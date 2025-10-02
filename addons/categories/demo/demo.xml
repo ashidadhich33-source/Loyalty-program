@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Demo Categories -->
+    <record id="demo_category_baby_boy" model="product.category">
+        <field name="name">Baby Boy</field>
+        <field name="parent_id" ref="category_babywear"/>
+        <field name="age_group">0-2</field>
+        <field name="gender">boys</field>
+        <field name="season">all_season</field>
+        <field name="brand_type">all</field>
+        <field name="description">Clothing specifically for baby boys</field>
+        <field name="icon">fa fa-male</field>
+        <field name="color">#00d2d3</field>
+    </record>
+
+    <record id="demo_category_baby_girl" model="product.category">
+        <field name="name">Baby Girl</field>
+        <field name="parent_id" ref="category_babywear"/>
+        <field name="age_group">0-2</field>
+        <field name="gender">girls</field>
+        <field name="season">all_season</field>
+        <field name="brand_type">all</field>
+        <field name="description">Clothing specifically for baby girls</field>
+        <field name="icon">fa fa-female</field>
+        <field name="color">#ff9ff3</field>
+    </record>
+
+    <record id="demo_category_toddler_boy" model="product.category">
+        <field name="name">Toddler Boy</field>
+        <field name="parent_id" ref="category_toddler"/>
+        <field name="age_group">2-4</field>
+        <field name="gender">boys</field>
+        <field name="season">all_season</field>
+        <field name="brand_type">all</field>
+        <field name="description">Clothing specifically for toddler boys</field>
+        <field name="icon">fa fa-male</field>
+        <field name="color">#00d2d3</field>
+    </record>
+
+    <record id="demo_category_toddler_girl" model="product.category">
+        <field name="name">Toddler Girl</field>
+        <field name="parent_id" ref="category_toddler"/>
+        <field name="age_group">2-4</field>
+        <field name="gender">girls</field>
+        <field name="season">all_season</field>
+        <field name="brand_type">all</field>
+        <field name="description">Clothing specifically for toddler girls</field>
+        <field name="icon">fa fa-female</field>
+        <field name="color">#ff9ff3</field>
+    </record>
+
+    <!-- Demo Category Attributes -->
+    <record id="demo_category_attribute_size" model="category.attribute">
+        <field name="name">Size</field>
+        <field name="category_id" ref="category_babywear"/>
+        <field name="attribute_type">selection</field>
+        <field name="required">True</field>
+        <field name="display_type">select</field>
+        <field name="selection_options">0-3 Months&#10;3-6 Months&#10;6-9 Months&#10;9-12 Months&#10;12-18 Months&#10;18-24 Months</field>
+        <field name="is_kids_specific">True</field>
+        <field name="age_group_filter">0-2</field>
+        <field name="gender_filter">unisex</field>
+    </record>
+
+    <record id="demo_category_attribute_fabric" model="category.attribute">
+        <field name="name">Fabric</field>
+        <field name="category_id" ref="category_babywear"/>
+        <field name="attribute_type">selection</field>
+        <field name="required">True</field>
+        <field name="display_type">select</field>
+        <field name="selection_options">Cotton&#10;Organic Cotton&#10;Bamboo&#10;Modal&#10;Polyester&#10;Blend</field>
+        <field name="is_kids_specific">True</field>
+        <field name="age_group_filter">0-2</field>
+        <field name="gender_filter">unisex</field>
+    </record>
+
+    <record id="demo_category_attribute_color" model="category.attribute">
+        <field name="name">Color</field>
+        <field name="category_id" ref="category_babywear"/>
+        <field name="attribute_type">selection</field>
+        <field name="required">True</field>
+        <field name="display_type">multiselect</field>
+        <field name="selection_options">White&#10;Black&#10;Blue&#10;Pink&#10;Yellow&#10;Green&#10;Red&#10;Orange&#10;Purple&#10;Brown</field>
+        <field name="is_kids_specific">True</field>
+        <field name="age_group_filter">0-2</field>
+        <field name="gender_filter">unisex</field>
+    </record>
+
+    <!-- Demo Category Rules -->
+    <record id="demo_category_rule_baby_discount" model="category.rule">
+        <field name="name">Baby Category Discount</field>
+        <field name="category_id" ref="category_babywear"/>
+        <field name="rule_type">discount</field>
+        <field name="condition_type">always</field>
+        <field name="action_type">apply_discount</field>
+        <field name="discount_type">percentage</field>
+        <field name="discount_value">10.0</field>
+        <field name="is_active">True</field>
+        <field name="priority">2</field>
+    </record>
+
+    <record id="demo_category_rule_toddler_discount" model="category.rule">
+        <field name="name">Toddler Category Discount</field>
+        <field name="category_id" ref="category_toddler"/>
+        <field name="rule_type">discount</field>
+        <field name="condition_type">always</field>
+        <field name="action_type">apply_discount</field>
+        <field name="discount_type">percentage</field>
+        <field name="discount_value">15.0</field>
+        <field name="is_active">True</field>
+        <field name="priority">2</field>
+    </record>
+
+    <record id="demo_category_rule_summer_pricing" model="category.rule">
+        <field name="name">Summer Category Pricing</field>
+        <field name="category_id" ref="category_summer"/>
+        <field name="rule_type">pricing</field>
+        <field name="condition_type">season</field>
+        <field name="season">summer</field>
+        <field name="action_type">set_price</field>
+        <field name="price_type">percentage</field>
+        <field name="price_value">5.0</field>
+        <field name="is_active">True</field>
+        <field name="priority">1</field>
+    </record>
+
+    <!-- Demo Category Analytics -->
+    <record id="demo_category_analytics_babywear" model="category.analytics">
+        <field name="category_id" ref="category_babywear"/>
+        <field name="date">2025-01-01</field>
+        <field name="period">monthly</field>
+        <field name="total_sales">50000.0</field>
+        <field name="sales_count">150</field>
+        <field name="product_count">25</field>
+        <field name="customer_count">120</field>
+        <field name="revenue">45000.0</field>
+        <field name="cost">30000.0</field>
+        <field name="profit">15000.0</field>
+        <field name="profit_margin">33.33</field>
+    </record>
+
+    <record id="demo_category_analytics_toddler" model="category.analytics">
+        <field name="category_id" ref="category_toddler"/>
+        <field name="date">2025-01-01</field>
+        <field name="period">monthly</field>
+        <field name="total_sales">75000.0</field>
+        <field name="sales_count">200</field>
+        <field name="product_count">35</field>
+        <field name="customer_count">180</field>
+        <field name="revenue">67500.0</field>
+        <field name="cost">45000.0</field>
+        <field name="profit">22500.0</field>
+        <field name="profit_margin">33.33</field>
+    </record>
+
+    <record id="demo_category_analytics_preschool" model="category.analytics">
+        <field name="category_id" ref="category_preschool"/>
+        <field name="date">2025-01-01</field>
+        <field name="period">monthly</field>
+        <field name="total_sales">100000.0</field>
+        <field name="sales_count">250</field>
+        <field name="product_count">45</field>
+        <field name="customer_count">220</field>
+        <field name="revenue">90000.0</field>
+        <field name="cost">60000.0</field>
+        <field name="profit">30000.0</field>
+        <field name="profit_margin">33.33</field>
+    </record>
+</odoo>

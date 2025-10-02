@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Import Template Tree View -->
+    <record id="view_import_template_tree" model="ir.ui.view">
+        <field name="name">import.template.tree</field>
+        <field name="model">import.template</field>
+        <field name="arch" type="xml">
+            <tree string="Import Templates" decoration-info="not is_active" decoration-muted="not is_active">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="model_name"/>
+                <field name="template_type"/>
+                <field name="is_kids_specific"/>
+                <field name="usage_count"/>
+                <field name="last_used"/>
+                <field name="is_active"/>
+                <field name="is_default"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Import Template Form View -->
+    <record id="view_import_template_form" model="ir.ui.view">
+        <field name="name">import.template.form</field>
+        <field name="model">import.template</field>
+        <field name="arch" type="xml">
+            <form string="Import Template">
+                <header>
+                    <button name="action_download_template" type="object" string="Download Template" class="btn-primary"/>
+                    <button name="action_preview_template" type="object" string="Preview" class="btn-secondary"/>
+                    <button name="action_validate_template" type="object" string="Validate" class="btn-secondary"/>
+                    <button name="action_duplicate_template" type="object" string="Duplicate" class="btn-secondary"/>
+                    <field name="is_active" widget="boolean_toggle"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_download_template" type="object" class="oe_stat_button" icon="fa-download">
+                            <field name="template_filename" widget="statinfo" string="Template File"/>
+                        </button>
+                        <button name="action_export_template" type="object" class="oe_stat_button" icon="fa-upload">
+                            <field name="usage_count" widget="statinfo" string="Usage Count"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Template Name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group name="basic_info">
+                            <field name="model_id"/>
+                            <field name="template_type"/>
+                            <field name="description"/>
+                            <field name="sequence"/>
+                        </group>
+                        <group name="template_config">
+                            <field name="has_header"/>
+                            <field name="header_row"/>
+                            <field name="data_start_row"/>
+                            <field name="max_rows"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group name="validation_rules">
+                            <field name="validation_rules"/>
+                            <field name="required_fields"/>
+                            <field name="unique_fields"/>
+                        </group>
+                        <group name="kids_specific">
+                            <field name="is_kids_specific"/>
+                            <field name="age_group_validation"/>
+                            <field name="gender_validation"/>
+                            <field name="size_validation"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group name="indian_localization">
+                            <field name="gstin_validation"/>
+                            <field name="pan_validation"/>
+                            <field name="mobile_validation"/>
+                        </group>
+                        <group name="template_status">
+                            <field name="is_default"/>
+                            <field name="version"/>
+                            <field name="parent_template_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Field Mappings" name="field_mappings">
+                            <field name="field_mapping_ids">
+                                <tree editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="source_field"/>
+                                    <field name="target_field"/>
+                                    <field name="data_type"/>
+                                    <field name="required"/>
+                                    <field name="is_active"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Template File" name="template_file">
+                            <group>
+                                <field name="template_file" filename="template_filename"/>
+                                <field name="template_filename"/>
+                            </group>
+                        </page>
+                        <page string="Categories" name="categories">
+                            <field name="category_ids"/>
+                            <field name="tags"/>
+                        </page>
+                        <page string="Versioning" name="versioning">
+                            <field name="child_template_ids">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="version"/>
+                                    <field name="is_active"/>
+                                    <field name="usage_count"/>
+                                    <field name="last_used"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Import Template Search View -->
+    <record id="view_import_template_search" model="ir.ui.view">
+        <field name="name">import.template.search</field>
+        <field name="model">import.template</field>
+        <field name="arch" type="xml">
+            <search string="Import Templates">
+                <field name="name"/>
+                <field name="model_name"/>
+                <field name="template_type"/>
+                <separator/>
+                <filter string="Active" name="active" domain="[('is_active', '=', True)]"/>
+                <filter string="Inactive" name="inactive" domain="[('is_active', '=', False)]"/>
+                <filter string="Default" name="default" domain="[('is_default', '=', True)]"/>
+                <separator/>
+                <filter string="Excel" name="excel" domain="[('template_type', '=', 'excel')]"/>
+                <filter string="CSV" name="csv" domain="[('template_type', '=', 'csv')]"/>
+                <filter string="JSON" name="json" domain="[('template_type', '=', 'json')]"/>
+                <filter string="XML" name="xml" domain="[('template_type', '=', 'xml')]"/>
+                <separator/>
+                <filter string="Kids Specific" name="kids_specific" domain="[('is_kids_specific', '=', True)]"/>
+                <filter string="GSTIN Validation" name="gstin_validation" domain="[('gstin_validation', '=', True)]"/>
+                <filter string="PAN Validation" name="pan_validation" domain="[('pan_validation', '=', True)]"/>
+                <filter string="Mobile Validation" name="mobile_validation" domain="[('mobile_validation', '=', True)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Model" name="group_model" context="{'group_by': 'model_name'}"/>
+                    <filter string="Template Type" name="group_template_type" context="{'group_by': 'template_type'}"/>
+                    <filter string="Kids Specific" name="group_kids_specific" context="{'group_by': 'is_kids_specific'}"/>
+                    <filter string="Active" name="group_active" context="{'group_by': 'is_active'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Import Template Kanban View -->
+    <record id="view_import_template_kanban" model="ir.ui.view">
+        <field name="name">import.template.kanban</field>
+        <field name="model">import.template</field>
+        <field name="arch" type="xml">
+            <kanban string="Import Templates" class="o_kanban_small_column">
+                <field name="name"/>
+                <field name="model_name"/>
+                <field name="template_type"/>
+                <field name="is_kids_specific"/>
+                <field name="usage_count"/>
+                <field name="last_used"/>
+                <field name="is_active"/>
+                <field name="is_default"/>
+                <templates>
+                    <t name="kanban-box">
+                        <div class="oe_kanban_card oe_kanban_global_click">
+                            <div class="oe_kanban_content">
+                                <div class="o_kanban_record_top">
+                                    <div class="o_kanban_record_headings">
+                                        <strong class="o_kanban_record_title">
+                                            <field name="name"/>
+                                        </strong>
+                                    </div>
+                                    <div class="o_kanban_record_body">
+                                        <div t-if="record.model_name.raw_value">
+                                            <i class="fa fa-database"/> <field name="model_name"/>
+                                        </div>
+                                        <div t-if="record.template_type.raw_value">
+                                            <i class="fa fa-file"/> <field name="template_type"/>
+                                        </div>
+                                        <div t-if="record.is_kids_specific.raw_value">
+                                            <i class="fa fa-child"/> Kids Specific
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="o_kanban_record_bottom">
+                                    <div class="oe_kanban_bottom_left">
+                                        <span class="o_kanban_record_stat">
+                                            <i class="fa fa-download"/> <field name="usage_count"/>
+                                        </span>
+                                        <span class="o_kanban_record_stat">
+                                            <i class="fa fa-clock-o"/> <field name="last_used"/>
+                                        </span>
+                                    </div>
+                                    <div class="oe_kanban_bottom_right">
+                                        <span t-if="record.is_default.raw_value" class="badge badge-info">Default</span>
+                                        <span t-if="record.is_active.raw_value" class="badge badge-success">Active</span>
+                                        <span t-if="not record.is_active.raw_value" class="badge badge-secondary">Inactive</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Import Job Tree View -->
+    <record id="view_import_job_tree" model="ir.ui.view">
+        <field name="name">import.job.tree</field>
+        <field name="model">import.job</field>
+        <field name="arch" type="xml">
+            <tree string="Import Jobs" decoration-info="state == 'validating'" decoration-warning="state == 'importing'" decoration-success="state == 'completed'" decoration-danger="state == 'failed'" decoration-muted="state == 'cancelled'">
+                <field name="name"/>
+                <field name="template_id"/>
+                <field name="model_name"/>
+                <field name="import_filename"/>
+                <field name="file_size"/>
+                <field name="state"/>
+                <field name="total_rows"/>
+                <field name="processed_rows"/>
+                <field name="success_rows"/>
+                <field name="error_rows"/>
+                <field name="progress_percentage"/>
+                <field name="start_time"/>
+                <field name="end_time"/>
+                <field name="duration"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Import Job Form View -->
+    <record id="view_import_job_form" model="ir.ui.view">
+        <field name="name">import.job.form</field>
+        <field name="model">import.job</field>
+        <field name="arch" type="xml">
+            <form string="Import Job">
+                <header>
+                    <button name="action_start_import" type="object" string="Start Import" class="btn-primary" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                    <button name="action_cancel_import" type="object" string="Cancel" class="btn-secondary" attrs="{'invisible': [('state', 'in', ['completed', 'failed', 'cancelled'])]}"/>
+                    <button name="action_retry_import" type="object" string="Retry" class="btn-secondary" attrs="{'invisible': [('state', 'not in', ['failed', 'cancelled'])]}"/>
+                    <button name="action_view_results" type="object" string="View Results" class="btn-secondary" attrs="{'invisible': [('state', '!=', 'completed')]}"/>
+                    <button name="action_view_errors" type="object" string="View Errors" class="btn-secondary" attrs="{'invisible': [('error_rows', '=', 0)]}"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,validating,validated,importing,completed"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_results" type="object" class="oe_stat_button" icon="fa-check">
+                            <field name="success_rows" widget="statinfo" string="Success"/>
+                        </button>
+                        <button name="action_view_errors" type="object" class="oe_stat_button" icon="fa-times">
+                            <field name="error_rows" widget="statinfo" string="Errors"/>
+                        </button>
+                        <button name="action_view_results" type="object" class="oe_stat_button" icon="fa-clock-o">
+                            <field name="duration" widget="statinfo" string="Duration"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Job Name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group name="basic_info">
+                            <field name="template_id"/>
+                            <field name="model_name"/>
+                            <field name="description"/>
+                            <field name="user_id"/>
+                            <field name="company_id"/>
+                        </group>
+                        <group name="file_info">
+                            <field name="import_file" filename="import_filename"/>
+                            <field name="import_filename"/>
+                            <field name="file_size"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group name="progress_info">
+                            <field name="total_rows"/>
+                            <field name="processed_rows"/>
+                            <field name="success_rows"/>
+                            <field name="error_rows"/>
+                            <field name="progress_percentage"/>
+                        </group>
+                        <group name="timing_info">
+                            <field name="start_time"/>
+                            <field name="end_time"/>
+                            <field name="duration"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group name="import_options">
+                            <field name="skip_validation"/>
+                            <field name="update_existing"/>
+                            <field name="create_missing"/>
+                            <field name="batch_size"/>
+                        </group>
+                        <group name="error_handling">
+                            <field name="max_errors"/>
+                            <field name="stop_on_error"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group name="scheduling">
+                            <field name="is_scheduled"/>
+                            <field name="scheduled_date"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Results" name="results">
+                            <field name="import_results"/>
+                        </page>
+                        <page string="Errors" name="errors">
+                            <field name="error_log"/>
+                        </page>
+                        <page string="Warnings" name="warnings">
+                            <field name="warning_log"/>
+                        </page>
+                        <page string="Options" name="options">
+                            <field name="import_options"/>
+                        </page>
+                        <page string="Created Records" name="created_records">
+                            <field name="created_record_ids">
+                                <tree>
+                                    <field name="record_id"/>
+                                    <field name="model_name"/>
+                                    <field name="action"/>
+                                    <field name="state"/>
+                                    <field name="error_message"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Updated Records" name="updated_records">
+                            <field name="updated_record_ids">
+                                <tree>
+                                    <field name="record_id"/>
+                                    <field name="model_name"/>
+                                    <field name="action"/>
+                                    <field name="state"/>
+                                    <field name="error_message"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Error Records" name="error_records">
+                            <field name="error_record_ids">
+                                <tree>
+                                    <field name="record_id"/>
+                                    <field name="model_name"/>
+                                    <field name="action"/>
+                                    <field name="state"/>
+                                    <field name="error_message"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Import Job Search View -->
+    <record id="view_import_job_search" model="ir.ui.view">
+        <field name="name">import.job.search</field>
+        <field name="model">import.job</field>
+        <field name="arch" type="xml">
+            <search string="Import Jobs">
+                <field name="name"/>
+                <field name="template_id"/>
+                <field name="model_name"/>
+                <field name="import_filename"/>
+                <field name="user_id"/>
+                <separator/>
+                <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
+                <filter string="Validating" name="validating" domain="[('state', '=', 'validating')]"/>
+                <filter string="Validated" name="validated" domain="[('state', '=', 'validated')]"/>
+                <filter string="Importing" name="importing" domain="[('state', '=', 'importing')]"/>
+                <filter string="Completed" name="completed" domain="[('state', '=', 'completed')]"/>
+                <filter string="Failed" name="failed" domain="[('state', '=', 'failed')]"/>
+                <filter string="Cancelled" name="cancelled" domain="[('state', '=', 'cancelled')]"/>
+                <separator/>
+                <filter string="Today" name="today" domain="[('create_date', '>=', context_today())]"/>
+                <filter string="This Week" name="this_week" domain="[('create_date', '>=', (context_today() - datetime.timedelta(days=7)).strftime('%Y-%m-%d'))]"/>
+                <filter string="This Month" name="this_month" domain="[('create_date', '>=', (context_today() - datetime.timedelta(days=30)).strftime('%Y-%m-%d'))]"/>
+                <separator/>
+                <filter string="Scheduled" name="scheduled" domain="[('is_scheduled', '=', True)]"/>
+                <filter string="With Errors" name="with_errors" domain="[('error_rows', '>', 0)]"/>
+                <filter string="Large Files" name="large_files" domain="[('file_size', '>', 1024)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="State" name="group_state" context="{'group_by': 'state'}"/>
+                    <filter string="Template" name="group_template" context="{'group_by': 'template_id'}"/>
+                    <filter string="Model" name="group_model" context="{'group_by': 'model_name'}"/>
+                    <filter string="User" name="group_user" context="{'group_by': 'user_id'}"/>
+                    <filter string="Date" name="group_date" context="{'group_by': 'create_date:day'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Import Job Kanban View -->
+    <record id="view_import_job_kanban" model="ir.ui.view">
+        <field name="name">import.job.kanban</field>
+        <field name="model">import.job</field>
+        <field name="arch" type="xml">
+            <kanban string="Import Jobs" class="o_kanban_small_column">
+                <field name="name"/>
+                <field name="template_id"/>
+                <field name="model_name"/>
+                <field name="state"/>
+                <field name="total_rows"/>
+                <field name="processed_rows"/>
+                <field name="success_rows"/>
+                <field name="error_rows"/>
+                <field name="progress_percentage"/>
+                <field name="start_time"/>
+                <field name="end_time"/>
+                <field name="duration"/>
+                <templates>
+                    <t name="kanban-box">
+                        <div class="oe_kanban_card oe_kanban_global_click">
+                            <div class="oe_kanban_content">
+                                <div class="o_kanban_record_top">
+                                    <div class="o_kanban_record_headings">
+                                        <strong class="o_kanban_record_title">
+                                            <field name="name"/>
+                                        </strong>
+                                    </div>
+                                    <div class="o_kanban_record_body">
+                                        <div t-if="record.template_id.raw_value">
+                                            <i class="fa fa-file"/> <field name="template_id"/>
+                                        </div>
+                                        <div t-if="record.model_name.raw_value">
+                                            <i class="fa fa-database"/> <field name="model_name"/>
+                                        </div>
+                                        <div t-if="record.total_rows.raw_value">
+                                            <i class="fa fa-list"/> <field name="total_rows"/> rows
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="o_kanban_record_bottom">
+                                    <div class="oe_kanban_bottom_left">
+                                        <span class="o_kanban_record_stat">
+                                            <i class="fa fa-check"/> <field name="success_rows"/>
+                                        </span>
+                                        <span class="o_kanban_record_stat">
+                                            <i class="fa fa-times"/> <field name="error_rows"/>
+                                        </span>
+                                        <span class="o_kanban_record_stat">
+                                            <i class="fa fa-percent"/> <field name="progress_percentage"/>
+                                        </span>
+                                    </div>
+                                    <div class="oe_kanban_bottom_right">
+                                        <span t-if="record.state.raw_value == 'completed'" class="badge badge-success">Completed</span>
+                                        <span t-if="record.state.raw_value == 'failed'" class="badge badge-danger">Failed</span>
+                                        <span t-if="record.state.raw_value == 'importing'" class="badge badge-warning">Importing</span>
+                                        <span t-if="record.state.raw_value == 'draft'" class="badge badge-secondary">Draft</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+</odoo>

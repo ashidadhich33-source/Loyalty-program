@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Import History Tree View -->
+    <record id="view_import_history_tree" model="ir.ui.view">
+        <field name="name">import.history.tree</field>
+        <field name="model">import.history</field>
+        <field name="arch" type="xml">
+            <tree string="Import History" decoration-success="status == 'completed'" decoration-danger="status == 'failed'" decoration-warning="status == 'partial'" decoration-muted="status == 'cancelled'">
+                <field name="import_job_id"/>
+                <field name="template_id"/>
+                <field name="model_name"/>
+                <field name="import_date"/>
+                <field name="user_id"/>
+                <field name="status"/>
+                <field name="total_records"/>
+                <field name="success_records"/>
+                <field name="error_records"/>
+                <field name="duration"/>
+                <field name="data_quality_score"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Import History Form View -->
+    <record id="view_import_history_form" model="ir.ui.view">
+        <field name="name">import.history.form</field>
+        <field name="model">import.history</field>
+        <field name="arch" type="xml">
+            <form string="Import History">
+                <header>
+                    <button name="action_view_import_job" type="object" string="View Import Job" class="btn-primary"/>
+                    <button name="action_view_records" type="object" string="View Records" class="btn-secondary"/>
+                    <button name="action_view_errors" type="object" string="View Errors" class="btn-secondary" attrs="{'invisible': [('error_records', '=', 0)]}"/>
+                    <button name="action_retry_import" type="object" string="Retry Import" class="btn-secondary" attrs="{'invisible': [('status', 'in', ['completed', 'cancelled'])]}"/>
+                    <button name="action_export_results" type="object" string="Export Results" class="btn-secondary"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_records" type="object" class="oe_stat_button" icon="fa-list">
+                            <field name="total_records" widget="statinfo" string="Total Records"/>
+                        </button>
+                        <button name="action_view_records" type="object" class="oe_stat_button" icon="fa-check">
+                            <field name="success_records" widget="statinfo" string="Success"/>
+                        </button>
+                        <button name="action_view_errors" type="object" class="oe_stat_button" icon="fa-times">
+                            <field name="error_records" widget="statinfo" string="Errors"/>
+                        </button>
+                        <button name="action_analyze_errors" type="object" class="oe_stat_button" icon="fa-bar-chart">
+                            <field name="data_quality_score" widget="statinfo" string="Quality Score"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="display_name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group name="basic_info">
+                            <field name="import_job_id"/>
+                            <field name="template_id"/>
+                            <field name="model_name"/>
+                            <field name="import_date"/>
+                            <field name="user_id"/>
+                            <field name="company_id"/>
+                        </group>
+                        <group name="file_info">
+                            <field name="file_name"/>
+                            <field name="file_size"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group name="results">
+                            <field name="total_records"/>
+                            <field name="success_records"/>
+                            <field name="error_records"/>
+                            <field name="warning_records"/>
+                            <field name="status"/>
+                        </group>
+                        <group name="performance">
+                            <field name="duration"/>
+                            <field name="records_per_second"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group name="data_quality">
+                            <field name="data_quality_score"/>
+                            <field name="completeness_score"/>
+                            <field name="accuracy_score"/>
+                            <field name="consistency_score"/>
+                        </group>
+                        <group name="business_impact">
+                            <field name="business_impact"/>
+                            <field name="cost_savings"/>
+                            <field name="time_savings"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Error Summary" name="error_summary">
+                            <field name="error_summary"/>
+                        </page>
+                        <page string="Error Details" name="error_details">
+                            <field name="error_details"/>
+                        </page>
+                        <page string="Success Summary" name="success_summary">
+                            <field name="success_summary"/>
+                        </page>
+                        <page string="Import Options" name="import_options">
+                            <field name="import_options"/>
+                        </page>
+                        <page string="Created Records" name="created_records">
+                            <field name="created_record_ids">
+                                <tree>
+                                    <field name="record_id"/>
+                                    <field name="model_name"/>
+                                    <field name="action"/>
+                                    <field name="state"/>
+                                    <field name="error_message"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Updated Records" name="updated_records">
+                            <field name="updated_record_ids">
+                                <tree>
+                                    <field name="record_id"/>
+                                    <field name="model_name"/>
+                                    <field name="action"/>
+                                    <field name="state"/>
+                                    <field name="error_message"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Error Records" name="error_records">
+                            <field name="error_record_ids">
+                                <tree>
+                                    <field name="record_id"/>
+                                    <field name="model_name"/>
+                                    <field name="action"/>
+                                    <field name="state"/>
+                                    <field name="error_message"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Import History Search View -->
+    <record id="view_import_history_search" model="ir.ui.view">
+        <field name="name">import.history.search</field>
+        <field name="model">import.history</field>
+        <field name="arch" type="xml">
+            <search string="Import History">
+                <field name="import_job_id"/>
+                <field name="template_id"/>
+                <field name="model_name"/>
+                <field name="user_id"/>
+                <field name="import_date"/>
+                <separator/>
+                <filter string="Completed" name="completed" domain="[('status', '=', 'completed')]"/>
+                <filter string="Failed" name="failed" domain="[('status', '=', 'failed')]"/>
+                <filter string="Partial" name="partial" domain="[('status', '=', 'partial')]"/>
+                <filter string="Cancelled" name="cancelled" domain="[('status', '=', 'cancelled')]"/>
+                <separator/>
+                <filter string="Today" name="today" domain="[('import_date', '>=', context_today())]"/>
+                <filter string="This Week" name="this_week" domain="[('import_date', '>=', (context_today() - datetime.timedelta(days=7)).strftime('%Y-%m-%d'))]"/>
+                <filter string="This Month" name="this_month" domain="[('import_date', '>=', (context_today() - datetime.timedelta(days=30)).strftime('%Y-%m-%d'))]"/>
+                <separator/>
+                <filter string="High Quality" name="high_quality" domain="[('data_quality_score', '>=', 90)]"/>
+                <filter string="Medium Quality" name="medium_quality" domain="[('data_quality_score', '>=', 70), ('data_quality_score', '<', 90)]"/>
+                <filter string="Low Quality" name="low_quality" domain="[('data_quality_score', '<', 70)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Status" name="group_status" context="{'group_by': 'status'}"/>
+                    <filter string="Template" name="group_template" context="{'group_by': 'template_id'}"/>
+                    <filter string="Model" name="group_model" context="{'group_by': 'model_name'}"/>
+                    <filter string="User" name="group_user" context="{'group_by': 'user_id'}"/>
+                    <filter string="Date" name="group_date" context="{'group_by': 'import_date:day'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+</odoo>

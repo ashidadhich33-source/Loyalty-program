@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Categories Menu -->
+    <menuitem id="menu_categories" name="Categories" parent="menu_master_data" sequence="20"/>
+
+    <!-- Category Management Menu -->
+    <menuitem id="menu_category_management" name="Category Management" parent="menu_categories" sequence="10"/>
+    <menuitem id="menu_categories_list" name="Categories" parent="menu_category_management" action="action_category" sequence="10"/>
+    <menuitem id="menu_category_attributes" name="Category Attributes" parent="menu_category_management" action="action_category_attribute" sequence="20"/>
+    <menuitem id="menu_category_rules" name="Category Rules" parent="menu_category_management" action="action_category_rule" sequence="30"/>
+
+    <!-- Category Analytics Menu -->
+    <menuitem id="menu_category_analytics" name="Category Analytics" parent="menu_categories" sequence="20"/>
+    <menuitem id="menu_category_analytics_dashboard" name="Analytics Dashboard" parent="menu_category_analytics" action="action_category_analytics_dashboard" sequence="10"/>
+    <menuitem id="menu_category_analytics_list" name="Analytics" parent="menu_category_analytics" action="action_category_analytics" sequence="20"/>
+    <menuitem id="menu_category_performance" name="Performance" parent="menu_category_analytics" action="action_category_performance" sequence="30"/>
+    <menuitem id="menu_category_sales_trend" name="Sales Trend" parent="menu_category_analytics" action="action_category_sales_trend" sequence="40"/>
+    <menuitem id="menu_category_customer_analytics" name="Customer Analytics" parent="menu_category_analytics" action="action_category_customer_analytics" sequence="50"/>
+    <menuitem id="menu_category_inventory_analytics" name="Inventory Analytics" parent="menu_category_analytics" action="action_category_inventory_analytics" sequence="60"/>
+    <menuitem id="menu_category_financial_analytics" name="Financial Analytics" parent="menu_category_analytics" action="action_category_financial_analytics" sequence="70"/>
+    <menuitem id="menu_category_market_share" name="Market Share" parent="menu_category_analytics" action="action_category_market_share" sequence="80"/>
+
+    <!-- Category Reports Menu -->
+    <menuitem id="menu_category_reports" name="Category Reports" parent="menu_categories" sequence="30"/>
+    <menuitem id="menu_category_age_group_reports" name="Age Group Reports" parent="menu_category_reports" action="action_category_age_group_analytics" sequence="10"/>
+    <menuitem id="menu_category_gender_reports" name="Gender Reports" parent="menu_category_reports" action="action_category_gender_analytics" sequence="20"/>
+    <menuitem id="menu_category_season_reports" name="Season Reports" parent="menu_category_reports" action="action_category_season_analytics" sequence="30"/>
+    <menuitem id="menu_category_brand_reports" name="Brand Reports" parent="menu_category_reports" action="action_category_brand_analytics" sequence="40"/>
+</odoo>

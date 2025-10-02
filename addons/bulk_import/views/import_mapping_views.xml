@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Import Mapping Tree View -->
+    <record id="view_import_mapping_tree" model="ir.ui.view">
+        <field name="name">import.mapping.tree</field>
+        <field name="model">import.mapping</field>
+        <field name="arch" type="xml">
+            <tree string="Import Mappings" decoration-muted="not is_active">
+                <field name="sequence" widget="handle"/>
+                <field name="source_field"/>
+                <field name="target_field"/>
+                <field name="data_type"/>
+                <field name="required"/>
+                <field name="transformation_rule"/>
+                <field name="validation_rule"/>
+                <field name="is_kids_specific"/>
+                <field name="is_active"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Import Mapping Form View -->
+    <record id="view_import_mapping_form" model="ir.ui.view">
+        <field name="name">import.mapping.form</field>
+        <field name="model">import.mapping</field>
+        <field name="arch" type="xml">
+            <form string="Import Mapping">
+                <header>
+                    <button name="action_test_mapping" type="object" string="Test Mapping" class="btn-primary"/>
+                    <button name="action_validate_mapping" type="object" string="Validate" class="btn-secondary"/>
+                    <field name="is_active" widget="boolean_toggle"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="display_name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group name="basic_info">
+                            <field name="template_id"/>
+                            <field name="sequence"/>
+                            <field name="source_field"/>
+                            <field name="target_field"/>
+                            <field name="data_type"/>
+                        </group>
+                        <group name="field_properties">
+                            <field name="required"/>
+                            <field name="default_value"/>
+                            <field name="is_mapped"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group name="transformation">
+                            <field name="transformation_rule"/>
+                            <field name="transformation_value"/>
+                        </group>
+                        <group name="validation">
+                            <field name="validation_rule"/>
+                            <field name="validation_value"/>
+                            <field name="validation_message"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group name="kids_specific">
+                            <field name="is_kids_specific"/>
+                            <field name="age_group_validation"/>
+                            <field name="gender_validation"/>
+                            <field name="size_validation"/>
+                        </group>
+                        <group name="indian_localization">
+                            <field name="gstin_validation"/>
+                            <field name="pan_validation"/>
+                            <field name="mobile_validation"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group name="related_fields">
+                            <field name="related_field"/>
+                            <field name="related_model"/>
+                            <field name="search_field"/>
+                            <field name="create_if_not_found"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Usage Statistics" name="usage_stats">
+                            <group>
+                                <group>
+                                    <field name="usage_count"/>
+                                    <field name="success_count"/>
+                                    <field name="error_count"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Import Mapping Search View -->
+    <record id="view_import_mapping_search" model="ir.ui.view">
+        <field name="name">import.mapping.search</field>
+        <field name="model">import.mapping</field>
+        <field name="arch" type="xml">
+            <search string="Import Mappings">
+                <field name="source_field"/>
+                <field name="target_field"/>
+                <field name="template_id"/>
+                <separator/>
+                <filter string="Active" name="active" domain="[('is_active', '=', True)]"/>
+                <filter string="Inactive" name="inactive" domain="[('is_active', '=', False)]"/>
+                <filter string="Mapped" name="mapped" domain="[('is_mapped', '=', True)]"/>
+                <filter string="Required" name="required" domain="[('required', '=', True)]"/>
+                <separator/>
+                <filter string="Kids Specific" name="kids_specific" domain="[('is_kids_specific', '=', True)]"/>
+                <filter string="GSTIN Validation" name="gstin_validation" domain="[('gstin_validation', '=', True)]"/>
+                <filter string="PAN Validation" name="pan_validation" domain="[('pan_validation', '=', True)]"/>
+                <filter string="Mobile Validation" name="mobile_validation" domain="[('mobile_validation', '=', True)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Template" name="group_template" context="{'group_by': 'template_id'}"/>
+                    <filter string="Data Type" name="group_data_type" context="{'group_by': 'data_type'}"/>
+                    <filter string="Transformation Rule" name="group_transformation" context="{'group_by': 'transformation_rule'}"/>
+                    <filter string="Validation Rule" name="group_validation" context="{'group_by': 'validation_rule'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+</odoo>

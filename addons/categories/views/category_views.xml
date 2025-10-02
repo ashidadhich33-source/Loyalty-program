@@ -1,0 +1,569 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Category Tree View -->
+    <record id="view_category_tree" model="ir.ui.view">
+        <field name="name">product.category.tree</field>
+        <field name="model">product.category</field>
+        <field name="arch" type="xml">
+            <tree string="Categories" decoration-info="not is_active" decoration-muted="not is_active">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="parent_id"/>
+                <field name="age_group"/>
+                <field name="gender"/>
+                <field name="season"/>
+                <field name="brand_type"/>
+                <field name="product_count"/>
+                <field name="total_sales"/>
+                <field name="avg_rating"/>
+                <field name="is_active"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Category Form View -->
+    <record id="view_category_form" model="ir.ui.view">
+        <field name="name">product.category.form</field>
+        <field name="model">product.category</field>
+        <field name="arch" type="xml">
+            <form string="Category">
+                <header>
+                    <button name="action_view_products" type="object" string="View Products" class="btn-primary"/>
+                    <button name="action_view_analytics" type="object" string="Analytics" class="btn-secondary"/>
+                    <field name="is_active" widget="boolean_toggle"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_products" type="object" class="oe_stat_button" icon="fa-shopping-cart">
+                            <field name="product_count" widget="statinfo" string="Products"/>
+                        </button>
+                        <button name="action_view_analytics" type="object" class="oe_stat_button" icon="fa-bar-chart">
+                            <field name="total_sales" widget="statinfo" string="Total Sales"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Category Name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group name="basic_info">
+                            <field name="parent_id"/>
+                            <field name="sequence"/>
+                            <field name="description"/>
+                        </group>
+                        <group name="kids_clothing_info">
+                            <field name="age_group"/>
+                            <field name="gender"/>
+                            <field name="season"/>
+                            <field name="brand_type"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group name="visual_info">
+                            <field name="image" widget="image" class="oe_avatar"/>
+                            <field name="icon"/>
+                            <field name="color"/>
+                        </group>
+                        <group name="business_rules">
+                            <field name="min_price"/>
+                            <field name="max_price"/>
+                            <field name="default_margin"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Attributes" name="attributes">
+                            <field name="attribute_ids">
+                                <tree editable="bottom">
+                                    <field name="name"/>
+                                    <field name="attribute_type"/>
+                                    <field name="required"/>
+                                    <field name="sequence"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Rules" name="rules">
+                            <field name="rule_ids">
+                                <tree editable="bottom">
+                                    <field name="name"/>
+                                    <field name="rule_type"/>
+                                    <field name="condition_type"/>
+                                    <field name="action_type"/>
+                                    <field name="is_active"/>
+                                    <field name="priority"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Analytics" name="analytics">
+                            <group>
+                                <group>
+                                    <field name="product_count"/>
+                                    <field name="total_sales"/>
+                                    <field name="avg_rating"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Category Search View -->
+    <record id="view_category_search" model="ir.ui.view">
+        <field name="name">product.category.search</field>
+        <field name="model">product.category</field>
+        <field name="arch" type="xml">
+            <search string="Categories">
+                <field name="name"/>
+                <field name="parent_id"/>
+                <field name="age_group"/>
+                <field name="gender"/>
+                <field name="season"/>
+                <field name="brand_type"/>
+                <separator/>
+                <filter string="Active" name="active" domain="[('is_active', '=', True)]"/>
+                <filter string="Inactive" name="inactive" domain="[('is_active', '=', False)]"/>
+                <separator/>
+                <filter string="Baby (0-2)" name="baby" domain="[('age_group', '=', '0-2')]"/>
+                <filter string="Toddler (2-4)" name="toddler" domain="[('age_group', '=', '2-4')]"/>
+                <filter string="Pre-school (4-6)" name="preschool" domain="[('age_group', '=', '4-6')]"/>
+                <filter string="Early School (6-8)" name="early_school" domain="[('age_group', '=', '6-8')]"/>
+                <filter string="Middle School (8-10)" name="middle_school" domain="[('age_group', '=', '8-10')]"/>
+                <filter string="Pre-teen (10-12)" name="preteen" domain="[('age_group', '=', '10-12')]"/>
+                <filter string="Teen (12-14)" name="teen" domain="[('age_group', '=', '12-14')]"/>
+                <filter string="Young Adult (14-16)" name="young_adult" domain="[('age_group', '=', '14-16')]"/>
+                <separator/>
+                <filter string="Boys" name="boys" domain="[('gender', '=', 'boys')]"/>
+                <filter string="Girls" name="girls" domain="[('gender', '=', 'girls')]"/>
+                <filter string="Unisex" name="unisex" domain="[('gender', '=', 'unisex')]"/>
+                <separator/>
+                <filter string="Summer" name="summer" domain="[('season', '=', 'summer')]"/>
+                <filter string="Winter" name="winter" domain="[('season', '=', 'winter')]"/>
+                <filter string="Monsoon" name="monsoon" domain="[('season', '=', 'monsoon')]"/>
+                <filter string="All Season" name="all_season" domain="[('season', '=', 'all_season')]"/>
+                <separator/>
+                <filter string="Premium" name="premium" domain="[('brand_type', '=', 'premium')]"/>
+                <filter string="Mid Range" name="mid_range" domain="[('brand_type', '=', 'mid_range')]"/>
+                <filter string="Budget" name="budget" domain="[('brand_type', '=', 'budget')]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Age Group" name="group_age_group" context="{'group_by': 'age_group'}"/>
+                    <filter string="Gender" name="group_gender" context="{'group_by': 'gender'}"/>
+                    <filter string="Season" name="group_season" context="{'group_by': 'season'}"/>
+                    <filter string="Brand Type" name="group_brand_type" context="{'group_by': 'brand_type'}"/>
+                    <filter string="Parent Category" name="group_parent" context="{'group_by': 'parent_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Category Kanban View -->
+    <record id="view_category_kanban" model="ir.ui.view">
+        <field name="name">product.category.kanban</field>
+        <field name="model">product.category</field>
+        <field name="arch" type="xml">
+            <kanban string="Categories" class="o_kanban_small_column">
+                <field name="name"/>
+                <field name="age_group"/>
+                <field name="gender"/>
+                <field name="season"/>
+                <field name="brand_type"/>
+                <field name="product_count"/>
+                <field name="total_sales"/>
+                <field name="avg_rating"/>
+                <field name="is_active"/>
+                <field name="color"/>
+                <field name="icon"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_card oe_kanban_global_click">
+                            <div class="oe_kanban_content">
+                                <div class="o_kanban_record_top">
+                                    <div class="o_kanban_record_headings">
+                                        <strong class="o_kanban_record_title">
+                                            <field name="name"/>
+                                        </strong>
+                                    </div>
+                                    <div class="o_kanban_record_body">
+                                        <div t-if="record.age_group.raw_value">
+                                            <i class="fa fa-child"/> <field name="age_group"/>
+                                        </div>
+                                        <div t-if="record.gender.raw_value">
+                                            <i class="fa fa-venus-mars"/> <field name="gender"/>
+                                        </div>
+                                        <div t-if="record.season.raw_value">
+                                            <i class="fa fa-calendar"/> <field name="season"/>
+                                        </div>
+                                        <div t-if="record.brand_type.raw_value">
+                                            <i class="fa fa-tag"/> <field name="brand_type"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="o_kanban_record_bottom">
+                                    <div class="oe_kanban_bottom_left">
+                                        <span class="o_kanban_record_stat">
+                                            <i class="fa fa-shopping-cart"/> <field name="product_count"/>
+                                        </span>
+                                        <span class="o_kanban_record_stat">
+                                            <i class="fa fa-rupee"/> <field name="total_sales"/>
+                                        </span>
+                                        <span class="o_kanban_record_stat">
+                                            <i class="fa fa-star"/> <field name="avg_rating"/>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Category Analytics Tree View -->
+    <record id="view_category_analytics_tree" model="ir.ui.view">
+        <field name="name">category.analytics.tree</field>
+        <field name="model">category.analytics</field>
+        <field name="arch" type="xml">
+            <tree string="Category Analytics">
+                <field name="category_id"/>
+                <field name="date"/>
+                <field name="period"/>
+                <field name="total_sales"/>
+                <field name="sales_count"/>
+                <field name="avg_order_value"/>
+                <field name="product_count"/>
+                <field name="customer_count"/>
+                <field name="revenue"/>
+                <field name="profit"/>
+                <field name="profit_margin"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Category Analytics Form View -->
+    <record id="view_category_analytics_form" model="ir.ui.view">
+        <field name="name">category.analytics.form</field>
+        <field name="model">category.analytics</field>
+        <field name="arch" type="xml">
+            <form string="Category Analytics">
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="display_name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group name="basic_info">
+                            <field name="category_id"/>
+                            <field name="date"/>
+                            <field name="period"/>
+                        </group>
+                        <group name="sales_info">
+                            <field name="total_sales"/>
+                            <field name="sales_count"/>
+                            <field name="avg_order_value"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group name="product_info">
+                            <field name="product_count"/>
+                            <field name="active_product_count"/>
+                            <field name="new_product_count"/>
+                        </group>
+                        <group name="inventory_info">
+                            <field name="total_stock"/>
+                            <field name="stock_value"/>
+                            <field name="stock_turnover"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group name="customer_info">
+                            <field name="customer_count"/>
+                            <field name="repeat_customer_count"/>
+                            <field name="customer_retention_rate"/>
+                        </group>
+                        <group name="performance_info">
+                            <field name="conversion_rate"/>
+                            <field name="bounce_rate"/>
+                            <field name="avg_session_duration"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group name="financial_info">
+                            <field name="revenue"/>
+                            <field name="cost"/>
+                            <field name="profit"/>
+                            <field name="profit_margin"/>
+                        </group>
+                        <group name="market_info">
+                            <field name="market_share"/>
+                            <field name="growth_rate"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Category Analytics Search View -->
+    <record id="view_category_analytics_search" model="ir.ui.view">
+        <field name="name">category.analytics.search</field>
+        <field name="model">category.analytics</field>
+        <field name="arch" type="xml">
+            <search string="Category Analytics">
+                <field name="category_id"/>
+                <field name="date"/>
+                <field name="period"/>
+                <separator/>
+                <filter string="Today" name="today" domain="[('date', '=', context_today())]"/>
+                <filter string="This Week" name="this_week" domain="[('date', '>=', (context_today() - datetime.timedelta(days=7)).strftime('%Y-%m-%d'))]"/>
+                <filter string="This Month" name="this_month" domain="[('date', '>=', (context_today() - datetime.timedelta(days=30)).strftime('%Y-%m-%d'))]"/>
+                <separator/>
+                <filter string="Daily" name="daily" domain="[('period', '=', 'daily')]"/>
+                <filter string="Weekly" name="weekly" domain="[('period', '=', 'weekly')]"/>
+                <filter string="Monthly" name="monthly" domain="[('period', '=', 'monthly')]"/>
+                <filter string="Quarterly" name="quarterly" domain="[('period', '=', 'quarterly')]"/>
+                <filter string="Yearly" name="yearly" domain="[('period', '=', 'yearly')]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Category" name="group_category" context="{'group_by': 'category_id'}"/>
+                    <filter string="Date" name="group_date" context="{'group_by': 'date'}"/>
+                    <filter string="Period" name="group_period" context="{'group_by': 'period'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Category Attribute Tree View -->
+    <record id="view_category_attribute_tree" model="ir.ui.view">
+        <field name="name">category.attribute.tree</field>
+        <field name="model">category.attribute</field>
+        <field name="arch" type="xml">
+            <tree string="Category Attributes">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="category_id"/>
+                <field name="attribute_type"/>
+                <field name="required"/>
+                <field name="display_type"/>
+                <field name="is_kids_specific"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Category Attribute Form View -->
+    <record id="view_category_attribute_form" model="ir.ui.view">
+        <field name="name">category.attribute.form</field>
+        <field name="model">category.attribute</field>
+        <field name="arch" type="xml">
+            <form string="Category Attribute">
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group name="basic_info">
+                            <field name="category_id"/>
+                            <field name="sequence"/>
+                            <field name="attribute_type"/>
+                            <field name="required"/>
+                            <field name="display_type"/>
+                        </group>
+                        <group name="kids_specific">
+                            <field name="is_kids_specific"/>
+                            <field name="age_group_filter"/>
+                            <field name="gender_filter"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group name="validation_rules">
+                            <field name="min_value"/>
+                            <field name="max_value"/>
+                            <field name="min_length"/>
+                            <field name="max_length"/>
+                        </group>
+                        <group name="display_options">
+                            <field name="default_value"/>
+                            <field name="help_text"/>
+                        </group>
+                    </group>
+                    <group t-if="attribute_type == 'selection'">
+                        <group name="selection_options">
+                            <field name="selection_options" widget="text" placeholder="Option 1&#10;Option 2&#10;Option 3"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Category Rule Tree View -->
+    <record id="view_category_rule_tree" model="ir.ui.view">
+        <field name="name">category.rule.tree</field>
+        <field name="model">category.rule</field>
+        <field name="arch" type="xml">
+            <tree string="Category Rules">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="category_id"/>
+                <field name="rule_type"/>
+                <field name="condition_type"/>
+                <field name="action_type"/>
+                <field name="is_active"/>
+                <field name="priority"/>
+                <field name="execution_count"/>
+                <field name="success_count"/>
+                <field name="failure_count"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Category Rule Form View -->
+    <record id="view_category_rule_form" model="ir.ui.view">
+        <field name="name">category.rule.form</field>
+        <field name="model">category.rule</field>
+        <field name="arch" type="xml">
+            <form string="Category Rule">
+                <header>
+                    <button name="execute_action" type="object" string="Execute Rule" class="btn-primary"/>
+                    <field name="is_active" widget="boolean_toggle"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group name="basic_info">
+                            <field name="category_id"/>
+                            <field name="sequence"/>
+                            <field name="rule_type"/>
+                            <field name="priority"/>
+                        </group>
+                        <group name="execution_stats">
+                            <field name="last_executed"/>
+                            <field name="execution_count"/>
+                            <field name="success_count"/>
+                            <field name="failure_count"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Conditions" name="conditions">
+                            <group>
+                                <group name="condition_basic">
+                                    <field name="condition_type"/>
+                                    <field name="custom_condition"/>
+                                </group>
+                            </group>
+                            <group t-if="condition_type == 'date_range'">
+                                <group name="date_conditions">
+                                    <field name="date_from"/>
+                                    <field name="date_to"/>
+                                </group>
+                            </group>
+                            <group t-if="condition_type == 'customer_type'">
+                                <group name="customer_conditions">
+                                    <field name="customer_type"/>
+                                </group>
+                            </group>
+                            <group t-if="condition_type == 'quantity'">
+                                <group name="quantity_conditions">
+                                    <field name="min_quantity"/>
+                                    <field name="max_quantity"/>
+                                </group>
+                            </group>
+                            <group t-if="condition_type == 'amount'">
+                                <group name="amount_conditions">
+                                    <field name="min_amount"/>
+                                    <field name="max_amount"/>
+                                </group>
+                            </group>
+                            <group t-if="condition_type == 'season'">
+                                <group name="season_conditions">
+                                    <field name="season"/>
+                                </group>
+                            </group>
+                            <group t-if="condition_type == 'age_group'">
+                                <group name="age_group_conditions">
+                                    <field name="age_group"/>
+                                </group>
+                            </group>
+                            <group t-if="condition_type == 'gender'">
+                                <group name="gender_conditions">
+                                    <field name="gender"/>
+                                </group>
+                            </group>
+                            <group t-if="condition_type == 'brand'">
+                                <group name="brand_conditions">
+                                    <field name="brand_ids"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Actions" name="actions">
+                            <group>
+                                <group name="action_basic">
+                                    <field name="action_type"/>
+                                </group>
+                            </group>
+                            <group t-if="action_type == 'set_price'">
+                                <group name="price_actions">
+                                    <field name="price_type"/>
+                                    <field name="price_value"/>
+                                    <field name="price_formula"/>
+                                </group>
+                            </group>
+                            <group t-if="action_type == 'apply_discount'">
+                                <group name="discount_actions">
+                                    <field name="discount_type"/>
+                                    <field name="discount_value"/>
+                                </group>
+                            </group>
+                            <group t-if="action_type == 'set_margin'">
+                                <group name="margin_actions">
+                                    <field name="margin_percentage"/>
+                                </group>
+                            </group>
+                            <group t-if="action_type == 'set_stock'">
+                                <group name="stock_actions">
+                                    <field name="stock_action"/>
+                                    <field name="stock_value"/>
+                                </group>
+                            </group>
+                            <group t-if="action_type == 'send_notification'">
+                                <group name="notification_actions">
+                                    <field name="notification_type"/>
+                                    <field name="notification_template"/>
+                                </group>
+                            </group>
+                            <group t-if="action_type == 'create_task'">
+                                <group name="task_actions">
+                                    <field name="task_name"/>
+                                    <field name="task_description"/>
+                                </group>
+                            </group>
+                            <group t-if="action_type == 'run_script'">
+                                <group name="script_actions">
+                                    <field name="script_name"/>
+                                    <field name="script_code"/>
+                                </group>
+                            </group>
+                            <group t-if="action_type == 'custom'">
+                                <group name="custom_actions">
+                                    <field name="custom_action"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

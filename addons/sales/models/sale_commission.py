@@ -99,7 +99,7 @@ class SaleCommission(BaseModel, KidsClothingMixin, PriceMixin):
     
     # Salesperson
     salesperson_id = Many2OneField(
-        comodel_name='res.users',
+        comodel_name='erp.users',
         string='Salesperson',
         required=True,
         help="Salesperson earning this commission"
@@ -162,7 +162,7 @@ class SaleCommission(BaseModel, KidsClothingMixin, PriceMixin):
     
     # Company and Multi-company
     company_id = Many2OneField(
-        comodel_name='res.company',
+        comodel_name='erp.company',
         string='Company',
         required=True,
         help="Company this commission belongs to"
@@ -348,7 +348,7 @@ class SaleCommissionRule(BaseModel, KidsClothingMixin, PriceMixin):
     
     # Company and Multi-company
     company_id = Many2OneField(
-        comodel_name='res.company',
+        comodel_name='erp.company',
         string='Company',
         required=True,
         help="Company this rule belongs to"

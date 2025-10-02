@@ -2,7 +2,7 @@
 <erp>
     <data>
         <!-- Sale Analytics Tree View -->
-        <record id="view_sale_analytics_tree" model="ir.ui.view">
+        <record id="view_sale_analytics_tree" model="erp.ui.view">
             <field name="name">sale.analytics.tree</field>
             <field name="model">sale.analytics</field>
             <field name="arch" type="xml">
@@ -20,7 +20,7 @@
         </record>
         
         <!-- Sale Analytics Form View -->
-        <record id="view_sale_analytics_form" model="ir.ui.view">
+        <record id="view_sale_analytics_form" model="erp.ui.view">
             <field name="name">sale.analytics.form</field>
             <field name="model">sale.analytics</field>
             <field name="arch" type="xml">
@@ -104,7 +104,7 @@
         </record>
         
         <!-- Sale Analytics Search View -->
-        <record id="view_sale_analytics_search" model="ir.ui.view">
+        <record id="view_sale_analytics_search" model="erp.ui.view">
             <field name="name">sale.analytics.search</field>
             <field name="model">sale.analytics</field>
             <field name="arch" type="xml">
@@ -128,7 +128,7 @@
         </record>
         
         <!-- Sale Analytics Action -->
-        <record id="action_sale_analytics" model="ir.actions.act_window">
+        <record id="action_sale_analytics" model="erp.actions.act_window">
             <field name="name">Sales Analytics</field>
             <field name="res_model">sale.analytics</field>
             <field name="view_mode">tree,form</field>
@@ -144,7 +144,7 @@
         </record>
         
         <!-- Sale Analytics Dashboard View -->
-        <record id="view_sale_analytics_dashboard" model="ir.ui.view">
+        <record id="view_sale_analytics_dashboard" model="erp.ui.view">
             <field name="name">sale.analytics.dashboard</field>
             <field name="model">sale.analytics</field>
             <field name="arch" type="xml">
@@ -156,7 +156,7 @@
         </record>
         
         <!-- Sale Analytics Graph View -->
-        <record id="view_sale_analytics_graph" model="ir.ui.view">
+        <record id="view_sale_analytics_graph" model="erp.ui.view">
             <field name="name">sale.analytics.graph</field>
             <field name="model">sale.analytics</field>
             <field name="arch" type="xml">
@@ -170,7 +170,7 @@
         </record>
         
         <!-- Sale Analytics Pivot View -->
-        <record id="view_sale_analytics_pivot" model="ir.ui.view">
+        <record id="view_sale_analytics_pivot" model="erp.ui.view">
             <field name="name">sale.analytics.pivot</field>
             <field name="model">sale.analytics</field>
             <field name="arch" type="xml">
@@ -185,7 +185,7 @@
         </record>
         
         <!-- Sale Analytics Dashboard Action -->
-        <record id="action_sale_analytics_dashboard" model="ir.actions.act_window">
+        <record id="action_sale_analytics_dashboard" model="erp.actions.act_window">
             <field name="name">Sales Analytics Dashboard</field>
             <field name="res_model">sale.analytics</field>
             <field name="view_mode">dashboard</field>

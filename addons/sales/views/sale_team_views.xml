@@ -2,7 +2,7 @@
 <erp>
     <data>
         <!-- Sale Team Tree View -->
-        <record id="view_sale_team_tree" model="ir.ui.view">
+        <record id="view_sale_team_tree" model="erp.ui.view">
             <field name="name">sale.team.tree</field>
             <field name="model">sale.team</field>
             <field name="arch" type="xml">
@@ -19,7 +19,7 @@
         </record>
         
         <!-- Sale Team Form View -->
-        <record id="view_sale_team_form" model="ir.ui.view">
+        <record id="view_sale_team_form" model="erp.ui.view">
             <field name="name">sale.team.form</field>
             <field name="model">sale.team</field>
             <field name="arch" type="xml">
@@ -100,7 +100,7 @@
         </record>
         
         <!-- Sale Team Search View -->
-        <record id="view_sale_team_search" model="ir.ui.view">
+        <record id="view_sale_team_search" model="erp.ui.view">
             <field name="name">sale.team.search</field>
             <field name="model">sale.team</field>
             <field name="arch" type="xml">
@@ -118,7 +118,7 @@
         </record>
         
         <!-- Sale Team Action -->
-        <record id="action_sale_team" model="ir.actions.act_window">
+        <record id="action_sale_team" model="erp.actions.act_window">
             <field name="name">Sales Teams</field>
             <field name="res_model">sale.team</field>
             <field name="view_mode">tree,form</field>
@@ -134,7 +134,7 @@
         </record>
         
         <!-- Sale Team Member Tree View -->
-        <record id="view_sale_team_member_tree" model="ir.ui.view">
+        <record id="view_sale_team_member_tree" model="erp.ui.view">
             <field name="name">sale.team.member.tree</field>
             <field name="model">sale.team.member</field>
             <field name="arch" type="xml">
@@ -150,7 +150,7 @@
         </record>
         
         <!-- Sale Team Member Form View -->
-        <record id="view_sale_team_member_form" model="ir.ui.view">
+        <record id="view_sale_team_member_form" model="erp.ui.view">
             <field name="name">sale.team.member.form</field>
             <field name="model">sale.team.member</field>
             <field name="arch" type="xml">
@@ -189,7 +189,7 @@
         </record>
         
         <!-- Sale Team Member Action -->
-        <record id="action_sale_team_member" model="ir.actions.act_window">
+        <record id="action_sale_team_member" model="erp.actions.act_window">
             <field name="name">Sales Team Members</field>
             <field name="res_model">sale.team.member</field>
             <field name="view_mode">tree,form</field>

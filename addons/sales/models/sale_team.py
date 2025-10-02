@@ -54,7 +54,7 @@ class SaleTeam(BaseModel, KidsClothingMixin, PriceMixin):
     
     # Team Leader
     leader_id = Many2OneField(
-        comodel_name='res.users',
+        comodel_name='erp.users',
         string='Team Leader',
         help="Leader of this sales team"
     )
@@ -125,7 +125,7 @@ class SaleTeam(BaseModel, KidsClothingMixin, PriceMixin):
     
     # Company and Multi-company
     company_id = Many2OneField(
-        comodel_name='res.company',
+        comodel_name='erp.company',
         string='Company',
         required=True,
         help="Company this team belongs to"
@@ -253,7 +253,7 @@ class SaleTeamMember(BaseModel, KidsClothingMixin, PriceMixin):
     
     # Member Information
     user_id = Many2OneField(
-        comodel_name='res.users',
+        comodel_name='erp.users',
         string='User',
         required=True,
         help="User for this team member"
@@ -304,7 +304,7 @@ class SaleTeamMember(BaseModel, KidsClothingMixin, PriceMixin):
     
     # Company and Multi-company
     company_id = Many2OneField(
-        comodel_name='res.company',
+        comodel_name='erp.company',
         string='Company',
         required=True,
         help="Company this member belongs to"

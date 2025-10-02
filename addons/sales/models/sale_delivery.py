@@ -44,13 +44,13 @@ class SaleDelivery(BaseModel, KidsClothingMixin, PriceMixin):
     )
     
     partner_id = Many2OneField(
-        comodel_name='res.partner',
+        comodel_name='erp.partner',
         string='Customer',
         help="Customer for this delivery"
     )
     
     partner_shipping_id = Many2OneField(
-        comodel_name='res.partner',
+        comodel_name='erp.partner',
         string='Delivery Address',
         help="Delivery address for this delivery"
     )
@@ -197,7 +197,7 @@ class SaleDelivery(BaseModel, KidsClothingMixin, PriceMixin):
     
     # Company and Multi-company
     company_id = Many2OneField(
-        comodel_name='res.company',
+        comodel_name='erp.company',
         string='Company',
         required=True,
         help="Company this delivery belongs to"

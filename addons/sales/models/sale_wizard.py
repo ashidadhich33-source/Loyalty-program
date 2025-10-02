@@ -79,7 +79,7 @@ class SaleWizard(BaseModel, KidsClothingMixin, PriceMixin):
     
     # Company and Multi-company
     company_id = Many2OneField(
-        comodel_name='res.company',
+        comodel_name='erp.company',
         string='Company',
         required=True,
         help="Company this wizard belongs to"
@@ -200,7 +200,7 @@ class SaleCommissionWizard(BaseModel, KidsClothingMixin, PriceMixin):
     
     # Company and Multi-company
     company_id = Many2OneField(
-        comodel_name='res.company',
+        comodel_name='erp.company',
         string='Company',
         required=True,
         help="Company this wizard belongs to"
@@ -283,7 +283,7 @@ class SaleAnalyticsWizard(BaseModel, KidsClothingMixin, PriceMixin):
     
     # Company and Multi-company
     company_id = Many2OneField(
-        comodel_name='res.company',
+        comodel_name='erp.company',
         string='Company',
         required=True,
         help="Company this wizard belongs to"

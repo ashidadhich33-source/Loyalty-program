@@ -2,7 +2,7 @@
 <erp>
     <data>
         <!-- Sale Delivery Tree View -->
-        <record id="view_sale_delivery_tree" model="ir.ui.view">
+        <record id="view_sale_delivery_tree" model="erp.ui.view">
             <field name="name">sale.delivery.tree</field>
             <field name="model">sale.delivery</field>
             <field name="arch" type="xml">
@@ -19,7 +19,7 @@
         </record>
         
         <!-- Sale Delivery Form View -->
-        <record id="view_sale_delivery_form" model="ir.ui.view">
+        <record id="view_sale_delivery_form" model="erp.ui.view">
             <field name="name">sale.delivery.form</field>
             <field name="model">sale.delivery</field>
             <field name="arch" type="xml">
@@ -72,7 +72,7 @@
         </record>
         
         <!-- Sale Delivery Search View -->
-        <record id="view_sale_delivery_search" model="ir.ui.view">
+        <record id="view_sale_delivery_search" model="erp.ui.view">
             <field name="name">sale.delivery.search</field>
             <field name="model">sale.delivery</field>
             <field name="arch" type="xml">
@@ -99,7 +99,7 @@
         </record>
         
         <!-- Sale Delivery Action -->
-        <record id="action_sale_delivery" model="ir.actions.act_window">
+        <record id="action_sale_delivery" model="erp.actions.act_window">
             <field name="name">Sales Deliveries</field>
             <field name="res_model">sale.delivery</field>
             <field name="view_mode">tree,form</field>
@@ -115,7 +115,7 @@
         </record>
         
         <!-- Sale Delivery Line Tree View -->
-        <record id="view_sale_delivery_line_tree" model="ir.ui.view">
+        <record id="view_sale_delivery_line_tree" model="erp.ui.view">
             <field name="name">sale.delivery.line.tree</field>
             <field name="model">sale.delivery.line</field>
             <field name="arch" type="xml">
@@ -131,7 +131,7 @@
         </record>
         
         <!-- Sale Delivery Line Form View -->
-        <record id="view_sale_delivery_line_form" model="ir.ui.view">
+        <record id="view_sale_delivery_line_form" model="erp.ui.view">
             <field name="name">sale.delivery.line.form</field>
             <field name="model">sale.delivery.line</field>
             <field name="arch" type="xml">
@@ -157,7 +157,7 @@
         </record>
         
         <!-- Sale Delivery Line Action -->
-        <record id="action_sale_delivery_line" model="ir.actions.act_window">
+        <record id="action_sale_delivery_line" model="erp.actions.act_window">
             <field name="name">Sales Delivery Lines</field>
             <field name="res_model">sale.delivery.line</field>
             <field name="view_mode">tree,form</field>

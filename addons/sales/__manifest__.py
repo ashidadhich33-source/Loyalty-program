@@ -67,7 +67,7 @@
     ],
     'data': [
         'security/security.xml',
-        'security/ir.model.access.csv',
+        'security/erp.model.access.csv',
         'data/data.xml',
         'views/sale_order_views.xml',
         'views/sale_quotation_views.xml',

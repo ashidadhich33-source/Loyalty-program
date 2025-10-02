@@ -60,13 +60,13 @@ class SaleTerritory(BaseModel, KidsClothingMixin, PriceMixin):
     
     # Geographic Information
     country_id = Many2OneField(
-        comodel_name='res.country',
+        comodel_name='erp.country',
         string='Country',
         help="Country of this territory"
     )
     
     state_id = Many2OneField(
-        comodel_name='res.state',
+        comodel_name='erp.state',
         string='State',
         help="State of this territory"
     )
@@ -106,7 +106,7 @@ class SaleTerritory(BaseModel, KidsClothingMixin, PriceMixin):
     
     # Territory Manager
     manager_id = Many2OneField(
-        comodel_name='res.users',
+        comodel_name='erp.users',
         string='Territory Manager',
         help="Manager of this territory"
     )
@@ -179,7 +179,7 @@ class SaleTerritory(BaseModel, KidsClothingMixin, PriceMixin):
     
     # Company and Multi-company
     company_id = Many2OneField(
-        comodel_name='res.company',
+        comodel_name='erp.company',
         string='Company',
         required=True,
         help="Company this territory belongs to"

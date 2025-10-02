@@ -36,20 +36,20 @@ class SaleQuotation(BaseModel, KidsClothingMixin, PriceMixin):
     )
     
     partner_id = Many2OneField(
-        comodel_name='res.partner',
+        comodel_name='erp.partner',
         string='Customer',
         required=True,
         help="Customer for this quotation"
     )
     
     partner_invoice_id = Many2OneField(
-        comodel_name='res.partner',
+        comodel_name='erp.partner',
         string='Invoice Address',
         help="Invoice address for this quotation"
     )
     
     partner_shipping_id = Many2OneField(
-        comodel_name='res.partner',
+        comodel_name='erp.partner',
         string='Delivery Address',
         help="Delivery address for this quotation"
     )
@@ -105,7 +105,7 @@ class SaleQuotation(BaseModel, KidsClothingMixin, PriceMixin):
     )
     
     user_id = Many2OneField(
-        comodel_name='res.users',
+        comodel_name='erp.users',
         string='Salesperson',
         help="Salesperson responsible for this quotation"
     )
@@ -140,7 +140,7 @@ class SaleQuotation(BaseModel, KidsClothingMixin, PriceMixin):
     
     # Company and Multi-company
     company_id = Many2OneField(
-        comodel_name='res.company',
+        comodel_name='erp.company',
         string='Company',
         required=True,
         help="Company this quotation belongs to"

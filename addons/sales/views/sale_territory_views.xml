@@ -2,7 +2,7 @@
 <erp>
     <data>
         <!-- Sale Territory Tree View -->
-        <record id="view_sale_territory_tree" model="ir.ui.view">
+        <record id="view_sale_territory_tree" model="erp.ui.view">
             <field name="name">sale.territory.tree</field>
             <field name="model">sale.territory</field>
             <field name="arch" type="xml">
@@ -21,7 +21,7 @@
         </record>
         
         <!-- Sale Territory Form View -->
-        <record id="view_sale_territory_form" model="ir.ui.view">
+        <record id="view_sale_territory_form" model="erp.ui.view">
             <field name="name">sale.territory.form</field>
             <field name="model">sale.territory</field>
             <field name="arch" type="xml">
@@ -95,7 +95,7 @@
         </record>
         
         <!-- Sale Territory Search View -->
-        <record id="view_sale_territory_search" model="ir.ui.view">
+        <record id="view_sale_territory_search" model="erp.ui.view">
             <field name="name">sale.territory.search</field>
             <field name="model">sale.territory</field>
             <field name="arch" type="xml">
@@ -120,7 +120,7 @@
         </record>
         
         <!-- Sale Territory Action -->
-        <record id="action_sale_territory" model="ir.actions.act_window">
+        <record id="action_sale_territory" model="erp.actions.act_window">
             <field name="name">Sales Territories</field>
             <field name="res_model">sale.territory</field>
             <field name="view_mode">tree,form</field>

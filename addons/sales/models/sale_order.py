@@ -37,20 +37,20 @@ class SaleOrder(BaseModel, KidsClothingMixin, PriceMixin):
     )
     
     partner_id = Many2OneField(
-        comodel_name='res.partner',
+        comodel_name='erp.partner',
         string='Customer',
         required=True,
         help="Customer for this sales order"
     )
     
     partner_invoice_id = Many2OneField(
-        comodel_name='res.partner',
+        comodel_name='erp.partner',
         string='Invoice Address',
         help="Invoice address for this sales order"
     )
     
     partner_shipping_id = Many2OneField(
-        comodel_name='res.partner',
+        comodel_name='erp.partner',
         string='Delivery Address',
         help="Delivery address for this sales order"
     )
@@ -104,7 +104,7 @@ class SaleOrder(BaseModel, KidsClothingMixin, PriceMixin):
     )
     
     user_id = Many2OneField(
-        comodel_name='res.users',
+        comodel_name='erp.users',
         string='Salesperson',
         help="Salesperson responsible for this order"
     )
@@ -146,7 +146,7 @@ class SaleOrder(BaseModel, KidsClothingMixin, PriceMixin):
     
     # Company and Multi-company
     company_id = Many2OneField(
-        comodel_name='res.company',
+        comodel_name='erp.company',
         string='Company',
         required=True,
         help="Company this order belongs to"

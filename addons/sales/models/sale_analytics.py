@@ -89,7 +89,7 @@ class SaleAnalytics(BaseModel, KidsClothingMixin, PriceMixin):
     
     # Top Performers
     top_salesperson_id = Many2OneField(
-        comodel_name='res.users',
+        comodel_name='erp.users',
         string='Top Salesperson',
         help="Top performing salesperson"
     )
@@ -121,7 +121,7 @@ class SaleAnalytics(BaseModel, KidsClothingMixin, PriceMixin):
     
     # Top Customers
     top_customer_id = Many2OneField(
-        comodel_name='res.partner',
+        comodel_name='erp.partner',
         string='Top Customer',
         help="Top customer by sales"
     )
@@ -187,7 +187,7 @@ class SaleAnalytics(BaseModel, KidsClothingMixin, PriceMixin):
     
     # Company and Multi-company
     company_id = Many2OneField(
-        comodel_name='res.company',
+        comodel_name='erp.company',
         string='Company',
         required=True,
         help="Company this analytics belongs to"

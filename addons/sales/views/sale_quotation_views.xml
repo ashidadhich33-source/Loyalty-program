@@ -2,7 +2,7 @@
 <erp>
     <data>
         <!-- Sale Quotation Tree View -->
-        <record id="view_sale_quotation_tree" model="ir.ui.view">
+        <record id="view_sale_quotation_tree" model="erp.ui.view">
             <field name="name">sale.quotation.tree</field>
             <field name="model">sale.quotation</field>
             <field name="arch" type="xml">
@@ -21,7 +21,7 @@
         </record>
         
         <!-- Sale Quotation Form View -->
-        <record id="view_sale_quotation_form" model="ir.ui.view">
+        <record id="view_sale_quotation_form" model="erp.ui.view">
             <field name="name">sale.quotation.form</field>
             <field name="model">sale.quotation</field>
             <field name="arch" type="xml">
@@ -78,7 +78,7 @@
         </record>
         
         <!-- Sale Quotation Search View -->
-        <record id="view_sale_quotation_search" model="ir.ui.view">
+        <record id="view_sale_quotation_search" model="erp.ui.view">
             <field name="name">sale.quotation.search</field>
             <field name="model">sale.quotation</field>
             <field name="arch" type="xml">
@@ -104,7 +104,7 @@
         </record>
         
         <!-- Sale Quotation Action -->
-        <record id="action_sale_quotation" model="ir.actions.act_window">
+        <record id="action_sale_quotation" model="erp.actions.act_window">
             <field name="name">Sales Quotations</field>
             <field name="res_model">sale.quotation</field>
             <field name="view_mode">tree,form</field>
@@ -120,7 +120,7 @@
         </record>
         
         <!-- Sale Quotation Line Tree View -->
-        <record id="view_sale_quotation_line_tree" model="ir.ui.view">
+        <record id="view_sale_quotation_line_tree" model="erp.ui.view">
             <field name="name">sale.quotation.line.tree</field>
             <field name="model">sale.quotation.line</field>
             <field name="arch" type="xml">
@@ -137,7 +137,7 @@
         </record>
         
         <!-- Sale Quotation Line Form View -->
-        <record id="view_sale_quotation_line_form" model="ir.ui.view">
+        <record id="view_sale_quotation_line_form" model="erp.ui.view">
             <field name="name">sale.quotation.line.form</field>
             <field name="model">sale.quotation.line</field>
             <field name="arch" type="xml">
@@ -163,7 +163,7 @@
         </record>
         
         <!-- Sale Quotation Line Action -->
-        <record id="action_sale_quotation_line" model="ir.actions.act_window">
+        <record id="action_sale_quotation_line" model="erp.actions.act_window">
             <field name="name">Sales Quotation Lines</field>
             <field name="res_model">sale.quotation.line</field>
             <field name="view_mode">tree,form</field>

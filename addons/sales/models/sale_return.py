@@ -44,13 +44,13 @@ class SaleReturn(BaseModel, KidsClothingMixin, PriceMixin):
     )
     
     partner_id = Many2OneField(
-        comodel_name='res.partner',
+        comodel_name='erp.partner',
         string='Customer',
         help="Customer for this return"
     )
     
     partner_invoice_id = Many2OneField(
-        comodel_name='res.partner',
+        comodel_name='erp.partner',
         string='Invoice Address',
         help="Invoice address for this return"
     )
@@ -192,7 +192,7 @@ class SaleReturn(BaseModel, KidsClothingMixin, PriceMixin):
     
     # Company and Multi-company
     company_id = Many2OneField(
-        comodel_name='res.company',
+        comodel_name='erp.company',
         string='Company',
         required=True,
         help="Company this return belongs to"

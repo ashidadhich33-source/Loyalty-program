@@ -1,20 +1,14 @@
 # -*- coding: utf-8 -*-
 """
-Kids Clothing ERP - Sales - Sales Order
-======================================
+Kids Clothing ERP - Sales - Sale Order Model
+===========================================
 
-Standalone version of the sales order model for kids clothing retail.
+Standalone version of the sale order model for kids clothing retail.
 """
 
 from core_framework.orm import BaseModel, CharField, TextField, IntegerField, FloatField, BooleanField
 from core_framework.orm import DateField, DateTimeField, Many2OneField, One2ManyField, SelectionField
-from core_framework.orm import ImageField, BinaryField
 from addons.core_base.models.base_mixins import KidsClothingMixin, PriceMixin
-from addons.contacts.models.res_partner import ResPartner
-from addons.contacts.models.child_profile import ChildProfile
-from addons.products.models.product_product import ProductProduct
-from addons.company.models.res_company import ResCompany
-from addons.users.models.res_users import ResUsers
 from typing import Dict, Any, Optional, List
 import logging
 from datetime import datetime, date
@@ -36,41 +30,37 @@ class SaleOrder(BaseModel, KidsClothingMixin, PriceMixin):
         help="Unique reference for the sales order"
     )
     
+    # Customer Information
     partner_id = Many2OneField(
-        comodel_name='erp.partner',
+        comodel_name='res.partner',
         string='Customer',
         required=True,
         help="Customer for this sales order"
     )
     
     partner_invoice_id = Many2OneField(
-        comodel_name='erp.partner',
+        comodel_name='res.partner',
         string='Invoice Address',
-        help="Invoice address for this sales order"
+        help="Invoice address for this order"
     )
     
     partner_shipping_id = Many2OneField(
-        comodel_name='erp.partner',
-        string='Delivery Address',
-        help="Delivery address for this sales order"
+        comodel_name='res.partner',
+        string='Shipping Address',
+        help="Shipping address for this order"
     )
     
-    # Order Dates
-    date_order = DateTimeField(
+    # Order Details
+    order_date = DateField(
         string='Order Date',
         required=True,
-        help="Date when the order was created"
-    )
-    
-    validity_date = DateField(
-        string='Expiration Date',
-        help="Date until which the quotation is valid"
+        help="Date when the order was placed"
     )
     
     # Order Status
     state = SelectionField(
         selection=[
-            ('draft', 'Quotation'),
+            ('draft', 'Draft'),
             ('sent', 'Quotation Sent'),
             ('sale', 'Sales Order'),
             ('done', 'Locked'),
@@ -96,83 +86,58 @@ class SaleOrder(BaseModel, KidsClothingMixin, PriceMixin):
         help="Order lines for this sales order"
     )
     
-    # Sales Team
-    team_id = Many2OneField(
-        comodel_name='sale.team',
-        string='Sales Team',
-        help="Sales team responsible for this order"
+    # Pricing
+    amount_untaxed = FloatField(
+        string='Untaxed Amount',
+        help="Total amount without taxes"
     )
     
-    user_id = Many2OneField(
-        comodel_name='erp.users',
-        string='Salesperson',
-        help="Salesperson responsible for this order"
+    amount_tax = FloatField(
+        string='Tax Amount',
+        help="Total tax amount"
     )
     
-    # Territory
-    territory_id = Many2OneField(
-        comodel_name='sale.territory',
-        string='Territory',
-        help="Territory for this order"
+    amount_total = FloatField(
+        string='Total Amount',
+        help="Total amount including taxes"
     )
     
-    # Commission
-    commission_id = Many2OneField(
-        comodel_name='sale.commission',
-        string='Commission',
-        help="Commission for this order"
+    # Currency
+    currency_id = Many2OneField(
+        comodel_name='res.currency',
+        string='Currency',
+        help="Currency of the sales order"
     )
     
-    # Delivery Information
-    delivery_count = IntegerField(
-        string='Delivery Count',
-        default=0,
-        help="Number of deliveries for this order"
-    )
-    
-    # Return Information
-    return_count = IntegerField(
-        string='Return Count',
-        default=0,
-        help="Number of returns for this order"
-    )
-    
-    # Analytics
-    analytics_id = Many2OneField(
-        comodel_name='sale.analytics',
-        string='Analytics',
-        help="Analytics for this order"
-    )
-    
-    # Company and Multi-company
+    # Company and User
     company_id = Many2OneField(
-        comodel_name='erp.company',
+        comodel_name='res.company',
         string='Company',
         required=True,
         help="Company this order belongs to"
     )
     
-    # Notes and Comments
+    user_id = Many2OneField(
+        comodel_name='res.users',
+        string='Salesperson',
+        help="Salesperson responsible for this order"
+    )
+    
+    # Notes
     note = TextField(
         string='Notes',
         help="Internal notes for this order"
     )
     
-    client_order_ref = CharField(
-        string='Customer Reference',
-        size=64,
-        help="Customer reference for this order"
+    # Active
+    active = BooleanField(
+        string='Active',
+        default=True,
+        help="Whether this order is active"
     )
     
-    # Kids Clothing Specific Analytics
-    total_kids_items = IntegerField(
-        string='Total Kids Items',
-        default=0,
-        help="Total number of kids items in this order"
-    )
-    
-    def _compute_amount(self):
-        """Compute order amounts"""
+    def _compute_amount_all(self):
+        """Compute all amounts for the order"""
         for order in self:
             amount_untaxed = sum(line.price_subtotal for line in order.order_line_ids)
             amount_tax = sum(line.price_tax for line in order.order_line_ids)
@@ -180,65 +145,33 @@ class SaleOrder(BaseModel, KidsClothingMixin, PriceMixin):
             order.amount_tax = amount_tax
             order.amount_total = amount_untaxed + amount_tax
     
-    def _compute_delivery_count(self):
-        """Compute delivery count"""
-        for order in self:
-            # This would count deliveries in a real implementation
-            order.delivery_count = 0
-    
-    def _compute_return_count(self):
-        """Compute return count"""
-        for order in self:
-            # This would count returns in a real implementation
-            order.return_count = 0
-    
-    def _compute_kids_items(self):
-        """Compute kids items count"""
-        for order in self:
-            kids_items = 0
-            for line in order.order_line_ids:
-                if line.product_id and line.product_id.age_group != 'all':
-                    kids_items += line.product_uom_qty
-            order.total_kids_items = kids_items
-    
     def action_quotation_send(self):
         """Send quotation to customer"""
-        self.write({'state': 'sent'})
+        for order in self:
+            order.state = 'sent'
         return True
     
     def action_confirm(self):
-        """Confirm sales order"""
-        self.write({'state': 'sale'})
+        """Confirm the sales order"""
+        for order in self:
+            order.state = 'sale'
         return True
     
     def action_done(self):
         """Mark order as done"""
-        self.write({'state': 'done'})
+        for order in self:
+            order.state = 'done'
         return True
     
     def action_cancel(self):
-        """Cancel sales order"""
-        self.write({'state': 'cancel'})
-        return True
-    
-    def action_view_deliveries(self):
-        """View deliveries for this order"""
-        # This would return an action to view deliveries
-        return True
-    
-    def action_view_returns(self):
-        """View returns for this order"""
-        # This would return an action to view returns
-        return True
-    
-    def action_view_analytics(self):
-        """View analytics for this order"""
-        # This would return an action to view analytics
+        """Cancel the sales order"""
+        for order in self:
+            order.state = 'cancel'
         return True
 
 
 class SaleOrderLine(BaseModel, KidsClothingMixin, PriceMixin):
-    """Sales Order Line for Kids Clothing"""
+    """Sales Order Line for Kids Clothing Retail"""
     
     _name = 'sale.order.line'
     _description = 'Sales Order Line'
@@ -247,7 +180,7 @@ class SaleOrderLine(BaseModel, KidsClothingMixin, PriceMixin):
     # Order Reference
     order_id = Many2OneField(
         comodel_name='sale.order',
-        string='Order Reference',
+        string='Sales Order',
         required=True,
         help="Sales order this line belongs to"
     )
@@ -264,25 +197,6 @@ class SaleOrderLine(BaseModel, KidsClothingMixin, PriceMixin):
         string='Product',
         required=True,
         help="Product for this line"
-    )
-    
-    # Kids Clothing Specific Fields
-    size = CharField(
-        string='Size',
-        size=32,
-        help="Size for this product"
-    )
-    
-    color = CharField(
-        string='Color',
-        size=32,
-        help="Color for this product"
-    )
-    
-    brand = CharField(
-        string='Brand',
-        size=64,
-        help="Brand for this product"
     )
     
     # Quantity and Pricing
@@ -312,7 +226,7 @@ class SaleOrderLine(BaseModel, KidsClothingMixin, PriceMixin):
     )
     
     price_tax = FloatField(
-        string='Tax',
+        string='Tax Amount',
         help="Tax amount for this line"
     )
     
@@ -328,11 +242,32 @@ class SaleOrderLine(BaseModel, KidsClothingMixin, PriceMixin):
         help="Discount percentage for this line"
     )
     
-    # Kids Clothing Specific Analytics
-    is_kids_item = BooleanField(
-        string='Kids Item',
-        default=False,
-        help="Whether this is a kids item"
+    # Kids Clothing Specific Fields
+    size_id = Many2OneField(
+        comodel_name='product.attribute.value',
+        string='Size',
+        domain=[('attribute_id.name', '=', 'Size')],
+        help="Size of the product"
+    )
+    
+    color_id = Many2OneField(
+        comodel_name='product.attribute.value',
+        string='Color',
+        domain=[('attribute_id.name', '=', 'Color')],
+        help="Color of the product"
+    )
+    
+    # Tax
+    tax_id = Many2OneField(
+        comodel_name='account.tax',
+        string='Taxes',
+        help="Taxes applied to this line"
+    )
+    
+    # Notes
+    name = TextField(
+        string='Description',
+        help="Description of this line"
     )
     
     def _compute_amount(self):
@@ -342,11 +277,6 @@ class SaleOrderLine(BaseModel, KidsClothingMixin, PriceMixin):
             line.price_subtotal = price * line.product_uom_qty
             line.price_tax = 0.0  # Tax calculation would be implemented
             line.price_total = line.price_subtotal + line.price_tax
-    
-    def _compute_is_kids_item(self):
-        """Compute if this is a kids item"""
-        for line in self:
-            line.is_kids_item = line.product_id and line.product_id.age_group != 'all'
     
     def _onchange_product_id(self):
         """Onchange product_id"""

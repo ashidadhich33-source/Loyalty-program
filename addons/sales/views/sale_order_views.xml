@@ -11,7 +11,7 @@
                     <field name="partner_id"/>
                     <field name="order_date"/>
                     <field name="state"/>
-                    <field name="total_amount"/>
+                    <field name="amount_total"/>
                     <field name="currency_id"/>
                     <field name="user_id"/>
                     <field name="company_id"/>
@@ -26,7 +26,9 @@
             <field name="arch" type="xml">
                 <form string="Sales Order" create="true" edit="true" delete="true">
                     <header>
-                        <button name="action_confirm" string="Confirm" type="object" class="btn-primary" states="draft"/>
+                        <button name="action_quotation_send" string="Send by Email" type="object" class="btn-primary" states="draft"/>
+                        <button name="action_confirm" string="Confirm" type="object" class="btn-primary" states="sent"/>
+                        <button name="action_done" string="Lock" type="object" class="btn-primary" states="sale"/>
                         <button name="action_cancel" string="Cancel" type="object" class="btn-secondary" states="draft"/>
                         <field name="state" widget="statusbar" statusbar_visible="draft,sent,sale,done"/>
                     </header>
@@ -39,7 +41,8 @@
                         <group>
                             <group>
                                 <field name="partner_id"/>
-                                <field name="quotation_id"/>
+                                <field name="partner_invoice_id"/>
+                                <field name="partner_shipping_id"/>
                                 <field name="order_date"/>
                                 <field name="currency_id"/>
                                 <field name="company_id"/>
@@ -47,8 +50,9 @@
                             <group>
                                 <field name="user_id"/>
                                 <field name="child_profile_id"/>
-                                <field name="age_group"/>
-                                <field name="gst_treatment"/>
+                                <field name="amount_untaxed"/>
+                                <field name="amount_tax"/>
+                                <field name="amount_total"/>
                             </group>
                         </group>
                         <notebook>
@@ -66,7 +70,7 @@
                                 </field>
                             </page>
                             <page string="Notes" name="notes">
-                                <field name="notes"/>
+                                <field name="note"/>
                             </page>
                         </notebook>
                     </sheet>
@@ -114,56 +118,6 @@
                     Sales orders are the main documents for managing sales in your business.
                 </p>
             </field>
-        </record>
-        
-        <!-- Sale Order Line Tree View -->
-        <record id="view_sale_order_line_tree" model="erp.ui.view">
-            <field name="name">sale.order.line.tree</field>
-            <field name="model">sale.order.line</field>
-            <field name="arch" type="xml">
-                <tree string="Sales Order Lines" create="true" edit="true" delete="true">
-                    <field name="product_id"/>
-                    <field name="product_uom_qty"/>
-                    <field name="price_unit"/>
-                    <field name="price_subtotal"/>
-                    <field name="size_id"/>
-                    <field name="color_id"/>
-                    <field name="tax_id"/>
-                </tree>
-            </field>
-        </record>
-        
-        <!-- Sale Order Line Form View -->
-        <record id="view_sale_order_line_form" model="erp.ui.view">
-            <field name="name">sale.order.line.form</field>
-            <field name="model">sale.order.line</field>
-            <field name="arch" type="xml">
-                <form string="Sales Order Line" create="true" edit="true" delete="true">
-                    <sheet>
-                        <group>
-                            <group>
-                                <field name="order_id"/>
-                                <field name="product_id"/>
-                                <field name="product_uom_qty"/>
-                                <field name="price_unit"/>
-                                <field name="price_subtotal"/>
-                            </group>
-                            <group>
-                                <field name="size_id"/>
-                                <field name="color_id"/>
-                                <field name="tax_id"/>
-                            </group>
-                        </group>
-                    </sheet>
-                </form>
-            </field>
-        </record>
-        
-        <!-- Sale Order Line Action -->
-        <record id="action_sale_order_line" model="erp.actions.act_window">
-            <field name="name">Sales Order Lines</field>
-            <field name="res_model">sale.order.line</field>
-            <field name="view_mode">tree,form</field>
         </record>
     </data>
 </erp>

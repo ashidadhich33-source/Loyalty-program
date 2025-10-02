@@ -27,22 +27,9 @@
         
         <menuitem id="menu_sale_commission" name="Commissions" parent="menu_sales_commission" sequence="10"/>
         
-        <menuitem id="menu_sale_commission_rule" name="Commission Rules" parent="menu_sales_commission" sequence="20"/>
-        
         <!-- Sales Analytics Menu -->
         <menuitem id="menu_sales_analytics" name="Analytics" parent="menu_sales" sequence="40"/>
         
         <menuitem id="menu_sale_analytics" name="Sales Analytics" parent="menu_sales_analytics" sequence="10"/>
-        
-        <menuitem id="menu_sale_analytics_wizard" name="Analytics Wizard" parent="menu_sales_analytics" sequence="20"/>
-        
-        <!-- Sales Wizards Menu -->
-        <menuitem id="menu_sales_wizards" name="Wizards" parent="menu_sales" sequence="50"/>
-        
-        <menuitem id="menu_sale_wizard" name="Sales Wizards" parent="menu_sales_wizards" sequence="10"/>
-        
-        <menuitem id="menu_sale_commission_wizard" name="Commission Wizard" parent="menu_sales_wizards" sequence="20"/>
-        
-        <menuitem id="menu_sale_analytics_wizard" name="Analytics Wizard" parent="menu_sales_wizards" sequence="30"/>
     </data>
 </erp>

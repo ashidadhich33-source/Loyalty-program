@@ -120,20 +120,5 @@
             <field name="domain_force">[(1, '=', 1)]</field>
             <field name="groups" eval="[(4, ref('erp.group_manager'))]"/>
         </record>
-        
-        <!-- Sales Wizard Security -->
-        <record id="sale_wizard_rule_user" model="erp.rule">
-            <field name="name">Sales Wizard: User Access</field>
-            <field name="model_id" ref="model_sale_wizard"/>
-            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
-            <field name="groups" eval="[(4, ref('erp.group_user'))]"/>
-        </record>
-        
-        <record id="sale_wizard_rule_manager" model="erp.rule">
-            <field name="name">Sales Wizard: Manager Access</field>
-            <field name="model_id" ref="model_sale_wizard"/>
-            <field name="domain_force">[(1, '=', 1)]</field>
-            <field name="groups" eval="[(4, ref('erp.group_manager'))]"/>
-        </record>
     </data>
 </erp>

@@ -15,5 +15,3 @@ access_sale_commission_user,sale.commission.user,model_sale_commission,erp.group
 access_sale_commission_manager,sale.commission.manager,model_sale_commission,erp.group_manager,1,1,1,1
 access_sale_analytics_user,sale.analytics.user,model_sale_analytics,erp.group_user,1,1,1,0
 access_sale_analytics_manager,sale.analytics.manager,model_sale_analytics,erp.group_manager,1,1,1,1
-access_sale_wizard_user,sale.wizard.user,model_sale_wizard,erp.group_user,1,1,1,0
-access_sale_wizard_manager,sale.wizard.manager,model_sale_wizard,erp.group_manager,1,1,1,1

@@ -1,532 +1,523 @@
 # -*- coding: utf-8 -*-
+"""
+Kids Clothing ERP - Database - Database Security Management
+=========================================================
 
-from odoo import models, fields, api, _
-from odoo.exceptions import ValidationError
+Standalone version of the database security management model.
+"""
+
+from core_framework.orm import BaseModel, CharField, TextField, BooleanField, IntegerField, DateTimeField, Many2OneField, SelectionField, FloatField
+from core_framework.orm import Field
+from typing import Dict, Any, Optional
 import logging
-from datetime import datetime, timedelta
+from datetime import datetime
 
-_logger = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
 
-
-class DatabaseSecurity(models.Model):
+class DatabaseSecurity(BaseModel):
     """Database security model for Kids Clothing ERP"""
     
     _name = 'database.security'
     _description = 'Database Security'
-    _order = 'create_date desc'
+    _table = 'database_security'
     
     # Basic fields
-    name = fields.Char(
+    name = CharField(
         string='Security Name',
+        size=255,
         required=True,
-        help='Name of the security record'
+        help='Name of the security'
     )
     
-    description = fields.Text(
+    description = TextField(
         string='Description',
-        help='Description of the security record'
+        help='Description of the security'
     )
     
     # Database relationship
-    database_id = fields.Many2one(
-        'database.info',
-        string='Database',
+    database_id = IntegerField(
+        string='Database ID',
         required=True,
         help='Database this security belongs to'
     )
     
     # Security details
-    security_type = fields.Selection([
-        ('access_control', 'Access Control'),
-        ('authentication', 'Authentication'),
-        ('authorization', 'Authorization'),
-        ('encryption', 'Encryption'),
-        ('audit', 'Audit'),
-        ('firewall', 'Firewall'),
-        ('ssl', 'SSL/TLS'),
-        ('backup_security', 'Backup Security'),
-        ('custom', 'Custom Security'),
-    ], string='Security Type', default='access_control', help='Type of security')
+    security_type = SelectionField(
+        string='Security Type',
+        selection=[
+            ('authentication', 'Authentication'),
+            ('authorization', 'Authorization'),
+            ('encryption', 'Encryption'),
+            ('audit', 'Audit'),
+            ('firewall', 'Firewall'),
+            ('backup', 'Backup Security'),
+        ],
+        default='authentication',
+        help='Type of security'
+    )
     
     # Security status
-    status = fields.Selection([
-        ('active', 'Active'),
-        ('inactive', 'Inactive'),
-        ('warning', 'Warning'),
-        'critical', 'Critical'),
-    ], string='Status', default='active', help='Status of the security')
-    
-    # Access control
-    user_access = fields.Boolean(
-        string='User Access',
-        default=True,
-        help='Whether user access is enabled'
+    status = SelectionField(
+        string='Status',
+        selection=[
+            ('active', 'Active'),
+            ('inactive', 'Inactive'),
+            ('error', 'Error'),
+            ('warning', 'Warning'),
+        ],
+        default='active',
+        help='Status of the security'
     )
     
-    role_based_access = fields.Boolean(
-        string='Role-Based Access',
+    # Security settings
+    is_enabled = BooleanField(
+        string='Enabled',
         default=True,
-        help='Whether role-based access is enabled'
+        help='Whether security is enabled'
     )
     
-    ip_restrictions = fields.Boolean(
-        string='IP Restrictions',
+    is_required = BooleanField(
+        string='Required',
         default=False,
-        help='Whether IP restrictions are enabled'
+        help='Whether security is required'
     )
     
-    allowed_ips = fields.Text(
-        string='Allowed IPs',
-        help='List of allowed IP addresses'
+    # Security level
+    security_level = SelectionField(
+        string='Security Level',
+        selection=[
+            ('low', 'Low'),
+            ('medium', 'Medium'),
+            ('high', 'High'),
+            ('critical', 'Critical'),
+        ],
+        default='medium',
+        help='Security level'
     )
     
-    blocked_ips = fields.Text(
-        string='Blocked IPs',
-        help='List of blocked IP addresses'
+    # Security metrics
+    failed_attempts = IntegerField(
+        string='Failed Attempts',
+        default=0,
+        help='Number of failed security attempts'
     )
     
-    # Authentication
-    password_policy = fields.Boolean(
-        string='Password Policy',
-        default=True,
-        help='Whether password policy is enabled'
+    successful_attempts = IntegerField(
+        string='Successful Attempts',
+        default=0,
+        help='Number of successful security attempts'
     )
     
-    min_password_length = fields.Integer(
-        string='Min Password Length',
-        default=8,
-        help='Minimum password length'
+    blocked_attempts = IntegerField(
+        string='Blocked Attempts',
+        default=0,
+        help='Number of blocked security attempts'
     )
     
-    password_complexity = fields.Boolean(
-        string='Password Complexity',
-        default=True,
-        help='Whether password complexity is required'
+    # Security timing
+    last_attempt = DateTimeField(
+        string='Last Attempt',
+        help='Last security attempt time'
     )
     
-    account_lockout = fields.Boolean(
-        string='Account Lockout',
-        default=True,
-        help='Whether account lockout is enabled'
+    last_success = DateTimeField(
+        string='Last Success',
+        help='Last successful security time'
     )
     
-    max_login_attempts = fields.Integer(
-        string='Max Login Attempts',
-        default=5,
-        help='Maximum login attempts before lockout'
+    last_failure = DateTimeField(
+        string='Last Failure',
+        help='Last failed security time'
     )
     
-    lockout_duration = fields.Integer(
+    # Security configuration
+    max_attempts = IntegerField(
+        string='Max Attempts',
+        default=3,
+        help='Maximum number of attempts allowed'
+    )
+    
+    lockout_duration = IntegerField(
         string='Lockout Duration (minutes)',
         default=30,
-        help='Account lockout duration in minutes'
+        help='Lockout duration in minutes'
     )
     
-    # Authorization
-    permission_level = fields.Selection([
-        ('read', 'Read Only'),
-        ('write', 'Read/Write'),
-        ('admin', 'Administrative'),
-        ('custom', 'Custom'),
-    ], string='Permission Level', default='read', help='Permission level')
-    
-    custom_permissions = fields.Text(
-        string='Custom Permissions',
-        help='Custom permissions configuration'
+    password_policy = TextField(
+        string='Password Policy',
+        help='Password policy configuration'
     )
     
-    # Encryption
-    encryption_enabled = fields.Boolean(
+    # Security encryption
+    encryption_enabled = BooleanField(
         string='Encryption Enabled',
         default=False,
         help='Whether encryption is enabled'
     )
     
-    encryption_algorithm = fields.Selection([
-        ('aes256', 'AES-256'),
-        ('aes128', 'AES-128'),
-        ('des', 'DES'),
-        ('3des', '3DES'),
-        ('custom', 'Custom'),
-    ], string='Encryption Algorithm', help='Encryption algorithm')
+    encryption_algorithm = CharField(
+        string='Encryption Algorithm',
+        size=50,
+        help='Encryption algorithm used'
+    )
     
-    encryption_key = fields.Char(
+    encryption_key = CharField(
         string='Encryption Key',
+        size=255,
         help='Encryption key'
     )
     
-    # SSL/TLS
-    ssl_enabled = fields.Boolean(
-        string='SSL Enabled',
-        default=False,
-        help='Whether SSL is enabled'
-    )
-    
-    ssl_certificate = fields.Char(
-        string='SSL Certificate',
-        help='SSL certificate path'
-    )
-    
-    ssl_key = fields.Char(
-        string='SSL Key',
-        help='SSL key path'
-    )
-    
-    ssl_ca = fields.Char(
-        string='SSL CA',
-        help='SSL CA certificate path'
-    )
-    
-    # Audit
-    audit_enabled = fields.Boolean(
+    # Security audit
+    audit_enabled = BooleanField(
         string='Audit Enabled',
         default=True,
         help='Whether audit is enabled'
     )
     
-    audit_level = fields.Selection([
-        ('basic', 'Basic'),
-        ('detailed', 'Detailed'),
-        ('comprehensive', 'Comprehensive'),
-    ], string='Audit Level', default='basic', help='Audit level')
-    
-    audit_retention_days = fields.Integer(
-        string='Audit Retention Days',
-        default=90,
-        help='Audit log retention days'
-    )
-    
-    # Firewall
-    firewall_enabled = fields.Boolean(
-        string='Firewall Enabled',
-        default=False,
-        help='Whether firewall is enabled'
-    )
-    
-    firewall_rules = fields.Text(
-        string='Firewall Rules',
-        help='Firewall rules configuration'
-    )
-    
-    # Security metrics
-    failed_logins = fields.Integer(
-        string='Failed Logins',
-        default=0,
-        help='Number of failed login attempts'
-    )
-    
-    security_violations = fields.Integer(
-        string='Security Violations',
-        default=0,
-        help='Number of security violations'
-    )
-    
-    blocked_attempts = fields.Integer(
-        string='Blocked Attempts',
-        default=0,
-        help='Number of blocked access attempts'
-    )
-    
-    # Security monitoring
-    last_security_check = fields.Datetime(
-        string='Last Security Check',
-        help='Last security check time'
-    )
-    
-    next_security_check = fields.Datetime(
-        string='Next Security Check',
-        compute='_compute_next_security_check',
-        store=True,
-        help='Next security check time'
-    )
-    
-    security_score = fields.Float(
-        string='Security Score',
-        compute='_compute_security_score',
-        store=True,
-        help='Security score (0-100)'
+    audit_level = SelectionField(
+        string='Audit Level',
+        selection=[
+            ('basic', 'Basic'),
+            ('detailed', 'Detailed'),
+            ('comprehensive', 'Comprehensive'),
+        ],
+        default='basic',
+        help='Audit level'
     )
     
     # Security alerts
-    alert_enabled = fields.Boolean(
+    alert_enabled = BooleanField(
         string='Alert Enabled',
         default=True,
-        help='Whether security alerts are enabled'
+        help='Whether alerts are enabled'
     )
     
-    alert_email = fields.Char(
-        string='Alert Email',
-        help='Email address for security alerts'
+    alert_threshold = IntegerField(
+        string='Alert Threshold',
+        default=5,
+        help='Alert threshold for failed attempts'
     )
     
-    alert_sms = fields.Char(
-        string='Alert SMS',
-        help='SMS number for security alerts'
+    # Security logs
+    log_file = CharField(
+        string='Log File',
+        size=255,
+        help='Path to security log file'
+    )
+    
+    error_message = TextField(
+        string='Error Message',
+        help='Error message if security failed'
     )
     
     # Security metadata
-    metadata = fields.Text(
+    metadata = TextField(
         string='Metadata',
         help='Security metadata (JSON format)'
     )
     
-    # Security logs
-    log_file = fields.Char(
-        string='Log File',
-        help='Path to security log file'
+    # Security analytics
+    success_rate = FloatField(
+        string='Success Rate (%)',
+        default=100.0,
+        help='Security success rate percentage'
     )
     
-    error_message = fields.Text(
-        string='Error Message',
-        help='Error message if security check failed'
+    threat_level = SelectionField(
+        string='Threat Level',
+        selection=[
+            ('low', 'Low'),
+            ('medium', 'Medium'),
+            ('high', 'High'),
+            ('critical', 'Critical'),
+        ],
+        default='low',
+        help='Current threat level'
     )
     
-    @api.depends('last_security_check')
-    def _compute_next_security_check(self):
-        """Compute next security check time"""
-        for security in self:
-            if security.last_security_check:
-                last_check = fields.Datetime.from_string(security.last_security_check)
-                security.next_security_check = last_check + timedelta(hours=24)
-            else:
-                security.next_security_check = fields.Datetime.now()
-    
-    @api.depends('failed_logins', 'security_violations', 'blocked_attempts', 'encryption_enabled', 'ssl_enabled')
-    def _compute_security_score(self):
-        """Compute security score"""
-        for security in self:
-            # Calculate security score based on security metrics
-            login_score = max(0, 100 - (security.failed_logins * 5))
-            violation_score = max(0, 100 - (security.security_violations * 10))
-            blocked_score = max(0, 100 - (security.blocked_attempts * 2))
-            encryption_score = 100 if security.encryption_enabled else 0
-            ssl_score = 100 if security.ssl_enabled else 0
-            
-            security.security_score = (login_score + violation_score + blocked_score + encryption_score + ssl_score) / 5
-    
-    @api.model
-    def create(self, vals):
+    def create(self, vals: Dict[str, Any]):
         """Override create to set default values"""
-        # Set default values
-        if 'last_security_check' not in vals:
-            vals['last_security_check'] = fields.Datetime.now()
-        
-        return super(DatabaseSecurity, self).create(vals)
+        return super().create(vals)
     
-    def write(self, vals):
+    def write(self, vals: Dict[str, Any]):
         """Override write to handle security updates"""
-        result = super(DatabaseSecurity, self).write(vals)
+        result = super().write(vals)
         
-        # Update last security check if security settings changed
-        if any(field in vals for field in ['user_access', 'role_based_access', 'ip_restrictions', 'encryption_enabled', 'ssl_enabled']):
+        # Update success rate
+        if 'failed_attempts' in vals or 'successful_attempts' in vals:
             for security in self:
-                security.last_security_check = fields.Datetime.now()
+                security._calculate_success_rate()
         
         return result
     
-    def unlink(self):
-        """Override unlink to prevent deletion of active security"""
-        for security in self:
-            if security.status == 'active':
-                raise ValidationError(_('Cannot delete active security. Please deactivate first.'))
-        
-        return super(DatabaseSecurity, self).unlink()
-    
     def action_activate(self):
         """Activate security"""
+        self.is_enabled = True
         self.status = 'active'
         return True
     
     def action_deactivate(self):
         """Deactivate security"""
+        self.is_enabled = False
         self.status = 'inactive'
         return True
     
-    def action_check_security(self):
-        """Perform security check"""
+    def action_test_security(self):
+        """Test security configuration"""
         self.ensure_one()
         
-        # This would need actual implementation to perform security check
-        self.last_security_check = fields.Datetime.now()
-        
-        # Update security metrics
-        self._update_security_metrics()
-        
-        return True
+        try:
+            # In standalone version, we'll do basic security tests
+            if not self.is_enabled:
+                raise ValueError('Security is not enabled')
+            
+            # Test encryption
+            if self.encryption_enabled and not self.encryption_algorithm:
+                raise ValueError('Encryption algorithm is required when encryption is enabled')
+            
+            # Test audit
+            if self.audit_enabled and not self.audit_level:
+                raise ValueError('Audit level is required when audit is enabled')
+            
+            self.status = 'active'
+            return True
+        except Exception as e:
+            self.status = 'error'
+            self.error_message = str(e)
+            raise ValueError(f'Security test failed: {str(e)}')
     
-    def action_analyze_security(self):
-        """Analyze security"""
+    def action_authenticate(self, credentials: Dict[str, Any]):
+        """Authenticate user"""
         self.ensure_one()
         
-        # This would need actual implementation to analyze security
-        return True
+        try:
+            # In standalone version, we'll do basic authentication
+            if not credentials.get('username') or not credentials.get('password'):
+                raise ValueError('Username and password are required')
+            
+            # Simulate authentication
+            if credentials['username'] == 'admin' and credentials['password'] == 'admin':
+                self.successful_attempts += 1
+                self.last_success = datetime.now()
+                self.status = 'active'
+                return True
+            else:
+                self.failed_attempts += 1
+                self.last_failure = datetime.now()
+                
+                # Check if max attempts exceeded
+                if self.failed_attempts >= self.max_attempts:
+                    self.blocked_attempts += 1
+                    self.status = 'error'
+                    raise ValueError('Maximum attempts exceeded. Account locked.')
+                
+                raise ValueError('Invalid credentials')
+        except Exception as e:
+            self.error_message = str(e)
+            raise ValueError(f'Authentication failed: {str(e)}')
     
-    def action_generate_security_report(self):
-        """Generate security report"""
+    def action_authorize(self, user_id: int, resource: str, action: str):
+        """Authorize user action"""
         self.ensure_one()
         
-        # This would need actual implementation to generate security report
-        return True
+        try:
+            # In standalone version, we'll do basic authorization
+            if not user_id or not resource or not action:
+                raise ValueError('User ID, resource, and action are required')
+            
+            # Simulate authorization check
+            if user_id == 1:  # Admin user
+                return True
+            else:
+                raise ValueError('Access denied')
+        except Exception as e:
+            self.error_message = str(e)
+            raise ValueError(f'Authorization failed: {str(e)}')
     
-    def action_send_security_alert(self, alert_type, message):
-        """Send security alert"""
+    def action_encrypt_data(self, data: str):
+        """Encrypt data"""
         self.ensure_one()
         
-        if not self.alert_enabled:
+        if not self.encryption_enabled:
+            raise ValueError('Encryption is not enabled')
+        
+        if not self.encryption_algorithm:
+            raise ValueError('Encryption algorithm is not configured')
+        
+        # In standalone version, we'll do basic encryption simulation
+        encrypted_data = f"encrypted_{data}"
+        return encrypted_data
+    
+    def action_decrypt_data(self, encrypted_data: str):
+        """Decrypt data"""
+        self.ensure_one()
+        
+        if not self.encryption_enabled:
+            raise ValueError('Encryption is not enabled')
+        
+        if not self.encryption_algorithm:
+            raise ValueError('Encryption algorithm is not configured')
+        
+        # In standalone version, we'll do basic decryption simulation
+        if encrypted_data.startswith('encrypted_'):
+            decrypted_data = encrypted_data[10:]  # Remove 'encrypted_' prefix
+            return decrypted_data
+        else:
+            raise ValueError('Invalid encrypted data')
+    
+    def action_audit_event(self, event_type: str, event_data: Dict[str, Any]):
+        """Audit security event"""
+        self.ensure_one()
+        
+        if not self.audit_enabled:
             return True
         
-        # This would need actual implementation to send security alerts
-        if self.alert_email:
-            # Send email alert
-            pass
+        # Log audit event
+        audit_message = f"Security audit: {event_type} - {event_data}"
+        logger.info(audit_message)
         
-        if self.alert_sms:
-            # Send SMS alert
-            pass
+        # Check for security threats
+        if event_type == 'failed_login':
+            self.failed_attempts += 1
+            if self.failed_attempts >= self.alert_threshold:
+                self.threat_level = 'high'
+                if self.alert_enabled:
+                    self._send_security_alert('High number of failed login attempts')
         
         return True
     
-    def _update_security_metrics(self):
-        """Update security metrics"""
-        # This would need actual implementation to update security metrics
-        pass
+    def _send_security_alert(self, message: str):
+        """Send security alert"""
+        logger.warning(f'Security alert: {message}')
+        
+        # This would need actual implementation to send alerts
+        # For now, we'll just log the alert
+    
+    def _calculate_success_rate(self):
+        """Calculate security success rate"""
+        total_attempts = self.successful_attempts + self.failed_attempts
+        if total_attempts > 0:
+            self.success_rate = (self.successful_attempts / total_attempts) * 100
+        else:
+            self.success_rate = 100.0
     
     def get_security_info(self):
         """Get security information"""
         return {
             'name': self.name,
             'description': self.description,
-            'database_id': self.database_id.id,
+            'database_id': self.database_id,
             'security_type': self.security_type,
             'status': self.status,
-            'user_access': self.user_access,
-            'role_based_access': self.role_based_access,
-            'ip_restrictions': self.ip_restrictions,
-            'allowed_ips': self.allowed_ips,
-            'blocked_ips': self.blocked_ips,
-            'password_policy': self.password_policy,
-            'min_password_length': self.min_password_length,
-            'password_complexity': self.password_complexity,
-            'account_lockout': self.account_lockout,
-            'max_login_attempts': self.max_login_attempts,
+            'is_enabled': self.is_enabled,
+            'is_required': self.is_required,
+            'security_level': self.security_level,
+            'failed_attempts': self.failed_attempts,
+            'successful_attempts': self.successful_attempts,
+            'blocked_attempts': self.blocked_attempts,
+            'last_attempt': self.last_attempt,
+            'last_success': self.last_success,
+            'last_failure': self.last_failure,
+            'max_attempts': self.max_attempts,
             'lockout_duration': self.lockout_duration,
-            'permission_level': self.permission_level,
-            'custom_permissions': self.custom_permissions,
+            'password_policy': self.password_policy,
             'encryption_enabled': self.encryption_enabled,
             'encryption_algorithm': self.encryption_algorithm,
-            'ssl_enabled': self.ssl_enabled,
-            'ssl_certificate': self.ssl_certificate,
-            'ssl_key': self.ssl_key,
-            'ssl_ca': self.ssl_ca,
             'audit_enabled': self.audit_enabled,
             'audit_level': self.audit_level,
-            'audit_retention_days': self.audit_retention_days,
-            'firewall_enabled': self.firewall_enabled,
-            'firewall_rules': self.firewall_rules,
-            'failed_logins': self.failed_logins,
-            'security_violations': self.security_violations,
-            'blocked_attempts': self.blocked_attempts,
-            'last_security_check': self.last_security_check,
-            'next_security_check': self.next_security_check,
-            'security_score': self.security_score,
             'alert_enabled': self.alert_enabled,
-            'alert_email': self.alert_email,
-            'alert_sms': self.alert_sms,
+            'alert_threshold': self.alert_threshold,
+            'log_file': self.log_file,
             'error_message': self.error_message,
+            'success_rate': self.success_rate,
+            'threat_level': self.threat_level,
         }
     
     def get_security_analytics(self):
         """Get security analytics"""
         return {
-            'security_score': self.security_score,
-            'failed_logins': self.failed_logins,
-            'security_violations': self.security_violations,
+            'status': self.status,
+            'security_level': self.security_level,
+            'threat_level': self.threat_level,
+            'failed_attempts': self.failed_attempts,
+            'successful_attempts': self.successful_attempts,
             'blocked_attempts': self.blocked_attempts,
-            'last_security_check': self.last_security_check,
-            'next_security_check': self.next_security_check,
+            'success_rate': self.success_rate,
+            'last_attempt': self.last_attempt,
+            'last_success': self.last_success,
+            'last_failure': self.last_failure,
             'encryption_enabled': self.encryption_enabled,
-            'ssl_enabled': self.ssl_enabled,
             'audit_enabled': self.audit_enabled,
-            'firewall_enabled': self.firewall_enabled,
             'alert_enabled': self.alert_enabled,
         }
     
-    @api.model
-    def get_security_by_database(self, database_id):
+    @classmethod
+    def get_security_by_database(cls, database_id: int):
         """Get security by database"""
-        return self.search([
+        return cls.search([
             ('database_id', '=', database_id),
-            ('status', '=', 'active'),
         ])
     
-    @api.model
-    def get_security_by_type(self, security_type):
+    @classmethod
+    def get_security_by_type(cls, security_type: str):
         """Get security by type"""
-        return self.search([
+        return cls.search([
             ('security_type', '=', security_type),
+        ])
+    
+    @classmethod
+    def get_security_by_status(cls, status: str):
+        """Get security by status"""
+        return cls.search([
+            ('status', '=', status),
+        ])
+    
+    @classmethod
+    def get_active_security(cls):
+        """Get active security"""
+        return cls.search([
+            ('is_enabled', '=', True),
             ('status', '=', 'active'),
         ])
     
-    @api.model
-    def get_active_security(self):
-        """Get active security"""
-        return self.search([('status', '=', 'active')])
-    
-    @api.model
-    def get_critical_security(self):
-        """Get critical security"""
-        return self.search([('status', '=', 'critical')])
-    
-    @api.model
-    def get_security_analytics_summary(self):
+    @classmethod
+    def get_security_analytics_summary(cls):
         """Get security analytics summary"""
-        total_security = self.search_count([])
-        active_security = self.search_count([('status', '=', 'active')])
-        critical_security = self.search_count([('status', '=', 'critical')])
-        warning_security = self.search_count([('status', '=', 'warning')])
-        
+        # In standalone version, we'll return mock data
         return {
-            'total_security': total_security,
-            'active_security': active_security,
-            'critical_security': critical_security,
-            'warning_security': warning_security,
-            'inactive_security': total_security - active_security,
-            'active_percentage': (active_security / total_security * 100) if total_security > 0 else 0,
+            'total_security': 0,
+            'active_security': 0,
+            'error_security': 0,
+            'warning_security': 0,
+            'average_success_rate': 0.0,
+            'total_failed_attempts': 0,
+            'total_blocked_attempts': 0,
+            'high_threat_level': 0,
         }
     
-    @api.constrains('name')
     def _check_name(self):
         """Validate security name"""
-        for security in self:
-            if security.name:
-                # Check for duplicate names
-                existing = self.search([
-                    ('name', '=', security.name),
-                    ('id', '!=', security.id),
-                ])
-                if existing:
-                    raise ValidationError(_('Security name must be unique'))
+        if self.name:
+            # Check for duplicate names
+            existing = self.search([
+                ('name', '=', self.name),
+                ('id', '!=', self.id),
+            ])
+            if existing:
+                raise ValueError('Security name must be unique')
     
-    @api.constrains('min_password_length')
-    def _check_min_password_length(self):
-        """Validate minimum password length"""
-        for security in self:
-            if security.min_password_length < 6:
-                raise ValidationError(_('Minimum password length must be at least 6'))
+    def _check_attempts(self):
+        """Validate security attempts"""
+        if self.max_attempts <= 0:
+            raise ValueError('Max attempts must be greater than 0')
+        
+        if self.lockout_duration < 0:
+            raise ValueError('Lockout duration cannot be negative')
     
-    @api.constrains('max_login_attempts')
-    def _check_max_login_attempts(self):
-        """Validate maximum login attempts"""
-        for security in self:
-            if security.max_login_attempts <= 0:
-                raise ValidationError(_('Maximum login attempts must be greater than 0'))
-    
-    @api.constrains('lockout_duration')
-    def _check_lockout_duration(self):
-        """Validate lockout duration"""
-        for security in self:
-            if security.lockout_duration <= 0:
-                raise ValidationError(_('Lockout duration must be greater than 0'))
+    def _check_threshold(self):
+        """Validate alert threshold"""
+        if self.alert_threshold <= 0:
+            raise ValueError('Alert threshold must be greater than 0')
     
     def action_duplicate(self):
         """Duplicate security"""
@@ -535,16 +526,12 @@ class DatabaseSecurity(models.Model):
         new_security = self.copy({
             'name': f'{self.name} (Copy)',
             'status': 'inactive',
+            'failed_attempts': 0,
+            'successful_attempts': 0,
+            'blocked_attempts': 0,
         })
         
-        return {
-            'type': 'ir.actions.act_window',
-            'name': 'Duplicated Security',
-            'res_model': 'database.security',
-            'res_id': new_security.id,
-            'view_mode': 'form',
-            'target': 'current',
-        }
+        return new_security
     
     def action_export_security(self):
         """Export security configuration"""
@@ -553,28 +540,23 @@ class DatabaseSecurity(models.Model):
         return {
             'name': self.name,
             'description': self.description,
-            'database_id': self.database_id.id,
+            'database_id': self.database_id,
             'security_type': self.security_type,
-            'user_access': self.user_access,
-            'role_based_access': self.role_based_access,
-            'ip_restrictions': self.ip_restrictions,
-            'password_policy': self.password_policy,
-            'min_password_length': self.min_password_length,
-            'password_complexity': self.password_complexity,
-            'account_lockout': self.account_lockout,
-            'max_login_attempts': self.max_login_attempts,
+            'is_enabled': self.is_enabled,
+            'is_required': self.is_required,
+            'security_level': self.security_level,
+            'max_attempts': self.max_attempts,
             'lockout_duration': self.lockout_duration,
-            'permission_level': self.permission_level,
+            'password_policy': self.password_policy,
             'encryption_enabled': self.encryption_enabled,
             'encryption_algorithm': self.encryption_algorithm,
-            'ssl_enabled': self.ssl_enabled,
             'audit_enabled': self.audit_enabled,
             'audit_level': self.audit_level,
-            'firewall_enabled': self.firewall_enabled,
             'alert_enabled': self.alert_enabled,
+            'alert_threshold': self.alert_threshold,
         }
     
-    def action_import_security(self, security_data):
+    def action_import_security(self, security_data: Dict[str, Any]):
         """Import security configuration"""
         self.ensure_one()
         

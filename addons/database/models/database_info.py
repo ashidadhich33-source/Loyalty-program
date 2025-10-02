@@ -1,354 +1,276 @@
 # -*- coding: utf-8 -*-
+"""
+Kids Clothing ERP - Database - Database Information Management
+===========================================================
 
-from odoo import models, fields, api, _
-from odoo.exceptions import ValidationError, UserError
+Standalone version of the database information management model.
+"""
+
+from core_framework.orm import BaseModel, CharField, TextField, BooleanField, IntegerField, DateTimeField, Many2OneField, SelectionField, FloatField, One2ManyField
+from core_framework.orm import Field
+from typing import Dict, Any, Optional
 import logging
-import psycopg2
-import os
 from datetime import datetime, timedelta
 
-_logger = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
 
-
-class DatabaseInfo(models.Model):
+class DatabaseInfo(BaseModel):
     """Database information model for Kids Clothing ERP"""
     
     _name = 'database.info'
     _description = 'Database Information'
-    _order = 'name'
+    _table = 'database_info'
     
     # Basic fields
-    name = fields.Char(
+    name = CharField(
         string='Database Name',
+        size=100,
         required=True,
         help='Name of the database'
     )
     
-    description = fields.Text(
+    description = TextField(
         string='Description',
         help='Description of the database'
     )
     
     # Database connection
-    host = fields.Char(
+    host = CharField(
         string='Host',
+        size=100,
         required=True,
         help='Database host'
     )
     
-    port = fields.Integer(
+    port = IntegerField(
         string='Port',
         default=5432,
         help='Database port'
     )
     
-    user = fields.Char(
+    user = CharField(
         string='User',
+        size=100,
         required=True,
         help='Database user'
     )
     
-    password = fields.Char(
+    password = CharField(
         string='Password',
+        size=255,
         help='Database password'
     )
     
     # Database status
-    is_active = fields.Boolean(
+    is_active = BooleanField(
         string='Active',
         default=True,
         help='Whether the database is active'
     )
     
-    is_default = fields.Boolean(
+    is_default = BooleanField(
         string='Default Database',
         default=False,
         help='Whether this is the default database'
     )
     
-    is_primary = fields.Boolean(
+    is_primary = BooleanField(
         string='Primary Database',
         default=False,
         help='Whether this is the primary database'
     )
     
     # Database type and version
-    database_type = fields.Selection([
-        ('postgresql', 'PostgreSQL'),
-        ('mysql', 'MySQL'),
-        ('oracle', 'Oracle'),
-        ('sqlserver', 'SQL Server'),
-        ('sqlite', 'SQLite'),
-    ], string='Database Type', default='postgresql', help='Type of database')
+    database_type = SelectionField(
+        string='Database Type',
+        selection=[
+            ('postgresql', 'PostgreSQL'),
+            ('mysql', 'MySQL'),
+            ('oracle', 'Oracle'),
+            ('sqlserver', 'SQL Server'),
+            ('sqlite', 'SQLite'),
+        ],
+        default='postgresql',
+        help='Type of database'
+    )
     
-    database_version = fields.Char(
+    database_version = CharField(
         string='Database Version',
+        size=50,
         help='Version of the database'
     )
     
-    odoo_version = fields.Char(
+    odoo_version = CharField(
         string='Odoo Version',
+        size=50,
         help='Odoo version running on this database'
     )
     
     # Database size and performance
-    database_size = fields.Float(
+    database_size = FloatField(
         string='Database Size (MB)',
-        compute='_compute_database_size',
-        store=True,
+        default=0.0,
         help='Size of the database in MB'
     )
     
-    table_count = fields.Integer(
+    table_count = IntegerField(
         string='Table Count',
-        compute='_compute_table_count',
-        store=True,
+        default=0,
         help='Number of tables in the database'
     )
     
-    record_count = fields.Integer(
+    record_count = IntegerField(
         string='Record Count',
-        compute='_compute_record_count',
-        store=True,
+        default=0,
         help='Total number of records in the database'
     )
     
     # Database health
-    health_status = fields.Selection([
-        ('healthy', 'Healthy'),
-        ('warning', 'Warning'),
-        ('critical', 'Critical'),
-        ('unknown', 'Unknown'),
-    ], string='Health Status', default='unknown', help='Health status of the database')
+    health_status = SelectionField(
+        string='Health Status',
+        selection=[
+            ('healthy', 'Healthy'),
+            ('warning', 'Warning'),
+            ('critical', 'Critical'),
+            ('unknown', 'Unknown'),
+        ],
+        default='unknown',
+        help='Health status of the database'
+    )
     
-    last_backup = fields.Datetime(
+    last_backup = DateTimeField(
         string='Last Backup',
         help='Last backup timestamp'
     )
     
-    last_maintenance = fields.Datetime(
+    last_maintenance = DateTimeField(
         string='Last Maintenance',
         help='Last maintenance timestamp'
     )
     
     # Database configuration
-    max_connections = fields.Integer(
+    max_connections = IntegerField(
         string='Max Connections',
         default=100,
         help='Maximum number of connections'
     )
     
-    current_connections = fields.Integer(
+    current_connections = IntegerField(
         string='Current Connections',
-        compute='_compute_current_connections',
-        store=True,
+        default=0,
         help='Current number of connections'
     )
     
     # Database features
-    enable_backup = fields.Boolean(
+    enable_backup = BooleanField(
         string='Enable Backup',
         default=True,
         help='Enable automatic backup'
     )
     
-    enable_monitoring = fields.Boolean(
+    enable_monitoring = BooleanField(
         string='Enable Monitoring',
         default=True,
         help='Enable database monitoring'
     )
     
-    enable_replication = fields.Boolean(
+    enable_replication = BooleanField(
         string='Enable Replication',
         default=False,
         help='Enable database replication'
     )
     
     # Database security
-    ssl_enabled = fields.Boolean(
+    ssl_enabled = BooleanField(
         string='SSL Enabled',
         default=False,
         help='Whether SSL is enabled'
     )
     
-    encryption_enabled = fields.Boolean(
+    encryption_enabled = BooleanField(
         string='Encryption Enabled',
         default=False,
         help='Whether encryption is enabled'
     )
     
     # Database analytics
-    total_queries = fields.Integer(
+    total_queries = IntegerField(
         string='Total Queries',
-        compute='_compute_total_queries',
-        store=True,
+        default=0,
         help='Total number of queries executed'
     )
     
-    slow_queries = fields.Integer(
+    slow_queries = IntegerField(
         string='Slow Queries',
-        compute='_compute_slow_queries',
-        store=True,
+        default=0,
         help='Number of slow queries'
     )
     
-    average_response_time = fields.Float(
+    average_response_time = FloatField(
         string='Average Response Time (ms)',
-        compute='_compute_average_response_time',
-        store=True,
+        default=0.0,
         help='Average response time in milliseconds'
     )
     
     # Database maintenance
-    maintenance_schedule = fields.Selection([
-        ('daily', 'Daily'),
-        ('weekly', 'Weekly'),
-        ('monthly', 'Monthly'),
-        ('manual', 'Manual'),
-    ], string='Maintenance Schedule', default='weekly', help='Maintenance schedule')
+    maintenance_schedule = SelectionField(
+        string='Maintenance Schedule',
+        selection=[
+            ('daily', 'Daily'),
+            ('weekly', 'Weekly'),
+            ('monthly', 'Monthly'),
+            ('manual', 'Manual'),
+        ],
+        default='weekly',
+        help='Maintenance schedule'
+    )
     
-    next_maintenance = fields.Datetime(
+    next_maintenance = DateTimeField(
         string='Next Maintenance',
-        compute='_compute_next_maintenance',
-        store=True,
         help='Next maintenance scheduled time'
     )
     
     # Database connections
-    connection_ids = fields.One2many(
-        'database.connection',
-        'database_id',
+    connection_ids = One2ManyField(
         string='Connections',
+        comodel_name='database.connection',
+        inverse_name='database_id',
         help='Database connections'
     )
     
     # Database backups
-    backup_ids = fields.One2many(
-        'database.backup',
-        'database_id',
+    backup_ids = One2ManyField(
         string='Backups',
+        comodel_name='database.backup',
+        inverse_name='database_id',
         help='Database backups'
     )
     
     # Database migrations
-    migration_ids = fields.One2many(
-        'database.migration',
-        'database_id',
+    migration_ids = One2ManyField(
         string='Migrations',
+        comodel_name='database.migration',
+        inverse_name='database_id',
         help='Database migrations'
     )
     
     # Database monitoring
-    monitoring_ids = fields.One2many(
-        'database.monitoring',
-        'database_id',
+    monitoring_ids = One2ManyField(
         string='Monitoring',
+        comodel_name='database.monitoring',
+        inverse_name='database_id',
         help='Database monitoring records'
     )
     
     # Database analytics
-    analytics_ids = fields.One2many(
-        'database.analytics',
-        'database_id',
+    analytics_ids = One2ManyField(
         string='Analytics',
+        comodel_name='database.analytics',
+        inverse_name='database_id',
         help='Database analytics records'
     )
     
-    @api.depends('name')
-    def _compute_database_size(self):
-        """Compute database size"""
-        for database in self:
-            try:
-                # This would need actual implementation to get database size
-                database.database_size = 0.0
-            except Exception as e:
-                _logger.error(f"Error computing database size: {str(e)}")
-                database.database_size = 0.0
-    
-    @api.depends('name')
-    def _compute_table_count(self):
-        """Compute table count"""
-        for database in self:
-            try:
-                # This would need actual implementation to get table count
-                database.table_count = 0
-            except Exception as e:
-                _logger.error(f"Error computing table count: {str(e)}")
-                database.table_count = 0
-    
-    @api.depends('name')
-    def _compute_record_count(self):
-        """Compute record count"""
-        for database in self:
-            try:
-                # This would need actual implementation to get record count
-                database.record_count = 0
-            except Exception as e:
-                _logger.error(f"Error computing record count: {str(e)}")
-                database.record_count = 0
-    
-    @api.depends('name')
-    def _compute_current_connections(self):
-        """Compute current connections"""
-        for database in self:
-            try:
-                # This would need actual implementation to get current connections
-                database.current_connections = 0
-            except Exception as e:
-                _logger.error(f"Error computing current connections: {str(e)}")
-                database.current_connections = 0
-    
-    @api.depends('name')
-    def _compute_total_queries(self):
-        """Compute total queries"""
-        for database in self:
-            try:
-                # This would need actual implementation to get total queries
-                database.total_queries = 0
-            except Exception as e:
-                _logger.error(f"Error computing total queries: {str(e)}")
-                database.total_queries = 0
-    
-    @api.depends('name')
-    def _compute_slow_queries(self):
-        """Compute slow queries"""
-        for database in self:
-            try:
-                # This would need actual implementation to get slow queries
-                database.slow_queries = 0
-            except Exception as e:
-                _logger.error(f"Error computing slow queries: {str(e)}")
-                database.slow_queries = 0
-    
-    @api.depends('name')
-    def _compute_average_response_time(self):
-        """Compute average response time"""
-        for database in self:
-            try:
-                # This would need actual implementation to get average response time
-                database.average_response_time = 0.0
-            except Exception as e:
-                _logger.error(f"Error computing average response time: {str(e)}")
-                database.average_response_time = 0.0
-    
-    @api.depends('maintenance_schedule', 'last_maintenance')
-    def _compute_next_maintenance(self):
-        """Compute next maintenance time"""
-        for database in self:
-            if database.last_maintenance:
-                if database.maintenance_schedule == 'daily':
-                    database.next_maintenance = database.last_maintenance + timedelta(days=1)
-                elif database.maintenance_schedule == 'weekly':
-                    database.next_maintenance = database.last_maintenance + timedelta(weeks=1)
-                elif database.maintenance_schedule == 'monthly':
-                    database.next_maintenance = database.last_maintenance + timedelta(days=30)
-                else:
-                    database.next_maintenance = False
-            else:
-                database.next_maintenance = fields.Datetime.now()
-    
-    @api.model
-    def create(self, vals):
+    def create(self, vals: Dict[str, Any]):
         """Override create to set default values"""
         # Set default values
         if 'host' not in vals:
@@ -360,11 +282,11 @@ class DatabaseInfo(models.Model):
         if 'user' not in vals:
             vals['user'] = 'odoo'
         
-        return super(DatabaseInfo, self).create(vals)
+        return super().create(vals)
     
-    def write(self, vals):
+    def write(self, vals: Dict[str, Any]):
         """Override write to handle database updates"""
-        result = super(DatabaseInfo, self).write(vals)
+        result = super().write(vals)
         
         # Update health status if connection details changed
         if any(field in vals for field in ['host', 'port', 'user', 'password']):
@@ -377,12 +299,12 @@ class DatabaseInfo(models.Model):
         """Override unlink to prevent deletion of active databases"""
         for database in self:
             if database.is_active:
-                raise ValidationError(_('Cannot delete active database. Please deactivate first.'))
+                raise ValueError('Cannot delete active database. Please deactivate first.')
             
             if database.is_primary:
-                raise ValidationError(_('Cannot delete primary database.'))
+                raise ValueError('Cannot delete primary database.')
         
-        return super(DatabaseInfo, self).unlink()
+        return super().unlink()
     
     def action_activate(self):
         """Activate database"""
@@ -397,7 +319,9 @@ class DatabaseInfo(models.Model):
     def action_set_default(self):
         """Set as default database"""
         # Remove default from other databases
-        self.search([('is_default', '=', True)]).write({'is_default': False})
+        other_databases = self.search([('is_default', '=', True)])
+        for database in other_databases:
+            database.is_default = False
         
         # Set this database as default
         self.is_default = True
@@ -406,7 +330,9 @@ class DatabaseInfo(models.Model):
     def action_set_primary(self):
         """Set as primary database"""
         # Remove primary from other databases
-        self.search([('is_primary', '=', True)]).write({'is_primary': False})
+        other_databases = self.search([('is_primary', '=', True)])
+        for database in other_databases:
+            database.is_primary = False
         
         # Set this database as primary
         self.is_primary = True
@@ -417,50 +343,38 @@ class DatabaseInfo(models.Model):
         self.ensure_one()
         
         try:
-            # Test connection
-            conn = psycopg2.connect(
-                host=self.host,
-                port=self.port,
-                database=self.name,
-                user=self.user,
-                password=self.password
-            )
-            conn.close()
+            # In standalone version, we'll do basic validation
+            if not self.host or not self.user:
+                raise ValueError('Host and user are required')
             
             self.health_status = 'healthy'
             return True
         except Exception as e:
             self.health_status = 'critical'
-            raise ValidationError(_('Database connection failed: %s') % str(e))
+            raise ValueError(f'Database connection failed: {str(e)}')
     
     def action_backup_database(self):
         """Create database backup"""
         self.ensure_one()
         
-        backup = self.env['database.backup'].create({
+        # In standalone version, we'll create a mock backup
+        backup_data = {
             'database_id': self.id,
             'backup_type': 'manual',
-            'status': 'in_progress',
-        })
+            'status': 'completed',
+        }
         
         # This would need actual implementation to create backup
-        backup.status = 'completed'
-        backup.backup_file = f'backup_{self.name}_{datetime.now().strftime("%Y%m%d_%H%M%S")}.sql'
-        
-        self.last_backup = fields.Datetime.now()
-        return backup
+        self.last_backup = datetime.now()
+        return backup_data
     
-    def action_restore_database(self, backup_id):
+    def action_restore_database(self, backup_id: int):
         """Restore database from backup"""
         self.ensure_one()
         
-        backup = self.env['database.backup'].browse(backup_id)
-        
-        if not backup.exists():
-            raise ValidationError(_('Backup not found'))
-        
-        if backup.status != 'completed':
-            raise ValidationError(_('Backup is not completed'))
+        # In standalone version, we'll do basic validation
+        if not backup_id:
+            raise ValueError('Backup ID is required')
         
         # This would need actual implementation to restore database
         return True
@@ -469,50 +383,50 @@ class DatabaseInfo(models.Model):
         """Migrate database"""
         self.ensure_one()
         
-        migration = self.env['database.migration'].create({
+        # In standalone version, we'll create a mock migration
+        migration_data = {
             'database_id': self.id,
             'migration_type': 'upgrade',
-            'status': 'in_progress',
-        })
+            'status': 'completed',
+        }
         
         # This would need actual implementation to migrate database
-        migration.status = 'completed'
-        return migration
+        return migration_data
     
     def action_monitor_database(self):
         """Monitor database"""
         self.ensure_one()
         
-        monitoring = self.env['database.monitoring'].create({
+        # In standalone version, we'll create a mock monitoring
+        monitoring_data = {
             'database_id': self.id,
             'monitoring_type': 'health_check',
-            'status': 'in_progress',
-        })
+            'status': 'completed',
+        }
         
         # This would need actual implementation to monitor database
-        monitoring.status = 'completed'
-        return monitoring
+        return monitoring_data
     
     def action_analyze_database(self):
         """Analyze database performance"""
         self.ensure_one()
         
-        analytics = self.env['database.analytics'].create({
+        # In standalone version, we'll create a mock analytics
+        analytics_data = {
             'database_id': self.id,
             'analytics_type': 'performance',
-            'status': 'in_progress',
-        })
+            'status': 'completed',
+        }
         
         # This would need actual implementation to analyze database
-        analytics.status = 'completed'
-        return analytics
+        return analytics_data
     
     def action_maintain_database(self):
         """Maintain database"""
         self.ensure_one()
         
         # This would need actual implementation to maintain database
-        self.last_maintenance = fields.Datetime.now()
+        self.last_maintenance = datetime.now()
         return True
     
     def _update_health_status(self):
@@ -559,101 +473,89 @@ class DatabaseInfo(models.Model):
             'next_maintenance': self.next_maintenance,
         }
     
-    @api.model
-    def get_active_databases(self):
+    @classmethod
+    def get_active_databases(cls):
         """Get active databases"""
-        return self.search([('is_active', '=', True)])
+        return cls.search([('is_active', '=', True)])
     
-    @api.model
-    def get_default_database(self):
+    @classmethod
+    def get_default_database(cls):
         """Get default database"""
-        return self.search([('is_default', '=', True)], limit=1)
+        return cls.search([('is_default', '=', True)], limit=1)
     
-    @api.model
-    def get_primary_database(self):
+    @classmethod
+    def get_primary_database(cls):
         """Get primary database"""
-        return self.search([('is_primary', '=', True)], limit=1)
+        return cls.search([('is_primary', '=', True)], limit=1)
     
-    @api.model
-    def get_databases_by_type(self, database_type):
+    @classmethod
+    def get_databases_by_type(cls, database_type: str):
         """Get databases by type"""
-        return self.search([
+        return cls.search([
             ('database_type', '=', database_type),
             ('is_active', '=', True),
         ])
     
-    @api.model
-    def get_databases_by_health(self, health_status):
+    @classmethod
+    def get_databases_by_health(cls, health_status: str):
         """Get databases by health status"""
-        return self.search([
+        return cls.search([
             ('health_status', '=', health_status),
             ('is_active', '=', True),
         ])
     
-    @api.model
-    def get_database_analytics_summary(self):
+    @classmethod
+    def get_database_analytics_summary(cls):
         """Get database analytics summary"""
-        total_databases = self.search_count([])
-        active_databases = self.search_count([('is_active', '=', True)])
-        healthy_databases = self.search_count([('health_status', '=', 'healthy')])
-        critical_databases = self.search_count([('health_status', '=', 'critical')])
-        
+        # In standalone version, we'll return mock data
         return {
-            'total_databases': total_databases,
-            'active_databases': active_databases,
-            'healthy_databases': healthy_databases,
-            'critical_databases': critical_databases,
-            'inactive_databases': total_databases - active_databases,
-            'warning_databases': total_databases - healthy_databases - critical_databases,
-            'active_percentage': (active_databases / total_databases * 100) if total_databases > 0 else 0,
-            'healthy_percentage': (healthy_databases / total_databases * 100) if total_databases > 0 else 0,
+            'total_databases': 0,
+            'active_databases': 0,
+            'healthy_databases': 0,
+            'critical_databases': 0,
+            'inactive_databases': 0,
+            'warning_databases': 0,
+            'active_percentage': 0,
+            'healthy_percentage': 0,
         }
     
-    @api.constrains('name')
     def _check_name(self):
         """Validate database name"""
-        for database in self:
-            if database.name:
-                # Check for duplicate names
-                existing = self.search([
-                    ('name', '=', database.name),
-                    ('id', '!=', database.id),
-                ])
-                if existing:
-                    raise ValidationError(_('Database name must be unique'))
+        if self.name:
+            # Check for duplicate names
+            existing = self.search([
+                ('name', '=', self.name),
+                ('id', '!=', self.id),
+            ])
+            if existing:
+                raise ValueError('Database name must be unique')
     
-    @api.constrains('is_default')
     def _check_default_database(self):
         """Validate default database"""
-        for database in self:
-            if database.is_default:
-                # Check if there's already a default database
-                existing_default = self.search([
-                    ('is_default', '=', True),
-                    ('id', '!=', database.id),
-                ])
-                if existing_default:
-                    raise ValidationError(_('Only one database can be set as default'))
+        if self.is_default:
+            # Check if there's already a default database
+            existing_default = self.search([
+                ('is_default', '=', True),
+                ('id', '!=', self.id),
+            ])
+            if existing_default:
+                raise ValueError('Only one database can be set as default')
     
-    @api.constrains('is_primary')
     def _check_primary_database(self):
         """Validate primary database"""
-        for database in self:
-            if database.is_primary:
-                # Check if there's already a primary database
-                existing_primary = self.search([
-                    ('is_primary', '=', True),
-                    ('id', '!=', database.id),
-                ])
-                if existing_primary:
-                    raise ValidationError(_('Only one database can be set as primary'))
+        if self.is_primary:
+            # Check if there's already a primary database
+            existing_primary = self.search([
+                ('is_primary', '=', True),
+                ('id', '!=', self.id),
+            ])
+            if existing_primary:
+                raise ValueError('Only one database can be set as primary')
     
-    @api.constrains('max_connections', 'current_connections')
     def _check_connections(self):
         """Validate connections"""
-        for database in self:
-            if database.current_connections > database.max_connections:
-                raise ValidationError(_('Current connections exceed maximum connections'))
+        if self.current_connections > self.max_connections:
+            raise ValueError('Current connections exceed maximum connections')
     
     def action_duplicate(self):
         """Duplicate database"""
@@ -665,14 +567,7 @@ class DatabaseInfo(models.Model):
             'is_primary': False,
         })
         
-        return {
-            'type': 'ir.actions.act_window',
-            'name': 'Duplicated Database',
-            'res_model': 'database.info',
-            'res_id': new_database.id,
-            'view_mode': 'form',
-            'target': 'current',
-        }
+        return new_database
     
     def action_export_database(self):
         """Export database configuration"""
@@ -696,7 +591,7 @@ class DatabaseInfo(models.Model):
             'maintenance_schedule': self.maintenance_schedule,
         }
     
-    def action_import_database(self, database_data):
+    def action_import_database(self, database_data: Dict[str, Any]):
         """Import database configuration"""
         self.ensure_one()
         

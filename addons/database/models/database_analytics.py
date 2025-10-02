@@ -1,384 +1,281 @@
 # -*- coding: utf-8 -*-
+"""
+Kids Clothing ERP - Database - Database Analytics Management
+=========================================================
 
-from odoo import models, fields, api, _
-from odoo.exceptions import ValidationError
+Standalone version of the database analytics management model.
+"""
+
+from core_framework.orm import BaseModel, CharField, TextField, BooleanField, IntegerField, DateTimeField, Many2OneField, SelectionField, FloatField
+from core_framework.orm import Field
+from typing import Dict, Any, Optional
 import logging
-from datetime import datetime, timedelta
+from datetime import datetime
 
-_logger = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
 
-
-class DatabaseAnalytics(models.Model):
+class DatabaseAnalytics(BaseModel):
     """Database analytics model for Kids Clothing ERP"""
     
     _name = 'database.analytics'
     _description = 'Database Analytics'
-    _order = 'create_date desc'
+    _table = 'database_analytics'
     
     # Basic fields
-    name = fields.Char(
+    name = CharField(
         string='Analytics Name',
+        size=255,
         required=True,
-        help='Name of the analytics record'
+        help='Name of the analytics'
     )
     
-    description = fields.Text(
+    description = TextField(
         string='Description',
-        help='Description of the analytics record'
+        help='Description of the analytics'
     )
     
     # Database relationship
-    database_id = fields.Many2one(
-        'database.info',
-        string='Database',
+    database_id = IntegerField(
+        string='Database ID',
         required=True,
         help='Database this analytics belongs to'
     )
     
     # Analytics details
-    analytics_type = fields.Selection([
-        ('performance', 'Performance Analytics'),
-        ('usage', 'Usage Analytics'),
-        ('security', 'Security Analytics'),
-        ('storage', 'Storage Analytics'),
-        ('query', 'Query Analytics'),
-        ('connection', 'Connection Analytics'),
-        ('backup', 'Backup Analytics'),
-        ('migration', 'Migration Analytics'),
-        ('custom', 'Custom Analytics'),
-    ], string='Analytics Type', default='performance', help='Type of analytics')
+    analytics_type = SelectionField(
+        string='Analytics Type',
+        selection=[
+            ('performance', 'Performance Analytics'),
+            ('usage', 'Usage Analytics'),
+            ('security', 'Security Analytics'),
+            ('backup', 'Backup Analytics'),
+            ('migration', 'Migration Analytics'),
+            ('custom', 'Custom Analytics'),
+        ],
+        default='performance',
+        help='Type of analytics'
+    )
     
     # Analytics status
-    status = fields.Selection([
-        ('pending', 'Pending'),
-        ('in_progress', 'In Progress'),
-        ('completed', 'Completed'),
-        ('failed', 'Failed'),
-        ('cancelled', 'Cancelled'),
-    ], string='Status', default='pending', help='Status of the analytics')
-    
-    # Analytics period
-    date_from = fields.Date(
-        string='From Date',
-        help='Start date for analytics'
-    )
-    
-    date_to = fields.Date(
-        string='To Date',
-        help='End date for analytics'
-    )
-    
-    # Performance analytics
-    total_queries = fields.Integer(
-        string='Total Queries',
-        help='Total number of queries executed'
-    )
-    
-    slow_queries = fields.Integer(
-        string='Slow Queries',
-        help='Number of slow queries'
-    )
-    
-    average_response_time = fields.Float(
-        string='Average Response Time (ms)',
-        help='Average response time in milliseconds'
-    )
-    
-    peak_response_time = fields.Float(
-        string='Peak Response Time (ms)',
-        help='Peak response time in milliseconds'
-    )
-    
-    throughput = fields.Float(
-        string='Throughput (queries/sec)',
-        help='Queries per second'
-    )
-    
-    # Usage analytics
-    total_connections = fields.Integer(
-        string='Total Connections',
-        help='Total number of connections'
-    )
-    
-    peak_connections = fields.Integer(
-        string='Peak Connections',
-        help='Peak number of connections'
-    )
-    
-    average_connections = fields.Float(
-        string='Average Connections',
-        help='Average number of connections'
-    )
-    
-    connection_duration = fields.Float(
-        string='Connection Duration (minutes)',
-        help='Average connection duration in minutes'
-    )
-    
-    # Security analytics
-    failed_logins = fields.Integer(
-        string='Failed Logins',
-        help='Number of failed login attempts'
-    )
-    
-    security_violations = fields.Integer(
-        string='Security Violations',
-        help='Number of security violations'
-    )
-    
-    blocked_ips = fields.Integer(
-        string='Blocked IPs',
-        help='Number of blocked IP addresses'
-    )
-    
-    # Storage analytics
-    database_size = fields.Float(
-        string='Database Size (MB)',
-        help='Database size in MB'
-    )
-    
-    table_count = fields.Integer(
-        string='Table Count',
-        help='Number of tables'
-    )
-    
-    record_count = fields.Integer(
-        string='Record Count',
-        help='Total number of records'
-    )
-    
-    index_count = fields.Integer(
-        string='Index Count',
-        help='Number of indexes'
-    )
-    
-    # Query analytics
-    most_used_tables = fields.Text(
-        string='Most Used Tables',
-        help='Most frequently used tables'
-    )
-    
-    slowest_queries = fields.Text(
-        string='Slowest Queries',
-        help='Slowest queries identified'
-    )
-    
-    query_patterns = fields.Text(
-        string='Query Patterns',
-        help='Common query patterns identified'
-    )
-    
-    # Connection analytics
-    connection_sources = fields.Text(
-        string='Connection Sources',
-        help='Sources of database connections'
-    )
-    
-    connection_times = fields.Text(
-        string='Connection Times',
-        help='Peak connection times'
-    )
-    
-    # Backup analytics
-    backup_frequency = fields.Float(
-        string='Backup Frequency (days)',
-        help='Average backup frequency in days'
-    )
-    
-    backup_success_rate = fields.Float(
-        string='Backup Success Rate (%)',
-        help='Backup success rate percentage'
-    )
-    
-    backup_size_trend = fields.Selection([
-        ('increasing', 'Increasing'),
-        ('decreasing', 'Decreasing'),
-        ('stable', 'Stable'),
-    ], string='Backup Size Trend', help='Backup size trend')
-    
-    # Migration analytics
-    migration_frequency = fields.Float(
-        string='Migration Frequency (days)',
-        help='Average migration frequency in days'
-    )
-    
-    migration_success_rate = fields.Float(
-        string='Migration Success Rate (%)',
-        help='Migration success rate percentage'
-    )
-    
-    migration_duration = fields.Float(
-        string='Migration Duration (minutes)',
-        help='Average migration duration in minutes'
-    )
-    
-    # Analytics insights
-    insights = fields.Text(
-        string='Insights',
-        help='Analytics insights and recommendations'
-    )
-    
-    recommendations = fields.Text(
-        string='Recommendations',
-        help='Recommendations based on analytics'
-    )
-    
-    # Analytics trends
-    performance_trend = fields.Selection([
-        ('improving', 'Improving'),
-        ('degrading', 'Degrading'),
-        ('stable', 'Stable'),
-    ], string='Performance Trend', help='Performance trend')
-    
-    usage_trend = fields.Selection([
-        ('increasing', 'Increasing'),
-        ('decreasing', 'Decreasing'),
-        ('stable', 'Stable'),
-    ], string='Usage Trend', help='Usage trend')
-    
-    security_trend = fields.Selection([
-        ('improving', 'Improving'),
-        ('degrading', 'Degrading'),
-        ('stable', 'Stable'),
-    ], string='Security Trend', help='Security trend')
-    
-    # Analytics metrics
-    health_score = fields.Float(
-        string='Health Score',
-        compute='_compute_health_score',
-        store=True,
-        help='Overall health score (0-100)'
-    )
-    
-    performance_score = fields.Float(
-        string='Performance Score',
-        compute='_compute_performance_score',
-        store=True,
-        help='Performance score (0-100)'
-    )
-    
-    security_score = fields.Float(
-        string='Security Score',
-        compute='_compute_security_score',
-        store=True,
-        help='Security score (0-100)'
+    status = SelectionField(
+        string='Status',
+        selection=[
+            ('pending', 'Pending'),
+            ('in_progress', 'In Progress'),
+            ('completed', 'Completed'),
+            ('failed', 'Failed'),
+        ],
+        default='pending',
+        help='Status of the analytics'
     )
     
     # Analytics timing
-    start_time = fields.Datetime(
+    start_time = DateTimeField(
         string='Start Time',
+        default=datetime.now,
         help='Analytics start time'
     )
     
-    end_time = fields.Datetime(
+    end_time = DateTimeField(
         string='End Time',
         help='Analytics end time'
     )
     
-    duration = fields.Float(
+    duration = FloatField(
         string='Duration (minutes)',
-        compute='_compute_duration',
-        store=True,
+        default=0.0,
         help='Analytics duration in minutes'
     )
     
-    # Analytics metadata
-    metadata = fields.Text(
-        string='Metadata',
-        help='Analytics metadata (JSON format)'
+    # Analytics period
+    date_from = DateTimeField(
+        string='From Date',
+        help='Analytics period start date'
+    )
+    
+    date_to = DateTimeField(
+        string='To Date',
+        help='Analytics period end date'
+    )
+    
+    # Performance metrics
+    total_queries = IntegerField(
+        string='Total Queries',
+        default=0,
+        help='Total number of queries'
+    )
+    
+    slow_queries = IntegerField(
+        string='Slow Queries',
+        default=0,
+        help='Number of slow queries'
+    )
+    
+    average_response_time = FloatField(
+        string='Average Response Time (ms)',
+        default=0.0,
+        help='Average response time in milliseconds'
+    )
+    
+    peak_response_time = FloatField(
+        string='Peak Response Time (ms)',
+        default=0.0,
+        help='Peak response time in milliseconds'
+    )
+    
+    # Usage metrics
+    total_connections = IntegerField(
+        string='Total Connections',
+        default=0,
+        help='Total number of connections'
+    )
+    
+    active_connections = IntegerField(
+        string='Active Connections',
+        default=0,
+        help='Number of active connections'
+    )
+    
+    peak_connections = IntegerField(
+        string='Peak Connections',
+        default=0,
+        help='Peak number of connections'
+    )
+    
+    # Database size metrics
+    database_size = FloatField(
+        string='Database Size (MB)',
+        default=0.0,
+        help='Database size in MB'
+    )
+    
+    table_count = IntegerField(
+        string='Table Count',
+        default=0,
+        help='Number of tables'
+    )
+    
+    record_count = IntegerField(
+        string='Record Count',
+        default=0,
+        help='Total number of records'
+    )
+    
+    # Security metrics
+    failed_logins = IntegerField(
+        string='Failed Logins',
+        default=0,
+        help='Number of failed login attempts'
+    )
+    
+    security_violations = IntegerField(
+        string='Security Violations',
+        default=0,
+        help='Number of security violations'
+    )
+    
+    # Backup metrics
+    total_backups = IntegerField(
+        string='Total Backups',
+        default=0,
+        help='Total number of backups'
+    )
+    
+    successful_backups = IntegerField(
+        string='Successful Backups',
+        default=0,
+        help='Number of successful backups'
+    )
+    
+    failed_backups = IntegerField(
+        string='Failed Backups',
+        default=0,
+        help='Number of failed backups'
+    )
+    
+    # Migration metrics
+    total_migrations = IntegerField(
+        string='Total Migrations',
+        default=0,
+        help='Total number of migrations'
+    )
+    
+    successful_migrations = IntegerField(
+        string='Successful Migrations',
+        default=0,
+        help='Number of successful migrations'
+    )
+    
+    failed_migrations = IntegerField(
+        string='Failed Migrations',
+        default=0,
+        help='Number of failed migrations'
+    )
+    
+    # Analytics results
+    performance_score = FloatField(
+        string='Performance Score',
+        default=0.0,
+        help='Overall performance score (0-100)'
+    )
+    
+    health_score = FloatField(
+        string='Health Score',
+        default=0.0,
+        help='Overall health score (0-100)'
+    )
+    
+    security_score = FloatField(
+        string='Security Score',
+        default=0.0,
+        help='Overall security score (0-100)'
+    )
+    
+    # Analytics recommendations
+    recommendations = TextField(
+        string='Recommendations',
+        help='Analytics recommendations'
     )
     
     # Analytics logs
-    log_file = fields.Char(
+    log_file = CharField(
         string='Log File',
+        size=255,
         help='Path to analytics log file'
     )
     
-    error_message = fields.Text(
+    error_message = TextField(
         string='Error Message',
         help='Error message if analytics failed'
     )
     
-    @api.depends('start_time', 'end_time')
-    def _compute_duration(self):
-        """Compute analytics duration"""
-        for analytics in self:
-            if analytics.start_time and analytics.end_time:
-                start = fields.Datetime.from_string(analytics.start_time)
-                end = fields.Datetime.from_string(analytics.end_time)
-                duration = (end - start).total_seconds() / 60  # Convert to minutes
-                analytics.duration = duration
-            else:
-                analytics.duration = 0.0
+    # Analytics metadata
+    metadata = TextField(
+        string='Metadata',
+        help='Analytics metadata (JSON format)'
+    )
     
-    @api.depends('total_queries', 'slow_queries', 'average_response_time', 'throughput')
-    def _compute_health_score(self):
-        """Compute health score"""
-        for analytics in self:
-            # Calculate health score based on performance metrics
-            query_score = max(0, 100 - (analytics.slow_queries / max(1, analytics.total_queries) * 100))
-            response_score = max(0, 100 - (analytics.average_response_time / 10))
-            throughput_score = min(100, analytics.throughput * 10)
-            
-            analytics.health_score = (query_score + response_score + throughput_score) / 3
-    
-    @api.depends('average_response_time', 'peak_response_time', 'throughput', 'slow_queries')
-    def _compute_performance_score(self):
-        """Compute performance score"""
-        for analytics in self:
-            # Calculate performance score based on performance metrics
-            response_score = max(0, 100 - (analytics.average_response_time / 10))
-            peak_score = max(0, 100 - (analytics.peak_response_time / 10))
-            throughput_score = min(100, analytics.throughput * 10)
-            slow_query_score = max(0, 100 - (analytics.slow_queries / max(1, analytics.total_queries) * 100))
-            
-            analytics.performance_score = (response_score + peak_score + throughput_score + slow_query_score) / 4
-    
-    @api.depends('failed_logins', 'security_violations', 'blocked_ips')
-    def _compute_security_score(self):
-        """Compute security score"""
-        for analytics in self:
-            # Calculate security score based on security metrics
-            login_score = max(0, 100 - (analytics.failed_logins * 5))
-            violation_score = max(0, 100 - (analytics.security_violations * 10))
-            ip_score = max(0, 100 - (analytics.blocked_ips * 2))
-            
-            analytics.security_score = (login_score + violation_score + ip_score) / 3
-    
-    @api.model
-    def create(self, vals):
+    def create(self, vals: Dict[str, Any]):
         """Override create to set default values"""
-        # Set default values
-        if 'start_time' not in vals:
-            vals['start_time'] = fields.Datetime.now()
-        
-        return super(DatabaseAnalytics, self).create(vals)
+        return super().create(vals)
     
-    def write(self, vals):
+    def write(self, vals: Dict[str, Any]):
         """Override write to handle analytics updates"""
-        result = super(DatabaseAnalytics, self).write(vals)
+        result = super().write(vals)
         
-        # Update end time if status changed to completed or failed
+        # Update end time if analytics is completed or failed
         if 'status' in vals and vals['status'] in ['completed', 'failed']:
             for analytics in self:
-                analytics.end_time = fields.Datetime.now()
+                analytics.end_time = datetime.now()
         
         return result
-    
-    def unlink(self):
-        """Override unlink to prevent deletion of completed analytics"""
-        for analytics in self:
-            if analytics.status == 'completed':
-                raise ValidationError(_('Cannot delete completed analytics'))
-        
-        return super(DatabaseAnalytics, self).unlink()
     
     def action_start_analytics(self):
         """Start analytics process"""
         self.ensure_one()
         
         self.status = 'in_progress'
-        self.start_time = fields.Datetime.now()
+        self.start_time = datetime.now()
         
         # This would need actual implementation to start analytics
         return True
@@ -388,51 +285,101 @@ class DatabaseAnalytics(models.Model):
         self.ensure_one()
         
         self.status = 'completed'
-        self.end_time = fields.Datetime.now()
+        self.end_time = datetime.now()
+        
+        # Calculate scores
+        self._calculate_scores()
         
         return True
     
-    def action_fail_analytics(self, error_message):
+    def action_fail_analytics(self, error_message: str):
         """Fail analytics process"""
         self.ensure_one()
         
         self.status = 'failed'
-        self.end_time = fields.Datetime.now()
+        self.end_time = datetime.now()
         self.error_message = error_message
         
         return True
     
-    def action_cancel_analytics(self):
-        """Cancel analytics process"""
-        self.ensure_one()
+    def _calculate_scores(self):
+        """Calculate analytics scores"""
+        # Calculate performance score
+        if self.total_queries > 0:
+            slow_query_rate = (self.slow_queries / self.total_queries) * 100
+            self.performance_score = max(0, 100 - slow_query_rate)
+        else:
+            self.performance_score = 100.0
         
-        self.status = 'cancelled'
-        self.end_time = fields.Datetime.now()
+        # Calculate health score
+        health_factors = []
         
-        return True
+        # Response time factor
+        if self.average_response_time > 0:
+            if self.average_response_time < 100:
+                health_factors.append(100)
+            elif self.average_response_time < 500:
+                health_factors.append(80)
+            elif self.average_response_time < 1000:
+                health_factors.append(60)
+            else:
+                health_factors.append(40)
+        
+        # Connection factor
+        if self.total_connections > 0:
+            connection_utilization = (self.active_connections / self.total_connections) * 100
+            if connection_utilization < 50:
+                health_factors.append(100)
+            elif connection_utilization < 80:
+                health_factors.append(80)
+            else:
+                health_factors.append(60)
+        
+        # Calculate average health score
+        if health_factors:
+            self.health_score = sum(health_factors) / len(health_factors)
+        else:
+            self.health_score = 100.0
+        
+        # Calculate security score
+        if self.failed_logins > 0 or self.security_violations > 0:
+            self.security_score = max(0, 100 - (self.failed_logins + self.security_violations) * 10)
+        else:
+            self.security_score = 100.0
     
-    def action_generate_report(self):
-        """Generate analytics report"""
+    def action_generate_recommendations(self):
+        """Generate recommendations"""
         self.ensure_one()
         
-        if self.status != 'completed':
-            raise ValidationError(_('Only completed analytics can generate reports'))
+        recommendations = []
         
-        # This would need actual implementation to generate report
-        return True
-    
-    def action_export_analytics(self):
-        """Export analytics data"""
-        self.ensure_one()
+        # Performance recommendations
+        if self.slow_queries > 0:
+            recommendations.append(f"Optimize {self.slow_queries} slow queries to improve performance")
         
-        # This would need actual implementation to export analytics
-        return True
-    
-    def action_analyze_trends(self):
-        """Analyze trends"""
-        self.ensure_one()
+        if self.average_response_time > 500:
+            recommendations.append("Consider database optimization to reduce response time")
         
-        # This would need actual implementation to analyze trends
+        # Connection recommendations
+        if self.active_connections > self.total_connections * 0.8:
+            recommendations.append("Consider increasing connection pool size")
+        
+        # Security recommendations
+        if self.failed_logins > 10:
+            recommendations.append("Review and strengthen authentication mechanisms")
+        
+        if self.security_violations > 0:
+            recommendations.append("Investigate and address security violations")
+        
+        # Backup recommendations
+        if self.failed_backups > 0:
+            recommendations.append(f"Review and fix {self.failed_backups} failed backups")
+        
+        # Migration recommendations
+        if self.failed_migrations > 0:
+            recommendations.append(f"Review and fix {self.failed_migrations} failed migrations")
+        
+        self.recommendations = '\n'.join(recommendations)
         return True
     
     def get_analytics_info(self):
@@ -440,140 +387,140 @@ class DatabaseAnalytics(models.Model):
         return {
             'name': self.name,
             'description': self.description,
-            'database_id': self.database_id.id,
+            'database_id': self.database_id,
             'analytics_type': self.analytics_type,
             'status': self.status,
+            'start_time': self.start_time,
+            'end_time': self.end_time,
+            'duration': self.duration,
             'date_from': self.date_from,
             'date_to': self.date_to,
             'total_queries': self.total_queries,
             'slow_queries': self.slow_queries,
             'average_response_time': self.average_response_time,
             'peak_response_time': self.peak_response_time,
-            'throughput': self.throughput,
             'total_connections': self.total_connections,
+            'active_connections': self.active_connections,
             'peak_connections': self.peak_connections,
-            'average_connections': self.average_connections,
-            'connection_duration': self.connection_duration,
-            'failed_logins': self.failed_logins,
-            'security_violations': self.security_violations,
-            'blocked_ips': self.blocked_ips,
             'database_size': self.database_size,
             'table_count': self.table_count,
             'record_count': self.record_count,
-            'index_count': self.index_count,
-            'most_used_tables': self.most_used_tables,
-            'slowest_queries': self.slowest_queries,
-            'query_patterns': self.query_patterns,
-            'connection_sources': self.connection_sources,
-            'connection_times': self.connection_times,
-            'backup_frequency': self.backup_frequency,
-            'backup_success_rate': self.backup_success_rate,
-            'backup_size_trend': self.backup_size_trend,
-            'migration_frequency': self.migration_frequency,
-            'migration_success_rate': self.migration_success_rate,
-            'migration_duration': self.migration_duration,
-            'insights': self.insights,
-            'recommendations': self.recommendations,
-            'performance_trend': self.performance_trend,
-            'usage_trend': self.usage_trend,
-            'security_trend': self.security_trend,
-            'health_score': self.health_score,
+            'failed_logins': self.failed_logins,
+            'security_violations': self.security_violations,
+            'total_backups': self.total_backups,
+            'successful_backups': self.successful_backups,
+            'failed_backups': self.failed_backups,
+            'total_migrations': self.total_migrations,
+            'successful_migrations': self.successful_migrations,
+            'failed_migrations': self.failed_migrations,
             'performance_score': self.performance_score,
+            'health_score': self.health_score,
             'security_score': self.security_score,
-            'start_time': self.start_time,
-            'end_time': self.end_time,
-            'duration': self.duration,
+            'recommendations': self.recommendations,
+            'log_file': self.log_file,
             'error_message': self.error_message,
         }
     
     def get_analytics_summary(self):
         """Get analytics summary"""
         return {
-            'health_score': self.health_score,
             'performance_score': self.performance_score,
+            'health_score': self.health_score,
             'security_score': self.security_score,
             'total_queries': self.total_queries,
             'slow_queries': self.slow_queries,
             'average_response_time': self.average_response_time,
-            'throughput': self.throughput,
             'total_connections': self.total_connections,
-            'peak_connections': self.peak_connections,
+            'active_connections': self.active_connections,
             'database_size': self.database_size,
             'table_count': self.table_count,
             'record_count': self.record_count,
             'failed_logins': self.failed_logins,
             'security_violations': self.security_violations,
-            'backup_success_rate': self.backup_success_rate,
-            'migration_success_rate': self.migration_success_rate,
-            'performance_trend': self.performance_trend,
-            'usage_trend': self.usage_trend,
-            'security_trend': self.security_trend,
-            'insights': self.insights,
-            'recommendations': self.recommendations,
+            'total_backups': self.total_backups,
+            'successful_backups': self.successful_backups,
+            'failed_backups': self.failed_backups,
+            'total_migrations': self.total_migrations,
+            'successful_migrations': self.successful_migrations,
+            'failed_migrations': self.failed_migrations,
         }
     
-    @api.model
-    def get_analytics_by_database(self, database_id):
+    @classmethod
+    def get_analytics_by_database(cls, database_id: int):
         """Get analytics by database"""
-        return self.search([
+        return cls.search([
             ('database_id', '=', database_id),
-            ('status', '=', 'completed'),
         ])
     
-    @api.model
-    def get_analytics_by_type(self, analytics_type):
+    @classmethod
+    def get_analytics_by_type(cls, analytics_type: str):
         """Get analytics by type"""
-        return self.search([
+        return cls.search([
             ('analytics_type', '=', analytics_type),
+        ])
+    
+    @classmethod
+    def get_analytics_by_status(cls, status: str):
+        """Get analytics by status"""
+        return cls.search([
+            ('status', '=', status),
+        ])
+    
+    @classmethod
+    def get_completed_analytics(cls):
+        """Get completed analytics"""
+        return cls.search([
             ('status', '=', 'completed'),
         ])
     
-    @api.model
-    def get_analytics_by_period(self, date_from, date_to):
-        """Get analytics by period"""
-        return self.search([
-            ('date_from', '>=', date_from),
-            ('date_to', '<=', date_to),
-            ('status', '=', 'completed'),
+    @classmethod
+    def get_failed_analytics(cls):
+        """Get failed analytics"""
+        return cls.search([
+            ('status', '=', 'failed'),
         ])
     
-    @api.model
-    def get_analytics_analytics_summary(self):
-        """Get analytics analytics summary"""
-        total_analytics = self.search_count([])
-        completed_analytics = self.search_count([('status', '=', 'completed')])
-        failed_analytics = self.search_count([('status', '=', 'failed')])
-        pending_analytics = self.search_count([('status', '=', 'pending')])
-        
+    @classmethod
+    def get_analytics_analytics(cls):
+        """Get analytics analytics"""
+        # In standalone version, we'll return mock data
         return {
-            'total_analytics': total_analytics,
-            'completed_analytics': completed_analytics,
-            'failed_analytics': failed_analytics,
-            'pending_analytics': pending_analytics,
-            'in_progress_analytics': total_analytics - completed_analytics - failed_analytics - pending_analytics,
-            'success_rate': (completed_analytics / total_analytics * 100) if total_analytics > 0 else 0,
+            'total_analytics': 0,
+            'completed_analytics': 0,
+            'failed_analytics': 0,
+            'pending_analytics': 0,
+            'average_performance_score': 0.0,
+            'average_health_score': 0.0,
+            'average_security_score': 0.0,
         }
     
-    @api.constrains('name')
     def _check_name(self):
         """Validate analytics name"""
-        for analytics in self:
-            if analytics.name:
-                # Check for duplicate names
-                existing = self.search([
-                    ('name', '=', analytics.name),
-                    ('id', '!=', analytics.id),
-                ])
-                if existing:
-                    raise ValidationError(_('Analytics name must be unique'))
+        if self.name:
+            # Check for duplicate names
+            existing = self.search([
+                ('name', '=', self.name),
+                ('id', '!=', self.id),
+            ])
+            if existing:
+                raise ValueError('Analytics name must be unique')
     
-    @api.constrains('date_from', 'date_to')
     def _check_dates(self):
         """Validate analytics dates"""
-        for analytics in self:
-            if analytics.date_from and analytics.date_to:
-                if analytics.date_from > analytics.date_to:
-                    raise ValidationError(_('From date must be before to date'))
+        if self.date_from and self.date_to:
+            if self.date_from >= self.date_to:
+                raise ValueError('From date must be before to date')
+    
+    def _check_scores(self):
+        """Validate scores"""
+        if self.performance_score < 0 or self.performance_score > 100:
+            raise ValueError('Performance score must be between 0 and 100')
+        
+        if self.health_score < 0 or self.health_score > 100:
+            raise ValueError('Health score must be between 0 and 100')
+        
+        if self.security_score < 0 or self.security_score > 100:
+            raise ValueError('Security score must be between 0 and 100')
     
     def action_duplicate(self):
         """Duplicate analytics"""
@@ -582,33 +529,26 @@ class DatabaseAnalytics(models.Model):
         new_analytics = self.copy({
             'name': f'{self.name} (Copy)',
             'status': 'pending',
-            'start_time': False,
-            'end_time': False,
+            'start_time': None,
+            'end_time': None,
         })
         
-        return {
-            'type': 'ir.actions.act_window',
-            'name': 'Duplicated Analytics',
-            'res_model': 'database.analytics',
-            'res_id': new_analytics.id,
-            'view_mode': 'form',
-            'target': 'current',
-        }
+        return new_analytics
     
-    def action_export_analytics_config(self):
+    def action_export_analytics(self):
         """Export analytics configuration"""
         self.ensure_one()
         
         return {
             'name': self.name,
             'description': self.description,
-            'database_id': self.database_id.id,
+            'database_id': self.database_id,
             'analytics_type': self.analytics_type,
             'date_from': self.date_from,
             'date_to': self.date_to,
         }
     
-    def action_import_analytics_config(self, analytics_data):
+    def action_import_analytics(self, analytics_data: Dict[str, Any]):
         """Import analytics configuration"""
         self.ensure_one()
         

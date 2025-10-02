@@ -1,336 +1,241 @@
 # -*- coding: utf-8 -*-
+"""
+Kids Clothing ERP - Database - Database Migration Management
+=========================================================
 
-from odoo import models, fields, api, _
-from odoo.exceptions import ValidationError
+Standalone version of the database migration management model.
+"""
+
+from core_framework.orm import BaseModel, CharField, TextField, BooleanField, IntegerField, DateTimeField, Many2OneField, SelectionField, FloatField
+from core_framework.orm import Field
+from typing import Dict, Any, Optional
 import logging
-from datetime import datetime, timedelta
+from datetime import datetime
 
-_logger = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
 
-
-class DatabaseMigration(models.Model):
+class DatabaseMigration(BaseModel):
     """Database migration model for Kids Clothing ERP"""
     
     _name = 'database.migration'
     _description = 'Database Migration'
-    _order = 'create_date desc'
+    _table = 'database_migration'
     
     # Basic fields
-    name = fields.Char(
+    name = CharField(
         string='Migration Name',
+        size=255,
         required=True,
         help='Name of the migration'
     )
     
-    description = fields.Text(
+    description = TextField(
         string='Description',
         help='Description of the migration'
     )
     
     # Database relationship
-    database_id = fields.Many2one(
-        'database.info',
-        string='Database',
+    database_id = IntegerField(
+        string='Database ID',
         required=True,
         help='Database this migration belongs to'
     )
     
     # Migration details
-    migration_type = fields.Selection([
-        ('upgrade', 'Upgrade'),
-        ('downgrade', 'Downgrade'),
-        ('schema_change', 'Schema Change'),
-        ('data_migration', 'Data Migration'),
-        ('index_optimization', 'Index Optimization'),
-        ('cleanup', 'Cleanup'),
-        ('custom', 'Custom'),
-    ], string='Migration Type', default='upgrade', help='Type of migration')
+    migration_type = SelectionField(
+        string='Migration Type',
+        selection=[
+            ('upgrade', 'Upgrade'),
+            ('downgrade', 'Downgrade'),
+            ('schema', 'Schema Migration'),
+            ('data', 'Data Migration'),
+            ('index', 'Index Migration'),
+            ('constraint', 'Constraint Migration'),
+        ],
+        default='upgrade',
+        help='Type of migration'
+    )
     
     # Migration status
-    status = fields.Selection([
-        ('pending', 'Pending'),
-        ('in_progress', 'In Progress'),
-        ('completed', 'Completed'),
-        ('failed', 'Failed'),
-        ('rolled_back', 'Rolled Back'),
-        ('cancelled', 'Cancelled'),
-    ], string='Status', default='pending', help='Status of the migration')
+    status = SelectionField(
+        string='Status',
+        selection=[
+            ('pending', 'Pending'),
+            ('in_progress', 'In Progress'),
+            ('completed', 'Completed'),
+            ('failed', 'Failed'),
+            ('rolled_back', 'Rolled Back'),
+        ],
+        default='pending',
+        help='Status of the migration'
+    )
     
     # Migration versioning
-    from_version = fields.Char(
+    from_version = CharField(
         string='From Version',
-        help='Source version for migration'
+        size=50,
+        help='Source version'
     )
     
-    to_version = fields.Char(
+    to_version = CharField(
         string='To Version',
-        help='Target version for migration'
-    )
-    
-    migration_script = fields.Text(
-        string='Migration Script',
-        help='Migration script content'
-    )
-    
-    rollback_script = fields.Text(
-        string='Rollback Script',
-        help='Rollback script content'
+        size=50,
+        help='Target version'
     )
     
     # Migration timing
-    start_time = fields.Datetime(
+    start_time = DateTimeField(
         string='Start Time',
         help='Migration start time'
     )
     
-    end_time = fields.Datetime(
+    end_time = DateTimeField(
         string='End Time',
         help='Migration end time'
     )
     
-    duration = fields.Float(
+    duration = FloatField(
         string='Duration (minutes)',
-        compute='_compute_duration',
-        store=True,
+        default=0.0,
         help='Migration duration in minutes'
     )
     
     # Migration settings
-    backup_before_migration = fields.Boolean(
-        string='Backup Before Migration',
+    backup_before = BooleanField(
+        string='Backup Before',
         default=True,
         help='Whether to backup before migration'
     )
     
-    backup_id = fields.Many2one(
-        'database.backup',
-        string='Backup',
-        help='Backup created before migration'
-    )
-    
-    rollback_enabled = fields.Boolean(
+    rollback_enabled = BooleanField(
         string='Rollback Enabled',
         default=True,
         help='Whether rollback is enabled'
     )
     
+    dry_run = BooleanField(
+        string='Dry Run',
+        default=False,
+        help='Whether this is a dry run'
+    )
+    
+    # Migration steps
+    total_steps = IntegerField(
+        string='Total Steps',
+        default=0,
+        help='Total number of migration steps'
+    )
+    
+    completed_steps = IntegerField(
+        string='Completed Steps',
+        default=0,
+        help='Number of completed steps'
+    )
+    
+    current_step = IntegerField(
+        string='Current Step',
+        default=0,
+        help='Current step number'
+    )
+    
+    # Migration progress
+    progress_percentage = FloatField(
+        string='Progress (%)',
+        default=0.0,
+        help='Migration progress percentage'
+    )
+    
+    # Migration results
+    tables_affected = IntegerField(
+        string='Tables Affected',
+        default=0,
+        help='Number of tables affected'
+    )
+    
+    records_affected = IntegerField(
+        string='Records Affected',
+        default=0,
+        help='Number of records affected'
+    )
+    
+    # Migration logs
+    log_file = CharField(
+        string='Log File',
+        size=255,
+        help='Path to migration log file'
+    )
+    
+    error_message = TextField(
+        string='Error Message',
+        help='Error message if migration failed'
+    )
+    
+    # Migration metadata
+    metadata = TextField(
+        string='Metadata',
+        help='Migration metadata (JSON format)'
+    )
+    
+    # Migration dependencies
+    depends_on = TextField(
+        string='Depends On',
+        help='Migration dependencies (JSON format)'
+    )
+    
     # Migration validation
-    validation_enabled = fields.Boolean(
+    validation_enabled = BooleanField(
         string='Validation Enabled',
         default=True,
         help='Whether validation is enabled'
     )
     
-    validation_status = fields.Selection([
-        ('not_validated', 'Not Validated'),
-        ('validated', 'Validated'),
-        ('validation_failed', 'Validation Failed'),
-    ], string='Validation Status', default='not_validated', help='Migration validation status')
+    validation_status = SelectionField(
+        string='Validation Status',
+        selection=[
+            ('not_validated', 'Not Validated'),
+            ('validated', 'Validated'),
+            ('validation_failed', 'Validation Failed'),
+        ],
+        default='not_validated',
+        help='Migration validation status'
+    )
     
-    validation_time = fields.Datetime(
+    validation_time = DateTimeField(
         string='Validation Time',
         help='Migration validation time'
     )
     
-    # Migration impact
-    affected_tables = fields.Text(
-        string='Affected Tables',
-        help='Tables affected by migration'
-    )
-    
-    affected_records = fields.Integer(
-        string='Affected Records',
-        help='Number of records affected by migration'
-    )
-    
-    # Migration scheduling
-    is_scheduled = fields.Boolean(
-        string='Scheduled Migration',
-        default=False,
-        help='Whether this is a scheduled migration'
-    )
-    
-    scheduled_time = fields.Datetime(
-        string='Scheduled Time',
-        help='Scheduled migration time'
-    )
-    
-    # Migration dependencies
-    depends_on = fields.Many2many(
-        'database.migration',
-        'database_migration_dependency_rel',
-        'migration_id',
-        'dependency_id',
-        string='Depends On',
-        help='Migrations this migration depends on'
-    )
-    
-    required_by = fields.Many2many(
-        'database.migration',
-        'database_migration_dependency_rel',
-        'dependency_id',
-        'migration_id',
-        string='Required By',
-        help='Migrations that depend on this migration'
-    )
-    
-    # Migration analytics
-    success_rate = fields.Float(
-        string='Success Rate (%)',
-        compute='_compute_success_rate',
-        store=True,
-        help='Migration success rate percentage'
-    )
-    
-    total_migrations = fields.Integer(
-        string='Total Migrations',
-        compute='_compute_total_migrations',
-        store=True,
-        help='Total number of migrations'
-    )
-    
-    successful_migrations = fields.Integer(
-        string='Successful Migrations',
-        compute='_compute_successful_migrations',
-        store=True,
-        help='Number of successful migrations'
-    )
-    
-    failed_migrations = fields.Integer(
-        string='Failed Migrations',
-        compute='_compute_failed_migrations',
-        store=True,
-        help='Number of failed migrations'
-    )
-    
-    # Migration metadata
-    metadata = fields.Text(
-        string='Metadata',
-        help='Migration metadata (JSON format)'
-    )
-    
-    # Migration logs
-    log_file = fields.Char(
-        string='Log File',
-        help='Path to migration log file'
-    )
-    
-    error_message = fields.Text(
-        string='Error Message',
-        help='Error message if migration failed'
-    )
-    
-    # Migration results
-    result_summary = fields.Text(
-        string='Result Summary',
-        help='Migration result summary'
-    )
-    
-    performance_impact = fields.Selection([
-        ('low', 'Low'),
-        ('medium', 'Medium'),
-        ('high', 'High'),
-        ('critical', 'Critical'),
-    ], string='Performance Impact', help='Performance impact of migration')
-    
-    @api.depends('start_time', 'end_time')
-    def _compute_duration(self):
-        """Compute migration duration"""
-        for migration in self:
-            if migration.start_time and migration.end_time:
-                start = fields.Datetime.from_string(migration.start_time)
-                end = fields.Datetime.from_string(migration.end_time)
-                duration = (end - start).total_seconds() / 60  # Convert to minutes
-                migration.duration = duration
-            else:
-                migration.duration = 0.0
-    
-    @api.depends('database_id')
-    def _compute_success_rate(self):
-        """Compute success rate"""
-        for migration in self:
-            database_migrations = self.search([('database_id', '=', migration.database_id.id)])
-            if database_migrations:
-                successful = database_migrations.filtered(lambda m: m.status == 'completed')
-                migration.success_rate = (len(successful) / len(database_migrations)) * 100
-            else:
-                migration.success_rate = 0.0
-    
-    @api.depends('database_id')
-    def _compute_total_migrations(self):
-        """Compute total migrations"""
-        for migration in self:
-            migration.total_migrations = self.search_count([('database_id', '=', migration.database_id.id)])
-    
-    @api.depends('database_id')
-    def _compute_successful_migrations(self):
-        """Compute successful migrations"""
-        for migration in self:
-            migration.successful_migrations = self.search_count([
-                ('database_id', '=', migration.database_id.id),
-                ('status', '=', 'completed')
-            ])
-    
-    @api.depends('database_id')
-    def _compute_failed_migrations(self):
-        """Compute failed migrations"""
-        for migration in self:
-            migration.failed_migrations = self.search_count([
-                ('database_id', '=', migration.database_id.id),
-                ('status', '=', 'failed')
-            ])
-    
-    @api.model
-    def create(self, vals):
+    def create(self, vals: Dict[str, Any]):
         """Override create to set default values"""
-        # Generate migration name if not provided
-        if 'name' not in vals:
-            database = self.env['database.info'].browse(vals.get('database_id'))
-            timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-            vals['name'] = f'{database.name}_migration_{timestamp}'
+        # Set start time
+        if 'start_time' not in vals:
+            vals['start_time'] = datetime.now()
         
-        return super(DatabaseMigration, self).create(vals)
+        return super().create(vals)
     
-    def write(self, vals):
+    def write(self, vals: Dict[str, Any]):
         """Override write to handle migration updates"""
-        result = super(DatabaseMigration, self).write(vals)
+        result = super().write(vals)
         
-        # Update end time if status changed to completed, failed, or rolled back
+        # Update progress percentage
+        if 'completed_steps' in vals or 'total_steps' in vals:
+            for migration in self:
+                if migration.total_steps > 0:
+                    migration.progress_percentage = (migration.completed_steps / migration.total_steps) * 100
+        
+        # Update end time if status changed to completed or failed
         if 'status' in vals and vals['status'] in ['completed', 'failed', 'rolled_back']:
             for migration in self:
-                migration.end_time = fields.Datetime.now()
+                migration.end_time = datetime.now()
         
         return result
-    
-    def unlink(self):
-        """Override unlink to prevent deletion of completed migrations"""
-        for migration in self:
-            if migration.status == 'completed':
-                raise ValidationError(_('Cannot delete completed migration'))
-        
-        return super(DatabaseMigration, self).unlink()
     
     def action_start_migration(self):
         """Start migration process"""
         self.ensure_one()
         
-        # Check dependencies
-        for dep in self.depends_on:
-            if dep.status != 'completed':
-                raise ValidationError(_('Migration dependencies not completed'))
-        
         self.status = 'in_progress'
-        self.start_time = fields.Datetime.now()
-        
-        # Create backup if enabled
-        if self.backup_before_migration:
-            backup = self.env['database.backup'].create({
-                'database_id': self.database_id.id,
-                'backup_type': 'manual',
-                'name': f'Pre-migration backup for {self.name}',
-                'status': 'in_progress',
-            })
-            self.backup_id = backup.id
+        self.start_time = datetime.now()
         
         # This would need actual implementation to start migration
         return True
@@ -340,20 +245,17 @@ class DatabaseMigration(models.Model):
         self.ensure_one()
         
         self.status = 'completed'
-        self.end_time = fields.Datetime.now()
-        
-        # Complete backup if created
-        if self.backup_id:
-            self.backup_id.action_complete_backup()
+        self.end_time = datetime.now()
+        self.progress_percentage = 100.0
         
         return True
     
-    def action_fail_migration(self, error_message):
+    def action_fail_migration(self, error_message: str):
         """Fail migration process"""
         self.ensure_one()
         
         self.status = 'failed'
-        self.end_time = fields.Datetime.now()
+        self.end_time = datetime.now()
         self.error_message = error_message
         
         return True
@@ -363,26 +265,13 @@ class DatabaseMigration(models.Model):
         self.ensure_one()
         
         if not self.rollback_enabled:
-            raise ValidationError(_('Rollback is not enabled for this migration'))
+            raise ValueError('Rollback is not enabled for this migration')
         
         if self.status not in ['completed', 'failed']:
-            raise ValidationError(_('Only completed or failed migrations can be rolled back'))
+            raise ValueError('Only completed or failed migrations can be rolled back')
         
         self.status = 'rolled_back'
-        self.end_time = fields.Datetime.now()
-        
-        # This would need actual implementation to rollback migration
-        return True
-    
-    def action_cancel_migration(self):
-        """Cancel migration"""
-        self.ensure_one()
-        
-        if self.status not in ['pending', 'in_progress']:
-            raise ValidationError(_('Only pending or in-progress migrations can be cancelled'))
-        
-        self.status = 'cancelled'
-        self.end_time = fields.Datetime.now()
+        self.end_time = datetime.now()
         
         return True
     
@@ -396,49 +285,44 @@ class DatabaseMigration(models.Model):
         try:
             # This would need actual implementation to validate migration
             self.validation_status = 'validated'
-            self.validation_time = fields.Datetime.now()
+            self.validation_time = datetime.now()
             return True
         except Exception as e:
             self.validation_status = 'validation_failed'
             self.error_message = str(e)
             return False
     
-    def action_schedule_migration(self, scheduled_time):
-        """Schedule migration"""
+    def action_dry_run_migration(self):
+        """Perform dry run migration"""
         self.ensure_one()
         
-        self.is_scheduled = True
-        self.scheduled_time = scheduled_time
+        self.dry_run = True
+        self.status = 'in_progress'
+        
+        # This would need actual implementation to perform dry run
+        self.status = 'completed'
         return True
     
-    def action_unschedule_migration(self):
-        """Unschedule migration"""
+    def action_retry_migration(self):
+        """Retry failed migration"""
         self.ensure_one()
         
-        self.is_scheduled = False
-        self.scheduled_time = False
+        if self.status != 'failed':
+            raise ValueError('Only failed migrations can be retried')
+        
+        self.status = 'pending'
+        self.error_message = None
+        self.start_time = None
+        self.end_time = None
+        
         return True
-    
-    def action_execute_migration(self):
-        """Execute migration"""
-        self.ensure_one()
-        
-        if self.status != 'pending':
-            raise ValidationError(_('Only pending migrations can be executed'))
-        
-        # Check if scheduled time has passed
-        if self.is_scheduled and self.scheduled_time:
-            if fields.Datetime.now() < self.scheduled_time:
-                raise ValidationError(_('Scheduled time has not been reached'))
-        
-        return self.action_start_migration()
     
     def get_migration_info(self):
         """Get migration information"""
         return {
             'name': self.name,
             'description': self.description,
-            'database_id': self.database_id.id,
+            'database_id': self.database_id,
             'migration_type': self.migration_type,
             'status': self.status,
             'from_version': self.from_version,
@@ -446,120 +330,109 @@ class DatabaseMigration(models.Model):
             'start_time': self.start_time,
             'end_time': self.end_time,
             'duration': self.duration,
-            'backup_before_migration': self.backup_before_migration,
-            'backup_id': self.backup_id.id if self.backup_id else None,
+            'backup_before': self.backup_before,
             'rollback_enabled': self.rollback_enabled,
+            'dry_run': self.dry_run,
+            'total_steps': self.total_steps,
+            'completed_steps': self.completed_steps,
+            'current_step': self.current_step,
+            'progress_percentage': self.progress_percentage,
+            'tables_affected': self.tables_affected,
+            'records_affected': self.records_affected,
+            'log_file': self.log_file,
+            'error_message': self.error_message,
+            'depends_on': self.depends_on,
             'validation_enabled': self.validation_enabled,
             'validation_status': self.validation_status,
             'validation_time': self.validation_time,
-            'affected_tables': self.affected_tables,
-            'affected_records': self.affected_records,
-            'is_scheduled': self.is_scheduled,
-            'scheduled_time': self.scheduled_time,
-            'success_rate': self.success_rate,
-            'total_migrations': self.total_migrations,
-            'successful_migrations': self.successful_migrations,
-            'failed_migrations': self.failed_migrations,
-            'error_message': self.error_message,
-            'result_summary': self.result_summary,
-            'performance_impact': self.performance_impact,
         }
     
     def get_migration_analytics(self):
         """Get migration analytics"""
         return {
-            'success_rate': self.success_rate,
-            'total_migrations': self.total_migrations,
-            'successful_migrations': self.successful_migrations,
-            'failed_migrations': self.failed_migrations,
+            'status': self.status,
             'duration': self.duration,
+            'progress_percentage': self.progress_percentage,
+            'tables_affected': self.tables_affected,
+            'records_affected': self.records_affected,
             'validation_status': self.validation_status,
-            'is_scheduled': self.is_scheduled,
-            'scheduled_time': self.scheduled_time,
-            'affected_records': self.affected_records,
-            'performance_impact': self.performance_impact,
+            'start_time': self.start_time,
+            'end_time': self.end_time,
         }
     
-    @api.model
-    def get_migrations_by_database(self, database_id):
+    @classmethod
+    def get_migrations_by_database(cls, database_id: int):
         """Get migrations by database"""
-        return self.search([
+        return cls.search([
             ('database_id', '=', database_id),
-            ('status', '=', 'completed'),
         ])
     
-    @api.model
-    def get_migrations_by_type(self, migration_type):
+    @classmethod
+    def get_migrations_by_type(cls, migration_type: str):
         """Get migrations by type"""
-        return self.search([
+        return cls.search([
             ('migration_type', '=', migration_type),
-            ('status', '=', 'completed'),
         ])
     
-    @api.model
-    def get_scheduled_migrations(self):
-        """Get scheduled migrations"""
-        return self.search([
-            ('is_scheduled', '=', True),
+    @classmethod
+    def get_migrations_by_status(cls, status: str):
+        """Get migrations by status"""
+        return cls.search([
+            ('status', '=', status),
+        ])
+    
+    @classmethod
+    def get_pending_migrations(cls):
+        """Get pending migrations"""
+        return cls.search([
             ('status', '=', 'pending'),
         ])
     
-    @api.model
-    def get_pending_migrations(self):
-        """Get pending migrations"""
-        return self.search([('status', '=', 'pending')])
+    @classmethod
+    def get_failed_migrations(cls):
+        """Get failed migrations"""
+        return cls.search([
+            ('status', '=', 'failed'),
+        ])
     
-    @api.model
-    def get_migration_analytics_summary(self):
+    @classmethod
+    def get_migration_analytics_summary(cls):
         """Get migration analytics summary"""
-        total_migrations = self.search_count([])
-        completed_migrations = self.search_count([('status', '=', 'completed')])
-        failed_migrations = self.search_count([('status', '=', 'failed')])
-        scheduled_migrations = self.search_count([('is_scheduled', '=', True)])
-        pending_migrations = self.search_count([('status', '=', 'pending')])
-        
+        # In standalone version, we'll return mock data
         return {
-            'total_migrations': total_migrations,
-            'completed_migrations': completed_migrations,
-            'failed_migrations': failed_migrations,
-            'scheduled_migrations': scheduled_migrations,
-            'pending_migrations': pending_migrations,
-            'in_progress_migrations': total_migrations - completed_migrations - failed_migrations - pending_migrations,
-            'success_rate': (completed_migrations / total_migrations * 100) if total_migrations > 0 else 0,
+            'total_migrations': 0,
+            'completed_migrations': 0,
+            'failed_migrations': 0,
+            'pending_migrations': 0,
+            'rolled_back_migrations': 0,
+            'average_duration': 0.0,
+            'success_rate': 0.0,
         }
     
-    @api.constrains('name')
     def _check_name(self):
         """Validate migration name"""
-        for migration in self:
-            if migration.name:
-                # Check for duplicate names
-                existing = self.search([
-                    ('name', '=', migration.name),
-                    ('id', '!=', migration.id),
-                ])
-                if existing:
-                    raise ValidationError(_('Migration name must be unique'))
+        if self.name:
+            # Check for duplicate names
+            existing = self.search([
+                ('name', '=', self.name),
+                ('id', '!=', self.id),
+            ])
+            if existing:
+                raise ValueError('Migration name must be unique')
     
-    @api.constrains('depends_on')
-    def _check_dependencies(self):
-        """Validate migration dependencies"""
-        for migration in self:
-            if migration in migration.depends_on:
-                raise ValidationError(_('Migration cannot depend on itself'))
-            
-            # Check for circular dependencies
-            for dep in migration.depends_on:
-                if migration in dep.required_by:
-                    raise ValidationError(_('Circular dependency detected'))
-    
-    @api.constrains('from_version', 'to_version')
     def _check_versions(self):
         """Validate migration versions"""
-        for migration in self:
-            if migration.from_version and migration.to_version:
-                if migration.from_version == migration.to_version:
-                    raise ValidationError(_('From version and to version cannot be the same'))
+        if self.from_version and self.to_version:
+            if self.from_version == self.to_version:
+                raise ValueError('From version and to version cannot be the same')
+    
+    def _check_steps(self):
+        """Validate migration steps"""
+        if self.completed_steps > self.total_steps:
+            raise ValueError('Completed steps cannot exceed total steps')
+        
+        if self.current_step > self.total_steps:
+            raise ValueError('Current step cannot exceed total steps')
     
     def action_duplicate(self):
         """Duplicate migration"""
@@ -568,18 +441,14 @@ class DatabaseMigration(models.Model):
         new_migration = self.copy({
             'name': f'{self.name} (Copy)',
             'status': 'pending',
-            'start_time': False,
-            'end_time': False,
+            'start_time': None,
+            'end_time': None,
+            'completed_steps': 0,
+            'current_step': 0,
+            'progress_percentage': 0.0,
         })
         
-        return {
-            'type': 'ir.actions.act_window',
-            'name': 'Duplicated Migration',
-            'res_model': 'database.migration',
-            'res_id': new_migration.id,
-            'view_mode': 'form',
-            'target': 'current',
-        }
+        return new_migration
     
     def action_export_migration(self):
         """Export migration configuration"""
@@ -588,23 +457,19 @@ class DatabaseMigration(models.Model):
         return {
             'name': self.name,
             'description': self.description,
-            'database_id': self.database_id.id,
+            'database_id': self.database_id,
             'migration_type': self.migration_type,
             'from_version': self.from_version,
             'to_version': self.to_version,
-            'migration_script': self.migration_script,
-            'rollback_script': self.rollback_script,
-            'backup_before_migration': self.backup_before_migration,
+            'backup_before': self.backup_before,
             'rollback_enabled': self.rollback_enabled,
+            'dry_run': self.dry_run,
+            'total_steps': self.total_steps,
+            'depends_on': self.depends_on,
             'validation_enabled': self.validation_enabled,
-            'affected_tables': self.affected_tables,
-            'affected_records': self.affected_records,
-            'is_scheduled': self.is_scheduled,
-            'scheduled_time': self.scheduled_time,
-            'performance_impact': self.performance_impact,
         }
     
-    def action_import_migration(self, migration_data):
+    def action_import_migration(self, migration_data: Dict[str, Any]):
         """Import migration configuration"""
         self.ensure_one()
         

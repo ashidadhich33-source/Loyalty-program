@@ -1,0 +1,13 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_res_company_users,access_res_company_users,model_res_company,base.group_user,1,0,0,0
+access_res_company_manager,access_res_company_manager,model_res_company,base.group_system,1,1,1,1
+access_company_branch_users,access_company_branch_users,model_company_branch,base.group_user,1,0,0,0
+access_company_branch_manager,access_company_branch_manager,model_company_branch,base.group_system,1,1,1,1
+access_company_location_users,access_company_location_users,model_company_location,base.group_user,1,0,0,0
+access_company_location_manager,access_company_location_manager,model_company_location,base.group_system,1,1,1,1
+access_financial_year_users,access_financial_year_users,model_financial_year,base.group_user,1,0,0,0
+access_financial_year_manager,access_financial_year_manager,model_financial_year,base.group_system,1,1,1,1
+access_company_settings_users,access_company_settings_users,model_company_settings,base.group_user,1,0,0,0
+access_company_settings_manager,access_company_settings_manager,model_company_settings,base.group_system,1,1,1,1
+access_company_analytics_users,access_company_analytics_users,model_company_analytics,base.group_user,1,0,0,0
+access_company_analytics_manager,access_company_analytics_manager,model_company_analytics,base.group_system,1,1,1,1

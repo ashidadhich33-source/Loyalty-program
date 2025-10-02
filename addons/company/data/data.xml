@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Default Company Settings -->
+        <record id="setting_company_name" model="company.settings">
+            <field name="name">Company Name</field>
+            <field name="key">company_name</field>
+            <field name="description">Name of the company</field>
+            <field name="value">Kids Clothing ERP</field>
+            <field name="value_type">string</field>
+            <field name="category">general</field>
+            <field name="scope">company</field>
+            <field name="is_system_setting">True</field>
+        </record>
+        
+        <record id="setting_company_type" model="company.settings">
+            <field name="name">Company Type</field>
+            <field name="key">company_type</field>
+            <field name="description">Type of the company</field>
+            <field name="value">retail</field>
+            <field name="value_type">string</field>
+            <field name="category">general</field>
+            <field name="scope">company</field>
+            <field name="is_system_setting">True</field>
+        </record>
+        
+        <record id="setting_business_nature" model="company.settings">
+            <field name="name">Business Nature</field>
+            <field name="key">business_nature</field>
+            <field name="description">Nature of the business</field>
+            <field name="value">kids_clothing</field>
+            <field name="value_type">string</field>
+            <field name="category">general</field>
+            <field name="scope">company</field>
+            <field name="is_system_setting">True</field>
+        </record>
+        
+        <record id="setting_enable_gst" model="company.settings">
+            <field name="name">Enable GST</field>
+            <field name="key">enable_gst</field>
+            <field name="description">Enable GST compliance</field>
+            <field name="value">true</field>
+            <field name="value_type">boolean</field>
+            <field name="category">financial</field>
+            <field name="scope">company</field>
+            <field name="is_system_setting">True</field>
+        </record>
+        
+        <record id="setting_enable_e_invoice" model="company.settings">
+            <field name="name">Enable E-invoice</field>
+            <field name="key">enable_e_invoice</field>
+            <field name="description">Enable E-invoice generation</field>
+            <field name="value">true</field>
+            <field name="value_type">boolean</field>
+            <field name="category">financial</field>
+            <field name="scope">company</field>
+            <field name="is_system_setting">True</field>
+        </record>
+        
+        <record id="setting_enable_e_way_bill" model="company.settings">
+            <field name="name">Enable E-way Bill</field>
+            <field name="key">enable_e_way_bill</field>
+            <field name="description">Enable E-way bill generation</field>
+            <field name="value">true</field>
+            <field name="value_type">boolean</field>
+            <field name="category">financial</field>
+            <field name="scope">company</field>
+            <field name="is_system_setting">True</field>
+        </record>
+        
+        <record id="setting_enable_multi_company" model="company.settings">
+            <field name="name">Enable Multi-Company</field>
+            <field name="key">enable_multi_company</field>
+            <field name="description">Enable multi-company operations</field>
+            <field name="value">true</field>
+            <field name="value_type">boolean</field>
+            <field name="category">general</field>
+            <field name="scope">company</field>
+            <field name="is_system_setting">True</field>
+        </record>
+        
+        <record id="setting_currency" model="company.settings">
+            <field name="name">Currency</field>
+            <field name="key">currency</field>
+            <field name="description">Company currency</field>
+            <field name="value">INR</field>
+            <field name="value_type">string</field>
+            <field name="category">financial</field>
+            <field name="scope">company</field>
+            <field name="is_system_setting">True</field>
+        </record>
+        
+        <record id="setting_financial_year_start" model="company.settings">
+            <field name="name">Financial Year Start</field>
+            <field name="key">financial_year_start</field>
+            <field name="description">Start date of financial year</field>
+            <field name="value">04-01</field>
+            <field name="value_type">string</field>
+            <field name="category">financial</field>
+            <field name="scope">company</field>
+            <field name="is_system_setting">True</field>
+        </record>
+        
+        <record id="setting_financial_year_end" model="company.settings">
+            <field name="name">Financial Year End</field>
+            <field name="key">financial_year_end</field>
+            <field name="description">End date of financial year</field>
+            <field name="value">03-31</field>
+            <field name="value_type">string</field>
+            <field name="category">financial</field>
+            <field name="scope">company</field>
+            <field name="is_system_setting">True</field>
+        </record>
+        
+        <record id="setting_enable_inventory" model="company.settings">
+            <field name="name">Enable Inventory</field>
+            <field name="key">enable_inventory</field>
+            <field name="description">Enable inventory management</field>
+            <field name="value">true</field>
+            <field name="value_type">boolean</field>
+            <field name="category">inventory</field>
+            <field name="scope">company</field>
+            <field name="is_system_setting">True</field>
+        </record>
+        
+        <record id="setting_enable_sales" model="company.settings">
+            <field name="name">Enable Sales</field>
+            <field name="key">enable_sales</field>
+            <field name="description">Enable sales management</field>
+            <field name="value">true</field>
+            <field name="value_type">boolean</field>
+            <field name="category">sales</field>
+            <field name="scope">company</field>
+            <field name="is_system_setting">True</field>
+        </record>
+        
+        <record id="setting_enable_purchase" model="company.settings">
+            <field name="name">Enable Purchase</field>
+            <field name="key">enable_purchase</field>
+            <field name="description">Enable purchase management</field>
+            <field name="value">true</field>
+            <field name="value_type">boolean</field>
+            <field name="category">purchase</field>
+            <field name="scope">company</field>
+            <field name="is_system_setting">True</field>
+        </record>
+        
+        <record id="setting_enable_pos" model="company.settings">
+            <field name="name">Enable POS</field>
+            <field name="key">enable_pos</field>
+            <field name="description">Enable point of sale</field>
+            <field name="value">true</field>
+            <field name="value_type">boolean</field>
+            <field name="category">pos</field>
+            <field name="scope">company</field>
+            <field name="is_system_setting">True</field>
+        </record>
+        
+        <record id="setting_enable_hr" model="company.settings">
+            <field name="name">Enable HR</field>
+            <field name="key">enable_hr</field>
+            <field name="description">Enable human resources</field>
+            <field name="value">true</field>
+            <field name="value_type">boolean</field>
+            <field name="category">hr</field>
+            <field name="scope">company</field>
+            <field name="is_system_setting">True</field>
+        </record>
+        
+        <record id="setting_enable_ecommerce" model="company.settings">
+            <field name="name">Enable E-commerce</field>
+            <field name="key">enable_ecommerce</field>
+            <field name="description">Enable e-commerce integration</field>
+            <field name="value">false</field>
+            <field name="value_type">boolean</field>
+            <field name="category">ecommerce</field>
+            <field name="scope">company</field>
+            <field name="is_system_setting">True</field>
+        </record>
+        
+        <record id="setting_enable_integration" model="company.settings">
+            <field name="name">Enable Integration</field>
+            <field name="key">enable_integration</field>
+            <field name="description">Enable third-party integrations</field>
+            <field name="value">false</field>
+            <field name="value_type">boolean</field>
+            <field name="category">integration</field>
+            <field name="scope">company</field>
+            <field name="is_system_setting">True</field>
+        </record>
+        
+        <record id="setting_enable_security" model="company.settings">
+            <field name="name">Enable Security</field>
+            <field name="key">enable_security</field>
+            <field name="description">Enable security features</field>
+            <field name="value">true</field>
+            <field name="value_type">boolean</field>
+            <field name="category">security</field>
+            <field name="scope">company</field>
+            <field name="is_system_setting">True</field>
+        </record>
+        
+    </data>
+</odoo>

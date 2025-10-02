@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Financial Years Tree View -->
+        <record id="view_financial_years_tree" model="ir.ui.view">
+            <field name="name">financial_years.tree</field>
+            <field name="model">financial.year</field>
+            <field name="arch" type="xml">
+                <tree string="Financial Years" decoration-muted="state=='cancelled'" decoration-success="state=='active'" decoration-info="state=='closed'">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="company_id"/>
+                    <field name="date_start"/>
+                    <field name="date_end"/>
+                    <field name="state"/>
+                    <field name="is_default"/>
+                    <field name="is_active"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Financial Years Form View -->
+        <record id="view_financial_years_form" model="ir.ui.view">
+            <field name="name">financial_years.form</field>
+            <field name="model">financial.year</field>
+            <field name="arch" type="xml">
+                <form string="Financial Year">
+                    <header>
+                        <button name="action_activate" string="Activate" type="object" class="btn-primary" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                        <button name="action_close" string="Close" type="object" class="btn-warning" attrs="{'invisible': [('state', '!=', 'active')]}"/>
+                        <button name="action_cancel" string="Cancel" type="object" class="btn-danger" attrs="{'invisible': [('state', 'in', ['active', 'closed'])]}"/>
+                        <button name="action_set_default" string="Set as Default" type="object" class="btn-secondary" attrs="{'invisible': [('is_default', '=', True)]}"/>
+                        <button name="action_duplicate" string="Duplicate" type="object" class="btn-info"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,active,closed"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Financial Year Name"/>
+                            </h1>
+                        </div>
+                        
+                        <group>
+                            <group string="Basic Information">
+                                <field name="code"/>
+                                <field name="company_id"/>
+                                <field name="date_start"/>
+                                <field name="date_end"/>
+                            </group>
+                            <group string="Status">
+                                <field name="state"/>
+                                <field name="is_default"/>
+                                <field name="is_active"/>
+                            </group>
+                        </group>
+                        
+                        <group>
+                            <group string="Financial Analytics">
+                                <field name="total_sales"/>
+                                <field name="total_purchase"/>
+                                <field name="total_profit"/>
+                                <field name="total_orders"/>
+                            </group>
+                        </group>
+                        
+                        <notebook>
+                            <page string="Periods" name="periods">
+                                <field name="period_ids" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="name"/>
+                                        <field name="code"/>
+                                        <field name="date_start"/>
+                                        <field name="date_end"/>
+                                        <field name="state"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            
+                            <page string="Documents" name="documents">
+                                <field name="document_ids" nolabel="1">
+                                    <tree>
+                                        <field name="name"/>
+                                        <field name="document_type"/>
+                                        <field name="file_name"/>
+                                        <field name="create_date"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                        
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Financial Years Search View -->
+        <record id="view_financial_years_search" model="ir.ui.view">
+            <field name="name">financial_years.search</field>
+            <field name="model">financial.year</field>
+            <field name="arch" type="xml">
+                <search string="Search Financial Years">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="company_id"/>
+                    <field name="date_start"/>
+                    <field name="date_end"/>
+                    <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
+                    <filter string="Active" name="active" domain="[('state', '=', 'active')]"/>
+                    <filter string="Closed" name="closed" domain="[('state', '=', 'closed')]"/>
+                    <filter string="Cancelled" name="cancelled" domain="[('state', '=', 'cancelled')]"/>
+                    <filter string="Default Financial Years" name="default" domain="[('is_default', '=', True)]"/>
+                    <filter string="Active Financial Years" name="active_fy" domain="[('is_active', '=', True)]"/>
+                    <filter string="Current Year" name="current_year" domain="[('date_start', '<=', context_today()), ('date_end', '>=', context_today())]"/>
+                    <filter string="Previous Year" name="previous_year" domain="[('date_end', '&lt;', context_today())]"/>
+                    <filter string="Next Year" name="next_year" domain="[('date_start', '&gt;', context_today())]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Company" name="group_company" context="{'group_by': 'company_id'}"/>
+                        <filter string="State" name="group_state" context="{'group_by': 'state'}"/>
+                        <filter string="Start Date" name="group_start_date" context="{'group_by': 'date_start:year'}"/>
+                        <filter string="End Date" name="group_end_date" context="{'group_by': 'date_end:year'}"/>
+                        <filter string="Created Date" name="group_create_date" context="{'group_by': 'create_date:day'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- Financial Years Action -->
+        <record id="action_financial_years" model="ir.actions.act_window">
+            <field name="name">Financial Years</field>
+            <field name="res_model">financial.year</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_financial_years_tree"/>
+            <field name="search_view_id" ref="view_financial_years_search"/>
+            <field name="context">{'search_default_active': 1}</field>
+        </record>
+        
+    </data>
+</odoo>

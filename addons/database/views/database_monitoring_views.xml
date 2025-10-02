@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Database Monitoring Tree View -->
+        <record id="view_database_monitoring_tree" model="ir.ui.view">
+            <field name="name">database_monitoring.tree</field>
+            <field name="model">database.monitoring</field>
+            <field name="arch" type="xml">
+                <tree string="Database Monitoring" decoration-muted="status=='inactive'" decoration-success="status=='active'" decoration-warning="status=='warning'" decoration-danger="status=='critical'">
+                    <field name="name"/>
+                    <field name="database_id"/>
+                    <field name="monitoring_type"/>
+                    <field name="status"/>
+                    <field name="cpu_usage"/>
+                    <field name="memory_usage"/>
+                    <field name="disk_usage"/>
+                    <field name="connection_count"/>
+                    <field name="response_time"/>
+                    <field name="health_score"/>
+                    <field name="performance_score"/>
+                    <field name="security_score"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Database Monitoring Form View -->
+        <record id="view_database_monitoring_form" model="ir.ui.view">
+            <field name="name">database_monitoring.form</field>
+            <field name="model">database.monitoring</field>
+            <field name="arch" type="xml">
+                <form string="Database Monitoring">
+                    <header>
+                        <button name="action_activate" string="Activate" type="object" class="btn-primary" attrs="{'invisible': [('status', '=', 'active')]}"/>
+                        <button name="action_deactivate" string="Deactivate" type="object" class="btn-warning" attrs="{'invisible': [('status', '=', 'inactive')]}"/>
+                        <button name="action_start_monitoring" string="Start Monitoring" type="object" class="btn-success"/>
+                        <button name="action_stop_monitoring" string="Stop Monitoring" type="object" class="btn-danger"/>
+                        <button name="action_check_monitoring" string="Check Monitoring" type="object" class="btn-info"/>
+                        <button name="action_analyze_monitoring" string="Analyze Monitoring" type="object" class="btn-secondary"/>
+                        <button name="action_generate_report" string="Generate Report" type="object" class="btn-warning"/>
+                        <field name="status" widget="statusbar" statusbar_visible="inactive,active,error,warning,critical"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Monitoring Name"/>
+                            </h1>
+                        </div>
+                        
+                        <group>
+                            <group string="Basic Information">
+                                <field name="description"/>
+                                <field name="database_id"/>
+                                <field name="monitoring_type"/>
+                                <field name="status"/>
+                            </group>
+                            <group string="Monitoring Settings">
+                                <field name="monitoring_interval"/>
+                                <field name="alert_threshold"/>
+                                <field name="critical_threshold"/>
+                            </group>
+                        </group>
+                        
+                        <group>
+                            <group string="System Metrics">
+                                <field name="cpu_usage"/>
+                                <field name="memory_usage"/>
+                                <field name="disk_usage"/>
+                            </group>
+                            <group string="Database Metrics">
+                                <field name="connection_count"/>
+                                <field name="query_count"/>
+                                <field name="slow_query_count"/>
+                                <field name="error_count"/>
+                            </group>
+                        </group>
+                        
+                        <group>
+                            <group string="Performance Metrics">
+                                <field name="response_time"/>
+                                <field name="throughput"/>
+                                <field name="latency"/>
+                            </group>
+                            <group string="Storage Metrics">
+                                <field name="database_size"/>
+                                <field name="table_count"/>
+                                <field name="record_count"/>
+                            </group>
+                        </group>
+                        
+                        <group>
+                            <group string="Security Metrics">
+                                <field name="failed_logins"/>
+                                <field name="security_violations"/>
+                            </group>
+                            <group string="Monitoring Scores">
+                                <field name="health_score"/>
+                                <field name="performance_score"/>
+                                <field name="security_score"/>
+                            </group>
+                        </group>
+                        
+                        <group>
+                            <group string="Monitoring Analytics">
+                                <field name="average_cpu_usage"/>
+                                <field name="average_memory_usage"/>
+                                <field name="average_response_time"/>
+                            </group>
+                            <group string="Monitoring Trends">
+                                <field name="cpu_trend"/>
+                                <field name="memory_trend"/>
+                                <field name="performance_trend"/>
+                            </group>
+                        </group>
+                        
+                        <group>
+                            <group string="Monitoring Alerts">
+                                <field name="alert_enabled"/>
+                                <field name="alert_email"/>
+                                <field name="alert_sms"/>
+                            </group>
+                            <group string="Monitoring History">
+                                <field name="last_check"/>
+                                <field name="next_check"/>
+                                <field name="check_count"/>
+                            </group>
+                        </group>
+                        
+                        <group>
+                            <group string="Monitoring Logs">
+                                <field name="log_file"/>
+                                <field name="error_message"/>
+                            </group>
+                            <group string="Monitoring Metadata">
+                                <field name="metadata"/>
+                            </group>
+                        </group>
+                        
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Database Monitoring Search View -->
+        <record id="view_database_monitoring_search" model="ir.ui.view">
+            <field name="name">database_monitoring.search</field>
+            <field name="model">database.monitoring</field>
+            <field name="arch" type="xml">
+                <search string="Search Database Monitoring">
+                    <field name="name"/>
+                    <field name="description"/>
+                    <field name="database_id"/>
+                    <field name="monitoring_type"/>
+                    <filter string="Active Monitoring" name="active" domain="[('status', '=', 'active')]"/>
+                    <filter string="Inactive Monitoring" name="inactive" domain="[('status', '=', 'inactive')]"/>
+                    <filter string="Error Monitoring" name="error" domain="[('status', '=', 'error')]"/>
+                    <filter string="Warning Monitoring" name="warning" domain="[('status', '=', 'warning')]"/>
+                    <filter string="Critical Monitoring" name="critical" domain="[('status', '=', 'critical')]"/>
+                    <filter string="Health Check" name="health_check" domain="[('monitoring_type', '=', 'health_check')]"/>
+                    <filter string="Performance Monitoring" name="performance" domain="[('monitoring_type', '=', 'performance')]"/>
+                    <filter string="Security Monitoring" name="security" domain="[('monitoring_type', '=', 'security')]"/>
+                    <filter string="Backup Monitoring" name="backup" domain="[('monitoring_type', '=', 'backup')]"/>
+                    <filter string="Connection Monitoring" name="connection" domain="[('monitoring_type', '=', 'connection')]"/>
+                    <filter string="Storage Monitoring" name="storage" domain="[('monitoring_type', '=', 'storage')]"/>
+                    <filter string="Query Monitoring" name="query" domain="[('monitoring_type', '=', 'query')]"/>
+                    <filter string="Error Monitoring" name="error_monitoring" domain="[('monitoring_type', '=', 'error')]"/>
+                    <filter string="Custom Monitoring" name="custom" domain="[('monitoring_type', '=', 'custom')]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Database" name="group_database" context="{'group_by': 'database_id'}"/>
+                        <filter string="Monitoring Type" name="group_monitoring_type" context="{'group_by': 'monitoring_type'}"/>
+                        <filter string="Status" name="group_status" context="{'group_by': 'status'}"/>
+                        <filter string="Created Date" name="group_create_date" context="{'group_by': 'create_date:day'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- Database Monitoring Action -->
+        <record id="action_database_monitoring" model="ir.actions.act_window">
+            <field name="name">Database Monitoring</field>
+            <field name="res_model">database.monitoring</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_database_monitoring_tree"/>
+            <field name="search_view_id" ref="view_database_monitoring_search"/>
+            <field name="context">{'search_default_active': 1}</field>
+        </record>
+        
+    </data>
+</odoo>

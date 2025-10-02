@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Database Connections Tree View -->
+        <record id="view_database_connections_tree" model="ir.ui.view">
+            <field name="name">database_connections.tree</field>
+            <field name="model">database.connection</field>
+            <field name="arch" type="xml">
+                <tree string="Database Connections" decoration-muted="status=='inactive'" decoration-success="status=='active'" decoration-warning="status=='error'" decoration-danger="status=='timeout'">
+                    <field name="name"/>
+                    <field name="database_id"/>
+                    <field name="connection_type"/>
+                    <field name="status"/>
+                    <field name="host"/>
+                    <field name="port"/>
+                    <field name="user"/>
+                    <field name="database_name"/>
+                    <field name="current_connections"/>
+                    <field name="max_connections"/>
+                    <field name="response_time"/>
+                    <field name="total_queries"/>
+                    <field name="successful_queries"/>
+                    <field name="failed_queries"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Database Connections Form View -->
+        <record id="view_database_connections_form" model="ir.ui.view">
+            <field name="name">database_connections.form</field>
+            <field name="model">database.connection</field>
+            <field name="arch" type="xml">
+                <form string="Database Connection">
+                    <header>
+                        <button name="action_activate" string="Activate" type="object" class="btn-primary" attrs="{'invisible': [('status', '=', 'active')]}"/>
+                        <button name="action_deactivate" string="Deactivate" type="object" class="btn-warning" attrs="{'invisible': [('status', '=', 'inactive')]}"/>
+                        <button name="action_test_connection" string="Test Connection" type="object" class="btn-success"/>
+                        <button name="action_reset_connection" string="Reset Connection" type="object" class="btn-secondary"/>
+                        <button name="action_monitor_connection" string="Monitor Connection" type="object" class="btn-info"/>
+                        <button name="action_analyze_connection" string="Analyze Connection" type="object" class="btn-warning"/>
+                        <button name="action_maintain_connection" string="Maintain Connection" type="object" class="btn-success"/>
+                        <field name="status" widget="statusbar" statusbar_visible="inactive,active,error,timeout"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Connection Name"/>
+                            </h1>
+                        </div>
+                        
+                        <group>
+                            <group string="Basic Information">
+                                <field name="description"/>
+                                <field name="database_id"/>
+                                <field name="connection_type"/>
+                                <field name="status"/>
+                            </group>
+                            <group string="Connection Details">
+                                <field name="host"/>
+                                <field name="port"/>
+                                <field name="user"/>
+                                <field name="password" password="True"/>
+                                <field name="database_name"/>
+                            </group>
+                        </group>
+                        
+                        <group>
+                            <group string="Connection Settings">
+                                <field name="connection_timeout"/>
+                                <field name="max_connections"/>
+                                <field name="current_connections"/>
+                            </group>
+                            <group string="Connection Performance">
+                                <field name="response_time"/>
+                                <field name="total_queries"/>
+                                <field name="successful_queries"/>
+                                <field name="failed_queries"/>
+                            </group>
+                        </group>
+                        
+                        <group>
+                            <group string="Connection Security">
+                                <field name="ssl_enabled"/>
+                                <field name="encryption_enabled"/>
+                            </group>
+                            <group string="Connection Pooling">
+                                <field name="enable_pooling"/>
+                                <field name="pool_size"/>
+                                <field name="pool_timeout"/>
+                            </group>
+                        </group>
+                        
+                        <group>
+                            <group string="Connection Analytics">
+                                <field name="total_connections"/>
+                                <field name="average_connection_time"/>
+                            </group>
+                            <group string="Connection Monitoring">
+                                <field name="last_activity"/>
+                                <field name="last_error"/>
+                                <field name="error_count"/>
+                                <field name="maintenance_required"/>
+                                <field name="last_maintenance"/>
+                                <field name="next_maintenance"/>
+                            </group>
+                        </group>
+                        
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Database Connections Search View -->
+        <record id="view_database_connections_search" model="ir.ui.view">
+            <field name="name">database_connections.search</field>
+            <field name="model">database.connection</field>
+            <field name="arch" type="xml">
+                <search string="Search Database Connections">
+                    <field name="name"/>
+                    <field name="description"/>
+                    <field name="database_id"/>
+                    <field name="connection_type"/>
+                    <field name="host"/>
+                    <field name="user"/>
+                    <field name="database_name"/>
+                    <filter string="Active Connections" name="active" domain="[('status', '=', 'active')]"/>
+                    <filter string="Inactive Connections" name="inactive" domain="[('status', '=', 'inactive')]"/>
+                    <filter string="Error Connections" name="error" domain="[('status', '=', 'error')]"/>
+                    <filter string="Timeout Connections" name="timeout" domain="[('status', '=', 'timeout')]"/>
+                    <filter string="Read Only" name="read" domain="[('connection_type', '=', 'read')]"/>
+                    <filter string="Read/Write" name="write" domain="[('connection_type', '=', 'write')]"/>
+                    <filter string="Administrative" name="admin" domain="[('connection_type', '=', 'admin')]"/>
+                    <filter string="Backup" name="backup" domain="[('connection_type', '=', 'backup')]"/>
+                    <filter string="Monitoring" name="monitoring" domain="[('connection_type', '=', 'monitoring')]"/>
+                    <filter string="Analytics" name="analytics" domain="[('connection_type', '=', 'analytics')]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Database" name="group_database" context="{'group_by': 'database_id'}"/>
+                        <filter string="Connection Type" name="group_connection_type" context="{'group_by': 'connection_type'}"/>
+                        <filter string="Status" name="group_status" context="{'group_by': 'status'}"/>
+                        <filter string="Host" name="group_host" context="{'group_by': 'host'}"/>
+                        <filter string="Created Date" name="group_create_date" context="{'group_by': 'create_date:day'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- Database Connections Action -->
+        <record id="action_database_connections" model="ir.actions.act_window">
+            <field name="name">Database Connections</field>
+            <field name="res_model">database.connection</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_database_connections_tree"/>
+            <field name="search_view_id" ref="view_database_connections_search"/>
+            <field name="context">{'search_default_active': 1}</field>
+        </record>
+        
+    </data>
+</odoo>

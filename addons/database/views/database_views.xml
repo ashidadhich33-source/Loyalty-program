@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Databases Tree View -->
+        <record id="view_databases_tree" model="ir.ui.view">
+            <field name="name">databases.tree</field>
+            <field name="model">database.info</field>
+            <field name="arch" type="xml">
+                <tree string="Databases" decoration-muted="not is_active" decoration-success="health_status=='healthy'" decoration-warning="health_status=='warning'" decoration-danger="health_status=='critical'">
+                    <field name="name"/>
+                    <field name="database_type"/>
+                    <field name="database_version"/>
+                    <field name="odoo_version"/>
+                    <field name="host"/>
+                    <field name="port"/>
+                    <field name="database_size"/>
+                    <field name="table_count"/>
+                    <field name="record_count"/>
+                    <field name="health_status"/>
+                    <field name="is_active"/>
+                    <field name="is_default"/>
+                    <field name="is_primary"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Databases Form View -->
+        <record id="view_databases_form" model="ir.ui.view">
+            <field name="name">databases.form</field>
+            <field name="model">database.info</field>
+            <field name="arch" type="xml">
+                <form string="Database">
+                    <header>
+                        <button name="action_activate" string="Activate" type="object" class="btn-primary" attrs="{'invisible': [('is_active', '=', True)]}"/>
+                        <button name="action_deactivate" string="Deactivate" type="object" class="btn-warning" attrs="{'invisible': [('is_active', '=', False)]}"/>
+                        <button name="action_set_default" string="Set as Default" type="object" class="btn-secondary" attrs="{'invisible': [('is_default', '=', True)]}"/>
+                        <button name="action_set_primary" string="Set as Primary" type="object" class="btn-info" attrs="{'invisible': [('is_primary', '=', True)]}"/>
+                        <button name="action_test_connection" string="Test Connection" type="object" class="btn-success"/>
+                        <button name="action_backup_database" string="Backup Database" type="object" class="btn-primary"/>
+                        <button name="action_migrate_database" string="Migrate Database" type="object" class="btn-info"/>
+                        <button name="action_monitor_database" string="Monitor Database" type="object" class="btn-secondary"/>
+                        <button name="action_analyze_database" string="Analyze Database" type="object" class="btn-warning"/>
+                        <button name="action_maintain_database" string="Maintain Database" type="object" class="btn-success"/>
+                        <field name="is_active" widget="statusbar" statusbar_visible="False,True"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Database Name"/>
+                            </h1>
+                        </div>
+                        
+                        <group>
+                            <group string="Basic Information">
+                                <field name="description"/>
+                                <field name="database_type"/>
+                                <field name="database_version"/>
+                                <field name="odoo_version"/>
+                            </group>
+                            <group string="Connection Information">
+                                <field name="host"/>
+                                <field name="port"/>
+                                <field name="user"/>
+                                <field name="password" password="True"/>
+                            </group>
+                        </group>
+                        
+                        <group>
+                            <group string="Database Status">
+                                <field name="is_active"/>
+                                <field name="is_default"/>
+                                <field name="is_primary"/>
+                                <field name="health_status"/>
+                            </group>
+                            <group string="Database Metrics">
+                                <field name="database_size"/>
+                                <field name="table_count"/>
+                                <field name="record_count"/>
+                                <field name="current_connections"/>
+                                <field name="max_connections"/>
+                            </group>
+                        </group>
+                        
+                        <group>
+                            <group string="Database Features">
+                                <field name="enable_backup"/>
+                                <field name="enable_monitoring"/>
+                                <field name="enable_replication"/>
+                            </group>
+                            <group string="Database Security">
+                                <field name="ssl_enabled"/>
+                                <field name="encryption_enabled"/>
+                            </group>
+                        </group>
+                        
+                        <group>
+                            <group string="Database Analytics">
+                                <field name="total_queries"/>
+                                <field name="slow_queries"/>
+                                <field name="average_response_time"/>
+                            </group>
+                            <group string="Database Maintenance">
+                                <field name="maintenance_schedule"/>
+                                <field name="last_backup"/>
+                                <field name="last_maintenance"/>
+                                <field name="next_maintenance"/>
+                            </group>
+                        </group>
+                        
+                        <notebook>
+                            <page string="Connections" name="connections">
+                                <field name="connection_ids" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="name"/>
+                                        <field name="connection_type"/>
+                                        <field name="status"/>
+                                        <field name="current_connections"/>
+                                        <field name="max_connections"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            
+                            <page string="Backups" name="backups">
+                                <field name="backup_ids" nolabel="1">
+                                    <tree>
+                                        <field name="name"/>
+                                        <field name="backup_type"/>
+                                        <field name="status"/>
+                                        <field name="backup_size"/>
+                                        <field name="start_time"/>
+                                        <field name="end_time"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            
+                            <page string="Migrations" name="migrations">
+                                <field name="migration_ids" nolabel="1">
+                                    <tree>
+                                        <field name="name"/>
+                                        <field name="migration_type"/>
+                                        <field name="status"/>
+                                        <field name="from_version"/>
+                                        <field name="to_version"/>
+                                        <field name="start_time"/>
+                                        <field name="end_time"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            
+                            <page string="Monitoring" name="monitoring">
+                                <field name="monitoring_ids" nolabel="1">
+                                    <tree>
+                                        <field name="name"/>
+                                        <field name="monitoring_type"/>
+                                        <field name="status"/>
+                                        <field name="health_score"/>
+                                        <field name="performance_score"/>
+                                        <field name="security_score"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            
+                            <page string="Analytics" name="analytics">
+                                <field name="analytics_ids" nolabel="1">
+                                    <tree>
+                                        <field name="name"/>
+                                        <field name="analytics_type"/>
+                                        <field name="status"/>
+                                        <field name="date_from"/>
+                                        <field name="date_to"/>
+                                        <field name="health_score"/>
+                                        <field name="performance_score"/>
+                                        <field name="security_score"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                        
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Databases Search View -->
+        <record id="view_databases_search" model="ir.ui.view">
+            <field name="name">databases.search</field>
+            <field name="model">database.info</field>
+            <field name="arch" type="xml">
+                <search string="Search Databases">
+                    <field name="name"/>
+                    <field name="description"/>
+                    <field name="host"/>
+                    <field name="user"/>
+                    <field name="database_type"/>
+                    <field name="database_version"/>
+                    <field name="odoo_version"/>
+                    <filter string="Active Databases" name="active" domain="[('is_active', '=', True)]"/>
+                    <filter string="Inactive Databases" name="inactive" domain="[('is_active', '=', False)]"/>
+                    <filter string="Default Database" name="default" domain="[('is_default', '=', True)]"/>
+                    <filter string="Primary Database" name="primary" domain="[('is_primary', '=', True)]"/>
+                    <filter string="Healthy" name="healthy" domain="[('health_status', '=', 'healthy')]"/>
+                    <filter string="Warning" name="warning" domain="[('health_status', '=', 'warning')]"/>
+                    <filter string="Critical" name="critical" domain="[('health_status', '=', 'critical')]"/>
+                    <filter string="Unknown" name="unknown" domain="[('health_status', '=', 'unknown')]"/>
+                    <filter string="PostgreSQL" name="postgresql" domain="[('database_type', '=', 'postgresql')]"/>
+                    <filter string="MySQL" name="mysql" domain="[('database_type', '=', 'mysql')]"/>
+                    <filter string="Oracle" name="oracle" domain="[('database_type', '=', 'oracle')]"/>
+                    <filter string="SQL Server" name="sqlserver" domain="[('database_type', '=', 'sqlserver')]"/>
+                    <filter string="SQLite" name="sqlite" domain="[('database_type', '=', 'sqlite')]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Database Type" name="group_database_type" context="{'group_by': 'database_type'}"/>
+                        <filter string="Health Status" name="group_health_status" context="{'group_by': 'health_status'}"/>
+                        <filter string="Host" name="group_host" context="{'group_by': 'host'}"/>
+                        <filter string="Created Date" name="group_create_date" context="{'group_by': 'create_date:day'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- Databases Action -->
+        <record id="action_databases" model="ir.actions.act_window">
+            <field name="name">Databases</field>
+            <field name="res_model">database.info</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_databases_tree"/>
+            <field name="search_view_id" ref="view_databases_search"/>
+            <field name="context">{'search_default_active': 1}</field>
+        </record>
+        
+        <!-- Database Analytics View -->
+        <record id="view_database_analytics" model="ir.ui.view">
+            <field name="name">database.analytics</field>
+            <field name="model">database.info</field>
+            <field name="arch" type="xml">
+                <form string="Database Analytics">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>Database Analytics</h1>
+                        </div>
+                        
+                        <group>
+                            <group string="Database Metrics">
+                                <label for="database_size" string="Database Size"/>
+                                <div id="database_size" class="oe_read_only"/>
+                                <label for="table_count" string="Table Count"/>
+                                <div id="table_count" class="oe_read_only"/>
+                                <label for="record_count" string="Record Count"/>
+                                <div id="record_count" class="oe_read_only"/>
+                            </group>
+                            <group string="Performance Metrics">
+                                <label for="total_queries" string="Total Queries"/>
+                                <div id="total_queries" class="oe_read_only"/>
+                                <label for="slow_queries" string="Slow Queries"/>
+                                <div id="slow_queries" class="oe_read_only"/>
+                                <label for="average_response_time" string="Average Response Time"/>
+                                <div id="average_response_time" class="oe_read_only"/>
+                            </group>
+                        </group>
+                        
+                        <group>
+                            <group string="Connection Metrics">
+                                <label for="current_connections" string="Current Connections"/>
+                                <div id="current_connections" class="oe_read_only"/>
+                                <label for="max_connections" string="Max Connections"/>
+                                <div id="max_connections" class="oe_read_only"/>
+                            </group>
+                            <group string="Database Status">
+                                <label for="health_status" string="Health Status"/>
+                                <div id="health_status" class="oe_read_only"/>
+                                <label for="is_active" string="Is Active"/>
+                                <div id="is_active" class="oe_read_only"/>
+                                <label for="is_default" string="Is Default"/>
+                                <div id="is_default" class="oe_read_only"/>
+                            </group>
+                        </group>
+                        
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Database Analytics Action -->
+        <record id="action_database_analytics" model="ir.actions.act_window">
+            <field name="name">Database Analytics</field>
+            <field name="res_model">database.info</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_database_analytics"/>
+            <field name="target">inline</field>
+        </record>
+        
+    </data>
+</odoo>

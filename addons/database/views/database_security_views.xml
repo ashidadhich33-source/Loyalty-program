@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Database Security Tree View -->
+        <record id="view_database_security_tree" model="ir.ui.view">
+            <field name="name">database.security.tree</field>
+            <field name="model">database.security</field>
+            <field name="arch" type="xml">
+                <tree string="Database Security">
+                    <field name="name"/>
+                    <field name="database_id"/>
+                    <field name="encryption_enabled"/>
+                    <field name="ssl_enabled"/>
+                    <field name="firewall_enabled"/>
+                    <field name="audit_enabled"/>
+                    <field name="status"/>
+                    <field name="last_scan_date"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Database Security Form View -->
+        <record id="view_database_security_form" model="ir.ui.view">
+            <field name="name">database.security.form</field>
+            <field name="model">database.security</field>
+            <field name="arch" type="xml">
+                <form string="Database Security">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Security Configuration Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="database_id"/>
+                                <field name="encryption_enabled"/>
+                                <field name="ssl_enabled"/>
+                                <field name="firewall_enabled"/>
+                                <field name="audit_enabled"/>
+                            </group>
+                            <group>
+                                <field name="status"/>
+                                <field name="last_scan_date"/>
+                                <field name="next_scan_date"/>
+                                <field name="scan_frequency"/>
+                            </group>
+                        </group>
+                        <group string="Security Settings">
+                            <group>
+                                <field name="encryption_algorithm"/>
+                                <field name="ssl_version"/>
+                                <field name="firewall_rules"/>
+                            </group>
+                            <group>
+                                <field name="audit_level"/>
+                                <field name="access_control"/>
+                                <field name="vulnerability_scan"/>
+                            </group>
+                        </group>
+                        <group string="Security Logs">
+                            <field name="security_logs" readonly="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Database Security Search View -->
+        <record id="view_database_security_search" model="ir.ui.view">
+            <field name="name">database.security.search</field>
+            <field name="model">database.security</field>
+            <field name="arch" type="xml">
+                <search string="Database Security">
+                    <field name="name"/>
+                    <field name="database_id"/>
+                    <field name="status"/>
+                    <filter string="Active" name="active" domain="[('status', '=', 'active')]"/>
+                    <filter string="Inactive" name="inactive" domain="[('status', '=', 'inactive')]"/>
+                    <filter string="Encryption Enabled" name="encryption" domain="[('encryption_enabled', '=', True)]"/>
+                    <filter string="SSL Enabled" name="ssl" domain="[('ssl_enabled', '=', True)]"/>
+                    <filter string="Firewall Enabled" name="firewall" domain="[('firewall_enabled', '=', True)]"/>
+                    <filter string="Audit Enabled" name="audit" domain="[('audit_enabled', '=', True)]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Database" name="database" context="{'group_by': 'database_id'}"/>
+                        <filter string="Status" name="status" context="{'group_by': 'status'}"/>
+                        <filter string="Encryption" name="encryption_group" context="{'group_by': 'encryption_enabled'}"/>
+                        <filter string="SSL" name="ssl_group" context="{'group_by': 'ssl_enabled'}"/>
+                        <filter string="Firewall" name="firewall_group" context="{'group_by': 'firewall_enabled'}"/>
+                        <filter string="Audit" name="audit_group" context="{'group_by': 'audit_enabled'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Database Security Action -->
+        <record id="action_database_security" model="ir.actions.act_window">
+            <field name="name">Database Security</field>
+            <field name="res_model">database.security</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_database_security_search"/>
+            <field name="context">{'search_default_active': 1}</field>
+        </record>
+
+    </data>
+</odoo>

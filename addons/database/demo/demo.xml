@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        
+        <!-- Demo Database Info -->
+        <record id="demo_database_01" model="database.info">
+            <field name="name">Kids Clothing ERP - Production</field>
+            <field name="database_type">postgresql</field>
+            <field name="version">14.5</field>
+            <field name="status">active</field>
+            <field name="size">1024</field>
+            <field name="description">Production database for Kids Clothing ERP</field>
+        </record>
+        
+        <record id="demo_database_02" model="database.info">
+            <field name="name">Kids Clothing ERP - Staging</field>
+            <field name="database_type">postgresql</field>
+            <field name="version">14.5</field>
+            <field name="status">active</field>
+            <field name="size">512</field>
+            <field name="description">Staging database for Kids Clothing ERP</field>
+        </record>
+        
+        <record id="demo_database_03" model="database.info">
+            <field name="name">Kids Clothing ERP - Development</field>
+            <field name="database_type">postgresql</field>
+            <field name="version">14.5</field>
+            <field name="status">active</field>
+            <field name="size">256</field>
+            <field name="description">Development database for Kids Clothing ERP</field>
+        </record>
+        
+        <!-- Demo Database Connection -->
+        <record id="demo_connection_01" model="database.connection">
+            <field name="name">Production Connection</field>
+            <field name="database_id" ref="demo_database_01"/>
+            <field name="host">localhost</field>
+            <field name="port">5432</field>
+            <field name="username">odoo</field>
+            <field name="status">connected</field>
+        </record>
+        
+        <record id="demo_connection_02" model="database.connection">
+            <field name="name">Staging Connection</field>
+            <field name="database_id" ref="demo_database_02"/>
+            <field name="host">localhost</field>
+            <field name="port">5432</field>
+            <field name="username">odoo</field>
+            <field name="status">connected</field>
+        </record>
+        
+        <!-- Demo Database Backup -->
+        <record id="demo_backup_01" model="database.backup">
+            <field name="name">Daily Backup - Production</field>
+            <field name="database_id" ref="demo_database_01"/>
+            <field name="backup_type">full</field>
+            <field name="status">completed</field>
+            <field name="schedule">daily</field>
+            <field name="retention_days">30</field>
+        </record>
+        
+        <record id="demo_backup_02" model="database.backup">
+            <field name="name">Weekly Backup - Production</field>
+            <field name="database_id" ref="demo_database_01"/>
+            <field name="backup_type">full</field>
+            <field name="status">completed</field>
+            <field name="schedule">weekly</field>
+            <field name="retention_days">90</field>
+        </record>
+        
+        <!-- Demo Database Migration -->
+        <record id="demo_migration_01" model="database.migration">
+            <field name="name">Migration to v14.5</field>
+            <field name="database_id" ref="demo_database_01"/>
+            <field name="version_from">14.0</field>
+            <field name="version_to">14.5</field>
+            <field name="status">completed</field>
+        </record>
+        
+        <!-- Demo Database Monitoring -->
+        <record id="demo_monitoring_01" model="database.monitoring">
+            <field name="name">Production Monitoring</field>
+            <field name="database_id" ref="demo_database_01"/>
+            <field name="monitoring_type">performance</field>
+            <field name="status">active</field>
+            <field name="cpu_usage">45</field>
+            <field name="memory_usage">60</field>
+            <field name="disk_io">50</field>
+            <field name="active_connections">25</field>
+        </record>
+        
+        <!-- Demo Database Analytics -->
+        <record id="demo_analytics_01" model="database.analytics">
+            <field name="name">Production Analytics</field>
+            <field name="database_id" ref="demo_database_01"/>
+            <field name="analytics_type">usage</field>
+            <field name="status">active</field>
+        </record>
+        
+        <!-- Demo Database Security -->
+        <record id="demo_security_01" model="database.security">
+            <field name="name">Production Security</field>
+            <field name="database_id" ref="demo_database_01"/>
+            <field name="encryption_enabled">True</field>
+            <field name="ssl_enabled">True</field>
+            <field name="firewall_enabled">True</field>
+            <field name="audit_enabled">True</field>
+            <field name="status">active</field>
+        </record>
+        
+        <!-- Demo Database Maintenance -->
+        <record id="demo_maintenance_01" model="database.maintenance">
+            <field name="name">Weekly Maintenance - Production</field>
+            <field name="database_id" ref="demo_database_01"/>
+            <field name="maintenance_type">reindex</field>
+            <field name="status">scheduled</field>
+            <field name="priority">medium</field>
+            <field name="frequency">weekly</field>
+        </record>
+        
+        <record id="demo_maintenance_02" model="database.maintenance">
+            <field name="name">Monthly Optimization - Production</field>
+            <field name="database_id" ref="demo_database_01"/>
+            <field name="maintenance_type">optimize</field>
+            <field name="status">scheduled</field>
+            <field name="priority">high</field>
+            <field name="frequency">monthly</field>
+        </record>
+        
+    </data>
+</odoo>

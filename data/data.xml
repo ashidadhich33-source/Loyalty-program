@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Demo Data for Kids Clothing ERP -->
+        
+        <!-- Product Categories -->
+        <record id="product_category_shirts" model="product.category">
+            <field name="name">Kids Shirts</field>
+            <field name="parent_id" ref="product.product_category_all"/>
+        </record>
+
+        <record id="product_category_pants" model="product.category">
+            <field name="name">Kids Pants</field>
+            <field name="parent_id" ref="product.product_category_all"/>
+        </record>
+
+        <record id="product_category_dresses" model="product.category">
+            <field name="name">Kids Dresses</field>
+            <field name="parent_id" ref="product.product_category_all"/>
+        </record>
+
+        <record id="product_category_shoes" model="product.category">
+            <field name="name">Kids Shoes</field>
+            <field name="parent_id" ref="product.product_category_all"/>
+        </record>
+
+        <record id="product_category_accessories" model="product.category">
+            <field name="name">Kids Accessories</field>
+            <field name="parent_id" ref="product.product_category_all"/>
+        </record>
+
+        <!-- Demo Products -->
+        <record id="product_kids_tshirt_blue" model="product.template">
+            <field name="name">Kids Blue T-Shirt</field>
+            <field name="categ_id" ref="product_category_shirts"/>
+            <field name="list_price">15.99</field>
+            <field name="standard_price">10.00</field>
+            <field name="type">product</field>
+            <field name="sale_ok">True</field>
+            <field name="purchase_ok">True</field>
+            <field name="is_kids_clothing">True</field>
+            <field name="age_range">4-6 years</field>
+            <field name="gender">unisex</field>
+            <field name="season">all_season</field>
+            <field name="clothing_type">shirt</field>
+            <field name="brand">KidsFashion</field>
+            <field name="material">100% Cotton</field>
+            <field name="care_instructions">Machine wash cold, tumble dry low</field>
+            <field name="safety_certification">CPSC</field>
+            <field name="choking_hazard">False</field>
+            <field name="min_stock_level">10</field>
+            <field name="reorder_qty">50</field>
+        </record>
+
+        <record id="product_kids_jeans_denim" model="product.template">
+            <field name="name">Kids Denim Jeans</field>
+            <field name="categ_id" ref="product_category_pants"/>
+            <field name="list_price">25.99</field>
+            <field name="standard_price">15.00</field>
+            <field name="type">product</field>
+            <field name="sale_ok">True</field>
+            <field name="purchase_ok">True</field>
+            <field name="is_kids_clothing">True</field>
+            <field name="age_range">6-8 years</field>
+            <field name="gender">unisex</field>
+            <field name="season">all_season</field>
+            <field name="clothing_type">pants</field>
+            <field name="brand">KidsFashion</field>
+            <field name="material">98% Cotton, 2% Elastane</field>
+            <field name="care_instructions">Machine wash cold, tumble dry low</field>
+            <field name="safety_certification">CPSC</field>
+            <field name="choking_hazard">False</field>
+            <field name="min_stock_level">8</field>
+            <field name="reorder_qty">40</field>
+        </record>
+
+        <record id="product_kids_dress_pink" model="product.template">
+            <field name="name">Kids Pink Dress</field>
+            <field name="categ_id" ref="product_category_dresses"/>
+            <field name="list_price">35.99</field>
+            <field name="standard_price">20.00</field>
+            <field name="type">product</field>
+            <field name="sale_ok">True</field>
+            <field name="purchase_ok">True</field>
+            <field name="is_kids_clothing">True</field>
+            <field name="age_range">4-6 years</field>
+            <field name="gender">girls</field>
+            <field name="season">spring</field>
+            <field name="clothing_type">dress</field>
+            <field name="brand">KidsFashion</field>
+            <field name="material">100% Cotton</field>
+            <field name="care_instructions">Machine wash cold, hang dry</field>
+            <field name="safety_certification">CPSC</field>
+            <field name="choking_hazard">False</field>
+            <field name="min_stock_level">5</field>
+            <field name="reorder_qty">25</field>
+        </record>
+
+        <record id="product_kids_sneakers_white" model="product.template">
+            <field name="name">Kids White Sneakers</field>
+            <field name="categ_id" ref="product_category_shoes"/>
+            <field name="list_price">45.99</field>
+            <field name="standard_price">25.00</field>
+            <field name="type">product</field>
+            <field name="sale_ok">True</field>
+            <field name="purchase_ok">True</field>
+            <field name="is_kids_clothing">True</field>
+            <field name="age_range">6-8 years</field>
+            <field name="gender">unisex</field>
+            <field name="season">all_season</field>
+            <field name="clothing_type">shoes</field>
+            <field name="brand">KidsFashion</field>
+            <field name="material">Canvas Upper, Rubber Sole</field>
+            <field name="care_instructions">Spot clean, air dry</field>
+            <field name="safety_certification">CPSC</field>
+            <field name="choking_hazard">False</field>
+            <field name="min_stock_level">12</field>
+            <field name="reorder_qty">30</field>
+        </record>
+
+        <!-- Demo Customers -->
+        <record id="partner_customer_john_doe" model="res.partner">
+            <field name="name">John Doe</field>
+            <field name="email">john.doe@email.com</field>
+            <field name="phone">+1 (555) 123-4567</field>
+            <field name="is_company">False</field>
+            <field name="is_kids_clothing_customer">True</field>
+            <field name="child_age">5</field>
+            <field name="preferred_brand">KidsFashion</field>
+            <field name="size_preference">s</field>
+            <field name="clothing_style">casual</field>
+            <field name="loyalty_points">150</field>
+            <field name="loyalty_tier">silver</field>
+        </record>
+
+        <record id="partner_customer_jane_smith" model="res.partner">
+            <field name="name">Jane Smith</field>
+            <field name="email">jane.smith@email.com</field>
+            <field name="phone">+1 (555) 987-6543</field>
+            <field name="is_company">False</field>
+            <field name="is_kids_clothing_customer">True</field>
+            <field name="child_age">7</field>
+            <field name="preferred_brand">KidsFashion</field>
+            <field name="size_preference">m</field>
+            <field name="clothing_style">formal</field>
+            <field name="loyalty_points">75</field>
+            <field name="loyalty_tier">bronze</field>
+        </record>
+
+        <record id="partner_customer_bob_johnson" model="res.partner">
+            <field name="name">Bob Johnson</field>
+            <field name="email">bob.johnson@email.com</field>
+            <field name="phone">+1 (555) 456-7890</field>
+            <field name="is_company">False</field>
+            <field name="is_kids_clothing_customer">True</field>
+            <field name="child_age">4</field>
+            <field name="preferred_brand">KidsFashion</field>
+            <field name="size_preference">s</field>
+            <field name="clothing_style">sport</field>
+            <field name="loyalty_points">300</field>
+            <field name="loyalty_tier">gold</field>
+        </record>
+
+        <!-- Demo Suppliers -->
+        <record id="partner_supplier_kids_fashion" model="res.partner">
+            <field name="name">Kids Fashion Supplier</field>
+            <field name="email">supplier@kidsfashion.com</field>
+            <field name="phone">+1 (555) 111-2222</field>
+            <field name="is_company">True</field>
+            <field name="supplier_rank">1</field>
+            <field name="customer_rank">0</field>
+        </record>
+
+        <record id="partner_supplier_children_wear" model="res.partner">
+            <field name="name">Children Wear Co.</field>
+            <field name="email">info@childrenwear.com</field>
+            <field name="phone">+1 (555) 333-4444</field>
+            <field name="is_company">True</field>
+            <field name="supplier_rank">2</field>
+            <field name="customer_rank">0</field>
+        </record>
+
+        <!-- Demo Sales Orders -->
+        <record id="sale_order_001" model="sale.order">
+            <field name="partner_id" ref="partner_customer_john_doe"/>
+            <field name="date_order">2024-01-15 10:30:00</field>
+            <field name="state">sale</field>
+            <field name="is_kids_clothing_order">True</field>
+            <field name="child_name">Emma Doe</field>
+            <field name="child_age">5</field>
+            <field name="special_instructions">Please ensure the shirt is soft and comfortable</field>
+            <field name="gift_wrapping">True</field>
+            <field name="gift_message">Happy Birthday Emma!</field>
+            <field name="order_status">delivered</field>
+            <field name="delivery_date">2024-01-17</field>
+            <field name="delivery_method">home_delivery</field>
+        </record>
+
+        <record id="sale_order_002" model="sale.order">
+            <field name="partner_id" ref="partner_customer_jane_smith"/>
+            <field name="date_order">2024-01-14 14:20:00</field>
+            <field name="state">sale</field>
+            <field name="is_kids_clothing_order">True</field>
+            <field name="child_name">Michael Smith</field>
+            <field name="child_age">7</field>
+            <field name="special_instructions">Need formal wear for school event</field>
+            <field name="gift_wrapping">False</field>
+            <field name="order_status">shipped</field>
+            <field name="delivery_date">2024-01-16</field>
+            <field name="delivery_method">express</field>
+        </record>
+
+        <!-- Demo POS Orders -->
+        <record id="pos_order_001" model="pos.order">
+            <field name="partner_id" ref="partner_customer_bob_johnson"/>
+            <field name="date_order">2024-01-13 16:45:00</field>
+            <field name="state">paid</field>
+            <field name="is_kids_clothing_pos">True</field>
+            <field name="child_name">Sarah Johnson</field>
+            <field name="child_age">4</field>
+            <field name="is_gift">True</field>
+            <field name="gift_recipient">Sarah Johnson</field>
+            <field name="gift_message">Happy Birthday Sarah!</field>
+            <field name="loyalty_points_earned">45</field>
+            <field name="loyalty_points_used">0</field>
+        </record>
+
+        <!-- Demo Employees -->
+        <record id="hr_employee_manager" model="hr.employee">
+            <field name="name">Store Manager</field>
+            <field name="work_email">manager@kidsclothing.com</field>
+            <field name="work_phone">+1 (555) 000-0001</field>
+            <field name="job_title">Store Manager</field>
+            <field name="department_id" ref="hr.dep_rd"/>
+        </record>
+
+        <record id="hr_employee_sales" model="hr.employee">
+            <field name="name">Sales Associate</field>
+            <field name="work_email">sales@kidsclothing.com</field>
+            <field name="work_phone">+1 (555) 000-0002</field>
+            <field name="job_title">Sales Associate</field>
+            <field name="department_id" ref="hr.dep_rd"/>
+        </record>
+
+        <record id="hr_employee_cashier" model="hr.employee">
+            <field name="name">Cashier</field>
+            <field name="work_email">cashier@kidsclothing.com</field>
+            <field name="work_phone">+1 (555) 000-0003</field>
+            <field name="job_title">Cashier</field>
+            <field name="department_id" ref="hr.dep_rd"/>
+        </record>
+
+    </data>
+</odoo>

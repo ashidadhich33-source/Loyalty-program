@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Main Menu -->
+        <menuitem id="menu_kids_clothing_erp" 
+                  name="Kids Clothing ERP" 
+                  web_icon="kids_clothing_erp,static/description/icon.png"
+                  sequence="1"/>
+
+        <!-- Sales Menu -->
+        <menuitem id="menu_sales" 
+                  name="Sales" 
+                  parent="menu_kids_clothing_erp" 
+                  sequence="10"/>
+        
+        <menuitem id="menu_sales_orders" 
+                  name="Sales Orders" 
+                  parent="menu_sales" 
+                  action="action_sale_order" 
+                  sequence="10"/>
+        
+        <menuitem id="menu_quotations" 
+                  name="Quotations" 
+                  parent="menu_sales" 
+                  action="action_quotation" 
+                  sequence="20"/>
+        
+        <menuitem id="menu_customers" 
+                  name="Customers" 
+                  parent="menu_sales" 
+                  action="action_partner" 
+                  sequence="30"/>
+
+        <!-- POS Menu -->
+        <menuitem id="menu_pos" 
+                  name="Point of Sale" 
+                  parent="menu_kids_clothing_erp" 
+                  sequence="20"/>
+        
+        <menuitem id="menu_pos_orders" 
+                  name="POS Orders" 
+                  parent="menu_pos" 
+                  action="action_pos_order" 
+                  sequence="10"/>
+        
+        <menuitem id="menu_pos_sessions" 
+                  name="POS Sessions" 
+                  parent="menu_pos" 
+                  action="action_pos_session" 
+                  sequence="20"/>
+
+        <!-- Inventory Menu -->
+        <menuitem id="menu_inventory" 
+                  name="Inventory" 
+                  parent="menu_kids_clothing_erp" 
+                  sequence="30"/>
+        
+        <menuitem id="menu_products" 
+                  name="Products" 
+                  parent="menu_inventory" 
+                  action="action_product_template" 
+                  sequence="10"/>
+        
+        <menuitem id="menu_stock" 
+                  name="Stock" 
+                  parent="menu_inventory" 
+                  action="action_stock_picking" 
+                  sequence="20"/>
+        
+        <menuitem id="menu_warehouse" 
+                  name="Warehouse" 
+                  parent="menu_inventory" 
+                  action="action_stock_warehouse" 
+                  sequence="30"/>
+
+        <!-- Purchase Menu -->
+        <menuitem id="menu_purchase" 
+                  name="Purchase" 
+                  parent="menu_kids_clothing_erp" 
+                  sequence="40"/>
+        
+        <menuitem id="menu_purchase_orders" 
+                  name="Purchase Orders" 
+                  parent="menu_purchase" 
+                  action="action_purchase_order" 
+                  sequence="10"/>
+        
+        <menuitem id="menu_suppliers" 
+                  name="Suppliers" 
+                  parent="menu_purchase" 
+                  action="action_supplier" 
+                  sequence="20"/>
+
+        <!-- Accounting Menu -->
+        <menuitem id="menu_accounting" 
+                  name="Accounting" 
+                  parent="menu_kids_clothing_erp" 
+                  sequence="50"/>
+        
+        <menuitem id="menu_invoices" 
+                  name="Invoices" 
+                  parent="menu_accounting" 
+                  action="action_account_move" 
+                  sequence="10"/>
+        
+        <menuitem id="menu_payments" 
+                  name="Payments" 
+                  parent="menu_accounting" 
+                  action="action_account_payment" 
+                  sequence="20"/>
+
+        <!-- CRM Menu -->
+        <menuitem id="menu_crm" 
+                  name="CRM" 
+                  parent="menu_kids_clothing_erp" 
+                  sequence="60"/>
+        
+        <menuitem id="menu_leads" 
+                  name="Leads" 
+                  parent="menu_crm" 
+                  action="action_crm_lead" 
+                  sequence="10"/>
+        
+        <menuitem id="menu_opportunities" 
+                  name="Opportunities" 
+                  parent="menu_crm" 
+                  action="action_crm_opportunity" 
+                  sequence="20"/>
+
+        <!-- HR Menu -->
+        <menuitem id="menu_hr" 
+                  name="Human Resources" 
+                  parent="menu_kids_clothing_erp" 
+                  sequence="70"/>
+        
+        <menuitem id="menu_employees" 
+                  name="Employees" 
+                  parent="menu_hr" 
+                  action="action_hr_employee" 
+                  sequence="10"/>
+        
+        <menuitem id="menu_attendance" 
+                  name="Attendance" 
+                  parent="menu_hr" 
+                  action="action_hr_attendance" 
+                  sequence="20"/>
+
+        <!-- Reports Menu -->
+        <menuitem id="menu_reports" 
+                  name="Reports" 
+                  parent="menu_kids_clothing_erp" 
+                  sequence="80"/>
+        
+        <menuitem id="menu_sales_reports" 
+                  name="Sales Reports" 
+                  parent="menu_reports" 
+                  action="action_sale_report" 
+                  sequence="10"/>
+        
+        <menuitem id="menu_inventory_reports" 
+                  name="Inventory Reports" 
+                  parent="menu_reports" 
+                  action="action_stock_report" 
+                  sequence="20"/>
+        
+        <menuitem id="menu_financial_reports" 
+                  name="Financial Reports" 
+                  parent="menu_reports" 
+                  action="action_account_report" 
+                  sequence="30"/>
+
+        <!-- Configuration Menu -->
+        <menuitem id="menu_configuration" 
+                  name="Configuration" 
+                  parent="menu_kids_clothing_erp" 
+                  sequence="90"/>
+        
+        <menuitem id="menu_company_settings" 
+                  name="Company Settings" 
+                  parent="menu_configuration" 
+                  action="action_res_company" 
+                  sequence="10"/>
+        
+        <menuitem id="menu_users" 
+                  name="Users" 
+                  parent="menu_configuration" 
+                  action="action_res_users" 
+                  sequence="20"/>
+        
+        <menuitem id="menu_warehouse_settings" 
+                  name="Warehouse Settings" 
+                  parent="menu_configuration" 
+                  action="action_stock_warehouse" 
+                  sequence="30"/>
+
+    </data>
+</odoo>

@@ -1,0 +1,14 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_res_partner_kids_clothing,res.partner.kids.clothing,base.model_res_partner,base.group_user,1,1,1,1
+access_product_template_kids_clothing,product.template.kids.clothing,product.model_product_template,base.group_user,1,1,1,1
+access_sale_order_kids_clothing,sale.order.kids.clothing,sale.model_sale_order,base.group_user,1,1,1,1
+access_pos_order_kids_clothing,pos.order.kids.clothing,point_of_sale.model_pos_order,base.group_user,1,1,1,1
+access_stock_picking_kids_clothing,stock.picking.kids.clothing,stock.model_stock_picking,base.group_user,1,1,1,1
+access_purchase_order_kids_clothing,purchase.order.kids.clothing,purchase.model_purchase_order,base.group_user,1,1,1,1
+access_account_move_kids_clothing,account.move.kids.clothing,account.model_account_move,base.group_user,1,1,1,1
+access_crm_lead_kids_clothing,crm.lead.kids.clothing,crm.model_crm_lead,base.group_user,1,1,1,1
+access_hr_employee_kids_clothing,hr.employee.kids.clothing,hr.model_hr_employee,base.group_user,1,1,1,1
+access_res_company_kids_clothing,res.company.kids.clothing,base.model_res_company,base.group_user,1,1,1,1
+access_product_template_size_variant,product.template.size.variant,base.model_product_template_size_variant,base.group_user,1,1,1,1
+access_product_template_color_variant,product.template.color.variant,base.model_product_template_color_variant,base.group_user,1,1,1,1
+access_product_template_attribute,product.template.attribute,base.model_product_template_attribute,base.group_user,1,1,1,1

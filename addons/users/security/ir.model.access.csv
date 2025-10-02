@@ -1,0 +1,14 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_res_users_users,access_res_users_users,model_res_users,base.group_user,1,1,0,0
+access_res_users_hr,access_res_users_hr,model_res_users,hr.group_hr_user,1,1,1,0
+access_res_users_manager,access_res_users_manager,model_res_users,base.group_system,1,1,1,1
+access_res_groups_users,access_res_groups_users,model_res_groups,base.group_user,1,0,0,0
+access_res_groups_manager,access_res_groups_manager,model_res_groups,base.group_system,1,1,1,1
+access_user_permissions_users,access_user_permissions_users,model_user_permissions,base.group_user,1,0,0,0
+access_user_permissions_manager,access_user_permissions_manager,model_user_permissions,base.group_system,1,1,1,1
+access_access_rights_users,access_access_rights_users,model_access_rights,base.group_user,1,0,0,0
+access_access_rights_manager,access_access_rights_manager,model_access_rights,base.group_system,1,1,1,1
+access_user_activity_users,access_user_activity_users,model_user_activity,base.group_user,1,0,0,0
+access_user_activity_manager,access_user_activity_manager,model_user_activity,base.group_system,1,1,1,1
+access_user_preferences_users,access_user_preferences_users,model_user_preferences,base.group_user,1,1,1,1
+access_user_preferences_manager,access_user_preferences_manager,model_user_preferences,base.group_system,1,1,1,1

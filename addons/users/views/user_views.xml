@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Users Tree View -->
+        <record id="view_users_tree" model="ir.ui.view">
+            <field name="name">users.tree</field>
+            <field name="model">res.users</field>
+            <field name="arch" type="xml">
+                <tree string="Users" decoration-muted="not active" decoration-danger="account_locked">
+                    <field name="name"/>
+                    <field name="login"/>
+                    <field name="email"/>
+                    <field name="phone"/>
+                    <field name="mobile"/>
+                    <field name="department_id"/>
+                    <field name="job_title"/>
+                    <field name="is_active_user"/>
+                    <field name="account_locked"/>
+                    <field name="last_login_date"/>
+                    <field name="login_count"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Users Form View -->
+        <record id="view_users_form" model="ir.ui.view">
+            <field name="name">users.form</field>
+            <field name="model">res.users</field>
+            <field name="arch" type="xml">
+                <form string="User">
+                    <header>
+                        <button name="action_login" string="Login" type="object" class="btn-primary"/>
+                        <button name="action_unlock_account" string="Unlock Account" type="object" class="btn-warning" attrs="{'invisible': [('account_locked', '=', False)]}"/>
+                        <button name="action_reset_password" string="Reset Password" type="object" class="btn-secondary"/>
+                        <field name="is_active_user" widget="statusbar" statusbar_visible="False,True"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="User Name"/>
+                            </h1>
+                        </div>
+                        
+                        <group>
+                            <group string="Basic Information">
+                                <field name="login"/>
+                                <field name="email"/>
+                                <field name="phone"/>
+                                <field name="mobile"/>
+                                <field name="lang"/>
+                                <field name="tz"/>
+                            </group>
+                            <group string="Job Information">
+                                <field name="employee_id"/>
+                                <field name="department_id"/>
+                                <field name="job_title"/>
+                                <field name="company_ids" widget="many2many_tags"/>
+                                <field name="default_company_id"/>
+                            </group>
+                        </group>
+                        
+                        <group>
+                            <group string="User Preferences">
+                                <field name="theme_preference"/>
+                                <field name="language_preference"/>
+                                <field name="timezone_preference"/>
+                                <field name="enable_notifications"/>
+                                <field name="enable_sound"/>
+                                <field name="enable_animations"/>
+                                <field name="touchscreen_mode"/>
+                                <field name="compact_mode"/>
+                            </group>
+                            <group string="User Status">
+                                <field name="is_active_user"/>
+                                <field name="account_locked"/>
+                                <field name="lock_reason"/>
+                                <field name="last_login_date"/>
+                                <field name="login_count"/>
+                                <field name="failed_login_count"/>
+                                <field name="last_failed_login"/>
+                            </group>
+                        </group>
+                        
+                        <group>
+                            <group string="Address">
+                                <field name="street"/>
+                                <field name="street2"/>
+                                <field name="city"/>
+                                <field name="state_id"/>
+                                <field name="zip"/>
+                                <field name="country_id"/>
+                            </group>
+                            <group string="Emergency Contact">
+                                <field name="emergency_contact_name"/>
+                                <field name="emergency_contact_phone"/>
+                                <field name="emergency_contact_relation"/>
+                            </group>
+                        </group>
+                        
+                        <group>
+                            <group string="Social Media">
+                                <field name="website"/>
+                                <field name="linkedin"/>
+                                <field name="twitter"/>
+                                <field name="facebook"/>
+                            </group>
+                            <group string="Profile">
+                                <field name="profile_image" widget="image"/>
+                                <field name="bio"/>
+                            </group>
+                        </group>
+                        
+                        <notebook>
+                            <page string="Groups" name="groups">
+                                <field name="groups_id" widget="many2many_tags"/>
+                            </page>
+                            
+                            <page string="Roles" name="roles">
+                                <field name="role_ids" widget="many2many_tags"/>
+                            </page>
+                            
+                            <page string="Permissions" name="permissions">
+                                <field name="custom_permissions" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="name"/>
+                                        <field name="description"/>
+                                        <field name="access_level"/>
+                                        <field name="is_active"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            
+                            <page string="Activity Logs" name="activity">
+                                <field name="activity_logs" nolabel="1">
+                                    <tree>
+                                        <field name="activity_type"/>
+                                        <field name="description"/>
+                                        <field name="status"/>
+                                        <field name="create_date"/>
+                                        <field name="ip_address"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            
+                            <page string="Preferences" name="preferences">
+                                <field name="user_preferences" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="name"/>
+                                        <field name="key"/>
+                                        <field name="value"/>
+                                        <field name="value_type"/>
+                                        <field name="category"/>
+                                        <field name="is_active"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                        
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Users Search View -->
+        <record id="view_users_search" model="ir.ui.view">
+            <field name="name">users.search</field>
+            <field name="model">res.users</field>
+            <field name="arch" type="xml">
+                <search string="Search Users">
+                    <field name="name"/>
+                    <field name="login"/>
+                    <field name="email"/>
+                    <field name="phone"/>
+                    <field name="mobile"/>
+                    <field name="department_id"/>
+                    <field name="job_title"/>
+                    <filter string="Active Users" name="active" domain="[('is_active_user', '=', True)]"/>
+                    <filter string="Inactive Users" name="inactive" domain="[('is_active_user', '=', False)]"/>
+                    <filter string="Locked Accounts" name="locked" domain="[('account_locked', '=', True)]"/>
+                    <filter string="Unlocked Accounts" name="unlocked" domain="[('account_locked', '=', False)]"/>
+                    <filter string="Recent Logins" name="recent_login" domain="[('last_login_date', '>=', (context_today() - datetime.timedelta(days=7)).strftime('%Y-%m-%d'))]"/>
+                    <filter string="No Recent Login" name="no_recent_login" domain="[('last_login_date', '&lt;', (context_today() - datetime.timedelta(days=30)).strftime('%Y-%m-%d'))]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Department" name="group_department" context="{'group_by': 'department_id'}"/>
+                        <filter string="Company" name="group_company" context="{'group_by': 'default_company_id'}"/>
+                        <filter string="Theme" name="group_theme" context="{'group_by': 'theme_preference'}"/>
+                        <filter string="Language" name="group_language" context="{'group_by': 'language_preference'}"/>
+                        <filter string="Created Date" name="group_create_date" context="{'group_by': 'create_date:day'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- Users Action -->
+        <record id="action_users" model="ir.actions.act_window">
+            <field name="name">Users</field>
+            <field name="res_model">res.users</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_users_tree"/>
+            <field name="search_view_id" ref="view_users_search"/>
+            <field name="context">{'search_default_active': 1}</field>
+        </record>
+        
+        <!-- User Statistics View -->
+        <record id="view_user_statistics" model="ir.ui.view">
+            <field name="name">user.statistics</field>
+            <field name="model">res.users</field>
+            <field name="arch" type="xml">
+                <form string="User Statistics">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>User Statistics</h1>
+                        </div>
+                        
+                        <group>
+                            <group string="Login Statistics">
+                                <label for="total_logins" string="Total Logins"/>
+                                <div id="total_logins" class="oe_read_only"/>
+                                <label for="last_login" string="Last Login"/>
+                                <div id="last_login" class="oe_read_only"/>
+                                <label for="failed_logins" string="Failed Logins"/>
+                                <div id="failed_logins" class="oe_read_only"/>
+                            </group>
+                            <group string="Account Status">
+                                <label for="account_locked" string="Account Locked"/>
+                                <div id="account_locked" class="oe_read_only"/>
+                                <label for="is_active" string="Is Active"/>
+                                <div id="is_active" class="oe_read_only"/>
+                                <label for="groups_count" string="Groups Count"/>
+                                <div id="groups_count" class="oe_read_only"/>
+                            </group>
+                        </group>
+                        
+                        <group>
+                            <group string="Permissions">
+                                <label for="permissions_count" string="Permissions Count"/>
+                                <div id="permissions_count" class="oe_read_only"/>
+                            </group>
+                            <group string="Companies">
+                                <label for="companies_count" string="Companies Count"/>
+                                <div id="companies_count" class="oe_read_only"/>
+                            </group>
+                        </group>
+                        
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- User Statistics Action -->
+        <record id="action_user_statistics" model="ir.actions.act_window">
+            <field name="name">User Statistics</field>
+            <field name="res_model">res.users</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_user_statistics"/>
+            <field name="target">inline</field>
+        </record>
+        
+    </data>
+</odoo>

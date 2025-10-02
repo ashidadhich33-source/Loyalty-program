@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Permissions Tree View -->
+        <record id="view_permissions_tree" model="ir.ui.view">
+            <field name="name">permissions.tree</field>
+            <field name="model">user.permissions</field>
+            <field name="arch" type="xml">
+                <tree string="Permissions" decoration-muted="not is_active" decoration-info="is_system_permission">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="model_name"/>
+                    <field name="access_level"/>
+                    <field name="scope"/>
+                    <field name="category"/>
+                    <field name="is_active"/>
+                    <field name="is_system_permission"/>
+                    <field name="usage_count"/>
+                    <field name="last_used"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Permissions Form View -->
+        <record id="view_permissions_form" model="ir.ui.view">
+            <field name="name">permissions.form</field>
+            <field name="model">user.permissions</field>
+            <field name="arch" type="xml">
+                <form string="Permission">
+                    <header>
+                        <button name="action_activate" string="Activate" type="object" class="btn-primary" attrs="{'invisible': [('is_active', '=', True)]}"/>
+                        <button name="action_deactivate" string="Deactivate" type="object" class="btn-warning" attrs="{'invisible': [('is_active', '=', False)]}"/>
+                        <button name="action_duplicate" string="Duplicate" type="object" class="btn-secondary"/>
+                        <field name="is_active" widget="statusbar" statusbar_visible="False,True"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Permission Name"/>
+                            </h1>
+                        </div>
+                        
+                        <group>
+                            <group string="Basic Information">
+                                <field name="code"/>
+                                <field name="description"/>
+                                <field name="model_name"/>
+                                <field name="access_level"/>
+                            </group>
+                            <group string="Scope and Category">
+                                <field name="scope"/>
+                                <field name="category"/>
+                                <field name="is_system_permission"/>
+                            </group>
+                        </group>
+                        
+                        <group>
+                            <group string="Restrictions">
+                                <field name="ip_restrictions"/>
+                                <field name="time_restrictions"/>
+                            </group>
+                            <group string="Statistics">
+                                <field name="usage_count"/>
+                                <field name="last_used"/>
+                            </group>
+                        </group>
+                        
+                        <group>
+                            <group string="Condition">
+                                <field name="condition"/>
+                            </group>
+                        </group>
+                        
+                        <notebook>
+                            <page string="Users" name="users">
+                                <field name="user_id"/>
+                            </page>
+                            
+                            <page string="Groups" name="groups">
+                                <field name="group_ids" widget="many2many_tags"/>
+                            </page>
+                            
+                            <page string="Roles" name="roles">
+                                <field name="role_ids" widget="many2many_tags"/>
+                            </page>
+                            
+                            <page string="Dependencies" name="dependencies">
+                                <field name="depends_on" widget="many2many_tags"/>
+                                <field name="required_by" widget="many2many_tags"/>
+                            </page>
+                        </notebook>
+                        
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Permissions Search View -->
+        <record id="view_permissions_search" model="ir.ui.view">
+            <field name="name">permissions.search</field>
+            <field name="model">user.permissions</field>
+            <field name="arch" type="xml">
+                <search string="Search Permissions">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="description"/>
+                    <field name="model_name"/>
+                    <field name="user_id"/>
+                    <filter string="Active Permissions" name="active" domain="[('is_active', '=', True)]"/>
+                    <filter string="Inactive Permissions" name="inactive" domain="[('is_active', '=', False)]"/>
+                    <filter string="System Permissions" name="system" domain="[('is_system_permission', '=', True)]"/>
+                    <filter string="Custom Permissions" name="custom" domain="[('is_system_permission', '=', False)]"/>
+                    <filter string="Read" name="read" domain="[('access_level', '=', 'read')]"/>
+                    <filter string="Write" name="write" domain="[('access_level', '=', 'write')]"/>
+                    <filter string="Create" name="create" domain="[('access_level', '=', 'create')]"/>
+                    <filter string="Delete" name="delete" domain="[('access_level', '=', 'delete')]"/>
+                    <filter string="Admin" name="admin" domain="[('access_level', '=', 'admin')]"/>
+                    <filter string="Global" name="global" domain="[('scope', '=', 'global')]"/>
+                    <filter string="Company" name="company" domain="[('scope', '=', 'company')]"/>
+                    <filter string="Department" name="department" domain="[('scope', '=', 'department')]"/>
+                    <filter string="User" name="user" domain="[('scope', '=', 'user')]"/>
+                    <filter string="Core" name="core" domain="[('category', '=', 'core')]"/>
+                    <filter string="Sales" name="sales" domain="[('category', '=', 'sales')]"/>
+                    <filter string="Inventory" name="inventory" domain="[('category', '=', 'inventory')]"/>
+                    <filter string="Accounting" name="accounting" domain="[('category', '=', 'accounting')]"/>
+                    <filter string="HR" name="hr" domain="[('category', '=', 'hr')]"/>
+                    <filter string="POS" name="pos" domain="[('category', '=', 'pos')]"/>
+                    <filter string="Reports" name="reports" domain="[('category', '=', 'reports')]"/>
+                    <filter string="Settings" name="settings" domain="[('category', '=', 'settings')]"/>
+                    <filter string="Custom" name="custom_category" domain="[('category', '=', 'custom')]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Model" name="group_model" context="{'group_by': 'model_name'}"/>
+                        <filter string="Access Level" name="group_access_level" context="{'group_by': 'access_level'}"/>
+                        <filter string="Scope" name="group_scope" context="{'group_by': 'scope'}"/>
+                        <filter string="Category" name="group_category" context="{'group_by': 'category'}"/>
+                        <filter string="User" name="group_user" context="{'group_by': 'user_id'}"/>
+                        <filter string="Created Date" name="group_create_date" context="{'group_by': 'create_date:day'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- Permissions Action -->
+        <record id="action_permissions" model="ir.actions.act_window">
+            <field name="name">Permissions</field>
+            <field name="res_model">user.permissions</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_permissions_tree"/>
+            <field name="search_view_id" ref="view_permissions_search"/>
+            <field name="context">{'search_default_active': 1}</field>
+        </record>
+        
+    </data>
+</odoo>

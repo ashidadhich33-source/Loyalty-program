@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Demo Users -->
+        <record id="demo_user_admin" model="res.users">
+            <field name="name">Admin User</field>
+            <field name="login">admin</field>
+            <field name="email">admin@kidsclothingerp.com</field>
+            <field name="phone">+91-9876543210</field>
+            <field name="mobile">+91-9876543210</field>
+            <field name="lang">en_US</field>
+            <field name="tz">Asia/Kolkata</field>
+            <field name="job_title">System Administrator</field>
+            <field name="theme_preference">kids</field>
+            <field name="language_preference">en_US</field>
+            <field name="timezone_preference">Asia/Kolkata</field>
+            <field name="enable_notifications">True</field>
+            <field name="enable_sound">True</field>
+            <field name="enable_animations">True</field>
+            <field name="touchscreen_mode">False</field>
+            <field name="compact_mode">False</field>
+            <field name="is_active_user">True</field>
+            <field name="account_locked">False</field>
+            <field name="login_count">25</field>
+            <field name="failed_login_count">0</field>
+            <field name="groups_id" eval="[(4, ref('base.group_system'))]"/>
+        </record>
+        
+        <record id="demo_user_manager" model="res.users">
+            <field name="name">Manager User</field>
+            <field name="login">manager</field>
+            <field name="email">manager@kidsclothingerp.com</field>
+            <field name="phone">+91-9876543211</field>
+            <field name="mobile">+91-9876543211</field>
+            <field name="lang">en_US</field>
+            <field name="tz">Asia/Kolkata</field>
+            <field name="job_title">Store Manager</field>
+            <field name="theme_preference">kids</field>
+            <field name="language_preference">en_US</field>
+            <field name="timezone_preference">Asia/Kolkata</field>
+            <field name="enable_notifications">True</field>
+            <field name="enable_sound">True</field>
+            <field name="enable_animations">True</field>
+            <field name="touchscreen_mode">False</field>
+            <field name="compact_mode">False</field>
+            <field name="is_active_user">True</field>
+            <field name="account_locked">False</field>
+            <field name="login_count">15</field>
+            <field name="failed_login_count">0</field>
+            <field name="groups_id" eval="[(4, ref('group_kids_clothing_manager'))]"/>
+        </record>
+        
+        <record id="demo_user_sales" model="res.users">
+            <field name="name">Sales User</field>
+            <field name="login">sales</field>
+            <field name="email">sales@kidsclothingerp.com</field>
+            <field name="phone">+91-9876543212</field>
+            <field name="mobile">+91-9876543212</field>
+            <field name="lang">en_US</field>
+            <field name="tz">Asia/Kolkata</field>
+            <field name="job_title">Sales Representative</field>
+            <field name="theme_preference">kids</field>
+            <field name="language_preference">en_US</field>
+            <field name="timezone_preference">Asia/Kolkata</field>
+            <field name="enable_notifications">True</field>
+            <field name="enable_sound">True</field>
+            <field name="enable_animations">True</field>
+            <field name="touchscreen_mode">True</field>
+            <field name="compact_mode">False</field>
+            <field name="is_active_user">True</field>
+            <field name="account_locked">False</field>
+            <field name="login_count">8</field>
+            <field name="failed_login_count">0</field>
+            <field name="groups_id" eval="[(4, ref('group_kids_clothing_user'))]"/>
+        </record>
+        
+        <record id="demo_user_pos" model="res.users">
+            <field name="name">POS User</field>
+            <field name="login">pos</field>
+            <field name="email">pos@kidsclothingerp.com</field>
+            <field name="phone">+91-9876543213</field>
+            <field name="mobile">+91-9876543213</field>
+            <field name="lang">en_US</field>
+            <field name="tz">Asia/Kolkata</field>
+            <field name="job_title">POS Operator</field>
+            <field name="theme_preference">kids</field>
+            <field name="language_preference">en_US</field>
+            <field name="timezone_preference">Asia/Kolkata</field>
+            <field name="enable_notifications">True</field>
+            <field name="enable_sound">True</field>
+            <field name="enable_animations">True</field>
+            <field name="touchscreen_mode">True</field>
+            <field name="compact_mode">False</field>
+            <field name="is_active_user">True</field>
+            <field name="account_locked">False</field>
+            <field name="login_count">12</field>
+            <field name="failed_login_count">0</field>
+            <field name="groups_id" eval="[(4, ref('group_kids_clothing_user'))]"/>
+        </record>
+        
+        <record id="demo_user_locked" model="res.users">
+            <field name="name">Locked User</field>
+            <field name="login">locked</field>
+            <field name="email">locked@kidsclothingerp.com</field>
+            <field name="phone">+91-9876543214</field>
+            <field name="mobile">+91-9876543214</field>
+            <field name="lang">en_US</field>
+            <field name="tz">Asia/Kolkata</field>
+            <field name="job_title">Former Employee</field>
+            <field name="theme_preference">kids</field>
+            <field name="language_preference">en_US</field>
+            <field name="timezone_preference">Asia/Kolkata</field>
+            <field name="enable_notifications">False</field>
+            <field name="enable_sound">False</field>
+            <field name="enable_animations">False</field>
+            <field name="touchscreen_mode">False</field>
+            <field name="compact_mode">False</field>
+            <field name="is_active_user">False</field>
+            <field name="account_locked">True</field>
+            <field name="lock_reason">Too many failed login attempts</field>
+            <field name="login_count">5</field>
+            <field name="failed_login_count">5</field>
+            <field name="groups_id" eval="[(4, ref('group_kids_clothing_user'))]"/>
+        </record>
+        
+        <!-- Demo Groups -->
+        <record id="demo_group_sales_team" model="res.groups">
+            <field name="name">Sales Team</field>
+            <field name="description">Sales team members with access to sales modules</field>
+            <field name="category">sales</field>
+            <field name="access_level">write</field>
+            <field name="is_system_group">False</field>
+            <field name="is_active">True</field>
+            <field name="notification_enabled">True</field>
+            <field name="notification_types">email</field>
+        </record>
+        
+        <record id="demo_group_pos_operators" model="res.groups">
+            <field name="name">POS Operators</field>
+            <field name="description">POS operators with access to point of sale</field>
+            <field name="category">pos</field>
+            <field name="access_level">write</field>
+            <field name="is_system_group">False</field>
+            <field name="is_active">True</field>
+            <field name="notification_enabled">True</field>
+            <field name="notification_types">in_app</field>
+        </record>
+        
+        <record id="demo_group_inventory_team" model="res.groups">
+            <field name="name">Inventory Team</field>
+            <field name="description">Inventory team members with access to inventory modules</field>
+            <field name="category">inventory</field>
+            <field name="access_level">write</field>
+            <field name="is_system_group">False</field>
+            <field name="is_active">True</field>
+            <field name="notification_enabled">True</field>
+            <field name="notification_types">email</field>
+        </record>
+        
+        <!-- Demo Permissions -->
+        <record id="demo_permission_sales_read" model="user.permissions">
+            <field name="name">Sales Read</field>
+            <field name="code">sales_read</field>
+            <field name="description">Read access to sales records</field>
+            <field name="model_name">sale.order</field>
+            <field name="access_level">read</field>
+            <field name="scope">global</field>
+            <field name="category">sales</field>
+            <field name="is_system_permission">False</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="demo_permission_sales_write" model="user.permissions">
+            <field name="name">Sales Write</field>
+            <field name="code">sales_write</field>
+            <field name="description">Write access to sales records</field>
+            <field name="model_name">sale.order</field>
+            <field name="access_level">write</field>
+            <field name="scope">global</field>
+            <field name="category">sales</field>
+            <field name="is_system_permission">False</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="demo_permission_pos_access" model="user.permissions">
+            <field name="name">POS Access</field>
+            <field name="code">pos_access</field>
+            <field name="description">Access to point of sale system</field>
+            <field name="model_name">pos.order</field>
+            <field name="access_level">write</field>
+            <field name="scope">global</field>
+            <field name="category">pos</field>
+            <field name="is_system_permission">False</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <!-- Demo Access Rights -->
+        <record id="demo_access_right_sales_own" model="access.rights">
+            <field name="name">Sales Own Records</field>
+            <field name="code">sales_own</field>
+            <field name="description">Access to own sales records</field>
+            <field name="model_name">sale.order</field>
+            <field name="access_type">read</field>
+            <field name="scope">user</field>
+            <field name="category">sales</field>
+            <field name="is_system_right">False</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="demo_access_right_pos_company" model="access.rights">
+            <field name="name">POS Company Records</field>
+            <field name="code">pos_company</field>
+            <field name="description">Access to POS records in same company</field>
+            <field name="model_name">pos.order</field>
+            <field name="access_type">read</field>
+            <field name="scope">company</field>
+            <field name="category">pos</field>
+            <field name="is_system_right">False</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <!-- Demo User Preferences -->
+        <record id="demo_preference_theme_sales" model="user.preferences">
+            <field name="name">Sales Theme</field>
+            <field name="key">sales_theme</field>
+            <field name="description">Theme preference for sales users</field>
+            <field name="value">kids</field>
+            <field name="value_type">string</field>
+            <field name="category">ui</field>
+            <field name="scope">user</field>
+            <field name="default_value">kids</field>
+            <field name="is_system_preference">False</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="demo_preference_notifications_pos" model="user.preferences">
+            <field name="name">POS Notifications</field>
+            <field name="key">pos_notifications</field>
+            <field name="description">Notification preference for POS users</field>
+            <field name="value">true</field>
+            <field name="value_type">boolean</field>
+            <field name="category">notifications</field>
+            <field name="scope">user</field>
+            <field name="default_value">true</field>
+            <field name="is_system_preference">False</field>
+            <field name="is_active">True</field>
+        </record>
+        
+    </data>
+</odoo>

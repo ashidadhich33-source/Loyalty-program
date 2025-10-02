@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Demo Sales Orders -->
+        <record id="demo_sale_order_1" model="sale.order">
+            <field name="name">SO00001</field>
+            <field name="partner_id" ref="base.res_partner_1"/>
+            <field name="date_order">2024-01-15 10:00:00</field>
+            <field name="state">sale</field>
+            <field name="age_group">4-6</field>
+            <field name="gender">boys</field>
+            <field name="season">winter</field>
+            <field name="team_id" ref="baby_sales_team"/>
+            <field name="territory_id" ref="boys_territory"/>
+            <field name="commission_id" ref="kids_commission"/>
+        </record>
+
+        <record id="demo_sale_order_2" model="sale.order">
+            <field name="name">SO00002</field>
+            <field name="partner_id" ref="base.res_partner_2"/>
+            <field name="date_order">2024-01-16 14:30:00</field>
+            <field name="state">sale</field>
+            <field name="age_group">2-4</field>
+            <field name="gender">girls</field>
+            <field name="season">summer</field>
+            <field name="team_id" ref="toddler_sales_team"/>
+            <field name="territory_id" ref="girls_territory"/>
+            <field name="commission_id" ref="toddler_commission"/>
+        </record>
+
+        <record id="demo_sale_order_3" model="sale.order">
+            <field name="name">SO00003</field>
+            <field name="partner_id" ref="base.res_partner_3"/>
+            <field name="date_order">2024-01-17 09:15:00</field>
+            <field name="state">done</field>
+            <field name="age_group">8-10</field>
+            <field name="gender">unisex</field>
+            <field name="season">all_season</field>
+            <field name="team_id" ref="kids_sales_team"/>
+            <field name="territory_id" ref="unisex_territory"/>
+            <field name="commission_id" ref="kids_commission"/>
+        </record>
+
+        <!-- Demo Sales Quotations -->
+        <record id="demo_sale_quotation_1" model="sale.quotation">
+            <field name="name">SQ00001</field>
+            <field name="partner_id" ref="base.res_partner_4"/>
+            <field name="date_quotation">2024-01-18 11:00:00</field>
+            <field name="validity_date">2024-02-18</field>
+            <field name="state">sent</field>
+            <field name="age_group">0-2</field>
+            <field name="gender">boys</field>
+            <field name="season">winter</field>
+            <field name="team_id" ref="baby_sales_team"/>
+            <field name="territory_id" ref="boys_territory"/>
+            <field name="commission_id" ref="baby_commission"/>
+        </record>
+
+        <record id="demo_sale_quotation_2" model="sale.quotation">
+            <field name="name">SQ00002</field>
+            <field name="partner_id" ref="base.res_partner_5"/>
+            <field name="date_quotation">2024-01-19 15:45:00</field>
+            <field name="validity_date">2024-02-19</field>
+            <field name="state">accepted</field>
+            <field name="age_group">6-8</field>
+            <field name="gender">girls</field>
+            <field name="season">summer</field>
+            <field name="team_id" ref="kids_sales_team"/>
+            <field name="territory_id" ref="girls_territory"/>
+            <field name="commission_id" ref="kids_commission"/>
+        </record>
+
+        <!-- Demo Sales Deliveries -->
+        <record id="demo_sale_delivery_1" model="sale.delivery">
+            <field name="name">SD00001</field>
+            <field name="order_id" ref="demo_sale_order_1"/>
+            <field name="date_delivery">2024-01-20 10:00:00</field>
+            <field name="state">delivered</field>
+            <field name="delivery_method">home_delivery</field>
+            <field name="delivery_company">Fast Delivery Co.</field>
+            <field name="tracking_number">FD123456789</field>
+            <field name="delivery_confirmed">True</field>
+        </record>
+
+        <record id="demo_sale_delivery_2" model="sale.delivery">
+            <field name="name">SD00002</field>
+            <field name="order_id" ref="demo_sale_order_2"/>
+            <field name="date_delivery">2024-01-21 14:30:00</field>
+            <field name="state">delivered</field>
+            <field name="delivery_method">home_delivery</field>
+            <field name="delivery_company">Express Delivery Co.</field>
+            <field name="tracking_number">ED987654321</field>
+            <field name="delivery_confirmed">True</field>
+        </record>
+
+        <!-- Demo Sales Returns -->
+        <record id="demo_sale_return_1" model="sale.return">
+            <field name="name">SR00001</field>
+            <field name="order_id" ref="demo_sale_order_1"/>
+            <field name="date_return">2024-01-25 16:00:00</field>
+            <field name="state">processed</field>
+            <field name="return_reason">wrong_size</field>
+            <field name="return_type">exchange</field>
+            <field name="return_confirmed">True</field>
+            <field name="return_received">True</field>
+            <field name="return_processed">True</field>
+        </record>
+
+        <record id="demo_sale_return_2" model="sale.return">
+            <field name="name">SR00002</field>
+            <field name="order_id" ref="demo_sale_order_2"/>
+            <field name="date_return">2024-01-26 11:30:00</field>
+            <field name="state">refunded</field>
+            <field name="return_reason">defective</field>
+            <field name="return_type">refund</field>
+            <field name="refund_method">card</field>
+            <field name="return_confirmed">True</field>
+            <field name="return_received">True</field>
+            <field name="return_processed">True</field>
+        </record>
+
+        <!-- Demo Sales Analytics -->
+        <record id="demo_sale_analytics_1" model="sale.analytics">
+            <field name="name">January 2024 Sales Analytics</field>
+            <field name="date_analytics">2024-01-31 23:59:59</field>
+            <field name="period_start">2024-01-01 00:00:00</field>
+            <field name="period_end">2024-01-31 23:59:59</field>
+            <field name="age_group">all</field>
+            <field name="gender">all</field>
+            <field name="season">all_season</field>
+            <field name="total_sales">50000.0</field>
+            <field name="total_orders">25</field>
+            <field name="total_quotations">15</field>
+            <field name="total_deliveries">20</field>
+            <field name="total_returns">3</field>
+            <field name="kids_sales">45000.0</field>
+            <field name="kids_orders">20</field>
+            <field name="kids_quotations">12</field>
+            <field name="kids_deliveries">18</field>
+            <field name="kids_returns">2</field>
+            <field name="conversion_rate">80.0</field>
+            <field name="delivery_rate">90.0</field>
+            <field name="return_rate">12.0</field>
+            <field name="total_customers">15</field>
+            <field name="new_customers">5</field>
+            <field name="returning_customers">10</field>
+            <field name="total_products">100</field>
+            <field name="total_commission">2500.0</field>
+            <field name="commission_rate">5.0</field>
+        </record>
+
+        <!-- Demo Sales Team Members -->
+        <record id="demo_sale_team_member_1" model="sale.team.member">
+            <field name="team_id" ref="baby_sales_team"/>
+            <field name="user_id" ref="base.user_admin"/>
+            <field name="role">leader</field>
+            <field name="age_group_expertise">0-2</field>
+            <field name="gender_expertise">all</field>
+            <field name="season_expertise">all_season</field>
+        </record>
+
+        <record id="demo_sale_team_member_2" model="sale.team.member">
+            <field name="team_id" ref="toddler_sales_team"/>
+            <field name="user_id" ref="base.user_demo"/>
+            <field name="role">member</field>
+            <field name="age_group_expertise">2-4</field>
+            <field name="gender_expertise">all</field>
+            <field name="season_expertise">all_season</field>
+        </record>
+
+        <record id="demo_sale_team_member_3" model="sale.team.member">
+            <field name="team_id" ref="kids_sales_team"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="role">member</field>
+            <field name="age_group_expertise">4-12</field>
+            <field name="gender_expertise">all</field>
+            <field name="season_expertise">all_season</field>
+        </record>
+
+        <!-- Demo Sales Commission Rules -->
+        <record id="demo_sale_commission_rule_1" model="sale.commission.rule">
+            <field name="commission_id" ref="baby_commission"/>
+            <field name="name">Baby Clothing Rule</field>
+            <field name="description">Commission rule for baby clothing</field>
+            <field name="condition_type">product</field>
+            <field name="commission_rate">7.0</field>
+        </record>
+
+        <record id="demo_sale_commission_rule_2" model="sale.commission.rule">
+            <field name="commission_id" ref="toddler_commission"/>
+            <field name="name">Toddler Clothing Rule</field>
+            <field name="description">Commission rule for toddler clothing</field>
+            <field name="condition_type">product</field>
+            <field name="commission_rate">6.0</field>
+        </record>
+
+        <record id="demo_sale_commission_rule_3" model="sale.commission.rule">
+            <field name="commission_id" ref="kids_commission"/>
+            <field name="name">Kids Clothing Rule</field>
+            <field name="description">Commission rule for kids clothing</field>
+            <field name="condition_type">product</field>
+            <field name="commission_rate">5.0</field>
+        </record>
+
+        <record id="demo_sale_commission_rule_4" model="sale.commission.rule">
+            <field name="commission_id" ref="teen_commission"/>
+            <field name="name">Teen Clothing Rule</field>
+            <field name="description">Commission rule for teen clothing</field>
+            <field name="condition_type">product</field>
+            <field name="commission_rate">4.0</field>
+        </record>
+    </data>
+</odoo>

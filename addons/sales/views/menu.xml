@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Sales Menu -->
+        <menuitem id="menu_sales" name="Sales" sequence="10" web_icon="sales,static/description/icon.png"/>
+
+        <!-- Sales Orders Menu -->
+        <menuitem id="menu_sales_orders" name="Sales Orders" parent="menu_sales" sequence="10"/>
+        <menuitem id="menu_sales_order" name="Sales Orders" parent="menu_sales_orders" action="action_sale_order" sequence="10"/>
+        <menuitem id="menu_sales_quotations" name="Quotations" parent="menu_sales_orders" action="action_sale_quotation" sequence="20"/>
+        <menuitem id="menu_sales_deliveries" name="Deliveries" parent="menu_sales_orders" action="action_sale_delivery" sequence="30"/>
+        <menuitem id="menu_sales_returns" name="Returns" parent="menu_sales_orders" action="action_sale_return" sequence="40"/>
+
+        <!-- Sales Teams Menu -->
+        <menuitem id="menu_sales_teams" name="Sales Teams" parent="menu_sales" sequence="20"/>
+        <menuitem id="menu_sales_team" name="Teams" parent="menu_sales_teams" action="action_sale_team" sequence="10"/>
+        <menuitem id="menu_sales_team_member" name="Team Members" parent="menu_sales_teams" action="action_sale_team_member" sequence="20"/>
+
+        <!-- Sales Territories Menu -->
+        <menuitem id="menu_sales_territories" name="Sales Territories" parent="menu_sales" sequence="30"/>
+        <menuitem id="menu_sales_territory" name="Territories" parent="menu_sales_territories" action="action_sale_territory" sequence="10"/>
+
+        <!-- Sales Commissions Menu -->
+        <menuitem id="menu_sales_commissions" name="Sales Commissions" parent="menu_sales" sequence="40"/>
+        <menuitem id="menu_sales_commission" name="Commissions" parent="menu_sales_commissions" action="action_sale_commission" sequence="10"/>
+        <menuitem id="menu_sales_commission_rule" name="Commission Rules" parent="menu_sales_commissions" action="action_sale_commission_rule" sequence="20"/>
+
+        <!-- Sales Analytics Menu -->
+        <menuitem id="menu_sales_analytics" name="Sales Analytics" parent="menu_sales" sequence="50"/>
+        <menuitem id="menu_sale_analytics" name="Analytics" parent="menu_sales_analytics" action="action_sale_analytics" sequence="10"/>
+
+        <!-- Kids Clothing Specific Menus -->
+        <menuitem id="menu_kids_sales" name="Kids Sales" parent="menu_sales" sequence="60"/>
+        <menuitem id="menu_baby_sales" name="Baby Sales (0-2)" parent="menu_kids_sales" action="action_sale_order" sequence="10" context="{'search_default_baby': 1}"/>
+        <menuitem id="menu_toddler_sales" name="Toddler Sales (2-4)" parent="menu_kids_sales" action="action_sale_order" sequence="20" context="{'search_default_toddler': 1}"/>
+        <menuitem id="menu_kids_sales_orders" name="Kids Sales (4-12)" parent="menu_kids_sales" action="action_sale_order" sequence="30" context="{'search_default_kids': 1}"/>
+        <menuitem id="menu_teen_sales" name="Teen Sales (12-16)" parent="menu_kids_sales" action="action_sale_order" sequence="40" context="{'search_default_teen': 1}"/>
+
+        <!-- Gender Specific Menus -->
+        <menuitem id="menu_gender_sales" name="Gender Sales" parent="menu_sales" sequence="70"/>
+        <menuitem id="menu_boys_sales" name="Boys Sales" parent="menu_gender_sales" action="action_sale_order" sequence="10" context="{'search_default_boys': 1}"/>
+        <menuitem id="menu_girls_sales" name="Girls Sales" parent="menu_gender_sales" action="action_sale_order" sequence="20" context="{'search_default_girls': 1}"/>
+        <menuitem id="menu_unisex_sales" name="Unisex Sales" parent="menu_gender_sales" action="action_sale_order" sequence="30" context="{'search_default_unisex': 1}"/>
+
+        <!-- Season Specific Menus -->
+        <menuitem id="menu_season_sales" name="Season Sales" parent="menu_sales" sequence="80"/>
+        <menuitem id="menu_summer_sales" name="Summer Sales" parent="menu_season_sales" action="action_sale_order" sequence="10" context="{'search_default_summer': 1}"/>
+        <menuitem id="menu_winter_sales" name="Winter Sales" parent="menu_season_sales" action="action_sale_order" sequence="20" context="{'search_default_winter': 1}"/>
+        <menuitem id="menu_monsoon_sales" name="Monsoon Sales" parent="menu_season_sales" action="action_sale_order" sequence="30" context="{'search_default_monsoon': 1}"/>
+
+        <!-- Sales Reports Menu -->
+        <menuitem id="menu_sales_reports" name="Sales Reports" parent="menu_sales" sequence="90"/>
+        <menuitem id="menu_sales_performance" name="Sales Performance" parent="menu_sales_reports" action="action_sale_analytics" sequence="10"/>
+        <menuitem id="menu_team_performance" name="Team Performance" parent="menu_sales_reports" action="action_sale_team" sequence="20"/>
+        <menuitem id="menu_territory_performance" name="Territory Performance" parent="menu_sales_reports" action="action_sale_territory" sequence="30"/>
+        <menuitem id="menu_commission_reports" name="Commission Reports" parent="menu_sales_reports" action="action_sale_commission" sequence="40"/>
+
+        <!-- Sales Configuration Menu -->
+        <menuitem id="menu_sales_config" name="Sales Configuration" parent="menu_sales" sequence="100"/>
+        <menuitem id="menu_sales_config_teams" name="Sales Teams" parent="menu_sales_config" action="action_sale_team" sequence="10"/>
+        <menuitem id="menu_sales_config_territories" name="Sales Territories" parent="menu_sales_config" action="action_sale_territory" sequence="20"/>
+        <menuitem id="menu_sales_config_commissions" name="Sales Commissions" parent="menu_sales_config" action="action_sale_commission" sequence="30"/>
+        <menuitem id="menu_sales_config_commission_rules" name="Commission Rules" parent="menu_sales_config" action="action_sale_commission_rule" sequence="40"/>
+    </data>
+</odoo>

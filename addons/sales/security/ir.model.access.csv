@@ -1,0 +1,15 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sale_order,access_sale_order,model_sale_order,base.group_user,1,1,1,1
+access_sale_order_line,access_sale_order_line,model_sale_order_line,base.group_user,1,1,1,1
+access_sale_quotation,access_sale_quotation,model_sale_quotation,base.group_user,1,1,1,1
+access_sale_quotation_line,access_sale_quotation_line,model_sale_quotation_line,base.group_user,1,1,1,1
+access_sale_delivery,access_sale_delivery,model_sale_delivery,base.group_user,1,1,1,1
+access_sale_delivery_line,access_sale_delivery_line,model_sale_delivery_line,base.group_user,1,1,1,1
+access_sale_return,access_sale_return,model_sale_return,base.group_user,1,1,1,1
+access_sale_return_line,access_sale_return_line,model_sale_return_line,base.group_user,1,1,1,1
+access_sale_team,access_sale_team,model_sale_team,base.group_user,1,1,1,1
+access_sale_team_member,access_sale_team_member,model_sale_team_member,base.group_user,1,1,1,1
+access_sale_territory,access_sale_territory,model_sale_territory,base.group_user,1,1,1,1
+access_sale_commission,access_sale_commission,model_sale_commission,base.group_user,1,1,1,1
+access_sale_commission_rule,access_sale_commission_rule,model_sale_commission_rule,base.group_user,1,1,1,1
+access_sale_analytics,access_sale_analytics,model_sale_analytics,base.group_user,1,1,1,1

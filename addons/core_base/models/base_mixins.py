@@ -1,109 +1,114 @@
 # -*- coding: utf-8 -*-
+"""
+Kids Clothing ERP - Core Base - Base Mixins
+==========================================
 
-from odoo import models, fields, api, _
-from odoo.exceptions import ValidationError
+Standalone version of the base mixins for Kids Clothing ERP models.
+"""
+
+from core_framework.orm import BaseModel, CharField, TextField, BooleanField, IntegerField, DateTimeField, Many2OneField, SelectionField, FloatField
+from core_framework.orm import Field
+from typing import Dict, Any, Optional
 import logging
+from datetime import datetime
 
-_logger = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
 
-
-class KidsClothingMixin(models.AbstractModel):
+class KidsClothingMixin(BaseModel):
     """Base mixin for Kids Clothing ERP models"""
     
     _name = 'kids.clothing.mixin'
     _description = 'Kids Clothing Base Mixin'
+    _abstract = True
     
     # Common fields for all models
-    active = fields.Boolean(
+    active = BooleanField(
         string='Active',
         default=True,
         help='Set to false to hide the record without removing it'
     )
     
-    notes = fields.Text(
+    notes = TextField(
         string='Notes',
         help='Additional notes or comments'
     )
     
-    created_by = fields.Many2one(
-        'res.users',
+    created_by = IntegerField(
         string='Created By',
-        default=lambda self: self.env.user,
-        readonly=True,
+        default=1,  # Default to admin user
         help='User who created this record'
     )
     
-    created_date = fields.Datetime(
+    created_date = DateTimeField(
         string='Created Date',
-        default=fields.Datetime.now,
-        readonly=True,
+        default=datetime.now,
         help='Date and time when this record was created'
     )
     
-    updated_by = fields.Many2one(
-        'res.users',
+    updated_by = IntegerField(
         string='Updated By',
-        readonly=True,
         help='User who last updated this record'
     )
     
-    updated_date = fields.Datetime(
+    updated_date = DateTimeField(
         string='Updated Date',
-        readonly=True,
         help='Date and time when this record was last updated'
     )
     
-    @api.model
-    def create(self, vals):
+    def create(self, vals: Dict[str, Any]):
         """Override create to set created_by and created_date"""
         if 'created_by' not in vals:
-            vals['created_by'] = self.env.user.id
+            vals['created_by'] = 1  # Default to admin user
         if 'created_date' not in vals:
-            vals['created_date'] = fields.Datetime.now()
+            vals['created_date'] = datetime.now()
         
-        result = super(KidsClothingMixin, self).create(vals)
+        result = super().create(vals)
         return result
     
-    def write(self, vals):
+    def write(self, vals: Dict[str, Any]):
         """Override write to set updated_by and updated_date"""
-        vals['updated_by'] = self.env.user.id
-        vals['updated_date'] = fields.Datetime.now()
+        vals['updated_by'] = 1  # Default to admin user
+        vals['updated_date'] = datetime.now()
         
-        result = super(KidsClothingMixin, self).write(vals)
+        result = super().write(vals)
         return result
     
     def unlink(self):
         """Override unlink to add logging"""
-        _logger.info(f"Deleting {self._name} records: {self.ids}")
-        return super(KidsClothingMixin, self).unlink()
+        logger.info(f"Deleting {self._name} records: {self._ids}")
+        return super().unlink()
 
 
-class AgeGroupMixin(models.AbstractModel):
+class AgeGroupMixin(BaseModel):
     """Mixin for age group functionality"""
     
     _name = 'age.group.mixin'
     _description = 'Age Group Mixin'
+    _abstract = True
     
-    age_group = fields.Selection([
-        ('newborn', 'Newborn (0-6 months)'),
-        ('infant', 'Infant (6-12 months)'),
-        ('toddler', 'Toddler (1-3 years)'),
-        ('preschool', 'Preschool (3-5 years)'),
-        ('school', 'School Age (5-12 years)'),
-        ('teen', 'Teen (12-18 years)'),
-    ], string='Age Group', help='Age group for the product or customer')
+    age_group = SelectionField(
+        string='Age Group',
+        selection=[
+            ('newborn', 'Newborn (0-6 months)'),
+            ('infant', 'Infant (6-12 months)'),
+            ('toddler', 'Toddler (1-3 years)'),
+            ('preschool', 'Preschool (3-5 years)'),
+            ('school', 'School Age (5-12 years)'),
+            ('teen', 'Teen (12-18 years)'),
+        ],
+        help='Age group for the product or customer'
+    )
     
-    min_age = fields.Integer(
+    min_age = IntegerField(
         string='Minimum Age (months)',
         help='Minimum age in months'
     )
     
-    max_age = fields.Integer(
+    max_age = IntegerField(
         string='Maximum Age (months)',
         help='Maximum age in months'
     )
     
-    @api.onchange('age_group')
     def _onchange_age_group(self):
         """Set min/max age based on age group selection"""
         age_mapping = {
@@ -118,168 +123,175 @@ class AgeGroupMixin(models.AbstractModel):
         if self.age_group in age_mapping:
             self.min_age, self.max_age = age_mapping[self.age_group]
     
-    @api.constrains('min_age', 'max_age')
     def _check_age_range(self):
         """Validate age range"""
-        for record in self:
-            if record.min_age and record.max_age and record.min_age >= record.max_age:
-                raise ValidationError(_('Minimum age must be less than maximum age'))
+        if self.min_age and self.max_age and self.min_age >= self.max_age:
+            raise ValueError('Minimum age must be less than maximum age')
 
 
-class GenderMixin(models.AbstractModel):
+class GenderMixin(BaseModel):
     """Mixin for gender functionality"""
     
     _name = 'gender.mixin'
     _description = 'Gender Mixin'
+    _abstract = True
     
-    gender = fields.Selection([
-        ('unisex', 'Unisex'),
-        ('boys', 'Boys'),
-        ('girls', 'Girls'),
-    ], string='Gender', default='unisex', help='Gender category for the product')
+    gender = SelectionField(
+        string='Gender',
+        selection=[
+            ('unisex', 'Unisex'),
+            ('boys', 'Boys'),
+            ('girls', 'Girls'),
+        ],
+        default='unisex',
+        help='Gender category for the product'
+    )
     
-    @api.constrains('gender')
     def _check_gender(self):
         """Validate gender selection"""
-        for record in self:
-            if not record.gender:
-                raise ValidationError(_('Gender must be selected'))
+        if not self.gender:
+            raise ValueError('Gender must be selected')
 
 
-class SeasonMixin(models.AbstractModel):
+class SeasonMixin(BaseModel):
     """Mixin for season functionality"""
     
     _name = 'season.mixin'
     _description = 'Season Mixin'
+    _abstract = True
     
-    season = fields.Selection([
-        ('summer', 'Summer'),
-        ('winter', 'Winter'),
-        ('monsoon', 'Monsoon'),
-        ('all_season', 'All Season'),
-    ], string='Season', default='all_season', help='Season for the product')
+    season = SelectionField(
+        string='Season',
+        selection=[
+            ('summer', 'Summer'),
+            ('winter', 'Winter'),
+            ('monsoon', 'Monsoon'),
+            ('all_season', 'All Season'),
+        ],
+        default='all_season',
+        help='Season for the product'
+    )
     
-    @api.constrains('season')
     def _check_season(self):
         """Validate season selection"""
-        for record in self:
-            if not record.season:
-                raise ValidationError(_('Season must be selected'))
+        if not self.season:
+            raise ValueError('Season must be selected')
 
 
-class SizeMixin(models.AbstractModel):
+class SizeMixin(BaseModel):
     """Mixin for size functionality"""
     
     _name = 'size.mixin'
     _description = 'Size Mixin'
+    _abstract = True
     
-    size = fields.Selection([
-        ('xs', 'XS'),
-        ('s', 'S'),
-        ('m', 'M'),
-        ('l', 'L'),
-        ('xl', 'XL'),
-        ('xxl', 'XXL'),
-        ('xxxl', 'XXXL'),
-    ], string='Size', help='Size of the product')
+    size = SelectionField(
+        string='Size',
+        selection=[
+            ('xs', 'XS'),
+            ('s', 'S'),
+            ('m', 'M'),
+            ('l', 'L'),
+            ('xl', 'XL'),
+            ('xxl', 'XXL'),
+            ('xxxl', 'XXXL'),
+        ],
+        help='Size of the product'
+    )
     
-    size_type = fields.Selection([
-        ('age', 'Age-based'),
-        ('standard', 'Standard'),
-        ('custom', 'Custom'),
-    ], string='Size Type', default='age', help='Type of size measurement')
+    size_type = SelectionField(
+        string='Size Type',
+        selection=[
+            ('age', 'Age-based'),
+            ('standard', 'Standard'),
+            ('custom', 'Custom'),
+        ],
+        default='age',
+        help='Type of size measurement'
+    )
     
-    @api.constrains('size', 'size_type')
     def _check_size(self):
         """Validate size selection"""
-        for record in self:
-            if record.size_type == 'standard' and not record.size:
-                raise ValidationError(_('Size must be selected for standard size type'))
+        if self.size_type == 'standard' and not self.size:
+            raise ValueError('Size must be selected for standard size type')
 
 
-class ColorMixin(models.AbstractModel):
+class ColorMixin(BaseModel):
     """Mixin for color functionality"""
     
     _name = 'color.mixin'
     _description = 'Color Mixin'
+    _abstract = True
     
-    color = fields.Char(
+    color = CharField(
         string='Color',
+        size=100,
         help='Color of the product'
     )
     
-    color_code = fields.Char(
+    color_code = CharField(
         string='Color Code',
+        size=10,
         help='Hex color code (e.g., #FF0000)'
     )
     
-    @api.constrains('color_code')
     def _check_color_code(self):
         """Validate color code format"""
-        for record in self:
-            if record.color_code and not record.color_code.startswith('#'):
-                raise ValidationError(_('Color code must start with # (e.g., #FF0000)'))
+        if self.color_code and not self.color_code.startswith('#'):
+            raise ValueError('Color code must start with # (e.g., #FF0000)')
 
 
-class BrandMixin(models.AbstractModel):
+class BrandMixin(BaseModel):
     """Mixin for brand functionality"""
     
     _name = 'brand.mixin'
     _description = 'Brand Mixin'
+    _abstract = True
     
-    brand_id = fields.Many2one(
-        'product.brand',
-        string='Brand',
+    brand_id = IntegerField(
+        string='Brand ID',
         help='Brand of the product'
     )
     
-    brand_name = fields.Char(
-        related='brand_id.name',
+    brand_name = CharField(
         string='Brand Name',
-        readonly=True,
+        size=100,
         help='Name of the brand'
     )
 
 
-class PriceMixin(models.AbstractModel):
+class PriceMixin(BaseModel):
     """Mixin for price functionality"""
     
     _name = 'price.mixin'
     _description = 'Price Mixin'
+    _abstract = True
     
-    list_price = fields.Float(
+    list_price = FloatField(
         string='List Price',
-        digits='Product Price',
         help='List price of the product'
     )
     
-    cost_price = fields.Float(
+    cost_price = FloatField(
         string='Cost Price',
-        digits='Product Price',
         help='Cost price of the product'
     )
     
-    margin = fields.Float(
+    margin = FloatField(
         string='Margin (%)',
-        compute='_compute_margin',
-        store=True,
         help='Profit margin percentage'
     )
     
-    @api.depends('list_price', 'cost_price')
     def _compute_margin(self):
         """Compute profit margin"""
-        for record in self:
-            if record.list_price and record.cost_price:
-                record.margin = ((record.list_price - record.cost_price) / record.list_price) * 100
-            else:
-                record.margin = 0.0
+        if self.list_price and self.cost_price:
+            self.margin = ((self.list_price - self.cost_price) / self.list_price) * 100
+        else:
+            self.margin = 0.0
     
-    @api.constrains('list_price', 'cost_price')
     def _check_prices(self):
         """Validate prices"""
-        for record in self:
-            if record.list_price < 0 or record.cost_price < 0:
-                raise ValidationError(_('Prices cannot be negative'))
-            if record.cost_price > record.list_price:
-                raise ValidationError(_('Cost price cannot be higher than list price'))
+        if self.list_price < 0 or self.cost_price < 0:
+            raise ValueError('Prices cannot be negative')
+        if self.cost_price > self.list_price:
+            raise ValueError('Cost price cannot be higher than list price')

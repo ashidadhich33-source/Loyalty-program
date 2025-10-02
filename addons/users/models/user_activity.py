@@ -1,496 +1,308 @@
 # -*- coding: utf-8 -*-
+"""
+Kids Clothing ERP - Users - User Activity
+========================================
 
-from odoo import models, fields, api, _
-from odoo.exceptions import ValidationError
+Standalone version of the user activity model.
+"""
+
+from core_framework.orm import BaseModel, CharField, TextField, BooleanField, IntegerField, DateTimeField, Many2OneField, SelectionField
+from core_framework.orm import Field
+from typing import Dict, Any, Optional
 import logging
+from datetime import datetime
 
-_logger = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
 
-
-class UserActivity(models.Model):
-    """User activity tracking model for Kids Clothing ERP"""
+class UserActivity(BaseModel):
+    """User activity model for Kids Clothing ERP"""
     
     _name = 'user.activity'
     _description = 'User Activity'
-    _order = 'create_date desc'
+    _table = 'user_activity'
     
-    # Basic fields
-    user_id = fields.Many2one(
-        'res.users',
-        string='User',
+    # Basic activity information
+    user_id = IntegerField(
+        string='User ID',
         required=True,
         help='User who performed the activity'
     )
     
-    activity_type = fields.Selection([
-        ('login', 'Login'),
-        ('logout', 'Logout'),
-        ('create', 'Create'),
-        ('update', 'Update'),
-        ('delete', 'Delete'),
-        ('read', 'Read'),
-        ('search', 'Search'),
-        ('export', 'Export'),
-        ('import', 'Import'),
-        ('print', 'Print'),
-        ('email', 'Email'),
-        ('sms', 'SMS'),
-        ('notification', 'Notification'),
-        ('security', 'Security'),
-        ('group_assignment', 'Group Assignment'),
-        ('group_removal', 'Group Removal'),
-        ('permission_grant', 'Permission Grant'),
-        ('permission_revoke', 'Permission Revoke'),
-        ('access_grant', 'Access Grant'),
-        ('access_revoke', 'Access Revoke'),
-        ('password_change', 'Password Change'),
-        ('password_reset', 'Password Reset'),
-        ('account_lock', 'Account Lock'),
-        ('account_unlock', 'Account Unlock'),
-        ('profile_update', 'Profile Update'),
-        ('preference_change', 'Preference Change'),
-        ('system_access', 'System Access'),
-        ('data_access', 'Data Access'),
-        ('report_generation', 'Report Generation'),
-        ('backup', 'Backup'),
-        ('restore', 'Restore'),
-        ('other', 'Other'),
-    ], string='Activity Type', required=True, help='Type of activity')
-    
-    description = fields.Text(
-        string='Description',
+    activity_type = SelectionField(
+        string='Activity Type',
+        selection=[
+            ('login', 'Login'),
+            ('logout', 'Logout'),
+            ('create', 'Create'),
+            ('update', 'Update'),
+            ('delete', 'Delete'),
+            ('view', 'View'),
+            ('search', 'Search'),
+            ('export', 'Export'),
+            ('import', 'Import'),
+            ('security', 'Security'),
+            ('group_assignment', 'Group Assignment'),
+            ('group_removal', 'Group Removal'),
+            ('permission_change', 'Permission Change'),
+            ('password_change', 'Password Change'),
+            ('profile_update', 'Profile Update'),
+            ('system_access', 'System Access'),
+        ],
         required=True,
-        help='Description of the activity'
+        help='Type of activity'
+    )
+    
+    description = TextField(
+        string='Description',
+        help='Activity description'
     )
     
     # Activity details
-    model_name = fields.Char(
-        string='Model',
+    model_name = CharField(
+        string='Model Name',
+        size=100,
         help='Model involved in the activity'
     )
     
-    record_id = fields.Integer(
+    record_id = IntegerField(
         string='Record ID',
-        help='ID of the record involved in the activity'
+        help='Record involved in the activity'
     )
     
-    record_name = fields.Char(
-        string='Record Name',
-        help='Name of the record involved in the activity'
-    )
-    
-    # Activity context
-    ip_address = fields.Char(
+    # Activity metadata
+    ip_address = CharField(
         string='IP Address',
+        size=45,
         help='IP address of the user'
     )
     
-    user_agent = fields.Text(
+    user_agent = TextField(
         string='User Agent',
         help='User agent string'
     )
     
-    session_id = fields.Char(
+    session_id = CharField(
         string='Session ID',
+        size=100,
         help='Session ID'
     )
     
-    # Activity data
-    old_values = fields.Text(
-        string='Old Values',
-        help='Old values (JSON format)'
-    )
-    
-    new_values = fields.Text(
-        string='New Values',
-        help='New values (JSON format)'
-    )
-    
-    # Activity status
-    status = fields.Selection([
-        ('success', 'Success'),
-        ('failed', 'Failed'),
-        ('warning', 'Warning'),
-        ('info', 'Info'),
-    ], string='Status', default='success', help='Status of the activity')
-    
-    error_message = fields.Text(
-        string='Error Message',
-        help='Error message if activity failed'
-    )
-    
     # Activity timing
-    duration = fields.Float(
+    activity_date = DateTimeField(
+        string='Activity Date',
+        default=datetime.now,
+        help='Date and time of the activity'
+    )
+    
+    duration = IntegerField(
         string='Duration (seconds)',
         help='Duration of the activity in seconds'
     )
     
-    start_time = fields.Datetime(
-        string='Start Time',
-        help='Start time of the activity'
+    # Activity status
+    is_successful = BooleanField(
+        string='Successful',
+        default=True,
+        help='Whether the activity was successful'
     )
     
-    end_time = fields.Datetime(
-        string='End Time',
-        help='End time of the activity'
+    error_message = TextField(
+        string='Error Message',
+        help='Error message if activity failed'
     )
-    
-    # Activity location
-    location = fields.Char(
-        string='Location',
-        help='Location of the activity'
-    )
-    
-    country = fields.Char(
-        string='Country',
-        help='Country of the activity'
-    )
-    
-    city = fields.Char(
-        string='City',
-        help='City of the activity'
-    )
-    
-    # Activity device
-    device_type = fields.Selection([
-        ('desktop', 'Desktop'),
-        ('tablet', 'Tablet'),
-        ('mobile', 'Mobile'),
-        ('other', 'Other'),
-    ], string='Device Type', help='Type of device used')
-    
-    browser = fields.Char(
-        string='Browser',
-        help='Browser used'
-    )
-    
-    operating_system = fields.Char(
-        string='Operating System',
-        help='Operating system used'
-    )
-    
-    # Activity severity
-    severity = fields.Selection([
-        ('low', 'Low'),
-        ('medium', 'Medium'),
-        ('high', 'High'),
-        ('critical', 'Critical'),
-    ], string='Severity', default='low', help='Severity of the activity')
     
     # Activity category
-    category = fields.Selection([
-        ('authentication', 'Authentication'),
-        ('authorization', 'Authorization'),
-        ('data_access', 'Data Access'),
-        ('data_modification', 'Data Modification'),
-        ('system_administration', 'System Administration'),
-        ('user_management', 'User Management'),
-        ('security', 'Security'),
-        ('reporting', 'Reporting'),
-        ('communication', 'Communication'),
-        ('other', 'Other'),
-    ], string='Category', default='other', help='Category of the activity')
-    
-    # Activity tags
-    tags = fields.Char(
-        string='Tags',
-        help='Comma-separated tags for the activity'
+    category = SelectionField(
+        string='Category',
+        selection=[
+            ('authentication', 'Authentication'),
+            ('data_access', 'Data Access'),
+            ('data_modification', 'Data Modification'),
+            ('system_administration', 'System Administration'),
+            ('security', 'Security'),
+            ('reporting', 'Reporting'),
+            ('communication', 'Communication'),
+            ('other', 'Other'),
+        ],
+        default='other',
+        help='Activity category'
     )
     
-    # Activity metadata
-    metadata = fields.Text(
-        string='Metadata',
-        help='Additional metadata (JSON format)'
+    # Activity priority
+    priority = SelectionField(
+        string='Priority',
+        selection=[
+            ('low', 'Low'),
+            ('medium', 'Medium'),
+            ('high', 'High'),
+            ('critical', 'Critical'),
+        ],
+        default='medium',
+        help='Activity priority'
     )
     
-    @api.model
-    def create(self, vals):
+    def create(self, vals: Dict[str, Any]):
         """Override create to set default values"""
-        # Set start time if not provided
-        if 'start_time' not in vals:
-            vals['start_time'] = fields.Datetime.now()
+        # Set activity date if not provided
+        if 'activity_date' not in vals:
+            vals['activity_date'] = datetime.now()
         
-        # Set end time if not provided
-        if 'end_time' not in vals:
-            vals['end_time'] = fields.Datetime.now()
+        # Set category based on activity type
+        if 'category' not in vals:
+            category_mapping = {
+                'login': 'authentication',
+                'logout': 'authentication',
+                'create': 'data_modification',
+                'update': 'data_modification',
+                'delete': 'data_modification',
+                'view': 'data_access',
+                'search': 'data_access',
+                'export': 'data_access',
+                'import': 'data_modification',
+                'security': 'security',
+                'group_assignment': 'system_administration',
+                'group_removal': 'system_administration',
+                'permission_change': 'system_administration',
+                'password_change': 'security',
+                'profile_update': 'data_modification',
+                'system_access': 'system_administration',
+            }
+            vals['category'] = category_mapping.get(vals.get('activity_type', ''), 'other')
         
-        # Calculate duration if not provided
-        if 'duration' not in vals and 'start_time' in vals and 'end_time' in vals:
-            start = fields.Datetime.from_string(vals['start_time'])
-            end = fields.Datetime.from_string(vals['end_time'])
-            vals['duration'] = (end - start).total_seconds()
-        
-        return super(UserActivity, self).create(vals)
+        return super().create(vals)
     
-    def write(self, vals):
-        """Override write to handle activity updates"""
-        result = super(UserActivity, self).write(vals)
-        
-        # Update duration if start_time or end_time changed
-        if 'start_time' in vals or 'end_time' in vals:
-            for activity in self:
-                if activity.start_time and activity.end_time:
-                    start = fields.Datetime.from_string(activity.start_time)
-                    end = fields.Datetime.from_string(activity.end_time)
-                    activity.duration = (end - start).total_seconds()
-        
-        return result
-    
-    def get_activity_summary(self):
-        """Get activity summary"""
+    def get_activity_info(self):
+        """Get activity information"""
         return {
-            'user': self.user_id.name,
-            'type': self.activity_type,
-            'description': self.description,
-            'status': self.status,
-            'duration': self.duration,
-            'severity': self.severity,
-            'category': self.category,
-            'ip_address': self.ip_address,
-            'device_type': self.device_type,
-            'browser': self.browser,
-            'operating_system': self.operating_system,
-            'location': self.location,
-            'country': self.country,
-            'city': self.city,
-        }
-    
-    def get_activity_details(self):
-        """Get detailed activity information"""
-        return {
-            'id': self.id,
-            'user_id': self.user_id.id,
-            'user_name': self.user_id.name,
+            'user_id': self.user_id,
             'activity_type': self.activity_type,
             'description': self.description,
             'model_name': self.model_name,
             'record_id': self.record_id,
-            'record_name': self.record_name,
-            'status': self.status,
-            'error_message': self.error_message,
-            'duration': self.duration,
-            'start_time': self.start_time,
-            'end_time': self.end_time,
             'ip_address': self.ip_address,
-            'user_agent': self.user_agent,
-            'session_id': self.session_id,
-            'old_values': self.old_values,
-            'new_values': self.new_values,
-            'location': self.location,
-            'country': self.country,
-            'city': self.city,
-            'device_type': self.device_type,
-            'browser': self.browser,
-            'operating_system': self.operating_system,
-            'severity': self.severity,
+            'activity_date': self.activity_date,
+            'duration': self.duration,
+            'is_successful': self.is_successful,
             'category': self.category,
-            'tags': self.tags,
-            'metadata': self.metadata,
+            'priority': self.priority,
         }
     
-    @api.model
-    def get_user_activities(self, user_id, days=30):
-        """Get activities for a specific user"""
-        date_from = fields.Datetime.now() - timedelta(days=days)
-        
-        return self.search([
+    @classmethod
+    def get_activities_by_user(cls, user_id: int, limit: int = 100):
+        """Get activities by user"""
+        return cls.search([
             ('user_id', '=', user_id),
-            ('create_date', '>=', date_from),
-        ], order='create_date desc')
+        ], order='activity_date desc', limit=limit)
     
-    @api.model
-    def get_activities_by_type(self, activity_type, days=30):
+    @classmethod
+    def get_activities_by_type(cls, activity_type: str, limit: int = 100):
         """Get activities by type"""
-        date_from = fields.Datetime.now() - timedelta(days=days)
-        
-        return self.search([
+        return cls.search([
             ('activity_type', '=', activity_type),
-            ('create_date', '>=', date_from),
-        ], order='create_date desc')
+        ], order='activity_date desc', limit=limit)
     
-    @api.model
-    def get_activities_by_status(self, status, days=30):
-        """Get activities by status"""
-        date_from = fields.Datetime.now() - timedelta(days=days)
-        
-        return self.search([
-            ('status', '=', status),
-            ('create_date', '>=', date_from),
-        ], order='create_date desc')
-    
-    @api.model
-    def get_activities_by_severity(self, severity, days=30):
-        """Get activities by severity"""
-        date_from = fields.Datetime.now() - timedelta(days=days)
-        
-        return self.search([
-            ('severity', '=', severity),
-            ('create_date', '>=', date_from),
-        ], order='create_date desc')
-    
-    @api.model
-    def get_activities_by_category(self, category, days=30):
+    @classmethod
+    def get_activities_by_category(cls, category: str, limit: int = 100):
         """Get activities by category"""
-        date_from = fields.Datetime.now() - timedelta(days=days)
-        
-        return self.search([
+        return cls.search([
             ('category', '=', category),
-            ('create_date', '>=', date_from),
-        ], order='create_date desc')
+        ], order='activity_date desc', limit=limit)
     
-    @api.model
-    def get_activity_analytics(self, days=30):
-        """Get activity analytics"""
-        date_from = fields.Datetime.now() - timedelta(days=days)
+    @classmethod
+    def get_recent_activities(cls, hours: int = 24, limit: int = 100):
+        """Get recent activities"""
+        from datetime import timedelta
+        date_from = datetime.now() - timedelta(hours=hours)
         
-        activities = self.search([
-            ('create_date', '>=', date_from),
+        return cls.search([
+            ('activity_date', '>=', date_from),
+        ], order='activity_date desc', limit=limit)
+    
+    @classmethod
+    def get_failed_activities(cls, limit: int = 100):
+        """Get failed activities"""
+        return cls.search([
+            ('is_successful', '=', False),
+        ], order='activity_date desc', limit=limit)
+    
+    @classmethod
+    def get_activity_analytics(cls, days: int = 30):
+        """Get activity analytics"""
+        from datetime import timedelta
+        date_from = datetime.now() - timedelta(days=days)
+        
+        total_activities = cls.search_count([
+            ('activity_date', '>=', date_from),
         ])
         
-        # Count by type
-        type_counts = {}
-        for activity in activities:
-            type_counts[activity.activity_type] = type_counts.get(activity.activity_type, 0) + 1
+        successful_activities = cls.search_count([
+            ('activity_date', '>=', date_from),
+            ('is_successful', '=', True),
+        ])
         
-        # Count by status
-        status_counts = {}
-        for activity in activities:
-            status_counts[activity.status] = status_counts.get(activity.status, 0) + 1
+        failed_activities = cls.search_count([
+            ('activity_date', '>=', date_from),
+            ('is_successful', '=', False),
+        ])
         
-        # Count by severity
-        severity_counts = {}
-        for activity in activities:
-            severity_counts[activity.severity] = severity_counts.get(activity.severity, 0) + 1
-        
-        # Count by category
-        category_counts = {}
-        for activity in activities:
-            category_counts[activity.category] = category_counts.get(activity.category, 0) + 1
-        
-        # Count by user
-        user_counts = {}
-        for activity in activities:
-            user_counts[activity.user_id.name] = user_counts.get(activity.user_id.name, 0) + 1
+        # Get activities by type
+        activities_by_type = {}
+        for activity_type in ['login', 'logout', 'create', 'update', 'delete', 'view']:
+            count = cls.search_count([
+                ('activity_date', '>=', date_from),
+                ('activity_type', '=', activity_type),
+            ])
+            activities_by_type[activity_type] = count
         
         return {
-            'total_activities': len(activities),
-            'type_counts': type_counts,
-            'status_counts': status_counts,
-            'severity_counts': severity_counts,
-            'category_counts': category_counts,
-            'user_counts': user_counts,
-            'average_duration': sum(activities.mapped('duration')) / len(activities) if activities else 0,
-            'most_active_user': max(user_counts.items(), key=lambda x: x[1])[0] if user_counts else None,
-            'most_common_type': max(type_counts.items(), key=lambda x: x[1])[0] if type_counts else None,
+            'total_activities': total_activities,
+            'successful_activities': successful_activities,
+            'failed_activities': failed_activities,
+            'success_rate': (successful_activities / total_activities * 100) if total_activities > 0 else 0,
+            'activities_by_type': activities_by_type,
         }
     
-    @api.model
-    def get_security_activities(self, days=30):
-        """Get security-related activities"""
-        date_from = fields.Datetime.now() - timedelta(days=days)
+    @classmethod
+    def cleanup_old_activities(cls, days: int = 90):
+        """Cleanup old activities"""
+        from datetime import timedelta
+        date_from = datetime.now() - timedelta(days=days)
         
-        return self.search([
-            ('category', '=', 'security'),
-            ('create_date', '>=', date_from),
-        ], order='create_date desc')
-    
-    @api.model
-    def get_failed_activities(self, days=30):
-        """Get failed activities"""
-        date_from = fields.Datetime.now() - timedelta(days=days)
-        
-        return self.search([
-            ('status', '=', 'failed'),
-            ('create_date', '>=', date_from),
-        ], order='create_date desc')
-    
-    @api.model
-    def get_critical_activities(self, days=30):
-        """Get critical activities"""
-        date_from = fields.Datetime.now() - timedelta(days=days)
-        
-        return self.search([
-            ('severity', '=', 'critical'),
-            ('create_date', '>=', date_from),
-        ], order='create_date desc')
-    
-    @api.model
-    def cleanup_old_activities(self, days=365):
-        """Clean up old activities"""
-        date_from = fields.Datetime.now() - timedelta(days=days)
-        
-        old_activities = self.search([
-            ('create_date', '<', date_from),
+        old_activities = cls.search([
+            ('activity_date', '<', date_from),
         ])
         
-        count = len(old_activities)
+        deleted_count = len(old_activities)
         old_activities.unlink()
         
-        _logger.info(f"Cleaned up {count} old activities")
-        return count
+        logger.info(f"Cleaned up {deleted_count} old activities")
+        return deleted_count
     
-    @api.model
-    def export_activities(self, domain=None, limit=None):
-        """Export activities to CSV"""
-        if domain is None:
-            domain = []
+    def _check_activity_type(self):
+        """Validate activity type"""
+        valid_types = [
+            'login', 'logout', 'create', 'update', 'delete', 'view',
+            'search', 'export', 'import', 'security', 'group_assignment',
+            'group_removal', 'permission_change', 'password_change',
+            'profile_update', 'system_access'
+        ]
         
-        activities = self.search(domain, limit=limit)
+        if self.activity_type not in valid_types:
+            raise ValueError(f'Invalid activity type: {self.activity_type}')
+    
+    def _check_priority(self):
+        """Validate priority"""
+        valid_priorities = ['low', 'medium', 'high', 'critical']
+        if self.priority not in valid_priorities:
+            raise ValueError(f'Invalid priority: {self.priority}')
+    
+    def _check_category(self):
+        """Validate category"""
+        valid_categories = [
+            'authentication', 'data_access', 'data_modification',
+            'system_administration', 'security', 'reporting',
+            'communication', 'other'
+        ]
         
-        export_data = []
-        for activity in activities:
-            export_data.append({
-                'id': activity.id,
-                'user': activity.user_id.name,
-                'activity_type': activity.activity_type,
-                'description': activity.description,
-                'status': activity.status,
-                'duration': activity.duration,
-                'create_date': activity.create_date,
-                'ip_address': activity.ip_address,
-                'device_type': activity.device_type,
-                'browser': activity.browser,
-                'operating_system': activity.operating_system,
-                'location': activity.location,
-                'country': activity.country,
-                'city': activity.city,
-                'severity': activity.severity,
-                'category': activity.category,
-            })
-        
-        return export_data
-    
-    def action_mark_as_resolved(self):
-        """Mark activity as resolved"""
-        self.status = 'success'
-        return True
-    
-    def action_mark_as_failed(self):
-        """Mark activity as failed"""
-        self.status = 'failed'
-        return True
-    
-    def action_set_severity(self, severity):
-        """Set activity severity"""
-        self.severity = severity
-        return True
-    
-    def action_add_tag(self, tag):
-        """Add tag to activity"""
-        if self.tags:
-            tags = self.tags.split(',')
-            if tag not in tags:
-                tags.append(tag)
-                self.tags = ','.join(tags)
-        else:
-            self.tags = tag
-        return True
-    
-    def action_remove_tag(self, tag):
-        """Remove tag from activity"""
-        if self.tags:
-            tags = self.tags.split(',')
-            if tag in tags:
-                tags.remove(tag)
-                self.tags = ','.join(tags)
-        return True
+        if self.category not in valid_categories:
+            raise ValueError(f'Invalid category: {self.category}')

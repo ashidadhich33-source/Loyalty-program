@@ -1,447 +1,365 @@
 # -*- coding: utf-8 -*-
+"""
+Kids Clothing ERP - Users - Access Rights
+========================================
 
-from odoo import models, fields, api, _
-from odoo.exceptions import ValidationError
+Standalone version of the access rights model.
+"""
+
+from core_framework.orm import BaseModel, CharField, TextField, BooleanField, IntegerField, DateTimeField, Many2OneField, SelectionField
+from core_framework.orm import Field
+from typing import Dict, Any, Optional, List
 import logging
+from datetime import datetime
 
-_logger = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
 
-
-class AccessRights(models.Model):
+class AccessRights(BaseModel):
     """Access rights model for Kids Clothing ERP"""
     
     _name = 'access.rights'
     _description = 'Access Rights'
-    _order = 'name'
+    _table = 'access_rights'
     
-    # Basic fields
-    name = fields.Char(
-        string='Access Right Name',
+    # Basic access rights information
+    name = CharField(
+        string='Name',
+        size=100,
         required=True,
-        help='Name of the access right'
+        help='Access rights name'
     )
     
-    description = fields.Text(
+    description = TextField(
         string='Description',
-        help='Description of the access right'
+        help='Access rights description'
     )
     
-    code = fields.Char(
-        string='Code',
-        required=True,
-        help='Unique code for the access right'
-    )
-    
-    # Access right details
-    model_name = fields.Char(
-        string='Model',
+    model_name = CharField(
+        string='Model Name',
+        size=100,
         required=True,
         help='Model this access right applies to'
     )
     
-    access_type = fields.Selection([
-        ('read', 'Read'),
-        ('write', 'Write'),
-        ('create', 'Create'),
-        ('delete', 'Delete'),
-        ('admin', 'Administrator'),
-    ], string='Access Type', required=True, help='Type of access granted')
+    # Access control
+    group_id = IntegerField(
+        string='Group ID',
+        help='Group this access right applies to'
+    )
     
-    # Access right scope
-    scope = fields.Selection([
-        ('global', 'Global'),
-        ('company', 'Company'),
-        ('department', 'Department'),
-        ('user', 'User'),
-        ('record', 'Record'),
-    ], string='Scope', default='global', help='Scope of the access right')
+    user_id = IntegerField(
+        string='User ID',
+        help='User this access right applies to'
+    )
     
-    # Access right category
-    category = fields.Selection([
-        ('core', 'Core'),
-        ('sales', 'Sales'),
-        ('inventory', 'Inventory'),
-        ('accounting', 'Accounting'),
-        ('hr', 'Human Resources'),
-        ('pos', 'Point of Sale'),
-        ('reports', 'Reports'),
-        ('settings', 'Settings'),
-        ('custom', 'Custom'),
-    ], string='Category', default='custom', help='Access right category')
+    # Access permissions
+    perm_read = BooleanField(
+        string='Read Access',
+        default=False,
+        help='Read permission'
+    )
     
-    # Access right status
-    is_active = fields.Boolean(
+    perm_write = BooleanField(
+        string='Write Access',
+        default=False,
+        help='Write permission'
+    )
+    
+    perm_create = BooleanField(
+        string='Create Access',
+        default=False,
+        help='Create permission'
+    )
+    
+    perm_unlink = BooleanField(
+        string='Delete Access',
+        default=False,
+        help='Delete permission'
+    )
+    
+    # Access restrictions
+    domain_force = TextField(
+        string='Domain Force',
+        help='Domain restriction for access'
+    )
+    
+    active = BooleanField(
         string='Active',
         default=True,
         help='Whether the access right is active'
     )
     
-    is_system_right = fields.Boolean(
-        string='System Right',
-        default=False,
-        help='Whether this is a system access right (cannot be deleted)'
+    # Access rights category
+    category = SelectionField(
+        string='Category',
+        selection=[
+            ('core', 'Core'),
+            ('sales', 'Sales'),
+            ('inventory', 'Inventory'),
+            ('accounting', 'Accounting'),
+            ('hr', 'Human Resources'),
+            ('pos', 'Point of Sale'),
+            ('reports', 'Reports'),
+            ('settings', 'Settings'),
+            ('custom', 'Custom'),
+        ],
+        default='custom',
+        help='Access rights category'
     )
     
-    # Access right relationships
-    user_id = fields.Many2one(
-        'res.users',
-        string='User',
-        help='User this access right is assigned to'
+    # Access rights priority
+    priority = SelectionField(
+        string='Priority',
+        selection=[
+            ('low', 'Low'),
+            ('medium', 'Medium'),
+            ('high', 'High'),
+            ('critical', 'Critical'),
+        ],
+        default='medium',
+        help='Access rights priority'
     )
     
-    group_id = fields.Many2one(
-        'res.groups',
-        string='Group',
-        help='Group this access right is assigned to'
+    # Access rights metadata
+    created_by = IntegerField(
+        string='Created By',
+        help='User who created this access right'
     )
     
-    role_id = fields.Many2one(
-        'user.role',
-        string='Role',
-        help='Role this access right is assigned to'
+    created_date = DateTimeField(
+        string='Created Date',
+        default=datetime.now,
+        help='Date when access right was created'
     )
     
-    # Access right conditions
-    domain = fields.Text(
-        string='Domain',
-        help='Domain condition for record-level access'
+    updated_by = IntegerField(
+        string='Updated By',
+        help='User who last updated this access right'
     )
     
-    condition = fields.Text(
-        string='Condition',
-        help='Python condition to evaluate for access'
+    updated_date = DateTimeField(
+        string='Updated Date',
+        help='Date when access right was last updated'
     )
     
-    # Access right restrictions
-    ip_restrictions = fields.Text(
-        string='IP Restrictions',
-        help='Comma-separated list of allowed IP addresses'
-    )
-    
-    time_restrictions = fields.Text(
-        string='Time Restrictions',
-        help='Time restrictions for access (e.g., 9:00-17:00)'
-    )
-    
-    # Access right analytics
-    usage_count = fields.Integer(
-        string='Usage Count',
-        default=0,
-        help='Number of times this access right has been used'
-    )
-    
-    last_used = fields.Datetime(
-        string='Last Used',
-        help='When this access right was last used'
-    )
-    
-    # Access right dependencies
-    depends_on = fields.Many2many(
-        'access.rights',
-        'access_right_dependency_rel',
-        'access_right_id',
-        'dependency_id',
-        string='Depends On',
-        help='Access rights this access right depends on'
-    )
-    
-    required_by = fields.Many2many(
-        'access.rights',
-        'access_right_dependency_rel',
-        'dependency_id',
-        'access_right_id',
-        string='Required By',
-        help='Access rights that depend on this access right'
-    )
-    
-    @api.model
-    def create(self, vals):
+    def create(self, vals: Dict[str, Any]):
         """Override create to set default values"""
-        # Generate code if not provided
-        if 'code' not in vals and 'name' in vals:
-            vals['code'] = vals['name'].lower().replace(' ', '_').replace('-', '_')
+        # Set created date
+        if 'created_date' not in vals:
+            vals['created_date'] = datetime.now()
         
-        return super(AccessRights, self).create(vals)
+        # Set updated date
+        vals['updated_date'] = datetime.now()
+        
+        return super().create(vals)
     
-    def write(self, vals):
-        """Override write to handle access right updates"""
-        result = super(AccessRights, self).write(vals)
+    def write(self, vals: Dict[str, Any]):
+        """Override write to handle access rights updates"""
+        # Set updated date
+        vals['updated_date'] = datetime.now()
         
-        # Update last used timestamp
-        if vals:
-            self.last_used = fields.Datetime.now()
+        result = super().write(vals)
+        
+        # Log access rights updates
+        for access_right in self:
+            if vals:
+                logger.info(f"Access rights {access_right.name} updated: {', '.join(vals.keys())}")
         
         return result
     
-    def unlink(self):
-        """Override unlink to prevent deletion of system access rights"""
-        for access_right in self:
-            if access_right.is_system_right:
-                raise ValidationError(_('System access rights cannot be deleted'))
-        
-        return super(AccessRights, self).unlink()
-    
-    def check_access(self, user_id, record_id=None, context=None):
-        """Check if user has this access right"""
-        user = self.env['res.users'].browse(user_id)
-        
-        # Check if access right is active
-        if not self.is_active:
-            return False
-        
-        # Check if user is assigned to this access right
-        if self.user_id and self.user_id.id != user_id:
-            return False
-        
-        # Check if user is in the group
-        if self.group_id and self.group_id not in user.groups_id:
-            return False
-        
-        # Check if user has the role
-        if self.role_id and self.role_id not in user.role_ids:
-            return False
-        
-        # Check domain for record-level access
-        if self.domain and record_id:
-            try:
-                domain = eval(self.domain)
-                record = self.env[self.model_name].browse(record_id)
-                if not record.exists():
-                    return False
-                
-                # Check if record matches domain
-                if not self.env[self.model_name].search(domain + [('id', '=', record_id)]):
-                    return False
-            except Exception as e:
-                _logger.error(f"Error evaluating access right domain: {str(e)}")
-                return False
-        
-        # Check conditions
-        if self.condition:
-            try:
-                # Evaluate condition in user context
-                eval_context = {
-                    'user': user,
-                    'self': self,
-                    'record_id': record_id,
-                    'context': context or {},
-                }
-                if not eval(self.condition, eval_context):
-                    return False
-            except Exception as e:
-                _logger.error(f"Error evaluating access right condition: {str(e)}")
-                return False
-        
-        # Check IP restrictions
-        if self.ip_restrictions:
-            client_ip = context.get('ip_address') if context else None
-            if client_ip:
-                allowed_ips = [ip.strip() for ip in self.ip_restrictions.split(',')]
-                if client_ip not in allowed_ips:
-                    return False
-        
-        # Check time restrictions
-        if self.time_restrictions:
-            current_time = fields.Datetime.now().time()
-            # Parse time restrictions (e.g., "9:00-17:00")
-            # This would need more complex parsing logic
-            pass
-        
-        # Update usage statistics
-        self.usage_count += 1
-        self.last_used = fields.Datetime.now()
-        
-        return True
-    
-    def grant_access(self, user_id):
-        """Grant access right to user"""
-        self.ensure_one()
-        
-        user = self.env['res.users'].browse(user_id)
-        
-        # Add to user's access rights
-        if self not in user.access_rights:
-            user.access_rights = [(4, self.id)]
-            
-            # Log access grant
-            self.env['user.activity'].create({
-                'user_id': user_id,
-                'activity_type': 'access_grant',
-                'description': f'Access right granted: {self.name}',
-            })
-    
-    def revoke_access(self, user_id):
-        """Revoke access right from user"""
-        self.ensure_one()
-        
-        user = self.env['res.users'].browse(user_id)
-        
-        # Remove from user's access rights
-        if self in user.access_rights:
-            user.access_rights = [(3, self.id)]
-            
-            # Log access revocation
-            self.env['user.activity'].create({
-                'user_id': user_id,
-                'activity_type': 'access_revoke',
-                'description': f'Access right revoked: {self.name}',
-            })
-    
-    def get_access_users(self):
-        """Get all users with this access right"""
-        users = set()
-        
-        # Get users from direct assignment
-        if self.user_id:
-            users.add(self.user_id)
-        
-        # Get users from group
-        if self.group_id:
-            users.update(self.group_id.users)
-        
-        # Get users from role
-        if self.role_id:
-            users.update(self.role_id.users)
-        
-        return list(users)
-    
-    def get_access_statistics(self):
-        """Get access right statistics"""
+    def get_access_rights_info(self):
+        """Get access rights information"""
         return {
-            'usage_count': self.usage_count,
-            'last_used': self.last_used,
-            'is_active': self.is_active,
-            'is_system_right': self.is_system_right,
-            'access_type': self.access_type,
-            'scope': self.scope,
+            'name': self.name,
+            'description': self.description,
+            'model_name': self.model_name,
+            'group_id': self.group_id,
+            'user_id': self.user_id,
+            'perm_read': self.perm_read,
+            'perm_write': self.perm_write,
+            'perm_create': self.perm_create,
+            'perm_unlink': self.perm_unlink,
+            'domain_force': self.domain_force,
+            'active': self.active,
             'category': self.category,
-            'user_count': len(self.get_access_users()),
+            'priority': self.priority,
         }
     
-    @api.model
-    def get_access_rights_by_category(self, category):
-        """Get access rights by category"""
-        return self.search([
-            ('category', '=', category),
-            ('is_active', '=', True),
-        ])
+    def check_access(self, operation: str, user_id: int = None, group_id: int = None):
+        """Check if access is allowed for specific operation"""
+        # Check if access right is active
+        if not self.active:
+            return False
+        
+        # Check if it applies to the user or group
+        if user_id and self.user_id and self.user_id != user_id:
+            return False
+        
+        if group_id and self.group_id and self.group_id != group_id:
+            return False
+        
+        # Check specific permission
+        if operation == 'read':
+            return self.perm_read
+        elif operation == 'write':
+            return self.perm_write
+        elif operation == 'create':
+            return self.perm_create
+        elif operation == 'unlink':
+            return self.perm_unlink
+        else:
+            return False
     
-    @api.model
-    def get_access_rights_by_model(self, model_name):
+    def get_permissions(self):
+        """Get all permissions for this access right"""
+        permissions = []
+        
+        if self.perm_read:
+            permissions.append('read')
+        if self.perm_write:
+            permissions.append('write')
+        if self.perm_create:
+            permissions.append('create')
+        if self.perm_unlink:
+            permissions.append('unlink')
+        
+        return permissions
+    
+    @classmethod
+    def get_access_rights_by_model(cls, model_name: str):
         """Get access rights by model"""
-        return self.search([
+        return cls.search([
             ('model_name', '=', model_name),
-            ('is_active', '=', True),
+            ('active', '=', True),
         ])
     
-    @api.model
-    def get_system_access_rights(self):
-        """Get all system access rights"""
-        return self.search([
-            ('is_system_right', '=', True),
-            ('is_active', '=', True),
+    @classmethod
+    def get_access_rights_by_user(cls, user_id: int):
+        """Get access rights by user"""
+        return cls.search([
+            ('user_id', '=', user_id),
+            ('active', '=', True),
         ])
     
-    @api.model
-    def get_custom_access_rights(self):
-        """Get all custom access rights"""
-        return self.search([
-            ('is_system_right', '=', False),
-            ('is_active', '=', True),
+    @classmethod
+    def get_access_rights_by_group(cls, group_id: int):
+        """Get access rights by group"""
+        return cls.search([
+            ('group_id', '=', group_id),
+            ('active', '=', True),
         ])
     
-    @api.model
-    def get_access_right_analytics(self):
-        """Get access right analytics"""
-        total_access_rights = self.search_count([])
-        active_access_rights = self.search_count([('is_active', '=', True)])
-        system_access_rights = self.search_count([('is_system_right', '=', True)])
-        custom_access_rights = self.search_count([('is_system_right', '=', False)])
+    @classmethod
+    def check_user_access(cls, user_id: int, model_name: str, operation: str):
+        """Check if user has access to specific model and operation"""
+        # Check user-specific access rights
+        user_access = cls.search([
+            ('user_id', '=', user_id),
+            ('model_name', '=', model_name),
+            ('active', '=', True),
+        ])
+        
+        for access_right in user_access:
+            if access_right.check_access(operation, user_id=user_id):
+                return True
+        
+        # Check group-specific access rights
+        # In standalone version, we'll implement basic group checking
+        group_access = cls.search([
+            ('group_id', '!=', None),
+            ('model_name', '=', model_name),
+            ('active', '=', True),
+        ])
+        
+        for access_right in group_access:
+            if access_right.check_access(operation, group_id=access_right.group_id):
+                return True
+        
+        return False
+    
+    @classmethod
+    def get_access_rights_by_category(cls, category: str):
+        """Get access rights by category"""
+        return cls.search([
+            ('category', '=', category),
+            ('active', '=', True),
+        ])
+    
+    @classmethod
+    def get_access_rights_analytics(cls):
+        """Get access rights analytics"""
+        total_access_rights = cls.search_count([])
+        active_access_rights = cls.search_count([('active', '=', True)])
+        
+        # Get access rights by category
+        access_rights_by_category = {}
+        for category in ['core', 'sales', 'inventory', 'accounting', 'hr', 'pos', 'reports', 'settings', 'custom']:
+            count = cls.search_count([
+                ('category', '=', category),
+                ('active', '=', True),
+            ])
+            access_rights_by_category[category] = count
+        
+        # Get access rights by permission type
+        read_access = cls.search_count([('perm_read', '=', True), ('active', '=', True)])
+        write_access = cls.search_count([('perm_write', '=', True), ('active', '=', True)])
+        create_access = cls.search_count([('perm_create', '=', True), ('active', '=', True)])
+        delete_access = cls.search_count([('perm_unlink', '=', True), ('active', '=', True)])
         
         return {
             'total_access_rights': total_access_rights,
             'active_access_rights': active_access_rights,
-            'system_access_rights': system_access_rights,
-            'custom_access_rights': custom_access_rights,
             'inactive_access_rights': total_access_rights - active_access_rights,
-            'active_percentage': (active_access_rights / total_access_rights * 100) if total_access_rights > 0 else 0,
+            'access_rights_by_category': access_rights_by_category,
+            'read_access': read_access,
+            'write_access': write_access,
+            'create_access': create_access,
+            'delete_access': delete_access,
         }
     
-    @api.constrains('code')
-    def _check_code(self):
-        """Validate access right code"""
-        for access_right in self:
-            if access_right.code:
-                # Check for duplicate codes
-                existing = self.search([
-                    ('code', '=', access_right.code),
-                    ('id', '!=', access_right.id),
-                ])
-                if existing:
-                    raise ValidationError(_('Access right code must be unique'))
-    
-    @api.constrains('depends_on')
-    def _check_dependencies(self):
-        """Validate access right dependencies"""
-        for access_right in self:
-            if access_right in access_right.depends_on:
-                raise ValidationError(_('Access right cannot depend on itself'))
-            
-            # Check for circular dependencies
-            for dep in access_right.depends_on:
-                if access_right in dep.required_by:
-                    raise ValidationError(_('Circular dependency detected'))
-    
-    def action_activate(self):
-        """Activate access right"""
-        self.is_active = True
-        return True
-    
-    def action_deactivate(self):
-        """Deactivate access right"""
-        self.is_active = False
-        return True
-    
-    def action_duplicate(self):
-        """Duplicate access right"""
-        self.ensure_one()
+    def _check_access_rights_name(self):
+        """Validate access rights name"""
+        if not self.name:
+            raise ValueError('Access rights name is required')
         
-        new_access_right = self.copy({
-            'name': f'{self.name} (Copy)',
-            'code': f'{self.code}_copy',
-            'is_system_right': False,
-        })
-        
-        return {
-            'type': 'ir.actions.act_window',
-            'name': 'Duplicated Access Right',
-            'res_model': 'access.rights',
-            'res_id': new_access_right.id,
-            'view_mode': 'form',
-            'target': 'current',
-        }
+        # Check for duplicate names
+        existing = self.search([
+            ('name', '=', self.name),
+            ('id', '!=', self.id),
+        ])
+        if existing:
+            raise ValueError('Access rights name must be unique')
     
-    def action_export_access_right(self):
-        """Export access right definition"""
-        self.ensure_one()
+    def _check_model_name(self):
+        """Validate model name"""
+        if not self.model_name:
+            raise ValueError('Model name is required')
         
-        return {
-            'name': self.name,
-            'description': self.description,
-            'code': self.code,
-            'model_name': self.model_name,
-            'access_type': self.access_type,
-            'scope': self.scope,
-            'category': self.category,
-            'domain': self.domain,
-            'condition': self.condition,
-            'ip_restrictions': self.ip_restrictions,
-            'time_restrictions': self.time_restrictions,
-        }
+        # In standalone version, we'll do basic validation
+        if not self.model_name.replace('.', '').replace('_', '').isalnum():
+            raise ValueError('Invalid model name format')
     
-    def action_import_access_right(self, access_right_data):
-        """Import access right definition"""
-        self.ensure_one()
+    def _check_user_or_group(self):
+        """Validate that either user_id or group_id is set"""
+        if not self.user_id and not self.group_id:
+            raise ValueError('Either user_id or group_id must be set')
         
-        self.write(access_right_data)
-        return True
+        if self.user_id and self.group_id:
+            raise ValueError('Cannot set both user_id and group_id')
+    
+    def _check_permissions(self):
+        """Validate permissions"""
+        if not any([self.perm_read, self.perm_write, self.perm_create, self.perm_unlink]):
+            raise ValueError('At least one permission must be granted')
+    
+    def _check_priority(self):
+        """Validate priority"""
+        valid_priorities = ['low', 'medium', 'high', 'critical']
+        if self.priority not in valid_priorities:
+            raise ValueError(f'Invalid priority: {self.priority}')
+    
+    def _check_category(self):
+        """Validate category"""
+        valid_categories = ['core', 'sales', 'inventory', 'accounting', 'hr', 'pos', 'reports', 'settings', 'custom']
+        if self.category not in valid_categories:
+            raise ValueError(f'Invalid category: {self.category}')

@@ -1,174 +1,145 @@
 # -*- coding: utf-8 -*-
+"""
+Kids Clothing ERP - Users - User Permissions
+===========================================
 
-from odoo import models, fields, api, _
-from odoo.exceptions import ValidationError
+Standalone version of the user permissions model.
+"""
+
+from core_framework.orm import BaseModel, CharField, TextField, BooleanField, IntegerField, DateTimeField, Many2OneField, SelectionField
+from core_framework.orm import Field
+from typing import Dict, Any, Optional
 import logging
+from datetime import datetime
 
-_logger = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
 
-
-class UserPermissions(models.Model):
+class UserPermissions(BaseModel):
     """User permissions model for Kids Clothing ERP"""
     
     _name = 'user.permissions'
     _description = 'User Permissions'
-    _order = 'name'
+    _table = 'user_permissions'
     
-    # Basic fields
-    name = fields.Char(
-        string='Permission Name',
+    # Basic permission information
+    name = CharField(
+        string='Name',
+        size=100,
         required=True,
-        help='Name of the permission'
+        help='Permission name'
     )
     
-    description = fields.Text(
+    description = TextField(
         string='Description',
-        help='Description of the permission'
+        help='Permission description'
     )
     
-    code = fields.Char(
-        string='Code',
-        required=True,
-        help='Unique code for the permission'
-    )
-    
-    # Permission details
-    model_name = fields.Char(
-        string='Model',
+    model_name = CharField(
+        string='Model Name',
+        size=100,
         help='Model this permission applies to'
     )
     
-    access_level = fields.Selection([
-        ('read', 'Read'),
-        ('write', 'Write'),
-        ('create', 'Create'),
-        ('delete', 'Delete'),
-        ('admin', 'Administrator'),
-    ], string='Access Level', default='read', help='Level of access granted')
+    access_level = SelectionField(
+        string='Access Level',
+        selection=[
+            ('read', 'Read Only'),
+            ('write', 'Read/Write'),
+            ('create', 'Create'),
+            ('delete', 'Delete'),
+            ('admin', 'Administrator'),
+        ],
+        default='read',
+        help='Access level for this permission'
+    )
     
-    # Permission scope
-    scope = fields.Selection([
-        ('global', 'Global'),
-        ('company', 'Company'),
-        ('department', 'Department'),
-        ('user', 'User'),
-    ], string='Scope', default='global', help='Scope of the permission')
-    
-    # Permission category
-    category = fields.Selection([
-        ('core', 'Core'),
-        ('sales', 'Sales'),
-        ('inventory', 'Inventory'),
-        ('accounting', 'Accounting'),
-        ('hr', 'Human Resources'),
-        ('pos', 'Point of Sale'),
-        ('reports', 'Reports'),
-        ('settings', 'Settings'),
-        ('custom', 'Custom'),
-    ], string='Category', default='custom', help='Permission category')
-    
-    # Permission status
-    is_active = fields.Boolean(
+    # Permission settings
+    is_active = BooleanField(
         string='Active',
         default=True,
         help='Whether the permission is active'
     )
     
-    is_system_permission = fields.Boolean(
+    is_system_permission = BooleanField(
         string='System Permission',
         default=False,
-        help='Whether this is a system permission (cannot be deleted)'
+        help='Whether this is a system permission'
     )
     
-    # Permission relationships
-    user_id = fields.Many2one(
-        'res.users',
-        string='User',
-        help='User this permission is assigned to'
-    )
-    
-    group_ids = fields.Many2many(
-        'res.groups',
-        'group_permission_rel',
-        'permission_id',
-        'group_id',
-        string='Groups',
-        help='Groups this permission is assigned to'
-    )
-    
-    role_ids = fields.Many2many(
-        'user.role',
-        'role_permission_rel',
-        'permission_id',
-        'role_id',
-        string='Roles',
-        help='Roles this permission is assigned to'
-    )
-    
-    # Permission conditions
-    condition = fields.Text(
-        string='Condition',
-        help='Python condition to evaluate for permission'
+    # Permission category
+    category = SelectionField(
+        string='Category',
+        selection=[
+            ('core', 'Core'),
+            ('sales', 'Sales'),
+            ('inventory', 'Inventory'),
+            ('accounting', 'Accounting'),
+            ('hr', 'Human Resources'),
+            ('pos', 'Point of Sale'),
+            ('reports', 'Reports'),
+            ('settings', 'Settings'),
+            ('custom', 'Custom'),
+        ],
+        default='custom',
+        help='Permission category'
     )
     
     # Permission restrictions
-    ip_restrictions = fields.Text(
+    ip_restrictions = TextField(
         string='IP Restrictions',
         help='Comma-separated list of allowed IP addresses'
     )
     
-    time_restrictions = fields.Text(
+    time_restrictions = TextField(
         string='Time Restrictions',
-        help='Time restrictions for permission (e.g., 9:00-17:00)'
+        help='Time restrictions for permission access'
     )
     
-    # Permission analytics
-    usage_count = fields.Integer(
-        string='Usage Count',
-        default=0,
-        help='Number of times this permission has been used'
+    # Permission metadata
+    created_by = IntegerField(
+        string='Created By',
+        help='User who created this permission'
     )
     
-    last_used = fields.Datetime(
-        string='Last Used',
-        help='When this permission was last used'
+    created_date = DateTimeField(
+        string='Created Date',
+        default=datetime.now,
+        help='Date when permission was created'
     )
     
-    # Permission dependencies
-    depends_on = fields.Many2many(
-        'user.permissions',
-        'permission_dependency_rel',
-        'permission_id',
-        'dependency_id',
-        string='Depends On',
-        help='Permissions this permission depends on'
+    updated_by = IntegerField(
+        string='Updated By',
+        help='User who last updated this permission'
     )
     
-    required_by = fields.Many2many(
-        'user.permissions',
-        'permission_dependency_rel',
-        'dependency_id',
-        'permission_id',
-        string='Required By',
-        help='Permissions that depend on this permission'
+    updated_date = DateTimeField(
+        string='Updated Date',
+        help='Date when permission was last updated'
     )
     
-    @api.model
-    def create(self, vals):
+    def create(self, vals: Dict[str, Any]):
         """Override create to set default values"""
-        # Generate code if not provided
-        if 'code' not in vals and 'name' in vals:
-            vals['code'] = vals['name'].lower().replace(' ', '_').replace('-', '_')
+        # Set default category if not provided
+        if 'category' not in vals:
+            vals['category'] = 'custom'
         
-        return super(UserPermissions, self).create(vals)
+        # Set created date
+        if 'created_date' not in vals:
+            vals['created_date'] = datetime.now()
+        
+        return super().create(vals)
     
-    def write(self, vals):
+    def write(self, vals: Dict[str, Any]):
         """Override write to handle permission updates"""
-        result = super(UserPermissions, self).write(vals)
+        # Set updated date
+        vals['updated_date'] = datetime.now()
         
-        # Update last used timestamp
-        if vals:
-            self.last_used = fields.Datetime.now()
+        result = super().write(vals)
+        
+        # Log permission updates
+        for permission in self:
+            if vals:
+                logger.info(f"Permission {permission.name} updated: {', '.join(vals.keys())}")
         
         return result
     
@@ -176,210 +147,9 @@ class UserPermissions(models.Model):
         """Override unlink to prevent deletion of system permissions"""
         for permission in self:
             if permission.is_system_permission:
-                raise ValidationError(_('System permissions cannot be deleted'))
+                raise ValueError('System permissions cannot be deleted')
         
-        return super(UserPermissions, self).unlink()
-    
-    def check_permission(self, user_id, context=None):
-        """Check if user has this permission"""
-        user = self.env['res.users'].browse(user_id)
-        
-        # Check if permission is active
-        if not self.is_active:
-            return False
-        
-        # Check if user is assigned to this permission
-        if self.user_id and self.user_id.id != user_id:
-            return False
-        
-        # Check if user is in any of the groups
-        if self.group_ids:
-            user_groups = user.groups_id
-            if not any(group in user_groups for group in self.group_ids):
-                return False
-        
-        # Check if user has any of the roles
-        if self.role_ids:
-            user_roles = user.role_ids
-            if not any(role in user_roles for role in self.role_ids):
-                return False
-        
-        # Check conditions
-        if self.condition:
-            try:
-                # Evaluate condition in user context
-                eval_context = {
-                    'user': user,
-                    'self': self,
-                    'context': context or {},
-                }
-                if not eval(self.condition, eval_context):
-                    return False
-            except Exception as e:
-                _logger.error(f"Error evaluating permission condition: {str(e)}")
-                return False
-        
-        # Check IP restrictions
-        if self.ip_restrictions:
-            client_ip = context.get('ip_address') if context else None
-            if client_ip:
-                allowed_ips = [ip.strip() for ip in self.ip_restrictions.split(',')]
-                if client_ip not in allowed_ips:
-                    return False
-        
-        # Check time restrictions
-        if self.time_restrictions:
-            current_time = fields.Datetime.now().time()
-            # Parse time restrictions (e.g., "9:00-17:00")
-            # This would need more complex parsing logic
-            pass
-        
-        # Update usage statistics
-        self.usage_count += 1
-        self.last_used = fields.Datetime.now()
-        
-        return True
-    
-    def grant_permission(self, user_id):
-        """Grant permission to user"""
-        self.ensure_one()
-        
-        user = self.env['res.users'].browse(user_id)
-        
-        # Add to user's custom permissions
-        if self not in user.custom_permissions:
-            user.custom_permissions = [(4, self.id)]
-            
-            # Log permission grant
-            self.env['user.activity'].create({
-                'user_id': user_id,
-                'activity_type': 'permission_grant',
-                'description': f'Permission granted: {self.name}',
-            })
-    
-    def revoke_permission(self, user_id):
-        """Revoke permission from user"""
-        self.ensure_one()
-        
-        user = self.env['res.users'].browse(user_id)
-        
-        # Remove from user's custom permissions
-        if self in user.custom_permissions:
-            user.custom_permissions = [(3, self.id)]
-            
-            # Log permission revocation
-            self.env['user.activity'].create({
-                'user_id': user_id,
-                'activity_type': 'permission_revoke',
-                'description': f'Permission revoked: {self.name}',
-            })
-    
-    def get_permission_users(self):
-        """Get all users with this permission"""
-        users = set()
-        
-        # Get users from direct assignment
-        if self.user_id:
-            users.add(self.user_id)
-        
-        # Get users from groups
-        for group in self.group_ids:
-            users.update(group.users)
-        
-        # Get users from roles
-        for role in self.role_ids:
-            users.update(role.users)
-        
-        return list(users)
-    
-    def get_permission_statistics(self):
-        """Get permission statistics"""
-        return {
-            'usage_count': self.usage_count,
-            'last_used': self.last_used,
-            'is_active': self.is_active,
-            'is_system_permission': self.is_system_permission,
-            'access_level': self.access_level,
-            'scope': self.scope,
-            'category': self.category,
-            'user_count': len(self.get_permission_users()),
-            'group_count': len(self.group_ids),
-            'role_count': len(self.role_ids),
-        }
-    
-    @api.model
-    def get_permissions_by_category(self, category):
-        """Get permissions by category"""
-        return self.search([
-            ('category', '=', category),
-            ('is_active', '=', True),
-        ])
-    
-    @api.model
-    def get_permissions_by_model(self, model_name):
-        """Get permissions by model"""
-        return self.search([
-            ('model_name', '=', model_name),
-            ('is_active', '=', True),
-        ])
-    
-    @api.model
-    def get_system_permissions(self):
-        """Get all system permissions"""
-        return self.search([
-            ('is_system_permission', '=', True),
-            ('is_active', '=', True),
-        ])
-    
-    @api.model
-    def get_custom_permissions(self):
-        """Get all custom permissions"""
-        return self.search([
-            ('is_system_permission', '=', False),
-            ('is_active', '=', True),
-        ])
-    
-    @api.model
-    def get_permission_analytics(self):
-        """Get permission analytics"""
-        total_permissions = self.search_count([])
-        active_permissions = self.search_count([('is_active', '=', True)])
-        system_permissions = self.search_count([('is_system_permission', '=', True)])
-        custom_permissions = self.search_count([('is_system_permission', '=', False)])
-        
-        return {
-            'total_permissions': total_permissions,
-            'active_permissions': active_permissions,
-            'system_permissions': system_permissions,
-            'custom_permissions': custom_permissions,
-            'inactive_permissions': total_permissions - active_permissions,
-            'active_percentage': (active_permissions / total_permissions * 100) if total_permissions > 0 else 0,
-        }
-    
-    @api.constrains('code')
-    def _check_code(self):
-        """Validate permission code"""
-        for permission in self:
-            if permission.code:
-                # Check for duplicate codes
-                existing = self.search([
-                    ('code', '=', permission.code),
-                    ('id', '!=', permission.id),
-                ])
-                if existing:
-                    raise ValidationError(_('Permission code must be unique'))
-    
-    @api.constrains('depends_on')
-    def _check_dependencies(self):
-        """Validate permission dependencies"""
-        for permission in self:
-            if permission in permission.depends_on:
-                raise ValidationError(_('Permission cannot depend on itself'))
-            
-            # Check for circular dependencies
-            for dep in permission.depends_on:
-                if permission in dep.required_by:
-                    raise ValidationError(_('Circular dependency detected'))
+        return super().unlink()
     
     def action_activate(self):
         """Activate permission"""
@@ -391,45 +161,89 @@ class UserPermissions(models.Model):
         self.is_active = False
         return True
     
-    def action_duplicate(self):
-        """Duplicate permission"""
-        self.ensure_one()
-        
-        new_permission = self.copy({
-            'name': f'{self.name} (Copy)',
-            'code': f'{self.code}_copy',
-            'is_system_permission': False,
-        })
-        
-        return {
-            'type': 'ir.actions.act_window',
-            'name': 'Duplicated Permission',
-            'res_model': 'user.permissions',
-            'res_id': new_permission.id,
-            'view_mode': 'form',
-            'target': 'current',
-        }
-    
-    def action_export_permission(self):
-        """Export permission definition"""
-        self.ensure_one()
-        
+    def get_permission_info(self):
+        """Get permission information"""
         return {
             'name': self.name,
             'description': self.description,
-            'code': self.code,
             'model_name': self.model_name,
             'access_level': self.access_level,
-            'scope': self.scope,
             'category': self.category,
-            'condition': self.condition,
-            'ip_restrictions': self.ip_restrictions,
-            'time_restrictions': self.time_restrictions,
+            'is_active': self.is_active,
+            'is_system_permission': self.is_system_permission,
         }
     
-    def action_import_permission(self, permission_data):
-        """Import permission definition"""
-        self.ensure_one()
+    @classmethod
+    def get_permissions_by_category(cls, category: str):
+        """Get permissions by category"""
+        return cls.search([
+            ('category', '=', category),
+            ('is_active', '=', True),
+        ])
+    
+    @classmethod
+    def get_system_permissions(cls):
+        """Get all system permissions"""
+        return cls.search([
+            ('is_system_permission', '=', True),
+            ('is_active', '=', True),
+        ])
+    
+    @classmethod
+    def get_custom_permissions(cls):
+        """Get all custom permissions"""
+        return cls.search([
+            ('is_system_permission', '=', False),
+            ('is_active', '=', True),
+        ])
+    
+    @classmethod
+    def get_permissions_by_model(cls, model_name: str):
+        """Get permissions by model"""
+        return cls.search([
+            ('model_name', '=', model_name),
+            ('is_active', '=', True),
+        ])
+    
+    @classmethod
+    def get_permission_analytics(cls):
+        """Get permission analytics"""
+        total_permissions = cls.search_count([])
+        active_permissions = cls.search_count([('is_active', '=', True)])
+        system_permissions = cls.search_count([('is_system_permission', '=', True)])
+        custom_permissions = cls.search_count([('is_system_permission', '=', False)])
         
-        self.write(permission_data)
-        return True
+        return {
+            'total_permissions': total_permissions,
+            'active_permissions': active_permissions,
+            'system_permissions': system_permissions,
+            'custom_permissions': custom_permissions,
+            'inactive_permissions': total_permissions - active_permissions,
+            'active_percentage': (active_permissions / total_permissions * 100) if total_permissions > 0 else 0,
+        }
+    
+    def _check_permission_name(self):
+        """Validate permission name"""
+        if not self.name:
+            raise ValueError('Permission name is required')
+        
+        # Check for duplicate names
+        existing = self.search([
+            ('name', '=', self.name),
+            ('id', '!=', self.id),
+        ])
+        if existing:
+            raise ValueError('Permission name must be unique')
+    
+    def _check_access_level(self):
+        """Validate access level"""
+        valid_levels = ['read', 'write', 'create', 'delete', 'admin']
+        if self.access_level not in valid_levels:
+            raise ValueError(f'Invalid access level: {self.access_level}')
+    
+    def _check_model_name(self):
+        """Validate model name"""
+        if self.model_name:
+            # In standalone version, we'll do basic validation
+            if not self.model_name.replace('.', '').replace('_', '').isalnum():
+                raise ValueError('Invalid model name format')

@@ -1,167 +1,155 @@
 # -*- coding: utf-8 -*-
+"""
+Kids Clothing ERP - Company - Company Settings
+============================================
 
-from odoo import models, fields, api, _
-from odoo.exceptions import ValidationError
+Standalone version of the company settings model.
+"""
+
+from core_framework.orm import BaseModel, CharField, TextField, BooleanField, IntegerField, DateTimeField, Many2OneField, SelectionField, FloatField
+from core_framework.orm import Field
+from typing import Dict, Any, Optional
 import logging
+from datetime import datetime
 
-_logger = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
 
-
-class CompanySettings(models.Model):
+class CompanySettings(BaseModel):
     """Company settings model for Kids Clothing ERP"""
     
     _name = 'company.settings'
     _description = 'Company Settings'
-    _order = 'name'
+    _table = 'company_settings'
     
     # Basic fields
-    name = fields.Char(
+    name = CharField(
         string='Setting Name',
+        size=100,
         required=True,
         help='Name of the setting'
     )
     
-    key = fields.Char(
+    key = CharField(
         string='Setting Key',
+        size=100,
         required=True,
         help='Unique key for the setting'
     )
     
-    description = fields.Text(
+    value = TextField(
+        string='Setting Value',
+        help='Value of the setting'
+    )
+    
+    description = TextField(
         string='Description',
         help='Description of the setting'
     )
     
     # Company relationship
-    company_id = fields.Many2one(
-        'res.company',
-        string='Company',
+    company_id = IntegerField(
+        string='Company ID',
         required=True,
         help='Company this setting belongs to'
     )
     
-    # Setting details
-    value = fields.Text(
-        string='Value',
-        help='Value of the setting'
+    # Setting information
+    setting_type = SelectionField(
+        string='Setting Type',
+        selection=[
+            ('string', 'String'),
+            ('integer', 'Integer'),
+            ('float', 'Float'),
+            ('boolean', 'Boolean'),
+            ('json', 'JSON'),
+            ('list', 'List'),
+            ('dict', 'Dictionary'),
+        ],
+        default='string',
+        help='Type of the setting value'
     )
     
-    value_type = fields.Selection([
-        ('string', 'String'),
-        ('integer', 'Integer'),
-        ('float', 'Float'),
-        ('boolean', 'Boolean'),
-        ('json', 'JSON'),
-        ('date', 'Date'),
-        ('datetime', 'DateTime'),
-    ], string='Value Type', default='string', help='Type of the setting value')
-    
     # Setting category
-    category = fields.Selection([
-        ('general', 'General'),
-        ('financial', 'Financial'),
-        ('inventory', 'Inventory'),
-        ('sales', 'Sales'),
-        ('purchase', 'Purchase'),
-        ('hr', 'Human Resources'),
-        ('pos', 'Point of Sale'),
-        ('ecommerce', 'E-commerce'),
-        ('integration', 'Integration'),
-        ('security', 'Security'),
-        ('custom', 'Custom'),
-    ], string='Category', default='general', help='Category of the setting')
-    
-    # Setting scope
-    scope = fields.Selection([
-        ('company', 'Company'),
-        ('branch', 'Branch'),
-        ('location', 'Location'),
-        ('user', 'User'),
-    ], string='Scope', default='company', help='Scope of the setting')
+    category = SelectionField(
+        string='Category',
+        selection=[
+            ('general', 'General'),
+            ('financial', 'Financial'),
+            ('inventory', 'Inventory'),
+            ('sales', 'Sales'),
+            ('purchase', 'Purchase'),
+            ('hr', 'Human Resources'),
+            ('security', 'Security'),
+            ('integration', 'Integration'),
+            ('custom', 'Custom'),
+        ],
+        default='general',
+        help='Category of the setting'
+    )
     
     # Setting status
-    is_active = fields.Boolean(
+    is_active = BooleanField(
         string='Active',
         default=True,
         help='Whether the setting is active'
     )
     
-    is_system_setting = fields.Boolean(
+    is_system_setting = BooleanField(
         string='System Setting',
         default=False,
-        help='Whether this is a system setting (cannot be deleted)'
+        help='Whether this is a system setting'
     )
     
     # Setting validation
-    validation_rule = fields.Text(
-        string='Validation Rule',
-        help='Python validation rule for the setting value'
-    )
-    
-    default_value = fields.Text(
-        string='Default Value',
-        help='Default value for the setting'
-    )
-    
-    # Setting options
-    options = fields.Text(
-        string='Options',
-        help='Available options for the setting (JSON format)'
+    validation_rules = TextField(
+        string='Validation Rules',
+        help='JSON validation rules for this setting'
     )
     
     # Setting metadata
-    metadata = fields.Text(
-        string='Metadata',
-        help='Additional metadata for the setting (JSON format)'
+    created_by = IntegerField(
+        string='Created By',
+        help='User who created this setting'
     )
     
-    # Setting analytics
-    usage_count = fields.Integer(
-        string='Usage Count',
-        default=0,
-        help='Number of times this setting has been accessed'
+    created_date = DateTimeField(
+        string='Created Date',
+        default=datetime.now,
+        help='Date when setting was created'
     )
     
-    last_accessed = fields.Datetime(
-        string='Last Accessed',
-        help='When this setting was last accessed'
+    updated_by = IntegerField(
+        string='Updated By',
+        help='User who last updated this setting'
     )
     
-    # Setting dependencies
-    depends_on = fields.Many2many(
-        'company.settings',
-        'company_setting_dependency_rel',
-        'setting_id',
-        'dependency_id',
-        string='Depends On',
-        help='Settings this setting depends on'
+    updated_date = DateTimeField(
+        string='Updated Date',
+        help='Date when setting was last updated'
     )
     
-    required_by = fields.Many2many(
-        'company.settings',
-        'company_setting_dependency_rel',
-        'dependency_id',
-        'setting_id',
-        string='Required By',
-        help='Settings that depend on this setting'
-    )
-    
-    @api.model
-    def create(self, vals):
+    def create(self, vals: Dict[str, Any]):
         """Override create to set default values"""
-        # Set default value if not provided
-        if 'value' not in vals and 'default_value' in vals:
-            vals['value'] = vals['default_value']
+        # Set created date
+        if 'created_date' not in vals:
+            vals['created_date'] = datetime.now()
         
-        return super(CompanySettings, self).create(vals)
+        # Set updated date
+        vals['updated_date'] = datetime.now()
+        
+        return super().create(vals)
     
-    def write(self, vals):
+    def write(self, vals: Dict[str, Any]):
         """Override write to handle setting updates"""
-        result = super(CompanySettings, self).write(vals)
+        # Set updated date
+        vals['updated_date'] = datetime.now()
         
-        # Update last accessed timestamp
-        if vals:
-            self.last_accessed = fields.Datetime.now()
+        result = super().write(vals)
+        
+        # Log setting updates
+        for setting in self:
+            if vals:
+                logger.info(f"Setting {setting.name} updated: {', '.join(vals.keys())}")
         
         return result
     
@@ -169,280 +157,208 @@ class CompanySettings(models.Model):
         """Override unlink to prevent deletion of system settings"""
         for setting in self:
             if setting.is_system_setting:
-                raise ValidationError(_('System settings cannot be deleted'))
+                raise ValueError('System settings cannot be deleted')
         
-        return super(CompanySettings, self).unlink()
+        return super().unlink()
     
-    def get_value(self):
-        """Get setting value with type conversion"""
+    def get_setting_value(self):
+        """Get setting value with proper type conversion"""
         if not self.value:
-            return self.default_value
+            return None
         
         try:
-            if self.value_type == 'string':
-                return self.value
-            elif self.value_type == 'integer':
+            if self.setting_type == 'string':
+                return str(self.value)
+            elif self.setting_type == 'integer':
                 return int(self.value)
-            elif self.value_type == 'float':
+            elif self.setting_type == 'float':
                 return float(self.value)
-            elif self.value_type == 'boolean':
-                return self.value.lower() in ('true', '1', 'yes', 'on')
-            elif self.value_type == 'json':
+            elif self.setting_type == 'boolean':
+                return self.value.lower() in ['true', '1', 'yes', 'on']
+            elif self.setting_type in ['json', 'list', 'dict']:
                 import json
                 return json.loads(self.value)
-            elif self.value_type == 'date':
-                return fields.Date.from_string(self.value)
-            elif self.value_type == 'datetime':
-                return fields.Datetime.from_string(self.value)
             else:
                 return self.value
         except (ValueError, TypeError, json.JSONDecodeError) as e:
-            _logger.error(f"Error converting setting value: {str(e)}")
-            return self.default_value
+            logger.error(f"Error converting setting value: {e}")
+            return self.value
     
-    def set_value(self, value):
-        """Set setting value with type conversion"""
-        try:
-            if self.value_type == 'string':
-                self.value = str(value)
-            elif self.value_type == 'integer':
-                self.value = str(int(value))
-            elif self.value_type == 'float':
-                self.value = str(float(value))
-            elif self.value_type == 'boolean':
-                self.value = str(bool(value)).lower()
-            elif self.value_type == 'json':
-                import json
-                self.value = json.dumps(value)
-            elif self.value_type == 'date':
-                self.value = fields.Date.to_string(value)
-            elif self.value_type == 'datetime':
-                self.value = fields.Datetime.to_string(value)
-            else:
-                self.value = str(value)
-            
-            # Update usage statistics
-            self.usage_count += 1
-            self.last_accessed = fields.Datetime.now()
-            
-        except (ValueError, TypeError, json.JSONEncodeError) as e:
-            _logger.error(f"Error setting setting value: {str(e)}")
-            raise ValidationError(_('Invalid value for setting: %s') % str(e))
+    def set_setting_value(self, value):
+        """Set setting value with proper type conversion"""
+        if self.setting_type == 'string':
+            self.value = str(value)
+        elif self.setting_type == 'integer':
+            self.value = str(int(value))
+        elif self.setting_type == 'float':
+            self.value = str(float(value))
+        elif self.setting_type == 'boolean':
+            self.value = str(bool(value)).lower()
+        elif self.setting_type in ['json', 'list', 'dict']:
+            import json
+            self.value = json.dumps(value)
+        else:
+            self.value = str(value)
     
-    def validate_value(self, value):
+    def validate_setting_value(self):
         """Validate setting value"""
-        if self.validation_rule:
-            try:
-                # Evaluate validation rule
-                eval_context = {
-                    'value': value,
-                    'self': self,
-                    'setting': self,
-                }
-                if not eval(self.validation_rule, eval_context):
-                    raise ValidationError(_('Setting value validation failed'))
-            except Exception as e:
-                _logger.error(f"Error validating setting value: {str(e)}")
-                raise ValidationError(_('Setting value validation error: %s') % str(e))
+        if not self.validation_rules:
+            return True
         
-        return True
+        try:
+            import json
+            rules = json.loads(self.validation_rules)
+            value = self.get_setting_value()
+            
+            # Check required
+            if rules.get('required', False) and value is None:
+                raise ValueError(f'Setting {self.name} is required')
+            
+            # Check min/max for numeric values
+            if self.setting_type in ['integer', 'float']:
+                if 'min' in rules and value < rules['min']:
+                    raise ValueError(f'Setting {self.name} must be >= {rules["min"]}')
+                if 'max' in rules and value > rules['max']:
+                    raise ValueError(f'Setting {self.name} must be <= {rules["max"]}')
+            
+            # Check length for string values
+            if self.setting_type == 'string':
+                if 'min_length' in rules and len(value) < rules['min_length']:
+                    raise ValueError(f'Setting {self.name} must be at least {rules["min_length"]} characters')
+                if 'max_length' in rules and len(value) > rules['max_length']:
+                    raise ValueError(f'Setting {self.name} must be at most {rules["max_length"]} characters')
+            
+            # Check allowed values
+            if 'allowed_values' in rules and value not in rules['allowed_values']:
+                raise ValueError(f'Setting {self.name} must be one of: {rules["allowed_values"]}')
+            
+            return True
+            
+        except (ValueError, TypeError, json.JSONDecodeError) as e:
+            logger.error(f"Setting validation error: {e}")
+            return False
     
-    def get_options(self):
-        """Get setting options"""
-        if self.options:
-            try:
-                import json
-                return json.loads(self.options)
-            except json.JSONDecodeError:
-                return []
-        return []
-    
-    def get_metadata(self):
-        """Get setting metadata"""
-        if self.metadata:
-            try:
-                import json
-                return json.loads(self.metadata)
-            except json.JSONDecodeError:
-                return {}
-        return {}
-    
-    def set_metadata(self, metadata):
-        """Set setting metadata"""
-        import json
-        self.metadata = json.dumps(metadata)
-    
-    def get_setting_summary(self):
-        """Get setting summary"""
+    def get_setting_info(self):
+        """Get setting information"""
         return {
             'name': self.name,
             'key': self.key,
-            'value': self.get_value(),
-            'value_type': self.value_type,
+            'value': self.get_setting_value(),
+            'setting_type': self.setting_type,
             'category': self.category,
-            'scope': self.scope,
             'is_active': self.is_active,
-            'usage_count': self.usage_count,
-            'last_accessed': self.last_accessed,
+            'is_system_setting': self.is_system_setting,
+            'description': self.description,
+            'created_date': self.created_date,
+            'updated_date': self.updated_date,
         }
     
-    @api.model
-    def get_company_settings(self, company_id, category=None):
-        """Get settings for a specific company"""
+    @classmethod
+    def get_company_settings(cls, company_id: int, category: str = None):
+        """Get company settings"""
         domain = [('company_id', '=', company_id), ('is_active', '=', True)]
-        
         if category:
             domain.append(('category', '=', category))
         
-        return self.search(domain)
+        return cls.search(domain)
     
-    @api.model
-    def get_setting_by_key(self, company_id, key):
-        """Get setting by key for a specific company"""
-        return self.search([
+    @classmethod
+    def get_company_setting(cls, company_id: int, setting_key: str):
+        """Get specific company setting"""
+        setting = cls.search([
             ('company_id', '=', company_id),
-            ('key', '=', key),
+            ('key', '=', setting_key),
             ('is_active', '=', True),
         ], limit=1)
+        
+        return setting.get_setting_value() if setting else None
     
-    @api.model
-    def set_company_setting(self, company_id, key, value, value_type='string', category='general'):
+    @classmethod
+    def set_company_setting(cls, company_id: int, setting_key: str, value, setting_type: str = 'string', category: str = 'general'):
         """Set company setting"""
-        setting = self.get_setting_by_key(company_id, key)
+        setting = cls.search([
+            ('company_id', '=', company_id),
+            ('key', '=', setting_key),
+        ], limit=1)
         
         if setting:
-            setting.set_value(value)
+            setting.set_setting_value(value)
+            setting.setting_type = setting_type
+            setting.category = category
+            setting.updated_date = datetime.now()
         else:
-            self.create({
+            setting = cls.create({
                 'company_id': company_id,
-                'key': key,
-                'value': str(value),
-                'value_type': value_type,
+                'key': setting_key,
+                'setting_type': setting_type,
                 'category': category,
             })
+            setting.set_setting_value(value)
+        
+        return setting
     
-    @api.model
-    def get_company_setting(self, company_id, key, default=None):
-        """Get company setting value"""
-        setting = self.get_setting_by_key(company_id, key)
-        
-        if setting:
-            return setting.get_value()
-        else:
-            return default
-    
-    @api.model
-    def get_branch_settings(self, branch_id, category=None):
-        """Get settings for a specific branch"""
-        domain = [('scope', '=', 'branch'), ('is_active', '=', True)]
-        
-        if category:
-            domain.append(('category', '=', category))
-        
-        return self.search(domain)
-    
-    @api.model
-    def get_location_settings(self, location_id, category=None):
-        """Get settings for a specific location"""
-        domain = [('scope', '=', 'location'), ('is_active', '=', True)]
-        
-        if category:
-            domain.append(('category', '=', category))
-        
-        return self.search(domain)
-    
-    @api.model
-    def get_user_settings(self, user_id, category=None):
-        """Get settings for a specific user"""
-        domain = [('scope', '=', 'user'), ('is_active', '=', True)]
-        
-        if category:
-            domain.append(('category', '=', category))
-        
-        return self.search(domain)
-    
-    @api.model
-    def get_settings_by_category(self, category):
+    @classmethod
+    def get_settings_by_category(cls, category: str):
         """Get settings by category"""
-        return self.search([
+        return cls.search([
             ('category', '=', category),
             ('is_active', '=', True),
         ])
     
-    @api.model
-    def get_system_settings(self):
-        """Get all system settings"""
-        return self.search([
+    @classmethod
+    def get_system_settings(cls):
+        """Get system settings"""
+        return cls.search([
             ('is_system_setting', '=', True),
             ('is_active', '=', True),
         ])
     
-    @api.model
-    def get_custom_settings(self):
-        """Get all custom settings"""
-        return self.search([
+    @classmethod
+    def get_custom_settings(cls):
+        """Get custom settings"""
+        return cls.search([
             ('is_system_setting', '=', False),
             ('is_active', '=', True),
         ])
     
-    @api.model
-    def get_setting_analytics(self):
+    @classmethod
+    def get_setting_analytics(cls):
         """Get setting analytics"""
-        total_settings = self.search_count([])
-        active_settings = self.search_count([('is_active', '=', True)])
-        system_settings = self.search_count([('is_system_setting', '=', True)])
-        custom_settings = self.search_count([('is_system_setting', '=', False)])
-        
+        # In standalone version, we'll return mock data
         return {
-            'total_settings': total_settings,
-            'active_settings': active_settings,
-            'system_settings': system_settings,
-            'custom_settings': custom_settings,
-            'inactive_settings': total_settings - active_settings,
-            'active_percentage': (active_settings / total_settings * 100) if total_settings > 0 else 0,
+            'total_settings': 0,
+            'active_settings': 0,
+            'system_settings': 0,
+            'custom_settings': 0,
+            'inactive_settings': 0,
+            'settings_by_category': {},
         }
     
-    @api.constrains('key')
-    def _check_key(self):
+    def _check_setting_key(self):
         """Validate setting key"""
-        for setting in self:
-            if setting.key:
-                # Check for duplicate keys for the same company
-                existing = self.search([
-                    ('key', '=', setting.key),
-                    ('company_id', '=', setting.company_id.id),
-                    ('id', '!=', setting.id),
-                ])
-                if existing:
-                    raise ValidationError(_('Setting key must be unique for each company'))
+        if not self.key:
+            raise ValueError('Setting key is required')
+        
+        # Check for duplicate keys for the same company
+        existing = self.search([
+            ('company_id', '=', self.company_id),
+            ('key', '=', self.key),
+            ('id', '!=', self.id),
+        ])
+        if existing:
+            raise ValueError('Setting key must be unique for each company')
     
-    @api.constrains('depends_on')
-    def _check_dependencies(self):
-        """Validate setting dependencies"""
-        for setting in self:
-            if setting in setting.depends_on:
-                raise ValidationError(_('Setting cannot depend on itself'))
-            
-            # Check for circular dependencies
-            for dep in setting.depends_on:
-                if setting in dep.required_by:
-                    raise ValidationError(_('Circular dependency detected'))
+    def _check_setting_type(self):
+        """Validate setting type"""
+        valid_types = ['string', 'integer', 'float', 'boolean', 'json', 'list', 'dict']
+        if self.setting_type not in valid_types:
+            raise ValueError(f'Invalid setting type: {self.setting_type}')
     
-    def action_activate(self):
-        """Activate setting"""
-        self.is_active = True
-        return True
-    
-    def action_deactivate(self):
-        """Deactivate setting"""
-        self.is_active = False
-        return True
-    
-    def action_reset_to_default(self):
-        """Reset setting to default value"""
-        if self.default_value:
-            self.value = self.default_value
-        return True
+    def _check_category(self):
+        """Validate category"""
+        valid_categories = ['general', 'financial', 'inventory', 'sales', 'purchase', 'hr', 'security', 'integration', 'custom']
+        if self.category not in valid_categories:
+            raise ValueError(f'Invalid category: {self.category}')
     
     def action_duplicate(self):
         """Duplicate setting"""
@@ -454,33 +370,24 @@ class CompanySettings(models.Model):
             'is_system_setting': False,
         })
         
-        return {
-            'type': 'ir.actions.act_window',
-            'name': 'Duplicated Setting',
-            'res_model': 'company.settings',
-            'res_id': new_setting.id,
-            'view_mode': 'form',
-            'target': 'current',
-        }
+        return new_setting
     
     def action_export_setting(self):
-        """Export setting definition"""
+        """Export setting data"""
         self.ensure_one()
         
         return {
             'name': self.name,
             'key': self.key,
-            'value': self.value,
-            'value_type': self.value_type,
+            'value': self.get_setting_value(),
+            'setting_type': self.setting_type,
             'category': self.category,
-            'scope': self.scope,
-            'default_value': self.default_value,
-            'options': self.options,
-            'metadata': self.metadata,
+            'is_active': self.is_active,
+            'description': self.description,
         }
     
-    def action_import_setting(self, setting_data):
-        """Import setting definition"""
+    def action_import_setting(self, setting_data: Dict[str, Any]):
+        """Import setting data"""
         self.ensure_one()
         
         self.write(setting_data)

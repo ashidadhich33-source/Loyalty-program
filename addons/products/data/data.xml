@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        
+        <!-- Product Categories -->
+        <record id="product_category_babywear" model="product.category">
+            <field name="name">Babywear</field>
+            <field name="description">Clothing for babies (0-2 years)</field>
+            <field name="code">BABY</field>
+            <field name="age_group">0-2</field>
+            <field name="gender">unisex</field>
+            <field name="category_type">clothing</field>
+            <field name="active">True</field>
+            <field name="state">active</field>
+        </record>
+        
+        <record id="product_category_toddler" model="product.category">
+            <field name="name">Toddler</field>
+            <field name="description">Clothing for toddlers (2-4 years)</field>
+            <field name="code">TODDLER</field>
+            <field name="age_group">2-4</field>
+            <field name="gender">unisex</field>
+            <field name="category_type">clothing</field>
+            <field name="active">True</field>
+            <field name="state">active</field>
+        </record>
+        
+        <record id="product_category_kids" model="product.category">
+            <field name="name">Kids</field>
+            <field name="description">Clothing for kids (4-12 years)</field>
+            <field name="code">KIDS</field>
+            <field name="age_group">4-6</field>
+            <field name="gender">unisex</field>
+            <field name="category_type">clothing</field>
+            <field name="active">True</field>
+            <field name="state">active</field>
+        </record>
+        
+        <record id="product_category_teens" model="product.category">
+            <field name="name">Teens</field>
+            <field name="description">Clothing for teens (12-16 years)</field>
+            <field name="code">TEENS</field>
+            <field name="age_group">12-14</field>
+            <field name="gender">unisex</field>
+            <field name="category_type">clothing</field>
+            <field name="active">True</field>
+            <field name="state">active</field>
+        </record>
+        
+        <!-- Product Attributes -->
+        <record id="product_attribute_size" model="product.attribute">
+            <field name="name">Size</field>
+            <field name="description">Product size attribute</field>
+            <field name="code">SIZE</field>
+            <field name="attribute_type">size</field>
+            <field name="age_group">all</field>
+            <field name="gender">all</field>
+            <field name="active">True</field>
+            <field name="state">active</field>
+        </record>
+        
+        <record id="product_attribute_color" model="product.attribute">
+            <field name="name">Color</field>
+            <field name="description">Product color attribute</field>
+            <field name="code">COLOR</field>
+            <field name="attribute_type">color</field>
+            <field name="age_group">all</field>
+            <field name="gender">all</field>
+            <field name="active">True</field>
+            <field name="state">active</field>
+        </record>
+        
+        <record id="product_attribute_fabric" model="product.attribute">
+            <field name="name">Fabric</field>
+            <field name="description">Product fabric attribute</field>
+            <field name="code">FABRIC</field>
+            <field name="attribute_type">fabric</field>
+            <field name="age_group">all</field>
+            <field name="gender">all</field>
+            <field name="active">True</field>
+            <field name="state">active</field>
+        </record>
+        
+        <!-- Product Tags -->
+        <record id="product_tag_new" model="product.tag">
+            <field name="name">New</field>
+            <field name="description">New arrivals</field>
+            <field name="code">NEW</field>
+            <field name="color">#28a745</field>
+            <field name="tag_type">new</field>
+            <field name="age_group">all</field>
+            <field name="gender">all</field>
+            <field name="active">True</field>
+            <field name="state">active</field>
+        </record>
+        
+        <record id="product_tag_sale" model="product.tag">
+            <field name="name">Sale</field>
+            <field name="description">On sale items</field>
+            <field name="code">SALE</field>
+            <field name="color">#dc3545</field>
+            <field name="tag_type">sale</field>
+            <field name="age_group">all</field>
+            <field name="gender">all</field>
+            <field name="active">True</field>
+            <field name="state">active</field>
+        </record>
+        
+        <record id="product_tag_popular" model="product.tag">
+            <field name="name">Popular</field>
+            <field name="description">Popular items</field>
+            <field name="code">POPULAR</field>
+            <field name="color">#ffc107</field>
+            <field name="tag_type">popular</field>
+            <field name="age_group">all</field>
+            <field name="gender">all</field>
+            <field name="active">True</field>
+            <field name="state">active</field>
+        </record>
+        
+        <record id="product_tag_recommended" model="product.tag">
+            <field name="name">Recommended</field>
+            <field name="description">Recommended items</field>
+            <field name="code">RECOMMENDED</field>
+            <field name="color">#17a2b8</field>
+            <field name="tag_type">recommended</field>
+            <field name="age_group">all</field>
+            <field name="gender">all</field>
+            <field name="active">True</field>
+            <field name="state">active</field>
+        </record>
+        
+    </data>
+</odoo>

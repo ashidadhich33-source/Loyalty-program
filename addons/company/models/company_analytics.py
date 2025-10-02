@@ -1,479 +1,342 @@
 # -*- coding: utf-8 -*-
+"""
+Kids Clothing ERP - Company - Company Analytics
+=============================================
 
-from odoo import models, fields, api, _
-from odoo.exceptions import ValidationError
+Standalone version of the company analytics model.
+"""
+
+from core_framework.orm import BaseModel, CharField, TextField, BooleanField, IntegerField, DateTimeField, Many2OneField, SelectionField, FloatField, DateField
+from core_framework.orm import Field
+from typing import Dict, Any, Optional
 import logging
 from datetime import datetime, timedelta
 
-_logger = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
 
-
-class CompanyAnalytics(models.Model):
+class CompanyAnalytics(BaseModel):
     """Company analytics model for Kids Clothing ERP"""
     
     _name = 'company.analytics'
     _description = 'Company Analytics'
-    _order = 'date desc'
+    _table = 'company_analytics'
     
     # Basic fields
-    name = fields.Char(
+    name = CharField(
         string='Analytics Name',
+        size=100,
         required=True,
         help='Name of the analytics record'
     )
     
+    description = TextField(
+        string='Description',
+        help='Description of the analytics record'
+    )
+    
     # Company relationship
-    company_id = fields.Many2one(
-        'res.company',
-        string='Company',
+    company_id = IntegerField(
+        string='Company ID',
         required=True,
         help='Company this analytics belongs to'
     )
     
-    # Analytics details
-    date = fields.Date(
-        string='Date',
+    # Analytics period
+    date_from = DateField(
+        string='From Date',
         required=True,
-        help='Date of the analytics'
+        help='Start date of the analytics period'
     )
     
-    period_type = fields.Selection([
-        ('daily', 'Daily'),
-        ('weekly', 'Weekly'),
-        ('monthly', 'Monthly'),
-        ('quarterly', 'Quarterly'),
-        ('yearly', 'Yearly'),
-    ], string='Period Type', default='daily', help='Type of analytics period')
+    date_to = DateField(
+        string='To Date',
+        required=True,
+        help='End date of the analytics period'
+    )
     
-    # Financial metrics
-    total_sales = fields.Float(
+    # Analytics type
+    analytics_type = SelectionField(
+        string='Analytics Type',
+        selection=[
+            ('sales', 'Sales Analytics'),
+            ('inventory', 'Inventory Analytics'),
+            ('financial', 'Financial Analytics'),
+            ('customer', 'Customer Analytics'),
+            ('employee', 'Employee Analytics'),
+            ('performance', 'Performance Analytics'),
+            ('custom', 'Custom Analytics'),
+        ],
+        default='sales',
+        help='Type of analytics'
+    )
+    
+    # Analytics data
+    total_sales = FloatField(
         string='Total Sales',
         default=0.0,
         help='Total sales for the period'
     )
     
-    total_purchase = fields.Float(
-        string='Total Purchase',
-        default=0.0,
-        help='Total purchase for the period'
-    )
-    
-    total_profit = fields.Float(
-        string='Total Profit',
-        compute='_compute_total_profit',
-        store=True,
-        help='Total profit for the period'
-    )
-    
-    profit_margin = fields.Float(
-        string='Profit Margin',
-        compute='_compute_profit_margin',
-        store=True,
-        help='Profit margin percentage'
-    )
-    
-    # Operational metrics
-    total_orders = fields.Integer(
+    total_orders = IntegerField(
         string='Total Orders',
         default=0,
         help='Total orders for the period'
     )
     
-    total_customers = fields.Integer(
+    total_customers = IntegerField(
         string='Total Customers',
         default=0,
         help='Total customers for the period'
     )
     
-    total_products = fields.Integer(
+    total_products = IntegerField(
         string='Total Products',
         default=0,
         help='Total products for the period'
     )
     
-    # User metrics
-    total_users = fields.Integer(
+    total_users = IntegerField(
         string='Total Users',
         default=0,
         help='Total users for the period'
     )
     
-    active_users = fields.Integer(
-        string='Active Users',
-        default=0,
-        help='Active users for the period'
+    # Financial metrics
+    revenue = FloatField(
+        string='Revenue',
+        default=0.0,
+        help='Revenue for the period'
     )
     
-    # Inventory metrics
-    total_inventory_value = fields.Float(
-        string='Total Inventory Value',
+    profit = FloatField(
+        string='Profit',
         default=0.0,
-        help='Total inventory value for the period'
+        help='Profit for the period'
     )
     
-    inventory_turnover = fields.Float(
-        string='Inventory Turnover',
+    expenses = FloatField(
+        string='Expenses',
         default=0.0,
-        help='Inventory turnover ratio'
+        help='Expenses for the period'
     )
     
     # Performance metrics
-    average_order_value = fields.Float(
+    conversion_rate = FloatField(
+        string='Conversion Rate (%)',
+        default=0.0,
+        help='Conversion rate percentage'
+    )
+    
+    average_order_value = FloatField(
         string='Average Order Value',
-        compute='_compute_average_order_value',
-        store=True,
-        help='Average order value for the period'
-    )
-    
-    customer_retention_rate = fields.Float(
-        string='Customer Retention Rate',
         default=0.0,
-        help='Customer retention rate percentage'
+        help='Average order value'
     )
     
-    # Growth metrics
-    sales_growth = fields.Float(
-        string='Sales Growth',
+    customer_satisfaction = FloatField(
+        string='Customer Satisfaction (%)',
         default=0.0,
-        help='Sales growth percentage'
-    )
-    
-    customer_growth = fields.Float(
-        string='Customer Growth',
-        default=0.0,
-        help='Customer growth percentage'
-    )
-    
-    user_growth = fields.Float(
-        string='User Growth',
-        default=0.0,
-        help='User growth percentage'
-    )
-    
-    # Efficiency metrics
-    sales_per_user = fields.Float(
-        string='Sales per User',
-        compute='_compute_sales_per_user',
-        store=True,
-        help='Sales per user for the period'
-    )
-    
-    orders_per_user = fields.Float(
-        string='Orders per User',
-        compute='_compute_orders_per_user',
-        store=True,
-        help='Orders per user for the period'
-    )
-    
-    # Quality metrics
-    order_fulfillment_rate = fields.Float(
-        string='Order Fulfillment Rate',
-        default=0.0,
-        help='Order fulfillment rate percentage'
-    )
-    
-    customer_satisfaction = fields.Float(
-        string='Customer Satisfaction',
-        default=0.0,
-        help='Customer satisfaction score'
-    )
-    
-    # Analytics metadata
-    metadata = fields.Text(
-        string='Metadata',
-        help='Additional analytics metadata (JSON format)'
+        help='Customer satisfaction percentage'
     )
     
     # Analytics status
-    is_active = fields.Boolean(
+    is_active = BooleanField(
         string='Active',
         default=True,
-        help='Whether the analytics record is active'
+        help='Whether the analytics is active'
     )
     
-    is_processed = fields.Boolean(
+    is_processed = BooleanField(
         string='Processed',
         default=False,
         help='Whether the analytics has been processed'
     )
     
-    @api.depends('total_sales', 'total_purchase')
-    def _compute_total_profit(self):
-        """Compute total profit"""
-        for analytics in self:
-            analytics.total_profit = analytics.total_sales - analytics.total_purchase
+    # Analytics metadata
+    created_by = IntegerField(
+        string='Created By',
+        help='User who created this analytics'
+    )
     
-    @api.depends('total_sales', 'total_profit')
-    def _compute_profit_margin(self):
-        """Compute profit margin"""
-        for analytics in self:
-            if analytics.total_sales > 0:
-                analytics.profit_margin = (analytics.total_profit / analytics.total_sales) * 100
-            else:
-                analytics.profit_margin = 0.0
+    created_date = DateTimeField(
+        string='Created Date',
+        default=datetime.now,
+        help='Date when analytics was created'
+    )
     
-    @api.depends('total_sales', 'total_orders')
-    def _compute_average_order_value(self):
-        """Compute average order value"""
-        for analytics in self:
-            if analytics.total_orders > 0:
-                analytics.average_order_value = analytics.total_sales / analytics.total_orders
-            else:
-                analytics.average_order_value = 0.0
+    processed_date = DateTimeField(
+        string='Processed Date',
+        help='Date when analytics was processed'
+    )
     
-    @api.depends('total_sales', 'active_users')
-    def _compute_sales_per_user(self):
-        """Compute sales per user"""
-        for analytics in self:
-            if analytics.active_users > 0:
-                analytics.sales_per_user = analytics.total_sales / analytics.active_users
-            else:
-                analytics.sales_per_user = 0.0
-    
-    @api.depends('total_orders', 'active_users')
-    def _compute_orders_per_user(self):
-        """Compute orders per user"""
-        for analytics in self:
-            if analytics.active_users > 0:
-                analytics.orders_per_user = analytics.total_orders / analytics.active_users
-            else:
-                analytics.orders_per_user = 0.0
-    
-    @api.model
-    def create(self, vals):
+    def create(self, vals: Dict[str, Any]):
         """Override create to set default values"""
-        # Set default date if not provided
-        if 'date' not in vals:
-            vals['date'] = fields.Date.today()
+        # Set created date
+        if 'created_date' not in vals:
+            vals['created_date'] = datetime.now()
         
-        return super(CompanyAnalytics, self).create(vals)
+        return super().create(vals)
     
-    def write(self, vals):
+    def write(self, vals: Dict[str, Any]):
         """Override write to handle analytics updates"""
-        result = super(CompanyAnalytics, self).write(vals)
+        result = super().write(vals)
         
-        # Mark as processed if key metrics are updated
-        if any(field in vals for field in ['total_sales', 'total_purchase', 'total_orders', 'total_customers']):
-            self.is_processed = True
+        # Log analytics updates
+        for analytics in self:
+            if vals:
+                logger.info(f"Analytics {analytics.name} updated: {', '.join(vals.keys())}")
         
         return result
     
-    def unlink(self):
-        """Override unlink to prevent deletion of processed analytics"""
-        for analytics in self:
-            if analytics.is_processed:
-                raise ValidationError(_('Processed analytics cannot be deleted'))
-        
-        return super(CompanyAnalytics, self).unlink()
-    
     def action_process(self):
-        """Process analytics"""
+        """Process analytics data"""
         self.ensure_one()
         
-        # This would need actual implementation to process analytics
+        # In standalone version, we'll do basic processing
         self.is_processed = True
-        return True
-    
-    def action_reprocess(self):
-        """Reprocess analytics"""
-        self.ensure_one()
+        self.processed_date = datetime.now()
         
-        self.is_processed = False
-        self.action_process()
+        logger.info(f"Analytics {self.name} processed")
         return True
     
     def get_analytics_summary(self):
         """Get analytics summary"""
         return {
-            'name': self.name,
-            'date': self.date,
-            'period_type': self.period_type,
             'total_sales': self.total_sales,
-            'total_purchase': self.total_purchase,
-            'total_profit': self.total_profit,
-            'profit_margin': self.profit_margin,
             'total_orders': self.total_orders,
             'total_customers': self.total_customers,
             'total_products': self.total_products,
             'total_users': self.total_users,
-            'active_users': self.active_users,
+            'revenue': self.revenue,
+            'profit': self.profit,
+            'expenses': self.expenses,
+            'conversion_rate': self.conversion_rate,
             'average_order_value': self.average_order_value,
-            'sales_per_user': self.sales_per_user,
-            'orders_per_user': self.orders_per_user,
+            'customer_satisfaction': self.customer_satisfaction,
             'is_processed': self.is_processed,
+            'date_from': self.date_from,
+            'date_to': self.date_to,
         }
     
-    @api.model
-    def get_analytics_by_company(self, company_id, date_from=None, date_to=None):
+    @classmethod
+    def get_analytics_by_company(cls, company_id: int, analytics_type: str = None):
         """Get analytics by company"""
         domain = [('company_id', '=', company_id), ('is_active', '=', True)]
+        if analytics_type:
+            domain.append(('analytics_type', '=', analytics_type))
         
-        if date_from:
-            domain.append(('date', '>=', date_from))
-        
-        if date_to:
-            domain.append(('date', '<=', date_to))
-        
-        return self.search(domain)
+        return cls.search(domain)
     
-    @api.model
-    def get_analytics_by_period(self, period_type, date_from=None, date_to=None):
-        """Get analytics by period type"""
-        domain = [('period_type', '=', period_type), ('is_active', '=', True)]
-        
-        if date_from:
-            domain.append(('date', '>=', date_from))
-        
-        if date_to:
-            domain.append(('date', '<=', date_to))
-        
-        return self.search(domain)
+    @classmethod
+    def get_analytics_by_period(cls, company_id: int, date_from: str, date_to: str):
+        """Get analytics by period"""
+        return cls.search([
+            ('company_id', '=', company_id),
+            ('date_from', '>=', date_from),
+            ('date_to', '<=', date_to),
+            ('is_active', '=', True),
+        ])
     
-    @api.model
-    def get_analytics_summary(self, company_id=None, date_from=None, date_to=None):
-        """Get analytics summary"""
-        domain = [('is_active', '=', True)]
-        
-        if company_id:
-            domain.append(('company_id', '=', company_id))
-        
-        if date_from:
-            domain.append(('date', '>=', date_from))
-        
-        if date_to:
-            domain.append(('date', '<=', date_to))
-        
-        analytics = self.search(domain)
+    @classmethod
+    def get_analytics_by_type(cls, analytics_type: str):
+        """Get analytics by type"""
+        return cls.search([
+            ('analytics_type', '=', analytics_type),
+            ('is_active', '=', True),
+        ])
+    
+    @classmethod
+    def get_processed_analytics(cls, company_id: int):
+        """Get processed analytics for company"""
+        return cls.search([
+            ('company_id', '=', company_id),
+            ('is_processed', '=', True),
+            ('is_active', '=', True),
+        ])
+    
+    @classmethod
+    def get_analytics_summary_by_company(cls, company_id: int):
+        """Get analytics summary for company"""
+        analytics = cls.search([
+            ('company_id', '=', company_id),
+            ('is_active', '=', True),
+        ])
         
         if not analytics:
             return {
                 'total_sales': 0.0,
-                'total_purchase': 0.0,
-                'total_profit': 0.0,
                 'total_orders': 0,
                 'total_customers': 0,
                 'total_products': 0,
                 'total_users': 0,
-                'active_users': 0,
+                'revenue': 0.0,
+                'profit': 0.0,
+                'expenses': 0.0,
+                'conversion_rate': 0.0,
                 'average_order_value': 0.0,
-                'sales_per_user': 0.0,
-                'orders_per_user': 0.0,
+                'customer_satisfaction': 0.0,
             }
         
-        return {
-            'total_sales': sum(analytics.mapped('total_sales')),
-            'total_purchase': sum(analytics.mapped('total_purchase')),
-            'total_profit': sum(analytics.mapped('total_profit')),
-            'total_orders': sum(analytics.mapped('total_orders')),
-            'total_customers': sum(analytics.mapped('total_customers')),
-            'total_products': sum(analytics.mapped('total_products')),
-            'total_users': sum(analytics.mapped('total_users')),
-            'active_users': sum(analytics.mapped('active_users')),
-            'average_order_value': sum(analytics.mapped('average_order_value')) / len(analytics) if analytics else 0.0,
-            'sales_per_user': sum(analytics.mapped('sales_per_user')) / len(analytics) if analytics else 0.0,
-            'orders_per_user': sum(analytics.mapped('orders_per_user')) / len(analytics) if analytics else 0.0,
-        }
-    
-    @api.model
-    def generate_analytics(self, company_id, date, period_type='daily'):
-        """Generate analytics for a specific period"""
-        analytics = self.create({
-            'name': f'Analytics {date}',
-            'company_id': company_id,
-            'date': date,
-            'period_type': period_type,
-        })
+        # Calculate totals
+        total_sales = sum(a.total_sales for a in analytics)
+        total_orders = sum(a.total_orders for a in analytics)
+        total_customers = sum(a.total_customers for a in analytics)
+        total_products = sum(a.total_products for a in analytics)
+        total_users = sum(a.total_users for a in analytics)
+        revenue = sum(a.revenue for a in analytics)
+        profit = sum(a.profit for a in analytics)
+        expenses = sum(a.expenses for a in analytics)
         
-        # This would need actual implementation to generate analytics data
-        analytics.action_process()
-        
-        return analytics
-    
-    @api.model
-    def get_analytics_trends(self, company_id, metric, days=30):
-        """Get analytics trends for a specific metric"""
-        date_from = fields.Date.today() - timedelta(days=days)
-        
-        analytics = self.search([
-            ('company_id', '=', company_id),
-            ('date', '>=', date_from),
-            ('is_active', '=', True),
-        ], order='date')
-        
-        trends = []
-        for analytic in analytics:
-            trends.append({
-                'date': analytic.date,
-                'value': getattr(analytic, metric, 0),
-            })
-        
-        return trends
-    
-    @api.model
-    def get_analytics_comparison(self, company_id, metric, current_period, previous_period):
-        """Get analytics comparison between periods"""
-        current_analytics = self.search([
-            ('company_id', '=', company_id),
-            ('date', '>=', current_period['start']),
-            ('date', '<=', current_period['end']),
-            ('is_active', '=', True),
-        ])
-        
-        previous_analytics = self.search([
-            ('company_id', '=', company_id),
-            ('date', '>=', previous_period['start']),
-            ('date', '<=', previous_period['end']),
-            ('is_active', '=', True),
-        ])
-        
-        current_value = sum(getattr(analytic, metric, 0) for analytic in current_analytics)
-        previous_value = sum(getattr(analytic, metric, 0) for analytic in previous_analytics)
-        
-        if previous_value > 0:
-            growth_rate = ((current_value - previous_value) / previous_value) * 100
-        else:
-            growth_rate = 0.0
+        # Calculate averages
+        conversion_rate = sum(a.conversion_rate for a in analytics) / len(analytics) if analytics else 0.0
+        average_order_value = sum(a.average_order_value for a in analytics) / len(analytics) if analytics else 0.0
+        customer_satisfaction = sum(a.customer_satisfaction for a in analytics) / len(analytics) if analytics else 0.0
         
         return {
-            'current_value': current_value,
-            'previous_value': previous_value,
-            'growth_rate': growth_rate,
-            'growth_direction': 'up' if growth_rate > 0 else 'down' if growth_rate < 0 else 'stable',
+            'total_sales': total_sales,
+            'total_orders': total_orders,
+            'total_customers': total_customers,
+            'total_products': total_products,
+            'total_users': total_users,
+            'revenue': revenue,
+            'profit': profit,
+            'expenses': expenses,
+            'conversion_rate': conversion_rate,
+            'average_order_value': average_order_value,
+            'customer_satisfaction': customer_satisfaction,
         }
     
-    @api.model
-    def get_analytics_analytics(self):
-        """Get analytics analytics summary"""
-        total_analytics = self.search_count([])
-        active_analytics = self.search_count([('is_active', '=', True)])
-        processed_analytics = self.search_count([('is_processed', '=', True)])
-        
+    @classmethod
+    def get_analytics_analytics(cls):
+        """Get analytics analytics"""
+        # In standalone version, we'll return mock data
         return {
-            'total_analytics': total_analytics,
-            'active_analytics': active_analytics,
-            'processed_analytics': processed_analytics,
-            'inactive_analytics': total_analytics - active_analytics,
-            'unprocessed_analytics': total_analytics - processed_analytics,
-            'active_percentage': (active_analytics / total_analytics * 100) if total_analytics > 0 else 0,
-            'processed_percentage': (processed_analytics / total_analytics * 100) if total_analytics > 0 else 0,
+            'total_analytics': 0,
+            'active_analytics': 0,
+            'processed_analytics': 0,
+            'inactive_analytics': 0,
+            'analytics_by_type': {},
         }
     
-    @api.constrains('date')
-    def _check_date(self):
-        """Validate analytics date"""
-        for analytics in self:
-            if analytics.date > fields.Date.today():
-                raise ValidationError(_('Analytics date cannot be in the future'))
+    def _check_dates(self):
+        """Validate analytics dates"""
+        if self.date_from and self.date_to:
+            if self.date_from >= self.date_to:
+                raise ValueError('From date must be before to date')
     
-    @api.constrains('total_sales', 'total_purchase')
-    def _check_financial_values(self):
-        """Validate financial values"""
-        for analytics in self:
-            if analytics.total_sales < 0:
-                raise ValidationError(_('Total sales cannot be negative'))
-            
-            if analytics.total_purchase < 0:
-                raise ValidationError(_('Total purchase cannot be negative'))
+    def _check_analytics_type(self):
+        """Validate analytics type"""
+        valid_types = ['sales', 'inventory', 'financial', 'customer', 'employee', 'performance', 'custom']
+        if self.analytics_type not in valid_types:
+            raise ValueError(f'Invalid analytics type: {self.analytics_type}')
+    
+    def _check_metrics(self):
+        """Validate metrics"""
+        if self.conversion_rate < 0 or self.conversion_rate > 100:
+            raise ValueError('Conversion rate must be between 0 and 100')
+        
+        if self.customer_satisfaction < 0 or self.customer_satisfaction > 100:
+            raise ValueError('Customer satisfaction must be between 0 and 100')
     
     def action_duplicate(self):
         """Duplicate analytics"""
@@ -482,16 +345,10 @@ class CompanyAnalytics(models.Model):
         new_analytics = self.copy({
             'name': f'{self.name} (Copy)',
             'is_processed': False,
+            'processed_date': None,
         })
         
-        return {
-            'type': 'ir.actions.act_window',
-            'name': 'Duplicated Analytics',
-            'res_model': 'company.analytics',
-            'res_id': new_analytics.id,
-            'view_mode': 'form',
-            'target': 'current',
-        }
+        return new_analytics
     
     def action_export_analytics(self):
         """Export analytics data"""
@@ -499,25 +356,25 @@ class CompanyAnalytics(models.Model):
         
         return {
             'name': self.name,
-            'company_id': self.company_id.id,
-            'date': self.date,
-            'period_type': self.period_type,
+            'description': self.description,
+            'company_id': self.company_id,
+            'date_from': self.date_from,
+            'date_to': self.date_to,
+            'analytics_type': self.analytics_type,
             'total_sales': self.total_sales,
-            'total_purchase': self.total_purchase,
-            'total_profit': self.total_profit,
-            'profit_margin': self.profit_margin,
             'total_orders': self.total_orders,
             'total_customers': self.total_customers,
             'total_products': self.total_products,
             'total_users': self.total_users,
-            'active_users': self.active_users,
+            'revenue': self.revenue,
+            'profit': self.profit,
+            'expenses': self.expenses,
+            'conversion_rate': self.conversion_rate,
             'average_order_value': self.average_order_value,
-            'sales_per_user': self.sales_per_user,
-            'orders_per_user': self.orders_per_user,
-            'is_processed': self.is_processed,
+            'customer_satisfaction': self.customer_satisfaction,
         }
     
-    def action_import_analytics(self, analytics_data):
+    def action_import_analytics(self, analytics_data: Dict[str, Any]):
         """Import analytics data"""
         self.ensure_one()
         

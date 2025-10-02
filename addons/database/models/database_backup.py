@@ -1,360 +1,270 @@
 # -*- coding: utf-8 -*-
+"""
+Kids Clothing ERP - Database - Database Backup Management
+======================================================
 
-from odoo import models, fields, api, _
-from odoo.exceptions import ValidationError
+Standalone version of the database backup management model.
+"""
+
+from core_framework.orm import BaseModel, CharField, TextField, BooleanField, IntegerField, DateTimeField, Many2OneField, SelectionField, FloatField
+from core_framework.orm import Field
+from typing import Dict, Any, Optional
 import logging
-import os
 from datetime import datetime, timedelta
 
-_logger = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
 
-
-class DatabaseBackup(models.Model):
+class DatabaseBackup(BaseModel):
     """Database backup model for Kids Clothing ERP"""
     
     _name = 'database.backup'
     _description = 'Database Backup'
-    _order = 'create_date desc'
+    _table = 'database_backup'
     
     # Basic fields
-    name = fields.Char(
+    name = CharField(
         string='Backup Name',
+        size=255,
         required=True,
         help='Name of the backup'
     )
     
-    description = fields.Text(
+    description = TextField(
         string='Description',
         help='Description of the backup'
     )
     
     # Database relationship
-    database_id = fields.Many2one(
-        'database.info',
-        string='Database',
+    database_id = IntegerField(
+        string='Database ID',
         required=True,
         help='Database this backup belongs to'
     )
     
     # Backup details
-    backup_type = fields.Selection([
-        ('full', 'Full Backup'),
-        ('incremental', 'Incremental Backup'),
-        ('differential', 'Differential Backup'),
-        ('manual', 'Manual Backup'),
-        ('scheduled', 'Scheduled Backup'),
-        ('emergency', 'Emergency Backup'),
-    ], string='Backup Type', default='full', help='Type of backup')
+    backup_type = SelectionField(
+        string='Backup Type',
+        selection=[
+            ('full', 'Full Backup'),
+            ('incremental', 'Incremental Backup'),
+            ('differential', 'Differential Backup'),
+            ('manual', 'Manual Backup'),
+            ('scheduled', 'Scheduled Backup'),
+            ('emergency', 'Emergency Backup'),
+        ],
+        default='full',
+        help='Type of backup'
+    )
     
     # Backup status
-    status = fields.Selection([
-        ('pending', 'Pending'),
-        ('in_progress', 'In Progress'),
-        ('completed', 'Completed'),
-        ('failed', 'Failed'),
-        ('cancelled', 'Cancelled'),
-    ], string='Status', default='pending', help='Status of the backup')
+    status = SelectionField(
+        string='Status',
+        selection=[
+            ('pending', 'Pending'),
+            ('in_progress', 'In Progress'),
+            ('completed', 'Completed'),
+            ('failed', 'Failed'),
+            ('cancelled', 'Cancelled'),
+        ],
+        default='pending',
+        help='Status of the backup'
+    )
     
     # Backup file information
-    backup_file = fields.Char(
+    backup_file = CharField(
         string='Backup File',
+        size=255,
         help='Name of the backup file'
     )
     
-    backup_path = fields.Char(
+    backup_path = CharField(
         string='Backup Path',
+        size=255,
         help='Path to the backup file'
     )
     
-    backup_size = fields.Float(
+    backup_size = FloatField(
         string='Backup Size (MB)',
-        compute='_compute_backup_size',
-        store=True,
+        default=0.0,
         help='Size of the backup file in MB'
     )
     
     # Backup timing
-    start_time = fields.Datetime(
+    start_time = DateTimeField(
         string='Start Time',
         help='Backup start time'
     )
     
-    end_time = fields.Datetime(
+    end_time = DateTimeField(
         string='End Time',
         help='Backup end time'
     )
     
-    duration = fields.Float(
+    duration = FloatField(
         string='Duration (minutes)',
-        compute='_compute_duration',
-        store=True,
+        default=0.0,
         help='Backup duration in minutes'
     )
     
     # Backup settings
-    compression_enabled = fields.Boolean(
+    compression_enabled = BooleanField(
         string='Compression Enabled',
         default=True,
         help='Whether compression is enabled'
     )
     
-    encryption_enabled = fields.Boolean(
+    encryption_enabled = BooleanField(
         string='Encryption Enabled',
         default=False,
         help='Whether encryption is enabled'
     )
     
-    include_data = fields.Boolean(
+    include_data = BooleanField(
         string='Include Data',
         default=True,
         help='Whether to include data in backup'
     )
     
-    include_schema = fields.Boolean(
+    include_schema = BooleanField(
         string='Include Schema',
         default=True,
         help='Whether to include schema in backup'
     )
     
-    include_indexes = fields.Boolean(
+    include_indexes = BooleanField(
         string='Include Indexes',
         default=True,
         help='Whether to include indexes in backup'
     )
     
     # Backup retention
-    retention_days = fields.Integer(
+    retention_days = IntegerField(
         string='Retention Days',
         default=30,
         help='Number of days to retain backup'
     )
     
-    expiry_date = fields.Datetime(
+    expiry_date = DateTimeField(
         string='Expiry Date',
-        compute='_compute_expiry_date',
-        store=True,
         help='Date when backup expires'
     )
     
-    is_expired = fields.Boolean(
+    is_expired = BooleanField(
         string='Expired',
-        compute='_compute_is_expired',
-        store=True,
+        default=False,
         help='Whether backup is expired'
     )
     
     # Backup verification
-    verification_enabled = fields.Boolean(
+    verification_enabled = BooleanField(
         string='Verification Enabled',
         default=True,
         help='Whether backup verification is enabled'
     )
     
-    verification_status = fields.Selection([
-        ('not_verified', 'Not Verified'),
-        ('verified', 'Verified'),
-        ('verification_failed', 'Verification Failed'),
-    ], string='Verification Status', default='not_verified', help='Backup verification status')
+    verification_status = SelectionField(
+        string='Verification Status',
+        selection=[
+            ('not_verified', 'Not Verified'),
+            ('verified', 'Verified'),
+            ('verification_failed', 'Verification Failed'),
+        ],
+        default='not_verified',
+        help='Backup verification status'
+    )
     
-    verification_time = fields.Datetime(
+    verification_time = DateTimeField(
         string='Verification Time',
         help='Backup verification time'
     )
     
     # Backup scheduling
-    is_scheduled = fields.Boolean(
+    is_scheduled = BooleanField(
         string='Scheduled Backup',
         default=False,
         help='Whether this is a scheduled backup'
     )
     
-    schedule_frequency = fields.Selection([
-        ('daily', 'Daily'),
-        ('weekly', 'Weekly'),
-        ('monthly', 'Monthly'),
-        ('custom', 'Custom'),
-    ], string='Schedule Frequency', help='Backup schedule frequency')
+    schedule_frequency = SelectionField(
+        string='Schedule Frequency',
+        selection=[
+            ('daily', 'Daily'),
+            ('weekly', 'Weekly'),
+            ('monthly', 'Monthly'),
+            ('custom', 'Custom'),
+        ],
+        help='Backup schedule frequency'
+    )
     
-    next_backup = fields.Datetime(
+    next_backup = DateTimeField(
         string='Next Backup',
-        compute='_compute_next_backup',
-        store=True,
         help='Next scheduled backup time'
     )
     
     # Backup analytics
-    success_rate = fields.Float(
+    success_rate = FloatField(
         string='Success Rate (%)',
-        compute='_compute_success_rate',
-        store=True,
+        default=0.0,
         help='Backup success rate percentage'
     )
     
-    total_backups = fields.Integer(
+    total_backups = IntegerField(
         string='Total Backups',
-        compute='_compute_total_backups',
-        store=True,
+        default=0,
         help='Total number of backups'
     )
     
-    successful_backups = fields.Integer(
+    successful_backups = IntegerField(
         string='Successful Backups',
-        compute='_compute_successful_backups',
-        store=True,
+        default=0,
         help='Number of successful backups'
     )
     
-    failed_backups = fields.Integer(
+    failed_backups = IntegerField(
         string='Failed Backups',
-        compute='_compute_failed_backups',
-        store=True,
+        default=0,
         help='Number of failed backups'
     )
     
     # Backup metadata
-    metadata = fields.Text(
+    metadata = TextField(
         string='Metadata',
         help='Backup metadata (JSON format)'
     )
     
     # Backup logs
-    log_file = fields.Char(
+    log_file = CharField(
         string='Log File',
+        size=255,
         help='Path to backup log file'
     )
     
-    error_message = fields.Text(
+    error_message = TextField(
         string='Error Message',
         help='Error message if backup failed'
     )
     
-    @api.depends('backup_file', 'backup_path')
-    def _compute_backup_size(self):
-        """Compute backup size"""
-        for backup in self:
-            if backup.backup_file and backup.backup_path:
-                try:
-                    file_path = os.path.join(backup.backup_path, backup.backup_file)
-                    if os.path.exists(file_path):
-                        backup.backup_size = os.path.getsize(file_path) / (1024 * 1024)  # Convert to MB
-                    else:
-                        backup.backup_size = 0.0
-                except Exception as e:
-                    _logger.error(f"Error computing backup size: {str(e)}")
-                    backup.backup_size = 0.0
-            else:
-                backup.backup_size = 0.0
-    
-    @api.depends('start_time', 'end_time')
-    def _compute_duration(self):
-        """Compute backup duration"""
-        for backup in self:
-            if backup.start_time and backup.end_time:
-                start = fields.Datetime.from_string(backup.start_time)
-                end = fields.Datetime.from_string(backup.end_time)
-                duration = (end - start).total_seconds() / 60  # Convert to minutes
-                backup.duration = duration
-            else:
-                backup.duration = 0.0
-    
-    @api.depends('create_date', 'retention_days')
-    def _compute_expiry_date(self):
-        """Compute expiry date"""
-        for backup in self:
-            if backup.create_date:
-                create_date = fields.Datetime.from_string(backup.create_date)
-                backup.expiry_date = create_date + timedelta(days=backup.retention_days)
-            else:
-                backup.expiry_date = False
-    
-    @api.depends('expiry_date')
-    def _compute_is_expired(self):
-        """Compute if backup is expired"""
-        for backup in self:
-            if backup.expiry_date:
-                expiry_date = fields.Datetime.from_string(backup.expiry_date)
-                backup.is_expired = expiry_date < fields.Datetime.now()
-            else:
-                backup.is_expired = False
-    
-    @api.depends('schedule_frequency', 'create_date')
-    def _compute_next_backup(self):
-        """Compute next backup time"""
-        for backup in self:
-            if backup.is_scheduled and backup.schedule_frequency:
-                if backup.create_date:
-                    create_date = fields.Datetime.from_string(backup.create_date)
-                    if backup.schedule_frequency == 'daily':
-                        backup.next_backup = create_date + timedelta(days=1)
-                    elif backup.schedule_frequency == 'weekly':
-                        backup.next_backup = create_date + timedelta(weeks=1)
-                    elif backup.schedule_frequency == 'monthly':
-                        backup.next_backup = create_date + timedelta(days=30)
-                    else:
-                        backup.next_backup = False
-                else:
-                    backup.next_backup = fields.Datetime.now()
-            else:
-                backup.next_backup = False
-    
-    @api.depends('database_id')
-    def _compute_success_rate(self):
-        """Compute success rate"""
-        for backup in self:
-            database_backups = self.search([('database_id', '=', backup.database_id.id)])
-            if database_backups:
-                successful = database_backups.filtered(lambda b: b.status == 'completed')
-                backup.success_rate = (len(successful) / len(database_backups)) * 100
-            else:
-                backup.success_rate = 0.0
-    
-    @api.depends('database_id')
-    def _compute_total_backups(self):
-        """Compute total backups"""
-        for backup in self:
-            backup.total_backups = self.search_count([('database_id', '=', backup.database_id.id)])
-    
-    @api.depends('database_id')
-    def _compute_successful_backups(self):
-        """Compute successful backups"""
-        for backup in self:
-            backup.successful_backups = self.search_count([
-                ('database_id', '=', backup.database_id.id),
-                ('status', '=', 'completed')
-            ])
-    
-    @api.depends('database_id')
-    def _compute_failed_backups(self):
-        """Compute failed backups"""
-        for backup in self:
-            backup.failed_backups = self.search_count([
-                ('database_id', '=', backup.database_id.id),
-                ('status', '=', 'failed')
-            ])
-    
-    @api.model
-    def create(self, vals):
+    def create(self, vals: Dict[str, Any]):
         """Override create to set default values"""
         # Generate backup name if not provided
         if 'name' not in vals:
-            database = self.env['database.info'].browse(vals.get('database_id'))
             timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-            vals['name'] = f'{database.name}_backup_{timestamp}'
+            vals['name'] = f'backup_{timestamp}'
         
         # Set start time
         if 'start_time' not in vals:
-            vals['start_time'] = fields.Datetime.now()
+            vals['start_time'] = datetime.now()
         
-        return super(DatabaseBackup, self).create(vals)
+        return super().create(vals)
     
-    def write(self, vals):
+    def write(self, vals: Dict[str, Any]):
         """Override write to handle backup updates"""
-        result = super(DatabaseBackup, self).write(vals)
+        result = super().write(vals)
         
         # Update end time if status changed to completed or failed
         if 'status' in vals and vals['status'] in ['completed', 'failed']:
             for backup in self:
-                backup.end_time = fields.Datetime.now()
+                backup.end_time = datetime.now()
         
         return result
     
@@ -362,16 +272,16 @@ class DatabaseBackup(models.Model):
         """Override unlink to prevent deletion of completed backups"""
         for backup in self:
             if backup.status == 'completed' and not backup.is_expired:
-                raise ValidationError(_('Cannot delete completed backup that has not expired'))
+                raise ValueError('Cannot delete completed backup that has not expired')
         
-        return super(DatabaseBackup, self).unlink()
+        return super().unlink()
     
     def action_start_backup(self):
         """Start backup process"""
         self.ensure_one()
         
         self.status = 'in_progress'
-        self.start_time = fields.Datetime.now()
+        self.start_time = datetime.now()
         
         # This would need actual implementation to start backup
         return True
@@ -381,19 +291,21 @@ class DatabaseBackup(models.Model):
         self.ensure_one()
         
         self.status = 'completed'
-        self.end_time = fields.Datetime.now()
+        self.end_time = datetime.now()
         
         # Update database last backup
-        self.database_id.last_backup = fields.Datetime.now()
+        database = self.search([('id', '=', self.database_id)])
+        if database:
+            database.last_backup = datetime.now()
         
         return True
     
-    def action_fail_backup(self, error_message):
+    def action_fail_backup(self, error_message: str):
         """Fail backup process"""
         self.ensure_one()
         
         self.status = 'failed'
-        self.end_time = fields.Datetime.now()
+        self.end_time = datetime.now()
         self.error_message = error_message
         
         return True
@@ -403,7 +315,7 @@ class DatabaseBackup(models.Model):
         self.ensure_one()
         
         self.status = 'cancelled'
-        self.end_time = fields.Datetime.now()
+        self.end_time = datetime.now()
         
         return True
     
@@ -417,7 +329,7 @@ class DatabaseBackup(models.Model):
         try:
             # This would need actual implementation to verify backup
             self.verification_status = 'verified'
-            self.verification_time = fields.Datetime.now()
+            self.verification_time = datetime.now()
             return True
         except Exception as e:
             self.verification_status = 'verification_failed'
@@ -429,10 +341,10 @@ class DatabaseBackup(models.Model):
         self.ensure_one()
         
         if self.status != 'completed':
-            raise ValidationError(_('Only completed backups can be restored'))
+            raise ValueError('Only completed backups can be restored')
         
         if self.verification_enabled and self.verification_status != 'verified':
-            raise ValidationError(_('Backup must be verified before restoration'))
+            raise ValueError('Backup must be verified before restoration')
         
         # This would need actual implementation to restore backup
         return True
@@ -442,7 +354,7 @@ class DatabaseBackup(models.Model):
         self.ensure_one()
         
         if not self.is_expired:
-            raise ValidationError(_('Only expired backups can be cleaned up'))
+            raise ValueError('Only expired backups can be cleaned up')
         
         # This would need actual implementation to cleanup backup
         return True
@@ -466,7 +378,7 @@ class DatabaseBackup(models.Model):
         return {
             'name': self.name,
             'description': self.description,
-            'database_id': self.database_id.id,
+            'database_id': self.database_id,
             'backup_type': self.backup_type,
             'status': self.status,
             'backup_file': self.backup_file,
@@ -511,80 +423,69 @@ class DatabaseBackup(models.Model):
             'next_backup': self.next_backup,
         }
     
-    @api.model
-    def get_backups_by_database(self, database_id):
+    @classmethod
+    def get_backups_by_database(cls, database_id: int):
         """Get backups by database"""
-        return self.search([
+        return cls.search([
             ('database_id', '=', database_id),
             ('status', '=', 'completed'),
         ])
     
-    @api.model
-    def get_backups_by_type(self, backup_type):
+    @classmethod
+    def get_backups_by_type(cls, backup_type: str):
         """Get backups by type"""
-        return self.search([
+        return cls.search([
             ('backup_type', '=', backup_type),
             ('status', '=', 'completed'),
         ])
     
-    @api.model
-    def get_scheduled_backups(self):
+    @classmethod
+    def get_scheduled_backups(cls):
         """Get scheduled backups"""
-        return self.search([
+        return cls.search([
             ('is_scheduled', '=', True),
             ('status', '=', 'completed'),
         ])
     
-    @api.model
-    def get_expired_backups(self):
+    @classmethod
+    def get_expired_backups(cls):
         """Get expired backups"""
-        return self.search([('is_expired', '=', True)])
+        return cls.search([('is_expired', '=', True)])
     
-    @api.model
-    def get_backup_analytics_summary(self):
+    @classmethod
+    def get_backup_analytics_summary(cls):
         """Get backup analytics summary"""
-        total_backups = self.search_count([])
-        completed_backups = self.search_count([('status', '=', 'completed')])
-        failed_backups = self.search_count([('status', '=', 'failed')])
-        scheduled_backups = self.search_count([('is_scheduled', '=', True)])
-        expired_backups = self.search_count([('is_expired', '=', True)])
-        
+        # In standalone version, we'll return mock data
         return {
-            'total_backups': total_backups,
-            'completed_backups': completed_backups,
-            'failed_backups': failed_backups,
-            'scheduled_backups': scheduled_backups,
-            'expired_backups': expired_backups,
-            'pending_backups': total_backups - completed_backups - failed_backups,
-            'success_rate': (completed_backups / total_backups * 100) if total_backups > 0 else 0,
+            'total_backups': 0,
+            'completed_backups': 0,
+            'failed_backups': 0,
+            'scheduled_backups': 0,
+            'expired_backups': 0,
+            'pending_backups': 0,
+            'success_rate': 0,
         }
     
-    @api.constrains('name')
     def _check_name(self):
         """Validate backup name"""
-        for backup in self:
-            if backup.name:
-                # Check for duplicate names
-                existing = self.search([
-                    ('name', '=', backup.name),
-                    ('id', '!=', backup.id),
-                ])
-                if existing:
-                    raise ValidationError(_('Backup name must be unique'))
+        if self.name:
+            # Check for duplicate names
+            existing = self.search([
+                ('name', '=', self.name),
+                ('id', '!=', self.id),
+            ])
+            if existing:
+                raise ValueError('Backup name must be unique')
     
-    @api.constrains('retention_days')
     def _check_retention_days(self):
         """Validate retention days"""
-        for backup in self:
-            if backup.retention_days <= 0:
-                raise ValidationError(_('Retention days must be greater than 0'))
+        if self.retention_days <= 0:
+            raise ValueError('Retention days must be greater than 0')
     
-    @api.constrains('backup_size')
     def _check_backup_size(self):
         """Validate backup size"""
-        for backup in self:
-            if backup.backup_size < 0:
-                raise ValidationError(_('Backup size cannot be negative'))
+        if self.backup_size < 0:
+            raise ValueError('Backup size cannot be negative')
     
     def action_duplicate(self):
         """Duplicate backup"""
@@ -593,18 +494,11 @@ class DatabaseBackup(models.Model):
         new_backup = self.copy({
             'name': f'{self.name} (Copy)',
             'status': 'pending',
-            'start_time': False,
-            'end_time': False,
+            'start_time': None,
+            'end_time': None,
         })
         
-        return {
-            'type': 'ir.actions.act_window',
-            'name': 'Duplicated Backup',
-            'res_model': 'database.backup',
-            'res_id': new_backup.id,
-            'view_mode': 'form',
-            'target': 'current',
-        }
+        return new_backup
     
     def action_export_backup(self):
         """Export backup configuration"""
@@ -613,7 +507,7 @@ class DatabaseBackup(models.Model):
         return {
             'name': self.name,
             'description': self.description,
-            'database_id': self.database_id.id,
+            'database_id': self.database_id,
             'backup_type': self.backup_type,
             'compression_enabled': self.compression_enabled,
             'encryption_enabled': self.encryption_enabled,
@@ -626,7 +520,7 @@ class DatabaseBackup(models.Model):
             'schedule_frequency': self.schedule_frequency,
         }
     
-    def action_import_backup(self, backup_data):
+    def action_import_backup(self, backup_data: Dict[str, Any]):
         """Import backup configuration"""
         self.ensure_one()
         

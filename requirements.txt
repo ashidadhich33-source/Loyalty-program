@@ -1,0 +1,32 @@
+# Kids Clothing ERP - Requirements
+# ===============================
+
+# Core Dependencies
+psycopg2-binary==2.9.9
+python-dateutil==2.8.2
+pytz==2023.3
+
+# Web Framework (if needed for advanced features)
+# flask==3.0.0
+# fastapi==0.104.1
+# uvicorn==0.24.0
+
+# Database
+sqlalchemy==2.0.23
+alembic==1.12.1
+
+# Utilities
+requests==2.31.0
+python-dotenv==1.0.0
+click==8.1.7
+
+# Development
+pytest==7.4.3
+pytest-cov==4.1.0
+black==23.11.0
+flake8==6.1.0
+
+# Optional: For advanced features
+# celery==5.3.4
+# redis==5.0.1
+# pillow==10.1.0

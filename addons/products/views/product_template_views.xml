@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        
+        <!-- Product Template Tree View -->
+        <record id="view_product_template_tree" model="ir.ui.view">
+            <field name="name">product.template.tree</field>
+            <field name="model">product.template</field>
+            <field name="arch" type="xml">
+                <tree string="Product Templates" create="true" edit="true" delete="true">
+                    <field name="name"/>
+                    <field name="internal_reference"/>
+                    <field name="barcode"/>
+                    <field name="sku"/>
+                    <field name="age_group"/>
+                    <field name="gender"/>
+                    <field name="season"/>
+                    <field name="category_id"/>
+                    <field name="list_price"/>
+                    <field name="standard_price"/>
+                    <field name="margin"/>
+                    <field name="margin_percent"/>
+                    <field name="total_sales"/>
+                    <field name="total_quantity_sold"/>
+                    <field name="average_rating"/>
+                    <field name="active"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Product Template Form View -->
+        <record id="view_product_template_form" model="ir.ui.view">
+            <field name="name">product.template.form</field>
+            <field name="model">product.template</field>
+            <field name="arch" type="xml">
+                <form string="Product Template" create="true" edit="true" delete="true">
+                    <header>
+                        <button name="activate_product" string="Activate" type="object" class="btn-primary" attrs="{'invisible': [('state', '=', 'active')]}"/>
+                        <button name="deactivate_product" string="Deactivate" type="object" class="btn-secondary" attrs="{'invisible': [('state', '!=', 'active')]}"/>
+                        <button name="discontinue_product" string="Discontinue" type="object" class="btn-warning" attrs="{'invisible': [('state', '=', 'discontinued')]}"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,active,inactive,discontinued"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="get_product_analytics_summary" string="Analytics" type="object" class="oe_stat_button" icon="fa-bar-chart"/>
+                            <button name="get_product_summary" string="Summary" type="object" class="oe_stat_button" icon="fa-info-circle"/>
+                        </div>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Product Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="internal_reference"/>
+                                <field name="barcode"/>
+                                <field name="sku"/>
+                                <field name="type"/>
+                                <field name="category_id"/>
+                                <field name="brand_id"/>
+                            </group>
+                            <group>
+                                <field name="age_group"/>
+                                <field name="gender"/>
+                                <field name="season"/>
+                                <field name="list_price"/>
+                                <field name="standard_price"/>
+                                <field name="margin"/>
+                                <field name="margin_percent"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="sale_ok"/>
+                                <field name="purchase_ok"/>
+                                <field name="track_service"/>
+                                <field name="active"/>
+                            </group>
+                            <group>
+                                <field name="total_sales"/>
+                                <field name="total_quantity_sold"/>
+                                <field name="average_rating"/>
+                                <field name="review_count"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Description" name="description">
+                                <field name="description" nolabel="1"/>
+                                <field name="short_description"/>
+                            </page>
+                            <page string="Variants" name="variants">
+                                <field name="has_variants"/>
+                                <field name="variant_ids" nolabel="1">
+                                    <tree string="Product Variants" create="true" edit="true" delete="true">
+                                        <field name="name"/>
+                                        <field name="default_code"/>
+                                        <field name="barcode"/>
+                                        <field name="sku"/>
+                                        <field name="age_group"/>
+                                        <field name="gender"/>
+                                        <field name="size"/>
+                                        <field name="color"/>
+                                        <field name="fabric"/>
+                                        <field name="style"/>
+                                        <field name="list_price"/>
+                                        <field name="standard_price"/>
+                                        <field name="qty_available"/>
+                                        <field name="qty_reserved"/>
+                                        <field name="qty_free"/>
+                                        <field name="active"/>
+                                        <field name="state"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Tags" name="tags">
+                                <field name="tag_ids" widget="many2many_tags" nolabel="1"/>
+                            </page>
+                            <page string="Images" name="images">
+                                <field name="image_1920" widget="image" class="oe_avatar"/>
+                                <field name="image_1024" widget="image"/>
+                                <field name="image_512" widget="image"/>
+                                <field name="image_256" widget="image"/>
+                                <field name="image_128" widget="image"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Product Template Search View -->
+        <record id="view_product_template_search" model="ir.ui.view">
+            <field name="name">product.template.search</field>
+            <field name="model">product.template</field>
+            <field name="arch" type="xml">
+                <search string="Search Product Templates">
+                    <field name="name"/>
+                    <field name="internal_reference"/>
+                    <field name="barcode"/>
+                    <field name="sku"/>
+                    <field name="category_id"/>
+                    <field name="brand_id"/>
+                    <field name="tag_ids"/>
+                    <filter string="Active" name="active" domain="[('active', '=', True)]"/>
+                    <filter string="Inactive" name="inactive" domain="[('active', '=', False)]"/>
+                    <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
+                    <filter string="Active" name="active_state" domain="[('state', '=', 'active')]"/>
+                    <filter string="Inactive" name="inactive_state" domain="[('state', '=', 'inactive')]"/>
+                    <filter string="Discontinued" name="discontinued" domain="[('state', '=', 'discontinued')]"/>
+                    <separator/>
+                    <filter string="Baby (0-2)" name="age_0_2" domain="[('age_group', '=', '0-2')]"/>
+                    <filter string="Toddler (2-4)" name="age_2_4" domain="[('age_group', '=', '2-4')]"/>
+                    <filter string="Kids (4-6)" name="age_4_6" domain="[('age_group', '=', '4-6')]"/>
+                    <filter string="Kids (6-8)" name="age_6_8" domain="[('age_group', '=', '6-8')]"/>
+                    <filter string="Kids (8-10)" name="age_8_10" domain="[('age_group', '=', '8-10')]"/>
+                    <filter string="Pre-teen (10-12)" name="age_10_12" domain="[('age_group', '=', '10-12')]"/>
+                    <filter string="Teen (12-14)" name="age_12_14" domain="[('age_group', '=', '12-14')]"/>
+                    <filter string="Young Adult (14-16)" name="age_14_16" domain="[('age_group', '=', '14-16')]"/>
+                    <separator/>
+                    <filter string="Unisex" name="gender_unisex" domain="[('gender', '=', 'unisex')]"/>
+                    <filter string="Boys" name="gender_boys" domain="[('gender', '=', 'boys')]"/>
+                    <filter string="Girls" name="gender_girls" domain="[('gender', '=', 'girls')]"/>
+                    <separator/>
+                    <filter string="Summer" name="season_summer" domain="[('season', '=', 'summer')]"/>
+                    <filter string="Winter" name="season_winter" domain="[('season', '=', 'winter')]"/>
+                    <filter string="Monsoon" name="season_monsoon" domain="[('season', '=', 'monsoon')]"/>
+                    <filter string="All Season" name="season_all" domain="[('season', '=', 'all_season')]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Category" name="group_category" context="{'group_by': 'category_id'}"/>
+                        <filter string="Brand" name="group_brand" context="{'group_by': 'brand_id'}"/>
+                        <filter string="Age Group" name="group_age_group" context="{'group_by': 'age_group'}"/>
+                        <filter string="Gender" name="group_gender" context="{'group_by': 'gender'}"/>
+                        <filter string="Season" name="group_season" context="{'group_by': 'season'}"/>
+                        <filter string="State" name="group_state" context="{'group_by': 'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- Product Template Action -->
+        <record id="action_product_template" model="ir.actions.act_window">
+            <field name="name">Product Templates</field>
+            <field name="res_model">product.template</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_product_template_search"/>
+            <field name="context">{'search_default_active': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first product template!
+                </p>
+                <p>
+                    Product templates are the main product definitions that can have multiple variants.
+                </p>
+            </field>
+        </record>
+        
+    </data>
+</odoo>

@@ -27,14 +27,15 @@ cat DEVELOPMENT_CHECKLIST.md
 ## Zero-Error Development Reminders
 
 ### Always Remember:
-1. **TypeScript Strict Mode**: No `any` types allowed
-2. **Test Coverage**: 95%+ for all new code
-3. **Code Review**: All code must be reviewed
-4. **Documentation**: Update docs with every change
-5. **Error Handling**: Comprehensive error handling required
-6. **Validation**: Input validation at all boundaries
-7. **Security**: Security-first approach
-8. **Performance**: Monitor and optimize continuously
+1. **Python PEP 8**: Strict code formatting standards
+2. **Type Hints**: Python type annotations for all functions
+3. **Test Coverage**: 95%+ for all new code
+4. **Code Review**: All code must be reviewed
+5. **Documentation**: Update docs with every change
+6. **Error Handling**: Comprehensive error handling required
+7. **Validation**: Input validation at all boundaries
+8. **Security**: Security-first approach
+9. **Performance**: Monitor and optimize continuously
 
 ### Before Starting Any Task:
 - [ ] Read the task requirements carefully
@@ -60,10 +61,15 @@ cat DEVELOPMENT_CHECKLIST.md
 ├── DEVELOPMENT_CHECKLIST.md   # Detailed task checklist
 ├── SESSION_CONTINUITY.md     # This file
 ├── ZERO_ERROR_PRINCIPLES.md  # Development standards
-├── ARCHITECTURE.md           # System architecture
-├── API_DOCUMENTATION.md      # API specifications
-├── TESTING_STRATEGY.md       # Testing approach
-└── DEPLOYMENT_GUIDE.md       # Deployment procedures
+├── __manifest__.py           # Module manifest
+├── models/                   # Python models
+├── views/                    # XML views
+├── static/                   # Static assets
+├── security/                 # Security configuration
+├── data/                     # Demo data
+├── odoo.conf                # Configuration
+├── requirements.txt          # Dependencies
+└── run_odoo.py              # Server runner
 ```
 
 ## Quick Commands for Status Check

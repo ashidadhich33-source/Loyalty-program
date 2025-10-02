@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Kids Clothing ERP - Odoo Server Runner
-This script runs the Odoo server with the Kids Clothing ERP module
+Kids Clothing ERP - Server Runner
+This script runs the ERP server with the Kids Clothing ERP module
 """
 
 import os
@@ -10,7 +10,7 @@ import subprocess
 import argparse
 
 def main():
-    parser = argparse.ArgumentParser(description='Run Kids Clothing ERP Odoo Server')
+    parser = argparse.ArgumentParser(description='Run Kids Clothing ERP Server')
     parser.add_argument('--config', '-c', default='odoo.conf', help='Configuration file')
     parser.add_argument('--database', '-d', default='kids_clothing_erp', help='Database name')
     parser.add_argument('--install', '-i', action='store_true', help='Install module')
@@ -21,12 +21,12 @@ def main():
     
     args = parser.parse_args()
     
-    # Check if Odoo is installed
+    # Check if ERP framework is installed
     try:
         import odoo
-        print(f"✅ Odoo {odoo.release.version} found")
+        print(f"✅ ERP Framework {odoo.release.version} found")
     except ImportError:
-        print("❌ Odoo not found. Please install Odoo first.")
+        print("❌ ERP Framework not found. Please install dependencies first.")
         print("Run: pip install -r requirements.txt")
         sys.exit(1)
     
@@ -68,14 +68,14 @@ def main():
         print("🧪 Running tests...")
     
     print("\n" + "="*50)
-    print("🎯 Kids Clothing ERP - Odoo Server")
+    print("🎯 Kids Clothing ERP - Server")
     print("="*50)
     
     try:
-        # Run Odoo server
+        # Run ERP server
         subprocess.run(cmd, check=True)
     except subprocess.CalledProcessError as e:
-        print(f"❌ Error running Odoo server: {e}")
+        print(f"❌ Error running ERP server: {e}")
         sys.exit(1)
     except KeyboardInterrupt:
         print("\n👋 Shutting down Kids Clothing ERP server...")

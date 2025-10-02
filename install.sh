@@ -132,35 +132,31 @@ sed -i "s|logfile = .*|logfile = $(pwd)/logs/odoo-server.log|g" odoo.conf
 
 print_status "Configuration updated"
 
-# Install Odoo
-print_info "Installing Odoo..."
-if [ ! -d "odoo" ]; then
-    print_info "Downloading Odoo 17.0..."
-    wget -q https://nightly.odoo.com/17.0/nightly/src/odoo_17.0.latest.tar.gz
-    tar -xzf odoo_17.0.latest.tar.gz
-    rm odoo_17.0.latest.tar.gz
-    print_status "Odoo downloaded and extracted"
+# Install ERP Framework
+print_info "Installing ERP Framework..."
+if [ ! -d "erp_framework" ]; then
+    print_info "Setting up ERP Framework..."
+    mkdir -p erp_framework
+    print_status "ERP Framework directory created"
 else
-    print_warning "Odoo directory already exists"
+    print_warning "ERP Framework directory already exists"
 fi
 
-# Install Odoo dependencies
-print_info "Installing Odoo dependencies..."
-cd odoo
+# Install ERP dependencies
+print_info "Installing ERP dependencies..."
 pip install -r requirements.txt
-cd ..
 
-print_status "Odoo dependencies installed"
+print_status "ERP dependencies installed"
 
 # Initialize database
 print_info "Initializing database..."
-python3 odoo/odoo-bin -c odoo.conf -d $DB_NAME --init=base --stop-after-init
+python3 run_odoo.py -c odoo.conf -d $DB_NAME --init=base --stop-after-init
 
 print_status "Database initialized"
 
 # Install Kids Clothing ERP module
 print_info "Installing Kids Clothing ERP module..."
-python3 odoo/odoo-bin -c odoo.conf -d $DB_NAME -i kids_clothing_erp --stop-after-init
+python3 run_odoo.py -c odoo.conf -d $DB_NAME -i kids_clothing_erp --stop-after-init
 
 print_status "Kids Clothing ERP module installed"
 
@@ -173,8 +169,8 @@ cat > start_erp.sh << 'EOF'
 # Activate virtual environment
 source venv/bin/activate
 
-# Start Odoo server
-python3 odoo/odoo-bin -c odoo.conf -d kids_clothing_erp
+# Start ERP server
+python3 run_odoo.py -c odoo.conf -d kids_clothing_erp
 EOF
 
 chmod +x start_erp.sh

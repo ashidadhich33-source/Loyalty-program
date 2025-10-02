@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Kids Clothing Retail ERP',
-    'version': '17.0.1.0.0',
+    'version': '1.0.0',
     'category': 'Sales/CRM',
-    'summary': 'Odoo-style ERP for Kids Clothing Retail Industry',
+    'summary': 'ERP System for Kids Clothing Retail Industry',
     'description': """
 Kids Clothing Retail ERP System
 ==============================
 
 A comprehensive ERP system designed specifically for the Kids' Clothing Retail Industry,
-built as an Odoo clone with the same architecture and technology stack.
+built with Python, PostgreSQL, and modern web technologies.
 
 Key Features:
 - Sales Management

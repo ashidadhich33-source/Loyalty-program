@@ -6,9 +6,10 @@
 ## Development Standards
 
 ### 1. Code Quality
-- **TypeScript Strict Mode**: No `any` types, strict null checks
-- **ESLint Rules**: Zero warnings policy
-- **Prettier**: Consistent formatting
+- **Python PEP 8**: Strict code formatting standards
+- **Type Hints**: Python type annotations for all functions
+- **Pylint**: Zero warnings policy
+- **Black**: Consistent code formatting
 - **SonarQube**: A+ quality gate
 - **Code Coverage**: Minimum 95%
 
@@ -21,7 +22,7 @@
 
 ### 3. Error Prevention
 - **Input Validation**: All inputs validated at boundaries
-- **Type Safety**: TypeScript strict mode enforced
+- **Type Safety**: Python type hints enforced
 - **Database Constraints**: Referential integrity maintained
 - **Transaction Management**: ACID compliance guaranteed
 - **Circuit Breakers**: External service protection
@@ -98,7 +99,7 @@
 
 ### 1. Prevention
 - **Input Validation**: Validate all inputs
-- **Type Safety**: Use TypeScript strict mode
+- **Type Safety**: Use Python type hints
 - **Business Rules**: Enforce business logic
 - **Database Constraints**: Use database constraints
 - **API Validation**: Validate API contracts

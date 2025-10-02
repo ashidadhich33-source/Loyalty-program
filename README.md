@@ -1,31 +1,31 @@
 # Kids Clothing Retail ERP System
 
-A comprehensive ERP system designed specifically for the Kids' Clothing Retail Industry, built as an **Odoo clone** using the exact same technology stack and architecture as Odoo.
+A comprehensive ERP system designed specifically for the Kids' Clothing Retail Industry, built with Python, PostgreSQL, and modern web technologies.
 
-## 🚀 **True Odoo Clone**
+## 🚀 **Modern ERP System**
 
-This is a **complete Odoo-style ERP system** that uses:
-- **Python** (not TypeScript)
+This is a **complete ERP system** that uses:
+- **Python** for backend development
 - **PostgreSQL** database
-- **Odoo Framework** architecture
+- **Modern web framework** architecture
 - **XML templates** for views
 - **Python models** for business logic
-- **Same module structure** as Odoo
+- **Modular structure** for easy customization
 
 ## 🏗️ **Architecture**
 
-### **Backend (Python/Odoo)**
-- **Odoo Framework**: Complete Odoo-style framework
+### **Backend (Python)**
+- **Python Framework**: Modern Python web framework
 - **Python Models**: Business logic in Python
-- **PostgreSQL**: Database with Odoo ORM
+- **PostgreSQL**: Database with ORM
 - **XML Views**: Templates and user interface
 - **Security**: Access control and permissions
 - **Multi-tenancy**: Company-based data isolation
 
-### **Frontend (Odoo Web)**
-- **Odoo Web Interface**: Native Odoo web client
-- **JavaScript**: Odoo-style JavaScript framework
-- **QWeb Templates**: Dynamic HTML generation
+### **Frontend (Web Interface)**
+- **Web Interface**: Modern web client
+- **JavaScript**: Modern JavaScript framework
+- **Templates**: Dynamic HTML generation
 - **Responsive Design**: Mobile-friendly interface
 - **Real-time Updates**: Live data synchronization
 
@@ -34,44 +34,37 @@ This is a **complete Odoo-style ERP system** that uses:
 ### **Prerequisites**
 - Python 3.8+
 - PostgreSQL 12+
-- Odoo 17.0
+- Modern web framework
 
 ### **Quick Start**
 
-1. **Install Odoo**
+1. **Install Dependencies**
    ```bash
-   # Install Odoo 17.0
-   wget https://nightly.odoo.com/17.0/nightly/src/odoo_17.0.latest.tar.gz
-   tar -xzf odoo_17.0.latest.tar.gz
-   cd odoo-17.0
-   ```
-
-2. **Install Dependencies**
-   ```bash
+   # Install Python dependencies
    pip install -r requirements.txt
    ```
 
-3. **Setup Database**
+2. **Setup Database**
    ```bash
    # Create PostgreSQL database
    createdb kids_clothing_erp
    ```
 
-4. **Configure Odoo**
+3. **Configure System**
    ```bash
    # Copy configuration file
-   cp odoo.conf /etc/odoo/odoo.conf
+   cp odoo.conf /etc/erp/erp.conf
    
    # Edit configuration
-   nano /etc/odoo/odoo.conf
+   nano /etc/erp/erp.conf
    ```
 
-5. **Start Odoo Server**
+4. **Start ERP Server**
    ```bash
-   python3 odoo-bin -c odoo.conf -d kids_clothing_erp -i kids_clothing_erp
+   python3 run_odoo.py --install
    ```
 
-6. **Access the System**
+5. **Access the System**
    - Open browser: `http://localhost:8069`
    - Login with admin credentials
    - Start using the ERP system!

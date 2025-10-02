@@ -1,5 +1,8 @@
 import { Router } from 'express';
 import { logger } from '@/config/logger';
+import { authRoutes } from './auth';
+import { userRoutes } from './users';
+import { companyRoutes } from './companies';
 
 /**
  * API routes
@@ -242,5 +245,14 @@ router.delete('/modules/:moduleName', (req, res) => {
     timestamp: new Date().toISOString(),
   });
 });
+
+// Authentication routes
+router.use('/auth', authRoutes);
+
+// User management routes
+router.use('/users', userRoutes);
+
+// Company management routes
+router.use('/companies', companyRoutes);
 
 export { router as apiRoutes };

@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Notification System Tree View -->
+        <record id="view_notification_system_tree" model="ir.ui.view">
+            <field name="name">notification.system.tree</field>
+            <field name="model">notification.system</field>
+            <field name="arch" type="xml">
+                <tree string="Notifications" decoration-info="type == 'info'" 
+                      decoration-success="type == 'success'" 
+                      decoration-warning="type == 'warning'" 
+                      decoration-danger="type == 'error'">
+                    <field name="name"/>
+                    <field name="type"/>
+                    <field name="priority"/>
+                    <field name="status"/>
+                    <field name="user_id"/>
+                    <field name="delivery_method"/>
+                    <field name="sent_date"/>
+                    <field name="read_date"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Notification System Form View -->
+        <record id="view_notification_system_form" model="ir.ui.view">
+            <field name="name">notification.system.form</field>
+            <field name="model">notification.system</field>
+            <field name="arch" type="xml">
+                <form string="Notification">
+                    <header>
+                        <button name="send_notification" string="Send" type="object" class="btn-primary"/>
+                        <button name="mark_as_read" string="Mark as Read" type="object" class="btn-secondary"/>
+                        <button name="resend_notification" string="Resend" type="object" class="btn-warning"/>
+                        <field name="status" widget="statusbar" statusbar_visible="draft,sent,delivered,read"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Notification Title"/>
+                            </h1>
+                        </div>
+                        
+                        <group>
+                            <group string="Basic Information">
+                                <field name="message"/>
+                                <field name="type"/>
+                                <field name="priority"/>
+                                <field name="icon"/>
+                            </group>
+                            <group string="Delivery">
+                                <field name="delivery_method"/>
+                                <field name="user_id"/>
+                                <field name="recipient_ids" widget="many2many_tags"/>
+                            </group>
+                        </group>
+                        
+                        <group>
+                            <group string="Action">
+                                <field name="action_url"/>
+                                <field name="action_text"/>
+                            </group>
+                            <group string="Timing">
+                                <field name="sent_date"/>
+                                <field name="delivered_date"/>
+                                <field name="read_date"/>
+                                <field name="expires_date"/>
+                            </group>
+                        </group>
+                        
+                        <group>
+                            <group string="Auto Dismiss">
+                                <field name="is_auto_dismiss"/>
+                                <field name="auto_dismiss_delay"/>
+                            </group>
+                            <group string="Related Record">
+                                <field name="model_name"/>
+                                <field name="record_id"/>
+                            </group>
+                        </group>
+                        
+                        <group>
+                            <group string="Grouping">
+                                <field name="category"/>
+                                <field name="group_id"/>
+                            </group>
+                            <group string="Template">
+                                <field name="template_id"/>
+                                <field name="template_data"/>
+                            </group>
+                        </group>
+                        
+                        <group>
+                            <group string="Delivery Tracking">
+                                <field name="delivery_attempts"/>
+                                <field name="last_delivery_attempt"/>
+                                <field name="delivery_error"/>
+                            </group>
+                        </group>
+                        
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Notification System Search View -->
+        <record id="view_notification_system_search" model="ir.ui.view">
+            <field name="name">notification.system.search</field>
+            <field name="model">notification.system</field>
+            <field name="arch" type="xml">
+                <search string="Search Notifications">
+                    <field name="name"/>
+                    <field name="message"/>
+                    <field name="user_id"/>
+                    <field name="recipient_ids"/>
+                    <field name="type"/>
+                    <field name="status"/>
+                    <field name="delivery_method"/>
+                    <field name="category"/>
+                    <field name="model_name"/>
+                    <filter string="Draft" name="draft" domain="[('status', '=', 'draft')]"/>
+                    <filter string="Sent" name="sent" domain="[('status', '=', 'sent')]"/>
+                    <filter string="Delivered" name="delivered" domain="[('status', '=', 'delivered')]"/>
+                    <filter string="Read" name="read" domain="[('status', '=', 'read')]"/>
+                    <filter string="Failed" name="failed" domain="[('status', '=', 'failed')]"/>
+                    <filter string="Info" name="info" domain="[('type', '=', 'info')]"/>
+                    <filter string="Success" name="success" domain="[('type', '=', 'success')]"/>
+                    <filter string="Warning" name="warning" domain="[('type', '=', 'warning')]"/>
+                    <filter string="Error" name="error" domain="[('type', '=', 'error')]"/>
+                    <filter string="High Priority" name="high_priority" domain="[('priority', 'in', ['high', 'urgent'])]"/>
+                    <filter string="Today" name="today" domain="[('create_date', '>=', datetime.datetime.combine(context_today(), datetime.time(0,0,0)))]"/>
+                    <filter string="This Week" name="this_week" domain="[('create_date', '>=', (context_today() - datetime.timedelta(days=context_today().weekday())).strftime('%Y-%m-%d'))]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Status" name="group_status" context="{'group_by': 'status'}"/>
+                        <filter string="Type" name="group_type" context="{'group_by': 'type'}"/>
+                        <filter string="Priority" name="group_priority" context="{'group_by': 'priority'}"/>
+                        <filter string="Delivery Method" name="group_delivery_method" context="{'group_by': 'delivery_method'}"/>
+                        <filter string="User" name="group_user" context="{'group_by': 'user_id'}"/>
+                        <filter string="Category" name="group_category" context="{'group_by': 'category'}"/>
+                        <filter string="Created Date" name="group_create_date" context="{'group_by': 'create_date:day'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- Notification System Action -->
+        <record id="action_notifications" model="ir.actions.act_window">
+            <field name="name">Notifications</field>
+            <field name="res_model">notification.system</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_notification_system_tree"/>
+            <field name="search_view_id" ref="view_notification_system_search"/>
+            <field name="context">{'search_default_delivered': 1}</field>
+        </record>
+        
+        <!-- Notification Template Tree View -->
+        <record id="view_notification_template_tree" model="ir.ui.view">
+            <field name="name">notification.template.tree</field>
+            <field name="model">notification.template</field>
+            <field name="arch" type="xml">
+                <tree string="Notification Templates">
+                    <field name="name"/>
+                    <field name="type"/>
+                    <field name="delivery_method"/>
+                    <field name="is_active"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Notification Template Form View -->
+        <record id="view_notification_template_form" model="ir.ui.view">
+            <field name="name">notification.template.form</field>
+            <field name="model">notification.template</field>
+            <field name="arch" type="xml">
+                <form string="Notification Template">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Template Name"/>
+                            </h1>
+                        </div>
+                        
+                        <group>
+                            <group string="Basic Information">
+                                <field name="subject"/>
+                                <field name="body"/>
+                                <field name="type"/>
+                                <field name="delivery_method"/>
+                            </group>
+                            <group string="Settings">
+                                <field name="is_active"/>
+                                <field name="variables"/>
+                            </group>
+                        </group>
+                        
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Notification Template Action -->
+        <record id="action_notification_templates" model="ir.actions.act_window">
+            <field name="name">Notification Templates</field>
+            <field name="res_model">notification.template</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_notification_template_tree"/>
+        </record>
+        
+    </data>
+</odoo>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Main Menu -->
+        <menuitem id="menu_kids_clothing_erp"
+                  name="Kids Clothing ERP"
+                  sequence="1"
+                  web_icon="core_base,static/description/icon.png"/>
+        
+        <!-- Configuration Menu -->
+        <menuitem id="menu_configuration"
+                  name="Configuration"
+                  parent="menu_kids_clothing_erp"
+                  sequence="100"/>
+        
+        <!-- System Settings -->
+        <menuitem id="menu_system_settings"
+                  name="System Settings"
+                  parent="menu_configuration"
+                  sequence="10"
+                  action="action_res_config_settings"/>
+        
+        <!-- System Information -->
+        <menuitem id="menu_system_info"
+                  name="System Information"
+                  parent="menu_configuration"
+                  sequence="20"
+                  action="action_system_info"/>
+        
+        <!-- Utilities Menu -->
+        <menuitem id="menu_utilities"
+                  name="Utilities"
+                  parent="menu_kids_clothing_erp"
+                  sequence="200"/>
+        
+        <!-- System Utilities -->
+        <menuitem id="menu_system_utilities"
+                  name="System Utilities"
+                  parent="menu_utilities"
+                  sequence="10"
+                  action="action_system_utilities"/>
+        
+    </data>
+</odoo>

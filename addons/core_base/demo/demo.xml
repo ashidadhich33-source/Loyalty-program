@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Demo data for core_base addon -->
+        
+        <!-- Demo System Configuration -->
+        <record id="demo_config_settings" model="res.config.settings">
+            <field name="company_name">Kids Clothing Store</field>
+            <field name="enable_child_profiles">True</field>
+            <field name="enable_age_based_discounts">True</field>
+            <field name="enable_loyalty_program">True</field>
+            <field name="enable_exchange_system">True</field>
+            <field name="enable_multi_location">True</field>
+            <field name="enable_stock_aging">True</field>
+            <field name="enable_touchscreen_mode">True</field>
+            <field name="enable_barcode_scanning">True</field>
+            <field name="enable_gst">True</field>
+            <field name="enable_e_invoice">True</field>
+            <field name="enable_e_way_bill">True</field>
+            <field name="enable_sms_notifications">True</field>
+            <field name="enable_email_notifications">True</field>
+            <field name="enable_whatsapp_notifications">True</field>
+        </record>
+        
+    </data>
+</odoo>

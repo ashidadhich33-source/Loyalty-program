@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- System Parameters -->
+        <record id="param_enable_child_profiles" model="ir.config_parameter">
+            <field name="key">core_base.enable_child_profiles</field>
+            <field name="value">True</field>
+        </record>
+        
+        <record id="param_enable_age_based_discounts" model="ir.config_parameter">
+            <field name="key">core_base.enable_age_based_discounts</field>
+            <field name="value">True</field>
+        </record>
+        
+        <record id="param_enable_loyalty_program" model="ir.config_parameter">
+            <field name="key">core_base.enable_loyalty_program</field>
+            <field name="value">True</field>
+        </record>
+        
+        <record id="param_enable_exchange_system" model="ir.config_parameter">
+            <field name="key">core_base.enable_exchange_system</field>
+            <field name="value">True</field>
+        </record>
+        
+        <record id="param_enable_multi_location" model="ir.config_parameter">
+            <field name="key">core_base.enable_multi_location</field>
+            <field name="value">True</field>
+        </record>
+        
+        <record id="param_enable_stock_aging" model="ir.config_parameter">
+            <field name="key">core_base.enable_stock_aging</field>
+            <field name="value">True</field>
+        </record>
+        
+        <record id="param_enable_touchscreen_mode" model="ir.config_parameter">
+            <field name="key">core_base.enable_touchscreen_mode</field>
+            <field name="value">True</field>
+        </record>
+        
+        <record id="param_enable_barcode_scanning" model="ir.config_parameter">
+            <field name="key">core_base.enable_barcode_scanning</field>
+            <field name="value">True</field>
+        </record>
+        
+        <record id="param_enable_gst" model="ir.config_parameter">
+            <field name="key">core_base.enable_gst</field>
+            <field name="value">True</field>
+        </record>
+        
+        <record id="param_enable_e_invoice" model="ir.config_parameter">
+            <field name="key">core_base.enable_e_invoice</field>
+            <field name="value">True</field>
+        </record>
+        
+        <record id="param_enable_e_way_bill" model="ir.config_parameter">
+            <field name="key">core_base.enable_e_way_bill</field>
+            <field name="value">True</field>
+        </record>
+        
+        <record id="param_enable_sms_notifications" model="ir.config_parameter">
+            <field name="key">core_base.enable_sms_notifications</field>
+            <field name="value">True</field>
+        </record>
+        
+        <record id="param_enable_email_notifications" model="ir.config_parameter">
+            <field name="key">core_base.enable_email_notifications</field>
+            <field name="value">True</field>
+        </record>
+        
+        <record id="param_enable_whatsapp_notifications" model="ir.config_parameter">
+            <field name="key">core_base.enable_whatsapp_notifications</field>
+            <field name="value">True</field>
+        </record>
+        
+        <!-- Age Groups -->
+        <record id="age_group_newborn" model="age.group">
+            <field name="name">Newborn</field>
+            <field name="code">newborn</field>
+            <field name="min_age">0</field>
+            <field name="max_age">6</field>
+            <field name="description">Newborn babies (0-6 months)</field>
+        </record>
+        
+        <record id="age_group_infant" model="age.group">
+            <field name="name">Infant</field>
+            <field name="code">infant</field>
+            <field name="min_age">6</field>
+            <field name="max_age">12</field>
+            <field name="description">Infants (6-12 months)</field>
+        </record>
+        
+        <record id="age_group_toddler" model="age.group">
+            <field name="name">Toddler</field>
+            <field name="code">toddler</field>
+            <field name="min_age">12</field>
+            <field name="max_age">36</field>
+            <field name="description">Toddlers (1-3 years)</field>
+        </record>
+        
+        <record id="age_group_preschool" model="age.group">
+            <field name="name">Preschool</field>
+            <field name="code">preschool</field>
+            <field name="min_age">36</field>
+            <field name="max_age">60</field>
+            <field name="description">Preschool children (3-5 years)</field>
+        </record>
+        
+        <record id="age_group_school" model="age.group">
+            <field name="name">School Age</field>
+            <field name="code">school</field>
+            <field name="min_age">60</field>
+            <field name="max_age">144</field>
+            <field name="description">School age children (5-12 years)</field>
+        </record>
+        
+        <record id="age_group_teen" model="age.group">
+            <field name="name">Teen</field>
+            <field name="code">teen</field>
+            <field name="min_age">144</field>
+            <field name="max_age">216</field>
+            <field name="description">Teenagers (12-18 years)</field>
+        </record>
+        
+        <!-- Seasons -->
+        <record id="season_summer" model="season">
+            <field name="name">Summer</field>
+            <field name="code">summer</field>
+            <field name="description">Summer season clothing</field>
+        </record>
+        
+        <record id="season_winter" model="season">
+            <field name="name">Winter</field>
+            <field name="code">winter</field>
+            <field name="description">Winter season clothing</field>
+        </record>
+        
+        <record id="season_monsoon" model="season">
+            <field name="name">Monsoon</field>
+            <field name="code">monsoon</field>
+            <field name="description">Monsoon season clothing</field>
+        </record>
+        
+        <record id="season_all_season" model="season">
+            <field name="name">All Season</field>
+            <field name="code">all_season</field>
+            <field name="description">All season clothing</field>
+        </record>
+        
+        <!-- Genders -->
+        <record id="gender_unisex" model="gender">
+            <field name="name">Unisex</field>
+            <field name="code">unisex</field>
+            <field name="description">Unisex clothing</field>
+        </record>
+        
+        <record id="gender_boys" model="gender">
+            <field name="name">Boys</field>
+            <field name="code">boys</field>
+            <field name="description">Boys clothing</field>
+        </record>
+        
+        <record id="gender_girls" model="gender">
+            <field name="name">Girls</field>
+            <field name="code">girls</field>
+            <field name="description">Girls clothing</field>
+        </record>
+        
+    </data>
+</odoo>

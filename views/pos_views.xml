@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- POS Configuration Form View -->
+    <record id="view_pos_config_form_kids_clothing" model="ir.ui.view">
+        <field name="name">pos.config.form.kids.clothing</field>
+        <field name="model">pos.config</field>
+        <field name="inherit_id" ref="point_of_sale.pos_config_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='module_pos_restaurant']" position="after">
+                <separator string="Kids Clothing Features"/>
+                <group>
+                    <group>
+                        <field name="enable_loyalty_program"/>
+                        <field name="loyalty_points_per_currency"/>
+                        <field name="enable_gift_wrapping"/>
+                        <field name="gift_wrap_price"/>
+                    </group>
+                    <group>
+                        <field name="enable_exchange_return"/>
+                        <field name="exchange_return_days"/>
+                        <field name="require_age_verification"/>
+                        <field name="enable_size_recommendation"/>
+                    </group>
+                </group>
+                <group>
+                    <group>
+                        <field name="enable_seasonal_promotions"/>
+                        <field name="enable_multi_payment"/>
+                        <field name="collect_child_info"/>
+                    </group>
+                    <group>
+                        <field name="receipt_template"/>
+                        <field name="enable_barcode_scanning"/>
+                        <field name="enable_product_recommendations"/>
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- POS Session Form View -->
+    <record id="view_pos_session_form_kids_clothing" model="ir.ui.view">
+        <field name="name">pos.session.form.kids.clothing</field>
+        <field name="model">pos.session</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_session_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='config_id']" position="after">
+                <separator string="Kids Clothing Analytics"/>
+                <group>
+                    <group>
+                        <field name="total_loyalty_points_earned"/>
+                        <field name="total_loyalty_points_used"/>
+                        <field name="gift_wraps_sold"/>
+                    </group>
+                    <group>
+                        <field name="exchanges_processed"/>
+                        <field name="returns_processed"/>
+                    </group>
+                </group>
+                <group>
+                    <group>
+                        <field name="newborn_sales"/>
+                        <field name="infant_sales"/>
+                        <field name="toddler_sales"/>
+                    </group>
+                    <group>
+                        <field name="preschool_sales"/>
+                        <field name="child_sales"/>
+                        <field name="teen_sales"/>
+                    </group>
+                </group>
+                <group>
+                    <group>
+                        <field name="boys_sales"/>
+                        <field name="girls_sales"/>
+                        <field name="unisex_sales"/>
+                    </group>
+                    <group>
+                        <field name="spring_sales"/>
+                        <field name="summer_sales"/>
+                        <field name="fall_sales"/>
+                        <field name="winter_sales"/>
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- POS Session Tree View -->
+    <record id="view_pos_session_tree_kids_clothing" model="ir.ui.view">
+        <field name="name">pos.session.tree.kids.clothing</field>
+        <field name="model">pos.session</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_session_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='config_id']" position="after">
+                <field name="total_loyalty_points_earned"/>
+                <field name="gift_wraps_sold"/>
+                <field name="exchanges_processed"/>
+                <field name="returns_processed"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- POS Session Analytics Action -->
+    <record id="action_pos_session_analytics" model="ir.actions.act_window">
+        <field name="name">POS Session Analytics</field>
+        <field name="res_model">pos.session</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('state', '=', 'closed')]</field>
+        <field name="context">{'search_default_this_month': 1}</field>
+    </record>
+
+    <!-- POS Session Analytics Menu -->
+    <menuitem id="menu_pos_session_analytics" 
+              name="Session Analytics" 
+              parent="point_of_sale.menu_point_ofsale" 
+              action="action_pos_session_analytics" 
+              sequence="20"/>
+</odoo>

@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_res_config_settings,access_res_config_settings,model_res_config_settings,base.group_system,1,1,1,1
+access_system_utils,access_system_utils,model_system_utils,base.group_system,1,0,0,0
+access_kids_clothing_mixin,access_kids_clothing_mixin,model_kids_clothing_mixin,base.group_user,1,1,1,1
+access_age_group_mixin,access_age_group_mixin,model_age_group_mixin,base.group_user,1,1,1,1
+access_gender_mixin,access_gender_mixin,model_gender_mixin,base.group_user,1,1,1,1
+access_season_mixin,access_season_mixin,model_season_mixin,base.group_user,1,1,1,1
+access_size_mixin,access_size_mixin,model_size_mixin,base.group_user,1,1,1,1
+access_color_mixin,access_color_mixin,model_color_mixin,base.group_user,1,1,1,1
+access_brand_mixin,access_brand_mixin,model_brand_mixin,base.group_user,1,1,1,1
+access_price_mixin,access_price_mixin,model_price_mixin,base.group_user,1,1,1,1

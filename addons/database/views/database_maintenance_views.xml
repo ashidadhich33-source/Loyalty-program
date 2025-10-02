@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Database Maintenance Tree View -->
+        <record id="view_database_maintenance_tree" model="ir.ui.view">
+            <field name="name">database.maintenance.tree</field>
+            <field name="model">database.maintenance</field>
+            <field name="arch" type="xml">
+                <tree string="Database Maintenance">
+                    <field name="name"/>
+                    <field name="database_id"/>
+                    <field name="maintenance_type"/>
+                    <field name="status"/>
+                    <field name="scheduled_date"/>
+                    <field name="last_run_date"/>
+                    <field name="next_run_date"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Database Maintenance Form View -->
+        <record id="view_database_maintenance_form" model="ir.ui.view">
+            <field name="name">database.maintenance.form</field>
+            <field name="model">database.maintenance</field>
+            <field name="arch" type="xml">
+                <form string="Database Maintenance">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Maintenance Task Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="database_id"/>
+                                <field name="maintenance_type"/>
+                                <field name="status"/>
+                                <field name="priority"/>
+                            </group>
+                            <group>
+                                <field name="scheduled_date"/>
+                                <field name="last_run_date"/>
+                                <field name="next_run_date"/>
+                                <field name="frequency"/>
+                            </group>
+                        </group>
+                        <group string="Maintenance Settings">
+                            <group>
+                                <field name="auto_run"/>
+                                <field name="run_duration"/>
+                                <field name="maintenance_window"/>
+                            </group>
+                            <group>
+                                <field name="notify_on_completion"/>
+                                <field name="notify_on_failure"/>
+                                <field name="notify_recipients"/>
+                            </group>
+                        </group>
+                        <group string="Maintenance Logs">
+                            <field name="maintenance_logs" readonly="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Database Maintenance Search View -->
+        <record id="view_database_maintenance_search" model="ir.ui.view">
+            <field name="name">database.maintenance.search</field>
+            <field name="model">database.maintenance</field>
+            <field name="arch" type="xml">
+                <search string="Database Maintenance">
+                    <field name="name"/>
+                    <field name="database_id"/>
+                    <field name="maintenance_type"/>
+                    <field name="status"/>
+                    <filter string="Active" name="active" domain="[('status', '=', 'active')]"/>
+                    <filter string="Inactive" name="inactive" domain="[('status', '=', 'inactive')]"/>
+                    <filter string="Scheduled" name="scheduled" domain="[('status', '=', 'scheduled')]"/>
+                    <filter string="Running" name="running" domain="[('status', '=', 'running')]"/>
+                    <filter string="Completed" name="completed" domain="[('status', '=', 'completed')]"/>
+                    <filter string="Failed" name="failed" domain="[('status', '=', 'failed')]"/>
+                    <filter string="Auto Run" name="auto_run" domain="[('auto_run', '=', True)]"/>
+                    <filter string="High Priority" name="high_priority" domain="[('priority', '=', 'high')]"/>
+                    <filter string="Medium Priority" name="medium_priority" domain="[('priority', '=', 'medium')]"/>
+                    <filter string="Low Priority" name="low_priority" domain="[('priority', '=', 'low')]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Database" name="database" context="{'group_by': 'database_id'}"/>
+                        <filter string="Type" name="type" context="{'group_by': 'maintenance_type'}"/>
+                        <filter string="Status" name="status" context="{'group_by': 'status'}"/>
+                        <filter string="Priority" name="priority" context="{'group_by': 'priority'}"/>
+                        <filter string="Auto Run" name="auto_run_group" context="{'group_by': 'auto_run'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Database Maintenance Action -->
+        <record id="action_database_maintenance" model="ir.actions.act_window">
+            <field name="name">Database Maintenance</field>
+            <field name="res_model">database.maintenance</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_database_maintenance_search"/>
+            <field name="context">{'search_default_active': 1}</field>
+        </record>
+
+    </data>
+</odoo>

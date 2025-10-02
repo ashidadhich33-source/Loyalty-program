@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Company Menu -->
+        <menuitem id="menu_company"
+                  name="Company"
+                  parent="menu_kids_clothing_erp"
+                  sequence="30"/>
+        
+        <!-- Company Management -->
+        <menuitem id="menu_company_management"
+                  name="Company Management"
+                  parent="menu_company"
+                  sequence="10"/>
+        
+        <!-- Companies -->
+        <menuitem id="menu_companies"
+                  name="Companies"
+                  parent="menu_company_management"
+                  sequence="10"
+                  action="action_companies"/>
+        
+        <!-- Branches -->
+        <menuitem id="menu_branches"
+                  name="Branches"
+                  parent="menu_company_management"
+                  sequence="20"
+                  action="action_branches"/>
+        
+        <!-- Locations -->
+        <menuitem id="menu_locations"
+                  name="Locations"
+                  parent="menu_company_management"
+                  sequence="30"
+                  action="action_locations"/>
+        
+        <!-- Financial Years -->
+        <menuitem id="menu_financial_years"
+                  name="Financial Years"
+                  parent="menu_company_management"
+                  sequence="40"
+                  action="action_financial_years"/>
+        
+        <!-- Company Settings -->
+        <menuitem id="menu_company_settings"
+                  name="Company Settings"
+                  parent="menu_company_management"
+                  sequence="50"
+                  action="action_company_settings"/>
+        
+        <!-- Company Analytics -->
+        <menuitem id="menu_company_analytics"
+                  name="Company Analytics"
+                  parent="menu_company"
+                  sequence="20"/>
+        
+        <!-- Analytics Dashboard -->
+        <menuitem id="menu_analytics_dashboard"
+                  name="Analytics Dashboard"
+                  parent="menu_company_analytics"
+                  sequence="10"
+                  action="action_analytics_dashboard"/>
+        
+        <!-- Analytics Reports -->
+        <menuitem id="menu_analytics_reports"
+                  name="Analytics Reports"
+                  parent="menu_company_analytics"
+                  sequence="20"
+                  action="action_analytics_reports"/>
+        
+        <!-- Company Configuration -->
+        <menuitem id="menu_company_configuration"
+                  name="Company Configuration"
+                  parent="menu_company"
+                  sequence="40"/>
+        
+        <!-- Company Setup -->
+        <menuitem id="menu_company_setup"
+                  name="Company Setup"
+                  parent="menu_company_configuration"
+                  sequence="10"
+                  action="action_company_setup"/>
+        
+        <!-- GST Configuration -->
+        <menuitem id="menu_gst_configuration"
+                  name="GST Configuration"
+                  parent="menu_company_configuration"
+                  sequence="20"
+                  action="action_gst_configuration"/>
+        
+        <!-- Multi-Company -->
+        <menuitem id="menu_multi_company"
+                  name="Multi-Company"
+                  parent="menu_company_configuration"
+                  sequence="30"
+                  action="action_multi_company"/>
+        
+    </data>
+</odoo>

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Users Menu -->
+        <menuitem id="menu_users"
+                  name="Users"
+                  parent="menu_kids_clothing_erp"
+                  sequence="20"/>
+        
+        <!-- User Management -->
+        <menuitem id="menu_user_management"
+                  name="User Management"
+                  parent="menu_users"
+                  sequence="10"/>
+        
+        <!-- Users -->
+        <menuitem id="menu_users_list"
+                  name="Users"
+                  parent="menu_user_management"
+                  sequence="10"
+                  action="action_users"/>
+        
+        <!-- Groups -->
+        <menuitem id="menu_groups"
+                  name="Groups"
+                  parent="menu_user_management"
+                  sequence="20"
+                  action="action_groups"/>
+        
+        <!-- Permissions -->
+        <menuitem id="menu_permissions"
+                  name="Permissions"
+                  parent="menu_user_management"
+                  sequence="30"
+                  action="action_permissions"/>
+        
+        <!-- Access Rights -->
+        <menuitem id="menu_access_rights"
+                  name="Access Rights"
+                  parent="menu_user_management"
+                  sequence="40"
+                  action="action_access_rights"/>
+        
+        <!-- User Preferences -->
+        <menuitem id="menu_user_preferences"
+                  name="User Preferences"
+                  parent="menu_user_management"
+                  sequence="50"
+                  action="action_user_preferences"/>
+        
+        <!-- Activity Monitoring -->
+        <menuitem id="menu_activity_monitoring"
+                  name="Activity Monitoring"
+                  parent="menu_users"
+                  sequence="20"/>
+        
+        <!-- User Activity -->
+        <menuitem id="menu_user_activity"
+                  name="User Activity"
+                  parent="menu_activity_monitoring"
+                  sequence="10"
+                  action="action_user_activity"/>
+        
+        <!-- Activity Analytics -->
+        <menuitem id="menu_activity_analytics"
+                  name="Activity Analytics"
+                  parent="menu_activity_monitoring"
+                  sequence="20"
+                  action="action_activity_analytics"/>
+        
+        <!-- Security -->
+        <menuitem id="menu_security"
+                  name="Security"
+                  parent="menu_users"
+                  sequence="30"/>
+        
+        <!-- Security Settings -->
+        <menuitem id="menu_security_settings"
+                  name="Security Settings"
+                  parent="menu_security"
+                  sequence="10"
+                  action="action_security_settings"/>
+        
+        <!-- Failed Logins -->
+        <menuitem id="menu_failed_logins"
+                  name="Failed Logins"
+                  parent="menu_security"
+                  sequence="20"
+                  action="action_failed_logins"/>
+        
+        <!-- Account Locks -->
+        <menuitem id="menu_account_locks"
+                  name="Account Locks"
+                  parent="menu_security"
+                  sequence="30"
+                  action="action_account_locks"/>
+        
+    </data>
+</odoo>

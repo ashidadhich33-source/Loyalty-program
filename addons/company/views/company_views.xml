@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Companies Tree View -->
+        <record id="view_companies_tree" model="ir.ui.view">
+            <field name="name">companies.tree</field>
+            <field name="model">res.company</field>
+            <field name="arch" type="xml">
+                <tree string="Companies" decoration-muted="not is_active" decoration-info="is_default">
+                    <field name="name"/>
+                    <field name="company_type"/>
+                    <field name="business_nature"/>
+                    <field name="gstin"/>
+                    <field name="gst_status"/>
+                    <field name="currency_id"/>
+                    <field name="total_users"/>
+                    <field name="active_users"/>
+                    <field name="is_active"/>
+                    <field name="is_default"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Companies Form View -->
+        <record id="view_companies_form" model="ir.ui.view">
+            <field name="name">companies.form</field>
+            <field name="model">res.company</field>
+            <field name="arch" type="xml">
+                <form string="Company">
+                    <header>
+                        <button name="action_activate" string="Activate" type="object" class="btn-primary" attrs="{'invisible': [('is_active', '=', True)]}"/>
+                        <button name="action_deactivate" string="Deactivate" type="object" class="btn-warning" attrs="{'invisible': [('is_active', '=', False)]}"/>
+                        <button name="action_set_default" string="Set as Default" type="object" class="btn-secondary" attrs="{'invisible': [('is_default', '=', True)]}"/>
+                        <button name="action_validate_gstin" string="Validate GSTIN" type="object" class="btn-info"/>
+                        <button name="action_generate_gstin" string="Generate GSTIN" type="object" class="btn-success"/>
+                        <field name="is_active" widget="statusbar" statusbar_visible="False,True"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Company Name"/>
+                            </h1>
+                        </div>
+                        
+                        <group>
+                            <group string="Basic Information">
+                                <field name="company_type"/>
+                                <field name="business_nature"/>
+                                <field name="parent_company_id"/>
+                                <field name="company_level"/>
+                                <field name="currency_id"/>
+                            </group>
+                            <group string="GST Information">
+                                <field name="gstin"/>
+                                <field name="gst_registration_date"/>
+                                <field name="gst_status"/>
+                            </group>
+                        </group>
+                        
+                        <group>
+                            <group string="Contact Information">
+                                <field name="contact_person"/>
+                                <field name="contact_phone"/>
+                                <field name="contact_email"/>
+                            </group>
+                            <group string="Financial Information">
+                                <field name="financial_year_start"/>
+                                <field name="financial_year_end"/>
+                            </group>
+                        </group>
+                        
+                        <group>
+                            <group string="Company Settings">
+                                <field name="enable_multi_company"/>
+                                <field name="enable_gst"/>
+                                <field name="enable_e_invoice"/>
+                                <field name="enable_e_way_bill"/>
+                            </group>
+                            <group string="Company Status">
+                                <field name="is_active"/>
+                                <field name="is_default"/>
+                                <field name="total_users"/>
+                                <field name="active_users"/>
+                            </group>
+                        </group>
+                        
+                        <group>
+                            <group string="Registered Address">
+                                <field name="registered_address"/>
+                            </group>
+                            <group string="Business Address">
+                                <field name="business_address"/>
+                            </group>
+                        </group>
+                        
+                        <group>
+                            <group string="Warehouse Address">
+                                <field name="warehouse_address"/>
+                            </group>
+                        </group>
+                        
+                        <notebook>
+                            <page string="Branches" name="branches">
+                                <field name="branch_ids" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="name"/>
+                                        <field name="code"/>
+                                        <field name="branch_type"/>
+                                        <field name="manager_id"/>
+                                        <field name="is_active"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            
+                            <page string="Locations" name="locations">
+                                <field name="location_ids" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="name"/>
+                                        <field name="code"/>
+                                        <field name="location_type"/>
+                                        <field name="manager_id"/>
+                                        <field name="is_active"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            
+                            <page string="Users" name="users">
+                                <field name="user_ids" widget="many2many_tags"/>
+                            </page>
+                            
+                            <page string="Documents" name="documents">
+                                <field name="document_ids" nolabel="1">
+                                    <tree>
+                                        <field name="name"/>
+                                        <field name="document_type"/>
+                                        <field name="file_name"/>
+                                        <field name="create_date"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            
+                            <page string="Social Media" name="social_media">
+                                <field name="social_media_ids" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="platform"/>
+                                        <field name="url"/>
+                                        <field name="is_active"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            
+                            <page string="Analytics" name="analytics">
+                                <field name="analytics_ids" nolabel="1">
+                                    <tree>
+                                        <field name="name"/>
+                                        <field name="date"/>
+                                        <field name="period_type"/>
+                                        <field name="total_sales"/>
+                                        <field name="total_profit"/>
+                                        <field name="is_processed"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                        
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Companies Search View -->
+        <record id="view_companies_search" model="ir.ui.view">
+            <field name="name">companies.search</field>
+            <field name="model">res.company</field>
+            <field name="arch" type="xml">
+                <search string="Search Companies">
+                    <field name="name"/>
+                    <field name="company_type"/>
+                    <field name="business_nature"/>
+                    <field name="gstin"/>
+                    <field name="contact_person"/>
+                    <field name="contact_email"/>
+                    <filter string="Active Companies" name="active" domain="[('is_active', '=', True)]"/>
+                    <filter string="Inactive Companies" name="inactive" domain="[('is_active', '=', False)]"/>
+                    <filter string="Default Company" name="default" domain="[('is_default', '=', True)]"/>
+                    <filter string="Retail" name="retail" domain="[('company_type', '=', 'retail')]"/>
+                    <filter string="Wholesale" name="wholesale" domain="[('company_type', '=', 'wholesale')]"/>
+                    <filter string="Franchise" name="franchise" domain="[('company_type', '=', 'franchise')]"/>
+                    <filter string="Corporate" name="corporate" domain="[('company_type', '=', 'corporate')]"/>
+                    <filter string="Distributor" name="distributor" domain="[('company_type', '=', 'distributor')]"/>
+                    <filter string="Manufacturer" name="manufacturer" domain="[('company_type', '=', 'manufacturer')]"/>
+                    <filter string="Kids Clothing" name="kids_clothing" domain="[('business_nature', '=', 'kids_clothing')]"/>
+                    <filter string="Fashion Retail" name="fashion_retail" domain="[('business_nature', '=', 'fashion_retail')]"/>
+                    <filter string="General Retail" name="general_retail" domain="[('business_nature', '=', 'general_retail')]"/>
+                    <filter string="E-commerce" name="ecommerce" domain="[('business_nature', '=', 'ecommerce')]"/>
+                    <filter string="Wholesale Trade" name="wholesale_trade" domain="[('business_nature', '=', 'wholesale_trade')]"/>
+                    <filter string="Manufacturing" name="manufacturing" domain="[('business_nature', '=', 'manufacturing')]"/>
+                    <filter string="GST Registered" name="gst_registered" domain="[('gst_status', '=', 'registered')]"/>
+                    <filter string="GST Unregistered" name="gst_unregistered" domain="[('gst_status', '=', 'unregistered')]"/>
+                    <filter string="GST Cancelled" name="gst_cancelled" domain="[('gst_status', '=', 'cancelled')]"/>
+                    <filter string="GST Suspended" name="gst_suspended" domain="[('gst_status', '=', 'suspended')]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Company Type" name="group_company_type" context="{'group_by': 'company_type'}"/>
+                        <filter string="Business Nature" name="group_business_nature" context="{'group_by': 'business_nature'}"/>
+                        <filter string="GST Status" name="group_gst_status" context="{'group_by': 'gst_status'}"/>
+                        <filter string="Currency" name="group_currency" context="{'group_by': 'currency_id'}"/>
+                        <filter string="Created Date" name="group_create_date" context="{'group_by': 'create_date:day'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- Companies Action -->
+        <record id="action_companies" model="ir.actions.act_window">
+            <field name="name">Companies</field>
+            <field name="res_model">res.company</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_companies_tree"/>
+            <field name="search_view_id" ref="view_companies_search"/>
+            <field name="context">{'search_default_active': 1}</field>
+        </record>
+        
+        <!-- Company Analytics View -->
+        <record id="view_company_analytics" model="ir.ui.view">
+            <field name="name">company.analytics</field>
+            <field name="model">res.company</field>
+            <field name="arch" type="xml">
+                <form string="Company Analytics">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>Company Analytics</h1>
+                        </div>
+                        
+                        <group>
+                            <group string="User Analytics">
+                                <label for="total_users" string="Total Users"/>
+                                <div id="total_users" class="oe_read_only"/>
+                                <label for="active_users" string="Active Users"/>
+                                <div id="active_users" class="oe_read_only"/>
+                            </group>
+                            <group string="Company Information">
+                                <label for="company_type" string="Company Type"/>
+                                <div id="company_type" class="oe_read_only"/>
+                                <label for="business_nature" string="Business Nature"/>
+                                <div id="business_nature" class="oe_read_only"/>
+                            </group>
+                        </group>
+                        
+                        <group>
+                            <group string="GST Information">
+                                <label for="gst_status" string="GST Status"/>
+                                <div id="gst_status" class="oe_read_only"/>
+                                <label for="gstin" string="GSTIN"/>
+                                <div id="gstin" class="oe_read_only"/>
+                            </group>
+                            <group string="Company Status">
+                                <label for="is_active" string="Is Active"/>
+                                <div id="is_active" class="oe_read_only"/>
+                                <label for="is_default" string="Is Default"/>
+                                <div id="is_default" class="oe_read_only"/>
+                            </group>
+                        </group>
+                        
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Company Analytics Action -->
+        <record id="action_company_analytics" model="ir.actions.act_window">
+            <field name="name">Company Analytics</field>
+            <field name="res_model">res.company</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_company_analytics"/>
+            <field name="target">inline</field>
+        </record>
+        
+    </data>
+</odoo>

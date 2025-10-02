@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Database Backups Tree View -->
+        <record id="view_database_backups_tree" model="ir.ui.view">
+            <field name="name">database_backups.tree</field>
+            <field name="model">database.backup</field>
+            <field name="arch" type="xml">
+                <tree string="Database Backups" decoration-muted="status=='pending'" decoration-success="status=='completed'" decoration-warning="status=='in_progress'" decoration-danger="status=='failed'">
+                    <field name="name"/>
+                    <field name="database_id"/>
+                    <field name="backup_type"/>
+                    <field name="status"/>
+                    <field name="backup_file"/>
+                    <field name="backup_size"/>
+                    <field name="start_time"/>
+                    <field name="end_time"/>
+                    <field name="duration"/>
+                    <field name="compression_enabled"/>
+                    <field name="encryption_enabled"/>
+                    <field name="verification_status"/>
+                    <field name="is_expired"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Database Backups Form View -->
+        <record id="view_database_backups_form" model="ir.ui.view">
+            <field name="name">database_backups.form</field>
+            <field name="model">database.backup</field>
+            <field name="arch" type="xml">
+                <form string="Database Backup">
+                    <header>
+                        <button name="action_start_backup" string="Start Backup" type="object" class="btn-primary" attrs="{'invisible': [('status', '!=', 'pending')]}"/>
+                        <button name="action_complete_backup" string="Complete Backup" type="object" class="btn-success" attrs="{'invisible': [('status', '!=', 'in_progress')]}"/>
+                        <button name="action_fail_backup" string="Fail Backup" type="object" class="btn-danger" attrs="{'invisible': [('status', '!=', 'in_progress')]}"/>
+                        <button name="action_cancel_backup" string="Cancel Backup" type="object" class="btn-warning" attrs="{'invisible': [('status', 'not in', ['pending', 'in_progress'])]}"/>
+                        <button name="action_verify_backup" string="Verify Backup" type="object" class="btn-info" attrs="{'invisible': [('status', '!=', 'completed')]}"/>
+                        <button name="action_restore_backup" string="Restore Backup" type="object" class="btn-primary" attrs="{'invisible': [('status', '!=', 'completed')]}"/>
+                        <button name="action_cleanup_backup" string="Cleanup Backup" type="object" class="btn-warning" attrs="{'invisible': [('is_expired', '=', False)]}"/>
+                        <button name="action_schedule_backup" string="Schedule Backup" type="object" class="btn-secondary" attrs="{'invisible': [('is_scheduled', '=', True)]}"/>
+                        <button name="action_unschedule_backup" string="Unschedule Backup" type="object" class="btn-secondary" attrs="{'invisible': [('is_scheduled', '=', False)]}"/>
+                        <field name="status" widget="statusbar" statusbar_visible="pending,in_progress,completed,failed"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Backup Name"/>
+                            </h1>
+                        </div>
+                        
+                        <group>
+                            <group string="Basic Information">
+                                <field name="description"/>
+                                <field name="database_id"/>
+                                <field name="backup_type"/>
+                                <field name="status"/>
+                            </group>
+                            <group string="Backup File">
+                                <field name="backup_file"/>
+                                <field name="backup_path"/>
+                                <field name="backup_size"/>
+                            </group>
+                        </group>
+                        
+                        <group>
+                            <group string="Backup Timing">
+                                <field name="start_time"/>
+                                <field name="end_time"/>
+                                <field name="duration"/>
+                            </group>
+                            <group string="Backup Settings">
+                                <field name="compression_enabled"/>
+                                <field name="encryption_enabled"/>
+                                <field name="include_data"/>
+                                <field name="include_schema"/>
+                                <field name="include_indexes"/>
+                            </group>
+                        </group>
+                        
+                        <group>
+                            <group string="Backup Retention">
+                                <field name="retention_days"/>
+                                <field name="expiry_date"/>
+                                <field name="is_expired"/>
+                            </group>
+                            <group string="Backup Verification">
+                                <field name="verification_enabled"/>
+                                <field name="verification_status"/>
+                                <field name="verification_time"/>
+                            </group>
+                        </group>
+                        
+                        <group>
+                            <group string="Backup Scheduling">
+                                <field name="is_scheduled"/>
+                                <field name="schedule_frequency"/>
+                                <field name="next_backup"/>
+                            </group>
+                            <group string="Backup Analytics">
+                                <field name="success_rate"/>
+                                <field name="total_backups"/>
+                                <field name="successful_backups"/>
+                                <field name="failed_backups"/>
+                            </group>
+                        </group>
+                        
+                        <group>
+                            <group string="Backup Logs">
+                                <field name="log_file"/>
+                                <field name="error_message"/>
+                            </group>
+                            <group string="Backup Metadata">
+                                <field name="metadata"/>
+                            </group>
+                        </group>
+                        
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Database Backups Search View -->
+        <record id="view_database_backups_search" model="ir.ui.view">
+            <field name="name">database_backups.search</field>
+            <field name="model">database.backup</field>
+            <field name="arch" type="xml">
+                <search string="Search Database Backups">
+                    <field name="name"/>
+                    <field name="description"/>
+                    <field name="database_id"/>
+                    <field name="backup_type"/>
+                    <field name="backup_file"/>
+                    <field name="start_time"/>
+                    <field name="end_time"/>
+                    <filter string="Pending Backups" name="pending" domain="[('status', '=', 'pending')]"/>
+                    <filter string="In Progress Backups" name="in_progress" domain="[('status', '=', 'in_progress')]"/>
+                    <filter string="Completed Backups" name="completed" domain="[('status', '=', 'completed')]"/>
+                    <filter string="Failed Backups" name="failed" domain="[('status', '=', 'failed')]"/>
+                    <filter string="Cancelled Backups" name="cancelled" domain="[('status', '=', 'cancelled')]"/>
+                    <filter string="Full Backups" name="full" domain="[('backup_type', '=', 'full')]"/>
+                    <filter string="Incremental Backups" name="incremental" domain="[('backup_type', '=', 'incremental')]"/>
+                    <filter string="Differential Backups" name="differential" domain="[('backup_type', '=', 'differential')]"/>
+                    <filter string="Manual Backups" name="manual" domain="[('backup_type', '=', 'manual')]"/>
+                    <filter string="Scheduled Backups" name="scheduled" domain="[('backup_type', '=', 'scheduled')]"/>
+                    <filter string="Emergency Backups" name="emergency" domain="[('backup_type', '=', 'emergency')]"/>
+                    <filter string="Scheduled Backups" name="is_scheduled" domain="[('is_scheduled', '=', True)]"/>
+                    <filter string="Expired Backups" name="expired" domain="[('is_expired', '=', True)]"/>
+                    <filter string="Verified Backups" name="verified" domain="[('verification_status', '=', 'verified')]"/>
+                    <filter string="Not Verified Backups" name="not_verified" domain="[('verification_status', '=', 'not_verified')]"/>
+                    <filter string="Verification Failed Backups" name="verification_failed" domain="[('verification_status', '=', 'verification_failed')]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Database" name="group_database" context="{'group_by': 'database_id'}"/>
+                        <filter string="Backup Type" name="group_backup_type" context="{'group_by': 'backup_type'}"/>
+                        <filter string="Status" name="group_status" context="{'group_by': 'status'}"/>
+                        <filter string="Start Time" name="group_start_time" context="{'group_by': 'start_time:day'}"/>
+                        <filter string="End Time" name="group_end_time" context="{'group_by': 'end_time:day'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- Database Backups Action -->
+        <record id="action_database_backups" model="ir.actions.act_window">
+            <field name="name">Database Backups</field>
+            <field name="res_model">database.backup</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_database_backups_tree"/>
+            <field name="search_view_id" ref="view_database_backups_search"/>
+            <field name="context">{'search_default_completed': 1}</field>
+        </record>
+        
+    </data>
+</odoo>

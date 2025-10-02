@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- System Configuration Settings Form -->
+        <record id="view_res_config_settings_form" model="ir.ui.view">
+            <field name="name">res.config.settings.form</field>
+            <field name="model">res.config.settings</field>
+            <field name="arch" type="xml">
+                <form string="System Configuration">
+                    <header>
+                        <button name="execute" string="Save" type="object" class="btn-primary"/>
+                        <button name="cancel" string="Cancel" type="object" class="btn-secondary"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>Kids Clothing ERP Configuration</h1>
+                        </div>
+                        
+                        <group>
+                            <group string="Company Information">
+                                <field name="company_name"/>
+                                <field name="company_currency"/>
+                            </group>
+                            <group string="Kids Clothing Features">
+                                <field name="enable_child_profiles"/>
+                                <field name="enable_age_based_discounts"/>
+                                <field name="enable_loyalty_program"/>
+                                <field name="enable_exchange_system"/>
+                            </group>
+                        </group>
+                        
+                        <group>
+                            <group string="Inventory Settings">
+                                <field name="enable_multi_location"/>
+                                <field name="enable_stock_aging"/>
+                            </group>
+                            <group string="POS Settings">
+                                <field name="enable_touchscreen_mode"/>
+                                <field name="enable_barcode_scanning"/>
+                            </group>
+                        </group>
+                        
+                        <group>
+                            <group string="Indian Localization">
+                                <field name="enable_gst"/>
+                                <field name="enable_e_invoice"/>
+                                <field name="enable_e_way_bill"/>
+                            </group>
+                            <group string="Notifications">
+                                <field name="enable_sms_notifications"/>
+                                <field name="enable_email_notifications"/>
+                                <field name="enable_whatsapp_notifications"/>
+                            </group>
+                        </group>
+                        
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- System Configuration Settings Action -->
+        <record id="action_res_config_settings" model="ir.actions.act_window">
+            <field name="name">System Configuration</field>
+            <field name="res_model">res.config.settings</field>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+            <field name="view_id" ref="view_res_config_settings_form"/>
+        </record>
+        
+        <!-- System Information View -->
+        <record id="view_system_info_form" model="ir.ui.view">
+            <field name="name">system.info.form</field>
+            <field name="model">res.config.settings</field>
+            <field name="arch" type="xml">
+                <form string="System Information">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>System Information</h1>
+                        </div>
+                        
+                        <group>
+                            <group string="System Details">
+                                <field name="company_name" readonly="1"/>
+                                <field name="company_currency" readonly="1"/>
+                            </group>
+                            <group string="Feature Status">
+                                <field name="enable_child_profiles" readonly="1"/>
+                                <field name="enable_loyalty_program" readonly="1"/>
+                                <field name="enable_gst" readonly="1"/>
+                            </group>
+                        </group>
+                        
+                        <group>
+                            <group string="System Statistics">
+                                <label for="modules_installed" string="Modules Installed"/>
+                                <div id="modules_installed" class="oe_read_only"/>
+                                <label for="users_count" string="Users Count"/>
+                                <div id="users_count" class="oe_read_only"/>
+                                <label for="companies_count" string="Companies Count"/>
+                                <div id="companies_count" class="oe_read_only"/>
+                            </group>
+                        </group>
+                        
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- System Information Action -->
+        <record id="action_system_info" model="ir.actions.act_window">
+            <field name="name">System Information</field>
+            <field name="res_model">res.config.settings</field>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+            <field name="view_id" ref="view_system_info_form"/>
+        </record>
+        
+        <!-- System Utilities Action -->
+        <record id="action_system_utilities" model="ir.actions.act_window">
+            <field name="name">System Utilities</field>
+            <field name="res_model">system.utils</field>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+        </record>
+        
+    </data>
+</odoo>

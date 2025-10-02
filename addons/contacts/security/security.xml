@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        
+        <!-- Contact Manager Group -->
+        <record id="group_contact_manager" model="res.groups">
+            <field name="name">Contact Manager</field>
+            <field name="category_id" ref="base.module_category_sales_sales"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        
+        <!-- Customer Manager Group -->
+        <record id="group_customer_manager" model="res.groups">
+            <field name="name">Customer Manager</field>
+            <field name="category_id" ref="base.module_category_sales_sales"/>
+            <field name="implied_ids" eval="[(4, ref('group_contact_manager'))]"/>
+        </record>
+        
+        <!-- Supplier Manager Group -->
+        <record id="group_supplier_manager" model="res.groups">
+            <field name="name">Supplier Manager</field>
+            <field name="category_id" ref="base.module_category_purchases_purchase"/>
+            <field name="implied_ids" eval="[(4, ref('group_contact_manager'))]"/>
+        </record>
+        
+        <!-- Vendor Manager Group -->
+        <record id="group_vendor_manager" model="res.groups">
+            <field name="name">Vendor Manager</field>
+            <field name="category_id" ref="base.module_category_operations_purchase"/>
+            <field name="implied_ids" eval="[(4, ref('group_contact_manager'))]"/>
+        </record>
+        
+    </data>
+</odoo>

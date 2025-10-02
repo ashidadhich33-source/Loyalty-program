@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Web Assets Template -->
+        <record id="template_web_assets" model="ir.ui.view">
+            <field name="name">web.assets</field>
+            <field name="model">ir.ui.view</field>
+            <field name="arch" type="xml">
+                <t t-name="web.assets">
+                    <!-- CSS Assets -->
+                    <link rel="stylesheet" href="/core_web/static/src/css/web_style.css"/>
+                    <link rel="stylesheet" href="/core_web/static/src/css/frontend_style.css"/>
+                    
+                    <!-- JavaScript Assets -->
+                    <script type="text/javascript" src="/core_web/static/src/js/web_script.js"></script>
+                    <script type="text/javascript" src="/core_web/static/src/js/notification_system.js"></script>
+                    <script type="text/javascript" src="/core_web/static/src/js/menu_enhancements.js"></script>
+                    <script type="text/javascript" src="/core_web/static/src/js/frontend_script.js"></script>
+                </t>
+            </field>
+        </record>
+        
+        <!-- Web Header Template -->
+        <record id="template_web_header" model="ir.ui.view">
+            <field name="name">web.header</field>
+            <field name="model">ir.ui.view</field>
+            <field name="arch" type="xml">
+                <t t-name="web.header">
+                    <div class="o_main_header">
+                        <div class="o_main_header_left">
+                            <div class="o_main_header_logo">
+                                <img src="/core_web/static/src/img/logo.png" alt="Kids Clothing ERP"/>
+                            </div>
+                            <div class="o_main_header_title">
+                                <h1>Kids Clothing ERP</h1>
+                            </div>
+                        </div>
+                        <div class="o_main_header_center">
+                            <div class="o_main_header_search">
+                                <input type="text" placeholder="Search..." class="form-control"/>
+                                <button class="btn btn-primary">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="o_main_header_right">
+                            <div class="o_main_header_notifications">
+                                <button class="btn btn-notification" data-toggle="dropdown">
+                                    <i class="fa fa-bell"></i>
+                                    <span class="notification-badge">3</span>
+                                </button>
+                                <div class="dropdown-menu notification-dropdown">
+                                    <div class="notification-header">
+                                        <h6>Notifications</h6>
+                                        <button class="btn btn-sm btn-link">Mark all as read</button>
+                                    </div>
+                                    <div class="notification-list">
+                                        <div class="notification-item">
+                                            <div class="notification-icon">
+                                                <i class="fa fa-info-circle text-info"></i>
+                                            </div>
+                                            <div class="notification-content">
+                                                <div class="notification-title">New order received</div>
+                                                <div class="notification-message">Order #12345 has been placed</div>
+                                                <div class="notification-time">2 minutes ago</div>
+                                            </div>
+                                        </div>
+                                        <div class="notification-item">
+                                            <div class="notification-icon">
+                                                <i class="fa fa-exclamation-triangle text-warning"></i>
+                                            </div>
+                                            <div class="notification-content">
+                                                <div class="notification-title">Low stock alert</div>
+                                                <div class="notification-message">Product ABC123 is running low</div>
+                                                <div class="notification-time">1 hour ago</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="o_main_header_user">
+                                <div class="dropdown">
+                                    <button class="btn btn-user dropdown-toggle" data-toggle="dropdown">
+                                        <img src="/core_web/static/src/img/user-avatar.png" alt="User" class="user-avatar"/>
+                                        <span class="user-name">John Doe</span>
+                                        <i class="fa fa-chevron-down"></i>
+                                    </button>
+                                    <div class="dropdown-menu user-dropdown">
+                                        <a href="#" class="dropdown-item">
+                                            <i class="fa fa-user"></i> Profile
+                                        </a>
+                                        <a href="#" class="dropdown-item">
+                                            <i class="fa fa-cog"></i> Settings
+                                        </a>
+                                        <a href="#" class="dropdown-item">
+                                            <i class="fa fa-question-circle"></i> Help
+                                        </a>
+                                        <div class="dropdown-divider"></div>
+                                        <a href="#" class="dropdown-item">
+                                            <i class="fa fa-sign-out-alt"></i> Logout
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </field>
+        </record>
+        
+        <!-- Web Sidebar Template -->
+        <record id="template_web_sidebar" model="ir.ui.view">
+            <field name="name">web.sidebar</field>
+            <field name="model">ir.ui.view</field>
+            <field name="arch" type="xml">
+                <t t-name="web.sidebar">
+                    <div class="o_main_sidebar">
+                        <div class="sidebar-header">
+                            <h5>Navigation</h5>
+                            <button class="btn btn-sm btn-link sidebar-toggle">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                        </div>
+                        <div class="sidebar-menu">
+                            <ul class="nav nav-pills flex-column">
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link active">
+                                        <i class="fa fa-tachometer-alt"></i>
+                                        <span>Dashboard</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <i class="fa fa-shopping-cart"></i>
+                                        <span>Sales</span>
+                                        <i class="fa fa-chevron-right"></i>
+                                    </a>
+                                    <ul class="nav nav-pills flex-column submenu">
+                                        <li class="nav-item">
+                                            <a href="#" class="nav-link">Quotations</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="#" class="nav-link">Sales Orders</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="#" class="nav-link">Customers</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <i class="fa fa-cash-register"></i>
+                                        <span>Point of Sale</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <i class="fa fa-warehouse"></i>
+                                        <span>Inventory</span>
+                                        <i class="fa fa-chevron-right"></i>
+                                    </a>
+                                    <ul class="nav nav-pills flex-column submenu">
+                                        <li class="nav-item">
+                                            <a href="#" class="nav-link">Products</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="#" class="nav-link">Stock</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="#" class="nav-link">Warehouses</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <i class="fa fa-calculator"></i>
+                                        <span>Accounting</span>
+                                        <i class="fa fa-chevron-right"></i>
+                                    </a>
+                                    <ul class="nav nav-pills flex-column submenu">
+                                        <li class="nav-item">
+                                            <a href="#" class="nav-link">Invoices</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="#" class="nav-link">Payments</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="#" class="nav-link">Reports</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <i class="fa fa-chart-bar"></i>
+                                        <span>Reports</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <i class="fa fa-cogs"></i>
+                                        <span>Settings</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </t>
+            </field>
+        </record>
+        
+        <!-- Web Footer Template -->
+        <record id="template_web_footer" model="ir.ui.view">
+            <field name="name">web.footer</field>
+            <field name="model">ir.ui.view</field>
+            <field name="arch" type="xml">
+                <t t-name="web.footer">
+                    <div class="o_main_footer">
+                        <div class="footer-left">
+                            <span>&copy; 2024 Kids Clothing ERP. All rights reserved.</span>
+                        </div>
+                        <div class="footer-center">
+                            <span>Version 1.0.0</span>
+                        </div>
+                        <div class="footer-right">
+                            <a href="#" class="footer-link">Help</a>
+                            <a href="#" class="footer-link">Support</a>
+                            <a href="#" class="footer-link">Documentation</a>
+                        </div>
+                    </div>
+                </t>
+            </field>
+        </record>
+        
+    </data>
+</odoo>

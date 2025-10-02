@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Demo Companies -->
+        <record id="demo_company_main" model="res.company">
+            <field name="name">Kids Clothing Store</field>
+            <field name="company_type">retail</field>
+            <field name="business_nature">kids_clothing</field>
+            <field name="gstin">27ABCDE1234F1Z5</field>
+            <field name="gst_registration_date">2023-04-01</field>
+            <field name="gst_status">registered</field>
+            <field name="registered_address">123 Main Street, Mumbai, Maharashtra 400001</field>
+            <field name="business_address">123 Main Street, Mumbai, Maharashtra 400001</field>
+            <field name="warehouse_address">456 Warehouse Road, Mumbai, Maharashtra 400002</field>
+            <field name="contact_person">John Doe</field>
+            <field name="contact_phone">+91-9876543210</field>
+            <field name="contact_email">contact@kidsclothingerp.com</field>
+            <field name="financial_year_start">2023-04-01</field>
+            <field name="financial_year_end">2024-03-31</field>
+            <field name="currency_id" ref="base.INR"/>
+            <field name="enable_multi_company">True</field>
+            <field name="enable_gst">True</field>
+            <field name="enable_e_invoice">True</field>
+            <field name="enable_e_way_bill">True</field>
+            <field name="is_active">True</field>
+            <field name="is_default">True</field>
+        </record>
+        
+        <record id="demo_company_branch" model="res.company">
+            <field name="name">Kids Clothing Store - Branch</field>
+            <field name="company_type">retail</field>
+            <field name="business_nature">kids_clothing</field>
+            <field name="parent_company_id" ref="demo_company_main"/>
+            <field name="gstin">27ABCDE1234F2Z5</field>
+            <field name="gst_registration_date">2023-04-01</field>
+            <field name="gst_status">registered</field>
+            <field name="registered_address">789 Branch Street, Delhi, Delhi 110001</field>
+            <field name="business_address">789 Branch Street, Delhi, Delhi 110001</field>
+            <field name="contact_person">Jane Smith</field>
+            <field name="contact_phone">+91-9876543211</field>
+            <field name="contact_email">branch@kidsclothingerp.com</field>
+            <field name="financial_year_start">2023-04-01</field>
+            <field name="financial_year_end">2024-03-31</field>
+            <field name="currency_id" ref="base.INR"/>
+            <field name="enable_multi_company">True</field>
+            <field name="enable_gst">True</field>
+            <field name="enable_e_invoice">True</field>
+            <field name="enable_e_way_bill">True</field>
+            <field name="is_active">True</field>
+            <field name="is_default">False</field>
+        </record>
+        
+        <record id="demo_company_wholesale" model="res.company">
+            <field name="name">Kids Clothing Wholesale</field>
+            <field name="company_type">wholesale</field>
+            <field name="business_nature">wholesale_trade</field>
+            <field name="gstin">27ABCDE1234F3Z5</field>
+            <field name="gst_registration_date">2023-04-01</field>
+            <field name="gst_status">registered</field>
+            <field name="registered_address">321 Wholesale Street, Bangalore, Karnataka 560001</field>
+            <field name="business_address">321 Wholesale Street, Bangalore, Karnataka 560001</field>
+            <field name="contact_person">Bob Johnson</field>
+            <field name="contact_phone">+91-9876543212</field>
+            <field name="contact_email">wholesale@kidsclothingerp.com</field>
+            <field name="financial_year_start">2023-04-01</field>
+            <field name="financial_year_end">2024-03-31</field>
+            <field name="currency_id" ref="base.INR"/>
+            <field name="enable_multi_company">True</field>
+            <field name="enable_gst">True</field>
+            <field name="enable_e_invoice">True</field>
+            <field name="enable_e_way_bill">True</field>
+            <field name="is_active">True</field>
+            <field name="is_default">False</field>
+        </record>
+        
+        <!-- Demo Branches -->
+        <record id="demo_branch_head_office" model="company.branch">
+            <field name="name">Head Office</field>
+            <field name="code">HO</field>
+            <field name="description">Main head office</field>
+            <field name="company_id" ref="demo_company_main"/>
+            <field name="branch_type">head_office</field>
+            <field name="street">123 Main Street</field>
+            <field name="city">Mumbai</field>
+            <field name="state_id" ref="base.state_in_mh"/>
+            <field name="zip">400001</field>
+            <field name="country_id" ref="base.in"/>
+            <field name="phone">+91-22-12345678</field>
+            <field name="mobile">+91-9876543210</field>
+            <field name="email">ho@kidsclothingerp.com</field>
+            <field name="website">https://www.kidsclothingerp.com</field>
+            <field name="is_active">True</field>
+            <field name="is_default">True</field>
+            <field name="max_users">100</field>
+            <field name="enable_pos">True</field>
+            <field name="enable_inventory">True</field>
+            <field name="enable_sales">True</field>
+            <field name="enable_purchase">True</field>
+        </record>
+        
+        <record id="demo_branch_showroom" model="company.branch">
+            <field name="name">Showroom</field>
+            <field name="code">SR</field>
+            <field name="description">Main showroom</field>
+            <field name="company_id" ref="demo_company_main"/>
+            <field name="branch_type">showroom</field>
+            <field name="street">456 Showroom Street</field>
+            <field name="city">Mumbai</field>
+            <field name="state_id" ref="base.state_in_mh"/>
+            <field name="zip">400002</field>
+            <field name="country_id" ref="base.in"/>
+            <field name="phone">+91-22-87654321</field>
+            <field name="mobile">+91-9876543211</field>
+            <field name="email">showroom@kidsclothingerp.com</field>
+            <field name="is_active">True</field>
+            <field name="is_default">False</field>
+            <field name="max_users">50</field>
+            <field name="enable_pos">True</field>
+            <field name="enable_inventory">True</field>
+            <field name="enable_sales">True</field>
+            <field name="enable_purchase">False</field>
+        </record>
+        
+        <record id="demo_branch_warehouse" model="company.branch">
+            <field name="name">Warehouse</field>
+            <field name="code">WH</field>
+            <field name="description">Main warehouse</field>
+            <field name="company_id" ref="demo_company_main"/>
+            <field name="branch_type">warehouse</field>
+            <field name="street">789 Warehouse Road</field>
+            <field name="city">Mumbai</field>
+            <field name="state_id" ref="base.state_in_mh"/>
+            <field name="zip">400003</field>
+            <field name="country_id" ref="base.in"/>
+            <field name="phone">+91-22-11223344</field>
+            <field name="mobile">+91-9876543212</field>
+            <field name="email">warehouse@kidsclothingerp.com</field>
+            <field name="is_active">True</field>
+            <field name="is_default">False</field>
+            <field name="max_users">30</field>
+            <field name="enable_pos">False</field>
+            <field name="enable_inventory">True</field>
+            <field name="enable_sales">False</field>
+            <field name="enable_purchase">True</field>
+        </record>
+        
+        <!-- Demo Locations -->
+        <record id="demo_location_warehouse" model="company.location">
+            <field name="name">Main Warehouse</field>
+            <field name="code">WH001</field>
+            <field name="description">Main warehouse location</field>
+            <field name="company_id" ref="demo_company_main"/>
+            <field name="branch_id" ref="demo_branch_warehouse"/>
+            <field name="location_type">warehouse</field>
+            <field name="street">789 Warehouse Road</field>
+            <field name="city">Mumbai</field>
+            <field name="state_id" ref="base.state_in_mh"/>
+            <field name="zip">400003</field>
+            <field name="country_id" ref="base.in"/>
+            <field name="phone">+91-22-11223344</field>
+            <field name="mobile">+91-9876543212</field>
+            <field name="email">warehouse@kidsclothingerp.com</field>
+            <field name="is_active">True</field>
+            <field name="is_default">True</field>
+            <field name="max_capacity">10000</field>
+            <field name="capacity_unit">sqft</field>
+            <field name="enable_inventory">True</field>
+            <field name="enable_sales">False</field>
+            <field name="enable_purchase">True</field>
+            <field name="enable_manufacturing">False</field>
+        </record>
+        
+        <record id="demo_location_showroom" model="company.location">
+            <field name="name">Main Showroom</field>
+            <field name="code">SR001</field>
+            <field name="description">Main showroom location</field>
+            <field name="company_id" ref="demo_company_main"/>
+            <field name="branch_id" ref="demo_branch_showroom"/>
+            <field name="location_type">showroom</field>
+            <field name="street">456 Showroom Street</field>
+            <field name="city">Mumbai</field>
+            <field name="state_id" ref="base.state_in_mh"/>
+            <field name="zip">400002</field>
+            <field name="country_id" ref="base.in"/>
+            <field name="phone">+91-22-87654321</field>
+            <field name="mobile">+91-9876543211</field>
+            <field name="email">showroom@kidsclothingerp.com</field>
+            <field name="is_active">True</field>
+            <field name="is_default">False</field>
+            <field name="max_capacity">5000</field>
+            <field name="capacity_unit">sqft</field>
+            <field name="enable_inventory">True</field>
+            <field name="enable_sales">True</field>
+            <field name="enable_purchase">False</field>
+            <field name="enable_manufacturing">False</field>
+        </record>
+        
+        <record id="demo_location_office" model="company.location">
+            <field name="name">Head Office</field>
+            <field name="code">HO001</field>
+            <field name="description">Head office location</field>
+            <field name="company_id" ref="demo_company_main"/>
+            <field name="branch_id" ref="demo_branch_head_office"/>
+            <field name="location_type">office</field>
+            <field name="street">123 Main Street</field>
+            <field name="city">Mumbai</field>
+            <field name="state_id" ref="base.state_in_mh"/>
+            <field name="zip">400001</field>
+            <field name="country_id" ref="base.in"/>
+            <field name="phone">+91-22-12345678</field>
+            <field name="mobile">+91-9876543210</field>
+            <field name="email">ho@kidsclothingerp.com</field>
+            <field name="is_active">True</field>
+            <field name="is_default">False</field>
+            <field name="max_capacity">2000</field>
+            <field name="capacity_unit">sqft</field>
+            <field name="enable_inventory">False</field>
+            <field name="enable_sales">False</field>
+            <field name="enable_purchase">False</field>
+            <field name="enable_manufacturing">False</field>
+        </record>
+        
+        <!-- Demo Financial Years -->
+        <record id="demo_financial_year_2023_24" model="financial.year">
+            <field name="name">2023-24</field>
+            <field name="code">2023_24</field>
+            <field name="company_id" ref="demo_company_main"/>
+            <field name="date_start">2023-04-01</field>
+            <field name="date_end">2024-03-31</field>
+            <field name="state">active</field>
+            <field name="is_default">True</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="demo_financial_year_2022_23" model="financial.year">
+            <field name="name">2022-23</field>
+            <field name="code">2022_23</field>
+            <field name="company_id" ref="demo_company_main"/>
+            <field name="date_start">2022-04-01</field>
+            <field name="date_end">2023-03-31</field>
+            <field name="state">closed</field>
+            <field name="is_default">False</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="demo_financial_year_2024_25" model="financial.year">
+            <field name="name">2024-25</field>
+            <field name="code">2024_25</field>
+            <field name="company_id" ref="demo_company_main"/>
+            <field name="date_start">2024-04-01</field>
+            <field name="date_end">2025-03-31</field>
+            <field name="state">draft</field>
+            <field name="is_default">False</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <!-- Demo Company Analytics -->
+        <record id="demo_company_analytics_2023" model="company.analytics">
+            <field name="name">Company Analytics 2023</field>
+            <field name="company_id" ref="demo_company_main"/>
+            <field name="date">2023-12-31</field>
+            <field name="period_type">yearly</field>
+            <field name="total_sales">1000000.0</field>
+            <field name="total_purchase">600000.0</field>
+            <field name="total_profit">400000.0</field>
+            <field name="total_orders">5000</field>
+            <field name="total_customers">2000</field>
+            <field name="total_products">1000</field>
+            <field name="total_users">50</field>
+            <field name="active_users">45</field>
+            <field name="total_inventory_value">200000.0</field>
+            <field name="inventory_turnover">5.0</field>
+            <field name="average_order_value">200.0</field>
+            <field name="customer_retention_rate">80.0</field>
+            <field name="sales_growth">15.0</field>
+            <field name="customer_growth">20.0</field>
+            <field name="user_growth">10.0</field>
+            <field name="sales_per_user">20000.0</field>
+            <field name="orders_per_user">100.0</field>
+            <field name="order_fulfillment_rate">95.0</field>
+            <field name="customer_satisfaction">4.5</field>
+            <field name="is_active">True</field>
+            <field name="is_processed">True</field>
+        </record>
+        
+    </data>
+</odoo>

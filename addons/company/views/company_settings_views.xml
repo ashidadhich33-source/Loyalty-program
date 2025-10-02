@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Company Settings Tree View -->
+        <record id="view_company_settings_tree" model="ir.ui.view">
+            <field name="name">company_settings.tree</field>
+            <field name="model">company.settings</field>
+            <field name="arch" type="xml">
+                <tree string="Company Settings" decoration-muted="not is_active" decoration-info="is_system_setting">
+                    <field name="name"/>
+                    <field name="key"/>
+                    <field name="company_id"/>
+                    <field name="value"/>
+                    <field name="value_type"/>
+                    <field name="category"/>
+                    <field name="scope"/>
+                    <field name="is_active"/>
+                    <field name="is_system_setting"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Company Settings Form View -->
+        <record id="view_company_settings_form" model="ir.ui.view">
+            <field name="name">company_settings.form</field>
+            <field name="model">company.settings</field>
+            <field name="arch" type="xml">
+                <form string="Company Setting">
+                    <header>
+                        <button name="action_activate" string="Activate" type="object" class="btn-primary" attrs="{'invisible': [('is_active', '=', True)]}"/>
+                        <button name="action_deactivate" string="Deactivate" type="object" class="btn-warning" attrs="{'invisible': [('is_active', '=', False)]}"/>
+                        <button name="action_reset_to_default" string="Reset to Default" type="object" class="btn-secondary"/>
+                        <button name="action_duplicate" string="Duplicate" type="object" class="btn-info"/>
+                        <field name="is_active" widget="statusbar" statusbar_visible="False,True"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Setting Name"/>
+                            </h1>
+                        </div>
+                        
+                        <group>
+                            <group string="Basic Information">
+                                <field name="key"/>
+                                <field name="description"/>
+                                <field name="company_id"/>
+                                <field name="value"/>
+                                <field name="value_type"/>
+                            </group>
+                            <group string="Category and Scope">
+                                <field name="category"/>
+                                <field name="scope"/>
+                                <field name="is_system_setting"/>
+                            </group>
+                        </group>
+                        
+                        <group>
+                            <group string="Validation">
+                                <field name="validation_rule"/>
+                                <field name="default_value"/>
+                            </group>
+                            <group string="Options">
+                                <field name="options"/>
+                            </group>
+                        </group>
+                        
+                        <group>
+                            <group string="Analytics">
+                                <field name="usage_count"/>
+                                <field name="last_accessed"/>
+                            </group>
+                        </group>
+                        
+                        <notebook>
+                            <page string="Dependencies" name="dependencies">
+                                <field name="depends_on" widget="many2many_tags"/>
+                                <field name="required_by" widget="many2many_tags"/>
+                            </page>
+                            
+                            <page string="Metadata" name="metadata">
+                                <field name="metadata"/>
+                            </page>
+                        </notebook>
+                        
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Company Settings Search View -->
+        <record id="view_company_settings_search" model="ir.ui.view">
+            <field name="name">company_settings.search</field>
+            <field name="model">company.settings</field>
+            <field name="arch" type="xml">
+                <search string="Search Company Settings">
+                    <field name="name"/>
+                    <field name="key"/>
+                    <field name="description"/>
+                    <field name="company_id"/>
+                    <field name="value"/>
+                    <filter string="Active Settings" name="active" domain="[('is_active', '=', True)]"/>
+                    <filter string="Inactive Settings" name="inactive" domain="[('is_active', '=', False)]"/>
+                    <filter string="System Settings" name="system" domain="[('is_system_setting', '=', True)]"/>
+                    <filter string="Custom Settings" name="custom" domain="[('is_system_setting', '=', False)]"/>
+                    <filter string="General" name="general" domain="[('category', '=', 'general')]"/>
+                    <filter string="Financial" name="financial" domain="[('category', '=', 'financial')]"/>
+                    <filter string="Inventory" name="inventory" domain="[('category', '=', 'inventory')]"/>
+                    <filter string="Sales" name="sales" domain="[('category', '=', 'sales')]"/>
+                    <filter string="Purchase" name="purchase" domain="[('category', '=', 'purchase')]"/>
+                    <filter string="HR" name="hr" domain="[('category', '=', 'hr')]"/>
+                    <filter string="POS" name="pos" domain="[('category', '=', 'pos')]"/>
+                    <filter string="E-commerce" name="ecommerce" domain="[('category', '=', 'ecommerce')]"/>
+                    <filter string="Integration" name="integration" domain="[('category', '=', 'integration')]"/>
+                    <filter string="Security" name="security" domain="[('category', '=', 'security')]"/>
+                    <filter string="Custom" name="custom_category" domain="[('category', '=', 'custom')]"/>
+                    <filter string="Company" name="company" domain="[('scope', '=', 'company')]"/>
+                    <filter string="Branch" name="branch" domain="[('scope', '=', 'branch')]"/>
+                    <filter string="Location" name="location" domain="[('scope', '=', 'location')]"/>
+                    <filter string="User" name="user" domain="[('scope', '=', 'user')]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Company" name="group_company" context="{'group_by': 'company_id'}"/>
+                        <filter string="Category" name="group_category" context="{'group_by': 'category'}"/>
+                        <filter string="Scope" name="group_scope" context="{'group_by': 'scope'}"/>
+                        <filter string="Value Type" name="group_value_type" context="{'group_by': 'value_type'}"/>
+                        <filter string="Created Date" name="group_create_date" context="{'group_by': 'create_date:day'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- Company Settings Action -->
+        <record id="action_company_settings" model="ir.actions.act_window">
+            <field name="name">Company Settings</field>
+            <field name="res_model">company.settings</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_company_settings_tree"/>
+            <field name="search_view_id" ref="view_company_settings_search"/>
+            <field name="context">{'search_default_active': 1}</field>
+        </record>
+        
+    </data>
+</odoo>

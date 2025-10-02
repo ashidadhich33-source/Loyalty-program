@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Database Menu -->
+        <menuitem id="menu_database"
+                  name="Database"
+                  parent="menu_kids_clothing_erp"
+                  sequence="40"/>
+        
+        <!-- Database Management -->
+        <menuitem id="menu_database_management"
+                  name="Database Management"
+                  parent="menu_database"
+                  sequence="10"/>
+        
+        <!-- Databases -->
+        <menuitem id="menu_databases"
+                  name="Databases"
+                  parent="menu_database_management"
+                  sequence="10"
+                  action="action_databases"/>
+        
+        <!-- Database Connections -->
+        <menuitem id="menu_database_connections"
+                  name="Database Connections"
+                  parent="menu_database_management"
+                  sequence="20"
+                  action="action_database_connections"/>
+        
+        <!-- Database Backups -->
+        <menuitem id="menu_database_backups"
+                  name="Database Backups"
+                  parent="menu_database_management"
+                  sequence="30"
+                  action="action_database_backups"/>
+        
+        <!-- Database Migrations -->
+        <menuitem id="menu_database_migrations"
+                  name="Database Migrations"
+                  parent="menu_database_management"
+                  sequence="40"
+                  action="action_database_migrations"/>
+        
+        <!-- Database Monitoring -->
+        <menuitem id="menu_database_monitoring"
+                  name="Database Monitoring"
+                  parent="menu_database_management"
+                  sequence="50"
+                  action="action_database_monitoring"/>
+        
+        <!-- Database Analytics -->
+        <menuitem id="menu_database_analytics"
+                  name="Database Analytics"
+                  parent="menu_database"
+                  sequence="20"/>
+        
+        <!-- Analytics Dashboard -->
+        <menuitem id="menu_analytics_dashboard"
+                  name="Analytics Dashboard"
+                  parent="menu_database_analytics"
+                  sequence="10"
+                  action="action_analytics_dashboard"/>
+        
+        <!-- Analytics Reports -->
+        <menuitem id="menu_analytics_reports"
+                  name="Analytics Reports"
+                  parent="menu_database_analytics"
+                  sequence="20"
+                  action="action_analytics_reports"/>
+        
+        <!-- Database Security -->
+        <menuitem id="menu_database_security"
+                  name="Database Security"
+                  parent="menu_database"
+                  sequence="30"/>
+        
+        <!-- Security Settings -->
+        <menuitem id="menu_security_settings"
+                  name="Security Settings"
+                  parent="menu_database_security"
+                  sequence="10"
+                  action="action_security_settings"/>
+        
+        <!-- Security Monitoring -->
+        <menuitem id="menu_security_monitoring"
+                  name="Security Monitoring"
+                  parent="menu_database_security"
+                  sequence="20"
+                  action="action_security_monitoring"/>
+        
+        <!-- Database Maintenance -->
+        <menuitem id="menu_database_maintenance"
+                  name="Database Maintenance"
+                  parent="menu_database"
+                  sequence="40"/>
+        
+        <!-- Maintenance Schedule -->
+        <menuitem id="menu_maintenance_schedule"
+                  name="Maintenance Schedule"
+                  parent="menu_database_maintenance"
+                  sequence="10"
+                  action="action_maintenance_schedule"/>
+        
+        <!-- Maintenance History -->
+        <menuitem id="menu_maintenance_history"
+                  name="Maintenance History"
+                  parent="menu_database_maintenance"
+                  sequence="20"
+                  action="action_maintenance_history"/>
+        
+    </data>
+</odoo>

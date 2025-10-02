@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Web Menu -->
+        <menuitem id="menu_web"
+                  name="Web Interface"
+                  parent="menu_kids_clothing_erp"
+                  sequence="10"/>
+        
+        <!-- Web Settings -->
+        <menuitem id="menu_web_settings"
+                  name="Web Settings"
+                  parent="menu_web"
+                  sequence="10"
+                  action="action_web_settings"/>
+        
+        <!-- Notification Management -->
+        <menuitem id="menu_notifications"
+                  name="Notifications"
+                  parent="menu_web"
+                  sequence="20"
+                  action="action_notifications"/>
+        
+        <!-- Menu Management -->
+        <menuitem id="menu_menu_management"
+                  name="Menu Management"
+                  parent="menu_web"
+                  sequence="30"
+                  action="action_menu_management"/>
+        
+        <!-- Web Analytics -->
+        <menuitem id="menu_web_analytics"
+                  name="Web Analytics"
+                  parent="menu_web"
+                  sequence="40"
+                  action="action_web_analytics"/>
+        
+    </data>
+</odoo>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Default Database Settings -->
+        <record id="setting_database_host" model="ir.config_parameter">
+            <field name="key">database.host</field>
+            <field name="value">localhost</field>
+        </record>
+        
+        <record id="setting_database_port" model="ir.config_parameter">
+            <field name="key">database.port</field>
+            <field name="value">5432</field>
+        </record>
+        
+        <record id="setting_database_user" model="ir.config_parameter">
+            <field name="key">database.user</field>
+            <field name="value">odoo</field>
+        </record>
+        
+        <record id="setting_database_type" model="ir.config_parameter">
+            <field name="key">database.type</field>
+            <field name="value">postgresql</field>
+        </record>
+        
+        <record id="setting_database_backup_enabled" model="ir.config_parameter">
+            <field name="key">database.backup.enabled</field>
+            <field name="value">True</field>
+        </record>
+        
+        <record id="setting_database_monitoring_enabled" model="ir.config_parameter">
+            <field name="key">database.monitoring.enabled</field>
+            <field name="value">True</field>
+        </record>
+        
+        <record id="setting_database_security_enabled" model="ir.config_parameter">
+            <field name="key">database.security.enabled</field>
+            <field name="value">True</field>
+        </record>
+        
+        <record id="setting_database_maintenance_enabled" model="ir.config_parameter">
+            <field name="key">database.maintenance.enabled</field>
+            <field name="value">True</field>
+        </record>
+        
+        <record id="setting_database_analytics_enabled" model="ir.config_parameter">
+            <field name="key">database.analytics.enabled</field>
+            <field name="value">True</field>
+        </record>
+        
+        <record id="setting_database_connection_timeout" model="ir.config_parameter">
+            <field name="key">database.connection.timeout</field>
+            <field name="value">30</field>
+        </record>
+        
+        <record id="setting_database_max_connections" model="ir.config_parameter">
+            <field name="key">database.max.connections</field>
+            <field name="value">100</field>
+        </record>
+        
+        <record id="setting_database_backup_retention_days" model="ir.config_parameter">
+            <field name="key">database.backup.retention.days</field>
+            <field name="value">30</field>
+        </record>
+        
+        <record id="setting_database_monitoring_interval" model="ir.config_parameter">
+            <field name="key">database.monitoring.interval</field>
+            <field name="value">5</field>
+        </record>
+        
+        <record id="setting_database_alert_threshold" model="ir.config_parameter">
+            <field name="key">database.alert.threshold</field>
+            <field name="value">80</field>
+        </record>
+        
+        <record id="setting_database_critical_threshold" model="ir.config_parameter">
+            <field name="key">database.critical.threshold</field>
+            <field name="value">95</field>
+        </record>
+        
+        <record id="setting_database_ssl_enabled" model="ir.config_parameter">
+            <field name="key">database.ssl.enabled</field>
+            <field name="value">False</field>
+        </record>
+        
+        <record id="setting_database_encryption_enabled" model="ir.config_parameter">
+            <field name="key">database.encryption.enabled</field>
+            <field name="value">False</field>
+        </record>
+        
+        <record id="setting_database_audit_enabled" model="ir.config_parameter">
+            <field name="key">database.audit.enabled</field>
+            <field name="value">True</field>
+        </record>
+        
+        <record id="setting_database_firewall_enabled" model="ir.config_parameter">
+            <field name="key">database.firewall.enabled</field>
+            <field name="value">False</field>
+        </record>
+        
+        <record id="setting_database_maintenance_schedule" model="ir.config_parameter">
+            <field name="key">database.maintenance.schedule</field>
+            <field name="value">weekly</field>
+        </record>
+        
+        <record id="setting_database_analytics_schedule" model="ir.config_parameter">
+            <field name="key">database.analytics.schedule</field>
+            <field name="value">daily</field>
+        </record>
+        
+    </data>
+</odoo>

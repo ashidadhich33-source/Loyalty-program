@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<erp>
+    <data>
+        <!-- Sale Order Tree View -->
+        <record id="view_sale_order_tree" model="erp.ui.view">
+            <field name="name">sale.order.tree</field>
+            <field name="model">sale.order</field>
+            <field name="arch" type="xml">
+                <tree string="Sales Orders" create="true" edit="true" delete="true">
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="order_date"/>
+                    <field name="state"/>
+                    <field name="amount_total"/>
+                    <field name="currency_id"/>
+                    <field name="user_id"/>
+                    <field name="company_id"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Sale Order Form View -->
+        <record id="view_sale_order_form" model="erp.ui.view">
+            <field name="name">sale.order.form</field>
+            <field name="model">sale.order</field>
+            <field name="arch" type="xml">
+                <form string="Sales Order" create="true" edit="true" delete="true">
+                    <header>
+                        <button name="action_quotation_send" string="Send by Email" type="object" class="btn-primary" states="draft"/>
+                        <button name="action_confirm" string="Confirm" type="object" class="btn-primary" states="sent"/>
+                        <button name="action_done" string="Lock" type="object" class="btn-primary" states="sale"/>
+                        <button name="action_cancel" string="Cancel" type="object" class="btn-secondary" states="draft"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,sent,sale,done"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="partner_id"/>
+                                <field name="partner_invoice_id"/>
+                                <field name="partner_shipping_id"/>
+                                <field name="order_date"/>
+                                <field name="currency_id"/>
+                                <field name="company_id"/>
+                            </group>
+                            <group>
+                                <field name="user_id"/>
+                                <field name="child_profile_id"/>
+                                <field name="amount_untaxed"/>
+                                <field name="amount_tax"/>
+                                <field name="amount_total"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Order Lines" name="order_lines">
+                                <field name="order_line_ids" nolabel="1">
+                                    <tree string="Order Lines" create="true" edit="true" delete="true">
+                                        <field name="product_id"/>
+                                        <field name="product_uom_qty"/>
+                                        <field name="price_unit"/>
+                                        <field name="price_subtotal"/>
+                                        <field name="size_id"/>
+                                        <field name="color_id"/>
+                                        <field name="tax_id"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Notes" name="notes">
+                                <field name="note"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Sale Order Search View -->
+        <record id="view_sale_order_search" model="erp.ui.view">
+            <field name="name">sale.order.search</field>
+            <field name="model">sale.order</field>
+            <field name="arch" type="xml">
+                <search string="Sales Orders">
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="order_date"/>
+                    <field name="state"/>
+                    <field name="user_id"/>
+                    <field name="company_id"/>
+                    <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
+                    <filter string="Sent" name="sent" domain="[('state', '=', 'sent')]"/>
+                    <filter string="Sale" name="sale" domain="[('state', '=', 'sale')]"/>
+                    <filter string="Done" name="done" domain="[('state', '=', 'done')]"/>
+                    <filter string="Cancelled" name="cancel" domain="[('state', '=', 'cancel')]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="State" name="group_state" context="{'group_by': 'state'}"/>
+                        <filter string="Salesperson" name="group_user" context="{'group_by': 'user_id'}"/>
+                        <filter string="Company" name="group_company" context="{'group_by': 'company_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- Sale Order Action -->
+        <record id="action_sale_order" model="erp.actions.act_window">
+            <field name="name">Sales Orders</field>
+            <field name="res_model">sale.order</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_sale_order_search"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first sales order!
+                </p>
+                <p>
+                    Sales orders are the main documents for managing sales in your business.
+                </p>
+            </field>
+        </record>
+    </data>
+</erp>

@@ -1,0 +1,508 @@
+/* Categories Addon Styles */
+
+/* Category Widget Styles */
+.category-widget {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 10px;
+    padding: 20px;
+    color: white;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.category-widget:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.category-widget .category-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.category-widget .category-icon {
+    font-size: 24px;
+    margin-right: 10px;
+    opacity: 0.9;
+}
+
+.category-widget .category-name {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.category-widget .category-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.category-widget .stat-item {
+    text-align: center;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 10px;
+    border-radius: 8px;
+    backdrop-filter: blur(10px);
+}
+
+.category-widget .stat-value {
+    font-size: 20px;
+    font-weight: 700;
+    display: block;
+}
+
+.category-widget .stat-label {
+    font-size: 12px;
+    opacity: 0.8;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Category Analytics Widget Styles */
+.category-analytics-widget {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid #e9ecef;
+}
+
+.category-analytics-widget .analytics-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.category-analytics-widget .analytics-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #495057;
+    margin: 0;
+}
+
+.category-analytics-widget .analytics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.category-analytics-widget .analytics-card {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-left: 4px solid #007bff;
+}
+
+.category-analytics-widget .analytics-card.sales {
+    border-left-color: #28a745;
+}
+
+.category-analytics-widget .analytics-card.customers {
+    border-left-color: #17a2b8;
+}
+
+.category-analytics-widget .analytics-card.products {
+    border-left-color: #ffc107;
+}
+
+.category-analytics-widget .analytics-card.financial {
+    border-left-color: #dc3545;
+}
+
+.category-analytics-widget .card-title {
+    font-size: 12px;
+    color: #6c757d;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 5px;
+}
+
+.category-analytics-widget .card-value {
+    font-size: 24px;
+    font-weight: 700;
+    color: #495057;
+    margin: 0;
+}
+
+/* Category Rule Widget Styles */
+.category-rule-widget {
+    background: white;
+    border-radius: 8px;
+    padding: 15px;
+    border: 1px solid #dee2e6;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.category-rule-widget .rule-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.category-rule-widget .rule-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: #495057;
+    margin: 0;
+}
+
+.category-rule-widget .rule-status {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.category-rule-widget .rule-status.active {
+    background: #d4edda;
+    color: #155724;
+}
+
+.category-rule-widget .rule-status.inactive {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.category-rule-widget .rule-details {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.category-rule-widget .detail-item {
+    text-align: center;
+}
+
+.category-rule-widget .detail-label {
+    font-size: 12px;
+    color: #6c757d;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 5px;
+}
+
+.category-rule-widget .detail-value {
+    font-size: 16px;
+    font-weight: 600;
+    color: #495057;
+}
+
+.category-rule-widget .execution-stats {
+    display: flex;
+    justify-content: space-around;
+    background: #f8f9fa;
+    padding: 10px;
+    border-radius: 6px;
+}
+
+.category-rule-widget .stat-item {
+    text-align: center;
+}
+
+.category-rule-widget .stat-number {
+    font-size: 18px;
+    font-weight: 700;
+    color: #495057;
+    display: block;
+}
+
+.category-rule-widget .stat-label {
+    font-size: 10px;
+    color: #6c757d;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Category Attribute Widget Styles */
+.category-attribute-widget {
+    background: white;
+    border-radius: 8px;
+    padding: 15px;
+    border: 1px solid #dee2e6;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.category-attribute-widget .attribute-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.category-attribute-widget .attribute-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: #495057;
+    margin: 0;
+}
+
+.category-attribute-widget .attribute-type {
+    padding: 4px 8px;
+    background: #e9ecef;
+    color: #495057;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.category-attribute-widget .attribute-details {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.category-attribute-widget .detail-item {
+    text-align: center;
+}
+
+.category-attribute-widget .detail-label {
+    font-size: 12px;
+    color: #6c757d;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 5px;
+}
+
+.category-attribute-widget .detail-value {
+    font-size: 14px;
+    font-weight: 600;
+    color: #495057;
+}
+
+.category-attribute-widget .kids-specific {
+    background: #fff3cd;
+    border: 1px solid #ffeaa7;
+    color: #856404;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    text-align: center;
+}
+
+.category-attribute-widget .filters {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.category-attribute-widget .filter-badge {
+    padding: 4px 8px;
+    background: #e9ecef;
+    color: #495057;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 500;
+}
+
+/* Category Tree View Enhancements */
+.o_list_view .o_list_table .o_data_row .o_data_cell {
+    vertical-align: middle;
+}
+
+.o_list_view .o_list_table .o_data_row .o_data_cell .category-badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.o_list_view .o_list_table .o_data_row .o_data_cell .category-badge.age-group {
+    background: #e3f2fd;
+    color: #1976d2;
+}
+
+.o_list_view .o_list_table .o_data_row .o_data_cell .category-badge.gender {
+    background: #f3e5f5;
+    color: #7b1fa2;
+}
+
+.o_list_view .o_list_table .o_data_row .o_data_cell .category-badge.season {
+    background: #e8f5e8;
+    color: #388e3c;
+}
+
+.o_list_view .o_list_table .o_data_row .o_data_cell .category-badge.brand-type {
+    background: #fff3e0;
+    color: #f57c00;
+}
+
+/* Category Kanban View Enhancements */
+.o_kanban_view .o_kanban_record {
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.o_kanban_view .o_kanban_record:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.o_kanban_view .o_kanban_record .o_kanban_record_top {
+    padding: 15px;
+}
+
+.o_kanban_view .o_kanban_record .o_kanban_record_title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #495057;
+    margin-bottom: 10px;
+}
+
+.o_kanban_view .o_kanban_record .o_kanban_record_body {
+    margin-bottom: 15px;
+}
+
+.o_kanban_view .o_kanban_record .o_kanban_record_body div {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+    font-size: 12px;
+    color: #6c757d;
+}
+
+.o_kanban_view .o_kanban_record .o_kanban_record_body div i {
+    margin-right: 8px;
+    width: 16px;
+    text-align: center;
+}
+
+.o_kanban_view .o_kanban_record .o_kanban_record_bottom {
+    padding: 10px 15px;
+    background: #f8f9fa;
+    border-top: 1px solid #dee2e6;
+}
+
+.o_kanban_view .o_kanban_record .o_kanban_record_bottom .o_kanban_record_stat {
+    display: inline-block;
+    margin-right: 15px;
+    font-size: 12px;
+    color: #6c757d;
+}
+
+.o_kanban_view .o_kanban_record .o_kanban_record_bottom .o_kanban_record_stat i {
+    margin-right: 5px;
+}
+
+/* Category Form View Enhancements */
+.o_form_view .o_form_sheet {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.o_form_view .o_form_sheet .oe_title {
+    border-bottom: 2px solid #e9ecef;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+.o_form_view .o_form_sheet .oe_title h1 {
+    color: #495057;
+    font-weight: 600;
+}
+
+.o_form_view .o_form_sheet .oe_button_box {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.o_form_view .o_form_sheet .oe_button_box .oe_stat_button {
+    background: white;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    padding: 10px;
+    margin: 5px;
+    transition: all 0.3s ease;
+}
+
+.o_form_view .o_form_sheet .oe_button_box .oe_stat_button:hover {
+    background: #007bff;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
+}
+
+/* Category Search View Enhancements */
+.o_searchview .o_searchview_facet {
+    background: #007bff;
+    color: white;
+    border-radius: 16px;
+    padding: 4px 12px;
+    margin: 2px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.o_searchview .o_searchview_facet .o_searchview_facet_label {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 2px 8px;
+    margin-right: 5px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .category-widget .category-stats {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+    
+    .category-analytics-widget .analytics-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .category-rule-widget .rule-details {
+        grid-template-columns: 1fr;
+    }
+    
+    .category-attribute-widget .attribute-details {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Dark Theme Support */
+@media (prefers-color-scheme: dark) {
+    .category-widget {
+        background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    }
+    
+    .category-analytics-widget {
+        background: #2c3e50;
+        border-color: #34495e;
+    }
+    
+    .category-analytics-widget .analytics-title {
+        color: #ecf0f1;
+    }
+    
+    .category-analytics-widget .analytics-card {
+        background: #34495e;
+        border-left-color: #3498db;
+    }
+    
+    .category-analytics-widget .card-title {
+        color: #bdc3c7;
+    }
+    
+    .category-analytics-widget .card-value {
+        color: #ecf0f1;
+    }
+}

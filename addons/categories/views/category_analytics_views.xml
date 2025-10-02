@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Category Analytics Dashboard View -->
+    <record id="view_category_analytics_dashboard" model="ir.ui.view">
+        <field name="name">category.analytics.dashboard</field>
+        <field name="model">category.analytics</field>
+        <field name="arch" type="xml">
+            <dashboard string="Category Analytics Dashboard">
+                <view type="graph" ref="view_category_analytics_graph"/>
+                <view type="pivot" ref="view_category_analytics_pivot"/>
+                <view type="cohort" ref="view_category_analytics_cohort"/>
+            </dashboard>
+        </field>
+    </record>
+
+    <!-- Category Analytics Graph View -->
+    <record id="view_category_analytics_graph" model="ir.ui.view">
+        <field name="name">category.analytics.graph</field>
+        <field name="model">category.analytics</field>
+        <field name="arch" type="xml">
+            <graph string="Category Analytics" type="bar">
+                <field name="category_id" type="row"/>
+                <field name="total_sales" type="measure"/>
+                <field name="revenue" type="measure"/>
+                <field name="profit" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- Category Analytics Pivot View -->
+    <record id="view_category_analytics_pivot" model="ir.ui.view">
+        <field name="name">category.analytics.pivot</field>
+        <field name="model">category.analytics</field>
+        <field name="arch" type="xml">
+            <pivot string="Category Analytics">
+                <field name="category_id" type="row"/>
+                <field name="date" type="col"/>
+                <field name="total_sales" type="measure"/>
+                <field name="revenue" type="measure"/>
+                <field name="profit" type="measure"/>
+                <field name="profit_margin" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!-- Category Analytics Cohort View -->
+    <record id="view_category_analytics_cohort" model="ir.ui.view">
+        <field name="name">category.analytics.cohort</field>
+        <field name="model">category.analytics</field>
+        <field name="arch" type="xml">
+            <cohort string="Category Analytics Cohort" date_start="date" date_stop="date" mode="retention"/>
+        </field>
+    </record>
+
+    <!-- Category Performance Graph View -->
+    <record id="view_category_performance_graph" model="ir.ui.view">
+        <field name="name">category.performance.graph</field>
+        <field name="model">category.analytics</field>
+        <field name="arch" type="xml">
+            <graph string="Category Performance" type="line">
+                <field name="date" type="row"/>
+                <field name="total_sales" type="measure"/>
+                <field name="sales_count" type="measure"/>
+                <field name="avg_order_value" type="measure"/>
+                <field name="conversion_rate" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- Category Sales Trend Graph View -->
+    <record id="view_category_sales_trend_graph" model="ir.ui.view">
+        <field name="name">category.sales.trend.graph</field>
+        <field name="model">category.analytics</field>
+        <field name="arch" type="xml">
+            <graph string="Sales Trend by Category" type="line">
+                <field name="category_id" type="row"/>
+                <field name="date" type="col"/>
+                <field name="total_sales" type="measure"/>
+                <field name="revenue" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- Category Customer Analytics Graph View -->
+    <record id="view_category_customer_analytics_graph" model="ir.ui.view">
+        <field name="name">category.customer.analytics.graph</field>
+        <field name="model">category.analytics</field>
+        <field name="arch" type="xml">
+            <graph string="Customer Analytics by Category" type="bar">
+                <field name="category_id" type="row"/>
+                <field name="customer_count" type="measure"/>
+                <field name="repeat_customer_count" type="measure"/>
+                <field name="customer_retention_rate" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- Category Inventory Analytics Graph View -->
+    <record id="view_category_inventory_analytics_graph" model="ir.ui.view">
+        <field name="name">category.inventory.analytics.graph</field>
+        <field name="model">category.analytics</field>
+        <field name="arch" type="xml">
+            <graph string="Inventory Analytics by Category" type="bar">
+                <field name="category_id" type="row"/>
+                <field name="total_stock" type="measure"/>
+                <field name="stock_value" type="measure"/>
+                <field name="stock_turnover" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- Category Financial Analytics Graph View -->
+    <record id="view_category_financial_analytics_graph" model="ir.ui.view">
+        <field name="name">category.financial.analytics.graph</field>
+        <field name="model">category.analytics</field>
+        <field name="arch" type="xml">
+            <graph string="Financial Analytics by Category" type="bar">
+                <field name="category_id" type="row"/>
+                <field name="revenue" type="measure"/>
+                <field name="cost" type="measure"/>
+                <field name="profit" type="measure"/>
+                <field name="profit_margin" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- Category Market Share Graph View -->
+    <record id="view_category_market_share_graph" model="ir.ui.view">
+        <field name="name">category.market.share.graph</field>
+        <field name="model">category.analytics</field>
+        <field name="arch" type="xml">
+            <graph string="Market Share by Category" type="pie">
+                <field name="category_id" type="row"/>
+                <field name="market_share" type="measure"/>
+                <field name="growth_rate" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- Category Age Group Analytics Graph View -->
+    <record id="view_category_age_group_analytics_graph" model="ir.ui.view">
+        <field name="name">category.age.group.analytics.graph</field>
+        <field name="model">category.analytics</field>
+        <field name="arch" type="xml">
+            <graph string="Analytics by Age Group" type="bar">
+                <field name="category_id" type="row"/>
+                <field name="total_sales" type="measure"/>
+                <field name="customer_count" type="measure"/>
+                <field name="product_count" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- Category Gender Analytics Graph View -->
+    <record id="view_category_gender_analytics_graph" model="ir.ui.view">
+        <field name="name">category.gender.analytics.graph</field>
+        <field name="model">category.analytics</field>
+        <field name="arch" type="xml">
+            <graph string="Analytics by Gender" type="bar">
+                <field name="category_id" type="row"/>
+                <field name="total_sales" type="measure"/>
+                <field name="customer_count" type="measure"/>
+                <field name="product_count" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- Category Season Analytics Graph View -->
+    <record id="view_category_season_analytics_graph" model="ir.ui.view">
+        <field name="name">category.season.analytics.graph</field>
+        <field name="model">category.analytics</field>
+        <field name="arch" type="xml">
+            <graph string="Analytics by Season" type="bar">
+                <field name="category_id" type="row"/>
+                <field name="total_sales" type="measure"/>
+                <field name="customer_count" type="measure"/>
+                <field name="product_count" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- Category Brand Analytics Graph View -->
+    <record id="view_category_brand_analytics_graph" model="ir.ui.view">
+        <field name="name">category.brand.analytics.graph</field>
+        <field name="model">category.analytics</field>
+        <field name="arch" type="xml">
+            <graph string="Analytics by Brand Type" type="bar">
+                <field name="category_id" type="row"/>
+                <field name="total_sales" type="measure"/>
+                <field name="customer_count" type="measure"/>
+                <field name="product_count" type="measure"/>
+            </graph>
+        </field>
+    </record>
+</odoo>

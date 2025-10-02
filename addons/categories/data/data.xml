@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Category Actions -->
+    <record id="action_category" model="ir.actions.act_window">
+        <field name="name">Categories</field>
+        <field name="res_model">product.category</field>
+        <field name="view_mode">tree,form,kanban</field>
+        <field name="context">{'search_default_active': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first category!
+            </p>
+            <p>
+                Categories help organize your products by age group, gender, season, and brand type.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_category_analytics" model="ir.actions.act_window">
+        <field name="name">Category Analytics</field>
+        <field name="res_model">category.analytics</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'search_default_today': 1}</field>
+    </record>
+
+    <record id="action_category_analytics_dashboard" model="ir.actions.act_window">
+        <field name="name">Category Analytics Dashboard</field>
+        <field name="res_model">category.analytics</field>
+        <field name="view_mode">dashboard</field>
+        <field name="view_id" ref="view_category_analytics_dashboard"/>
+    </record>
+
+    <record id="action_category_attribute" model="ir.actions.act_window">
+        <field name="name">Category Attributes</field>
+        <field name="res_model">category.attribute</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_category_rule" model="ir.actions.act_window">
+        <field name="name">Category Rules</field>
+        <field name="res_model">category.rule</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Analytics Actions -->
+    <record id="action_category_performance" model="ir.actions.act_window">
+        <field name="name">Category Performance</field>
+        <field name="res_model">category.analytics</field>
+        <field name="view_mode">graph</field>
+        <field name="view_id" ref="view_category_performance_graph"/>
+    </record>
+
+    <record id="action_category_sales_trend" model="ir.actions.act_window">
+        <field name="name">Sales Trend by Category</field>
+        <field name="res_model">category.analytics</field>
+        <field name="view_mode">graph</field>
+        <field name="view_id" ref="view_category_sales_trend_graph"/>
+    </record>
+
+    <record id="action_category_customer_analytics" model="ir.actions.act_window">
+        <field name="name">Customer Analytics by Category</field>
+        <field name="res_model">category.analytics</field>
+        <field name="view_mode">graph</field>
+        <field name="view_id" ref="view_category_customer_analytics_graph"/>
+    </record>
+
+    <record id="action_category_inventory_analytics" model="ir.actions.act_window">
+        <field name="name">Inventory Analytics by Category</field>
+        <field name="res_model">category.analytics</field>
+        <field name="view_mode">graph</field>
+        <field name="view_id" ref="view_category_inventory_analytics_graph"/>
+    </record>
+
+    <record id="action_category_financial_analytics" model="ir.actions.act_window">
+        <field name="name">Financial Analytics by Category</field>
+        <field name="res_model">category.analytics</field>
+        <field name="view_mode">graph</field>
+        <field name="view_id" ref="view_category_financial_analytics_graph"/>
+    </record>
+
+    <record id="action_category_market_share" model="ir.actions.act_window">
+        <field name="name">Market Share by Category</field>
+        <field name="res_model">category.analytics</field>
+        <field name="view_mode">graph</field>
+        <field name="view_id" ref="view_category_market_share_graph"/>
+    </record>
+
+    <!-- Report Actions -->
+    <record id="action_category_age_group_analytics" model="ir.actions.act_window">
+        <field name="name">Analytics by Age Group</field>
+        <field name="res_model">category.analytics</field>
+        <field name="view_mode">graph</field>
+        <field name="view_id" ref="view_category_age_group_analytics_graph"/>
+    </record>
+
+    <record id="action_category_gender_analytics" model="ir.actions.act_window">
+        <field name="name">Analytics by Gender</field>
+        <field name="res_model">category.analytics</field>
+        <field name="view_mode">graph</field>
+        <field name="view_id" ref="view_category_gender_analytics_graph"/>
+    </record>
+
+    <record id="action_category_season_analytics" model="ir.actions.act_window">
+        <field name="name">Analytics by Season</field>
+        <field name="res_model">category.analytics</field>
+        <field name="view_mode">graph</field>
+        <field name="view_id" ref="view_category_season_analytics_graph"/>
+    </record>
+
+    <record id="action_category_brand_analytics" model="ir.actions.act_window">
+        <field name="name">Analytics by Brand Type</field>
+        <field name="res_model">category.analytics</field>
+        <field name="view_mode">graph</field>
+        <field name="view_id" ref="view_category_brand_analytics_graph"/>
+    </record>
+
+    <!-- Default Categories -->
+    <record id="category_babywear" model="product.category">
+        <field name="name">Babywear</field>
+        <field name="age_group">0-2</field>
+        <field name="gender">unisex</field>
+        <field name="season">all_season</field>
+        <field name="brand_type">all</field>
+        <field name="description">Clothing for babies aged 0-2 years</field>
+        <field name="icon">fa fa-baby</field>
+        <field name="color">#ff6b6b</field>
+    </record>
+
+    <record id="category_toddler" model="product.category">
+        <field name="name">Toddler</field>
+        <field name="age_group">2-4</field>
+        <field name="gender">unisex</field>
+        <field name="season">all_season</field>
+        <field name="brand_type">all</field>
+        <field name="description">Clothing for toddlers aged 2-4 years</field>
+        <field name="icon">fa fa-child</field>
+        <field name="color">#4ecdc4</field>
+    </record>
+
+    <record id="category_preschool" model="product.category">
+        <field name="name">Pre-school</field>
+        <field name="age_group">4-6</field>
+        <field name="gender">unisex</field>
+        <field name="season">all_season</field>
+        <field name="brand_type">all</field>
+        <field name="description">Clothing for pre-school children aged 4-6 years</field>
+        <field name="icon">fa fa-graduation-cap</field>
+        <field name="color">#45b7d1</field>
+    </record>
+
+    <record id="category_early_school" model="product.category">
+        <field name="name">Early School</field>
+        <field name="age_group">6-8</field>
+        <field name="gender">unisex</field>
+        <field name="season">all_season</field>
+        <field name="brand_type">all</field>
+        <field name="description">Clothing for early school children aged 6-8 years</field>
+        <field name="icon">fa fa-book</field>
+        <field name="color">#96ceb4</field>
+    </record>
+
+    <record id="category_middle_school" model="product.category">
+        <field name="name">Middle School</field>
+        <field name="age_group">8-10</field>
+        <field name="gender">unisex</field>
+        <field name="season">all_season</field>
+        <field name="brand_type">all</field>
+        <field name="description">Clothing for middle school children aged 8-10 years</field>
+        <field name="icon">fa fa-pencil</field>
+        <field name="color">#feca57</field>
+    </record>
+
+    <record id="category_preteen" model="product.category">
+        <field name="name">Pre-teen</field>
+        <field name="age_group">10-12</field>
+        <field name="gender">unisex</field>
+        <field name="season">all_season</field>
+        <field name="brand_type">all</field>
+        <field name="description">Clothing for pre-teen children aged 10-12 years</field>
+        <field name="icon">fa fa-user</field>
+        <field name="color">#ff9ff3</field>
+    </record>
+
+    <record id="category_teen" model="product.category">
+        <field name="name">Teen</field>
+        <field name="age_group">12-14</field>
+        <field name="gender">unisex</field>
+        <field name="season">all_season</field>
+        <field name="brand_type">all</field>
+        <field name="description">Clothing for teenagers aged 12-14 years</field>
+        <field name="icon">fa fa-users</field>
+        <field name="color">#54a0ff</field>
+    </record>
+
+    <record id="category_young_adult" model="product.category">
+        <field name="name">Young Adult</field>
+        <field name="age_group">14-16</field>
+        <field name="gender">unisex</field>
+        <field name="season">all_season</field>
+        <field name="brand_type">all</field>
+        <field name="description">Clothing for young adults aged 14-16 years</field>
+        <field name="icon">fa fa-user-circle</field>
+        <field name="color">#5f27cd</field>
+    </record>
+
+    <!-- Gender-based Categories -->
+    <record id="category_boys" model="product.category">
+        <field name="name">Boys</field>
+        <field name="age_group">all</field>
+        <field name="gender">boys</field>
+        <field name="season">all_season</field>
+        <field name="brand_type">all</field>
+        <field name="description">Clothing for boys of all ages</field>
+        <field name="icon">fa fa-male</field>
+        <field name="color">#00d2d3</field>
+    </record>
+
+    <record id="category_girls" model="product.category">
+        <field name="name">Girls</field>
+        <field name="age_group">all</field>
+        <field name="gender">girls</field>
+        <field name="season">all_season</field>
+        <field name="brand_type">all</field>
+        <field name="description">Clothing for girls of all ages</field>
+        <field name="icon">fa fa-female</field>
+        <field name="color">#ff9ff3</field>
+    </record>
+
+    <!-- Season-based Categories -->
+    <record id="category_summer" model="product.category">
+        <field name="name">Summer</field>
+        <field name="age_group">all</field>
+        <field name="gender">unisex</field>
+        <field name="season">summer</field>
+        <field name="brand_type">all</field>
+        <field name="description">Summer clothing for all ages</field>
+        <field name="icon">fa fa-sun-o</field>
+        <field name="color">#feca57</field>
+    </record>
+
+    <record id="category_winter" model="product.category">
+        <field name="name">Winter</field>
+        <field name="age_group">all</field>
+        <field name="gender">unisex</field>
+        <field name="season">winter</field>
+        <field name="brand_type">all</field>
+        <field name="description">Winter clothing for all ages</field>
+        <field name="icon">fa fa-snowflake-o</field>
+        <field name="color">#54a0ff</field>
+    </record>
+
+    <record id="category_monsoon" model="product.category">
+        <field name="name">Monsoon</field>
+        <field name="age_group">all</field>
+        <field name="gender">unisex</field>
+        <field name="season">monsoon</field>
+        <field name="brand_type">all</field>
+        <field name="description">Monsoon clothing for all ages</field>
+        <field name="icon">fa fa-cloud-rain</field>
+        <field name="color">#5f27cd</field>
+    </record>
+
+    <!-- Brand-based Categories -->
+    <record id="category_premium" model="product.category">
+        <field name="name">Premium</field>
+        <field name="age_group">all</field>
+        <field name="gender">unisex</field>
+        <field name="season">all_season</field>
+        <field name="brand_type">premium</field>
+        <field name="description">Premium brand clothing for all ages</field>
+        <field name="icon">fa fa-star</field>
+        <field name="color">#ffd700</field>
+    </record>
+
+    <record id="category_mid_range" model="product.category">
+        <field name="name">Mid Range</field>
+        <field name="age_group">all</field>
+        <field name="gender">unisex</field>
+        <field name="season">all_season</field>
+        <field name="brand_type">mid_range</field>
+        <field name="description">Mid-range brand clothing for all ages</field>
+        <field name="icon">fa fa-tag</field>
+        <field name="color">#4ecdc4</field>
+    </record>
+
+    <record id="category_budget" model="product.category">
+        <field name="name">Budget</field>
+        <field name="age_group">all</field>
+        <field name="gender">unisex</field>
+        <field name="season">all_season</field>
+        <field name="brand_type">budget</field>
+        <field name="description">Budget brand clothing for all ages</field>
+        <field name="icon">fa fa-rupee</field>
+        <field name="color">#96ceb4</field>
+    </record>
+</odoo>

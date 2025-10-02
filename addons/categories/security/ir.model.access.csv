@@ -1,0 +1,13 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_product_category_manager,product.category.manager,model_product_category,group_category_manager,1,1,1,1
+access_product_category_user,product.category.user,model_product_category,group_category_user,1,1,1,0
+access_product_category_analyst,product.category.analyst,model_product_category,group_category_analyst,1,0,0,0
+access_category_analytics_manager,category.analytics.manager,model_category_analytics,group_category_manager,1,1,1,1
+access_category_analytics_user,category.analytics.user,model_category_analytics,group_category_user,1,1,1,0
+access_category_analytics_analyst,category.analytics.analyst,model_category_analytics,group_category_analyst,1,0,0,0
+access_category_attribute_manager,category.attribute.manager,model_category_attribute,group_category_manager,1,1,1,1
+access_category_attribute_user,category.attribute.user,model_category_attribute,group_category_user,1,1,1,0
+access_category_attribute_analyst,category.attribute.analyst,model_category_attribute,group_category_analyst,1,0,0,0
+access_category_rule_manager,category.rule.manager,model_category_rule,group_category_manager,1,1,1,1
+access_category_rule_user,category.rule.user,model_category_rule,group_category_user,1,1,1,0
+access_category_rule_analyst,category.rule.analyst,model_category_rule,group_category_analyst,1,0,0,0

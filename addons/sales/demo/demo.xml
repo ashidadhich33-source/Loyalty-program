@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<erp>
+    <data>
+        <!-- Demo Sales Teams -->
+        <record id="demo_sale_team_kids" model="sale.team">
+            <field name="name">Kids Clothing Sales Team</field>
+            <field name="code">KIDS</field>
+            <field name="description">Specialized team for kids clothing sales</field>
+            <field name="target_amount">100000.0</field>
+            <field name="target_orders">500</field>
+            <field name="company_id" ref="erp.main_company"/>
+        </record>
+        
+        <record id="demo_sale_team_infant" model="sale.team">
+            <field name="name">Infant Sales Team</field>
+            <field name="code">INFANT</field>
+            <field name="description">Team specialized in infant clothing</field>
+            <field name="target_amount">50000.0</field>
+            <field name="target_orders">250</field>
+            <field name="company_id" ref="erp.main_company"/>
+        </record>
+        
+        <!-- Demo Sales Territories -->
+        <record id="demo_sale_territory_mumbai" model="sale.territory">
+            <field name="name">Mumbai Territory</field>
+            <field name="code">MUMBAI</field>
+            <field name="description">Mumbai and surrounding areas</field>
+            <field name="territory_type">city</field>
+            <field name="city">Mumbai</field>
+            <field name="target_amount">200000.0</field>
+            <field name="target_orders">1000</field>
+            <field name="company_id" ref="erp.main_company"/>
+        </record>
+        
+        <record id="demo_sale_territory_delhi" model="sale.territory">
+            <field name="name">Delhi Territory</field>
+            <field name="code">DELHI</field>
+            <field name="description">Delhi and surrounding areas</field>
+            <field name="territory_type">city</field>
+            <field name="city">Delhi</field>
+            <field name="target_amount">150000.0</field>
+            <field name="target_orders">750</field>
+            <field name="company_id" ref="erp.main_company"/>
+        </record>
+    </data>
+</erp>

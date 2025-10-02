@@ -1,0 +1,17 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sale_order_user,sale.order.user,model_sale_order,erp.group_user,1,1,1,0
+access_sale_order_manager,sale.order.manager,model_sale_order,erp.group_manager,1,1,1,1
+access_sale_quotation_user,sale.quotation.user,model_sale_quotation,erp.group_user,1,1,1,0
+access_sale_quotation_manager,sale.quotation.manager,model_sale_quotation,erp.group_manager,1,1,1,1
+access_sale_delivery_user,sale.delivery.user,model_sale_delivery,erp.group_user,1,1,1,0
+access_sale_delivery_manager,sale.delivery.manager,model_sale_delivery,erp.group_manager,1,1,1,1
+access_sale_return_user,sale.return.user,model_sale_return,erp.group_user,1,1,1,0
+access_sale_return_manager,sale.return.manager,model_sale_return,erp.group_manager,1,1,1,1
+access_sale_team_user,sale.team.user,model_sale_team,erp.group_user,1,1,1,0
+access_sale_team_manager,sale.team.manager,model_sale_team,erp.group_manager,1,1,1,1
+access_sale_territory_user,sale.territory.user,model_sale_territory,erp.group_user,1,1,1,0
+access_sale_territory_manager,sale.territory.manager,model_sale_territory,erp.group_manager,1,1,1,1
+access_sale_commission_user,sale.commission.user,model_sale_commission,erp.group_user,1,1,1,0
+access_sale_commission_manager,sale.commission.manager,model_sale_commission,erp.group_manager,1,1,1,1
+access_sale_analytics_user,sale.analytics.user,model_sale_analytics,erp.group_user,1,1,1,0
+access_sale_analytics_manager,sale.analytics.manager,model_sale_analytics,erp.group_manager,1,1,1,1

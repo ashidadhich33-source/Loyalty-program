@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<erp>
+    <data>
+        <!-- Sales Menu -->
+        <menuitem id="menu_sales" name="Sales" sequence="10"/>
+        
+        <!-- Sales Orders Menu -->
+        <menuitem id="menu_sales_orders" name="Sales Orders" parent="menu_sales" sequence="10"/>
+        
+        <menuitem id="menu_sale_order" name="Sales Orders" parent="menu_sales_orders" sequence="10"/>
+        
+        <menuitem id="menu_sale_quotation" name="Quotations" parent="menu_sales_orders" sequence="20"/>
+        
+        <menuitem id="menu_sale_delivery" name="Deliveries" parent="menu_sales_orders" sequence="30"/>
+        
+        <menuitem id="menu_sale_return" name="Returns" parent="menu_sales_orders" sequence="40"/>
+        
+        <!-- Sales Teams Menu -->
+        <menuitem id="menu_sales_teams" name="Sales Teams" parent="menu_sales" sequence="20"/>
+        
+        <menuitem id="menu_sale_team" name="Teams" parent="menu_sales_teams" sequence="10"/>
+        
+        <menuitem id="menu_sale_territory" name="Territories" parent="menu_sales_teams" sequence="20"/>
+        
+        <!-- Sales Commission Menu -->
+        <menuitem id="menu_sales_commission" name="Commission" parent="menu_sales" sequence="30"/>
+        
+        <menuitem id="menu_sale_commission" name="Commissions" parent="menu_sales_commission" sequence="10"/>
+        
+        <!-- Sales Analytics Menu -->
+        <menuitem id="menu_sales_analytics" name="Analytics" parent="menu_sales" sequence="40"/>
+        
+        <menuitem id="menu_sale_analytics" name="Sales Analytics" parent="menu_sales_analytics" sequence="10"/>
+    </data>
+</erp>

@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Demo Import Templates -->
+    <record id="demo_template_products_advanced" model="import.template">
+        <field name="name">Advanced Products Import Template</field>
+        <field name="description">Advanced template for importing products with all variants and attributes</field>
+        <field name="model_id" ref="model_product_template"/>
+        <field name="template_type">excel</field>
+        <field name="is_kids_specific">True</field>
+        <field name="age_group_validation">True</field>
+        <field name="gender_validation">True</field>
+        <field name="size_validation">True</field>
+        <field name="required_fields">name,list_price,age_group,gender</field>
+        <field name="unique_fields">default_code</field>
+        <field name="version">2.0</field>
+        <field name="parent_template_id" ref="template_products"/>
+    </record>
+
+    <record id="demo_template_categories_advanced" model="import.template">
+        <field name="name">Advanced Categories Import Template</field>
+        <field name="description">Advanced template for importing categories with hierarchy</field>
+        <field name="model_id" ref="model_product_category"/>
+        <field name="template_type">excel</field>
+        <field name="is_kids_specific">True</field>
+        <field name="age_group_validation">True</field>
+        <field name="gender_validation">True</field>
+        <field name="required_fields">name,age_group,gender,season</field>
+        <field name="version">2.0</field>
+        <field name="parent_template_id" ref="template_categories"/>
+    </record>
+
+    <!-- Demo Import Jobs -->
+    <record id="demo_import_job_products" model="import.job">
+        <field name="name">Demo Products Import</field>
+        <field name="description">Demo import job for products</field>
+        <field name="template_id" ref="template_products"/>
+        <field name="state">completed</field>
+        <field name="total_rows">100</field>
+        <field name="processed_rows">100</field>
+        <field name="success_rows">95</field>
+        <field name="error_rows">5</field>
+        <field name="start_time">2025-01-01 10:00:00</field>
+        <field name="end_time">2025-01-01 10:05:00</field>
+        <field name="duration">300</field>
+    </record>
+
+    <record id="demo_import_job_categories" model="import.job">
+        <field name="name">Demo Categories Import</field>
+        <field name="description">Demo import job for categories</field>
+        <field name="template_id" ref="template_categories"/>
+        <field name="state">completed</field>
+        <field name="total_rows">50</field>
+        <field name="processed_rows">50</field>
+        <field name="success_rows">50</field>
+        <field name="error_rows">0</field>
+        <field name="start_time">2025-01-01 11:00:00</field>
+        <field name="end_time">2025-01-01 11:02:00</field>
+        <field name="duration">120</field>
+    </record>
+
+    <record id="demo_import_job_contacts" model="import.job">
+        <field name="name">Demo Contacts Import</field>
+        <field name="description">Demo import job for contacts</field>
+        <field name="template_id" ref="template_contacts"/>
+        <field name="state">failed</field>
+        <field name="total_rows">200</field>
+        <field name="processed_rows">150</field>
+        <field name="success_rows">120</field>
+        <field name="error_rows">30</field>
+        <field name="start_time">2025-01-01 12:00:00</field>
+        <field name="end_time">2025-01-01 12:10:00</field>
+        <field name="duration">600</field>
+    </record>
+
+    <!-- Demo Import History -->
+    <record id="demo_import_history_products" model="import.history">
+        <field name="import_job_id" ref="demo_import_job_products"/>
+        <field name="import_date">2025-01-01 10:05:00</field>
+        <field name="status">completed</field>
+        <field name="total_records">100</field>
+        <field name="success_records">95</field>
+        <field name="error_records">5</field>
+        <field name="duration">300</field>
+        <field name="data_quality_score">95.0</field>
+        <field name="completeness_score">98.0</field>
+        <field name="accuracy_score">92.0</field>
+        <field name="consistency_score">96.0</field>
+        <field name="business_impact">high</field>
+        <field name="cost_savings">5000.0</field>
+        <field name="time_savings">8.0</field>
+    </record>
+
+    <record id="demo_import_history_categories" model="import.history">
+        <field name="import_job_id" ref="demo_import_job_categories"/>
+        <field name="import_date">2025-01-01 11:02:00</field>
+        <field name="status">completed</field>
+        <field name="total_records">50</field>
+        <field name="success_records">50</field>
+        <field name="error_records">0</field>
+        <field name="duration">120</field>
+        <field name="data_quality_score">100.0</field>
+        <field name="completeness_score">100.0</field>
+        <field name="accuracy_score">100.0</field>
+        <field name="consistency_score">100.0</field>
+        <field name="business_impact">medium</field>
+        <field name="cost_savings">2000.0</field>
+        <field name="time_savings">4.0</field>
+    </record>
+
+    <record id="demo_import_history_contacts" model="import.history">
+        <field name="import_job_id" ref="demo_import_job_contacts"/>
+        <field name="import_date">2025-01-01 12:10:00</field>
+        <field name="status">failed</field>
+        <field name="total_records">200</field>
+        <field name="success_records">120</field>
+        <field name="error_records">30</field>
+        <field name="duration">600</field>
+        <field name="data_quality_score">60.0</field>
+        <field name="completeness_score">75.0</field>
+        <field name="accuracy_score">80.0</field>
+        <field name="consistency_score">70.0</field>
+        <field name="business_impact">low</field>
+        <field name="cost_savings">0.0</field>
+        <field name="time_savings">0.0</field>
+    </record>
+
+    <!-- Demo Import Statistics -->
+    <record id="demo_import_statistics_daily" model="import.statistics">
+        <field name="date">2025-01-01</field>
+        <field name="period">daily</field>
+        <field name="total_imports">3</field>
+        <field name="successful_imports">2</field>
+        <field name="failed_imports">1</field>
+        <field name="cancelled_imports">0</field>
+        <field name="total_records">350</field>
+        <field name="successful_records">265</field>
+        <field name="error_records">35</field>
+        <field name="warning_records">0</field>
+        <field name="avg_duration">340.0</field>
+        <field name="min_duration">120.0</field>
+        <field name="max_duration">600.0</field>
+        <field name="avg_records_per_second">1.03</field>
+        <field name="total_file_size">2.5</field>
+        <field name="avg_file_size">0.83</field>
+        <field name="data_quality_score">85.0</field>
+        <field name="completeness_score">91.0</field>
+        <field name="accuracy_score">90.7</field>
+        <field name="consistency_score">88.7</field>
+        <field name="cost_savings">7000.0</field>
+        <field name="time_savings">12.0</field>
+        <field name="efficiency_improvement">25.0</field>
+        <field name="import_trend">increasing</field>
+        <field name="success_rate_trend">stable</field>
+    </record>
+
+    <!-- Demo Import Records -->
+    <record id="demo_import_record_success" model="import.record">
+        <field name="import_job_id" ref="demo_import_job_products"/>
+        <field name="record_id">1</field>
+        <field name="model_name">product.template</field>
+        <field name="action">create</field>
+        <field name="state">success</field>
+        <field name="data">{"name": "Kids T-Shirt", "list_price": 299.0, "age_group": "4-6", "gender": "unisex"}</field>
+        <field name="processing_time">2.5</field>
+        <field name="record_name">Kids T-Shirt</field>
+        <field name="record_code">KTS001</field>
+    </record>
+
+    <record id="demo_import_record_error" model="import.record">
+        <field name="import_job_id" ref="demo_import_job_products"/>
+        <field name="model_name">product.template</field>
+        <field name="action">create</field>
+        <field name="state">error</field>
+        <field name="data">{"name": "Invalid Product", "list_price": -50.0, "age_group": "invalid", "gender": "unknown"}</field>
+        <field name="error_message">Invalid price: -50.0. Price must be positive.</field>
+        <field name="error_type">validation_error</field>
+        <field name="error_code">INVALID_PRICE</field>
+        <field name="processing_time">1.0</field>
+    </record>
+
+    <!-- Demo Import Mappings -->
+    <record id="demo_mapping_product_color" model="import.mapping">
+        <field name="template_id" ref="demo_template_products_advanced"/>
+        <field name="source_field">color</field>
+        <field name="target_field">color</field>
+        <field name="data_type">selection</field>
+        <field name="is_kids_specific">True</field>
+        <field name="sequence">60</field>
+    </record>
+
+    <record id="demo_mapping_product_brand" model="import.mapping">
+        <field name="template_id" ref="demo_template_products_advanced"/>
+        <field name="source_field">brand</field>
+        <field name="target_field">brand_id</field>
+        <field name="data_type">many2one</field>
+        <field name="related_model">product.brand</field>
+        <field name="search_field">name</field>
+        <field name="create_if_not_found">True</field>
+        <field name="sequence">70</field>
+    </record>
+
+    <record id="demo_mapping_product_category" model="import.mapping">
+        <field name="template_id" ref="demo_template_products_advanced"/>
+        <field name="source_field">category</field>
+        <field name="target_field">categ_id</field>
+        <field name="data_type">many2one</field>
+        <field name="related_model">product.category</field>
+        <field name="search_field">name</field>
+        <field name="create_if_not_found">True</field>
+        <field name="sequence">80</field>
+    </record>
+</odoo>

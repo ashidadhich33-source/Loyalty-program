@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Bulk Import Menu -->
+    <menuitem id="menu_bulk_import" name="Bulk Import" parent="menu_master_data" sequence="30"/>
+
+    <!-- Import Management Menu -->
+    <menuitem id="menu_import_management" name="Import Management" parent="menu_bulk_import" sequence="10"/>
+    <menuitem id="menu_import_templates" name="Import Templates" parent="menu_import_management" action="action_import_template" sequence="10"/>
+    <menuitem id="menu_import_jobs" name="Import Jobs" parent="menu_import_management" action="action_import_job" sequence="20"/>
+    <menuitem id="menu_import_mappings" name="Field Mappings" parent="menu_import_management" action="action_import_mapping" sequence="30"/>
+
+    <!-- Import History Menu -->
+    <menuitem id="menu_import_history" name="Import History" parent="menu_bulk_import" sequence="20"/>
+    <menuitem id="menu_import_history_list" name="Import History" parent="menu_import_history" action="action_import_history" sequence="10"/>
+    <menuitem id="menu_import_records" name="Import Records" parent="menu_import_history" action="action_import_record" sequence="20"/>
+
+    <!-- Import Analytics Menu -->
+    <menuitem id="menu_import_analytics" name="Import Analytics" parent="menu_bulk_import" sequence="30"/>
+    <menuitem id="menu_import_statistics" name="Import Statistics" parent="menu_import_analytics" action="action_import_statistics" sequence="10"/>
+    <menuitem id="menu_import_statistics_graph" name="Statistics Graph" parent="menu_import_analytics" action="action_import_statistics_graph" sequence="20"/>
+    <menuitem id="menu_import_statistics_pivot" name="Statistics Pivot" parent="menu_import_analytics" action="action_import_statistics_pivot" sequence="30"/>
+
+    <!-- Import Tools Menu -->
+    <menuitem id="menu_import_tools" name="Import Tools" parent="menu_bulk_import" sequence="40"/>
+    <menuitem id="menu_import_wizard" name="Import Wizard" parent="menu_import_tools" action="action_import_wizard" sequence="10"/>
+    <menuitem id="menu_import_scheduler" name="Import Scheduler" parent="menu_import_tools" action="action_import_scheduler" sequence="20"/>
+    <menuitem id="menu_import_automation" name="Import Automation" parent="menu_import_tools" action="action_import_automation" sequence="30"/>
+
+    <!-- Import Reports Menu -->
+    <menuitem id="menu_import_reports" name="Import Reports" parent="menu_bulk_import" sequence="50"/>
+    <menuitem id="menu_import_performance_report" name="Performance Report" parent="menu_import_reports" action="action_import_performance_report" sequence="10"/>
+    <menuitem id="menu_import_error_report" name="Error Report" parent="menu_import_reports" action="action_import_error_report" sequence="20"/>
+    <menuitem id="menu_import_quality_report" name="Quality Report" parent="menu_import_reports" action="action_import_quality_report" sequence="30"/>
+</odoo>

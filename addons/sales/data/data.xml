@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<erp>
+    <data>
+        <!-- Sales Team Data -->
+        <record id="sale_team_online" model="sale.team">
+            <field name="name">Online Sales Team</field>
+            <field name="code">ONLINE</field>
+            <field name="description">Team responsible for online sales</field>
+            <field name="company_id" ref="erp.main_company"/>
+        </record>
+        
+        <record id="sale_team_offline" model="sale.team">
+            <field name="name">Offline Sales Team</field>
+            <field name="code">OFFLINE</field>
+            <field name="description">Team responsible for offline sales</field>
+            <field name="company_id" ref="erp.main_company"/>
+        </record>
+        
+        <!-- Sales Territory Data -->
+        <record id="sale_territory_north" model="sale.territory">
+            <field name="name">North Territory</field>
+            <field name="code">NORTH</field>
+            <field name="description">Northern region sales territory</field>
+            <field name="territory_type">region</field>
+            <field name="company_id" ref="erp.main_company"/>
+        </record>
+        
+        <record id="sale_territory_south" model="sale.territory">
+            <field name="name">South Territory</field>
+            <field name="code">SOUTH</field>
+            <field name="description">Southern region sales territory</field>
+            <field name="territory_type">region</field>
+            <field name="company_id" ref="erp.main_company"/>
+        </record>
+    </data>
+</erp>

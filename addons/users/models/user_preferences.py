@@ -1,378 +1,324 @@
 # -*- coding: utf-8 -*-
+"""
+Kids Clothing ERP - Users - User Preferences
+===========================================
 
-from odoo import models, fields, api, _
-from odoo.exceptions import ValidationError
+Standalone version of the user preferences model.
+"""
+
+from core_framework.orm import BaseModel, CharField, TextField, BooleanField, IntegerField, DateTimeField, Many2OneField, SelectionField, FloatField
+from core_framework.orm import Field
+from typing import Dict, Any, Optional
 import logging
+from datetime import datetime
 import json
 
-_logger = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
 
-
-class UserPreferences(models.Model):
+class UserPreferences(BaseModel):
     """User preferences model for Kids Clothing ERP"""
     
     _name = 'user.preferences'
     _description = 'User Preferences'
-    _order = 'name'
+    _table = 'user_preferences'
     
-    # Basic fields
-    name = fields.Char(
-        string='Preference Name',
-        required=True,
-        help='Name of the preference'
-    )
-    
-    description = fields.Text(
-        string='Description',
-        help='Description of the preference'
-    )
-    
-    key = fields.Char(
-        string='Key',
-        required=True,
-        help='Unique key for the preference'
-    )
-    
-    # Preference details
-    user_id = fields.Many2one(
-        'res.users',
-        string='User',
+    # Basic preference information
+    user_id = IntegerField(
+        string='User ID',
         required=True,
         help='User this preference belongs to'
     )
     
-    value = fields.Text(
-        string='Value',
-        help='Value of the preference'
+    preference_key = CharField(
+        string='Preference Key',
+        size=100,
+        required=True,
+        help='Preference key/name'
     )
     
-    value_type = fields.Selection([
-        ('string', 'String'),
-        ('integer', 'Integer'),
-        ('float', 'Float'),
-        ('boolean', 'Boolean'),
-        ('json', 'JSON'),
-        ('date', 'Date'),
-        ('datetime', 'DateTime'),
-    ], string='Value Type', default='string', help='Type of the preference value')
+    preference_value = TextField(
+        string='Preference Value',
+        help='Preference value (JSON encoded)'
+    )
+    
+    preference_type = SelectionField(
+        string='Preference Type',
+        selection=[
+            ('string', 'String'),
+            ('integer', 'Integer'),
+            ('float', 'Float'),
+            ('boolean', 'Boolean'),
+            ('json', 'JSON'),
+            ('list', 'List'),
+            ('dict', 'Dictionary'),
+        ],
+        default='string',
+        help='Type of preference value'
+    )
     
     # Preference category
-    category = fields.Selection([
-        ('ui', 'User Interface'),
-        ('notifications', 'Notifications'),
-        ('security', 'Security'),
-        ('performance', 'Performance'),
-        ('accessibility', 'Accessibility'),
-        ('localization', 'Localization'),
-        ('integration', 'Integration'),
-        ('custom', 'Custom'),
-    ], string='Category', default='custom', help='Category of the preference')
+    category = SelectionField(
+        string='Category',
+        selection=[
+            ('ui', 'User Interface'),
+            ('notifications', 'Notifications'),
+            ('security', 'Security'),
+            ('data', 'Data Display'),
+            ('workflow', 'Workflow'),
+            ('integration', 'Integration'),
+            ('custom', 'Custom'),
+        ],
+        default='custom',
+        help='Preference category'
+    )
     
-    # Preference scope
-    scope = fields.Selection([
-        ('user', 'User'),
-        ('company', 'Company'),
-        ('global', 'Global'),
-    ], string='Scope', default='user', help='Scope of the preference')
-    
-    # Preference status
-    is_active = fields.Boolean(
+    # Preference settings
+    is_active = BooleanField(
         string='Active',
         default=True,
         help='Whether the preference is active'
     )
     
-    is_system_preference = fields.Boolean(
+    is_system_preference = BooleanField(
         string='System Preference',
         default=False,
-        help='Whether this is a system preference (cannot be deleted)'
-    )
-    
-    # Preference validation
-    validation_rule = fields.Text(
-        string='Validation Rule',
-        help='Python validation rule for the preference value'
-    )
-    
-    default_value = fields.Text(
-        string='Default Value',
-        help='Default value for the preference'
-    )
-    
-    # Preference options
-    options = fields.Text(
-        string='Options',
-        help='Available options for the preference (JSON format)'
+        help='Whether this is a system preference'
     )
     
     # Preference metadata
-    metadata = fields.Text(
-        string='Metadata',
-        help='Additional metadata for the preference (JSON format)'
+    description = TextField(
+        string='Description',
+        help='Preference description'
     )
     
-    # Preference analytics
-    usage_count = fields.Integer(
-        string='Usage Count',
-        default=0,
-        help='Number of times this preference has been accessed'
+    default_value = TextField(
+        string='Default Value',
+        help='Default value for this preference'
     )
     
-    last_accessed = fields.Datetime(
-        string='Last Accessed',
-        help='When this preference was last accessed'
+    # Preference validation
+    validation_rules = TextField(
+        string='Validation Rules',
+        help='JSON validation rules for this preference'
     )
     
-    # Preference dependencies
-    depends_on = fields.Many2many(
-        'user.preferences',
-        'preference_dependency_rel',
-        'preference_id',
-        'dependency_id',
-        string='Depends On',
-        help='Preferences this preference depends on'
+    # Preference timing
+    created_date = DateTimeField(
+        string='Created Date',
+        default=datetime.now,
+        help='Date when preference was created'
     )
     
-    required_by = fields.Many2many(
-        'user.preferences',
-        'preference_dependency_rel',
-        'dependency_id',
-        'preference_id',
-        string='Required By',
-        help='Preferences that depend on this preference'
+    updated_date = DateTimeField(
+        string='Updated Date',
+        help='Date when preference was last updated'
     )
     
-    @api.model
-    def create(self, vals):
+    last_used = DateTimeField(
+        string='Last Used',
+        help='Date when preference was last used'
+    )
+    
+    def create(self, vals: Dict[str, Any]):
         """Override create to set default values"""
-        # Set default value if not provided
-        if 'value' not in vals and 'default_value' in vals:
-            vals['value'] = vals['default_value']
+        # Set created date
+        if 'created_date' not in vals:
+            vals['created_date'] = datetime.now()
         
-        return super(UserPreferences, self).create(vals)
+        # Set updated date
+        vals['updated_date'] = datetime.now()
+        
+        return super().create(vals)
     
-    def write(self, vals):
+    def write(self, vals: Dict[str, Any]):
         """Override write to handle preference updates"""
-        result = super(UserPreferences, self).write(vals)
+        # Set updated date
+        vals['updated_date'] = datetime.now()
+        vals['last_used'] = datetime.now()
         
-        # Update last accessed timestamp
-        if vals:
-            self.last_accessed = fields.Datetime.now()
+        result = super().write(vals)
+        
+        # Log preference updates
+        for preference in self:
+            if vals:
+                logger.info(f"Preference {preference.preference_key} updated for user {preference.user_id}")
         
         return result
     
-    def unlink(self):
-        """Override unlink to prevent deletion of system preferences"""
-        for preference in self:
-            if preference.is_system_preference:
-                raise ValidationError(_('System preferences cannot be deleted'))
-        
-        return super(UserPreferences, self).unlink()
-    
-    def get_value(self):
-        """Get preference value with type conversion"""
-        if not self.value:
-            return self.default_value
+    def get_preference_value(self):
+        """Get preference value with proper type conversion"""
+        if not self.preference_value:
+            return None
         
         try:
-            if self.value_type == 'string':
-                return self.value
-            elif self.value_type == 'integer':
-                return int(self.value)
-            elif self.value_type == 'float':
-                return float(self.value)
-            elif self.value_type == 'boolean':
-                return self.value.lower() in ('true', '1', 'yes', 'on')
-            elif self.value_type == 'json':
-                return json.loads(self.value)
-            elif self.value_type == 'date':
-                return fields.Date.from_string(self.value)
-            elif self.value_type == 'datetime':
-                return fields.Datetime.from_string(self.value)
+            if self.preference_type == 'string':
+                return str(self.preference_value)
+            elif self.preference_type == 'integer':
+                return int(self.preference_value)
+            elif self.preference_type == 'float':
+                return float(self.preference_value)
+            elif self.preference_type == 'boolean':
+                return self.preference_value.lower() in ['true', '1', 'yes', 'on']
+            elif self.preference_type in ['json', 'list', 'dict']:
+                return json.loads(self.preference_value)
             else:
-                return self.value
+                return self.preference_value
         except (ValueError, TypeError, json.JSONDecodeError) as e:
-            _logger.error(f"Error converting preference value: {str(e)}")
-            return self.default_value
+            logger.error(f"Error converting preference value: {e}")
+            return self.preference_value
     
-    def set_value(self, value):
-        """Set preference value with type conversion"""
-        try:
-            if self.value_type == 'string':
-                self.value = str(value)
-            elif self.value_type == 'integer':
-                self.value = str(int(value))
-            elif self.value_type == 'float':
-                self.value = str(float(value))
-            elif self.value_type == 'boolean':
-                self.value = str(bool(value)).lower()
-            elif self.value_type == 'json':
-                self.value = json.dumps(value)
-            elif self.value_type == 'date':
-                self.value = fields.Date.to_string(value)
-            elif self.value_type == 'datetime':
-                self.value = fields.Datetime.to_string(value)
-            else:
-                self.value = str(value)
-            
-            # Update usage statistics
-            self.usage_count += 1
-            self.last_accessed = fields.Datetime.now()
-            
-        except (ValueError, TypeError, json.JSONEncodeError) as e:
-            _logger.error(f"Error setting preference value: {str(e)}")
-            raise ValidationError(_('Invalid value for preference: %s') % str(e))
+    def set_preference_value(self, value):
+        """Set preference value with proper type conversion"""
+        if self.preference_type == 'string':
+            self.preference_value = str(value)
+        elif self.preference_type == 'integer':
+            self.preference_value = str(int(value))
+        elif self.preference_type == 'float':
+            self.preference_value = str(float(value))
+        elif self.preference_type == 'boolean':
+            self.preference_value = str(bool(value)).lower()
+        elif self.preference_type in ['json', 'list', 'dict']:
+            self.preference_value = json.dumps(value)
+        else:
+            self.preference_value = str(value)
     
-    def validate_value(self, value):
+    def validate_preference_value(self):
         """Validate preference value"""
-        if self.validation_rule:
-            try:
-                # Evaluate validation rule
-                eval_context = {
-                    'value': value,
-                    'self': self,
-                    'preference': self,
-                }
-                if not eval(self.validation_rule, eval_context):
-                    raise ValidationError(_('Preference value validation failed'))
-            except Exception as e:
-                _logger.error(f"Error validating preference value: {str(e)}")
-                raise ValidationError(_('Preference value validation error: %s') % str(e))
+        if not self.validation_rules:
+            return True
         
-        return True
+        try:
+            rules = json.loads(self.validation_rules)
+            value = self.get_preference_value()
+            
+            # Check required
+            if rules.get('required', False) and value is None:
+                raise ValueError(f'Preference {self.preference_key} is required')
+            
+            # Check min/max for numeric values
+            if self.preference_type in ['integer', 'float']:
+                if 'min' in rules and value < rules['min']:
+                    raise ValueError(f'Preference {self.preference_key} must be >= {rules["min"]}')
+                if 'max' in rules and value > rules['max']:
+                    raise ValueError(f'Preference {self.preference_key} must be <= {rules["max"]}')
+            
+            # Check length for string values
+            if self.preference_type == 'string':
+                if 'min_length' in rules and len(value) < rules['min_length']:
+                    raise ValueError(f'Preference {self.preference_key} must be at least {rules["min_length"]} characters')
+                if 'max_length' in rules and len(value) > rules['max_length']:
+                    raise ValueError(f'Preference {self.preference_key} must be at most {rules["max_length"]} characters')
+            
+            # Check allowed values
+            if 'allowed_values' in rules and value not in rules['allowed_values']:
+                raise ValueError(f'Preference {self.preference_key} must be one of: {rules["allowed_values"]}')
+            
+            return True
+            
+        except (ValueError, TypeError, json.JSONDecodeError) as e:
+            logger.error(f"Preference validation error: {e}")
+            return False
     
-    def get_options(self):
-        """Get preference options"""
-        if self.options:
-            try:
-                return json.loads(self.options)
-            except json.JSONDecodeError:
-                return []
-        return []
-    
-    def get_metadata(self):
-        """Get preference metadata"""
-        if self.metadata:
-            try:
-                return json.loads(self.metadata)
-            except json.JSONDecodeError:
-                return {}
-        return {}
-    
-    def set_metadata(self, metadata):
-        """Set preference metadata"""
-        self.metadata = json.dumps(metadata)
-    
-    def get_preference_summary(self):
-        """Get preference summary"""
+    def get_preference_info(self):
+        """Get preference information"""
         return {
-            'name': self.name,
-            'key': self.key,
-            'value': self.get_value(),
-            'value_type': self.value_type,
+            'user_id': self.user_id,
+            'preference_key': self.preference_key,
+            'preference_value': self.get_preference_value(),
+            'preference_type': self.preference_type,
             'category': self.category,
-            'scope': self.scope,
             'is_active': self.is_active,
-            'usage_count': self.usage_count,
-            'last_accessed': self.last_accessed,
+            'description': self.description,
+            'created_date': self.created_date,
+            'updated_date': self.updated_date,
+            'last_used': self.last_used,
         }
     
-    @api.model
-    def get_user_preferences(self, user_id, category=None):
-        """Get preferences for a specific user"""
+    @classmethod
+    def get_user_preferences(cls, user_id: int, category: str = None):
+        """Get user preferences"""
         domain = [('user_id', '=', user_id), ('is_active', '=', True)]
-        
         if category:
             domain.append(('category', '=', category))
         
-        return self.search(domain)
+        return cls.search(domain)
     
-    @api.model
-    def get_preference_by_key(self, user_id, key):
-        """Get preference by key for a specific user"""
-        return self.search([
+    @classmethod
+    def get_user_preference(cls, user_id: int, preference_key: str):
+        """Get specific user preference"""
+        preference = cls.search([
             ('user_id', '=', user_id),
-            ('key', '=', key),
+            ('preference_key', '=', preference_key),
             ('is_active', '=', True),
         ], limit=1)
+        
+        return preference.get_preference_value() if preference else None
     
-    @api.model
-    def set_user_preference(self, user_id, key, value, value_type='string', category='custom'):
+    @classmethod
+    def set_user_preference(cls, user_id: int, preference_key: str, value, preference_type: str = 'string', category: str = 'custom'):
         """Set user preference"""
-        preference = self.get_preference_by_key(user_id, key)
+        preference = cls.search([
+            ('user_id', '=', user_id),
+            ('preference_key', '=', preference_key),
+        ], limit=1)
         
         if preference:
-            preference.set_value(value)
+            preference.set_preference_value(value)
+            preference.preference_type = preference_type
+            preference.category = category
+            preference.updated_date = datetime.now()
+            preference.last_used = datetime.now()
         else:
-            self.create({
+            preference = cls.create({
                 'user_id': user_id,
-                'key': key,
-                'value': str(value),
-                'value_type': value_type,
+                'preference_key': preference_key,
+                'preference_type': preference_type,
                 'category': category,
             })
+            preference.set_preference_value(value)
+        
+        return preference
     
-    @api.model
-    def get_user_preference(self, user_id, key, default=None):
-        """Get user preference value"""
-        preference = self.get_preference_by_key(user_id, key)
-        
-        if preference:
-            return preference.get_value()
-        else:
-            return default
-    
-    @api.model
-    def get_company_preferences(self, company_id, category=None):
-        """Get preferences for a specific company"""
-        domain = [('scope', '=', 'company'), ('is_active', '=', True)]
-        
-        if category:
-            domain.append(('category', '=', category))
-        
-        return self.search(domain)
-    
-    @api.model
-    def get_global_preferences(self, category=None):
-        """Get global preferences"""
-        domain = [('scope', '=', 'global'), ('is_active', '=', True)]
-        
-        if category:
-            domain.append(('category', '=', category))
-        
-        return self.search(domain)
-    
-    @api.model
-    def get_preferences_by_category(self, category):
+    @classmethod
+    def get_preferences_by_category(cls, category: str):
         """Get preferences by category"""
-        return self.search([
+        return cls.search([
             ('category', '=', category),
             ('is_active', '=', True),
         ])
     
-    @api.model
-    def get_system_preferences(self):
-        """Get all system preferences"""
-        return self.search([
+    @classmethod
+    def get_system_preferences(cls):
+        """Get system preferences"""
+        return cls.search([
             ('is_system_preference', '=', True),
             ('is_active', '=', True),
         ])
     
-    @api.model
-    def get_custom_preferences(self):
-        """Get all custom preferences"""
-        return self.search([
+    @classmethod
+    def get_custom_preferences(cls):
+        """Get custom preferences"""
+        return cls.search([
             ('is_system_preference', '=', False),
             ('is_active', '=', True),
         ])
     
-    @api.model
-    def get_preference_analytics(self):
+    @classmethod
+    def get_preference_analytics(cls):
         """Get preference analytics"""
-        total_preferences = self.search_count([])
-        active_preferences = self.search_count([('is_active', '=', True)])
-        system_preferences = self.search_count([('is_system_preference', '=', True)])
-        custom_preferences = self.search_count([('is_system_preference', '=', False)])
+        total_preferences = cls.search_count([])
+        active_preferences = cls.search_count([('is_active', '=', True)])
+        system_preferences = cls.search_count([('is_system_preference', '=', True)])
+        custom_preferences = cls.search_count([('is_system_preference', '=', False)])
+        
+        # Get preferences by category
+        preferences_by_category = {}
+        for category in ['ui', 'notifications', 'security', 'data', 'workflow', 'integration', 'custom']:
+            count = cls.search_count([
+                ('category', '=', category),
+                ('is_active', '=', True),
+            ])
+            preferences_by_category[category] = count
         
         return {
             'total_preferences': total_preferences,
@@ -380,89 +326,31 @@ class UserPreferences(models.Model):
             'system_preferences': system_preferences,
             'custom_preferences': custom_preferences,
             'inactive_preferences': total_preferences - active_preferences,
-            'active_percentage': (active_preferences / total_preferences * 100) if total_preferences > 0 else 0,
+            'preferences_by_category': preferences_by_category,
         }
     
-    @api.constrains('key')
-    def _check_key(self):
+    def _check_preference_key(self):
         """Validate preference key"""
-        for preference in self:
-            if preference.key:
-                # Check for duplicate keys for the same user
-                existing = self.search([
-                    ('key', '=', preference.key),
-                    ('user_id', '=', preference.user_id.id),
-                    ('id', '!=', preference.id),
-                ])
-                if existing:
-                    raise ValidationError(_('Preference key must be unique for each user'))
-    
-    @api.constrains('depends_on')
-    def _check_dependencies(self):
-        """Validate preference dependencies"""
-        for preference in self:
-            if preference in preference.depends_on:
-                raise ValidationError(_('Preference cannot depend on itself'))
-            
-            # Check for circular dependencies
-            for dep in preference.depends_on:
-                if preference in dep.required_by:
-                    raise ValidationError(_('Circular dependency detected'))
-    
-    def action_activate(self):
-        """Activate preference"""
-        self.is_active = True
-        return True
-    
-    def action_deactivate(self):
-        """Deactivate preference"""
-        self.is_active = False
-        return True
-    
-    def action_reset_to_default(self):
-        """Reset preference to default value"""
-        if self.default_value:
-            self.value = self.default_value
-        return True
-    
-    def action_duplicate(self):
-        """Duplicate preference"""
-        self.ensure_one()
+        if not self.preference_key:
+            raise ValueError('Preference key is required')
         
-        new_preference = self.copy({
-            'name': f'{self.name} (Copy)',
-            'key': f'{self.key}_copy',
-            'is_system_preference': False,
-        })
-        
-        return {
-            'type': 'ir.actions.act_window',
-            'name': 'Duplicated Preference',
-            'res_model': 'user.preferences',
-            'res_id': new_preference.id,
-            'view_mode': 'form',
-            'target': 'current',
-        }
+        # Check for duplicate keys for the same user
+        existing = self.search([
+            ('user_id', '=', self.user_id),
+            ('preference_key', '=', self.preference_key),
+            ('id', '!=', self.id),
+        ])
+        if existing:
+            raise ValueError('Preference key must be unique for each user')
     
-    def action_export_preference(self):
-        """Export preference definition"""
-        self.ensure_one()
-        
-        return {
-            'name': self.name,
-            'key': self.key,
-            'value': self.value,
-            'value_type': self.value_type,
-            'category': self.category,
-            'scope': self.scope,
-            'default_value': self.default_value,
-            'options': self.options,
-            'metadata': self.metadata,
-        }
+    def _check_preference_type(self):
+        """Validate preference type"""
+        valid_types = ['string', 'integer', 'float', 'boolean', 'json', 'list', 'dict']
+        if self.preference_type not in valid_types:
+            raise ValueError(f'Invalid preference type: {self.preference_type}')
     
-    def action_import_preference(self, preference_data):
-        """Import preference definition"""
-        self.ensure_one()
-        
-        self.write(preference_data)
-        return True
+    def _check_category(self):
+        """Validate category"""
+        valid_categories = ['ui', 'notifications', 'security', 'data', 'workflow', 'integration', 'custom']
+        if self.category not in valid_categories:
+            raise ValueError(f'Invalid category: {self.category}')

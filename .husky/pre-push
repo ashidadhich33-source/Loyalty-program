@@ -1,0 +1,11 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Run full quality check
+npm run quality
+
+# Run security audit
+npm audit --audit-level high
+
+# Run E2E tests
+npm run test:e2e

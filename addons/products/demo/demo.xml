@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        
+        <!-- Demo Product Templates -->
+        <record id="product_template_demo_1" model="product.template">
+            <field name="name">Kids Cotton T-Shirt</field>
+            <field name="description">Comfortable cotton t-shirt for kids</field>
+            <field name="short_description">Soft cotton t-shirt</field>
+            <field name="internal_reference">KTS001</field>
+            <field name="barcode">1234567890123</field>
+            <field name="sku">KTS001</field>
+            <field name="type">product</field>
+            <field name="age_group">4-6</field>
+            <field name="gender">unisex</field>
+            <field name="season">all_season</field>
+            <field name="category_id" ref="product_category_kids"/>
+            <field name="list_price">299.00</field>
+            <field name="standard_price">150.00</field>
+            <field name="sale_ok">True</field>
+            <field name="purchase_ok">True</field>
+            <field name="active">True</field>
+            <field name="state">active</field>
+        </record>
+        
+        <record id="product_template_demo_2" model="product.template">
+            <field name="name">Boys Denim Jeans</field>
+            <field name="description">Durable denim jeans for boys</field>
+            <field name="short_description">Classic denim jeans</field>
+            <field name="internal_reference">BDJ001</field>
+            <field name="barcode">1234567890124</field>
+            <field name="sku">BDJ001</field>
+            <field name="type">product</field>
+            <field name="age_group">6-8</field>
+            <field name="gender">boys</field>
+            <field name="season">all_season</field>
+            <field name="category_id" ref="product_category_kids"/>
+            <field name="list_price">599.00</field>
+            <field name="standard_price">300.00</field>
+            <field name="sale_ok">True</field>
+            <field name="purchase_ok">True</field>
+            <field name="active">True</field>
+            <field name="state">active</field>
+        </record>
+        
+        <record id="product_template_demo_3" model="product.template">
+            <field name="name">Girls Summer Dress</field>
+            <field name="description">Beautiful summer dress for girls</field>
+            <field name="short_description">Elegant summer dress</field>
+            <field name="internal_reference">GSD001</field>
+            <field name="barcode">1234567890125</field>
+            <field name="sku">GSD001</field>
+            <field name="type">product</field>
+            <field name="age_group">4-6</field>
+            <field name="gender">girls</field>
+            <field name="season">summer</field>
+            <field name="category_id" ref="product_category_kids"/>
+            <field name="list_price">799.00</field>
+            <field name="standard_price">400.00</field>
+            <field name="sale_ok">True</field>
+            <field name="purchase_ok">True</field>
+            <field name="active">True</field>
+            <field name="state">active</field>
+        </record>
+        
+        <!-- Demo Product Variants -->
+        <record id="product_variant_demo_1" model="product.variant">
+            <field name="name">Kids Cotton T-Shirt - Red - M</field>
+            <field name="default_code">KTS001-RED-M</field>
+            <field name="barcode">1234567890126</field>
+            <field name="sku">KTS001-RED-M</field>
+            <field name="product_tmpl_id" ref="product_template_demo_1"/>
+            <field name="age_group">4-6</field>
+            <field name="gender">unisex</field>
+            <field name="size">M</field>
+            <field name="color">Red</field>
+            <field name="fabric">Cotton</field>
+            <field name="style">Casual</field>
+            <field name="list_price">299.00</field>
+            <field name="standard_price">150.00</field>
+            <field name="qty_available">50.0</field>
+            <field name="qty_reserved">5.0</field>
+            <field name="active">True</field>
+            <field name="state">active</field>
+        </record>
+        
+        <record id="product_variant_demo_2" model="product.variant">
+            <field name="name">Kids Cotton T-Shirt - Blue - L</field>
+            <field name="default_code">KTS001-BLUE-L</field>
+            <field name="barcode">1234567890127</field>
+            <field name="sku">KTS001-BLUE-L</field>
+            <field name="product_tmpl_id" ref="product_template_demo_1"/>
+            <field name="age_group">4-6</field>
+            <field name="gender">unisex</field>
+            <field name="size">L</field>
+            <field name="color">Blue</field>
+            <field name="fabric">Cotton</field>
+            <field name="style">Casual</field>
+            <field name="list_price">299.00</field>
+            <field name="standard_price">150.00</field>
+            <field name="qty_available">30.0</field>
+            <field name="qty_reserved">2.0</field>
+            <field name="active">True</field>
+            <field name="state">active</field>
+        </record>
+        
+        <!-- Demo Product Bundles -->
+        <record id="product_bundle_demo_1" model="product.bundle">
+            <field name="name">Kids Summer Combo</field>
+            <field name="description">Complete summer outfit for kids</field>
+            <field name="code">KSC001</field>
+            <field name="bundle_type">combo</field>
+            <field name="age_group">4-6</field>
+            <field name="gender">unisex</field>
+            <field name="bundle_price">999.00</field>
+            <field name="active">True</field>
+            <field name="state">active</field>
+        </record>
+        
+        <!-- Demo Product Analytics -->
+        <record id="product_analytics_demo_1" model="product.analytics">
+            <field name="name">Kids T-Shirt Analytics</field>
+            <field name="description">Analytics for kids t-shirt performance</field>
+            <field name="analytics_type">sales</field>
+            <field name="product_id" ref="product_template_demo_1"/>
+            <field name="period_start">2025-01-01</field>
+            <field name="period_end">2025-12-31</field>
+            <field name="total_sales">15000.00</field>
+            <field name="total_quantity_sold">50.0</field>
+            <field name="average_order_value">300.00</field>
+            <field name="total_orders">50</field>
+            <field name="current_stock">80.0</field>
+            <field name="stock_turnover">0.625</field>
+            <field name="days_in_stock">60.0</field>
+            <field name="stock_velocity">6.0</field>
+            <field name="conversion_rate">15.5</field>
+            <field name="click_through_rate">8.2</field>
+            <field name="bounce_rate">25.0</field>
+            <field name="engagement_rate">75.0</field>
+            <field name="total_customers">45</field>
+            <field name="repeat_customers">20</field>
+            <field name="new_customers">25</field>
+            <field name="customer_retention_rate">44.4</field>
+            <field name="sales_growth">12.5</field>
+            <field name="quantity_growth">8.3</field>
+            <field name="customer_growth">15.0</field>
+            <field name="market_share">5.2</field>
+            <field name="average_rating">4.2</field>
+            <field name="total_reviews">25</field>
+            <field name="positive_reviews">20</field>
+            <field name="negative_reviews">2</field>
+            <field name="neutral_reviews">3</field>
+            <field name="active">True</field>
+            <field name="state">active</field>
+        </record>
+        
+    </data>
+</odoo>

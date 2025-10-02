@@ -79,6 +79,30 @@ class SelectionField(Field):
         super().__init__(**kwargs)
         self.selection = selection
 
+class ImageField(Field):
+    """Image field"""
+    def __init__(self, max_width: int = 1920, max_height: int = 1920, **kwargs):
+        super().__init__(**kwargs)
+        self.max_width = max_width
+        self.max_height = max_height
+
+class BinaryField(Field):
+    """Binary field"""
+    pass
+
+# Import mixins from core_base
+try:
+    from addons.core_base.models.base_mixins import KidsClothingMixin, PriceMixin
+except ImportError:
+    # Fallback mixins if core_base is not available
+    class KidsClothingMixin:
+        """Fallback KidsClothingMixin"""
+        pass
+    
+    class PriceMixin:
+        """Fallback PriceMixin"""
+        pass
+
 class BaseModel(ABC):
     """Base model class for ORM"""
     

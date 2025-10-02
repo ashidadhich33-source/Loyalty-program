@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        
+        <!-- Products Menu -->
+        <menuitem id="menu_products" name="Products" sequence="10" web_icon="products,static/description/icon.png"/>
+        
+        <!-- Product Templates Menu -->
+        <menuitem id="menu_product_templates" name="Product Templates" parent="menu_products" sequence="10"/>
+        <menuitem id="menu_product_templates_list" name="All Products" parent="menu_product_templates" action="action_product_template" sequence="10"/>
+        <menuitem id="menu_product_templates_create" name="New Product" parent="menu_product_templates" action="action_product_template" sequence="20"/>
+        
+        <!-- Product Variants Menu -->
+        <menuitem id="menu_product_variants" name="Product Variants" parent="menu_products" sequence="20"/>
+        <menuitem id="menu_product_variants_list" name="All Variants" parent="menu_product_variants" action="action_product_variant" sequence="10"/>
+        <menuitem id="menu_product_variants_create" name="New Variant" parent="menu_product_variants" action="action_product_variant" sequence="20"/>
+        
+        <!-- Product Categories Menu -->
+        <menuitem id="menu_product_categories" name="Categories" parent="menu_products" sequence="30"/>
+        <menuitem id="menu_product_categories_list" name="All Categories" parent="menu_product_categories" action="action_product_category" sequence="10"/>
+        <menuitem id="menu_product_categories_create" name="New Category" parent="menu_product_categories" action="action_product_category" sequence="20"/>
+        
+        <!-- Product Attributes Menu -->
+        <menuitem id="menu_product_attributes" name="Attributes" parent="menu_products" sequence="40"/>
+        <menuitem id="menu_product_attributes_list" name="All Attributes" parent="menu_product_attributes" action="action_product_attribute" sequence="10"/>
+        <menuitem id="menu_product_attributes_create" name="New Attribute" parent="menu_product_attributes" action="action_product_attribute" sequence="20"/>
+        
+        <!-- Product Tags Menu -->
+        <menuitem id="menu_product_tags" name="Tags" parent="menu_products" sequence="50"/>
+        <menuitem id="menu_product_tags_list" name="All Tags" parent="menu_product_tags" action="action_product_tag" sequence="10"/>
+        <menuitem id="menu_product_tags_create" name="New Tag" parent="menu_product_tags" action="action_product_tag" sequence="20"/>
+        
+        <!-- Product Bundles Menu -->
+        <menuitem id="menu_product_bundles" name="Bundles" parent="menu_products" sequence="60"/>
+        <menuitem id="menu_product_bundles_list" name="All Bundles" parent="menu_product_bundles" action="action_product_bundle" sequence="10"/>
+        <menuitem id="menu_product_bundles_create" name="New Bundle" parent="menu_product_bundles" action="action_product_bundle" sequence="20"/>
+        
+        <!-- Product Analytics Menu -->
+        <menuitem id="menu_product_analytics" name="Analytics" parent="menu_products" sequence="70"/>
+        <menuitem id="menu_product_analytics_list" name="All Analytics" parent="menu_product_analytics" action="action_product_analytics" sequence="10"/>
+        <menuitem id="menu_product_analytics_create" name="New Analytics" parent="menu_product_analytics" action="action_product_analytics" sequence="20"/>
+        
+    </data>
+</odoo>

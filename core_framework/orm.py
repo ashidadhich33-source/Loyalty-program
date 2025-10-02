@@ -73,6 +73,12 @@ class Many2ManyField(Field):
         super().__init__(**kwargs)
         self.comodel_name = comodel_name
 
+class SelectionField(Field):
+    """Selection field"""
+    def __init__(self, selection: list, **kwargs):
+        super().__init__(**kwargs)
+        self.selection = selection
+
 class BaseModel(ABC):
     """Base model class for ORM"""
     

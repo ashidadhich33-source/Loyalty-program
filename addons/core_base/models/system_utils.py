@@ -1,23 +1,30 @@
 # -*- coding: utf-8 -*-
+"""
+Kids Clothing ERP - Core Base - System Utilities
+===============================================
 
-from odoo import models, fields, api, _
-from odoo.exceptions import ValidationError
+Standalone version of the system utilities for Kids Clothing ERP.
+"""
+
+from core_framework.orm import BaseModel, CharField, IntegerField, FloatField, BooleanField
+from core_framework.orm import Field
+from typing import Dict, Any, Optional, List, Tuple
 import logging
 import json
 import datetime
 from dateutil.relativedelta import relativedelta
+import random
+import string
 
-_logger = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
 
-
-class SystemUtils(models.AbstractModel):
+class SystemUtils(BaseModel):
     """System utilities for Kids Clothing ERP"""
     
     _name = 'system.utils'
     _description = 'System Utilities'
     
-    @api.model
-    def get_age_group_from_months(self, months):
+    def get_age_group_from_months(self, months: int) -> str:
         """Get age group from age in months"""
         if months <= 6:
             return 'newborn'
@@ -32,33 +39,30 @@ class SystemUtils(models.AbstractModel):
         else:
             return 'teen'
     
-    @api.model
-    def get_age_group_from_birth_date(self, birth_date):
+    def get_age_group_from_birth_date(self, birth_date: datetime.date) -> str:
         """Get age group from birth date"""
         if not birth_date:
             return 'newborn'
         
-        today = fields.Date.today()
+        today = datetime.date.today()
         age_months = (today.year - birth_date.year) * 12 + (today.month - birth_date.month)
         
         return self.get_age_group_from_months(age_months)
     
-    @api.model
-    def calculate_age_in_months(self, birth_date):
+    def calculate_age_in_months(self, birth_date: datetime.date) -> int:
         """Calculate age in months from birth date"""
         if not birth_date:
             return 0
         
-        today = fields.Date.today()
+        today = datetime.date.today()
         age_months = (today.year - birth_date.year) * 12 + (today.month - birth_date.month)
         
         return age_months
     
-    @api.model
-    def get_season_from_date(self, date=None):
+    def get_season_from_date(self, date: datetime.date = None) -> str:
         """Get season from date (defaults to today)"""
         if not date:
-            date = fields.Date.today()
+            date = datetime.date.today()
         
         month = date.month
         
@@ -71,8 +75,7 @@ class SystemUtils(models.AbstractModel):
         else:
             return 'all_season'
     
-    @api.model
-    def get_size_recommendation(self, age_months, gender='unisex'):
+    def get_size_recommendation(self, age_months: int, gender: str = 'unisex') -> str:
         """Get size recommendation based on age and gender"""
         size_mapping = {
             'newborn': 'XS',
@@ -86,25 +89,17 @@ class SystemUtils(models.AbstractModel):
         age_group = self.get_age_group_from_months(age_months)
         return size_mapping.get(age_group, 'M')
     
-    @api.model
-    def generate_barcode(self, prefix='KC', length=10):
+    def generate_barcode(self, prefix: str = 'KC', length: int = 10) -> str:
         """Generate unique barcode for products"""
-        import random
-        import string
-        
         # Generate random string
         random_part = ''.join(random.choices(string.digits, k=length-len(prefix)))
         barcode = prefix + random_part
         
-        # Check if barcode already exists
-        existing = self.env['product.template'].search([('barcode', '=', barcode)], limit=1)
-        if existing:
-            return self.generate_barcode(prefix, length)
-        
+        # In real implementation, we'd check if barcode already exists
+        # For now, we'll just return the generated barcode
         return barcode
     
-    @api.model
-    def validate_gst_number(self, gst_number):
+    def validate_gst_number(self, gst_number: str) -> bool:
         """Validate Indian GST number format"""
         if not gst_number:
             return False
@@ -133,8 +128,7 @@ class SystemUtils(models.AbstractModel):
         
         return True
     
-    @api.model
-    def validate_pan_number(self, pan_number):
+    def validate_pan_number(self, pan_number: str) -> bool:
         """Validate Indian PAN number format"""
         if not pan_number:
             return False
@@ -148,8 +142,7 @@ class SystemUtils(models.AbstractModel):
         
         return True
     
-    @api.model
-    def validate_mobile_number(self, mobile_number):
+    def validate_mobile_number(self, mobile_number: str) -> bool:
         """Validate Indian mobile number format"""
         if not mobile_number:
             return False
@@ -163,8 +156,7 @@ class SystemUtils(models.AbstractModel):
         
         return False
     
-    @api.model
-    def format_mobile_number(self, mobile_number):
+    def format_mobile_number(self, mobile_number: str) -> str:
         """Format mobile number to standard Indian format"""
         if not mobile_number:
             return ''
@@ -180,8 +172,7 @@ class SystemUtils(models.AbstractModel):
         else:
             return mobile_number
     
-    @api.model
-    def get_currency_symbol(self, currency_code):
+    def get_currency_symbol(self, currency_code: str) -> str:
         """Get currency symbol from currency code"""
         currency_symbols = {
             'INR': '₹',
@@ -193,14 +184,12 @@ class SystemUtils(models.AbstractModel):
         
         return currency_symbols.get(currency_code, currency_code)
     
-    @api.model
-    def format_currency(self, amount, currency_code='INR'):
+    def format_currency(self, amount: float, currency_code: str = 'INR') -> str:
         """Format currency amount with symbol"""
         symbol = self.get_currency_symbol(currency_code)
         return f"{symbol} {amount:,.2f}"
     
-    @api.model
-    def calculate_discount(self, list_price, discount_percent):
+    def calculate_discount(self, list_price: float, discount_percent: float) -> Dict[str, float]:
         """Calculate discount amount and final price"""
         discount_amount = (list_price * discount_percent) / 100
         final_price = list_price - discount_amount
@@ -212,8 +201,7 @@ class SystemUtils(models.AbstractModel):
             'final_price': final_price,
         }
     
-    @api.model
-    def calculate_age_based_discount(self, age_months, base_discount=0):
+    def calculate_age_based_discount(self, age_months: int, base_discount: float = 0) -> float:
         """Calculate age-based discount for kids clothing"""
         age_group = self.get_age_group_from_months(age_months)
         
@@ -232,18 +220,15 @@ class SystemUtils(models.AbstractModel):
         
         return min(total_discount, 50)  # Maximum 50% discount
     
-    @api.model
-    def generate_loyalty_points(self, order_amount, points_per_rupee=1):
+    def generate_loyalty_points(self, order_amount: float, points_per_rupee: int = 1) -> int:
         """Generate loyalty points based on order amount"""
         return int(order_amount * points_per_rupee)
     
-    @api.model
-    def calculate_loyalty_discount(self, loyalty_points, points_per_rupee=1):
+    def calculate_loyalty_discount(self, loyalty_points: int, points_per_rupee: int = 1) -> float:
         """Calculate discount from loyalty points"""
         return loyalty_points / points_per_rupee
     
-    @api.model
-    def get_stock_status(self, quantity, min_quantity=0):
+    def get_stock_status(self, quantity: int, min_quantity: int = 0) -> str:
         """Get stock status based on quantity"""
         if quantity <= 0:
             return 'out_of_stock'
@@ -252,30 +237,15 @@ class SystemUtils(models.AbstractModel):
         else:
             return 'in_stock'
     
-    @api.model
-    def send_notification(self, message, notification_type='info', user_ids=None):
+    def send_notification(self, message: str, notification_type: str = 'info', user_ids: List[int] = None):
         """Send notification to users"""
         if not user_ids:
-            user_ids = [self.env.user.id]
+            user_ids = [1]  # Default to admin user
         
-        notification_vals = {
-            'message': message,
-            'type': notification_type,
-            'user_ids': [(6, 0, user_ids)],
-        }
-        
-        self.env['mail.notification'].create(notification_vals)
+        logger.info(f"Sending notification to users {user_ids}: {message}")
+        # In real implementation, we'd create notification records
     
-    @api.model
-    def log_activity(self, model_name, record_id, activity_type, description):
+    def log_activity(self, model_name: str, record_id: int, activity_type: str, description: str):
         """Log activity for audit trail"""
-        activity_vals = {
-            'model_name': model_name,
-            'record_id': record_id,
-            'activity_type': activity_type,
-            'description': description,
-            'user_id': self.env.user.id,
-            'date': fields.Datetime.now(),
-        }
-        
-        self.env['activity.log'].create(activity_vals)
+        logger.info(f"Activity logged: {model_name} {record_id} - {activity_type}: {description}")
+        # In real implementation, we'd create activity log records

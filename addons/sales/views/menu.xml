@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo>
+<erp>
     <data>
         <!-- Sales Menu -->
         <menuitem id="menu_sales" name="Sales" sequence="10"/>
@@ -45,4 +45,4 @@
         
         <menuitem id="menu_sale_analytics_wizard" name="Analytics Wizard" parent="menu_sales_wizards" sequence="30"/>
     </data>
-</odoo>
+</erp>

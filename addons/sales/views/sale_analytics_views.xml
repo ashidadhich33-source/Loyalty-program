@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo>
+<erp>
     <data>
         <!-- Sale Analytics Tree View -->
         <record id="view_sale_analytics_tree" model="ir.ui.view">
@@ -192,4 +192,4 @@
             <field name="view_id" ref="view_sale_analytics_dashboard"/>
         </record>
     </data>
-</odoo>
+</erp>

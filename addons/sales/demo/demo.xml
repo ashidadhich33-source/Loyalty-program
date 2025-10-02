@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo>
+<erp>
     <data>
         <!-- Demo Sales Teams -->
         <record id="demo_sale_team_kids" model="sale.team">
@@ -8,7 +8,7 @@
             <field name="description">Specialized team for kids clothing sales</field>
             <field name="target_amount">100000.0</field>
             <field name="target_orders">500</field>
-            <field name="company_id" ref="base.main_company"/>
+            <field name="company_id" ref="erp.main_company"/>
         </record>
         
         <record id="demo_sale_team_infant" model="sale.team">
@@ -17,7 +17,7 @@
             <field name="description">Team specialized in infant clothing</field>
             <field name="target_amount">50000.0</field>
             <field name="target_orders">250</field>
-            <field name="company_id" ref="base.main_company"/>
+            <field name="company_id" ref="erp.main_company"/>
         </record>
         
         <!-- Demo Sales Territories -->
@@ -29,7 +29,7 @@
             <field name="city">Mumbai</field>
             <field name="target_amount">200000.0</field>
             <field name="target_orders">1000</field>
-            <field name="company_id" ref="base.main_company"/>
+            <field name="company_id" ref="erp.main_company"/>
         </record>
         
         <record id="demo_sale_territory_delhi" model="sale.territory">
@@ -40,7 +40,7 @@
             <field name="city">Delhi</field>
             <field name="target_amount">150000.0</field>
             <field name="target_orders">750</field>
-            <field name="company_id" ref="base.main_company"/>
+            <field name="company_id" ref="erp.main_company"/>
         </record>
         
         <record id="demo_sale_territory_bangalore" model="sale.territory">
@@ -51,7 +51,7 @@
             <field name="city">Bangalore</field>
             <field name="target_amount">100000.0</field>
             <field name="target_orders">500</field>
-            <field name="company_id" ref="base.main_company"/>
+            <field name="company_id" ref="erp.main_company"/>
         </record>
         
         <!-- Demo Sales Commission Rules -->
@@ -62,7 +62,7 @@
             <field name="rule_type">percentage</field>
             <field name="commission_rate">10.0</field>
             <field name="min_amount">10000.0</field>
-            <field name="company_id" ref="base.main_company"/>
+            <field name="company_id" ref="erp.main_company"/>
         </record>
         
         <record id="demo_sale_commission_rule_kids_special" model="sale.commission.rule">
@@ -72,7 +72,7 @@
             <field name="rule_type">percentage</field>
             <field name="commission_rate">8.0</field>
             <field name="kids_commission_rate">3.0</field>
-            <field name="company_id" ref="base.main_company"/>
+            <field name="company_id" ref="erp.main_company"/>
         </record>
         
         <!-- Demo Sales Analytics -->
@@ -86,7 +86,7 @@
             <field name="average_order_value">200.0</field>
             <field name="kids_sales_amount">300000.0</field>
             <field name="kids_sales_percentage">60.0</field>
-            <field name="company_id" ref="base.main_company"/>
+            <field name="company_id" ref="erp.main_company"/>
         </record>
         
         <record id="demo_sale_analytics_monthly_jan" model="sale.analytics">
@@ -99,7 +99,7 @@
             <field name="average_order_value">200.0</field>
             <field name="kids_sales_amount">90000.0</field>
             <field name="kids_sales_percentage">60.0</field>
-            <field name="company_id" ref="base.main_company"/>
+            <field name="company_id" ref="erp.main_company"/>
         </record>
         
         <!-- Demo Sales Wizards -->
@@ -107,14 +107,14 @@
             <field name="name">Commission Calculation Wizard</field>
             <field name="wizard_type">bulk_commission</field>
             <field name="status">draft</field>
-            <field name="company_id" ref="base.main_company"/>
+            <field name="company_id" ref="erp.main_company"/>
         </record>
         
         <record id="demo_sale_wizard_analytics" model="sale.wizard">
             <field name="name">Analytics Generation Wizard</field>
             <field name="wizard_type">bulk_analytics</field>
             <field name="status">draft</field>
-            <field name="company_id" ref="base.main_company"/>
+            <field name="company_id" ref="erp.main_company"/>
         </record>
     </data>
-</odoo>
+</erp>

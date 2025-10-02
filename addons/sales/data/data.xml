@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo>
+<erp>
     <data>
         <!-- Sales Team Data -->
         <record id="sale_team_online" model="sale.team">
             <field name="name">Online Sales Team</field>
             <field name="code">ONLINE</field>
             <field name="description">Team responsible for online sales</field>
-            <field name="company_id" ref="base.main_company"/>
+            <field name="company_id" ref="erp.main_company"/>
         </record>
         
         <record id="sale_team_offline" model="sale.team">
             <field name="name">Offline Sales Team</field>
             <field name="code">OFFLINE</field>
             <field name="description">Team responsible for offline sales</field>
-            <field name="company_id" ref="base.main_company"/>
+            <field name="company_id" ref="erp.main_company"/>
         </record>
         
         <!-- Sales Territory Data -->
@@ -22,7 +22,7 @@
             <field name="code">NORTH</field>
             <field name="description">Northern region sales territory</field>
             <field name="territory_type">region</field>
-            <field name="company_id" ref="base.main_company"/>
+            <field name="company_id" ref="erp.main_company"/>
         </record>
         
         <record id="sale_territory_south" model="sale.territory">
@@ -30,7 +30,7 @@
             <field name="code">SOUTH</field>
             <field name="description">Southern region sales territory</field>
             <field name="territory_type">region</field>
-            <field name="company_id" ref="base.main_company"/>
+            <field name="company_id" ref="erp.main_company"/>
         </record>
         
         <record id="sale_territory_east" model="sale.territory">
@@ -38,7 +38,7 @@
             <field name="code">EAST</field>
             <field name="description">Eastern region sales territory</field>
             <field name="territory_type">region</field>
-            <field name="company_id" ref="base.main_company"/>
+            <field name="company_id" ref="erp.main_company"/>
         </record>
         
         <record id="sale_territory_west" model="sale.territory">
@@ -46,7 +46,7 @@
             <field name="code">WEST</field>
             <field name="description">Western region sales territory</field>
             <field name="territory_type">region</field>
-            <field name="company_id" ref="base.main_company"/>
+            <field name="company_id" ref="erp.main_company"/>
         </record>
         
         <!-- Sales Commission Rules -->
@@ -56,7 +56,7 @@
             <field name="description">Standard commission rule for sales</field>
             <field name="rule_type">percentage</field>
             <field name="commission_rate">5.0</field>
-            <field name="company_id" ref="base.main_company"/>
+            <field name="company_id" ref="erp.main_company"/>
         </record>
         
         <record id="sale_commission_rule_kids" model="sale.commission.rule">
@@ -66,7 +66,7 @@
             <field name="rule_type">percentage</field>
             <field name="commission_rate">7.0</field>
             <field name="kids_commission_rate">2.0</field>
-            <field name="company_id" ref="base.main_company"/>
+            <field name="company_id" ref="erp.main_company"/>
         </record>
         
         <!-- Sales Analytics Data -->
@@ -75,7 +75,7 @@
             <field name="analytics_type">monthly</field>
             <field name="period_start">2024-01-01</field>
             <field name="period_end">2024-01-31</field>
-            <field name="company_id" ref="base.main_company"/>
+            <field name="company_id" ref="erp.main_company"/>
         </record>
         
         <record id="sale_analytics_quarterly" model="sale.analytics">
@@ -83,7 +83,7 @@
             <field name="analytics_type">quarterly</field>
             <field name="period_start">2024-01-01</field>
             <field name="period_end">2024-03-31</field>
-            <field name="company_id" ref="base.main_company"/>
+            <field name="company_id" ref="erp.main_company"/>
         </record>
         
         <record id="sale_analytics_yearly" model="sale.analytics">
@@ -91,7 +91,7 @@
             <field name="analytics_type">yearly</field>
             <field name="period_start">2024-01-01</field>
             <field name="period_end">2024-12-31</field>
-            <field name="company_id" ref="base.main_company"/>
+            <field name="company_id" ref="erp.main_company"/>
         </record>
     </data>
-</odoo>
+</erp>

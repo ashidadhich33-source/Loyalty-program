@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo>
+<erp>
     <data>
         <!-- Sale Commission Tree View -->
         <record id="view_sale_commission_tree" model="ir.ui.view">
@@ -227,4 +227,4 @@
             </field>
         </record>
     </data>
-</odoo>
+</erp>

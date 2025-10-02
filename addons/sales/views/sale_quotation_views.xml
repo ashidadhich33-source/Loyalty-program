@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo>
+<erp>
     <data>
         <!-- Sale Quotation Tree View -->
         <record id="view_sale_quotation_tree" model="ir.ui.view">
@@ -169,4 +169,4 @@
             <field name="view_mode">tree,form</field>
         </record>
     </data>
-</odoo>
+</erp>

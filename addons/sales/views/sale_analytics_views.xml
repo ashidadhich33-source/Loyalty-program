@@ -1,211 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <!-- Sales Analytics Tree View -->
+        <!-- Sale Analytics Tree View -->
         <record id="view_sale_analytics_tree" model="ir.ui.view">
             <field name="name">sale.analytics.tree</field>
             <field name="model">sale.analytics</field>
             <field name="arch" type="xml">
-                <tree string="Sales Analytics" decoration-info="active==False">
+                <tree string="Sales Analytics" create="true" edit="true" delete="true">
                     <field name="name"/>
-                    <field name="date_analytics"/>
+                    <field name="analytics_type"/>
                     <field name="period_start"/>
                     <field name="period_end"/>
-                    <field name="age_group"/>
-                    <field name="gender"/>
-                    <field name="season"/>
-                    <field name="total_sales"/>
-                    <field name="total_orders"/>
-                    <field name="kids_sales"/>
-                    <field name="kids_orders"/>
-                    <field name="conversion_rate"/>
-                    <field name="delivery_rate"/>
-                    <field name="return_rate"/>
-                    <field name="active"/>
+                    <field name="total_sales_amount"/>
+                    <field name="total_sales_orders"/>
+                    <field name="average_order_value"/>
+                    <field name="company_id"/>
                 </tree>
             </field>
         </record>
-
-        <!-- Sales Analytics Form View -->
+        
+        <!-- Sale Analytics Form View -->
         <record id="view_sale_analytics_form" model="ir.ui.view">
             <field name="name">sale.analytics.form</field>
             <field name="model">sale.analytics</field>
             <field name="arch" type="xml">
-                <form string="Sales Analytics">
+                <form string="Sales Analytics" create="true" edit="true" delete="true">
                     <header>
-                        <field name="active" widget="boolean_toggle"/>
+                        <button name="action_generate_analytics" string="Generate Analytics" type="object" class="btn-primary"/>
+                        <button name="action_view_detailed_analytics" string="View Detailed" type="object" class="btn-secondary"/>
+                        <button name="action_export_analytics" string="Export" type="object" class="btn-secondary"/>
                     </header>
                     <sheet>
-                        <div class="oe_button_box" name="button_box">
-                            <button name="action_view_orders" type="object" class="oe_stat_button" icon="fa-shopping-cart" attrs="{'invisible': [('order_id', '=', False)]}">
-                                <div class="o_field_widget o_stat_info">
-                                    <span class="o_stat_text">Orders</span>
-                                </div>
-                            </button>
-                            <button name="action_view_quotations" type="object" class="oe_stat_button" icon="fa-file-text" attrs="{'invisible': [('quotation_id', '=', False)]}">
-                                <div class="o_field_widget o_stat_info">
-                                    <span class="o_stat_text">Quotations</span>
-                                </div>
-                            </button>
-                            <button name="action_view_deliveries" type="object" class="oe_stat_button" icon="fa-truck" attrs="{'invisible': [('delivery_id', '=', False)]}">
-                                <div class="o_field_widget o_stat_info">
-                                    <span class="o_stat_text">Deliveries</span>
-                                </div>
-                            </button>
-                            <button name="action_view_returns" type="object" class="oe_stat_button" icon="fa-undo" attrs="{'invisible': [('return_id', '=', False)]}">
-                                <div class="o_field_widget o_stat_info">
-                                    <span class="o_stat_text">Returns</span>
-                                </div>
-                            </button>
-                            <button name="action_view_team" type="object" class="oe_stat_button" icon="fa-users" attrs="{'invisible': [('team_id', '=', False)]}">
-                                <div class="o_field_widget o_stat_info">
-                                    <span class="o_stat_text">Team</span>
-                                </div>
-                            </button>
-                            <button name="action_view_territory" type="object" class="oe_stat_button" icon="fa-map-marker" attrs="{'invisible': [('territory_id', '=', False)]}">
-                                <div class="o_field_widget o_stat_info">
-                                    <span class="o_stat_text">Territory</span>
-                                </div>
-                            </button>
-                            <button name="action_view_commission" type="object" class="oe_stat_button" icon="fa-percent" attrs="{'invisible': [('commission_id', '=', False)]}">
-                                <div class="o_field_widget o_stat_info">
-                                    <span class="o_stat_text">Commission</span>
-                                </div>
-                            </button>
-                        </div>
                         <div class="oe_title">
                             <h1>
-                                <field name="name" placeholder="Analytics Name"/>
+                                <field name="name"/>
                             </h1>
                         </div>
                         <group>
                             <group>
-                                <field name="date_analytics"/>
+                                <field name="analytics_type"/>
                                 <field name="period_start"/>
                                 <field name="period_end"/>
+                                <field name="total_sales_amount"/>
+                                <field name="total_sales_orders"/>
                             </group>
                             <group>
-                                <field name="child_profile_id"/>
-                                <field name="age_group"/>
-                                <field name="gender"/>
-                                <field name="season"/>
-                            </group>
-                        </group>
-                        <group>
-                            <group>
-                                <field name="total_sales"/>
-                                <field name="total_orders"/>
-                                <field name="total_quotations"/>
-                                <field name="total_deliveries"/>
-                                <field name="total_returns"/>
-                                <field name="currency_id"/>
-                            </group>
-                            <group>
-                                <field name="kids_sales"/>
-                                <field name="kids_orders"/>
-                                <field name="kids_quotations"/>
-                                <field name="kids_deliveries"/>
-                                <field name="kids_returns"/>
+                                <field name="average_order_value"/>
+                                <field name="sales_growth_percentage"/>
+                                <field name="order_growth_percentage"/>
+                                <field name="company_id"/>
                             </group>
                         </group>
                         <group>
                             <group>
-                                <field name="conversion_rate"/>
-                                <field name="delivery_rate"/>
-                                <field name="return_rate"/>
+                                <field name="top_salesperson_id"/>
+                                <field name="top_team_id"/>
+                                <field name="top_territory_id"/>
+                                <field name="top_product_id"/>
                             </group>
                             <group>
-                                <field name="total_customers"/>
-                                <field name="new_customers"/>
-                                <field name="returning_customers"/>
-                            </group>
-                        </group>
-                        <group>
-                            <group>
-                                <field name="total_products"/>
-                                <field name="top_products"/>
-                            </group>
-                            <group>
-                                <field name="top_categories"/>
-                            </group>
-                        </group>
-                        <group>
-                            <group>
-                                <field name="team_performance"/>
-                                <field name="territory_performance"/>
-                            </group>
-                            <group>
-                                <field name="total_commission"/>
-                                <field name="commission_rate"/>
+                                <field name="top_category_id"/>
+                                <field name="top_customer_id"/>
+                                <field name="kids_sales_amount"/>
+                                <field name="kids_sales_percentage"/>
                             </group>
                         </group>
                         <notebook>
-                            <page string="Age Group Analytics" name="age_group_analytics">
+                            <page string="Kids Clothing Analytics" name="kids_analytics">
                                 <group>
                                     <group>
                                         <field name="age_group_sales"/>
-                                    </group>
-                                    <group>
-                                        <field name="age_group_orders"/>
-                                    </group>
-                                </group>
-                                <group>
-                                    <group>
-                                        <field name="age_group_quotations"/>
-                                    </group>
-                                    <group>
-                                        <field name="age_group_deliveries"/>
-                                    </group>
-                                </group>
-                                <group>
-                                    <group>
-                                        <field name="age_group_returns"/>
-                                    </group>
-                                </group>
-                            </page>
-                            <page string="Gender Analytics" name="gender_analytics">
-                                <group>
-                                    <group>
                                         <field name="gender_sales"/>
                                     </group>
                                     <group>
-                                        <field name="gender_orders"/>
-                                    </group>
-                                </group>
-                                <group>
-                                    <group>
-                                        <field name="gender_quotations"/>
-                                    </group>
-                                    <group>
-                                        <field name="gender_deliveries"/>
-                                    </group>
-                                </group>
-                                <group>
-                                    <group>
-                                        <field name="gender_returns"/>
+                                        <field name="season_sales"/>
+                                        <field name="online_sales"/>
+                                        <field name="offline_sales"/>
                                     </group>
                                 </group>
                             </page>
-                            <page string="Season Analytics" name="season_analytics">
+                            <page string="Sales Trends" name="trends">
                                 <group>
                                     <group>
-                                        <field name="season_sales"/>
+                                        <field name="sales_trend"/>
                                     </group>
                                     <group>
-                                        <field name="season_orders"/>
+                                        <field name="order_trend"/>
                                     </group>
                                 </group>
+                            </page>
+                            <page string="Commission Analytics" name="commission_analytics">
                                 <group>
                                     <group>
-                                        <field name="season_quotations"/>
-                                    </group>
-                                    <group>
-                                        <field name="season_deliveries"/>
-                                    </group>
-                                </group>
-                                <group>
-                                    <group>
-                                        <field name="season_returns"/>
+                                        <field name="total_commission_paid"/>
+                                        <field name="average_commission_rate"/>
                                     </group>
                                 </group>
                             </page>
@@ -214,135 +102,94 @@
                 </form>
             </field>
         </record>
-
-        <!-- Sales Analytics Search View -->
+        
+        <!-- Sale Analytics Search View -->
         <record id="view_sale_analytics_search" model="ir.ui.view">
             <field name="name">sale.analytics.search</field>
             <field name="model">sale.analytics</field>
             <field name="arch" type="xml">
-                <search string="Search Sales Analytics">
+                <search string="Sales Analytics">
                     <field name="name"/>
-                    <field name="date_analytics"/>
+                    <field name="analytics_type"/>
                     <field name="period_start"/>
                     <field name="period_end"/>
-                    <field name="child_profile_id"/>
-                    <field name="age_group"/>
-                    <field name="gender"/>
-                    <field name="season"/>
-                    <field name="team_id"/>
-                    <field name="territory_id"/>
-                    <field name="commission_id"/>
-                    <filter string="Active" name="active" domain="[('active', '=', True)]"/>
-                    <filter string="Inactive" name="inactive" domain="[('active', '=', False)]"/>
-                    <separator/>
-                    <filter string="Baby (0-2)" name="baby" domain="[('age_group', '=', '0-2')]"/>
-                    <filter string="Toddler (2-4)" name="toddler" domain="[('age_group', '=', '2-4')]"/>
-                    <filter string="Kids (4-12)" name="kids" domain="[('age_group', 'in', ['4-6', '6-8', '8-10', '10-12'])]"/>
-                    <filter string="Teen (12-16)" name="teen" domain="[('age_group', 'in', ['12-14', '14-16'])]"/>
-                    <separator/>
-                    <filter string="Boys" name="boys" domain="[('gender', '=', 'boys')]"/>
-                    <filter string="Girls" name="girls" domain="[('gender', '=', 'girls')]"/>
-                    <filter string="Unisex" name="unisex" domain="[('gender', '=', 'unisex')]"/>
-                    <separator/>
-                    <filter string="Summer" name="summer" domain="[('season', '=', 'summer')]"/>
-                    <filter string="Winter" name="winter" domain="[('season', '=', 'winter')]"/>
-                    <filter string="Monsoon" name="monsoon" domain="[('season', '=', 'monsoon')]"/>
-                    <separator/>
-                    <filter string="Today" name="today" domain="[('date_analytics', '>=', datetime.datetime.combine(context_today(), datetime.time(0,0,0)))]"/>
-                    <filter string="This Week" name="this_week" domain="[('date_analytics', '>=', (context_today() - datetime.timedelta(days=context_today().weekday())).strftime('%Y-%m-%d'))]"/>
-                    <filter string="This Month" name="this_month" domain="[('date_analytics', '>=', context_today().strftime('%Y-%m-01'))]"/>
+                    <field name="company_id"/>
+                    <filter string="Daily" name="daily" domain="[('analytics_type', '=', 'daily')]"/>
+                    <filter string="Weekly" name="weekly" domain="[('analytics_type', '=', 'weekly')]"/>
+                    <filter string="Monthly" name="monthly" domain="[('analytics_type', '=', 'monthly')]"/>
+                    <filter string="Quarterly" name="quarterly" domain="[('analytics_type', '=', 'quarterly')]"/>
+                    <filter string="Yearly" name="yearly" domain="[('analytics_type', '=', 'yearly')]"/>
                     <group expand="0" string="Group By">
-                        <filter string="Age Group" name="group_age_group" context="{'group_by': 'age_group'}"/>
-                        <filter string="Gender" name="group_gender" context="{'group_by': 'gender'}"/>
-                        <filter string="Season" name="group_season" context="{'group_by': 'season'}"/>
-                        <filter string="Team" name="group_team" context="{'group_by': 'team_id'}"/>
-                        <filter string="Territory" name="group_territory" context="{'group_by': 'territory_id'}"/>
-                        <filter string="Commission" name="group_commission" context="{'group_by': 'commission_id'}"/>
-                        <filter string="Date" name="group_date" context="{'group_by': 'date_analytics:day'}"/>
+                        <filter string="Analytics Type" name="group_type" context="{'group_by': 'analytics_type'}"/>
+                        <filter string="Company" name="group_company" context="{'group_by': 'company_id'}"/>
                     </group>
                 </search>
             </field>
         </record>
-
-        <!-- Sales Analytics Kanban View -->
-        <record id="view_sale_analytics_kanban" model="ir.ui.view">
-            <field name="name">sale.analytics.kanban</field>
-            <field name="model">sale.analytics</field>
-            <field name="arch" type="xml">
-                <kanban string="Sales Analytics">
-                    <field name="name"/>
-                    <field name="date_analytics"/>
-                    <field name="period_start"/>
-                    <field name="period_end"/>
-                    <field name="age_group"/>
-                    <field name="gender"/>
-                    <field name="season"/>
-                    <field name="total_sales"/>
-                    <field name="total_orders"/>
-                    <field name="kids_sales"/>
-                    <field name="kids_orders"/>
-                    <field name="conversion_rate"/>
-                    <field name="delivery_rate"/>
-                    <field name="return_rate"/>
-                    <field name="active"/>
-                    <templates>
-                        <t t-name="kanban-box">
-                            <div class="oe_kanban_card oe_kanban_global_click">
-                                <div class="oe_kanban_content">
-                                    <div class="o_kanban_record_top">
-                                        <div class="o_kanban_record_headings">
-                                            <strong class="o_kanban_record_title">
-                                                <field name="name"/>
-                                            </strong>
-                                            <br/>
-                                            <field name="date_analytics"/>
-                                        </div>
-                                        <div class="o_kanban_record_body">
-                                            <field name="period_start"/>
-                                            <field name="period_end"/>
-                                            <br/>
-                                            <field name="age_group"/>
-                                            <field name="gender"/>
-                                            <field name="season"/>
-                                            <br/>
-                                            <field name="total_sales"/>
-                                            <field name="total_orders"/>
-                                        </div>
-                                    </div>
-                                    <div class="o_kanban_record_bottom">
-                                        <div class="oe_kanban_bottom_left">
-                                            <field name="kids_sales"/>
-                                            <field name="kids_orders"/>
-                                        </div>
-                                        <div class="oe_kanban_bottom_right">
-                                            <field name="conversion_rate"/>
-                                            <field name="delivery_rate"/>
-                                            <field name="return_rate"/>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </t>
-                    </templates>
-                </kanban>
-            </field>
-        </record>
-
-        <!-- Sales Analytics Action -->
+        
+        <!-- Sale Analytics Action -->
         <record id="action_sale_analytics" model="ir.actions.act_window">
             <field name="name">Sales Analytics</field>
             <field name="res_model">sale.analytics</field>
-            <field name="view_mode">tree,form,kanban</field>
-            <field name="context">{}</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_sale_analytics_search"/>
             <field name="help" type="html">
                 <p class="o_view_nocontent_smiling_face">
                     Create your first sales analytics!
                 </p>
                 <p>
-                    Sales analytics provide insights into sales performance, customer behavior,
-                    and business trends for kids clothing retail.
+                    Sales analytics provide insights into your sales performance.
                 </p>
             </field>
+        </record>
+        
+        <!-- Sale Analytics Dashboard View -->
+        <record id="view_sale_analytics_dashboard" model="ir.ui.view">
+            <field name="name">sale.analytics.dashboard</field>
+            <field name="model">sale.analytics</field>
+            <field name="arch" type="xml">
+                <dashboard string="Sales Analytics Dashboard">
+                    <view type="graph" ref="view_sale_analytics_graph"/>
+                    <view type="pivot" ref="view_sale_analytics_pivot"/>
+                </dashboard>
+            </field>
+        </record>
+        
+        <!-- Sale Analytics Graph View -->
+        <record id="view_sale_analytics_graph" model="ir.ui.view">
+            <field name="name">sale.analytics.graph</field>
+            <field name="model">sale.analytics</field>
+            <field name="arch" type="xml">
+                <graph string="Sales Analytics" type="bar">
+                    <field name="period_start" type="row"/>
+                    <field name="total_sales_amount" type="measure"/>
+                    <field name="total_sales_orders" type="measure"/>
+                    <field name="average_order_value" type="measure"/>
+                </graph>
+            </field>
+        </record>
+        
+        <!-- Sale Analytics Pivot View -->
+        <record id="view_sale_analytics_pivot" model="ir.ui.view">
+            <field name="name">sale.analytics.pivot</field>
+            <field name="model">sale.analytics</field>
+            <field name="arch" type="xml">
+                <pivot string="Sales Analytics">
+                    <field name="period_start" type="row"/>
+                    <field name="analytics_type" type="col"/>
+                    <field name="total_sales_amount" type="measure"/>
+                    <field name="total_sales_orders" type="measure"/>
+                    <field name="average_order_value" type="measure"/>
+                </pivot>
+            </field>
+        </record>
+        
+        <!-- Sale Analytics Dashboard Action -->
+        <record id="action_sale_analytics_dashboard" model="ir.actions.act_window">
+            <field name="name">Sales Analytics Dashboard</field>
+            <field name="res_model">sale.analytics</field>
+            <field name="view_mode">dashboard</field>
+            <field name="view_id" ref="view_sale_analytics_dashboard"/>
         </record>
     </data>
 </odoo>

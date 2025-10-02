@@ -1,230 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <!-- Sales Territory Tree View -->
+        <!-- Sale Territory Tree View -->
         <record id="view_sale_territory_tree" model="ir.ui.view">
             <field name="name">sale.territory.tree</field>
             <field name="model">sale.territory</field>
             <field name="arch" type="xml">
-                <tree string="Sales Territories" decoration-info="active==False">
+                <tree string="Sales Territories" create="true" edit="true" delete="true">
                     <field name="name"/>
                     <field name="code"/>
-                    <field name="country_id"/>
-                    <field name="state_id"/>
-                    <field name="age_group_focus"/>
-                    <field name="gender_focus"/>
-                    <field name="season_focus"/>
+                    <field name="territory_type"/>
+                    <field name="team_id"/>
+                    <field name="manager_id"/>
                     <field name="target_amount"/>
                     <field name="achieved_amount"/>
                     <field name="performance_percentage"/>
-                    <field name="total_kids_sales"/>
-                    <field name="active"/>
+                    <field name="company_id"/>
                 </tree>
             </field>
         </record>
-
-        <!-- Sales Territory Form View -->
+        
+        <!-- Sale Territory Form View -->
         <record id="view_sale_territory_form" model="ir.ui.view">
             <field name="name">sale.territory.form</field>
             <field name="model">sale.territory</field>
             <field name="arch" type="xml">
-                <form string="Sales Territory">
-                    <header>
-                        <field name="active" widget="boolean_toggle"/>
-                    </header>
+                <form string="Sales Territory" create="true" edit="true" delete="true">
                     <sheet>
-                        <div class="oe_button_box" name="button_box">
-                            <button name="action_view_orders" type="object" class="oe_stat_button" icon="fa-shopping-cart">
-                                <div class="o_field_widget o_stat_info">
-                                    <span class="o_stat_text">Orders</span>
-                                </div>
-                            </button>
-                            <button name="action_view_customers" type="object" class="oe_stat_button" icon="fa-users">
-                                <div class="o_field_widget o_stat_info">
-                                    <span class="o_stat_text">Customers</span>
-                                </div>
-                            </button>
-                            <button name="action_view_analytics" type="object" class="oe_stat_button" icon="fa-bar-chart">
-                                <div class="o_field_widget o_stat_info">
-                                    <span class="o_stat_text">Analytics</span>
-                                </div>
-                            </button>
-                        </div>
                         <div class="oe_title">
                             <h1>
-                                <field name="name" placeholder="Territory Name"/>
+                                <field name="name"/>
                             </h1>
                         </div>
                         <group>
                             <group>
                                 <field name="code"/>
-                                <field name="description"/>
+                                <field name="territory_type"/>
                                 <field name="team_id"/>
-                                <field name="user_id"/>
+                                <field name="manager_id"/>
+                                <field name="target_amount"/>
+                                <field name="achieved_amount"/>
                             </group>
                             <group>
-                                <field name="age_group_focus"/>
-                                <field name="gender_focus"/>
-                                <field name="season_focus"/>
+                                <field name="target_orders"/>
+                                <field name="achieved_orders"/>
+                                <field name="performance_percentage"/>
+                                <field name="coverage_percentage"/>
+                                <field name="status"/>
+                                <field name="company_id"/>
                             </group>
                         </group>
                         <group>
                             <group>
                                 <field name="country_id"/>
                                 <field name="state_id"/>
-                                <field name="city_ids"/>
-                                <field name="zip_codes"/>
+                                <field name="city"/>
+                                <field name="zip_code"/>
                             </group>
                             <group>
-                                <field name="target_amount"/>
-                                <field name="achieved_amount"/>
-                                <field name="performance_percentage"/>
-                                <field name="currency_id"/>
-                            </group>
-                        </group>
-                        <group>
-                            <group>
-                                <field name="target_orders"/>
-                                <field name="achieved_orders"/>
-                            </group>
-                            <group>
-                                <field name="total_customers"/>
-                                <field name="active_customers"/>
+                                <field name="parent_id"/>
+                                <field name="total_kids_sales"/>
                             </group>
                         </group>
                         <notebook>
-                            <page string="Kids Analytics" name="kids_analytics">
+                            <page string="Child Territories" name="child_territories">
+                                <field name="child_ids" nolabel="1">
+                                    <tree string="Child Territories" create="true" edit="true" delete="true">
+                                        <field name="name"/>
+                                        <field name="code"/>
+                                        <field name="territory_type"/>
+                                        <field name="target_amount"/>
+                                        <field name="achieved_amount"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Analytics" name="analytics">
                                 <group>
                                     <group>
-                                        <field name="total_kids_sales"/>
                                         <field name="age_group_sales"/>
+                                        <field name="gender_sales"/>
                                     </group>
                                     <group>
-                                        <field name="gender_sales"/>
                                         <field name="season_sales"/>
                                     </group>
                                 </group>
+                            </page>
+                            <page string="Notes" name="notes">
+                                <field name="description"/>
                             </page>
                         </notebook>
                     </sheet>
                 </form>
             </field>
         </record>
-
-        <!-- Sales Territory Search View -->
+        
+        <!-- Sale Territory Search View -->
         <record id="view_sale_territory_search" model="ir.ui.view">
             <field name="name">sale.territory.search</field>
             <field name="model">sale.territory</field>
             <field name="arch" type="xml">
-                <search string="Search Sales Territories">
+                <search string="Sales Territories">
                     <field name="name"/>
                     <field name="code"/>
-                    <field name="country_id"/>
-                    <field name="state_id"/>
+                    <field name="territory_type"/>
                     <field name="team_id"/>
-                    <field name="user_id"/>
-                    <field name="age_group_focus"/>
-                    <field name="gender_focus"/>
-                    <field name="season_focus"/>
-                    <filter string="Active" name="active" domain="[('active', '=', True)]"/>
-                    <filter string="Inactive" name="inactive" domain="[('active', '=', False)]"/>
-                    <separator/>
-                    <filter string="Baby (0-2)" name="baby" domain="[('age_group_focus', '=', '0-2')]"/>
-                    <filter string="Toddler (2-4)" name="toddler" domain="[('age_group_focus', '=', '2-4')]"/>
-                    <filter string="Kids (4-12)" name="kids" domain="[('age_group_focus', 'in', ['4-6', '6-8', '8-10', '10-12'])]"/>
-                    <filter string="Teen (12-16)" name="teen" domain="[('age_group_focus', 'in', ['12-14', '14-16'])]"/>
-                    <separator/>
-                    <filter string="Boys" name="boys" domain="[('gender_focus', '=', 'boys')]"/>
-                    <filter string="Girls" name="girls" domain="[('gender_focus', '=', 'girls')]"/>
-                    <filter string="Unisex" name="unisex" domain="[('gender_focus', '=', 'unisex')]"/>
-                    <separator/>
-                    <filter string="Summer" name="summer" domain="[('season_focus', '=', 'summer')]"/>
-                    <filter string="Winter" name="winter" domain="[('season_focus', '=', 'winter')]"/>
-                    <filter string="Monsoon" name="monsoon" domain="[('season_focus', '=', 'monsoon')]"/>
+                    <field name="manager_id"/>
+                    <field name="company_id"/>
+                    <filter string="Active" name="active" domain="[('status', '=', 'active')]"/>
+                    <filter string="Inactive" name="inactive" domain="[('status', '=', 'inactive')]"/>
+                    <filter string="Suspended" name="suspended" domain="[('status', '=', 'suspended')]"/>
                     <group expand="0" string="Group By">
-                        <filter string="Country" name="group_country" context="{'group_by': 'country_id'}"/>
-                        <filter string="State" name="group_state" context="{'group_by': 'state_id'}"/>
+                        <filter string="Territory Type" name="group_type" context="{'group_by': 'territory_type'}"/>
                         <filter string="Team" name="group_team" context="{'group_by': 'team_id'}"/>
-                        <filter string="Salesperson" name="group_user" context="{'group_by': 'user_id'}"/>
-                        <filter string="Age Group Focus" name="group_age_group_focus" context="{'group_by': 'age_group_focus'}"/>
-                        <filter string="Gender Focus" name="group_gender_focus" context="{'group_by': 'gender_focus'}"/>
-                        <filter string="Season Focus" name="group_season_focus" context="{'group_by': 'season_focus'}"/>
+                        <filter string="Manager" name="group_manager" context="{'group_by': 'manager_id'}"/>
+                        <filter string="Company" name="group_company" context="{'group_by': 'company_id'}"/>
                     </group>
                 </search>
             </field>
         </record>
-
-        <!-- Sales Territory Kanban View -->
-        <record id="view_sale_territory_kanban" model="ir.ui.view">
-            <field name="name">sale.territory.kanban</field>
-            <field name="model">sale.territory</field>
-            <field name="arch" type="xml">
-                <kanban string="Sales Territories">
-                    <field name="name"/>
-                    <field name="code"/>
-                    <field name="country_id"/>
-                    <field name="state_id"/>
-                    <field name="age_group_focus"/>
-                    <field name="gender_focus"/>
-                    <field name="season_focus"/>
-                    <field name="target_amount"/>
-                    <field name="achieved_amount"/>
-                    <field name="performance_percentage"/>
-                    <field name="total_kids_sales"/>
-                    <field name="active"/>
-                    <templates>
-                        <t t-name="kanban-box">
-                            <div class="oe_kanban_card oe_kanban_global_click">
-                                <div class="oe_kanban_content">
-                                    <div class="o_kanban_record_top">
-                                        <div class="o_kanban_record_headings">
-                                            <strong class="o_kanban_record_title">
-                                                <field name="name"/>
-                                            </strong>
-                                            <br/>
-                                            <field name="code"/>
-                                        </div>
-                                        <div class="o_kanban_record_body">
-                                            <field name="country_id"/>
-                                            <field name="state_id"/>
-                                            <br/>
-                                            <field name="age_group_focus"/>
-                                            <field name="gender_focus"/>
-                                            <field name="season_focus"/>
-                                            <br/>
-                                            <field name="target_amount"/>
-                                            <field name="achieved_amount"/>
-                                        </div>
-                                    </div>
-                                    <div class="o_kanban_record_bottom">
-                                        <div class="oe_kanban_bottom_left">
-                                            <field name="performance_percentage"/>
-                                        </div>
-                                        <div class="oe_kanban_bottom_right">
-                                            <field name="total_kids_sales"/>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </t>
-                    </templates>
-                </kanban>
-            </field>
-        </record>
-
-        <!-- Sales Territory Action -->
+        
+        <!-- Sale Territory Action -->
         <record id="action_sale_territory" model="ir.actions.act_window">
             <field name="name">Sales Territories</field>
             <field name="res_model">sale.territory</field>
-            <field name="view_mode">tree,form,kanban</field>
-            <field name="context">{}</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_sale_territory_search"/>
             <field name="help" type="html">
                 <p class="o_view_nocontent_smiling_face">
                     Create your first sales territory!
                 </p>
                 <p>
-                    Sales territories are used to define geographic areas and assign salespeople.
-                    They can be focused on specific age groups, genders, or seasons.
+                    Sales territories help organize and manage your sales coverage.
                 </p>
             </field>
         </record>

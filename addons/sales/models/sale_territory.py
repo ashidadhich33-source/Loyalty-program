@@ -1,342 +1,279 @@
 # -*- coding: utf-8 -*-
+"""
+Kids Clothing ERP - Sales - Sales Territory
+==========================================
 
-from odoo import models, fields, api, _
-from odoo.exceptions import ValidationError
+Standalone version of the sales territory model for kids clothing retail.
+"""
 
+from core_framework.orm import BaseModel, CharField, TextField, IntegerField, FloatField, BooleanField
+from core_framework.orm import DateField, DateTimeField, Many2OneField, One2ManyField, SelectionField
+from addons.core_base.models.base_mixins import KidsClothingMixin, PriceMixin
+from addons.company.models.res_company import ResCompany
+from addons.users.models.res_users import ResUsers
+from typing import Dict, Any, Optional, List
+import logging
+from datetime import datetime, date
 
-class SaleTerritory(models.Model):
+logger = logging.getLogger(__name__)
+
+class SaleTerritory(BaseModel, KidsClothingMixin, PriceMixin):
+    """Sales Territory for Kids Clothing Retail"""
+    
     _name = 'sale.territory'
     _description = 'Sales Territory'
-    _inherit = ['mail.thread', 'mail.activity.mixin']
-    _order = 'name'
-    _rec_name = 'name'
-
-    name = fields.Char(
+    _table = 'sale_territory'
+    
+    # Territory Information
+    name = CharField(
         string='Territory Name',
+        size=128,
         required=True,
         help="Name of the sales territory"
     )
     
-    code = fields.Char(
+    code = CharField(
         string='Territory Code',
+        size=32,
         required=True,
         help="Code for the sales territory"
     )
     
-    # Territory Information
-    description = fields.Text(
+    description = TextField(
         string='Description',
         help="Description of the sales territory"
     )
     
-    # Territory Assignment
-    team_id = fields.Many2one(
-        'sale.team',
+    # Territory Type
+    territory_type = SelectionField(
+        selection=[
+            ('region', 'Region'),
+            ('state', 'State'),
+            ('city', 'City'),
+            ('area', 'Area'),
+            ('zone', 'Zone'),
+        ],
+        string='Territory Type',
+        default='area',
+        help="Type of sales territory"
+    )
+    
+    # Geographic Information
+    country_id = Many2OneField(
+        comodel_name='res.country',
+        string='Country',
+        help="Country of this territory"
+    )
+    
+    state_id = Many2OneField(
+        comodel_name='res.state',
+        string='State',
+        help="State of this territory"
+    )
+    
+    city = CharField(
+        string='City',
+        size=64,
+        help="City of this territory"
+    )
+    
+    zip_code = CharField(
+        string='ZIP Code',
+        size=16,
+        help="ZIP code of this territory"
+    )
+    
+    # Territory Hierarchy
+    parent_id = Many2OneField(
+        comodel_name='sale.territory',
+        string='Parent Territory',
+        help="Parent territory of this territory"
+    )
+    
+    child_ids = One2ManyField(
+        comodel_name='sale.territory',
+        inverse_name='parent_id',
+        string='Child Territories',
+        help="Child territories of this territory"
+    )
+    
+    # Team Assignment
+    team_id = Many2OneField(
+        comodel_name='sale.team',
         string='Sales Team',
         help="Sales team assigned to this territory"
     )
     
-    user_id = fields.Many2one(
-        'res.users',
-        string='Salesperson',
-        help="Salesperson assigned to this territory"
+    # Territory Manager
+    manager_id = Many2OneField(
+        comodel_name='res.users',
+        string='Territory Manager',
+        help="Manager of this territory"
     )
-    
-    # Geographic Information
-    country_id = fields.Many2one(
-        'res.country',
-        string='Country',
-        help="Country for this territory"
-    )
-    
-    state_id = fields.Many2one(
-        'res.country.state',
-        string='State',
-        help="State for this territory"
-    )
-    
-    city_ids = fields.Many2many(
-        'res.city',
-        string='Cities',
-        help="Cities in this territory"
-    )
-    
-    zip_codes = fields.Text(
-        string='ZIP Codes',
-        help="ZIP codes in this territory"
-    )
-    
-    # Kids Clothing Specific Fields
-    age_group_focus = fields.Selection([
-        ('0-2', '0-2 Years (Baby)'),
-        ('2-4', '2-4 Years (Toddler)'),
-        ('4-6', '4-6 Years (Pre-school)'),
-        ('6-8', '6-8 Years (Early School)'),
-        ('8-10', '8-10 Years (Middle School)'),
-        ('10-12', '10-12 Years (Pre-teen)'),
-        ('12-14', '12-14 Years (Teen)'),
-        ('14-16', '14-16 Years (Young Adult)'),
-        ('all', 'All Ages'),
-    ], string='Age Group Focus', default='all',
-       help="Primary age group focus for this territory")
-    
-    gender_focus = fields.Selection([
-        ('boys', 'Boys'),
-        ('girls', 'Girls'),
-        ('unisex', 'Unisex'),
-        ('all', 'All Genders'),
-    ], string='Gender Focus', default='all',
-       help="Primary gender focus for this territory")
-    
-    season_focus = fields.Selection([
-        ('summer', 'Summer'),
-        ('winter', 'Winter'),
-        ('monsoon', 'Monsoon'),
-        ('all_season', 'All Seasons'),
-    ], string='Season Focus', default='all_season',
-       help="Primary season focus for this territory")
     
     # Territory Performance
-    target_amount = fields.Monetary(
+    target_amount = FloatField(
         string='Target Amount',
         help="Target amount for this territory"
     )
     
-    achieved_amount = fields.Monetary(
+    achieved_amount = FloatField(
         string='Achieved Amount',
-        compute='_compute_achieved_amount',
         help="Amount achieved in this territory"
     )
     
-    target_orders = fields.Integer(
+    target_orders = IntegerField(
         string='Target Orders',
         help="Target number of orders for this territory"
     )
     
-    achieved_orders = fields.Integer(
+    achieved_orders = IntegerField(
         string='Achieved Orders',
-        compute='_compute_achieved_orders',
         help="Number of orders achieved in this territory"
     )
     
-    currency_id = fields.Many2one(
-        'res.currency',
-        string='Currency',
-        default=lambda self: self.env.company.currency_id,
-        help="Currency for this territory"
-    )
-    
     # Territory Analytics
-    performance_percentage = fields.Float(
+    performance_percentage = FloatField(
         string='Performance %',
-        compute='_compute_performance_percentage',
         help="Performance percentage of this territory"
     )
     
     # Kids Clothing Specific Analytics
-    total_kids_sales = fields.Monetary(
+    total_kids_sales = FloatField(
         string='Total Kids Sales',
-        compute='_compute_kids_sales',
         help="Total sales of kids items in this territory"
     )
     
-    age_group_sales = fields.Text(
+    age_group_sales = TextField(
         string='Age Group Sales',
-        compute='_compute_age_group_sales',
-        help="Sales by age group in this territory"
+        help="Sales by age group for this territory"
     )
     
-    gender_sales = fields.Text(
+    gender_sales = TextField(
         string='Gender Sales',
-        compute='_compute_gender_sales',
-        help="Sales by gender in this territory"
+        help="Sales by gender for this territory"
     )
     
-    season_sales = fields.Text(
+    season_sales = TextField(
         string='Season Sales',
-        compute='_compute_season_sales',
-        help="Sales by season in this territory"
+        help="Sales by season for this territory"
     )
     
-    # Territory Statistics
-    total_customers = fields.Integer(
-        string='Total Customers',
-        compute='_compute_total_customers',
-        help="Total number of customers in this territory"
+    # Territory Coverage
+    coverage_percentage = FloatField(
+        string='Coverage %',
+        help="Percentage of territory covered"
     )
     
-    active_customers = fields.Integer(
-        string='Active Customers',
-        compute='_compute_active_customers',
-        help="Number of active customers in this territory"
+    # Territory Status
+    status = SelectionField(
+        selection=[
+            ('active', 'Active'),
+            ('inactive', 'Inactive'),
+            ('suspended', 'Suspended'),
+        ],
+        string='Status',
+        default='active',
+        help="Status of this territory"
     )
     
     # Company and Multi-company
-    company_id = fields.Many2one(
-        'res.company',
+    company_id = Many2OneField(
+        comodel_name='res.company',
         string='Company',
         required=True,
-        default=lambda self: self.env.company,
         help="Company this territory belongs to"
     )
     
     # Active
-    active = fields.Boolean(
+    active = BooleanField(
         string='Active',
         default=True,
         help="Whether this territory is active"
     )
     
-    @api.depends('user_id')
     def _compute_achieved_amount(self):
+        """Compute achieved amount"""
         for territory in self:
-            if territory.user_id:
-                orders = self.env['sale.order'].search([
-                    ('user_id', '=', territory.user_id.id),
-                    ('state', 'in', ['sale', 'done']),
-                ])
-                territory.achieved_amount = sum(order.amount_total for order in orders)
-            else:
-                territory.achieved_amount = 0.0
+            territory.achieved_amount = sum(member.sale_amount for member in territory.team_id.member_ids)
     
-    @api.depends('user_id')
     def _compute_achieved_orders(self):
+        """Compute achieved orders"""
         for territory in self:
-            if territory.user_id:
-                orders = self.env['sale.order'].search([
-                    ('user_id', '=', territory.user_id.id),
-                    ('state', 'in', ['sale', 'done']),
-                ])
-                territory.achieved_orders = len(orders)
-            else:
-                territory.achieved_orders = 0
+            territory.achieved_orders = sum(member.sale_orders for member in territory.team_id.member_ids)
     
-    @api.depends('achieved_amount', 'target_amount')
     def _compute_performance_percentage(self):
+        """Compute performance percentage"""
         for territory in self:
             if territory.target_amount > 0:
                 territory.performance_percentage = (territory.achieved_amount / territory.target_amount) * 100
             else:
                 territory.performance_percentage = 0.0
     
-    @api.depends('user_id')
     def _compute_kids_sales(self):
+        """Compute kids sales"""
         for territory in self:
-            if territory.user_id:
-                orders = self.env['sale.order'].search([
-                    ('user_id', '=', territory.user_id.id),
-                    ('state', 'in', ['sale', 'done']),
-                ])
-                kids_sales = 0
-                for order in orders:
-                    for line in order.order_line:
-                        if line.product_id and line.product_id.age_group != 'all':
-                            kids_sales += line.price_total
-                territory.total_kids_sales = kids_sales
-            else:
-                territory.total_kids_sales = 0.0
+            territory.total_kids_sales = sum(member.kids_sales for member in territory.team_id.member_ids)
     
-    @api.depends('user_id')
     def _compute_age_group_sales(self):
+        """Compute age group sales"""
         for territory in self:
-            if territory.user_id:
-                orders = self.env['sale.order'].search([
-                    ('user_id', '=', territory.user_id.id),
-                    ('state', 'in', ['sale', 'done']),
-                ])
-                age_group_sales = {}
-                for order in orders:
-                    for line in order.order_line:
-                        if line.product_id and line.product_id.age_group:
-                            age_group = line.product_id.age_group
+            age_group_sales = {}
+            for member in territory.team_id.member_ids:
+                if member.age_group_sales:
+                    try:
+                        member_sales = eval(member.age_group_sales)
+                        for age_group, amount in member_sales.items():
                             if age_group not in age_group_sales:
                                 age_group_sales[age_group] = 0
-                            age_group_sales[age_group] += line.price_total
-                territory.age_group_sales = str(age_group_sales)
-            else:
-                territory.age_group_sales = str({})
+                            age_group_sales[age_group] += amount
+                    except:
+                        pass
+            territory.age_group_sales = str(age_group_sales)
     
-    @api.depends('user_id')
     def _compute_gender_sales(self):
+        """Compute gender sales"""
         for territory in self:
-            if territory.user_id:
-                orders = self.env['sale.order'].search([
-                    ('user_id', '=', territory.user_id.id),
-                    ('state', 'in', ['sale', 'done']),
-                ])
-                gender_sales = {}
-                for order in orders:
-                    for line in order.order_line:
-                        if line.product_id and line.product_id.gender:
-                            gender = line.product_id.gender
+            gender_sales = {}
+            for member in territory.team_id.member_ids:
+                if member.gender_sales:
+                    try:
+                        member_sales = eval(member.gender_sales)
+                        for gender, amount in member_sales.items():
                             if gender not in gender_sales:
                                 gender_sales[gender] = 0
-                            gender_sales[gender] += line.price_total
-                territory.gender_sales = str(gender_sales)
-            else:
-                territory.gender_sales = str({})
+                            gender_sales[gender] += amount
+                    except:
+                        pass
+            territory.gender_sales = str(gender_sales)
     
-    @api.depends('user_id')
     def _compute_season_sales(self):
+        """Compute season sales"""
         for territory in self:
-            if territory.user_id:
-                orders = self.env['sale.order'].search([
-                    ('user_id', '=', territory.user_id.id),
-                    ('state', 'in', ['sale', 'done']),
-                ])
-                season_sales = {}
-                for order in orders:
-                    for line in order.order_line:
-                        if line.product_id and line.product_id.season:
-                            season = line.product_id.season
+            season_sales = {}
+            for member in territory.team_id.member_ids:
+                if member.season_sales:
+                    try:
+                        member_sales = eval(member.season_sales)
+                        for season, amount in member_sales.items():
                             if season not in season_sales:
                                 season_sales[season] = 0
-                            season_sales[season] += line.price_total
-                territory.season_sales = str(season_sales)
-            else:
-                territory.season_sales = str({})
+                            season_sales[season] += amount
+                    except:
+                        pass
+            territory.season_sales = str(season_sales)
     
-    @api.depends('user_id')
-    def _compute_total_customers(self):
-        for territory in self:
-            if territory.user_id:
-                customers = self.env['res.partner'].search([
-                    ('user_id', '=', territory.user_id.id),
-                    ('is_company', '=', False),
-                ])
-                territory.total_customers = len(customers)
-            else:
-                territory.total_customers = 0
-    
-    @api.depends('user_id')
-    def _compute_active_customers(self):
-        for territory in self:
-            if territory.user_id:
-                # Get customers with recent orders
-                recent_date = fields.Datetime.now() - fields.timedelta(days=90)
-                orders = self.env['sale.order'].search([
-                    ('user_id', '=', territory.user_id.id),
-                    ('date_order', '>=', recent_date),
-                ])
-                active_customers = set(order.partner_id.id for order in orders)
-                territory.active_customers = len(active_customers)
-            else:
-                territory.active_customers = 0
-    
-    def action_view_orders(self):
-        """View orders for this territory"""
-        action = self.env.ref('sales.action_sale_order').read()[0]
-        action['domain'] = [('territory_id', '=', self.id)]
-        return action
-    
-    def action_view_customers(self):
-        """View customers for this territory"""
-        action = self.env.ref('contacts.action_res_partner').read()[0]
-        action['domain'] = [('user_id', '=', self.user_id.id)]
-        return action
+    def action_view_team(self):
+        """View territory team"""
+        # This would return an action to view team
+        return True
     
     def action_view_analytics(self):
-        """View analytics for this territory"""
-        action = self.env.ref('sales.action_sale_analytics').read()[0]
-        action['domain'] = [('territory_id', '=', self.id)]
-        return action
+        """View territory analytics"""
+        # This would return an action to view analytics
+        return True
+    
+    def action_view_child_territories(self):
+        """View child territories"""
+        # This would return an action to view child territories
+        return True

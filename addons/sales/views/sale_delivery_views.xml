@@ -1,52 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <!-- Sales Delivery Tree View -->
+        <!-- Sale Delivery Tree View -->
         <record id="view_sale_delivery_tree" model="ir.ui.view">
             <field name="name">sale.delivery.tree</field>
             <field name="model">sale.delivery</field>
             <field name="arch" type="xml">
-                <tree string="Sales Deliveries" decoration-info="state=='draft'" decoration-success="state=='delivered'" decoration-muted="state=='cancelled'">
+                <tree string="Sales Deliveries" create="true" edit="true" delete="true">
                     <field name="name"/>
-                    <field name="date_delivery"/>
+                    <field name="sale_order_id"/>
                     <field name="partner_id"/>
-                    <field name="age_group"/>
-                    <field name="gender"/>
-                    <field name="season"/>
-                    <field name="delivery_method"/>
-                    <field name="delivery_company"/>
-                    <field name="tracking_number"/>
+                    <field name="delivery_date"/>
                     <field name="state"/>
+                    <field name="user_id"/>
+                    <field name="company_id"/>
                 </tree>
             </field>
         </record>
-
-        <!-- Sales Delivery Form View -->
+        
+        <!-- Sale Delivery Form View -->
         <record id="view_sale_delivery_form" model="ir.ui.view">
             <field name="name">sale.delivery.form</field>
             <field name="model">sale.delivery</field>
             <field name="arch" type="xml">
-                <form string="Sales Delivery">
+                <form string="Sales Delivery" create="true" edit="true" delete="true">
                     <header>
-                        <button name="action_ready_delivery" string="Ready for Delivery" type="object" class="btn-primary" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
-                        <button name="action_start_delivery" string="Start Delivery" type="object" class="btn-primary" attrs="{'invisible': [('state', '!=', 'ready')]}"/>
-                        <button name="action_deliver" string="Deliver" type="object" class="btn-primary" attrs="{'invisible': [('state', '!=', 'in_transit')]}"/>
-                        <button name="action_cancel_delivery" string="Cancel" type="object" class="btn-secondary" attrs="{'invisible': [('state', 'in', ['delivered', 'cancelled'])]}"/>
-                        <field name="state" widget="statusbar" statusbar_visible="draft,ready,in_transit,delivered"/>
+                        <button name="action_assign" string="Assign" type="object" class="btn-primary" states="draft"/>
+                        <button name="action_done" string="Done" type="object" class="btn-primary" states="assigned"/>
+                        <button name="action_cancel" string="Cancel" type="object" class="btn-secondary" states="draft"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,waiting,assigned,done"/>
                     </header>
                     <sheet>
-                        <div class="oe_button_box" name="button_box">
-                            <button name="action_view_order" type="object" class="oe_stat_button" icon="fa-shopping-cart">
-                                <div class="o_field_widget o_stat_info">
-                                    <span class="o_stat_text">Order</span>
-                                </div>
-                            </button>
-                            <button name="action_view_analytics" type="object" class="oe_stat_button" icon="fa-bar-chart">
-                                <div class="o_field_widget o_stat_info">
-                                    <span class="o_stat_text">Analytics</span>
-                                </div>
-                            </button>
-                        </div>
                         <div class="oe_title">
                             <h1>
                                 <field name="name" readonly="1"/>
@@ -54,200 +38,129 @@
                         </div>
                         <group>
                             <group>
-                                <field name="order_id"/>
+                                <field name="sale_order_id"/>
                                 <field name="partner_id"/>
-                                <field name="partner_shipping_id"/>
-                                <field name="date_delivery"/>
-                                <field name="date_scheduled"/>
+                                <field name="delivery_date"/>
+                                <field name="company_id"/>
                             </group>
                             <group>
-                                <field name="child_profile_id"/>
-                                <field name="age_group"/>
-                                <field name="gender"/>
-                                <field name="season"/>
-                                <field name="delivery_method"/>
-                                <field name="delivery_company"/>
-                                <field name="tracking_number"/>
-                            </group>
-                        </group>
-                        <group>
-                            <group>
-                                <field name="delivery_person"/>
-                                <field name="delivery_contact"/>
-                                <field name="delivery_confirmed"/>
-                                <field name="delivery_signed"/>
-                            </group>
-                            <group>
+                                <field name="user_id"/>
                                 <field name="delivery_address"/>
-                                <field name="delivery_city"/>
-                                <field name="delivery_state"/>
-                                <field name="delivery_zip"/>
-                                <field name="delivery_country"/>
+                                <field name="delivery_notes"/>
                             </group>
                         </group>
                         <notebook>
                             <page string="Delivery Lines" name="delivery_lines">
-                                <field name="delivery_line">
-                                    <tree editable="bottom">
+                                <field name="delivery_line_ids" nolabel="1">
+                                    <tree string="Delivery Lines" create="true" edit="true" delete="true">
                                         <field name="product_id"/>
-                                        <field name="product_uom_qty"/>
-                                        <field name="product_uom"/>
                                         <field name="delivered_qty"/>
-                                        <field name="remaining_qty"/>
-                                        <field name="age_group"/>
-                                        <field name="gender"/>
-                                        <field name="season"/>
-                                        <field name="size"/>
-                                        <field name="color"/>
-                                        <field name="brand"/>
+                                        <field name="size_id"/>
+                                        <field name="color_id"/>
+                                        <field name="lot_id"/>
+                                        <field name="package_id"/>
                                     </tree>
                                 </field>
                             </page>
-                            <page string="Kids Analytics" name="kids_analytics">
-                                <group>
-                                    <group>
-                                        <field name="total_kids_items"/>
-                                        <field name="age_group_distribution"/>
-                                    </group>
-                                    <group>
-                                        <field name="gender_distribution"/>
-                                        <field name="season_distribution"/>
-                                    </group>
-                                </group>
-                            </page>
                             <page string="Notes" name="notes">
-                                <field name="delivery_notes" nolabel="1"/>
-                            </page>
-                            <page string="Photo" name="photo">
-                                <field name="delivery_photo" widget="image" nolabel="1"/>
+                                <field name="notes"/>
                             </page>
                         </notebook>
                     </sheet>
                 </form>
             </field>
         </record>
-
-        <!-- Sales Delivery Search View -->
+        
+        <!-- Sale Delivery Search View -->
         <record id="view_sale_delivery_search" model="ir.ui.view">
             <field name="name">sale.delivery.search</field>
             <field name="model">sale.delivery</field>
             <field name="arch" type="xml">
-                <search string="Search Sales Deliveries">
+                <search string="Sales Deliveries">
                     <field name="name"/>
+                    <field name="sale_order_id"/>
                     <field name="partner_id"/>
-                    <field name="child_profile_id"/>
-                    <field name="age_group"/>
-                    <field name="gender"/>
-                    <field name="season"/>
-                    <field name="delivery_method"/>
-                    <field name="delivery_company"/>
-                    <field name="tracking_number"/>
+                    <field name="delivery_date"/>
+                    <field name="state"/>
+                    <field name="user_id"/>
+                    <field name="company_id"/>
                     <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
-                    <filter string="Ready" name="ready" domain="[('state', '=', 'ready')]"/>
-                    <filter string="In Transit" name="in_transit" domain="[('state', '=', 'in_transit')]"/>
-                    <filter string="Delivered" name="delivered" domain="[('state', '=', 'delivered')]"/>
-                    <filter string="Cancelled" name="cancelled" domain="[('state', '=', 'cancelled')]"/>
-                    <separator/>
-                    <filter string="Baby (0-2)" name="baby" domain="[('age_group', '=', '0-2')]"/>
-                    <filter string="Toddler (2-4)" name="toddler" domain="[('age_group', '=', '2-4')]"/>
-                    <filter string="Kids (4-12)" name="kids" domain="[('age_group', 'in', ['4-6', '6-8', '8-10', '10-12'])]"/>
-                    <filter string="Teen (12-16)" name="teen" domain="[('age_group', 'in', ['12-14', '14-16'])]"/>
-                    <separator/>
-                    <filter string="Boys" name="boys" domain="[('gender', '=', 'boys')]"/>
-                    <filter string="Girls" name="girls" domain="[('gender', '=', 'girls')]"/>
-                    <filter string="Unisex" name="unisex" domain="[('gender', '=', 'unisex')]"/>
-                    <separator/>
-                    <filter string="Summer" name="summer" domain="[('season', '=', 'summer')]"/>
-                    <filter string="Winter" name="winter" domain="[('season', '=', 'winter')]"/>
-                    <filter string="Monsoon" name="monsoon" domain="[('season', '=', 'monsoon')]"/>
-                    <separator/>
-                    <filter string="Today" name="today" domain="[('date_delivery', '>=', datetime.datetime.combine(context_today(), datetime.time(0,0,0)))]"/>
-                    <filter string="This Week" name="this_week" domain="[('date_delivery', '>=', (context_today() - datetime.timedelta(days=context_today().weekday())).strftime('%Y-%m-%d'))]"/>
-                    <filter string="This Month" name="this_month" domain="[('date_delivery', '>=', context_today().strftime('%Y-%m-01'))]"/>
+                    <filter string="Waiting" name="waiting" domain="[('state', '=', 'waiting')]"/>
+                    <filter string="Assigned" name="assigned" domain="[('state', '=', 'assigned')]"/>
+                    <filter string="Done" name="done" domain="[('state', '=', 'done')]"/>
+                    <filter string="Cancelled" name="cancel" domain="[('state', '=', 'cancel')]"/>
                     <group expand="0" string="Group By">
-                        <filter string="Status" name="group_state" context="{'group_by': 'state'}"/>
-                        <filter string="Customer" name="group_partner" context="{'group_by': 'partner_id'}"/>
-                        <filter string="Age Group" name="group_age_group" context="{'group_by': 'age_group'}"/>
-                        <filter string="Gender" name="group_gender" context="{'group_by': 'gender'}"/>
-                        <filter string="Season" name="group_season" context="{'group_by': 'season'}"/>
-                        <filter string="Delivery Method" name="group_delivery_method" context="{'group_by': 'delivery_method'}"/>
-                        <filter string="Delivery Company" name="group_delivery_company" context="{'group_by': 'delivery_company'}"/>
-                        <filter string="Date" name="group_date" context="{'group_by': 'date_delivery:day'}"/>
+                        <filter string="State" name="group_state" context="{'group_by': 'state'}"/>
+                        <filter string="Responsible" name="group_user" context="{'group_by': 'user_id'}"/>
+                        <filter string="Company" name="group_company" context="{'group_by': 'company_id'}"/>
                     </group>
                 </search>
             </field>
         </record>
-
-        <!-- Sales Delivery Kanban View -->
-        <record id="view_sale_delivery_kanban" model="ir.ui.view">
-            <field name="name">sale.delivery.kanban</field>
-            <field name="model">sale.delivery</field>
-            <field name="arch" type="xml">
-                <kanban string="Sales Deliveries">
-                    <field name="name"/>
-                    <field name="partner_id"/>
-                    <field name="date_delivery"/>
-                    <field name="state"/>
-                    <field name="age_group"/>
-                    <field name="gender"/>
-                    <field name="season"/>
-                    <field name="delivery_method"/>
-                    <field name="delivery_company"/>
-                    <field name="tracking_number"/>
-                    <templates>
-                        <t t-name="kanban-box">
-                            <div class="oe_kanban_card oe_kanban_global_click">
-                                <div class="oe_kanban_content">
-                                    <div class="o_kanban_record_top">
-                                        <div class="o_kanban_record_headings">
-                                            <strong class="o_kanban_record_title">
-                                                <field name="name"/>
-                                            </strong>
-                                            <br/>
-                                            <field name="partner_id"/>
-                                        </div>
-                                        <div class="o_kanban_record_body">
-                                            <field name="date_delivery"/>
-                                            <br/>
-                                            <field name="age_group"/>
-                                            <field name="gender"/>
-                                            <field name="season"/>
-                                            <br/>
-                                            <field name="delivery_method"/>
-                                            <field name="delivery_company"/>
-                                        </div>
-                                    </div>
-                                    <div class="o_kanban_record_bottom">
-                                        <div class="oe_kanban_bottom_left">
-                                            <field name="tracking_number"/>
-                                        </div>
-                                        <div class="oe_kanban_bottom_right">
-                                            <field name="state" widget="label_selection"/>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </t>
-                    </templates>
-                </kanban>
-            </field>
-        </record>
-
-        <!-- Sales Delivery Action -->
+        
+        <!-- Sale Delivery Action -->
         <record id="action_sale_delivery" model="ir.actions.act_window">
             <field name="name">Sales Deliveries</field>
             <field name="res_model">sale.delivery</field>
-            <field name="view_mode">tree,form,kanban</field>
-            <field name="context">{}</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_sale_delivery_search"/>
             <field name="help" type="html">
                 <p class="o_view_nocontent_smiling_face">
                     Create your first sales delivery!
                 </p>
                 <p>
-                    Sales deliveries are used to track the delivery of orders to customers.
-                    They include delivery information, tracking, and status updates.
+                    Sales deliveries are used to manage product deliveries to customers.
                 </p>
             </field>
+        </record>
+        
+        <!-- Sale Delivery Line Tree View -->
+        <record id="view_sale_delivery_line_tree" model="ir.ui.view">
+            <field name="name">sale.delivery.line.tree</field>
+            <field name="model">sale.delivery.line</field>
+            <field name="arch" type="xml">
+                <tree string="Sales Delivery Lines" create="true" edit="true" delete="true">
+                    <field name="product_id"/>
+                    <field name="delivered_qty"/>
+                    <field name="size_id"/>
+                    <field name="color_id"/>
+                    <field name="lot_id"/>
+                    <field name="package_id"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Sale Delivery Line Form View -->
+        <record id="view_sale_delivery_line_form" model="ir.ui.view">
+            <field name="name">sale.delivery.line.form</field>
+            <field name="model">sale.delivery.line</field>
+            <field name="arch" type="xml">
+                <form string="Sales Delivery Line" create="true" edit="true" delete="true">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="delivery_id"/>
+                                <field name="product_id"/>
+                                <field name="delivered_qty"/>
+                                <field name="size_id"/>
+                                <field name="color_id"/>
+                            </group>
+                            <group>
+                                <field name="lot_id"/>
+                                <field name="package_id"/>
+                                <field name="delivery_notes"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Sale Delivery Line Action -->
+        <record id="action_sale_delivery_line" model="ir.actions.act_window">
+            <field name="name">Sales Delivery Lines</field>
+            <field name="res_model">sale.delivery.line</field>
+            <field name="view_mode">tree,form</field>
         </record>
     </data>
 </odoo>

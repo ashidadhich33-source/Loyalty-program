@@ -1,411 +1,305 @@
 # -*- coding: utf-8 -*-
+"""
+Kids Clothing ERP - Sales - Sales Analytics
+==========================================
 
-from odoo import models, fields, api, _
-from odoo.exceptions import ValidationError
+Standalone version of the sales analytics model for kids clothing retail.
+"""
 
+from core_framework.orm import BaseModel, CharField, TextField, IntegerField, FloatField, BooleanField
+from core_framework.orm import DateField, DateTimeField, Many2OneField, One2ManyField, SelectionField
+from addons.core_base.models.base_mixins import KidsClothingMixin, PriceMixin
+from addons.company.models.res_company import ResCompany
+from addons.users.models.res_users import ResUsers
+from typing import Dict, Any, Optional, List
+import logging
+from datetime import datetime, date
 
-class SaleAnalytics(models.Model):
+logger = logging.getLogger(__name__)
+
+class SaleAnalytics(BaseModel, KidsClothingMixin, PriceMixin):
+    """Sales Analytics for Kids Clothing Retail"""
+    
     _name = 'sale.analytics'
     _description = 'Sales Analytics'
-    _inherit = ['mail.thread', 'mail.activity.mixin']
-    _order = 'date_analytics desc, id desc'
-    _rec_name = 'name'
-
-    name = fields.Char(
-        string='Analytics Name',
-        required=True,
-        help="Name of the analytics"
-    )
+    _table = 'sale_analytics'
     
     # Analytics Information
-    date_analytics = fields.Datetime(
-        string='Analytics Date',
+    name = CharField(
+        string='Analytics Name',
+        size=128,
         required=True,
-        default=fields.Datetime.now,
-        help="Date of the analytics"
+        help="Name of this analytics record"
     )
     
-    period_start = fields.Datetime(
+    # Analytics Period
+    period_start = DateField(
         string='Period Start',
         required=True,
-        help="Start date of the analytics period"
+        help="Start date of analytics period"
     )
     
-    period_end = fields.Datetime(
+    period_end = DateField(
         string='Period End',
         required=True,
-        help="End date of the analytics period"
+        help="End date of analytics period"
     )
     
-    # Related Records
-    order_id = fields.Many2one(
-        'sale.order',
-        string='Sales Order',
-        help="Sales order for this analytics"
+    # Analytics Type
+    analytics_type = SelectionField(
+        selection=[
+            ('daily', 'Daily'),
+            ('weekly', 'Weekly'),
+            ('monthly', 'Monthly'),
+            ('quarterly', 'Quarterly'),
+            ('yearly', 'Yearly'),
+            ('custom', 'Custom'),
+        ],
+        string='Analytics Type',
+        default='monthly',
+        help="Type of analytics period"
     )
     
-    quotation_id = fields.Many2one(
-        'sale.quotation',
-        string='Sales Quotation',
-        help="Sales quotation for this analytics"
+    # Sales Performance
+    total_sales_amount = FloatField(
+        string='Total Sales Amount',
+        help="Total sales amount for the period"
     )
     
-    delivery_id = fields.Many2one(
-        'sale.delivery',
-        string='Sales Delivery',
-        help="Sales delivery for this analytics"
+    total_sales_orders = IntegerField(
+        string='Total Sales Orders',
+        help="Total number of sales orders for the period"
     )
     
-    return_id = fields.Many2one(
-        'sale.return',
-        string='Sales Return',
-        help="Sales return for this analytics"
+    average_order_value = FloatField(
+        string='Average Order Value',
+        help="Average value of each sales order"
     )
     
-    team_id = fields.Many2one(
-        'sale.team',
-        string='Sales Team',
-        help="Sales team for this analytics"
+    # Sales Growth
+    sales_growth_percentage = FloatField(
+        string='Sales Growth %',
+        help="Percentage growth in sales"
     )
     
-    territory_id = fields.Many2one(
-        'sale.territory',
-        string='Sales Territory',
-        help="Sales territory for this analytics"
+    order_growth_percentage = FloatField(
+        string='Order Growth %',
+        help="Percentage growth in orders"
     )
     
-    commission_id = fields.Many2one(
-        'sale.commission',
-        string='Sales Commission',
-        help="Sales commission for this analytics"
+    # Top Performers
+    top_salesperson_id = Many2OneField(
+        comodel_name='res.users',
+        string='Top Salesperson',
+        help="Top performing salesperson"
     )
     
-    # Kids Clothing Specific Fields
-    child_profile_id = fields.Many2one(
-        'child.profile',
-        string='Child Profile',
-        help="Child profile for this analytics"
+    top_team_id = Many2OneField(
+        comodel_name='sale.team',
+        string='Top Team',
+        help="Top performing sales team"
     )
     
-    age_group = fields.Selection([
-        ('0-2', '0-2 Years (Baby)'),
-        ('2-4', '2-4 Years (Toddler)'),
-        ('4-6', '4-6 Years (Pre-school)'),
-        ('6-8', '6-8 Years (Early School)'),
-        ('8-10', '8-10 Years (Middle School)'),
-        ('10-12', '10-12 Years (Pre-teen)'),
-        ('12-14', '12-14 Years (Teen)'),
-        ('14-16', '14-16 Years (Young Adult)'),
-        ('all', 'All Ages'),
-    ], string='Age Group', help="Age group for this analytics")
-    
-    gender = fields.Selection([
-        ('boys', 'Boys'),
-        ('girls', 'Girls'),
-        ('unisex', 'Unisex'),
-    ], string='Gender', help="Gender for this analytics")
-    
-    season = fields.Selection([
-        ('summer', 'Summer'),
-        ('winter', 'Winter'),
-        ('monsoon', 'Monsoon'),
-        ('all_season', 'All Season'),
-    ], string='Season', help="Season for this analytics")
-    
-    # Sales Analytics
-    total_sales = fields.Monetary(
-        string='Total Sales',
-        help="Total sales amount"
+    top_territory_id = Many2OneField(
+        comodel_name='sale.territory',
+        string='Top Territory',
+        help="Top performing territory"
     )
     
-    total_orders = fields.Integer(
-        string='Total Orders',
-        help="Total number of orders"
+    # Top Products
+    top_product_id = Many2OneField(
+        comodel_name='product.product',
+        string='Top Product',
+        help="Top selling product"
     )
     
-    total_quotations = fields.Integer(
-        string='Total Quotations',
-        help="Total number of quotations"
+    top_category_id = Many2OneField(
+        comodel_name='product.category',
+        string='Top Category',
+        help="Top selling category"
     )
     
-    total_deliveries = fields.Integer(
-        string='Total Deliveries',
-        help="Total number of deliveries"
-    )
-    
-    total_returns = fields.Integer(
-        string='Total Returns',
-        help="Total number of returns"
-    )
-    
-    currency_id = fields.Many2one(
-        'res.currency',
-        string='Currency',
-        default=lambda self: self.env.company.currency_id,
-        help="Currency for this analytics"
+    # Top Customers
+    top_customer_id = Many2OneField(
+        comodel_name='res.partner',
+        string='Top Customer',
+        help="Top customer by sales"
     )
     
     # Kids Clothing Specific Analytics
-    kids_sales = fields.Monetary(
-        string='Kids Sales',
-        help="Total sales of kids items"
+    kids_sales_amount = FloatField(
+        string='Kids Sales Amount',
+        help="Total sales amount of kids items"
     )
     
-    kids_orders = fields.Integer(
-        string='Kids Orders',
-        help="Total number of kids orders"
+    kids_sales_percentage = FloatField(
+        string='Kids Sales %',
+        help="Percentage of kids sales"
     )
     
-    kids_quotations = fields.Integer(
-        string='Kids Quotations',
-        help="Total number of kids quotations"
-    )
-    
-    kids_deliveries = fields.Integer(
-        string='Kids Deliveries',
-        help="Total number of kids deliveries"
-    )
-    
-    kids_returns = fields.Integer(
-        string='Kids Returns',
-        help="Total number of kids returns"
-    )
-    
-    # Age Group Analytics
-    age_group_sales = fields.Text(
+    age_group_sales = TextField(
         string='Age Group Sales',
         help="Sales by age group"
     )
     
-    age_group_orders = fields.Text(
-        string='Age Group Orders',
-        help="Orders by age group"
-    )
-    
-    age_group_quotations = fields.Text(
-        string='Age Group Quotations',
-        help="Quotations by age group"
-    )
-    
-    age_group_deliveries = fields.Text(
-        string='Age Group Deliveries',
-        help="Deliveries by age group"
-    )
-    
-    age_group_returns = fields.Text(
-        string='Age Group Returns',
-        help="Returns by age group"
-    )
-    
-    # Gender Analytics
-    gender_sales = fields.Text(
+    gender_sales = TextField(
         string='Gender Sales',
         help="Sales by gender"
     )
     
-    gender_orders = fields.Text(
-        string='Gender Orders',
-        help="Orders by gender"
-    )
-    
-    gender_quotations = fields.Text(
-        string='Gender Quotations',
-        help="Quotations by gender"
-    )
-    
-    gender_deliveries = fields.Text(
-        string='Gender Deliveries',
-        help="Deliveries by gender"
-    )
-    
-    gender_returns = fields.Text(
-        string='Gender Returns',
-        help="Returns by gender"
-    )
-    
-    # Season Analytics
-    season_sales = fields.Text(
+    season_sales = TextField(
         string='Season Sales',
         help="Sales by season"
     )
     
-    season_orders = fields.Text(
-        string='Season Orders',
-        help="Orders by season"
+    # Sales Channels
+    online_sales = FloatField(
+        string='Online Sales',
+        help="Sales through online channels"
     )
     
-    season_quotations = fields.Text(
-        string='Season Quotations',
-        help="Quotations by season"
+    offline_sales = FloatField(
+        string='Offline Sales',
+        help="Sales through offline channels"
     )
     
-    season_deliveries = fields.Text(
-        string='Season Deliveries',
-        help="Deliveries by season"
+    # Sales Trends
+    sales_trend = TextField(
+        string='Sales Trend',
+        help="Sales trend data"
     )
     
-    season_returns = fields.Text(
-        string='Season Returns',
-        help="Returns by season"
-    )
-    
-    # Performance Analytics
-    conversion_rate = fields.Float(
-        string='Conversion Rate (%)',
-        help="Quotation to order conversion rate"
-    )
-    
-    delivery_rate = fields.Float(
-        string='Delivery Rate (%)',
-        help="Order to delivery rate"
-    )
-    
-    return_rate = fields.Float(
-        string='Return Rate (%)',
-        help="Order to return rate"
-    )
-    
-    # Customer Analytics
-    total_customers = fields.Integer(
-        string='Total Customers',
-        help="Total number of customers"
-    )
-    
-    new_customers = fields.Integer(
-        string='New Customers',
-        help="Number of new customers"
-    )
-    
-    returning_customers = fields.Integer(
-        string='Returning Customers',
-        help="Number of returning customers"
-    )
-    
-    # Product Analytics
-    total_products = fields.Integer(
-        string='Total Products',
-        help="Total number of products"
-    )
-    
-    top_products = fields.Text(
-        string='Top Products',
-        help="Top selling products"
-    )
-    
-    top_categories = fields.Text(
-        string='Top Categories',
-        help="Top selling categories"
-    )
-    
-    # Team Analytics
-    team_performance = fields.Text(
-        string='Team Performance',
-        help="Performance by team"
-    )
-    
-    territory_performance = fields.Text(
-        string='Territory Performance',
-        help="Performance by territory"
+    order_trend = TextField(
+        string='Order Trend',
+        help="Order trend data"
     )
     
     # Commission Analytics
-    total_commission = fields.Monetary(
-        string='Total Commission',
-        help="Total commission paid"
+    total_commission_paid = FloatField(
+        string='Total Commission Paid',
+        help="Total commission paid for the period"
     )
     
-    commission_rate = fields.Float(
-        string='Commission Rate (%)',
+    average_commission_rate = FloatField(
+        string='Average Commission Rate',
         help="Average commission rate"
     )
     
     # Company and Multi-company
-    company_id = fields.Many2one(
-        'res.company',
+    company_id = Many2OneField(
+        comodel_name='res.company',
         string='Company',
         required=True,
-        default=lambda self: self.env.company,
         help="Company this analytics belongs to"
     )
     
     # Active
-    active = fields.Boolean(
+    active = BooleanField(
         string='Active',
         default=True,
         help="Whether this analytics is active"
     )
     
-    def action_view_orders(self):
-        """View orders for this analytics"""
-        action = self.env.ref('sales.action_sale_order').read()[0]
-        if self.order_id:
-            action['domain'] = [('id', '=', self.order_id.id)]
-        else:
-            action['domain'] = [('id', '=', False)]
-        return action
+    def _compute_average_order_value(self):
+        """Compute average order value"""
+        for analytics in self:
+            if analytics.total_sales_orders > 0:
+                analytics.average_order_value = analytics.total_sales_amount / analytics.total_sales_orders
+            else:
+                analytics.average_order_value = 0.0
     
-    def action_view_quotations(self):
-        """View quotations for this analytics"""
-        action = self.env.ref('sales.action_sale_quotation').read()[0]
-        if self.quotation_id:
-            action['domain'] = [('id', '=', self.quotation_id.id)]
-        else:
-            action['domain'] = [('id', '=', False)]
-        return action
+    def _compute_kids_sales_percentage(self):
+        """Compute kids sales percentage"""
+        for analytics in self:
+            if analytics.total_sales_amount > 0:
+                analytics.kids_sales_percentage = (analytics.kids_sales_amount / analytics.total_sales_amount) * 100
+            else:
+                analytics.kids_sales_percentage = 0.0
     
-    def action_view_deliveries(self):
-        """View deliveries for this analytics"""
-        action = self.env.ref('sales.action_sale_delivery').read()[0]
-        if self.delivery_id:
-            action['domain'] = [('id', '=', self.delivery_id.id)]
-        else:
-            action['domain'] = [('id', '=', False)]
-        return action
+    def _compute_sales_growth(self):
+        """Compute sales growth percentage"""
+        for analytics in self:
+            # This would calculate growth compared to previous period
+            analytics.sales_growth_percentage = 0.0
     
-    def action_view_returns(self):
-        """View returns for this analytics"""
-        action = self.env.ref('sales.action_sale_return').read()[0]
-        if self.return_id:
-            action['domain'] = [('id', '=', self.return_id.id)]
-        else:
-            action['domain'] = [('id', '=', False)]
-        return action
+    def _compute_order_growth(self):
+        """Compute order growth percentage"""
+        for analytics in self:
+            # This would calculate growth compared to previous period
+            analytics.order_growth_percentage = 0.0
     
-    def action_view_team(self):
-        """View team for this analytics"""
-        if not self.team_id:
-            raise ValidationError(_('No team found.'))
-        
-        return {
-            'type': 'ir.actions.act_window',
-            'name': 'Sales Team',
-            'res_model': 'sale.team',
-            'view_mode': 'form',
-            'res_id': self.team_id.id,
-        }
+    def _compute_top_performers(self):
+        """Compute top performers"""
+        for analytics in self:
+            # This would calculate top performers based on actual data
+            pass
     
-    def action_view_territory(self):
-        """View territory for this analytics"""
-        if not self.territory_id:
-            raise ValidationError(_('No territory found.'))
-        
-        return {
-            'type': 'ir.actions.act_window',
-            'name': 'Sales Territory',
-            'res_model': 'sale.territory',
-            'view_mode': 'form',
-            'res_id': self.territory_id.id,
-        }
+    def _compute_top_products(self):
+        """Compute top products"""
+        for analytics in self:
+            # This would calculate top products based on actual data
+            pass
     
-    def action_view_commission(self):
-        """View commission for this analytics"""
-        if not self.commission_id:
-            raise ValidationError(_('No commission found.'))
-        
-        return {
-            'type': 'ir.actions.act_window',
-            'name': 'Sales Commission',
-            'res_model': 'sale.commission',
-            'view_mode': 'form',
-            'res_id': self.commission_id.id,
-        }
+    def _compute_top_customers(self):
+        """Compute top customers"""
+        for analytics in self:
+            # This would calculate top customers based on actual data
+            pass
+    
+    def _compute_age_group_sales(self):
+        """Compute age group sales"""
+        for analytics in self:
+            # This would calculate age group sales based on actual data
+            analytics.age_group_sales = str({})
+    
+    def _compute_gender_sales(self):
+        """Compute gender sales"""
+        for analytics in self:
+            # This would calculate gender sales based on actual data
+            analytics.gender_sales = str({})
+    
+    def _compute_season_sales(self):
+        """Compute season sales"""
+        for analytics in self:
+            # This would calculate season sales based on actual data
+            analytics.season_sales = str({})
+    
+    def _compute_sales_trends(self):
+        """Compute sales trends"""
+        for analytics in self:
+            # This would calculate sales trends based on actual data
+            analytics.sales_trend = str({})
+            analytics.order_trend = str({})
+    
+    def _compute_commission_analytics(self):
+        """Compute commission analytics"""
+        for analytics in self:
+            # This would calculate commission analytics based on actual data
+            analytics.total_commission_paid = 0.0
+            analytics.average_commission_rate = 0.0
+    
+    def action_generate_analytics(self):
+        """Generate analytics for the period"""
+        for analytics in self:
+            analytics._compute_average_order_value()
+            analytics._compute_kids_sales_percentage()
+            analytics._compute_sales_growth()
+            analytics._compute_order_growth()
+            analytics._compute_top_performers()
+            analytics._compute_top_products()
+            analytics._compute_top_customers()
+            analytics._compute_age_group_sales()
+            analytics._compute_gender_sales()
+            analytics._compute_season_sales()
+            analytics._compute_sales_trends()
+            analytics._compute_commission_analytics()
+    
+    def action_view_detailed_analytics(self):
+        """View detailed analytics"""
+        # This would return an action to view detailed analytics
+        return True
+    
+    def action_export_analytics(self):
+        """Export analytics data"""
+        # This would return an action to export analytics
+        return True

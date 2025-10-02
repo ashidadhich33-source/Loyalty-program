@@ -1,287 +1,216 @@
 # -*- coding: utf-8 -*-
+"""
+Kids Clothing ERP - Sales - Sales Delivery
+=========================================
 
-from odoo import models, fields, api, _
-from odoo.exceptions import ValidationError
+Standalone version of the sales delivery model for kids clothing retail.
+"""
 
+from core_framework.orm import BaseModel, CharField, TextField, IntegerField, FloatField, BooleanField
+from core_framework.orm import DateField, DateTimeField, Many2OneField, One2ManyField, SelectionField
+from addons.core_base.models.base_mixins import KidsClothingMixin, PriceMixin
+from addons.contacts.models.res_partner import ResPartner
+from addons.contacts.models.child_profile import ChildProfile
+from addons.products.models.product_product import ProductProduct
+from addons.company.models.res_company import ResCompany
+from addons.users.models.res_users import ResUsers
+from typing import Dict, Any, Optional, List
+import logging
+from datetime import datetime, date
 
-class SaleDelivery(models.Model):
+logger = logging.getLogger(__name__)
+
+class SaleDelivery(BaseModel, KidsClothingMixin, PriceMixin):
+    """Sales Delivery for Kids Clothing Retail"""
+    
     _name = 'sale.delivery'
     _description = 'Sales Delivery'
-    _inherit = ['mail.thread', 'mail.activity.mixin']
-    _order = 'date_delivery desc, id desc'
-    _rec_name = 'name'
-
-    name = fields.Char(
+    _table = 'sale_delivery'
+    
+    # Delivery Information
+    name = CharField(
         string='Delivery Reference',
+        size=64,
         required=True,
-        copy=False,
-        readonly=True,
-        default=lambda self: _('New'),
         help="Unique reference for the delivery"
     )
     
     # Order Reference
-    order_id = fields.Many2one(
-        'sale.order',
+    order_id = Many2OneField(
+        comodel_name='sale.order',
         string='Sales Order',
         required=True,
-        ondelete='cascade',
         help="Sales order this delivery belongs to"
     )
     
-    partner_id = fields.Many2one(
-        'res.partner',
+    partner_id = Many2OneField(
+        comodel_name='res.partner',
         string='Customer',
-        related='order_id.partner_id',
-        store=True,
         help="Customer for this delivery"
     )
     
-    partner_shipping_id = fields.Many2one(
-        'res.partner',
+    partner_shipping_id = Many2OneField(
+        comodel_name='res.partner',
         string='Delivery Address',
-        related='order_id.partner_shipping_id',
-        store=True,
         help="Delivery address for this delivery"
     )
     
     # Delivery Information
-    date_delivery = fields.Datetime(
+    date_delivery = DateTimeField(
         string='Delivery Date',
         required=True,
-        default=fields.Datetime.now,
         help="Date when the delivery was made"
     )
     
-    date_scheduled = fields.Datetime(
+    date_scheduled = DateTimeField(
         string='Scheduled Date',
         help="Scheduled delivery date"
     )
     
     # Delivery Status
-    state = fields.Selection([
-        ('draft', 'Draft'),
-        ('ready', 'Ready for Delivery'),
-        ('in_transit', 'In Transit'),
-        ('delivered', 'Delivered'),
-        ('cancelled', 'Cancelled'),
-    ], string='Status', readonly=True, copy=False, index=True, tracking=True, default='draft',
-       help="Current status of the delivery")
+    state = SelectionField(
+        selection=[
+            ('draft', 'Draft'),
+            ('ready', 'Ready for Delivery'),
+            ('in_transit', 'In Transit'),
+            ('delivered', 'Delivered'),
+            ('cancelled', 'Cancelled'),
+        ],
+        string='Status',
+        default='draft',
+        help="Current status of the delivery"
+    )
     
     # Kids Clothing Specific Fields
-    child_profile_id = fields.Many2one(
-        'child.profile',
+    child_profile_id = Many2OneField(
+        comodel_name='child.profile',
         string='Child Profile',
-        related='order_id.child_profile_id',
-        store=True,
         help="Child profile for this delivery"
     )
     
-    age_group = fields.Selection([
-        ('0-2', '0-2 Years (Baby)'),
-        ('2-4', '2-4 Years (Toddler)'),
-        ('4-6', '4-6 Years (Pre-school)'),
-        ('6-8', '6-8 Years (Early School)'),
-        ('8-10', '8-10 Years (Middle School)'),
-        ('10-12', '10-12 Years (Pre-teen)'),
-        ('12-14', '12-14 Years (Teen)'),
-        ('14-16', '14-16 Years (Young Adult)'),
-        ('all', 'All Ages'),
-    ], string='Age Group', related='order_id.age_group', store=True,
-       help="Target age group for this delivery")
-    
-    gender = fields.Selection([
-        ('boys', 'Boys'),
-        ('girls', 'Girls'),
-        ('unisex', 'Unisex'),
-    ], string='Gender', related='order_id.gender', store=True,
-       help="Target gender for this delivery")
-    
-    season = fields.Selection([
-        ('summer', 'Summer'),
-        ('winter', 'Winter'),
-        ('monsoon', 'Monsoon'),
-        ('all_season', 'All Season'),
-    ], string='Season', related='order_id.season', store=True,
-       help="Season for this delivery")
-    
     # Delivery Lines
-    delivery_line = fields.One2many(
-        'sale.delivery.line',
-        'delivery_id',
+    delivery_line_ids = One2ManyField(
+        comodel_name='sale.delivery.line',
+        inverse_name='delivery_id',
         string='Delivery Lines',
-        copy=True,
         help="Delivery lines for this delivery"
     )
     
     # Delivery Information
-    delivery_method = fields.Selection([
-        ('pickup', 'Customer Pickup'),
-        ('home_delivery', 'Home Delivery'),
-        ('store_delivery', 'Store Delivery'),
-        ('express', 'Express Delivery'),
-    ], string='Delivery Method', default='home_delivery',
-       help="Method of delivery")
+    delivery_method = SelectionField(
+        selection=[
+            ('pickup', 'Customer Pickup'),
+            ('home_delivery', 'Home Delivery'),
+            ('store_delivery', 'Store Delivery'),
+            ('express', 'Express Delivery'),
+        ],
+        string='Delivery Method',
+        default='home_delivery',
+        help="Method of delivery"
+    )
     
-    delivery_company = fields.Char(
+    delivery_company = CharField(
         string='Delivery Company',
+        size=128,
         help="Company handling the delivery"
     )
     
-    tracking_number = fields.Char(
+    tracking_number = CharField(
         string='Tracking Number',
+        size=64,
         help="Tracking number for the delivery"
     )
     
-    delivery_notes = fields.Text(
+    delivery_notes = TextField(
         string='Delivery Notes',
         help="Notes for the delivery"
     )
     
     # Delivery Address
-    delivery_address = fields.Text(
+    delivery_address = TextField(
         string='Delivery Address',
-        related='partner_shipping_id.street',
         help="Delivery address"
     )
     
-    delivery_city = fields.Char(
+    delivery_city = CharField(
         string='City',
-        related='partner_shipping_id.city',
+        size=64,
         help="Delivery city"
     )
     
-    delivery_state = fields.Char(
+    delivery_state = CharField(
         string='State',
-        related='partner_shipping_id.state_id.name',
+        size=64,
         help="Delivery state"
     )
     
-    delivery_zip = fields.Char(
+    delivery_zip = CharField(
         string='ZIP',
-        related='partner_shipping_id.zip',
+        size=16,
         help="Delivery ZIP code"
     )
     
-    delivery_country = fields.Char(
+    delivery_country = CharField(
         string='Country',
-        related='partner_shipping_id.country_id.name',
+        size=64,
         help="Delivery country"
     )
     
     # Delivery Person
-    delivery_person = fields.Char(
+    delivery_person = CharField(
         string='Delivery Person',
+        size=128,
         help="Person handling the delivery"
     )
     
-    delivery_contact = fields.Char(
+    delivery_contact = CharField(
         string='Delivery Contact',
+        size=32,
         help="Contact number for delivery"
     )
     
     # Delivery Status
-    delivery_confirmed = fields.Boolean(
+    delivery_confirmed = BooleanField(
         string='Delivery Confirmed',
         default=False,
         help="Whether delivery is confirmed"
     )
     
-    delivery_signed = fields.Boolean(
+    delivery_signed = BooleanField(
         string='Delivery Signed',
         default=False,
         help="Whether delivery is signed for"
     )
     
-    delivery_photo = fields.Binary(
+    delivery_photo = CharField(
         string='Delivery Photo',
+        size=255,
         help="Photo of the delivery"
     )
     
     # Kids Clothing Specific Analytics
-    total_kids_items = fields.Integer(
+    total_kids_items = IntegerField(
         string='Total Kids Items',
-        compute='_compute_kids_items',
+        default=0,
         help="Total number of kids items in this delivery"
     )
     
-    age_group_distribution = fields.Text(
-        string='Age Group Distribution',
-        compute='_compute_age_group_distribution',
-        help="Distribution of items by age group"
-    )
-    
-    gender_distribution = fields.Text(
-        string='Gender Distribution',
-        compute='_compute_gender_distribution',
-        help="Distribution of items by gender"
-    )
-    
-    season_distribution = fields.Text(
-        string='Season Distribution',
-        compute='_compute_season_distribution',
-        help="Distribution of items by season"
-    )
-    
     # Company and Multi-company
-    company_id = fields.Many2one(
-        'res.company',
+    company_id = Many2OneField(
+        comodel_name='res.company',
         string='Company',
-        related='order_id.company_id',
-        store=True,
+        required=True,
         help="Company this delivery belongs to"
     )
     
-    @api.depends('delivery_line', 'delivery_line.product_id', 'delivery_line.product_id.age_group')
     def _compute_kids_items(self):
+        """Compute kids items count"""
         for delivery in self:
             kids_items = 0
-            for line in delivery.delivery_line:
+            for line in delivery.delivery_line_ids:
                 if line.product_id and line.product_id.age_group != 'all':
                     kids_items += line.product_uom_qty
             delivery.total_kids_items = kids_items
-    
-    @api.depends('delivery_line', 'delivery_line.product_id', 'delivery_line.product_id.age_group')
-    def _compute_age_group_distribution(self):
-        for delivery in self:
-            distribution = {}
-            for line in delivery.delivery_line:
-                if line.product_id and line.product_id.age_group:
-                    age_group = line.product_id.age_group
-                    if age_group not in distribution:
-                        distribution[age_group] = 0
-                    distribution[age_group] += line.product_uom_qty
-            delivery.age_group_distribution = str(distribution)
-    
-    @api.depends('delivery_line', 'delivery_line.product_id', 'delivery_line.product_id.gender')
-    def _compute_gender_distribution(self):
-        for delivery in self:
-            distribution = {}
-            for line in delivery.delivery_line:
-                if line.product_id and line.product_id.gender:
-                    gender = line.product_id.gender
-                    if gender not in distribution:
-                        distribution[gender] = 0
-                    distribution[gender] += line.product_uom_qty
-            delivery.gender_distribution = str(distribution)
-    
-    @api.depends('delivery_line', 'delivery_line.product_id', 'delivery_line.product_id.season')
-    def _compute_season_distribution(self):
-        for delivery in self:
-            distribution = {}
-            for line in delivery.delivery_line:
-                if line.product_id and line.product_id.season:
-                    season = line.product_id.season
-                    if season not in distribution:
-                        distribution[season] = 0
-                    distribution[season] += line.product_uom_qty
-            delivery.season_distribution = str(distribution)
-    
-    @api.model
-    def create(self, vals):
-        if vals.get('name', _('New')) == _('New'):
-            vals['name'] = self.env['ir.sequence'].next_by_code('sale.delivery') or _('New')
-        return super().create(vals)
     
     def action_ready_delivery(self):
         """Mark delivery as ready"""
@@ -308,158 +237,102 @@ class SaleDelivery(models.Model):
     
     def action_view_order(self):
         """View related order"""
-        return {
-            'type': 'ir.actions.act_window',
-            'name': 'Sales Order',
-            'res_model': 'sale.order',
-            'view_mode': 'form',
-            'res_id': self.order_id.id,
-        }
+        return self.order_id
     
     def action_view_analytics(self):
         """View analytics for this delivery"""
-        action = self.env.ref('sales.action_sale_analytics').read()[0]
-        action['domain'] = [('delivery_id', '=', self.id)]
-        return action
+        # This would return an action to view analytics
+        return True
 
 
-class SaleDeliveryLine(models.Model):
+class SaleDeliveryLine(BaseModel, KidsClothingMixin, PriceMixin):
+    """Sales Delivery Line for Kids Clothing"""
+    
     _name = 'sale.delivery.line'
     _description = 'Sales Delivery Line'
-    _order = 'delivery_id, sequence, id'
-    _rec_name = 'display_name'
-
-    display_name = fields.Char(
-        string='Display Name',
-        compute='_compute_display_name',
-        store=True,
-        help="Display name for this delivery line"
-    )
+    _table = 'sale_delivery_line'
     
     # Delivery Reference
-    delivery_id = fields.Many2one(
-        'sale.delivery',
+    delivery_id = Many2OneField(
+        comodel_name='sale.delivery',
         string='Delivery Reference',
         required=True,
-        ondelete='cascade',
         help="Sales delivery this line belongs to"
     )
     
-    sequence = fields.Integer(
+    sequence = IntegerField(
         string='Sequence',
         default=10,
         help="Order of lines in the delivery"
     )
     
     # Product Information
-    product_id = fields.Many2one(
-        'product.product',
+    product_id = Many2OneField(
+        comodel_name='product.product',
         string='Product',
         required=True,
         help="Product for this line"
     )
     
-    product_template_id = fields.Many2one(
-        'product.template',
-        string='Product Template',
-        related='product_id.product_tmpl_id',
-        store=True,
-        help="Product template for this line"
-    )
-    
     # Kids Clothing Specific Fields
-    age_group = fields.Selection([
-        ('0-2', '0-2 Years (Baby)'),
-        ('2-4', '2-4 Years (Toddler)'),
-        ('4-6', '4-6 Years (Pre-school)'),
-        ('6-8', '6-8 Years (Early School)'),
-        ('8-10', '8-10 Years (Middle School)'),
-        ('10-12', '10-12 Years (Pre-teen)'),
-        ('12-14', '12-14 Years (Teen)'),
-        ('14-16', '14-16 Years (Young Adult)'),
-        ('all', 'All Ages'),
-    ], string='Age Group', related='product_id.age_group', store=True,
-       help="Age group for this product")
-    
-    gender = fields.Selection([
-        ('boys', 'Boys'),
-        ('girls', 'Girls'),
-        ('unisex', 'Unisex'),
-    ], string='Gender', related='product_id.gender', store=True,
-       help="Gender for this product")
-    
-    season = fields.Selection([
-        ('summer', 'Summer'),
-        ('winter', 'Winter'),
-        ('monsoon', 'Monsoon'),
-        ('all_season', 'All Season'),
-    ], string='Season', related='product_id.season', store=True,
-       help="Season for this product")
-    
-    size = fields.Char(
+    size = CharField(
         string='Size',
+        size=32,
         help="Size for this product"
     )
     
-    color = fields.Char(
+    color = CharField(
         string='Color',
+        size=32,
         help="Color for this product"
     )
     
-    brand = fields.Char(
+    brand = CharField(
         string='Brand',
+        size=64,
         help="Brand for this product"
     )
     
     # Quantity
-    product_uom_qty = fields.Float(
+    product_uom_qty = FloatField(
         string='Quantity',
         required=True,
         default=1.0,
         help="Quantity of the product"
     )
     
-    product_uom = fields.Many2one(
-        'uom.uom',
+    product_uom = Many2OneField(
+        comodel_name='uom.uom',
         string='Unit of Measure',
         required=True,
         help="Unit of measure for this line"
     )
     
     # Delivery Status
-    delivered_qty = fields.Float(
+    delivered_qty = FloatField(
         string='Delivered Quantity',
         default=0.0,
         help="Quantity delivered"
     )
     
-    remaining_qty = fields.Float(
+    remaining_qty = FloatField(
         string='Remaining Quantity',
-        compute='_compute_remaining_qty',
         help="Remaining quantity to deliver"
     )
     
     # Kids Clothing Specific Analytics
-    is_kids_item = fields.Boolean(
+    is_kids_item = BooleanField(
         string='Kids Item',
-        compute='_compute_is_kids_item',
+        default=False,
         help="Whether this is a kids item"
     )
     
-    @api.depends('product_id', 'product_id.age_group')
-    def _compute_display_name(self):
-        for line in self:
-            if line.product_id:
-                line.display_name = f"{line.product_id.name} - {line.product_uom_qty} {line.product_uom.name}"
-            else:
-                line.display_name = "New Line"
-    
-    @api.depends('product_uom_qty', 'delivered_qty')
     def _compute_remaining_qty(self):
+        """Compute remaining quantity"""
         for line in self:
             line.remaining_qty = line.product_uom_qty - line.delivered_qty
     
-    @api.depends('product_id', 'product_id.age_group')
     def _compute_is_kids_item(self):
+        """Compute if this is a kids item"""
         for line in self:
             line.is_kids_item = line.product_id and line.product_id.age_group != 'all'

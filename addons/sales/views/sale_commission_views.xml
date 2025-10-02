@@ -1,386 +1,228 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <!-- Sales Commission Tree View -->
+        <!-- Sale Commission Tree View -->
         <record id="view_sale_commission_tree" model="ir.ui.view">
             <field name="name">sale.commission.tree</field>
             <field name="model">sale.commission</field>
             <field name="arch" type="xml">
-                <tree string="Sales Commissions" decoration-info="state=='draft'" decoration-success="state=='active'" decoration-muted="state=='inactive'">
+                <tree string="Sales Commissions" create="true" edit="true" delete="true">
                     <field name="name"/>
-                    <field name="code"/>
-                    <field name="commission_type"/>
-                    <field name="commission_rate"/>
-                    <field name="fixed_amount"/>
-                    <field name="age_group_focus"/>
-                    <field name="gender_focus"/>
-                    <field name="season_focus"/>
-                    <field name="total_commission"/>
-                    <field name="total_orders"/>
-                    <field name="state"/>
-                    <field name="active"/>
+                    <field name="salesperson_id"/>
+                    <field name="team_id"/>
+                    <field name="territory_id"/>
+                    <field name="commission_date"/>
+                    <field name="base_amount"/>
+                    <field name="calculated_amount"/>
+                    <field name="status"/>
+                    <field name="company_id"/>
                 </tree>
             </field>
         </record>
-
-        <!-- Sales Commission Form View -->
+        
+        <!-- Sale Commission Form View -->
         <record id="view_sale_commission_form" model="ir.ui.view">
             <field name="name">sale.commission.form</field>
             <field name="model">sale.commission</field>
             <field name="arch" type="xml">
-                <form string="Sales Commission">
+                <form string="Sales Commission" create="true" edit="true" delete="true">
                     <header>
-                        <button name="action_activate" string="Activate" type="object" class="btn-primary" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
-                        <button name="action_deactivate" string="Deactivate" type="object" class="btn-secondary" attrs="{'invisible': [('state', '!=', 'active')]}"/>
-                        <field name="state" widget="statusbar" statusbar_visible="draft,active,inactive"/>
+                        <button name="action_calculate" string="Calculate" type="object" class="btn-primary" states="draft"/>
+                        <button name="action_approve" string="Approve" type="object" class="btn-primary" states="calculated"/>
+                        <button name="action_pay" string="Pay" type="object" class="btn-primary" states="approved"/>
+                        <button name="action_cancel" string="Cancel" type="object" class="btn-secondary" states="draft"/>
+                        <field name="status" widget="statusbar" statusbar_visible="draft,calculated,approved,paid"/>
                     </header>
                     <sheet>
-                        <div class="oe_button_box" name="button_box">
-                            <button name="action_view_rules" type="object" class="oe_stat_button" icon="fa-list">
-                                <div class="o_field_widget o_stat_info">
-                                    <span class="o_stat_text">Rules</span>
-                                </div>
-                            </button>
-                            <button name="action_view_analytics" type="object" class="oe_stat_button" icon="fa-bar-chart">
-                                <div class="o_field_widget o_stat_info">
-                                    <span class="o_stat_text">Analytics</span>
-                                </div>
-                            </button>
-                        </div>
                         <div class="oe_title">
                             <h1>
-                                <field name="name" placeholder="Commission Name"/>
+                                <field name="name" readonly="1"/>
                             </h1>
                         </div>
                         <group>
                             <group>
-                                <field name="code"/>
-                                <field name="description"/>
                                 <field name="commission_type"/>
-                            </group>
-                            <group>
-                                <field name="age_group_focus"/>
-                                <field name="gender_focus"/>
-                                <field name="season_focus"/>
-                            </group>
-                        </group>
-                        <group>
-                            <group>
                                 <field name="commission_rate"/>
-                                <field name="fixed_amount"/>
-                                <field name="currency_id"/>
+                                <field name="commission_amount"/>
+                                <field name="base_amount"/>
+                                <field name="calculated_amount"/>
                             </group>
                             <group>
-                                <field name="minimum_amount"/>
-                                <field name="maximum_amount"/>
-                                <field name="period_type"/>
+                                <field name="salesperson_id"/>
+                                <field name="team_id"/>
+                                <field name="territory_id"/>
+                                <field name="commission_date"/>
+                                <field name="company_id"/>
                             </group>
                         </group>
                         <group>
                             <group>
-                                <field name="total_commission"/>
-                                <field name="total_orders"/>
+                                <field name="period_start"/>
+                                <field name="period_end"/>
+                                <field name="sale_order_id"/>
+                                <field name="rule_id"/>
                             </group>
                             <group>
-                                <field name="kids_commission"/>
+                                <field name="kids_commission_rate"/>
+                                <field name="age_group_commission"/>
+                                <field name="gender_commission"/>
+                                <field name="season_commission"/>
                             </group>
                         </group>
                         <notebook>
-                            <page string="Commission Rules" name="commission_rules">
-                                <field name="rule_ids">
-                                    <tree editable="bottom">
-                                        <field name="name"/>
-                                        <field name="condition_type"/>
-                                        <field name="minimum_amount"/>
-                                        <field name="maximum_amount"/>
-                                        <field name="commission_rate"/>
-                                        <field name="fixed_amount"/>
-                                        <field name="active"/>
-                                    </tree>
-                                </field>
-                            </page>
-                            <page string="Kids Analytics" name="kids_analytics">
-                                <group>
-                                    <group>
-                                        <field name="age_group_commission"/>
-                                    </group>
-                                    <group>
-                                        <field name="gender_commission"/>
-                                    </group>
-                                </group>
-                                <group>
-                                    <group>
-                                        <field name="season_commission"/>
-                                    </group>
-                                </group>
+                            <page string="Notes" name="notes">
+                                <field name="notes"/>
                             </page>
                         </notebook>
                     </sheet>
                 </form>
             </field>
         </record>
-
-        <!-- Sales Commission Search View -->
+        
+        <!-- Sale Commission Search View -->
         <record id="view_sale_commission_search" model="ir.ui.view">
             <field name="name">sale.commission.search</field>
             <field name="model">sale.commission</field>
             <field name="arch" type="xml">
-                <search string="Search Sales Commissions">
+                <search string="Sales Commissions">
                     <field name="name"/>
-                    <field name="code"/>
-                    <field name="commission_type"/>
-                    <field name="age_group_focus"/>
-                    <field name="gender_focus"/>
-                    <field name="season_focus"/>
-                    <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
-                    <filter string="Active" name="active" domain="[('state', '=', 'active')]"/>
-                    <filter string="Inactive" name="inactive" domain="[('state', '=', 'inactive')]"/>
-                    <separator/>
-                    <filter string="Percentage" name="percentage" domain="[('commission_type', '=', 'percentage')]"/>
-                    <filter string="Fixed Amount" name="fixed" domain="[('commission_type', '=', 'fixed')]"/>
-                    <filter string="Tiered" name="tiered" domain="[('commission_type', '=', 'tiered')]"/>
-                    <separator/>
-                    <filter string="Baby (0-2)" name="baby" domain="[('age_group_focus', '=', '0-2')]"/>
-                    <filter string="Toddler (2-4)" name="toddler" domain="[('age_group_focus', '=', '2-4')]"/>
-                    <filter string="Kids (4-12)" name="kids" domain="[('age_group_focus', 'in', ['4-6', '6-8', '8-10', '10-12'])]"/>
-                    <filter string="Teen (12-16)" name="teen" domain="[('age_group_focus', 'in', ['12-14', '14-16'])]"/>
-                    <separator/>
-                    <filter string="Boys" name="boys" domain="[('gender_focus', '=', 'boys')]"/>
-                    <filter string="Girls" name="girls" domain="[('gender_focus', '=', 'girls')]"/>
-                    <filter string="Unisex" name="unisex" domain="[('gender_focus', '=', 'unisex')]"/>
-                    <separator/>
-                    <filter string="Summer" name="summer" domain="[('season_focus', '=', 'summer')]"/>
-                    <filter string="Winter" name="winter" domain="[('season_focus', '=', 'winter')]"/>
-                    <filter string="Monsoon" name="monsoon" domain="[('season_focus', '=', 'monsoon')]"/>
+                    <field name="salesperson_id"/>
+                    <field name="team_id"/>
+                    <field name="territory_id"/>
+                    <field name="commission_date"/>
+                    <field name="status"/>
+                    <field name="company_id"/>
+                    <filter string="Draft" name="draft" domain="[('status', '=', 'draft')]"/>
+                    <filter string="Calculated" name="calculated" domain="[('status', '=', 'calculated')]"/>
+                    <filter string="Approved" name="approved" domain="[('status', '=', 'approved')]"/>
+                    <filter string="Paid" name="paid" domain="[('status', '=', 'paid')]"/>
+                    <filter string="Cancelled" name="cancel" domain="[('status', '=', 'cancelled')]"/>
                     <group expand="0" string="Group By">
-                        <filter string="Commission Type" name="group_commission_type" context="{'group_by': 'commission_type'}"/>
-                        <filter string="Age Group Focus" name="group_age_group_focus" context="{'group_by': 'age_group_focus'}"/>
-                        <filter string="Gender Focus" name="group_gender_focus" context="{'group_by': 'gender_focus'}"/>
-                        <filter string="Season Focus" name="group_season_focus" context="{'group_by': 'season_focus'}"/>
-                        <filter string="Status" name="group_state" context="{'group_by': 'state'}"/>
+                        <filter string="Status" name="group_status" context="{'group_by': 'status'}"/>
+                        <filter string="Salesperson" name="group_salesperson" context="{'group_by': 'salesperson_id'}"/>
+                        <filter string="Team" name="group_team" context="{'group_by': 'team_id'}"/>
+                        <filter string="Territory" name="group_territory" context="{'group_by': 'territory_id'}"/>
+                        <filter string="Company" name="group_company" context="{'group_by': 'company_id'}"/>
                     </group>
                 </search>
             </field>
         </record>
-
-        <!-- Sales Commission Kanban View -->
-        <record id="view_sale_commission_kanban" model="ir.ui.view">
-            <field name="name">sale.commission.kanban</field>
-            <field name="model">sale.commission</field>
-            <field name="arch" type="xml">
-                <kanban string="Sales Commissions">
-                    <field name="name"/>
-                    <field name="code"/>
-                    <field name="commission_type"/>
-                    <field name="commission_rate"/>
-                    <field name="fixed_amount"/>
-                    <field name="age_group_focus"/>
-                    <field name="gender_focus"/>
-                    <field name="season_focus"/>
-                    <field name="total_commission"/>
-                    <field name="total_orders"/>
-                    <field name="state"/>
-                    <field name="active"/>
-                    <templates>
-                        <t t-name="kanban-box">
-                            <div class="oe_kanban_card oe_kanban_global_click">
-                                <div class="oe_kanban_content">
-                                    <div class="o_kanban_record_top">
-                                        <div class="o_kanban_record_headings">
-                                            <strong class="o_kanban_record_title">
-                                                <field name="name"/>
-                                            </strong>
-                                            <br/>
-                                            <field name="code"/>
-                                        </div>
-                                        <div class="o_kanban_record_body">
-                                            <field name="commission_type"/>
-                                            <br/>
-                                            <field name="commission_rate"/>
-                                            <field name="fixed_amount"/>
-                                            <br/>
-                                            <field name="age_group_focus"/>
-                                            <field name="gender_focus"/>
-                                            <field name="season_focus"/>
-                                        </div>
-                                    </div>
-                                    <div class="o_kanban_record_bottom">
-                                        <div class="oe_kanban_bottom_left">
-                                            <field name="total_commission"/>
-                                            <field name="total_orders"/>
-                                        </div>
-                                        <div class="oe_kanban_bottom_right">
-                                            <field name="state" widget="label_selection"/>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </t>
-                    </templates>
-                </kanban>
-            </field>
-        </record>
-
-        <!-- Sales Commission Action -->
+        
+        <!-- Sale Commission Action -->
         <record id="action_sale_commission" model="ir.actions.act_window">
             <field name="name">Sales Commissions</field>
             <field name="res_model">sale.commission</field>
-            <field name="view_mode">tree,form,kanban</field>
-            <field name="context">{}</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_sale_commission_search"/>
             <field name="help" type="html">
                 <p class="o_view_nocontent_smiling_face">
                     Create your first sales commission!
                 </p>
                 <p>
-                    Sales commissions are used to define how salespeople are compensated.
-                    They can be percentage-based, fixed amount, or tiered.
+                    Sales commissions track and manage commission payments to salespeople.
                 </p>
             </field>
         </record>
-
-        <!-- Sales Commission Rule Tree View -->
+        
+        <!-- Sale Commission Rule Tree View -->
         <record id="view_sale_commission_rule_tree" model="ir.ui.view">
             <field name="name">sale.commission.rule.tree</field>
             <field name="model">sale.commission.rule</field>
             <field name="arch" type="xml">
-                <tree string="Sales Commission Rules" decoration-info="active==False">
-                    <field name="display_name"/>
-                    <field name="commission_id"/>
+                <tree string="Sales Commission Rules" create="true" edit="true" delete="true">
                     <field name="name"/>
-                    <field name="condition_type"/>
-                    <field name="minimum_amount"/>
-                    <field name="maximum_amount"/>
+                    <field name="code"/>
+                    <field name="rule_type"/>
                     <field name="commission_rate"/>
-                    <field name="fixed_amount"/>
+                    <field name="commission_amount"/>
+                    <field name="min_amount"/>
+                    <field name="max_amount"/>
+                    <field name="sequence"/>
                     <field name="active"/>
+                    <field name="company_id"/>
                 </tree>
             </field>
         </record>
-
-        <!-- Sales Commission Rule Form View -->
+        
+        <!-- Sale Commission Rule Form View -->
         <record id="view_sale_commission_rule_form" model="ir.ui.view">
             <field name="name">sale.commission.rule.form</field>
             <field name="model">sale.commission.rule</field>
             <field name="arch" type="xml">
-                <form string="Sales Commission Rule">
-                    <header>
-                        <field name="active" widget="boolean_toggle"/>
-                    </header>
+                <form string="Sales Commission Rule" create="true" edit="true" delete="true">
                     <sheet>
                         <div class="oe_title">
                             <h1>
-                                <field name="display_name" readonly="1"/>
+                                <field name="name"/>
                             </h1>
                         </div>
                         <group>
                             <group>
-                                <field name="commission_id"/>
-                                <field name="name"/>
-                                <field name="description"/>
-                                <field name="condition_type"/>
+                                <field name="code"/>
+                                <field name="rule_type"/>
+                                <field name="commission_rate"/>
+                                <field name="commission_amount"/>
+                                <field name="sequence"/>
                             </group>
                             <group>
-                                <field name="minimum_amount"/>
-                                <field name="maximum_amount"/>
-                                <field name="commission_rate"/>
-                                <field name="fixed_amount"/>
-                                <field name="currency_id"/>
+                                <field name="min_amount"/>
+                                <field name="max_amount"/>
+                                <field name="active"/>
+                                <field name="company_id"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="kids_commission_rate"/>
+                                <field name="age_group_commission"/>
+                            </group>
+                            <group>
+                                <field name="gender_commission"/>
+                                <field name="season_commission"/>
                             </group>
                         </group>
                         <notebook>
-                            <page string="Conditions" name="conditions">
-                                <group>
-                                    <group>
-                                        <field name="product_ids"/>
-                                        <field name="category_ids"/>
-                                    </group>
-                                    <group>
-                                        <field name="customer_ids"/>
-                                        <field name="customer_segment_ids"/>
-                                    </group>
-                                </group>
-                                <group>
-                                    <group>
-                                        <field name="territory_ids"/>
-                                        <field name="team_ids"/>
-                                    </group>
-                                    <group>
-                                        <field name="age_group_ids"/>
-                                        <field name="gender_ids"/>
-                                        <field name="season_ids"/>
-                                    </group>
-                                </group>
-                            </page>
-                            <page string="Analytics" name="analytics">
-                                <group>
-                                    <group>
-                                        <field name="commission_amount"/>
-                                        <field name="order_count"/>
-                                    </group>
-                                    <group>
-                                        <field name="kids_commission"/>
-                                    </group>
-                                </group>
-                                <group>
-                                    <group>
-                                        <field name="age_group_commission"/>
-                                    </group>
-                                    <group>
-                                        <field name="gender_commission"/>
-                                    </group>
-                                </group>
-                                <group>
-                                    <group>
-                                        <field name="season_commission"/>
-                                    </group>
-                                </group>
+                            <page string="Description" name="description">
+                                <field name="description"/>
                             </page>
                         </notebook>
                     </sheet>
                 </form>
             </field>
         </record>
-
-        <!-- Sales Commission Rule Search View -->
+        
+        <!-- Sale Commission Rule Search View -->
         <record id="view_sale_commission_rule_search" model="ir.ui.view">
             <field name="name">sale.commission.rule.search</field>
             <field name="model">sale.commission.rule</field>
             <field name="arch" type="xml">
-                <search string="Search Sales Commission Rules">
-                    <field name="display_name"/>
-                    <field name="commission_id"/>
+                <search string="Sales Commission Rules">
                     <field name="name"/>
-                    <field name="condition_type"/>
+                    <field name="code"/>
+                    <field name="rule_type"/>
+                    <field name="company_id"/>
                     <filter string="Active" name="active" domain="[('active', '=', True)]"/>
                     <filter string="Inactive" name="inactive" domain="[('active', '=', False)]"/>
-                    <separator/>
-                    <filter string="Amount Based" name="amount" domain="[('condition_type', '=', 'amount')]"/>
-                    <filter string="Quantity Based" name="quantity" domain="[('condition_type', '=', 'quantity')]"/>
-                    <filter string="Product Based" name="product" domain="[('condition_type', '=', 'product')]"/>
-                    <filter string="Customer Based" name="customer" domain="[('condition_type', '=', 'customer')]"/>
-                    <filter string="Territory Based" name="territory" domain="[('condition_type', '=', 'territory')]"/>
-                    <filter string="Team Based" name="team" domain="[('condition_type', '=', 'team')]"/>
                     <group expand="0" string="Group By">
-                        <filter string="Commission" name="group_commission" context="{'group_by': 'commission_id'}"/>
-                        <filter string="Condition Type" name="group_condition_type" context="{'group_by': 'condition_type'}"/>
+                        <filter string="Rule Type" name="group_type" context="{'group_by': 'rule_type'}"/>
+                        <filter string="Company" name="group_company" context="{'group_by': 'company_id'}"/>
                     </group>
                 </search>
             </field>
         </record>
-
-        <!-- Sales Commission Rule Action -->
+        
+        <!-- Sale Commission Rule Action -->
         <record id="action_sale_commission_rule" model="ir.actions.act_window">
             <field name="name">Sales Commission Rules</field>
             <field name="res_model">sale.commission.rule</field>
             <field name="view_mode">tree,form</field>
-            <field name="context">{}</field>
+            <field name="search_view_id" ref="view_sale_commission_rule_search"/>
             <field name="help" type="html">
                 <p class="o_view_nocontent_smiling_face">
-                    Create your first sales commission rule!
+                    Create your first commission rule!
                 </p>
                 <p>
-                    Sales commission rules define the conditions and rates for commissions.
-                    They can be based on amount, quantity, product, customer, territory, or team.
+                    Commission rules define how commissions are calculated for sales.
                 </p>
             </field>
         </record>

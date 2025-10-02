@@ -1,232 +1,314 @@
-# Sales Addon
+# Sales Management Addon
 
 ## Overview
 
-The Sales addon provides comprehensive sales management functionality specifically designed for kids clothing retail. It includes sales orders, quotations, deliveries, returns, team management, territory management, commission tracking, and analytics.
+The Sales Management addon provides comprehensive sales functionality for the Kids Clothing ERP system. It includes sales orders, quotations, deliveries, returns, team management, territory management, commission tracking, and analytics.
 
 ## Features
 
-### Core Sales Management
-- **Sales Orders**: Complete order management with kids clothing specific fields
-- **Sales Quotations**: Quotation management with conversion to orders
-- **Sales Deliveries**: Delivery tracking and management
-- **Sales Returns**: Return and exchange processing
-
-### Kids Clothing Specific Features
-- **Age Group Management**: Support for baby (0-2), toddler (2-4), kids (4-12), teen (12-16)
-- **Gender Management**: Boys, girls, and unisex clothing support
-- **Season Management**: Summer, winter, monsoon, and all-season support
-- **Child Profiles**: Integration with child profile management
-- **Size and Color Management**: Product variant management
-- **Brand Management**: Brand-specific sales tracking
+### Core Sales Features
+- **Sales Orders**: Create and manage sales orders with order lines
+- **Sales Quotations**: Send price quotes to customers
+- **Sales Deliveries**: Manage product deliveries to customers
+- **Sales Returns**: Handle product returns and refunds
 
 ### Sales Team Management
-- **Sales Teams**: Team organization and management
-- **Team Members**: Member management with roles and expertise
-- **Performance Tracking**: Team and individual performance metrics
-- **Commission Management**: Commission rules and calculations
+- **Sales Teams**: Organize and manage sales teams
+- **Team Members**: Assign team members and roles
+- **Team Performance**: Track team performance metrics
 
-### Territory Management
-- **Sales Territories**: Geographic territory management
-- **Territory Assignment**: Salesperson assignment to territories
-- **Performance Analytics**: Territory-specific performance tracking
+### Sales Territory Management
+- **Sales Territories**: Define and manage sales territories
+- **Territory Hierarchy**: Support for parent-child territory relationships
+- **Territory Performance**: Track territory performance metrics
 
-### Commission Management
-- **Commission Rules**: Flexible commission rule configuration
-- **Commission Types**: Percentage, fixed amount, and tiered commissions
-- **Performance Tracking**: Commission performance analytics
+### Sales Commission Management
+- **Commission Rules**: Define commission calculation rules
+- **Commission Tracking**: Track and manage sales commissions
+- **Commission Payments**: Process commission payments
 
-### Analytics and Reporting
-- **Sales Analytics**: Comprehensive sales performance analytics
-- **Kids Clothing Analytics**: Age group, gender, and season analytics
-- **Performance Metrics**: Conversion rates, delivery rates, return rates
-- **Customer Analytics**: Customer segmentation and behavior analysis
+### Sales Analytics
+- **Sales Performance**: Track sales performance metrics
+- **Kids Clothing Analytics**: Specialized analytics for kids clothing
+- **Age Group Analytics**: Sales analysis by age group
+- **Gender Analytics**: Sales analysis by gender
+- **Season Analytics**: Sales analysis by season
+
+### Sales Wizards
+- **Commission Wizard**: Bulk commission calculation
+- **Analytics Wizard**: Bulk analytics generation
+- **Sales Wizard**: General sales operations
 
 ## Models
 
-### Sale Order
-- **sale.order**: Main sales order model
-- **sale.order.line**: Sales order line items
+### Sale Order Models
+- `sale.order`: Main sales order model
+- `sale.order.line`: Sales order line model
 
-### Sale Quotation
-- **sale.quotation**: Sales quotation model
-- **sale.quotation.line**: Quotation line items
+### Sale Quotation Models
+- `sale.quotation`: Sales quotation model
+- `sale.quotation.line`: Sales quotation line model
 
-### Sale Delivery
-- **sale.delivery**: Sales delivery model
-- **sale.delivery.line**: Delivery line items
+### Sale Delivery Models
+- `sale.delivery`: Sales delivery model
+- `sale.delivery.line`: Sales delivery line model
 
-### Sale Return
-- **sale.return**: Sales return model
-- **sale.return.line**: Return line items
+### Sale Return Models
+- `sale.return`: Sales return model
+- `sale.return.line`: Sales return line model
 
-### Sale Team
-- **sale.team**: Sales team model
-- **sale.team.member**: Team member model
+### Sales Team Models
+- `sale.team`: Sales team model
+- `sale.team.member`: Sales team member model
 
-### Sale Territory
-- **sale.territory**: Sales territory model
+### Sales Territory Models
+- `sale.territory`: Sales territory model
 
-### Sale Commission
-- **sale.commission**: Sales commission model
-- **sale.commission.rule**: Commission rule model
+### Sales Commission Models
+- `sale.commission`: Sales commission model
+- `sale.commission.rule`: Sales commission rule model
 
-### Sale Analytics
-- **sale.analytics**: Sales analytics model
+### Sales Analytics Models
+- `sale.analytics`: Sales analytics model
 
-## Views
+### Sales Wizard Models
+- `sale.wizard`: Sales wizard model
+- `sale.commission.wizard`: Sales commission wizard model
+- `sale.analytics.wizard`: Sales analytics wizard model
 
-### Tree Views
-- Sales orders, quotations, deliveries, returns
-- Sales teams, territories, commissions
-- Sales analytics with filtering and grouping
+## Kids Clothing Specific Features
 
-### Form Views
-- Comprehensive form views with tabs
-- Kids clothing specific fields
-- Analytics and performance metrics
+### Age Group Support
+- Infant (0-12 months)
+- Toddler (1-3 years)
+- Preschool (3-5 years)
+- Child (5-12 years)
+- Teen (12-18 years)
 
-### Kanban Views
-- Visual representation of sales data
-- Status-based organization
-- Kids clothing specific badges
+### Gender Support
+- Boys
+- Girls
+- Unisex
 
-### Search Views
-- Advanced filtering options
-- Age group, gender, season filters
-- Performance and analytics filters
+### Season Support
+- Spring
+- Summer
+- Fall
+- Winter
+
+### Size and Color Support
+- Product size variants
+- Product color variants
+- Size and color combinations
+
+## Indian Localization
+
+### GST Support
+- GST treatment options
+- Consumer, Registered Business, Unregistered Business
+- GST calculation and reporting
+
+### Currency Support
+- Indian Rupee (INR) support
+- Multi-currency support
+- Currency conversion
+
+### Address Support
+- Indian address format
+- State and city support
+- PIN code support
 
 ## Security
 
 ### Access Control
-- Model-level access control
-- Multi-company support
-- Record-level security rules
-
-### Data Protection
-- Company-based data isolation
 - User-based access control
-- Secure data handling
+- Role-based permissions
+- Company-based data isolation
 
-## Dependencies
+### Data Security
+- Encrypted sensitive data
+- Audit trail
+- Data validation
 
-- **core_base**: Core framework
-- **core_web**: Web framework
-- **users**: User management
-- **company**: Company management
-- **contacts**: Contact management
-- **products**: Product management
-- **categories**: Product categorization
+## Testing
+
+### Unit Tests
+- Model validation tests
+- Business logic tests
+- Data integrity tests
+
+### Integration Tests
+- API integration tests
+- Database integration tests
+- UI integration tests
+
+### Performance Tests
+- Load testing
+- Stress testing
+- Scalability testing
 
 ## Installation
 
-1. Ensure all dependencies are installed
-2. Install the sales addon
-3. Configure sales teams and territories
-4. Set up commission rules
-5. Configure analytics settings
+1. Ensure the addon is in the `addons/sales/` directory
+2. Install the addon using the ERP system's addon manager
+3. Configure the addon settings
+4. Set up initial data
 
 ## Configuration
 
-### Sales Teams
-1. Create sales teams for different age groups
-2. Assign team members with appropriate expertise
-3. Set team targets and performance metrics
+### Sales Team Configuration
+1. Create sales teams
+2. Assign team members
+3. Set team targets
+4. Configure team territories
 
-### Sales Territories
-1. Define geographic territories
-2. Assign salespeople to territories
-3. Set territory-specific targets
+### Commission Configuration
+1. Define commission rules
+2. Set commission rates
+3. Configure commission periods
+4. Set up commission calculations
 
-### Commission Rules
-1. Create commission structures
-2. Define commission rates and conditions
-3. Set up performance-based commissions
-
-### Analytics
+### Analytics Configuration
 1. Configure analytics periods
-2. Set up performance metrics
-3. Enable kids clothing specific analytics
+2. Set up analytics types
+3. Configure analytics filters
+4. Set up analytics exports
 
 ## Usage
 
-### Sales Orders
-1. Create sales orders with customer information
-2. Add order lines with products
-3. Specify age group, gender, and season
-4. Process orders through workflow
+### Creating Sales Orders
+1. Navigate to Sales > Sales Orders
+2. Click "Create" to create a new order
+3. Fill in customer details
+4. Add order lines with products
+5. Set quantities and prices
+6. Save and confirm the order
 
-### Sales Quotations
-1. Create quotations for customers
-2. Send quotations for approval
-3. Convert approved quotations to orders
+### Managing Sales Teams
+1. Navigate to Sales > Sales Teams
+2. Create or edit teams
+3. Assign team members
+4. Set team targets
+5. Monitor team performance
 
-### Sales Deliveries
-1. Create delivery orders
-2. Track delivery status
-3. Confirm deliveries
+### Tracking Commissions
+1. Navigate to Sales > Commission
+2. View commission records
+3. Calculate commissions
+4. Approve and pay commissions
 
-### Sales Returns
-1. Process customer returns
-2. Handle exchanges and refunds
-3. Track return reasons and analytics
+### Generating Analytics
+1. Navigate to Sales > Analytics
+2. Select analytics period
+3. Choose analytics type
+4. Generate analytics report
+5. Export analytics data
 
-### Analytics
-1. View sales performance metrics
-2. Analyze kids clothing trends
-3. Track team and territory performance
+## API Reference
 
-## Customization
+### Sale Order API
+- `POST /api/sales/orders` - Create sales order
+- `GET /api/sales/orders` - List sales orders
+- `GET /api/sales/orders/{id}` - Get sales order
+- `PUT /api/sales/orders/{id}` - Update sales order
+- `DELETE /api/sales/orders/{id}` - Delete sales order
 
-### Kids Clothing Specific Fields
-- Age group selection
-- Gender specification
-- Season management
-- Child profile integration
+### Sales Team API
+- `POST /api/sales/teams` - Create sales team
+- `GET /api/sales/teams` - List sales teams
+- `GET /api/sales/teams/{id}` - Get sales team
+- `PUT /api/sales/teams/{id}` - Update sales team
+- `DELETE /api/sales/teams/{id}` - Delete sales team
 
-### Business Logic
-- Kids clothing specific validation
-- Age-appropriate product recommendations
-- Seasonal sales management
-- Size and color management
+### Sales Analytics API
+- `GET /api/sales/analytics` - Get sales analytics
+- `POST /api/sales/analytics/generate` - Generate analytics
+- `GET /api/sales/analytics/export` - Export analytics
 
-### Reporting
-- Kids clothing specific reports
-- Age group analytics
-- Gender-based analytics
-- Seasonal performance tracking
+## Troubleshooting
 
-## Technical Details
+### Common Issues
+1. **Sales order not saving**: Check required fields and validation
+2. **Commission not calculating**: Verify commission rules and rates
+3. **Analytics not generating**: Check data availability and permissions
+4. **Team performance not updating**: Verify team member assignments
 
-### Architecture
-- Modular design with clear separation of concerns
-- Multi-company support
-- Scalable and maintainable code
+### Debug Mode
+Enable debug mode for detailed logging:
+```python
+DEBUG = True
+```
 
-### Performance
-- Optimized database queries
-- Efficient data processing
-- Responsive user interface
-
-### Integration
-- Seamless integration with other addons
-- API support for external systems
-- Data import/export capabilities
+### Log Files
+Check log files for errors:
+- `logs/sales.log` - Sales-specific logs
+- `logs/erp.log` - General ERP logs
 
 ## Support
 
-For technical support and questions:
-- Check the documentation
-- Review the code examples
-- Contact the development team
+### Documentation
+- User manual
+- API documentation
+- Developer guide
+
+### Community
+- Forum support
+- GitHub issues
+- Community chat
+
+### Professional Support
+- Email support
+- Phone support
+- On-site support
 
 ## License
 
-This addon is licensed under LGPL-3.
+This addon is licensed under the LGPL-3 license.
 
-## Version History
+## Changelog
 
-- **1.0.0**: Initial release with core sales functionality
+### Version 1.0.0
+- Initial release
+- Basic sales order functionality
+- Sales team management
+- Sales territory management
+- Sales commission tracking
+- Sales analytics
 - Kids clothing specific features
-- Sales team and territory management
-- Commission and analytics support
+- Indian localization support
+
+## Contributing
+
+### Development Setup
+1. Fork the repository
+2. Create a feature branch
+3. Make changes
+4. Add tests
+5. Submit pull request
+
+### Code Standards
+- Follow PEP 8 for Python code
+- Use meaningful variable names
+- Add docstrings to functions
+- Write unit tests
+- Update documentation
+
+### Testing
+- Run unit tests: `python -m pytest tests/`
+- Run integration tests: `python -m pytest tests/integration/`
+- Run performance tests: `python -m pytest tests/performance/`
+
+## Roadmap
+
+### Future Features
+- Advanced analytics
+- Machine learning integration
+- Mobile app support
+- API improvements
+- Performance optimizations
+
+### Planned Updates
+- Version 1.1.0: Advanced analytics
+- Version 1.2.0: Mobile support
+- Version 1.3.0: AI integration
+- Version 2.0.0: Major UI overhaul

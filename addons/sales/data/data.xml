@@ -1,191 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <!-- Sales Order Sequence -->
-        <record id="seq_sale_order" model="ir.sequence">
-            <field name="name">Sales Order</field>
-            <field name="code">sale.order</field>
-            <field name="prefix">SO</field>
-            <field name="padding">5</field>
-            <field name="number_next">1</field>
-            <field name="number_increment">1</field>
+        <!-- Sales Team Data -->
+        <record id="sale_team_online" model="sale.team">
+            <field name="name">Online Sales Team</field>
+            <field name="code">ONLINE</field>
+            <field name="description">Team responsible for online sales</field>
+            <field name="company_id" ref="base.main_company"/>
         </record>
-
-        <!-- Sales Quotation Sequence -->
-        <record id="seq_sale_quotation" model="ir.sequence">
-            <field name="name">Sales Quotation</field>
-            <field name="code">sale.quotation</field>
-            <field name="prefix">SQ</field>
-            <field name="padding">5</field>
-            <field name="number_next">1</field>
-            <field name="number_increment">1</field>
+        
+        <record id="sale_team_offline" model="sale.team">
+            <field name="name">Offline Sales Team</field>
+            <field name="code">OFFLINE</field>
+            <field name="description">Team responsible for offline sales</field>
+            <field name="company_id" ref="base.main_company"/>
         </record>
-
-        <!-- Sales Delivery Sequence -->
-        <record id="seq_sale_delivery" model="ir.sequence">
-            <field name="name">Sales Delivery</field>
-            <field name="code">sale.delivery</field>
-            <field name="prefix">SD</field>
-            <field name="padding">5</field>
-            <field name="number_next">1</field>
-            <field name="number_increment">1</field>
+        
+        <!-- Sales Territory Data -->
+        <record id="sale_territory_north" model="sale.territory">
+            <field name="name">North Territory</field>
+            <field name="code">NORTH</field>
+            <field name="description">Northern region sales territory</field>
+            <field name="territory_type">region</field>
+            <field name="company_id" ref="base.main_company"/>
         </record>
-
-        <!-- Sales Return Sequence -->
-        <record id="seq_sale_return" model="ir.sequence">
-            <field name="name">Sales Return</field>
-            <field name="code">sale.return</field>
-            <field name="prefix">SR</field>
-            <field name="padding">5</field>
-            <field name="number_next">1</field>
-            <field name="number_increment">1</field>
+        
+        <record id="sale_territory_south" model="sale.territory">
+            <field name="name">South Territory</field>
+            <field name="code">SOUTH</field>
+            <field name="description">Southern region sales territory</field>
+            <field name="territory_type">region</field>
+            <field name="company_id" ref="base.main_company"/>
         </record>
-
-        <!-- Default Sales Team -->
-        <record id="default_sales_team" model="sale.team">
-            <field name="name">Default Sales Team</field>
-            <field name="code">DEFAULT</field>
-            <field name="description">Default sales team for kids clothing</field>
-            <field name="age_group_focus">all</field>
-            <field name="gender_focus">all</field>
-            <field name="season_focus">all_season</field>
+        
+        <record id="sale_territory_east" model="sale.territory">
+            <field name="name">East Territory</field>
+            <field name="code">EAST</field>
+            <field name="description">Eastern region sales territory</field>
+            <field name="territory_type">region</field>
+            <field name="company_id" ref="base.main_company"/>
         </record>
-
-        <!-- Default Sales Territory -->
-        <record id="default_sales_territory" model="sale.territory">
-            <field name="name">Default Territory</field>
-            <field name="code">DEFAULT</field>
-            <field name="description">Default territory for kids clothing</field>
-            <field name="age_group_focus">all</field>
-            <field name="gender_focus">all</field>
-            <field name="season_focus">all_season</field>
+        
+        <record id="sale_territory_west" model="sale.territory">
+            <field name="name">West Territory</field>
+            <field name="code">WEST</field>
+            <field name="description">Western region sales territory</field>
+            <field name="territory_type">region</field>
+            <field name="company_id" ref="base.main_company"/>
         </record>
-
-        <!-- Default Sales Commission -->
-        <record id="default_sales_commission" model="sale.commission">
-            <field name="name">Default Commission</field>
-            <field name="code">DEFAULT</field>
-            <field name="description">Default commission for kids clothing</field>
-            <field name="commission_type">percentage</field>
+        
+        <!-- Sales Commission Rules -->
+        <record id="sale_commission_rule_standard" model="sale.commission.rule">
+            <field name="name">Standard Commission Rule</field>
+            <field name="code">STANDARD</field>
+            <field name="description">Standard commission rule for sales</field>
+            <field name="rule_type">percentage</field>
             <field name="commission_rate">5.0</field>
-            <field name="age_group_focus">all</field>
-            <field name="gender_focus">all</field>
-            <field name="season_focus">all_season</field>
-            <field name="state">active</field>
+            <field name="company_id" ref="base.main_company"/>
         </record>
-
-        <!-- Kids Clothing Specific Sales Teams -->
-        <record id="baby_sales_team" model="sale.team">
-            <field name="name">Baby Sales Team</field>
-            <field name="code">BABY</field>
-            <field name="description">Sales team for baby clothing (0-2 years)</field>
-            <field name="age_group_focus">0-2</field>
-            <field name="gender_focus">all</field>
-            <field name="season_focus">all_season</field>
-        </record>
-
-        <record id="toddler_sales_team" model="sale.team">
-            <field name="name">Toddler Sales Team</field>
-            <field name="code">TODDLER</field>
-            <field name="description">Sales team for toddler clothing (2-4 years)</field>
-            <field name="age_group_focus">2-4</field>
-            <field name="gender_focus">all</field>
-            <field name="season_focus">all_season</field>
-        </record>
-
-        <record id="kids_sales_team" model="sale.team">
-            <field name="name">Kids Sales Team</field>
+        
+        <record id="sale_commission_rule_kids" model="sale.commission.rule">
+            <field name="name">Kids Commission Rule</field>
             <field name="code">KIDS</field>
-            <field name="description">Sales team for kids clothing (4-12 years)</field>
-            <field name="age_group_focus">4-12</field>
-            <field name="gender_focus">all</field>
-            <field name="season_focus">all_season</field>
-        </record>
-
-        <record id="teen_sales_team" model="sale.team">
-            <field name="name">Teen Sales Team</field>
-            <field name="code">TEEN</field>
-            <field name="description">Sales team for teen clothing (12-16 years)</field>
-            <field name="age_group_focus">12-16</field>
-            <field name="gender_focus">all</field>
-            <field name="season_focus">all_season</field>
-        </record>
-
-        <!-- Kids Clothing Specific Sales Territories -->
-        <record id="boys_territory" model="sale.territory">
-            <field name="name">Boys Territory</field>
-            <field name="code">BOYS</field>
-            <field name="description">Territory for boys clothing</field>
-            <field name="age_group_focus">all</field>
-            <field name="gender_focus">boys</field>
-            <field name="season_focus">all_season</field>
-        </record>
-
-        <record id="girls_territory" model="sale.territory">
-            <field name="name">Girls Territory</field>
-            <field name="code">GIRLS</field>
-            <field name="description">Territory for girls clothing</field>
-            <field name="age_group_focus">all</field>
-            <field name="gender_focus">girls</field>
-            <field name="season_focus">all_season</field>
-        </record>
-
-        <record id="unisex_territory" model="sale.territory">
-            <field name="name">Unisex Territory</field>
-            <field name="code">UNISEX</field>
-            <field name="description">Territory for unisex clothing</field>
-            <field name="age_group_focus">all</field>
-            <field name="gender_focus">unisex</field>
-            <field name="season_focus">all_season</field>
-        </record>
-
-        <!-- Kids Clothing Specific Sales Commissions -->
-        <record id="baby_commission" model="sale.commission">
-            <field name="name">Baby Commission</field>
-            <field name="code">BABY</field>
-            <field name="description">Commission for baby clothing (0-2 years)</field>
-            <field name="commission_type">percentage</field>
+            <field name="description">Special commission rule for kids items</field>
+            <field name="rule_type">percentage</field>
             <field name="commission_rate">7.0</field>
-            <field name="age_group_focus">0-2</field>
-            <field name="gender_focus">all</field>
-            <field name="season_focus">all_season</field>
-            <field name="state">active</field>
+            <field name="kids_commission_rate">2.0</field>
+            <field name="company_id" ref="base.main_company"/>
         </record>
-
-        <record id="toddler_commission" model="sale.commission">
-            <field name="name">Toddler Commission</field>
-            <field name="code">TODDLER</field>
-            <field name="description">Commission for toddler clothing (2-4 years)</field>
-            <field name="commission_type">percentage</field>
-            <field name="commission_rate">6.0</field>
-            <field name="age_group_focus">2-4</field>
-            <field name="gender_focus">all</field>
-            <field name="season_focus">all_season</field>
-            <field name="state">active</field>
+        
+        <!-- Sales Analytics Data -->
+        <record id="sale_analytics_monthly" model="sale.analytics">
+            <field name="name">Monthly Sales Analytics</field>
+            <field name="analytics_type">monthly</field>
+            <field name="period_start">2024-01-01</field>
+            <field name="period_end">2024-01-31</field>
+            <field name="company_id" ref="base.main_company"/>
         </record>
-
-        <record id="kids_commission" model="sale.commission">
-            <field name="name">Kids Commission</field>
-            <field name="code">KIDS</field>
-            <field name="description">Commission for kids clothing (4-12 years)</field>
-            <field name="commission_type">percentage</field>
-            <field name="commission_rate">5.0</field>
-            <field name="age_group_focus">4-12</field>
-            <field name="gender_focus">all</field>
-            <field name="season_focus">all_season</field>
-            <field name="state">active</field>
+        
+        <record id="sale_analytics_quarterly" model="sale.analytics">
+            <field name="name">Quarterly Sales Analytics</field>
+            <field name="analytics_type">quarterly</field>
+            <field name="period_start">2024-01-01</field>
+            <field name="period_end">2024-03-31</field>
+            <field name="company_id" ref="base.main_company"/>
         </record>
-
-        <record id="teen_commission" model="sale.commission">
-            <field name="name">Teen Commission</field>
-            <field name="code">TEEN</field>
-            <field name="description">Commission for teen clothing (12-16 years)</field>
-            <field name="commission_type">percentage</field>
-            <field name="commission_rate">4.0</field>
-            <field name="age_group_focus">12-16</field>
-            <field name="gender_focus">all</field>
-            <field name="season_focus">all_season</field>
-            <field name="state">active</field>
+        
+        <record id="sale_analytics_yearly" model="sale.analytics">
+            <field name="name">Yearly Sales Analytics</field>
+            <field name="analytics_type">yearly</field>
+            <field name="period_start">2024-01-01</field>
+            <field name="period_end">2024-12-31</field>
+            <field name="company_id" ref="base.main_company"/>
         </record>
     </data>
 </odoo>

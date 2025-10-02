@@ -1,327 +1,182 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <!-- Sales Team Tree View -->
+        <!-- Sale Team Tree View -->
         <record id="view_sale_team_tree" model="ir.ui.view">
             <field name="name">sale.team.tree</field>
             <field name="model">sale.team</field>
             <field name="arch" type="xml">
-                <tree string="Sales Teams" decoration-info="active==False">
+                <tree string="Sales Teams" create="true" edit="true" delete="true">
                     <field name="name"/>
                     <field name="code"/>
-                    <field name="age_group_focus"/>
-                    <field name="gender_focus"/>
-                    <field name="season_focus"/>
+                    <field name="leader_id"/>
                     <field name="target_amount"/>
                     <field name="achieved_amount"/>
                     <field name="performance_percentage"/>
-                    <field name="total_kids_sales"/>
-                    <field name="active"/>
+                    <field name="company_id"/>
                 </tree>
             </field>
         </record>
-
-        <!-- Sales Team Form View -->
+        
+        <!-- Sale Team Form View -->
         <record id="view_sale_team_form" model="ir.ui.view">
             <field name="name">sale.team.form</field>
             <field name="model">sale.team</field>
             <field name="arch" type="xml">
-                <form string="Sales Team">
-                    <header>
-                        <field name="active" widget="boolean_toggle"/>
-                    </header>
+                <form string="Sales Team" create="true" edit="true" delete="true">
                     <sheet>
-                        <div class="oe_button_box" name="button_box">
-                            <button name="action_view_members" type="object" class="oe_stat_button" icon="fa-users">
-                                <div class="o_field_widget o_stat_info">
-                                    <span class="o_stat_text">Members</span>
-                                </div>
-                            </button>
-                            <button name="action_view_territories" type="object" class="oe_stat_button" icon="fa-map-marker">
-                                <div class="o_field_widget o_stat_info">
-                                    <span class="o_stat_text">Territories</span>
-                                </div>
-                            </button>
-                            <button name="action_view_commission_rules" type="object" class="oe_stat_button" icon="fa-percent">
-                                <div class="o_field_widget o_stat_info">
-                                    <span class="o_stat_text">Commission</span>
-                                </div>
-                            </button>
-                            <button name="action_view_analytics" type="object" class="oe_stat_button" icon="fa-bar-chart">
-                                <div class="o_field_widget o_stat_info">
-                                    <span class="o_stat_text">Analytics</span>
-                                </div>
-                            </button>
-                        </div>
                         <div class="oe_title">
                             <h1>
-                                <field name="name" placeholder="Team Name"/>
+                                <field name="name"/>
                             </h1>
                         </div>
                         <group>
                             <group>
                                 <field name="code"/>
-                                <field name="description"/>
                                 <field name="leader_id"/>
-                            </group>
-                            <group>
-                                <field name="age_group_focus"/>
-                                <field name="gender_focus"/>
-                                <field name="season_focus"/>
-                            </group>
-                        </group>
-                        <group>
-                            <group>
                                 <field name="target_amount"/>
                                 <field name="achieved_amount"/>
                                 <field name="performance_percentage"/>
-                                <field name="currency_id"/>
                             </group>
                             <group>
                                 <field name="target_orders"/>
                                 <field name="achieved_orders"/>
+                                <field name="total_kids_sales"/>
+                                <field name="company_id"/>
                             </group>
                         </group>
                         <notebook>
-                            <page string="Team Members" name="team_members">
-                                <field name="member_ids">
-                                    <tree editable="bottom">
+                            <page string="Team Members" name="members">
+                                <field name="member_ids" nolabel="1">
+                                    <tree string="Team Members" create="true" edit="true" delete="true">
                                         <field name="user_id"/>
                                         <field name="role"/>
-                                        <field name="age_group_expertise"/>
-                                        <field name="gender_expertise"/>
-                                        <field name="season_expertise"/>
                                         <field name="sale_amount"/>
                                         <field name="sale_orders"/>
                                         <field name="kids_sales"/>
-                                        <field name="active"/>
                                     </tree>
                                 </field>
                             </page>
-                            <page string="Kids Analytics" name="kids_analytics">
-                                <group>
-                                    <group>
-                                        <field name="total_kids_sales"/>
-                                        <field name="age_group_sales"/>
-                                    </group>
-                                    <group>
-                                        <field name="gender_sales"/>
-                                        <field name="season_sales"/>
-                                    </group>
-                                </group>
-                            </page>
                             <page string="Territories" name="territories">
-                                <field name="territory_ids">
-                                    <tree>
+                                <field name="territory_ids" nolabel="1">
+                                    <tree string="Territories" create="true" edit="true" delete="true">
                                         <field name="name"/>
                                         <field name="code"/>
-                                        <field name="country_id"/>
-                                        <field name="state_id"/>
-                                        <field name="age_group_focus"/>
-                                        <field name="gender_focus"/>
-                                        <field name="season_focus"/>
+                                        <field name="territory_type"/>
                                         <field name="target_amount"/>
                                         <field name="achieved_amount"/>
-                                        <field name="performance_percentage"/>
-                                        <field name="active"/>
                                     </tree>
                                 </field>
                             </page>
                             <page string="Commission Rules" name="commission_rules">
-                                <field name="commission_rule_ids">
-                                    <tree>
+                                <field name="commission_rule_ids" nolabel="1">
+                                    <tree string="Commission Rules" create="true" edit="true" delete="true">
                                         <field name="name"/>
-                                        <field name="condition_type"/>
+                                        <field name="code"/>
+                                        <field name="rule_type"/>
                                         <field name="commission_rate"/>
-                                        <field name="fixed_amount"/>
-                                        <field name="minimum_amount"/>
-                                        <field name="maximum_amount"/>
-                                        <field name="active"/>
+                                        <field name="commission_amount"/>
                                     </tree>
                                 </field>
+                            </page>
+                            <page string="Analytics" name="analytics">
+                                <group>
+                                    <group>
+                                        <field name="age_group_sales"/>
+                                        <field name="gender_sales"/>
+                                    </group>
+                                    <group>
+                                        <field name="season_sales"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Notes" name="notes">
+                                <field name="description"/>
                             </page>
                         </notebook>
                     </sheet>
                 </form>
             </field>
         </record>
-
-        <!-- Sales Team Search View -->
+        
+        <!-- Sale Team Search View -->
         <record id="view_sale_team_search" model="ir.ui.view">
             <field name="name">sale.team.search</field>
             <field name="model">sale.team</field>
             <field name="arch" type="xml">
-                <search string="Search Sales Teams">
+                <search string="Sales Teams">
                     <field name="name"/>
                     <field name="code"/>
                     <field name="leader_id"/>
-                    <field name="age_group_focus"/>
-                    <field name="gender_focus"/>
-                    <field name="season_focus"/>
-                    <filter string="Active" name="active" domain="[('active', '=', True)]"/>
-                    <filter string="Inactive" name="inactive" domain="[('active', '=', False)]"/>
-                    <separator/>
-                    <filter string="Baby (0-2)" name="baby" domain="[('age_group_focus', '=', '0-2')]"/>
-                    <filter string="Toddler (2-4)" name="toddler" domain="[('age_group_focus', '=', '2-4')]"/>
-                    <filter string="Kids (4-12)" name="kids" domain="[('age_group_focus', 'in', ['4-6', '6-8', '8-10', '10-12'])]"/>
-                    <filter string="Teen (12-16)" name="teen" domain="[('age_group_focus', 'in', ['12-14', '14-16'])]"/>
-                    <separator/>
-                    <filter string="Boys" name="boys" domain="[('gender_focus', '=', 'boys')]"/>
-                    <filter string="Girls" name="girls" domain="[('gender_focus', '=', 'girls')]"/>
-                    <filter string="Unisex" name="unisex" domain="[('gender_focus', '=', 'unisex')]"/>
-                    <separator/>
-                    <filter string="Summer" name="summer" domain="[('season_focus', '=', 'summer')]"/>
-                    <filter string="Winter" name="winter" domain="[('season_focus', '=', 'winter')]"/>
-                    <filter string="Monsoon" name="monsoon" domain="[('season_focus', '=', 'monsoon')]"/>
+                    <field name="company_id"/>
                     <group expand="0" string="Group By">
-                        <filter string="Age Group Focus" name="group_age_group_focus" context="{'group_by': 'age_group_focus'}"/>
-                        <filter string="Gender Focus" name="group_gender_focus" context="{'group_by': 'gender_focus'}"/>
-                        <filter string="Season Focus" name="group_season_focus" context="{'group_by': 'season_focus'}"/>
                         <filter string="Leader" name="group_leader" context="{'group_by': 'leader_id'}"/>
+                        <filter string="Company" name="group_company" context="{'group_by': 'company_id'}"/>
                     </group>
                 </search>
             </field>
         </record>
-
-        <!-- Sales Team Kanban View -->
-        <record id="view_sale_team_kanban" model="ir.ui.view">
-            <field name="name">sale.team.kanban</field>
-            <field name="model">sale.team</field>
-            <field name="arch" type="xml">
-                <kanban string="Sales Teams">
-                    <field name="name"/>
-                    <field name="code"/>
-                    <field name="age_group_focus"/>
-                    <field name="gender_focus"/>
-                    <field name="season_focus"/>
-                    <field name="target_amount"/>
-                    <field name="achieved_amount"/>
-                    <field name="performance_percentage"/>
-                    <field name="total_kids_sales"/>
-                    <field name="active"/>
-                    <templates>
-                        <t t-name="kanban-box">
-                            <div class="oe_kanban_card oe_kanban_global_click">
-                                <div class="oe_kanban_content">
-                                    <div class="o_kanban_record_top">
-                                        <div class="o_kanban_record_headings">
-                                            <strong class="o_kanban_record_title">
-                                                <field name="name"/>
-                                            </strong>
-                                            <br/>
-                                            <field name="code"/>
-                                        </div>
-                                        <div class="o_kanban_record_body">
-                                            <field name="age_group_focus"/>
-                                            <field name="gender_focus"/>
-                                            <field name="season_focus"/>
-                                            <br/>
-                                            <field name="target_amount"/>
-                                            <field name="achieved_amount"/>
-                                        </div>
-                                    </div>
-                                    <div class="o_kanban_record_bottom">
-                                        <div class="oe_kanban_bottom_left">
-                                            <field name="performance_percentage"/>
-                                        </div>
-                                        <div class="oe_kanban_bottom_right">
-                                            <field name="total_kids_sales"/>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </t>
-                    </templates>
-                </kanban>
-            </field>
-        </record>
-
-        <!-- Sales Team Action -->
+        
+        <!-- Sale Team Action -->
         <record id="action_sale_team" model="ir.actions.act_window">
             <field name="name">Sales Teams</field>
             <field name="res_model">sale.team</field>
-            <field name="view_mode">tree,form,kanban</field>
-            <field name="context">{}</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_sale_team_search"/>
             <field name="help" type="html">
                 <p class="o_view_nocontent_smiling_face">
                     Create your first sales team!
                 </p>
                 <p>
-                    Sales teams are used to organize salespeople and manage their performance.
-                    They can be focused on specific age groups, genders, or seasons.
+                    Sales teams help organize and manage your sales force.
                 </p>
             </field>
         </record>
-
-        <!-- Sales Team Member Tree View -->
+        
+        <!-- Sale Team Member Tree View -->
         <record id="view_sale_team_member_tree" model="ir.ui.view">
             <field name="name">sale.team.member.tree</field>
             <field name="model">sale.team.member</field>
             <field name="arch" type="xml">
-                <tree string="Sales Team Members" decoration-info="active==False">
-                    <field name="display_name"/>
+                <tree string="Sales Team Members" create="true" edit="true" delete="true">
                     <field name="team_id"/>
                     <field name="user_id"/>
                     <field name="role"/>
-                    <field name="age_group_expertise"/>
-                    <field name="gender_expertise"/>
-                    <field name="season_expertise"/>
                     <field name="sale_amount"/>
                     <field name="sale_orders"/>
                     <field name="kids_sales"/>
-                    <field name="active"/>
                 </tree>
             </field>
         </record>
-
-        <!-- Sales Team Member Form View -->
+        
+        <!-- Sale Team Member Form View -->
         <record id="view_sale_team_member_form" model="ir.ui.view">
             <field name="name">sale.team.member.form</field>
             <field name="model">sale.team.member</field>
             <field name="arch" type="xml">
-                <form string="Sales Team Member">
-                    <header>
-                        <field name="active" widget="boolean_toggle"/>
-                    </header>
+                <form string="Sales Team Member" create="true" edit="true" delete="true">
                     <sheet>
-                        <div class="oe_title">
-                            <h1>
-                                <field name="display_name" readonly="1"/>
-                            </h1>
-                        </div>
                         <group>
                             <group>
                                 <field name="team_id"/>
                                 <field name="user_id"/>
                                 <field name="role"/>
+                                <field name="sequence"/>
                             </group>
-                            <group>
-                                <field name="age_group_expertise"/>
-                                <field name="gender_expertise"/>
-                                <field name="season_expertise"/>
-                            </group>
-                        </group>
-                        <group>
                             <group>
                                 <field name="sale_amount"/>
                                 <field name="sale_orders"/>
-                                <field name="currency_id"/>
-                            </group>
-                            <group>
                                 <field name="kids_sales"/>
+                                <field name="company_id"/>
                             </group>
                         </group>
                         <notebook>
-                            <page string="Kids Analytics" name="kids_analytics">
+                            <page string="Analytics" name="analytics">
                                 <group>
                                     <group>
                                         <field name="age_group_sales"/>
-                                    </group>
-                                    <group>
                                         <field name="gender_sales"/>
                                     </group>
-                                </group>
-                                <group>
                                     <group>
                                         <field name="season_sales"/>
                                     </group>
@@ -332,65 +187,12 @@
                 </form>
             </field>
         </record>
-
-        <!-- Sales Team Member Search View -->
-        <record id="view_sale_team_member_search" model="ir.ui.view">
-            <field name="name">sale.team.member.search</field>
-            <field name="model">sale.team.member</field>
-            <field name="arch" type="xml">
-                <search string="Search Sales Team Members">
-                    <field name="display_name"/>
-                    <field name="team_id"/>
-                    <field name="user_id"/>
-                    <field name="role"/>
-                    <field name="age_group_expertise"/>
-                    <field name="gender_expertise"/>
-                    <field name="season_expertise"/>
-                    <filter string="Active" name="active" domain="[('active', '=', True)]"/>
-                    <filter string="Inactive" name="inactive" domain="[('active', '=', False)]"/>
-                    <separator/>
-                    <filter string="Leader" name="leader" domain="[('role', '=', 'leader')]"/>
-                    <filter string="Member" name="member" domain="[('role', '=', 'member')]"/>
-                    <filter string="Assistant" name="assistant" domain="[('role', '=', 'assistant')]"/>
-                    <separator/>
-                    <filter string="Baby (0-2)" name="baby" domain="[('age_group_expertise', '=', '0-2')]"/>
-                    <filter string="Toddler (2-4)" name="toddler" domain="[('age_group_expertise', '=', '2-4')]"/>
-                    <filter string="Kids (4-12)" name="kids" domain="[('age_group_expertise', 'in', ['4-6', '6-8', '8-10', '10-12'])]"/>
-                    <filter string="Teen (12-16)" name="teen" domain="[('age_group_expertise', 'in', ['12-14', '14-16'])]"/>
-                    <separator/>
-                    <filter string="Boys" name="boys" domain="[('gender_expertise', '=', 'boys')]"/>
-                    <filter string="Girls" name="girls" domain="[('gender_expertise', '=', 'girls')]"/>
-                    <filter string="Unisex" name="unisex" domain="[('gender_expertise', '=', 'unisex')]"/>
-                    <separator/>
-                    <filter string="Summer" name="summer" domain="[('season_expertise', '=', 'summer')]"/>
-                    <filter string="Winter" name="winter" domain="[('season_expertise', '=', 'winter')]"/>
-                    <filter string="Monsoon" name="monsoon" domain="[('season_expertise', '=', 'monsoon')]"/>
-                    <group expand="0" string="Group By">
-                        <filter string="Team" name="group_team" context="{'group_by': 'team_id'}"/>
-                        <filter string="Role" name="group_role" context="{'group_by': 'role'}"/>
-                        <filter string="Age Group Expertise" name="group_age_group_expertise" context="{'group_by': 'age_group_expertise'}"/>
-                        <filter string="Gender Expertise" name="group_gender_expertise" context="{'group_by': 'gender_expertise'}"/>
-                        <filter string="Season Expertise" name="group_season_expertise" context="{'group_by': 'season_expertise'}"/>
-                    </group>
-                </search>
-            </field>
-        </record>
-
-        <!-- Sales Team Member Action -->
+        
+        <!-- Sale Team Member Action -->
         <record id="action_sale_team_member" model="ir.actions.act_window">
             <field name="name">Sales Team Members</field>
             <field name="res_model">sale.team.member</field>
             <field name="view_mode">tree,form</field>
-            <field name="context">{}</field>
-            <field name="help" type="html">
-                <p class="o_view_nocontent_smiling_face">
-                    Create your first sales team member!
-                </p>
-                <p>
-                    Sales team members are the people who make up your sales teams.
-                    They can have different roles and expertise areas.
-                </p>
-            </field>
         </record>
     </data>
 </odoo>

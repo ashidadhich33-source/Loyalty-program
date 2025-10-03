@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api, _
-from odoo.exceptions import ValidationError
+from core_framework.orm import BaseModel, CharField, TextField, BooleanField, IntegerField, DateTimeField, Many2OneField, SelectionField, FloatField, One2ManyField, Many2ManyField
+from core_framework.exceptions import ValidationError
 import logging
 
 _logger = logging.getLogger(__name__)
 
 
-class MenuManagement(models.Model):
+class MenuManagement(BaseModel):
     """Menu management for Kids Clothing ERP"""
     
     _name = 'menu.management'

@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from odoo.tests.common import TransactionCase
+from core_framework.testing import TestCase
 
-class TestContactCustomer(TransactionCase):
+class TestContactCustomer(TestCase):
     
     def setUp(self):
         super().setUp()

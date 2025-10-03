@@ -52,11 +52,11 @@
     'website': 'https://kidsclothingerp.com',
     'license': 'LGPL-3',
     'depends': [
-        'core_base',
-        'core_web',
-        'users',
-        'company',
-        'contacts',
+        'ocean_base',
+        'ocean_web',
+        'ocean_users',
+        'ocean_company',
+        'ocean_contacts',
     ],
     'data': [
         'security/security.xml',
@@ -75,7 +75,7 @@
         'demo/demo.xml',
     ],
     'assets': {
-        'web.assets_backend': [
+        'ocean.assets_backend': [
             'products/static/src/js/product_script.js',
             'products/static/src/css/product_style.css',
         ],

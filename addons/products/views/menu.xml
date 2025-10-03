@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo>
+<ocean>
     <data>
         
         <!-- Products Menu -->
@@ -41,4 +41,4 @@
         <menuitem id="menu_product_analytics_create" name="New Analytics" parent="menu_product_analytics" action="action_product_analytics" sequence="20"/>
         
     </data>
-</odoo>
+</ocean>

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api, _
-from odoo.exceptions import ValidationError
+from core_framework.orm import BaseModel, CharField, TextField, BooleanField, IntegerField, DateTimeField, Many2OneField, SelectionField, FloatField, One2ManyField, Many2ManyField
+from core_framework.exceptions import ValidationError
 import logging
 import json
 import base64
@@ -10,16 +10,16 @@ from datetime import datetime, timedelta
 _logger = logging.getLogger(__name__)
 
 
-class WebUtils(models.AbstractModel):
+class WebUtils(BaseModel):
     """Web utilities for Kids Clothing ERP"""
     
     _name = 'web.utils'
     _description = 'Web Utilities'
     
-    @api.model
-    def get_user_preferences(self):
+    @classmethod
+    def get_user_preferences(cls):
         """Get user preferences for web interface"""
-        user = self.env.user
+        user = cls.env.user
         
         preferences = {
             'theme': 'kids_clothing',
@@ -37,10 +37,10 @@ class WebUtils(models.AbstractModel):
         
         return preferences
     
-    @api.model
-    def set_user_preferences(self, preferences):
+    @classmethod
+    def set_user_preferences(cls, preferences):
         """Set user preferences for web interface"""
-        user = self.env.user
+        user = cls.env.user
         
         # Update user preferences
         if 'language' in preferences:
@@ -55,7 +55,7 @@ class WebUtils(models.AbstractModel):
         
         return True
     
-    @api.model
+    @classmethod
     def get_theme_config(self):
         """Get theme configuration for kids clothing theme"""
         return {
@@ -102,7 +102,7 @@ class WebUtils(models.AbstractModel):
             },
         }
     
-    @api.model
+    @classmethod
     def get_responsive_breakpoints(self):
         """Get responsive breakpoints for different screen sizes"""
         return {
@@ -114,7 +114,7 @@ class WebUtils(models.AbstractModel):
             'xxl': '1400px',
         }
     
-    @api.model
+    @classmethod
     def get_icon_mapping(self):
         """Get icon mapping for different modules and actions"""
         return {
@@ -163,7 +163,7 @@ class WebUtils(models.AbstractModel):
             'success': 'fa-check-circle',
         }
     
-    @api.model
+    @classmethod
     def get_menu_structure(self):
         """Get menu structure for the application"""
         return {
@@ -265,7 +265,7 @@ class WebUtils(models.AbstractModel):
             },
         }
     
-    @api.model
+    @classmethod
     def get_breadcrumb(self, model, record_id=None):
         """Get breadcrumb navigation for current page"""
         breadcrumb = []
@@ -298,7 +298,7 @@ class WebUtils(models.AbstractModel):
         
         return breadcrumb
     
-    @api.model
+    @classmethod
     def get_model_info(self, model_name):
         """Get model information for display"""
         model_info = {
@@ -324,7 +324,7 @@ class WebUtils(models.AbstractModel):
         
         return model_info
     
-    @api.model
+    @classmethod
     def get_page_title(self, model=None, record_id=None):
         """Get page title for current page"""
         if model and record_id:
@@ -337,17 +337,17 @@ class WebUtils(models.AbstractModel):
         else:
             return "Kids Clothing ERP"
     
-    @api.model
+    @classmethod
     def get_favicon(self):
         """Get favicon for the application"""
         return '/core_web/static/src/img/favicon.ico'
     
-    @api.model
+    @classmethod
     def get_logo(self):
         """Get logo for the application"""
         return '/core_web/static/src/img/logo.png'
     
-    @api.model
+    @classmethod
     def get_loading_spinner(self):
         """Get loading spinner HTML"""
         return '''
@@ -357,7 +357,7 @@ class WebUtils(models.AbstractModel):
         </div>
         '''
     
-    @api.model
+    @classmethod
     def get_error_page(self, error_code, error_message):
         """Get error page HTML"""
         return f'''
@@ -371,7 +371,7 @@ class WebUtils(models.AbstractModel):
         </div>
         '''
     
-    @api.model
+    @classmethod
     def get_success_page(self, title, message, redirect_url=None):
         """Get success page HTML"""
         return f'''
@@ -386,7 +386,7 @@ class WebUtils(models.AbstractModel):
         </div>
         '''
     
-    @api.model
+    @classmethod
     def get_confirm_dialog(self, title, message, confirm_text="Confirm", cancel_text="Cancel"):
         """Get confirmation dialog HTML"""
         return f'''
@@ -400,7 +400,7 @@ class WebUtils(models.AbstractModel):
         </div>
         '''
     
-    @api.model
+    @classmethod
     def get_tooltip(self, text, position="top"):
         """Get tooltip HTML"""
         return f'''
@@ -409,12 +409,12 @@ class WebUtils(models.AbstractModel):
         </div>
         '''
     
-    @api.model
+    @classmethod
     def get_badge(self, text, type="default"):
         """Get badge HTML"""
         return f'<span class="badge badge-{type}">{text}</span>'
     
-    @api.model
+    @classmethod
     def get_alert(self, message, type="info"):
         """Get alert HTML"""
         return f'''
@@ -425,7 +425,7 @@ class WebUtils(models.AbstractModel):
         </div>
         '''
     
-    @api.model
+    @classmethod
     def get_progress_bar(self, value, max_value=100, show_percentage=True):
         """Get progress bar HTML"""
         percentage = (value / max_value) * 100 if max_value > 0 else 0
@@ -436,7 +436,7 @@ class WebUtils(models.AbstractModel):
         </div>
         '''
     
-    @api.model
+    @classmethod
     def get_rating_stars(self, rating, max_rating=5, interactive=False):
         """Get rating stars HTML"""
         stars = ''
@@ -454,7 +454,7 @@ class WebUtils(models.AbstractModel):
         </div>
         '''
     
-    @api.model
+    @classmethod
     def get_pagination(self, current_page, total_pages, base_url):
         """Get pagination HTML"""
         pagination = '<div class="pagination">'

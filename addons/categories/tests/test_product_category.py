@@ -10,9 +10,6 @@ class TestProductCategory(unittest.TestCase):
     def setUp(self):
         """Set up test environment"""
         self.category_model = Model('product.category')
-        self.template_model = Model('product.category.template')
-        self.rule_model = Model('product.category.rule')
-        self.analytics_model = Model('product.category.analytics')
         self.tag_model = Model('product.category.tag')
     
     def test_create_category(self):
@@ -184,6 +181,33 @@ class TestProductCategory(unittest.TestCase):
         self.assertEqual(duplicated_category.default_margin, 30.0)
         self.assertEqual(duplicated_category.min_margin, 20.0)
         self.assertEqual(duplicated_category.max_margin, 40.0)
+    
+    def test_category_tag(self):
+        """Test category tag functionality"""
+        # Create tag
+        tag = self.tag_model.create({
+            'name': 'Test Tag',
+            'color': 1,
+            'description': 'Test tag description',
+        })
+        
+        self.assertEqual(tag.name, 'Test Tag')
+        self.assertEqual(tag.color, 1)
+        self.assertEqual(tag.description, 'Test tag description')
+        self.assertTrue(tag.active)
+        
+        # Test get_categories
+        categories = tag.get_categories()
+        self.assertEqual(len(categories), 0)
+        
+        # Test merge_with
+        other_tag = self.tag_model.create({
+            'name': 'Other Tag',
+            'color': 2,
+        })
+        
+        tag.merge_with(other_tag)
+        self.assertFalse(other_tag.active)
 
 
 if __name__ == '__main__':

@@ -2,15 +2,6 @@ id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_product_category_public,product.category.public,model_product_category,,1,0,0,0
 access_product_category_user,product.category.user,model_product_category,group_category_user,1,1,1,0
 access_product_category_manager,product.category.manager,model_product_category,group_category_manager,1,1,1,1
-access_product_category_template_public,product.category.template.public,model_product_category_template,,1,0,0,0
-access_product_category_template_user,product.category.template.user,model_product_category_template,group_category_user,1,1,1,0
-access_product_category_template_manager,product.category.template.manager,model_product_category_template,group_category_manager,1,1,1,1
-access_product_category_rule_public,product.category.rule.public,model_product_category_rule,,1,0,0,0
-access_product_category_rule_user,product.category.rule.user,model_product_category_rule,group_category_user,1,1,1,0
-access_product_category_rule_manager,product.category.rule.manager,model_product_category_rule,group_category_manager,1,1,1,1
-access_product_category_analytics_public,product.category.analytics.public,model_product_category_analytics,,1,0,0,0
-access_product_category_analytics_user,product.category.analytics.user,model_product_category_analytics,group_category_analytics,1,0,0,0
-access_product_category_analytics_manager,product.category.analytics.manager,model_product_category_analytics,group_category_manager,1,1,1,1
 access_product_category_tag_public,product.category.tag.public,model_product_category_tag,,1,0,0,0
 access_product_category_tag_user,product.category.tag.user,model_product_category_tag,group_category_user,1,1,1,0
 access_product_category_tag_manager,product.category.tag.manager,model_product_category_tag,group_category_manager,1,1,1,1

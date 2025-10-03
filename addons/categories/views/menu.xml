@@ -8,44 +8,24 @@
         <!-- Categories Menu -->
         <menuitem id="menu_categories" name="Product Categories" parent="menu_categories_main" sequence="10"/>
         
-        <!-- Category Templates Menu -->
-        <menuitem id="menu_category_templates" name="Category Templates" parent="menu_categories_main" sequence="20"/>
-        
-        <!-- Category Rules Menu -->
-        <menuitem id="menu_category_rules" name="Category Rules" parent="menu_categories_main" sequence="30"/>
-        
-        <!-- Category Analytics Menu -->
-        <menuitem id="menu_category_analytics" name="Category Analytics" parent="menu_categories_main" sequence="40"/>
-        
         <!-- Category Tags Menu -->
-        <menuitem id="menu_category_tags" name="Category Tags" parent="menu_categories_main" sequence="50"/>
+        <menuitem id="menu_category_tags" name="Category Tags" parent="menu_categories_main" sequence="20"/>
         
         <!-- Actions -->
         <record id="action_product_category" model="ir.actions.act_window">
             <field name="name">Product Categories</field>
             <field name="res_model">product.category</field>
             <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_product_category_search"/>
             <field name="context">{'search_default_active': 1}</field>
-        </record>
-        
-        <record id="action_product_category_template" model="ir.actions.act_window">
-            <field name="name">Category Templates</field>
-            <field name="res_model">product.category.template</field>
-            <field name="view_mode">tree,form</field>
-            <field name="context">{'search_default_active': 1}</field>
-        </record>
-        
-        <record id="action_product_category_rule" model="ir.actions.act_window">
-            <field name="name">Category Rules</field>
-            <field name="res_model">product.category.rule</field>
-            <field name="view_mode">tree,form</field>
-            <field name="context">{'search_default_active': 1}</field>
-        </record>
-        
-        <record id="action_product_category_analytics" model="ir.actions.act_window">
-            <field name="name">Category Analytics</field>
-            <field name="res_model">product.category.analytics</field>
-            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first product category!
+                </p>
+                <p>
+                    Product categories help organize your products by age group, gender, season, and more.
+                </p>
+            </field>
         </record>
         
         <record id="action_product_category_tag" model="ir.actions.act_window">
@@ -53,13 +33,18 @@
             <field name="res_model">product.category.tag</field>
             <field name="view_mode">tree,form</field>
             <field name="context">{'search_default_active': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first category tag!
+                </p>
+                <p>
+                    Category tags help you organize and filter your product categories.
+                </p>
+            </field>
         </record>
         
         <!-- Menu Items -->
         <menuitem id="menu_categories_tree" action="action_product_category" parent="menu_categories" sequence="10"/>
-        <menuitem id="menu_category_templates_tree" action="action_product_category_template" parent="menu_category_templates" sequence="10"/>
-        <menuitem id="menu_category_rules_tree" action="action_product_category_rule" parent="menu_category_rules" sequence="10"/>
-        <menuitem id="menu_category_analytics_tree" action="action_product_category_analytics" parent="menu_category_analytics" sequence="10"/>
         <menuitem id="menu_category_tags_tree" action="action_product_category_tag" parent="menu_category_tags" sequence="10"/>
         
     </data>

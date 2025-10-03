@@ -1,16 +1,15 @@
 # Product Categories Addon
 
 ## Overview
-The Product Categories addon provides comprehensive product categorization system specifically designed for kids clothing retail. It offers hierarchical category management, templates, rules, and analytics to help organize and manage product categories effectively.
+The Product Categories addon provides comprehensive product categorization system specifically designed for kids clothing retail. It offers hierarchical category management and flexible tagging to help organize and manage product categories effectively.
 
 ## Features
 
 ### Core Functionality
 - **Hierarchical Categories**: Create parent-child category relationships
-- **Category Templates**: Predefined templates for quick category creation
-- **Category Rules**: Automated categorization based on conditions
-- **Category Analytics**: Performance tracking and reporting
 - **Category Tags**: Flexible tagging system for organization
+- **Category Analytics**: Performance tracking and reporting
+- **Category Management**: Archive, duplicate, and organize categories
 
 ### Kids Clothing Specific Features
 - **Age Group Categorization**: 0-2, 2-4, 4-6, 6-8, 8-10, 10-12, 12-14, 14-16 years
@@ -28,7 +27,6 @@ The Product Categories addon provides comprehensive product categorization syste
 - **Margin Management**: Default, min, and max margin percentages
 - **Category Performance**: Sales, quantity, and customer analytics
 - **Growth Tracking**: Sales, quantity, customer, and product growth
-- **Seasonal Analysis**: Peak and low period identification
 
 ## Models
 
@@ -38,24 +36,6 @@ The Product Categories addon provides comprehensive product categorization syste
 - **Key Fields**: name, parent_id, age_group, gender, season, brand_type, style_type, color_family, size_range
 - **Business Rules**: age_range, height_range, weight_range, margin_range
 - **Analytics**: product_count, total_sales, avg_rating
-
-### Category Template
-- **Name**: `product.category.template`
-- **Purpose**: Template for quick category creation
-- **Key Fields**: name, age_group, gender, season, brand_type, style_type, color_family, size_range
-- **Usage**: Create categories from templates, apply templates to existing categories
-
-### Category Rule
-- **Name**: `product.category.rule`
-- **Purpose**: Automated categorization rules
-- **Key Fields**: condition_type, condition_operator, condition_value, action_type, target_category_id
-- **Actions**: assign_category, assign_template, set_margin, set_price, set_tag, send_notification, create_task
-
-### Category Analytics
-- **Name**: `product.category.analytics`
-- **Purpose**: Performance tracking and reporting
-- **Key Fields**: total_sales, total_quantity, total_orders, total_products, total_customers
-- **Metrics**: conversion_rate, return_rate, average_rating, stock_turnover, customer_retention_rate
 
 ### Category Tag
 - **Name**: `product.category.tag`
@@ -73,26 +53,17 @@ The Product Categories addon provides comprehensive product categorization syste
 5. Configure business rules
 6. Save
 
-### Using Templates
-1. Navigate to Categories > Category Templates
-2. Select a template
-3. Click "Create Category from Template"
-4. Enter category name
-5. Save
+### Using Tags
+1. Navigate to Categories > Category Tags
+2. Create tags for organization
+3. Assign tags to categories
+4. Use tags for filtering and grouping
 
-### Setting Up Rules
-1. Navigate to Categories > Category Rules
-2. Click Create
-3. Set condition type and operator
-4. Set action type and target
-5. Configure apply to scope
-6. Save and test
-
-### Viewing Analytics
-1. Navigate to Categories > Category Analytics
-2. Generate analytics for specific period
-3. View performance metrics
-4. Export reports
+### Category Management
+- **Archive/Unarchive**: Manage category status
+- **Duplicate**: Create copies of categories
+- **Move**: Change parent categories
+- **Analytics**: View performance metrics
 
 ## Dependencies
 
@@ -184,6 +155,22 @@ category.unarchive()
 
 # Duplicate
 duplicated = category.duplicate()
+```
+
+### Tag API
+```python
+# Create tag
+tag = env['product.category.tag'].create({
+    'name': 'New Tag',
+    'color': 1,
+    'description': 'Tag description',
+})
+
+# Get categories using this tag
+categories = tag.get_categories()
+
+# Merge with another tag
+tag.merge_with(other_tag)
 ```
 
 ## License

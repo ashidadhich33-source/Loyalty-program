@@ -65,9 +65,6 @@
         'security/ir.model.access.csv',
         'data/data.xml',
         'views/category_views.xml',
-        'views/category_template_views.xml',
-        'views/category_rule_views.xml',
-        'views/category_analytics_views.xml',
         'views/menu.xml',
     ],
     'demo': [

@@ -60,17 +60,38 @@
             <field name="max_margin">45.0</field>
         </record>
         
-        <!-- Default Category Templates -->
-        <record id="template_babywear" model="product.category.template">
-            <field name="name">Babywear Template</field>
-            <field name="description">Template for babywear categories</field>
+        <!-- Sub-categories for Babywear -->
+        <record id="category_babywear_boys" model="product.category">
+            <field name="name">Boys</field>
+            <field name="parent_id" ref="category_babywear"/>
             <field name="age_group">0-2</field>
-            <field name="gender">unisex</field>
+            <field name="gender">boys</field>
             <field name="season">all_season</field>
             <field name="brand_type">all</field>
             <field name="style_type">all</field>
             <field name="color_family">all</field>
             <field name="size_range">all</field>
+            <field name="category_code">BABY_B</field>
+            <field name="description">Boys clothing for babies aged 0-2 years</field>
+            <field name="min_age_months">0</field>
+            <field name="max_age_months">24</field>
+            <field name="default_margin">40.0</field>
+            <field name="min_margin">20.0</field>
+            <field name="max_margin">60.0</field>
+        </record>
+        
+        <record id="category_babywear_girls" model="product.category">
+            <field name="name">Girls</field>
+            <field name="parent_id" ref="category_babywear"/>
+            <field name="age_group">0-2</field>
+            <field name="gender">girls</field>
+            <field name="season">all_season</field>
+            <field name="brand_type">all</field>
+            <field name="style_type">all</field>
+            <field name="color_family">all</field>
+            <field name="size_range">all</field>
+            <field name="category_code">BABY_G</field>
+            <field name="description">Girls clothing for babies aged 0-2 years</field>
             <field name="min_age_months">0</field>
             <field name="max_age_months">24</field>
             <field name="default_margin">40.0</field>
@@ -89,6 +110,18 @@
             <field name="name">Budget</field>
             <field name="color">2</field>
             <field name="description">Budget-friendly products</field>
+        </record>
+        
+        <record id="tag_seasonal" model="product.category.tag">
+            <field name="name">Seasonal</field>
+            <field name="color">3</field>
+            <field name="description">Seasonal products</field>
+        </record>
+        
+        <record id="tag_trending" model="product.category.tag">
+            <field name="name">Trending</field>
+            <field name="color">4</field>
+            <field name="description">Trending products</field>
         </record>
         
     </data>

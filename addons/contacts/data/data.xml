@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo>
+<ocean>
     <data noupdate="1">
         <!-- Sequences -->
-        <record id="seq_contact_customer" model="ir.sequence">
+        <record id="seq_contact_customer" model="ocean.sequence">
             <field name="name">Customer Sequence</field>
             <field name="code">contact.customer</field>
             <field name="prefix">CUST</field>
             <field name="padding">5</field>
         </record>
         
-        <record id="seq_contact_supplier" model="ir.sequence">
+        <record id="seq_contact_supplier" model="ocean.sequence">
             <field name="name">Supplier Sequence</field>
             <field name="code">contact.supplier</field>
             <field name="prefix">SUPP</field>
             <field name="padding">5</field>
         </record>
         
-        <record id="seq_contact_vendor" model="ir.sequence">
+        <record id="seq_contact_vendor" model="ocean.sequence">
             <field name="name">Vendor Sequence</field>
             <field name="code">contact.vendor</field>
             <field name="prefix">VEND</field>
             <field name="padding">5</field>
         </record>
     </data>
-</odoo>
+</ocean>

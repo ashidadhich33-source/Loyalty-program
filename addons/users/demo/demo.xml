@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo>
+<ocean>
     <data>
         <!-- Demo Users -->
         <record id="demo_user_admin" model="res.users">
@@ -124,7 +124,7 @@
         </record>
         
         <!-- Demo Groups -->
-        <record id="demo_group_sales_team" model="res.groups">
+        <record id="demo_group_sales_team" model="ocean.groups">
             <field name="name">Sales Team</field>
             <field name="description">Sales team members with access to sales modules</field>
             <field name="category">sales</field>
@@ -135,7 +135,7 @@
             <field name="notification_types">email</field>
         </record>
         
-        <record id="demo_group_pos_operators" model="res.groups">
+        <record id="demo_group_pos_operators" model="ocean.groups">
             <field name="name">POS Operators</field>
             <field name="description">POS operators with access to point of sale</field>
             <field name="category">pos</field>
@@ -146,7 +146,7 @@
             <field name="notification_types">in_app</field>
         </record>
         
-        <record id="demo_group_inventory_team" model="res.groups">
+        <record id="demo_group_inventory_team" model="ocean.groups">
             <field name="name">Inventory Team</field>
             <field name="description">Inventory team members with access to inventory modules</field>
             <field name="category">inventory</field>
@@ -247,4 +247,4 @@
         </record>
         
     </data>
-</odoo>
+</ocean>

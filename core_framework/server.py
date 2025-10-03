@@ -4,7 +4,7 @@
 Kids Clothing ERP - Core Server
 ==============================
 
-Standalone ERP system built with Odoo-style technology stack.
+Standalone ERP system built with custom technology stack.
 This is the main server file that initializes and runs the ERP system.
 """
 

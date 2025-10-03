@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo>
+<ocean>
     <data>
         <!-- Database Monitoring Tree View -->
-        <record id="view_database_monitoring_tree" model="ir.ui.view">
+        <record id="view_database_monitoring_tree" model="ocean.ui.view">
             <field name="name">database_monitoring.tree</field>
             <field name="model">database.monitoring</field>
             <field name="arch" type="xml">
@@ -24,7 +24,7 @@
         </record>
         
         <!-- Database Monitoring Form View -->
-        <record id="view_database_monitoring_form" model="ir.ui.view">
+        <record id="view_database_monitoring_form" model="ocean.ui.view">
             <field name="name">database_monitoring.form</field>
             <field name="model">database.monitoring</field>
             <field name="arch" type="xml">
@@ -141,7 +141,7 @@
         </record>
         
         <!-- Database Monitoring Search View -->
-        <record id="view_database_monitoring_search" model="ir.ui.view">
+        <record id="view_database_monitoring_search" model="ocean.ui.view">
             <field name="name">database_monitoring.search</field>
             <field name="model">database.monitoring</field>
             <field name="arch" type="xml">
@@ -175,7 +175,7 @@
         </record>
         
         <!-- Database Monitoring Action -->
-        <record id="action_database_monitoring" model="ir.actions.act_window">
+        <record id="action_database_monitoring" model="ocean.actions.act_window">
             <field name="name">Database Monitoring</field>
             <field name="res_model">database.monitoring</field>
             <field name="view_mode">tree,form</field>
@@ -185,4 +185,4 @@
         </record>
         
     </data>
-</odoo>
+</ocean>

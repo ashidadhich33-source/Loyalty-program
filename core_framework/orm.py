@@ -4,7 +4,7 @@
 Kids Clothing ERP - ORM Manager
 ==============================
 
-Custom ORM system similar to Odoo's ORM for the standalone ERP system.
+Custom ORM system for the standalone Ocean ERP system.
 """
 
 import logging

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo>
+<ocean>
     <data>
         <!-- Database Analytics Tree View -->
-        <record id="view_database_analytics_tree" model="ir.ui.view">
+        <record id="view_database_analytics_tree" model="ocean.ui.view">
             <field name="name">database_analytics.tree</field>
             <field name="model">database.analytics</field>
             <field name="arch" type="xml">
@@ -24,7 +24,7 @@
         </record>
         
         <!-- Database Analytics Form View -->
-        <record id="view_database_analytics_form" model="ir.ui.view">
+        <record id="view_database_analytics_form" model="ocean.ui.view">
             <field name="name">database_analytics.form</field>
             <field name="model">database.analytics</field>
             <field name="arch" type="xml">
@@ -155,7 +155,7 @@
         </record>
         
         <!-- Database Analytics Search View -->
-        <record id="view_database_analytics_search" model="ir.ui.view">
+        <record id="view_database_analytics_search" model="ocean.ui.view">
             <field name="name">database_analytics.search</field>
             <field name="model">database.analytics</field>
             <field name="arch" type="xml">
@@ -192,7 +192,7 @@
         </record>
         
         <!-- Database Analytics Action -->
-        <record id="action_database_analytics" model="ir.actions.act_window">
+        <record id="action_database_analytics" model="ocean.actions.act_window">
             <field name="name">Database Analytics</field>
             <field name="res_model">database.analytics</field>
             <field name="view_mode">tree,form</field>
@@ -202,7 +202,7 @@
         </record>
         
         <!-- Analytics Dashboard Action -->
-        <record id="action_analytics_dashboard" model="ir.actions.act_window">
+        <record id="action_analytics_dashboard" model="ocean.actions.act_window">
             <field name="name">Analytics Dashboard</field>
             <field name="res_model">database.analytics</field>
             <field name="view_mode">tree,form</field>
@@ -212,7 +212,7 @@
         </record>
         
         <!-- Analytics Reports Action -->
-        <record id="action_analytics_reports" model="ir.actions.act_window">
+        <record id="action_analytics_reports" model="ocean.actions.act_window">
             <field name="name">Analytics Reports</field>
             <field name="res_model">database.analytics</field>
             <field name="view_mode">tree,form</field>
@@ -222,4 +222,4 @@
         </record>
         
     </data>
-</odoo>
+</ocean>

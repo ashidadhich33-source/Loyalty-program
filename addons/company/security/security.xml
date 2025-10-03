@@ -1,38 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo>
+<ocean>
     <data>
         <!-- Security Groups -->
-        <record id="group_company_management" model="res.groups">
+        <record id="group_company_management" model="ocean.groups">
             <field name="name">Company Management</field>
             <field name="category_id" ref="base.module_category_administration"/>
             <field name="comment">Company management and administration</field>
         </record>
         
-        <record id="group_company_administration" model="res.groups">
+        <record id="group_company_administration" model="ocean.groups">
             <field name="name">Company Administration</field>
             <field name="category_id" ref="base.module_category_administration"/>
             <field name="comment">Full company administration rights</field>
         </record>
         
-        <record id="group_branch_management" model="res.groups">
+        <record id="group_branch_management" model="ocean.groups">
             <field name="name">Branch Management</field>
             <field name="category_id" ref="base.module_category_administration"/>
             <field name="comment">Branch management and administration</field>
         </record>
         
-        <record id="group_location_management" model="res.groups">
+        <record id="group_location_management" model="ocean.groups">
             <field name="name">Location Management</field>
             <field name="category_id" ref="base.module_category_administration"/>
             <field name="comment">Location management and administration</field>
         </record>
         
-        <record id="group_financial_management" model="res.groups">
+        <record id="group_financial_management" model="ocean.groups">
             <field name="name">Financial Management</field>
             <field name="category_id" ref="base.module_category_administration"/>
             <field name="comment">Financial year and period management</field>
         </record>
         
-        <record id="group_company_analytics" model="res.groups">
+        <record id="group_company_analytics" model="ocean.groups">
             <field name="name">Company Analytics</field>
             <field name="category_id" ref="base.module_category_administration"/>
             <field name="comment">Company analytics and reporting</field>
@@ -172,4 +172,4 @@
         </record>
         
     </data>
-</odoo>
+</ocean>

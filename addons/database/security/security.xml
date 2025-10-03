@@ -1,50 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo>
+<ocean>
     <data>
         <!-- Security Groups -->
-        <record id="group_database_management" model="res.groups">
+        <record id="group_database_management" model="ocean.groups">
             <field name="name">Database Management</field>
             <field name="category_id" ref="base.module_category_administration"/>
             <field name="comment">Database management and administration</field>
         </record>
         
-        <record id="group_database_administration" model="res.groups">
+        <record id="group_database_administration" model="ocean.groups">
             <field name="name">Database Administration</field>
             <field name="category_id" ref="base.module_category_administration"/>
             <field name="comment">Full database administration rights</field>
         </record>
         
-        <record id="group_database_backup" model="res.groups">
+        <record id="group_database_backup" model="ocean.groups">
             <field name="name">Database Backup</field>
             <field name="category_id" ref="base.module_category_administration"/>
             <field name="comment">Database backup and restore operations</field>
         </record>
         
-        <record id="group_database_migration" model="res.groups">
+        <record id="group_database_migration" model="ocean.groups">
             <field name="name">Database Migration</field>
             <field name="category_id" ref="base.module_category_administration"/>
             <field name="comment">Database migration and upgrade operations</field>
         </record>
         
-        <record id="group_database_monitoring" model="res.groups">
+        <record id="group_database_monitoring" model="ocean.groups">
             <field name="name">Database Monitoring</field>
             <field name="category_id" ref="base.module_category_administration"/>
             <field name="comment">Database monitoring and performance analysis</field>
         </record>
         
-        <record id="group_database_analytics" model="res.groups">
+        <record id="group_database_analytics" model="ocean.groups">
             <field name="name">Database Analytics</field>
             <field name="category_id" ref="base.module_category_administration"/>
             <field name="comment">Database analytics and reporting</field>
         </record>
         
-        <record id="group_database_security" model="res.groups">
+        <record id="group_database_security" model="ocean.groups">
             <field name="name">Database Security</field>
             <field name="category_id" ref="base.module_category_administration"/>
             <field name="comment">Database security and access control</field>
         </record>
         
-        <record id="group_database_maintenance" model="res.groups">
+        <record id="group_database_maintenance" model="ocean.groups">
             <field name="name">Database Maintenance</field>
             <field name="category_id" ref="base.module_category_administration"/>
             <field name="comment">Database maintenance and optimization</field>
@@ -228,4 +228,4 @@
         </record>
         
     </data>
-</odoo>
+</ocean>

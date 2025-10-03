@@ -318,7 +318,7 @@ ocean.define('core_base.KidsClothingCore', function (require) {
 });
 
 // System Information Dialog Template
-odoo.define('core_base.SystemInfoDialog', function (require) {
+ocean.define('core_base.SystemInfoDialog', function (require) {
     'use strict';
     
     return {
@@ -327,7 +327,7 @@ odoo.define('core_base.SystemInfoDialog', function (require) {
 });
 
 // System Information Dialog Template
-odoo.define('core_base.SystemInfoDialog', function (require) {
+ocean.define('core_base.SystemInfoDialog', function (require) {
     'use strict';
     
     return {

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo>
+<ocean>
     <data>
         <!-- Default Database Settings -->
         <record id="setting_database_host" model="ir.config_parameter">
@@ -14,7 +14,7 @@
         
         <record id="setting_database_user" model="ir.config_parameter">
             <field name="key">database.user</field>
-            <field name="value">odoo</field>
+            <field name="value">ocean</field>
         </record>
         
         <record id="setting_database_type" model="ir.config_parameter">
@@ -108,4 +108,4 @@
         </record>
         
     </data>
-</odoo>
+</ocean>

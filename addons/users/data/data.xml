@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo>
+<ocean>
     <data>
         <!-- Default User Groups -->
-        <record id="group_kids_clothing_user" model="res.groups">
+        <record id="group_kids_clothing_user" model="ocean.groups">
             <field name="name">Kids Clothing User</field>
             <field name="category_id" ref="base.module_category_administration"/>
             <field name="description">Basic user access to Kids Clothing ERP</field>
             <field name="comment">Users with basic access to the system</field>
         </record>
         
-        <record id="group_kids_clothing_manager" model="res.groups">
+        <record id="group_kids_clothing_manager" model="ocean.groups">
             <field name="name">Kids Clothing Manager</field>
             <field name="category_id" ref="base.module_category_administration"/>
             <field name="description">Manager access to Kids Clothing ERP</field>
             <field name="comment">Users with manager access to the system</field>
         </record>
         
-        <record id="group_kids_clothing_admin" model="res.groups">
+        <record id="group_kids_clothing_admin" model="ocean.groups">
             <field name="name">Kids Clothing Administrator</field>
             <field name="category_id" ref="base.module_category_administration"/>
             <field name="description">Administrator access to Kids Clothing ERP</field>
@@ -189,4 +189,4 @@
         </record>
         
     </data>
-</odoo>
+</ocean>

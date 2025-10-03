@@ -16,6 +16,25 @@
 - ✅ All framework tests passing
 - ✅ All addon tests passing
 
+### Session 2 - October 2, 2025
+**Duration**: 1 Hour  
+**Focus**: Categories Addon Development  
+**Issue Encountered**:
+- ❌ Created Odoo-style addon instead of standalone ERP addon
+- ❌ Used Odoo model syntax instead of custom framework
+- ❌ Used Odoo XML views instead of custom framework
+- ❌ Created Odoo manifest files instead of custom addon structure
+
+**Root Cause**: 
+- Misunderstood project architecture - created Odoo modules instead of standalone ERP addons
+- Did not use the custom framework (core_framework/) that was already built
+- Should have used custom ORM, addon manager, and web interface
+
+**Resolution**:
+- ✅ Updated project documentation to prevent future confusion
+- ✅ Deleted Odoo-style categories addon
+- ✅ Created proper categories addon using custom framework
+
 **Files Created**:
 - Core framework files (server.py, config.py, database.py, orm.py, addon_manager.py, web_interface.py)
 - 7 addon migration complete files

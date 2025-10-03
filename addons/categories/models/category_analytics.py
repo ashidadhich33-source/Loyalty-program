@@ -1,241 +1,102 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api, _
-from odoo.exceptions import ValidationError
-import logging
+from core_framework.orm import BaseModel, CharField, TextField, FloatField, IntegerField, BooleanField, DateField, DateTimeField, Many2OneField, SelectionField
 from datetime import datetime, timedelta
 
-_logger = logging.getLogger(__name__)
 
-
-class ProductCategoryAnalytics(models.Model):
+class ProductCategoryAnalytics(BaseModel):
+    """Product Category Analytics - Performance tracking and reporting"""
+    
     _name = 'product.category.analytics'
     _description = 'Product Category Analytics'
     _order = 'date desc'
     _rec_name = 'display_name'
 
     # Basic Fields
-    category_id = fields.Many2one(
-        'product.category',
-        string='Category',
-        required=True,
-        ondelete='cascade',
-        help="Category this analytics record belongs to"
-    )
-    date = fields.Date(
-        string='Date',
-        required=True,
-        default=fields.Date.today,
-        help="Date of the analytics record"
-    )
-    period_type = fields.Selection([
+    category_id = Many2OneField('product.category', string='Category', required=True)
+    date = DateField(string='Date', required=True, default=lambda self: self.env.today())
+    period_type = SelectionField(string='Period Type', selection=[
         ('daily', 'Daily'),
         ('weekly', 'Weekly'),
         ('monthly', 'Monthly'),
         ('quarterly', 'Quarterly'),
         ('yearly', 'Yearly'),
-    ], string='Period Type', required=True, default='daily', help="Type of period for this analytics")
+    ], required=True, default='daily')
     
     # Sales Analytics
-    total_sales = fields.Float(
-        string='Total Sales',
-        digits=(12, 2),
-        help="Total sales amount for this category"
-    )
-    total_quantity = fields.Float(
-        string='Total Quantity',
-        digits=(12, 2),
-        help="Total quantity sold for this category"
-    )
-    average_order_value = fields.Float(
-        string='Average Order Value',
-        digits=(12, 2),
-        compute='_compute_average_order_value',
-        help="Average order value for this category"
-    )
-    total_orders = fields.Integer(
-        string='Total Orders',
-        help="Total number of orders for this category"
-    )
+    total_sales = FloatField(string='Total Sales', digits=(12, 2))
+    total_quantity = FloatField(string='Total Quantity', digits=(12, 2))
+    average_order_value = FloatField(string='Average Order Value', digits=(12, 2), readonly=True)
+    total_orders = IntegerField(string='Total Orders')
     
     # Product Analytics
-    total_products = fields.Integer(
-        string='Total Products',
-        help="Total number of products in this category"
-    )
-    active_products = fields.Integer(
-        string='Active Products',
-        help="Number of active products in this category"
-    )
-    new_products = fields.Integer(
-        string='New Products',
-        help="Number of new products added in this period"
-    )
-    discontinued_products = fields.Integer(
-        string='Discontinued Products',
-        help="Number of products discontinued in this period"
-    )
+    total_products = IntegerField(string='Total Products')
+    active_products = IntegerField(string='Active Products')
+    new_products = IntegerField(string='New Products')
+    discontinued_products = IntegerField(string='Discontinued Products')
     
     # Performance Metrics
-    conversion_rate = fields.Float(
-        string='Conversion Rate (%)',
-        digits=(5, 2),
-        help="Conversion rate for this category"
-    )
-    return_rate = fields.Float(
-        string='Return Rate (%)',
-        digits=(5, 2),
-        help="Return rate for this category"
-    )
-    average_rating = fields.Float(
-        string='Average Rating',
-        digits=(3, 2),
-        help="Average rating of products in this category"
-    )
-    total_reviews = fields.Integer(
-        string='Total Reviews',
-        help="Total number of reviews for this category"
-    )
+    conversion_rate = FloatField(string='Conversion Rate (%)', digits=(5, 2))
+    return_rate = FloatField(string='Return Rate (%)', digits=(5, 2))
+    average_rating = FloatField(string='Average Rating', digits=(3, 2))
+    total_reviews = IntegerField(string='Total Reviews')
     
     # Inventory Analytics
-    total_stock_value = fields.Float(
-        string='Total Stock Value',
-        digits=(12, 2),
-        help="Total value of stock for this category"
-    )
-    total_stock_quantity = fields.Float(
-        string='Total Stock Quantity',
-        digits=(12, 2),
-        help="Total quantity of stock for this category"
-    )
-    stock_turnover = fields.Float(
-        string='Stock Turnover',
-        digits=(5, 2),
-        help="Stock turnover ratio for this category"
-    )
-    stock_velocity = fields.Float(
-        string='Stock Velocity',
-        digits=(5, 2),
-        help="Stock velocity for this category"
-    )
+    total_stock_value = FloatField(string='Total Stock Value', digits=(12, 2))
+    total_stock_quantity = FloatField(string='Total Stock Quantity', digits=(12, 2))
+    stock_turnover = FloatField(string='Stock Turnover', digits=(5, 2))
+    stock_velocity = FloatField(string='Stock Velocity', digits=(5, 2))
     
     # Customer Analytics
-    total_customers = fields.Integer(
-        string='Total Customers',
-        help="Total number of customers for this category"
-    )
-    new_customers = fields.Integer(
-        string='New Customers',
-        help="Number of new customers for this category"
-    )
-    returning_customers = fields.Integer(
-        string='Returning Customers',
-        help="Number of returning customers for this category"
-    )
-    customer_retention_rate = fields.Float(
-        string='Customer Retention Rate (%)',
-        digits=(5, 2),
-        help="Customer retention rate for this category"
-    )
+    total_customers = IntegerField(string='Total Customers')
+    new_customers = IntegerField(string='New Customers')
+    returning_customers = IntegerField(string='Returning Customers')
+    customer_retention_rate = FloatField(string='Customer Retention Rate (%)', digits=(5, 2))
     
     # Financial Analytics
-    total_cost = fields.Float(
-        string='Total Cost',
-        digits=(12, 2),
-        help="Total cost for this category"
-    )
-    total_margin = fields.Float(
-        string='Total Margin',
-        digits=(12, 2),
-        help="Total margin for this category"
-    )
-    margin_percentage = fields.Float(
-        string='Margin Percentage (%)',
-        digits=(5, 2),
-        compute='_compute_margin_percentage',
-        help="Margin percentage for this category"
-    )
-    profit_margin = fields.Float(
-        string='Profit Margin (%)',
-        digits=(5, 2),
-        help="Profit margin for this category"
-    )
+    total_cost = FloatField(string='Total Cost', digits=(12, 2))
+    total_margin = FloatField(string='Total Margin', digits=(12, 2))
+    margin_percentage = FloatField(string='Margin Percentage (%)', digits=(5, 2), readonly=True)
+    profit_margin = FloatField(string='Profit Margin (%)', digits=(5, 2))
     
     # Growth Analytics
-    sales_growth = fields.Float(
-        string='Sales Growth (%)',
-        digits=(5, 2),
-        help="Sales growth percentage compared to previous period"
-    )
-    quantity_growth = fields.Float(
-        string='Quantity Growth (%)',
-        digits=(5, 2),
-        help="Quantity growth percentage compared to previous period"
-    )
-    customer_growth = fields.Float(
-        string='Customer Growth (%)',
-        digits=(5, 2),
-        help="Customer growth percentage compared to previous period"
-    )
-    product_growth = fields.Float(
-        string='Product Growth (%)',
-        digits=(5, 2),
-        help="Product growth percentage compared to previous period"
-    )
+    sales_growth = FloatField(string='Sales Growth (%)', digits=(5, 2))
+    quantity_growth = FloatField(string='Quantity Growth (%)', digits=(5, 2))
+    customer_growth = FloatField(string='Customer Growth (%)', digits=(5, 2))
+    product_growth = FloatField(string='Product Growth (%)', digits=(5, 2))
     
     # Seasonal Analytics
-    seasonal_index = fields.Float(
-        string='Seasonal Index',
-        digits=(5, 2),
-        help="Seasonal index for this category"
-    )
-    peak_period = fields.Char(
-        string='Peak Period',
-        help="Peak period for this category"
-    )
-    low_period = fields.Char(
-        string='Low Period',
-        help="Low period for this category"
-    )
+    seasonal_index = FloatField(string='Seasonal Index', digits=(5, 2))
+    peak_period = CharField(string='Peak Period', size=255)
+    low_period = CharField(string='Low Period', size=255)
     
     # Company
-    company_id = fields.Many2one(
-        'res.company',
-        string='Company',
-        default=lambda self: self.env.company,
-        help="Company this analytics record belongs to"
-    )
+    company_id = Many2OneField('res.company', string='Company', default=lambda self: self.env.company)
     
     # Computed Fields
-    display_name = fields.Char(
-        string='Display Name',
-        compute='_compute_display_name',
-        store=True,
-        help="Display name for this analytics record"
-    )
+    display_name = CharField(string='Display Name', readonly=True)
     
-    @api.depends('category_id', 'date', 'period_type')
     def _compute_display_name(self):
+        """Compute display name for this analytics record"""
         for record in self:
             record.display_name = f"{record.category_id.name} - {record.date} ({record.period_type})"
     
-    @api.depends('total_sales', 'total_orders')
     def _compute_average_order_value(self):
+        """Compute average order value"""
         for record in self:
             if record.total_orders > 0:
                 record.average_order_value = record.total_sales / record.total_orders
             else:
                 record.average_order_value = 0.0
     
-    @api.depends('total_margin', 'total_sales')
     def _compute_margin_percentage(self):
+        """Compute margin percentage"""
         for record in self:
             if record.total_sales > 0:
                 record.margin_percentage = (record.total_margin / record.total_sales) * 100
             else:
                 record.margin_percentage = 0.0
     
-    # Methods
     def generate_analytics(self, category_id, date_from, date_to, period_type='daily'):
         """Generate analytics for a category for a specific period"""
         category = self.env['product.category'].browse(category_id)
@@ -322,8 +183,8 @@ class ProductCategoryAnalytics(models.Model):
         if not category:
             return {}
         
-        date_from = fields.Date.today() - timedelta(days=period_days)
-        date_to = fields.Date.today()
+        date_from = self.env.today() - timedelta(days=period_days)
+        date_to = self.env.today()
         
         analytics = self.search([
             ('category_id', '=', category_id),
@@ -370,8 +231,8 @@ class ProductCategoryAnalytics(models.Model):
     
     def get_top_categories(self, limit=10, period_days=30):
         """Get top performing categories"""
-        date_from = fields.Date.today() - timedelta(days=period_days)
-        date_to = fields.Date.today()
+        date_from = self.env.today() - timedelta(days=period_days)
+        date_to = self.env.today()
         
         analytics = self.search([
             ('date', '>=', date_from),
@@ -408,10 +269,10 @@ class ProductCategoryAnalytics(models.Model):
     def get_seasonal_analysis(self, category_id, year=None):
         """Get seasonal analysis for a category"""
         if not year:
-            year = fields.Date.today().year
+            year = self.env.today().year
         
-        date_from = fields.Date.today().replace(year=year, month=1, day=1)
-        date_to = fields.Date.today().replace(year=year, month=12, day=31)
+        date_from = self.env.today().replace(year=year, month=1, day=1)
+        date_to = self.env.today().replace(year=year, month=12, day=31)
         
         analytics = self.search([
             ('category_id', '=', category_id),

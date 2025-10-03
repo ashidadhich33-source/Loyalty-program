@@ -1,39 +1,23 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api, _
-from odoo.exceptions import ValidationError
-import logging
-
-_logger = logging.getLogger(__name__)
+from core_framework.orm import BaseModel, CharField, TextField, FloatField, IntegerField, BooleanField, DateTimeField, Many2OneField, Many2ManyField, SelectionField
 
 
-class ProductCategoryRule(models.Model):
+class ProductCategoryRule(BaseModel):
+    """Product Category Rule - Automated categorization rules"""
+    
     _name = 'product.category.rule'
     _description = 'Product Category Rule'
     _order = 'sequence, name'
 
-    name = fields.Char(
-        string='Rule Name',
-        required=True,
-        help="Name of the category rule"
-    )
-    description = fields.Text(
-        string='Description',
-        help="Description of this rule"
-    )
-    active = fields.Boolean(
-        string='Active',
-        default=True,
-        help="Whether this rule is active"
-    )
-    sequence = fields.Integer(
-        string='Sequence',
-        default=10,
-        help="Order of rule execution"
-    )
+    # Basic Information
+    name = CharField(string='Rule Name', required=True, size=255)
+    description = TextField(string='Description')
+    active = BooleanField(string='Active', default=True)
+    sequence = IntegerField(string='Sequence', default=10)
     
     # Rule Conditions
-    condition_type = fields.Selection([
+    condition_type = SelectionField(string='Condition Type', selection=[
         ('age_group', 'Age Group'),
         ('gender', 'Gender'),
         ('season', 'Season'),
@@ -44,9 +28,9 @@ class ProductCategoryRule(models.Model):
         ('price_range', 'Price Range'),
         ('margin_range', 'Margin Range'),
         ('custom', 'Custom Condition'),
-    ], string='Condition Type', required=True, help="Type of condition for this rule")
+    ], required=True)
     
-    condition_operator = fields.Selection([
+    condition_operator = SelectionField(string='Operator', selection=[
         ('equals', 'Equals'),
         ('not_equals', 'Not Equals'),
         ('in', 'In'),
@@ -56,19 +40,13 @@ class ProductCategoryRule(models.Model):
         ('between', 'Between'),
         ('contains', 'Contains'),
         ('not_contains', 'Not Contains'),
-    ], string='Operator', required=True, help="Operator for the condition")
+    ], required=True)
     
-    condition_value = fields.Char(
-        string='Condition Value',
-        help="Value for the condition"
-    )
-    condition_value_2 = fields.Char(
-        string='Condition Value 2',
-        help="Second value for between conditions"
-    )
+    condition_value = CharField(string='Condition Value', size=500)
+    condition_value_2 = CharField(string='Condition Value 2', size=500)
     
     # Rule Actions
-    action_type = fields.Selection([
+    action_type = SelectionField(string='Action Type', selection=[
         ('assign_category', 'Assign Category'),
         ('assign_template', 'Assign Template'),
         ('set_margin', 'Set Margin'),
@@ -77,86 +55,32 @@ class ProductCategoryRule(models.Model):
         ('send_notification', 'Send Notification'),
         ('create_task', 'Create Task'),
         ('custom', 'Custom Action'),
-    ], string='Action Type', required=True, help="Type of action to perform")
+    ], required=True)
     
-    target_category_id = fields.Many2one(
-        'product.category',
-        string='Target Category',
-        help="Category to assign to matching products"
-    )
-    target_template_id = fields.Many2one(
-        'product.category.template',
-        string='Target Template',
-        help="Template to apply to matching products"
-    )
-    margin_value = fields.Float(
-        string='Margin Value (%)',
-        digits=(5, 2),
-        help="Margin percentage to set"
-    )
-    price_value = fields.Float(
-        string='Price Value',
-        digits=(12, 2),
-        help="Price to set"
-    )
-    tag_ids = fields.Many2many(
-        'product.category.tag',
-        'category_rule_tag_rel',
-        'rule_id',
-        'tag_id',
-        string='Tags',
-        help="Tags to assign to matching products"
-    )
-    notification_message = fields.Text(
-        string='Notification Message',
-        help="Message to send in notification"
-    )
-    task_description = fields.Text(
-        string='Task Description',
-        help="Description for the task to create"
-    )
+    target_category_id = Many2OneField('product.category', string='Target Category')
+    target_template_id = Many2OneField('product.category.template', string='Target Template')
+    margin_value = FloatField(string='Margin Value (%)', digits=(5, 2))
+    price_value = FloatField(string='Price Value', digits=(12, 2))
+    tag_ids = Many2ManyField('product.category.tag', string='Tags')
+    notification_message = TextField(string='Notification Message')
+    task_description = TextField(string='Task Description')
     
     # Rule Scope
-    apply_to = fields.Selection([
+    apply_to = SelectionField(string='Apply To', selection=[
         ('new_products', 'New Products Only'),
         ('existing_products', 'Existing Products Only'),
         ('all_products', 'All Products'),
-    ], string='Apply To', default='new_products', help="Scope of products to apply this rule to")
+    ], default='new_products')
     
     # Rule Execution
-    last_execution = fields.Datetime(
-        string='Last Execution',
-        readonly=True,
-        help="When this rule was last executed"
-    )
-    execution_count = fields.Integer(
-        string='Execution Count',
-        readonly=True,
-        default=0,
-        help="Number of times this rule has been executed"
-    )
-    success_count = fields.Integer(
-        string='Success Count',
-        readonly=True,
-        default=0,
-        help="Number of successful executions"
-    )
-    error_count = fields.Integer(
-        string='Error Count',
-        readonly=True,
-        default=0,
-        help="Number of failed executions"
-    )
+    last_execution = DateTimeField(string='Last Execution', readonly=True)
+    execution_count = IntegerField(string='Execution Count', readonly=True, default=0)
+    success_count = IntegerField(string='Success Count', readonly=True, default=0)
+    error_count = IntegerField(string='Error Count', readonly=True, default=0)
     
     # Company
-    company_id = fields.Many2one(
-        'res.company',
-        string='Company',
-        default=lambda self: self.env.company,
-        help="Company this rule belongs to"
-    )
+    company_id = Many2OneField('res.company', string='Company', default=lambda self: self.env.company)
     
-    # Methods
     def execute_rule(self, products=None):
         """Execute this rule on the given products"""
         if not products:
@@ -171,12 +95,12 @@ class ProductCategoryRule(models.Model):
                     self._execute_action(product)
                     success_count += 1
             except Exception as e:
-                _logger.error(f"Error executing rule {self.name} on product {product.id}: {str(e)}")
+                self.logger.error(f"Error executing rule {self.name} on product {product.id}: {str(e)}")
                 error_count += 1
         
         # Update execution statistics
         self.write({
-            'last_execution': fields.Datetime.now(),
+            'last_execution': self.env.now(),
             'execution_count': self.execution_count + 1,
             'success_count': self.success_count + success_count,
             'error_count': self.error_count + error_count,
@@ -193,9 +117,9 @@ class ProductCategoryRule(models.Model):
         domain = []
         
         if self.apply_to == 'new_products':
-            domain.append(('create_date', '>=', fields.Date.today()))
+            domain.append(('create_date', '>=', self.env.today()))
         elif self.apply_to == 'existing_products':
-            domain.append(('create_date', '<', fields.Date.today()))
+            domain.append(('create_date', '<', self.env.today()))
         
         return self.env['product.template'].search(domain)
     
@@ -312,8 +236,8 @@ class ProductCategoryRule(models.Model):
             'condition_value': self.condition_value,
             'condition_value_2': self.condition_value_2,
             'action_type': self.action_type,
-            'target_category_id': self.target_category_id.id,
-            'target_template_id': self.target_template_id.id,
+            'target_category_id': self.target_category_id.id if self.target_category_id else False,
+            'target_template_id': self.target_template_id.id if self.target_template_id else False,
             'margin_value': self.margin_value,
             'price_value': self.price_value,
             'tag_ids': [(6, 0, self.tag_ids.ids)],

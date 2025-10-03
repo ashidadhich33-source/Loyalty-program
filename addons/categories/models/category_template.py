@@ -1,34 +1,23 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api, _
-from odoo.exceptions import ValidationError
-import logging
-
-_logger = logging.getLogger(__name__)
+from core_framework.orm import BaseModel, CharField, TextField, FloatField, IntegerField, BooleanField, Many2OneField, Many2ManyField, SelectionField
+from core_framework.orm import KidsClothingMixin, PriceMixin
 
 
-class ProductCategoryTemplate(models.Model):
+class ProductCategoryTemplate(BaseModel, KidsClothingMixin, PriceMixin):
+    """Product Category Template - Template for quick category creation"""
+    
     _name = 'product.category.template'
     _description = 'Product Category Template'
     _order = 'name'
 
-    name = fields.Char(
-        string='Template Name',
-        required=True,
-        help="Name of the category template"
-    )
-    description = fields.Text(
-        string='Description',
-        help="Description of this template"
-    )
-    active = fields.Boolean(
-        string='Active',
-        default=True,
-        help="Whether this template is active"
-    )
+    # Basic Information
+    name = CharField(string='Template Name', required=True, size=255)
+    description = TextField(string='Description')
+    active = BooleanField(string='Active', default=True)
     
-    # Template Properties
-    age_group = fields.Selection([
+    # Kids Clothing Specific Fields
+    age_group = SelectionField(string='Age Group', selection=[
         ('0-2', '0-2 Years (Baby)'),
         ('2-4', '2-4 Years (Toddler)'),
         ('4-6', '4-6 Years (Pre-school)'),
@@ -38,154 +27,108 @@ class ProductCategoryTemplate(models.Model):
         ('12-14', '12-14 Years (Teen)'),
         ('14-16', '14-16 Years (Young Adult)'),
         ('all', 'All Ages'),
-    ], string='Age Group', help="Target age group for this template")
+    ], default='all')
     
-    gender = fields.Selection([
+    gender = SelectionField(string='Gender', selection=[
         ('boys', 'Boys'),
         ('girls', 'Girls'),
         ('unisex', 'Unisex'),
-    ], string='Gender', help="Target gender for this template")
+    ], default='unisex')
     
-    season = fields.Selection([
+    season = SelectionField(string='Season', selection=[
         ('summer', 'Summer'),
         ('winter', 'Winter'),
         ('monsoon', 'Monsoon'),
         ('all_season', 'All Season'),
-    ], string='Season', help="Season for this template")
+    ], default='all_season')
     
-    brand_type = fields.Selection([
+    brand_type = SelectionField(string='Brand Type', selection=[
         ('premium', 'Premium'),
         ('mid_range', 'Mid Range'),
         ('budget', 'Budget'),
         ('all', 'All Brands'),
-    ], string='Brand Type', help="Brand type for this template")
+    ], default='all')
     
-    style_type = fields.Selection([
+    style_type = SelectionField(string='Style Type', selection=[
         ('casual', 'Casual'),
         ('formal', 'Formal'),
         ('party', 'Party'),
         ('sports', 'Sports'),
         ('ethnic', 'Ethnic'),
         ('all', 'All Styles'),
-    ], string='Style Type', help="Style type for this template")
+    ], default='all')
     
-    color_family = fields.Selection([
+    color_family = SelectionField(string='Color Family', selection=[
         ('primary', 'Primary Colors'),
         ('pastel', 'Pastel Colors'),
         ('neutral', 'Neutral Colors'),
         ('bright', 'Bright Colors'),
         ('all', 'All Colors'),
-    ], string='Color Family', help="Color family for this template")
+    ], default='all')
     
-    size_range = fields.Selection([
+    size_range = SelectionField(string='Size Range', selection=[
         ('xs_s', 'XS-S'),
         ('m_l', 'M-L'),
         ('xl_xxl', 'XL-XXL'),
         ('xxxl_plus', 'XXXL+'),
         ('all', 'All Sizes'),
-    ], string='Size Range', help="Size range for this template")
+    ], default='all')
     
     # Business Rules
-    min_age_months = fields.Integer(
-        string='Minimum Age (Months)',
-        help="Minimum age in months for this template"
-    )
-    max_age_months = fields.Integer(
-        string='Maximum Age (Months)',
-        help="Maximum age in months for this template"
-    )
-    min_height_cm = fields.Float(
-        string='Minimum Height (cm)',
-        digits=(8, 2),
-        help="Minimum height in cm for this template"
-    )
-    max_height_cm = fields.Float(
-        string='Maximum Height (cm)',
-        digits=(8, 2),
-        help="Maximum height in cm for this template"
-    )
-    min_weight_kg = fields.Float(
-        string='Minimum Weight (kg)',
-        digits=(8, 2),
-        help="Minimum weight in kg for this template"
-    )
-    max_weight_kg = fields.Float(
-        string='Maximum Weight (kg)',
-        digits=(8, 2),
-        help="Maximum weight in kg for this template"
-    )
+    min_age_months = IntegerField(string='Minimum Age (Months)')
+    max_age_months = IntegerField(string='Maximum Age (Months)')
+    min_height_cm = FloatField(string='Minimum Height (cm)', digits=(8, 2))
+    max_height_cm = FloatField(string='Maximum Height (cm)', digits=(8, 2))
+    min_weight_kg = FloatField(string='Minimum Weight (kg)', digits=(8, 2))
+    max_weight_kg = FloatField(string='Maximum Weight (kg)', digits=(8, 2))
     
     # Pricing Rules
-    default_margin = fields.Float(
-        string='Default Margin (%)',
-        digits=(5, 2),
-        help="Default margin percentage for this template"
-    )
-    min_margin = fields.Float(
-        string='Minimum Margin (%)',
-        digits=(5, 2),
-        help="Minimum margin percentage allowed"
-    )
-    max_margin = fields.Float(
-        string='Maximum Margin (%)',
-        digits=(5, 2),
-        help="Maximum margin percentage allowed"
-    )
+    default_margin = FloatField(string='Default Margin (%)', digits=(5, 2))
+    min_margin = FloatField(string='Minimum Margin (%)', digits=(5, 2))
+    max_margin = FloatField(string='Maximum Margin (%)', digits=(5, 2))
     
     # Template Usage
-    usage_count = fields.Integer(
-        string='Usage Count',
-        compute='_compute_usage_count',
-        help="Number of categories using this template"
-    )
+    usage_count = IntegerField(string='Usage Count', readonly=True)
     
     # Company
-    company_id = fields.Many2one(
-        'res.company',
-        string='Company',
-        default=lambda self: self.env.company,
-        help="Company this template belongs to"
-    )
+    company_id = Many2OneField('res.company', string='Company', default=lambda self: self.env.company)
     
-    # Computed Fields
-    @api.depends('name')
     def _compute_usage_count(self):
+        """Compute usage count for this template"""
         for template in self:
             categories = self.env['product.category'].search([
                 ('template_id', '=', template.id)
             ])
             template.usage_count = len(categories)
     
-    # Constraints
-    @api.constrains('min_age_months', 'max_age_months')
     def _check_age_range(self):
+        """Check age range validation"""
         for template in self:
             if template.min_age_months and template.max_age_months:
                 if template.min_age_months >= template.max_age_months:
-                    raise ValidationError(_('Minimum age must be less than maximum age.'))
+                    raise ValueError('Minimum age must be less than maximum age.')
     
-    @api.constrains('min_height_cm', 'max_height_cm')
     def _check_height_range(self):
+        """Check height range validation"""
         for template in self:
             if template.min_height_cm and template.max_height_cm:
                 if template.min_height_cm >= template.max_height_cm:
-                    raise ValidationError(_('Minimum height must be less than maximum height.'))
+                    raise ValueError('Minimum height must be less than maximum height.')
     
-    @api.constrains('min_weight_kg', 'max_weight_kg')
     def _check_weight_range(self):
+        """Check weight range validation"""
         for template in self:
             if template.min_weight_kg and template.max_weight_kg:
                 if template.min_weight_kg >= template.max_weight_kg:
-                    raise ValidationError(_('Minimum weight must be less than maximum weight.'))
+                    raise ValueError('Minimum weight must be less than maximum weight.')
     
-    @api.constrains('min_margin', 'max_margin')
     def _check_margin_range(self):
+        """Check margin range validation"""
         for template in self:
             if template.min_margin and template.max_margin:
                 if template.min_margin >= template.max_margin:
-                    raise ValidationError(_('Minimum margin must be less than maximum margin.'))
+                    raise ValueError('Minimum margin must be less than maximum margin.')
     
-    # Methods
     def create_category_from_template(self, name, parent_id=None):
         """Create a new category from this template"""
         vals = {
@@ -258,51 +201,32 @@ class ProductCategoryTemplate(models.Model):
         return self.create(copy_vals)
 
 
-class ProductCategoryTag(models.Model):
+class ProductCategoryTag(BaseModel):
+    """Product Category Tag - Flexible tagging system for categories"""
+    
     _name = 'product.category.tag'
     _description = 'Product Category Tag'
     _order = 'name'
 
-    name = fields.Char(
-        string='Tag Name',
-        required=True,
-        help="Name of the tag"
-    )
-    color = fields.Integer(
-        string='Color',
-        help="Color for the tag"
-    )
-    active = fields.Boolean(
-        string='Active',
-        default=True,
-        help="Whether this tag is active"
-    )
+    # Basic Information
+    name = CharField(string='Tag Name', required=True, size=255)
+    color = IntegerField(string='Color')
+    active = BooleanField(string='Active', default=True)
     
     # Usage
-    category_count = fields.Integer(
-        string='Category Count',
-        compute='_compute_category_count',
-        help="Number of categories using this tag"
-    )
+    category_count = IntegerField(string='Category Count', readonly=True)
     
     # Company
-    company_id = fields.Many2one(
-        'res.company',
-        string='Company',
-        default=lambda self: self.env.company,
-        help="Company this tag belongs to"
-    )
+    company_id = Many2OneField('res.company', string='Company', default=lambda self: self.env.company)
     
-    # Computed Fields
-    @api.depends('name')
     def _compute_category_count(self):
+        """Compute category count for this tag"""
         for tag in self:
             categories = self.env['product.category'].search([
                 ('tag_ids', 'in', tag.id)
             ])
             tag.category_count = len(categories)
     
-    # Methods
     def get_categories(self):
         """Get all categories using this tag"""
         return self.env['product.category'].search([
@@ -311,6 +235,7 @@ class ProductCategoryTag(models.Model):
     
     def merge_with(self, other_tag):
         """Merge this tag with another tag"""
+        if other_tag = self.env['product.category.tag'].browse(other_tag)
         if other_tag == self:
             return
         

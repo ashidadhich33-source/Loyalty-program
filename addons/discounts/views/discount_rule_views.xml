@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        <!-- Discount Rules Tree View -->
+        <record id="view_discount_rules_tree" model="ocean.ui.view">
+            <field name="name">discount.rules.tree</field>
+            <field name="model">discount.rule</field>
+            <field name="arch" type="xml">
+                <tree string="Discount Rules" decoration-muted="not is_active" decoration-success="is_active">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="program_id"/>
+                    <field name="sequence"/>
+                    <field name="is_active"/>
+                    <field name="rule_type"/>
+                    <field name="condition_type"/>
+                    <field name="condition_field"/>
+                    <field name="condition_value"/>
+                    <field name="discount_type"/>
+                    <field name="discount_value"/>
+                    <field name="discount_currency_id"/>
+                    <field name="min_purchase_amount"/>
+                    <field name="max_discount_amount"/>
+                    <field name="age_group_target"/>
+                    <field name="gender_target"/>
+                    <field name="season_target"/>
+                    <field name="customer_segment"/>
+                    <field name="loyalty_tier_id"/>
+                    <field name="min_loyalty_points"/>
+                    <field name="usage_limit"/>
+                    <field name="usage_limit_per_customer"/>
+                    <field name="usage_limit_per_day"/>
+                    <field name="time_condition"/>
+                    <field name="specific_days"/>
+                    <field name="specific_hours"/>
+                    <field name="total_usage"/>
+                    <field name="total_customers"/>
+                    <field name="total_discount_amount"/>
+                    <field name="average_discount_amount"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Discount Rules Form View -->
+        <record id="view_discount_rules_form" model="ocean.ui.view">
+            <field name="name">discount.rules.form</field>
+            <field name="model">discount.rule</field>
+            <field name="arch" type="xml">
+                <form string="Discount Rule">
+                    <header>
+                        <button name="action_activate" string="Activate" type="object" class="btn-success" attrs="{'invisible': [('is_active', '=', True)]}"/>
+                        <button name="action_deactivate" string="Deactivate" type="object" class="btn-danger" attrs="{'invisible': [('is_active', '=', False)]}"/>
+                        <button name="action_test_rule" string="Test Rule" type="object" class="btn-info"/>
+                        <button name="action_view_analytics" string="View Analytics" type="object" class="btn-primary"/>
+                        <field name="is_active" widget="boolean_toggle"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Rule Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="code"/>
+                                <field name="program_id"/>
+                                <field name="sequence"/>
+                                <field name="is_active"/>
+                                <field name="description"/>
+                            </group>
+                            <group>
+                                <field name="rule_type"/>
+                                <field name="condition_type"/>
+                                <field name="condition_field"/>
+                                <field name="condition_value"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="discount_type"/>
+                                <field name="discount_value"/>
+                                <field name="discount_currency_id"/>
+                                <field name="min_purchase_amount"/>
+                                <field name="max_discount_amount"/>
+                            </group>
+                            <group>
+                                <field name="buy_quantity" attrs="{'invisible': [('discount_type', '!=', 'buy_x_get_y')]}"/>
+                                <field name="get_quantity" attrs="{'invisible': [('discount_type', '!=', 'buy_x_get_y')]}"/>
+                                <field name="get_discount_percentage" attrs="{'invisible': [('discount_type', '!=', 'buy_x_get_y')]}"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="usage_limit"/>
+                                <field name="usage_limit_per_customer"/>
+                                <field name="usage_limit_per_day"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Kids Clothing Target" name="kids_target">
+                                <group>
+                                    <group>
+                                        <field name="age_group_target"/>
+                                        <field name="gender_target"/>
+                                        <field name="season_target"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Products" name="products">
+                                <field name="product_ids" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="product_id"/>
+                                        <field name="sequence"/>
+                                        <field name="is_required"/>
+                                        <field name="min_quantity"/>
+                                        <field name="max_quantity"/>
+                                        <field name="discount_percentage"/>
+                                        <field name="discount_amount"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Categories" name="categories">
+                                <field name="category_ids" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="category_id"/>
+                                        <field name="sequence"/>
+                                        <field name="is_required"/>
+                                        <field name="min_quantity"/>
+                                        <field name="max_quantity"/>
+                                        <field name="discount_percentage"/>
+                                        <field name="discount_amount"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Customer Target" name="customer_target">
+                                <group>
+                                    <group>
+                                        <field name="customer_segment"/>
+                                        <field name="loyalty_tier_id"/>
+                                        <field name="min_loyalty_points"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Time Based" name="time_based">
+                                <group>
+                                    <group>
+                                        <field name="time_condition"/>
+                                        <field name="specific_days"/>
+                                        <field name="specific_hours"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Analytics" name="analytics">
+                                <button name="action_view_analytics" string="View Analytics" type="object" class="btn-primary"/>
+                                <group>
+                                    <group>
+                                        <field name="total_usage"/>
+                                        <field name="total_customers"/>
+                                        <field name="total_discount_amount"/>
+                                        <field name="average_discount_amount"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Discount Rules Search View -->
+        <record id="view_discount_rules_search" model="ocean.ui.view">
+            <field name="name">discount.rules.search</field>
+            <field name="model">discount.rule</field>
+            <field name="arch" type="xml">
+                <search string="Search Discount Rules">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="description"/>
+                    <field name="program_id"/>
+                    <field name="rule_type"/>
+                    <field name="condition_type"/>
+                    <field name="condition_field"/>
+                    <field name="condition_value"/>
+                    <field name="discount_type"/>
+                    <field name="discount_value"/>
+                    <field name="age_group_target"/>
+                    <field name="gender_target"/>
+                    <field name="season_target"/>
+                    <field name="customer_segment"/>
+                    <field name="loyalty_tier_id"/>
+                    <field name="time_condition"/>
+                    <separator/>
+                    <filter string="Active" name="active" domain="[('is_active', '=', True)]"/>
+                    <filter string="Inactive" name="inactive" domain="[('is_active', '=', False)]"/>
+                    <separator/>
+                    <filter string="Product Based" name="product" domain="[('rule_type', '=', 'product')]"/>
+                    <filter string="Category Based" name="category" domain="[('rule_type', '=', 'category')]"/>
+                    <filter string="Customer Based" name="customer" domain="[('rule_type', '=', 'customer')]"/>
+                    <filter string="Order Based" name="order" domain="[('rule_type', '=', 'order')]"/>
+                    <filter string="Time Based" name="time" domain="[('rule_type', '=', 'time')]"/>
+                    <filter string="Loyalty Based" name="loyalty" domain="[('rule_type', '=', 'loyalty')]"/>
+                    <filter string="Age Group Based" name="age_group" domain="[('rule_type', '=', 'age_group')]"/>
+                    <filter string="Gender Based" name="gender" domain="[('rule_type', '=', 'gender')]"/>
+                    <filter string="Seasonal Based" name="seasonal" domain="[('rule_type', '=', 'seasonal')]"/>
+                    <separator/>
+                    <filter string="Equals" name="equals" domain="[('condition_type', '=', 'equals')]"/>
+                    <filter string="Not Equals" name="not_equals" domain="[('condition_type', '=', 'not_equals')]"/>
+                    <filter string="Greater Than" name="greater_than" domain="[('condition_type', '=', 'greater_than')]"/>
+                    <filter string="Less Than" name="less_than" domain="[('condition_type', '=', 'less_than')]"/>
+                    <filter string="Contains" name="contains" domain="[('condition_type', '=', 'contains')]"/>
+                    <filter string="Not Contains" name="not_contains" domain="[('condition_type', '=', 'not_contains')]"/>
+                    <filter string="In" name="in" domain="[('condition_type', '=', 'in')]"/>
+                    <filter string="Not In" name="not_in" domain="[('condition_type', '=', 'not_in')]"/>
+                    <separator/>
+                    <filter string="Percentage" name="percentage" domain="[('discount_type', '=', 'percentage')]"/>
+                    <filter string="Fixed Amount" name="fixed" domain="[('discount_type', '=', 'fixed')]"/>
+                    <filter string="Buy X Get Y" name="buy_x_get_y" domain="[('discount_type', '=', 'buy_x_get_y')]"/>
+                    <filter string="Free Shipping" name="free_shipping" domain="[('discount_type', '=', 'free_shipping')]"/>
+                    <filter string="Loyalty Points" name="loyalty_points" domain="[('discount_type', '=', 'loyalty_points')]"/>
+                    <separator/>
+                    <filter string="Newborn" name="newborn" domain="[('age_group_target', '=', 'newborn')]"/>
+                    <filter string="Infant" name="infant" domain="[('age_group_target', '=', 'infant')]"/>
+                    <filter string="Toddler" name="toddler" domain="[('age_group_target', '=', 'toddler')]"/>
+                    <filter string="Preschool" name="preschool" domain="[('age_group_target', '=', 'preschool')]"/>
+                    <filter string="School" name="school" domain="[('age_group_target', '=', 'school')]"/>
+                    <filter string="Teen" name="teen" domain="[('age_group_target', '=', 'teen')]"/>
+                    <filter string="All Age Groups" name="all_ages" domain="[('age_group_target', '=', 'all')]"/>
+                    <separator/>
+                    <filter string="Boys" name="boys" domain="[('gender_target', '=', 'boys')]"/>
+                    <filter string="Girls" name="girls" domain="[('gender_target', '=', 'girls')]"/>
+                    <filter string="Unisex" name="unisex" domain="[('gender_target', '=', 'unisex')]"/>
+                    <filter string="All Genders" name="all_genders" domain="[('gender_target', '=', 'all')]"/>
+                    <separator/>
+                    <filter string="Summer" name="summer" domain="[('season_target', '=', 'summer')]"/>
+                    <filter string="Winter" name="winter" domain="[('season_target', '=', 'winter')]"/>
+                    <filter string="Monsoon" name="monsoon" domain="[('season_target', '=', 'monsoon')]"/>
+                    <filter string="All Seasons" name="all_seasons" domain="[('season_target', '=', 'all')]"/>
+                    <separator/>
+                    <filter string="Always" name="always" domain="[('time_condition', '=', 'always')]"/>
+                    <filter string="Business Hours" name="business_hours" domain="[('time_condition', '=', 'business_hours')]"/>
+                    <filter string="Weekdays" name="weekdays" domain="[('time_condition', '=', 'weekdays')]"/>
+                    <filter string="Weekends" name="weekends" domain="[('time_condition', '=', 'weekends')]"/>
+                    <filter string="Specific Days" name="specific_days" domain="[('time_condition', '=', 'specific_days')]"/>
+                    <filter string="Specific Hours" name="specific_hours" domain="[('time_condition', '=', 'specific_hours')]"/>
+                    <separator/>
+                    <filter string="Today" name="today" domain="[('create_date', '>=', datetime.datetime.now().replace(hour=0, minute=0, second=0))]"/>
+                    <filter string="This Week" name="this_week" domain="[('create_date', '>=', (datetime.datetime.now() - datetime.timedelta(days=7)))]"/>
+                    <filter string="This Month" name="this_month" domain="[('create_date', '>=', datetime.datetime.now().replace(day=1))]"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter string="Program" name="group_program" context="{'group_by': 'program_id'}"/>
+                        <filter string="Rule Type" name="group_rule" context="{'group_by': 'rule_type'}"/>
+                        <filter string="Condition Type" name="group_condition" context="{'group_by': 'condition_type'}"/>
+                        <filter string="Discount Type" name="group_discount" context="{'group_by': 'discount_type'}"/>
+                        <filter string="Age Group" name="group_age" context="{'group_by': 'age_group_target'}"/>
+                        <filter string="Gender" name="group_gender" context="{'group_by': 'gender_target'}"/>
+                        <filter string="Season" name="group_season" context="{'group_by': 'season_target'}"/>
+                        <filter string="Customer Segment" name="group_customer" context="{'group_by': 'customer_segment'}"/>
+                        <filter string="Time Condition" name="group_time" context="{'group_by': 'time_condition'}"/>
+                        <filter string="Date" name="group_date" context="{'group_by': 'create_date'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- Discount Rules Action -->
+        <record id="action_discount_rules" model="ocean.actions.act_window">
+            <field name="name">Discount Rules</field>
+            <field name="res_model">discount.rule</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_discount_rules_tree"/>
+            <field name="search_view_id" ref="view_discount_rules_search"/>
+            <field name="context">{'search_default_active': 1}</field>
+        </record>
+        
+    </data>
+</ocean>

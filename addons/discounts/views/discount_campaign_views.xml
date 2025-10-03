@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        <!-- Discount Campaigns Tree View -->
+        <record id="view_discount_campaigns_tree" model="ocean.ui.view">
+            <field name="name">discount.campaigns.tree</field>
+            <field name="model">discount.campaign</field>
+            <field name="arch" type="xml">
+                <tree string="Discount Campaigns" decoration-muted="not is_active" decoration-success="is_active">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="is_active"/>
+                    <field name="campaign_type"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="is_permanent"/>
+                    <field name="program_id"/>
+                    <field name="workflow_id"/>
+                    <field name="coupon_template_id"/>
+                    <field name="age_group_target"/>
+                    <field name="gender_target"/>
+                    <field name="season_target"/>
+                    <field name="customer_segment"/>
+                    <field name="loyalty_tier_id"/>
+                    <field name="min_loyalty_points"/>
+                    <field name="rule_count"/>
+                    <field name="is_automatic"/>
+                    <field name="is_notification_sent"/>
+                    <field name="total_usage"/>
+                    <field name="total_customers"/>
+                    <field name="total_discount_amount"/>
+                    <field name="average_discount_amount"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Discount Campaigns Form View -->
+        <record id="view_discount_campaigns_form" model="ocean.ui.view">
+            <field name="name">discount.campaigns.form</field>
+            <field name="model">discount.campaign</field>
+            <field name="arch" type="xml">
+                <form string="Discount Campaign">
+                    <header>
+                        <button name="action_activate" string="Activate" type="object" class="btn-success" attrs="{'invisible': [('is_active', '=', True)]}"/>
+                        <button name="action_deactivate" string="Deactivate" type="object" class="btn-danger" attrs="{'invisible': [('is_active', '=', False)]}"/>
+                        <button name="action_send_notification" string="Send Notification" type="object" class="btn-info"/>
+                        <button name="action_view_analytics" string="View Analytics" type="object" class="btn-primary"/>
+                        <field name="is_active" widget="boolean_toggle"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Campaign Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="code"/>
+                                <field name="description"/>
+                                <field name="is_active"/>
+                                <field name="campaign_type"/>
+                                <field name="start_date"/>
+                                <field name="end_date"/>
+                                <field name="is_permanent"/>
+                            </group>
+                            <group>
+                                <field name="program_id"/>
+                                <field name="workflow_id"/>
+                                <field name="coupon_template_id"/>
+                                <field name="rule_count"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Kids Clothing Target" name="kids_target">
+                                <group>
+                                    <group>
+                                        <field name="age_group_target"/>
+                                        <field name="gender_target"/>
+                                        <field name="season_target"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Products" name="products">
+                                <field name="product_ids" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="product_id"/>
+                                        <field name="sequence"/>
+                                        <field name="is_required"/>
+                                        <field name="min_quantity"/>
+                                        <field name="max_quantity"/>
+                                        <field name="discount_percentage"/>
+                                        <field name="discount_amount"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Categories" name="categories">
+                                <field name="category_ids" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="category_id"/>
+                                        <field name="sequence"/>
+                                        <field name="is_required"/>
+                                        <field name="min_quantity"/>
+                                        <field name="max_quantity"/>
+                                        <field name="discount_percentage"/>
+                                        <field name="discount_amount"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Customer Target" name="customer_target">
+                                <group>
+                                    <group>
+                                        <field name="customer_segment"/>
+                                        <field name="loyalty_tier_id"/>
+                                        <field name="min_loyalty_points"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Campaign Rules" name="rules">
+                                <field name="rule_ids" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="name"/>
+                                        <field name="sequence"/>
+                                        <field name="is_active"/>
+                                        <field name="rule_type"/>
+                                        <field name="condition_field"/>
+                                        <field name="condition_operator"/>
+                                        <field name="condition_value"/>
+                                        <field name="discount_type"/>
+                                        <field name="discount_value"/>
+                                        <field name="usage_limit"/>
+                                        <field name="usage_limit_per_customer"/>
+                                        <field name="usage_limit_per_day"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Special Features" name="special_features">
+                                <group>
+                                    <group>
+                                        <field name="is_automatic"/>
+                                        <field name="is_notification_sent"/>
+                                        <field name="notification_template_id"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Analytics" name="analytics">
+                                <button name="action_view_analytics" string="View Analytics" type="object" class="btn-primary"/>
+                                <group>
+                                    <group>
+                                        <field name="total_usage"/>
+                                        <field name="total_customers"/>
+                                        <field name="total_discount_amount"/>
+                                        <field name="average_discount_amount"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Discount Campaigns Search View -->
+        <record id="view_discount_campaigns_search" model="ocean.ui.view">
+            <field name="name">discount.campaigns.search</field>
+            <field name="model">discount.campaign</field>
+            <field name="arch" type="xml">
+                <search string="Search Discount Campaigns">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="description"/>
+                    <field name="campaign_type"/>
+                    <field name="program_id"/>
+                    <field name="workflow_id"/>
+                    <field name="coupon_template_id"/>
+                    <field name="age_group_target"/>
+                    <field name="gender_target"/>
+                    <field name="season_target"/>
+                    <field name="customer_segment"/>
+                    <field name="loyalty_tier_id"/>
+                    <separator/>
+                    <filter string="Active" name="active" domain="[('is_active', '=', True)]"/>
+                    <filter string="Inactive" name="inactive" domain="[('is_active', '=', False)]"/>
+                    <filter string="Permanent" name="permanent" domain="[('is_permanent', '=', True)]"/>
+                    <filter string="Temporary" name="temporary" domain="[('is_permanent', '=', False)]"/>
+                    <filter string="Automatic" name="automatic" domain="[('is_automatic', '=', True)]"/>
+                    <filter string="Manual" name="manual" domain="[('is_automatic', '=', False)]"/>
+                    <filter string="Notification Sent" name="notification_sent" domain="[('is_notification_sent', '=', True)]"/>
+                    <filter string="Notification Not Sent" name="notification_not_sent" domain="[('is_notification_sent', '=', False)]"/>
+                    <separator/>
+                    <filter string="Seasonal" name="seasonal" domain="[('campaign_type', '=', 'seasonal')]"/>
+                    <filter string="Promotional" name="promotional" domain="[('campaign_type', '=', 'promotional')]"/>
+                    <filter string="Loyalty" name="loyalty" domain="[('campaign_type', '=', 'loyalty')]"/>
+                    <filter string="Birthday" name="birthday" domain="[('campaign_type', '=', 'birthday')]"/>
+                    <filter string="Referral" name="referral" domain="[('campaign_type', '=', 'referral')]"/>
+                    <filter string="Anniversary" name="anniversary" domain="[('campaign_type', '=', 'anniversary')]"/>
+                    <filter string="Custom" name="custom" domain="[('campaign_type', '=', 'custom')]"/>
+                    <separator/>
+                    <filter string="All Customers" name="all_customers" domain="[('customer_segment', '=', 'all')]"/>
+                    <filter string="New Customers" name="new_customers" domain="[('customer_segment', '=', 'new')]"/>
+                    <filter string="Existing Customers" name="existing_customers" domain="[('customer_segment', '=', 'existing')]"/>
+                    <filter string="Loyalty Tier Based" name="loyalty_tier" domain="[('customer_segment', '=', 'loyalty_tier')]"/>
+                    <filter string="Age Group Based" name="age_group" domain="[('customer_segment', '=', 'age_group')]"/>
+                    <filter string="Gender Based" name="gender" domain="[('customer_segment', '=', 'gender')]"/>
+                    <filter string="Seasonal Based" name="seasonal" domain="[('customer_segment', '=', 'seasonal')]"/>
+                    <separator/>
+                    <filter string="Newborn" name="newborn" domain="[('age_group_target', '=', 'newborn')]"/>
+                    <filter string="Infant" name="infant" domain="[('age_group_target', '=', 'infant')]"/>
+                    <filter string="Toddler" name="toddler" domain="[('age_group_target', '=', 'toddler')]"/>
+                    <filter string="Preschool" name="preschool" domain="[('age_group_target', '=', 'preschool')]"/>
+                    <filter string="School" name="school" domain="[('age_group_target', '=', 'school')]"/>
+                    <filter string="Teen" name="teen" domain="[('age_group_target', '=', 'teen')]"/>
+                    <filter string="All Age Groups" name="all_ages" domain="[('age_group_target', '=', 'all')]"/>
+                    <separator/>
+                    <filter string="Boys" name="boys" domain="[('gender_target', '=', 'boys')]"/>
+                    <filter string="Girls" name="girls" domain="[('gender_target', '=', 'girls')]"/>
+                    <filter string="Unisex" name="unisex" domain="[('gender_target', '=', 'unisex')]"/>
+                    <filter string="All Genders" name="all_genders" domain="[('gender_target', '=', 'all')]"/>
+                    <separator/>
+                    <filter string="Summer" name="summer" domain="[('season_target', '=', 'summer')]"/>
+                    <filter string="Winter" name="winter" domain="[('season_target', '=', 'winter')]"/>
+                    <filter string="Monsoon" name="monsoon" domain="[('season_target', '=', 'monsoon')]"/>
+                    <filter string="All Seasons" name="all_seasons" domain="[('season_target', '=', 'all')]"/>
+                    <separator/>
+                    <filter string="Today" name="today" domain="[('start_date', '>=', datetime.datetime.now().replace(hour=0, minute=0, second=0))]"/>
+                    <filter string="This Week" name="this_week" domain="[('start_date', '>=', (datetime.datetime.now() - datetime.timedelta(days=7)))]"/>
+                    <filter string="This Month" name="this_month" domain="[('start_date', '>=', datetime.datetime.now().replace(day=1))]"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter string="Type" name="group_type" context="{'group_by': 'campaign_type'}"/>
+                        <filter string="Program" name="group_program" context="{'group_by': 'program_id'}"/>
+                        <filter string="Workflow" name="group_workflow" context="{'group_by': 'workflow_id'}"/>
+                        <filter string="Age Group" name="group_age" context="{'group_by': 'age_group_target'}"/>
+                        <filter string="Gender" name="group_gender" context="{'group_by': 'gender_target'}"/>
+                        <filter string="Season" name="group_season" context="{'group_by': 'season_target'}"/>
+                        <filter string="Customer Segment" name="group_customer" context="{'group_by': 'customer_segment'}"/>
+                        <filter string="Start Date" name="group_start" context="{'group_by': 'start_date'}"/>
+                        <filter string="End Date" name="group_end" context="{'group_by': 'end_date'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- Discount Campaigns Action -->
+        <record id="action_discount_campaigns" model="ocean.actions.act_window">
+            <field name="name">Discount Campaigns</field>
+            <field name="res_model">discount.campaign</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_discount_campaigns_tree"/>
+            <field name="search_view_id" ref="view_discount_campaigns_search"/>
+            <field name="context">{'search_default_active': 1}</field>
+        </record>
+        
+    </data>
+</ocean>

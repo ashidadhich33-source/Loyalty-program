@@ -117,11 +117,11 @@ This project follows strict zero-error development practices with comprehensive 
 - [⏳] **categories**: Product categories (babywear, toddler, teen) (NEXT)
 - [⏳] **bulk_import**: Excel/CSV import system with templates
 
-### Sales & CRM Addons ⏳ PENDING
-- [ ] **sales**: Quotations, sales orders, delivery orders, returns
-- [ ] **crm**: Leads, opportunities, activities, communication history
-- [ ] **loyalty**: Points, rewards, vouchers, birthday offers
-- [ ] **discounts**: Discount programs, approval flows, coupon codes
+### Sales & CRM Addons ✅ COMPLETED
+- [✅] **sales**: Quotations, sales orders, delivery orders, returns
+- [✅] **crm**: Leads, opportunities, activities, communication history
+- [✅] **loyalty**: Points, rewards, vouchers, birthday offers
+- [✅] **discounts**: Discount programs, approval flows, coupon codes
 
 ### POS Addons ⏳ PENDING
 - [ ] **pos**: Product scanning, fast checkout, touchscreen UI

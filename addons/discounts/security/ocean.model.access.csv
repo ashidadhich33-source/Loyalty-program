@@ -1,0 +1,13 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_discount_program_user,discount.program.user,model_discount_program,group_user,1,1,1,0
+access_discount_program_manager,discount.program.manager,model_discount_program,group_manager,1,1,1,1
+access_discount_rule_user,discount.rule.user,model_discount_rule,group_user,1,1,1,0
+access_discount_rule_manager,discount.rule.manager,model_discount_rule,group_manager,1,1,1,1
+access_discount_coupon_user,discount.coupon.user,model_discount_coupon,group_user,1,1,1,0
+access_discount_coupon_manager,discount.coupon.manager,model_discount_coupon,group_manager,1,1,1,1
+access_discount_approval_user,discount.approval.user,model_discount_approval,group_user,1,1,1,0
+access_discount_approval_manager,discount.approval.manager,model_discount_approval,group_manager,1,1,1,1
+access_discount_campaign_user,discount.campaign.user,model_discount_campaign,group_user,1,1,1,0
+access_discount_campaign_manager,discount.campaign.manager,model_discount_campaign,group_manager,1,1,1,1
+access_discount_analytics_user,discount.analytics.user,model_discount_analytics,group_user,1,0,0,0
+access_discount_analytics_manager,discount.analytics.manager,model_discount_analytics,group_manager,1,1,1,1

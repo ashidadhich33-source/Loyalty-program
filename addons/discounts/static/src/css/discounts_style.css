@@ -1,0 +1,485 @@
+/* Discounts Management Styles */
+
+/* Discount Program Styles */
+.discount-program-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    background: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.discount-program-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.discount-program-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+}
+
+.discount-program-status {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.discount-program-status.active {
+    background: #e8f5e8;
+    color: #2e7d32;
+}
+
+.discount-program-status.inactive {
+    background: #ffebee;
+    color: #c62828;
+}
+
+.discount-program-metrics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.discount-metric {
+    text-align: center;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 6px;
+}
+
+.discount-metric-value {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1976d2;
+}
+
+.discount-metric-label {
+    font-size: 12px;
+    color: #666;
+    margin-top: 5px;
+}
+
+/* Discount Rule Styles */
+.discount-rule-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    background: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.discount-rule-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.discount-rule-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+}
+
+.discount-rule-type {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    background: #e3f2fd;
+    color: #1976d2;
+}
+
+.discount-rule-conditions {
+    margin-top: 15px;
+}
+
+.discount-rule-condition {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 10px;
+    background: #f8f9fa;
+    border-radius: 6px;
+}
+
+.discount-rule-condition-label {
+    font-weight: 500;
+    color: #333;
+    margin-right: 10px;
+}
+
+.discount-rule-condition-value {
+    color: #666;
+}
+
+/* Discount Coupon Styles */
+.discount-coupon-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    background: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.discount-coupon-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.discount-coupon-code {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1976d2;
+    font-family: 'Courier New', monospace;
+}
+
+.discount-coupon-status {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.discount-coupon-status.active {
+    background: #e8f5e8;
+    color: #2e7d32;
+}
+
+.discount-coupon-status.used {
+    background: #fff3e0;
+    color: #f57c00;
+}
+
+.discount-coupon-status.expired {
+    background: #ffebee;
+    color: #c62828;
+}
+
+.discount-coupon-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.discount-coupon-detail {
+    text-align: center;
+    padding: 10px;
+    background: #f8f9fa;
+    border-radius: 6px;
+}
+
+.discount-coupon-detail-value {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+}
+
+.discount-coupon-detail-label {
+    font-size: 12px;
+    color: #666;
+    margin-top: 5px;
+}
+
+/* Discount Approval Styles */
+.discount-approval-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    background: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.discount-approval-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.discount-approval-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+}
+
+.discount-approval-status {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.discount-approval-status.pending {
+    background: #fff3e0;
+    color: #f57c00;
+}
+
+.discount-approval-status.approved {
+    background: #e8f5e8;
+    color: #2e7d32;
+}
+
+.discount-approval-status.rejected {
+    background: #ffebee;
+    color: #c62828;
+}
+
+.discount-approval-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.discount-approval-action {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.discount-approval-action.approve {
+    background: #4caf50;
+    color: white;
+}
+
+.discount-approval-action.approve:hover {
+    background: #45a049;
+}
+
+.discount-approval-action.reject {
+    background: #f44336;
+    color: white;
+}
+
+.discount-approval-action.reject:hover {
+    background: #da190b;
+}
+
+/* Discount Campaign Styles */
+.discount-campaign-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    background: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.discount-campaign-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.discount-campaign-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+}
+
+.discount-campaign-status {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.discount-campaign-status.active {
+    background: #e8f5e8;
+    color: #2e7d32;
+}
+
+.discount-campaign-status.paused {
+    background: #fff3e0;
+    color: #f57c00;
+}
+
+.discount-campaign-status.completed {
+    background: #e3f2fd;
+    color: #1976d2;
+}
+
+.discount-campaign-metrics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.discount-campaign-metric {
+    text-align: center;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 6px;
+}
+
+.discount-campaign-metric-value {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1976d2;
+}
+
+.discount-campaign-metric-label {
+    font-size: 12px;
+    color: #666;
+    margin-top: 5px;
+}
+
+/* Discount Analytics Styles */
+.discount-analytics-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    background: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.discount-analytics-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.discount-analytics-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+}
+
+.discount-analytics-period {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    background: #e3f2fd;
+    color: #1976d2;
+}
+
+.discount-analytics-metrics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.discount-analytics-metric {
+    text-align: center;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 6px;
+}
+
+.discount-analytics-metric-value {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1976d2;
+}
+
+.discount-analytics-metric-label {
+    font-size: 12px;
+    color: #666;
+    margin-top: 5px;
+}
+
+.discount-analytics-metric.positive {
+    background: #e8f5e8;
+}
+
+.discount-analytics-metric.positive .discount-analytics-metric-value {
+    color: #2e7d32;
+}
+
+.discount-analytics-metric.negative {
+    background: #ffebee;
+}
+
+.discount-analytics-metric.negative .discount-analytics-metric-value {
+    color: #c62828;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .discount-program-metrics,
+    .discount-campaign-metrics,
+    .discount-analytics-metrics {
+        grid-template-columns: 1fr;
+    }
+    
+    .discount-program-header,
+    .discount-rule-header,
+    .discount-coupon-header,
+    .discount-approval-header,
+    .discount-campaign-header,
+    .discount-analytics-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .discount-approval-actions {
+        flex-direction: column;
+    }
+}
+
+/* Animation Effects */
+.discount-card {
+    transition: all 0.3s ease;
+}
+
+.discount-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.discount-metric {
+    transition: all 0.3s ease;
+}
+
+.discount-metric:hover {
+    transform: scale(1.05);
+}
+
+/* Loading States */
+.discount-loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.discount-loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid #1976d2;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

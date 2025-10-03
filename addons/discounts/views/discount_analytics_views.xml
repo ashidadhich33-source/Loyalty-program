@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        <!-- Discount Analytics Tree View -->
+        <record id="view_discount_analytics_tree" model="ocean.ui.view">
+            <field name="name">discount.analytics.tree</field>
+            <field name="model">discount.analytics</field>
+            <field name="arch" type="xml">
+                <tree string="Discount Analytics" decoration-success="program_roi > 0" decoration-warning="program_roi == 0" decoration-danger="program_roi < 0">
+                    <field name="name"/>
+                    <field name="program_id"/>
+                    <field name="rule_id"/>
+                    <field name="campaign_id"/>
+                    <field name="date"/>
+                    <field name="period_type"/>
+                    <field name="total_programs"/>
+                    <field name="active_programs"/>
+                    <field name="total_rules"/>
+                    <field name="active_rules"/>
+                    <field name="total_campaigns"/>
+                    <field name="active_campaigns"/>
+                    <field name="total_usage"/>
+                    <field name="total_customers"/>
+                    <field name="total_orders"/>
+                    <field name="total_order_amount"/>
+                    <field name="average_order_value"/>
+                    <field name="total_discount_amount"/>
+                    <field name="average_discount_amount"/>
+                    <field name="discount_percentage"/>
+                    <field name="discount_per_order"/>
+                    <field name="total_coupons_issued"/>
+                    <field name="total_coupons_used"/>
+                    <field name="total_coupons_expired"/>
+                    <field name="coupon_usage_rate"/>
+                    <field name="coupon_expiry_rate"/>
+                    <field name="total_requests"/>
+                    <field name="approved_requests"/>
+                    <field name="rejected_requests"/>
+                    <field name="pending_requests"/>
+                    <field name="approval_rate"/>
+                    <field name="average_approval_time"/>
+                    <field name="total_campaigns_active"/>
+                    <field name="total_campaign_usage"/>
+                    <field name="total_campaign_value"/>
+                    <field name="average_campaign_value"/>
+                    <field name="age_group_breakdown"/>
+                    <field name="gender_breakdown"/>
+                    <field name="seasonal_breakdown"/>
+                    <field name="birthday_discounts"/>
+                    <field name="referral_discounts"/>
+                    <field name="loyalty_discounts"/>
+                    <field name="seasonal_discounts"/>
+                    <field name="program_cost"/>
+                    <field name="program_revenue"/>
+                    <field name="program_roi"/>
+                    <field name="cost_per_customer"/>
+                    <field name="revenue_per_customer"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Discount Analytics Form View -->
+        <record id="view_discount_analytics_form" model="ocean.ui.view">
+            <field name="name">discount.analytics.form</field>
+            <field name="model">discount.analytics</field>
+            <field name="arch" type="xml">
+                <form string="Discount Analytics">
+                    <header>
+                        <button name="action_generate_analytics" string="Generate Analytics" type="object" class="btn-primary"/>
+                        <button name="action_export_analytics" string="Export Analytics" type="object" class="btn-info"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Analytics Reference"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="program_id"/>
+                                <field name="rule_id"/>
+                                <field name="campaign_id"/>
+                                <field name="date"/>
+                                <field name="period_type"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Program Metrics" name="program_metrics">
+                                <group>
+                                    <group>
+                                        <field name="total_programs"/>
+                                        <field name="active_programs"/>
+                                        <field name="total_rules"/>
+                                        <field name="active_rules"/>
+                                        <field name="total_campaigns"/>
+                                        <field name="active_campaigns"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Usage Metrics" name="usage_metrics">
+                                <group>
+                                    <group>
+                                        <field name="total_usage"/>
+                                        <field name="total_customers"/>
+                                        <field name="total_orders"/>
+                                        <field name="total_order_amount"/>
+                                        <field name="average_order_value"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Discount Metrics" name="discount_metrics">
+                                <group>
+                                    <group>
+                                        <field name="total_discount_amount"/>
+                                        <field name="average_discount_amount"/>
+                                        <field name="discount_percentage"/>
+                                        <field name="discount_per_order"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Coupon Metrics" name="coupon_metrics">
+                                <group>
+                                    <group>
+                                        <field name="total_coupons_issued"/>
+                                        <field name="total_coupons_used"/>
+                                        <field name="total_coupons_expired"/>
+                                        <field name="coupon_usage_rate"/>
+                                        <field name="coupon_expiry_rate"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Approval Metrics" name="approval_metrics">
+                                <group>
+                                    <group>
+                                        <field name="total_requests"/>
+                                        <field name="approved_requests"/>
+                                        <field name="rejected_requests"/>
+                                        <field name="pending_requests"/>
+                                        <field name="approval_rate"/>
+                                        <field name="average_approval_time"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Campaign Metrics" name="campaign_metrics">
+                                <group>
+                                    <group>
+                                        <field name="total_campaigns_active"/>
+                                        <field name="total_campaign_usage"/>
+                                        <field name="total_campaign_value"/>
+                                        <field name="average_campaign_value"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Kids Clothing Metrics" name="kids_metrics">
+                                <group>
+                                    <group>
+                                        <field name="age_group_breakdown"/>
+                                        <field name="gender_breakdown"/>
+                                        <field name="seasonal_breakdown"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Special Metrics" name="special_metrics">
+                                <group>
+                                    <group>
+                                        <field name="birthday_discounts"/>
+                                        <field name="referral_discounts"/>
+                                        <field name="loyalty_discounts"/>
+                                        <field name="seasonal_discounts"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Financial Metrics" name="financial_metrics">
+                                <group>
+                                    <group>
+                                        <field name="program_cost"/>
+                                        <field name="program_revenue"/>
+                                        <field name="program_roi"/>
+                                        <field name="cost_per_customer"/>
+                                        <field name="revenue_per_customer"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Discount Analytics Search View -->
+        <record id="view_discount_analytics_search" model="ocean.ui.view">
+            <field name="name">discount.analytics.search</field>
+            <field name="model">discount.analytics</field>
+            <field name="arch" type="xml">
+                <search string="Search Discount Analytics">
+                    <field name="name"/>
+                    <field name="program_id"/>
+                    <field name="rule_id"/>
+                    <field name="campaign_id"/>
+                    <field name="date"/>
+                    <field name="period_type"/>
+                    <field name="total_usage"/>
+                    <field name="total_customers"/>
+                    <field name="total_discount_amount"/>
+                    <field name="program_roi"/>
+                    <separator/>
+                    <filter string="Daily" name="daily" domain="[('period_type', '=', 'daily')]"/>
+                    <filter string="Weekly" name="weekly" domain="[('period_type', '=', 'weekly')]"/>
+                    <filter string="Monthly" name="monthly" domain="[('period_type', '=', 'monthly')]"/>
+                    <filter string="Yearly" name="yearly" domain="[('period_type', '=', 'yearly')]"/>
+                    <separator/>
+                    <filter string="Positive ROI" name="positive_roi" domain="[('program_roi', '>', 0)]"/>
+                    <filter string="Zero ROI" name="zero_roi" domain="[('program_roi', '=', 0)]"/>
+                    <filter string="Negative ROI" name="negative_roi" domain="[('program_roi', '<', 0)]"/>
+                    <separator/>
+                    <filter string="Today" name="today" domain="[('date', '>=', datetime.datetime.now().replace(hour=0, minute=0, second=0))]"/>
+                    <filter string="This Week" name="this_week" domain="[('date', '>=', (datetime.datetime.now() - datetime.timedelta(days=7)))]"/>
+                    <filter string="This Month" name="this_month" domain="[('date', '>=', datetime.datetime.now().replace(day=1))]"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter string="Program" name="group_program" context="{'group_by': 'program_id'}"/>
+                        <filter string="Rule" name="group_rule" context="{'group_by': 'rule_id'}"/>
+                        <filter string="Campaign" name="group_campaign" context="{'group_by': 'campaign_id'}"/>
+                        <filter string="Period Type" name="group_period" context="{'group_by': 'period_type'}"/>
+                        <filter string="Date" name="group_date" context="{'group_by': 'date'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- Discount Analytics Action -->
+        <record id="action_discount_analytics" model="ocean.actions.act_window">
+            <field name="name">Discount Analytics</field>
+            <field name="res_model">discount.analytics</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_discount_analytics_tree"/>
+            <field name="search_view_id" ref="view_discount_analytics_search"/>
+        </record>
+        
+    </data>
+</ocean>

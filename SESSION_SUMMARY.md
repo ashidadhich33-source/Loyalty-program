@@ -187,9 +187,9 @@
 ### 🔧 Technical Highlights
 
 **Architecture**:
-- Clean, modular Odoo-style addon architecture
+- Clean, modular Ocean ERP-style addon architecture
 - Proper separation of concerns (models, views, security, data)
-- Inheritance and extension of base Odoo models
+- Inheritance and extension of base Ocean ERP models
 - Mail threading and activity mixing for communication
 
 **Code Quality**:
@@ -264,12 +264,12 @@
 ### 🎓 Technical Stack Used
 
 **Backend**:
-- Python 3.8+ with Odoo ORM
+- Python 3.8+ with Ocean ERP ORM
 - PostgreSQL for database
 - XML for view definitions
 
 **Frontend**:
-- JavaScript (Odoo framework)
+- JavaScript (Ocean ERP framework)
 - CSS3 with responsive design
 - Dark theme support
 - Modern UI components

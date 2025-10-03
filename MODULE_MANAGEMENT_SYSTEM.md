@@ -1,7 +1,7 @@
-# Odoo-Style Module Management System
+# Ocean ERP-Style Module Management System
 
 ## Overview
-This ERP system will work exactly like Odoo with **modular installation**, **dependency management**, and **selective module activation**. Users can install only the modules they need.
+This ERP system will work exactly like Ocean ERP with **modular installation**, **dependency management**, and **selective module activation**. Users can install only the modules they need.
 
 ## Module Architecture
 
@@ -41,7 +41,7 @@ studio/             # Low-code customization
 
 ## Module Installation System
 
-### Installation Process (Odoo-Style)
+### Installation Process (Ocean ERP-Style)
 1. **Module Discovery**: Browse available modules
 2. **Dependency Check**: Automatic dependency resolution
 3. **Installation**: Install selected modules
@@ -187,7 +187,7 @@ sales/
     └── hi.po
 ```
 
-## User Experience (Odoo-Style)
+## User Experience (Ocean ERP-Style)
 
 ### 1. App Store Interface
 - **Browse Modules**: Category-based browsing
@@ -252,7 +252,7 @@ sales/
 ### 1. Module Creation
 ```bash
 # Create new module
-./odoo-bin scaffold my_module
+./ocean-bin scaffold my_module
 
 # Module structure created automatically
 # Includes manifest, models, views, security, tests
@@ -303,39 +303,39 @@ describe('Sales Module', () => {
 ### 1. Basic POS Setup
 ```bash
 # Install core modules
-./odoo-bin install core_base core_web users company
+./ocean-bin install core_base core_web users company
 
 # Install business modules
-./odoo-bin install contacts products pos inventory
+./ocean-bin install contacts products pos inventory
 
 # Configure modules
-./odoo-bin configure pos inventory
+./ocean-bin configure pos inventory
 ```
 
 ### 2. Full ERP Setup
 ```bash
 # Install all modules
-./odoo-bin install all
+./ocean-bin install all
 
 # Or install specific modules
-./odoo-bin install sales crm purchase accounting hr
+./ocean-bin install sales crm purchase accounting hr
 ```
 
 ### 3. Custom Installation
 ```bash
 # Install with dependencies
-./odoo-bin install sales --with-dependencies
+./ocean-bin install sales --with-dependencies
 
 # Install specific version
-./odoo-bin install sales@1.2.0
+./ocean-bin install sales@1.2.0
 
 # Install from custom repository
-./odoo-bin install sales --repo https://custom-repo.com
+./ocean-bin install sales --repo https://custom-repo.com
 ```
 
 ## Conclusion
 
-This ERP system will work **exactly like Odoo** with:
+This ERP system will work **exactly like Ocean ERP** with:
 - ✅ **Modular Installation**: Install only what you need
 - ✅ **Dependency Management**: Automatic dependency resolution
 - ✅ **App Store Interface**: Browse and install modules
@@ -344,4 +344,4 @@ This ERP system will work **exactly like Odoo** with:
 - ✅ **Customization**: Modify modules without coding
 - ✅ **Multi-tenant**: Different configurations per company
 
-Users can start with basic modules and add more as their business grows, just like Odoo!
+Users can start with basic modules and add more as their business grows, just like Ocean ERP!

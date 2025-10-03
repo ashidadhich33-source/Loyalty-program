@@ -20,19 +20,19 @@
 **Duration**: 1 Hour  
 **Focus**: Categories Addon Development  
 **Issue Encountered**:
-- ❌ Created Odoo-style addon instead of standalone ERP addon
-- ❌ Used Odoo model syntax instead of custom framework
-- ❌ Used Odoo XML views instead of custom framework
-- ❌ Created Odoo manifest files instead of custom addon structure
+- ❌ Created Ocean ERP-style addon instead of standalone ERP addon
+- ❌ Used Ocean ERP model syntax instead of custom framework
+- ❌ Used Ocean ERP XML views instead of custom framework
+- ❌ Created Ocean ERP manifest files instead of custom addon structure
 
 **Root Cause**: 
-- Misunderstood project architecture - created Odoo modules instead of standalone ERP addons
+- Misunderstood project architecture - created Ocean ERP modules instead of standalone ERP addons
 - Did not use the custom framework (core_framework/) that was already built
 - Should have used custom ORM, addon manager, and web interface
 
 **Resolution**:
 - ✅ Updated project documentation to prevent future confusion
-- ✅ Deleted Odoo-style categories addon
+- ✅ Deleted Ocean ERP-style categories addon
 - ✅ Created proper categories addon using custom framework
 
 **Files Created**:

@@ -63,7 +63,7 @@ cat DEVELOPMENT_CHECKLIST.md
 ├── ZERO_ERROR_PRINCIPLES.md  # Development standards
 ├── clone_Version3.md         # Complete module blueprint
 ├── REMAINING_MODULES_ANALYSIS.md # Detailed remaining modules
-├── addons/                   # Addons folder (like Odoo)
+├── addons/                   # Addons folder (like Ocean ERP)
 │   ├── core_base/            # Core base addon
 │   ├── core_web/            # Core web addon
 │   ├── users/               # Users addon

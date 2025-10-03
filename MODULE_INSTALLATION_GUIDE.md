@@ -177,19 +177,19 @@ l10n_in_hr → hr + l10n_in
 ### Command Line Installation
 ```bash
 # Install single module
-./odoo-bin install sales
+./ocean-bin install sales
 
 # Install multiple modules
-./odoo-bin install sales crm pos
+./ocean-bin install sales crm pos
 
 # Install with dependencies
-./odoo-bin install sales --with-dependencies
+./ocean-bin install sales --with-dependencies
 
 # Install specific version
-./odoo-bin install sales@1.2.0
+./ocean-bin install sales@1.2.0
 
 # Install from custom repository
-./odoo-bin install sales --repo https://custom-repo.com
+./ocean-bin install sales --repo https://custom-repo.com
 ```
 
 ### Web Interface Installation
@@ -257,13 +257,13 @@ Settings → Apps → Updates
 ### Manual Updates
 ```bash
 # Update specific module
-./odoo-bin update sales
+./ocean-bin update sales
 
 # Update all modules
-./odoo-bin update all
+./ocean-bin update all
 
 # Update with dependencies
-./odoo-bin update sales --with-dependencies
+./ocean-bin update sales --with-dependencies
 ```
 
 ## Module Uninstallation
@@ -286,13 +286,13 @@ Settings → Apps → Updates
 ### Uninstall Commands
 ```bash
 # Uninstall single module
-./odoo-bin uninstall sales
+./ocean-bin uninstall sales
 
 # Uninstall multiple modules
-./odoo-bin uninstall sales crm
+./ocean-bin uninstall sales crm
 
 # Uninstall with dependencies
-./odoo-bin uninstall sales --with-dependencies
+./ocean-bin uninstall sales --with-dependencies
 ```
 
 ## Troubleshooting
@@ -351,4 +351,4 @@ Settings → Apps → Updates
 - Keep documentation current
 
 ---
-**This guide ensures smooth module installation and management, just like Odoo!**
+**This guide ensures smooth module installation and management, just like Ocean ERP!**

@@ -1,53 +1,53 @@
 # Module Scaffolding System
 
 ## Overview
-Complete module scaffolding system that allows users to create custom modules according to their requirements, just like Odoo's scaffolding system.
+Complete module scaffolding system that allows users to create custom modules according to their requirements, just like Ocean ERP's scaffolding system.
 
 ## Module Creation Commands
 
 ### 1. Basic Module Creation
 ```bash
 # Create basic module
-./odoo-bin scaffold my_custom_module
+./ocean-bin scaffold my_custom_module
 
 # Create module with specific path
-./odoo-bin scaffold my_custom_module --path=/custom/modules
+./ocean-bin scaffold my_custom_module --path=/custom/modules
 
 # Create module with specific author
-./odoo-bin scaffold my_custom_module --author="Your Company"
+./ocean-bin scaffold my_custom_module --author="Your Company"
 ```
 
 ### 2. Template-Based Creation
 ```bash
 # Create module with standard template
-./odoo-bin scaffold my_module --template=standard
+./ocean-bin scaffold my_module --template=standard
 
 # Create module with ecommerce template
-./odoo-bin scaffold my_module --template=ecommerce
+./ocean-bin scaffold my_module --template=ecommerce
 
 # Create module with POS template
-./odoo-bin scaffold my_module --template=pos
+./ocean-bin scaffold my_module --template=pos
 
 # Create module with accounting template
-./odoo-bin scaffold my_module --template=accounting
+./ocean-bin scaffold my_module --template=accounting
 
 # Create module with HR template
-./odoo-bin scaffold my_module --template=hr
+./ocean-bin scaffold my_module --template=hr
 ```
 
 ### 3. Advanced Module Creation
 ```bash
 # Create module with dependencies
-./odoo-bin scaffold my_module --depends="sale,account,inventory"
+./ocean-bin scaffold my_module --depends="sale,account,inventory"
 
 # Create module with specific category
-./odoo-bin scaffold my_module --category="Sales"
+./ocean-bin scaffold my_module --category="Sales"
 
 # Create module with custom template
-./odoo-bin scaffold my_module --template=custom --template-path=/templates/custom
+./ocean-bin scaffold my_module --template=custom --template-path=/templates/custom
 
 # Create module with full configuration
-./odoo-bin scaffold my_module \
+./ocean-bin scaffold my_module \
   --template=ecommerce \
   --depends="sale,account,inventory" \
   --category="E-commerce" \
@@ -287,7 +287,7 @@ export class MyModel extends Model {
 ### 3. View Configuration
 ```xml
 <!-- views/my_model_views.xml -->
-<odoo>
+<ocean>
   <record id="view_my_model_tree" model="ir.ui.view">
     <field name="name">my.model.tree</field>
     <field name="model">my.model</field>
@@ -372,7 +372,7 @@ export class MyModel extends Model {
   </record>
   
   <menuitem id="menu_my_model" name="My Model" parent="base.menu_custom" action="action_my_model"/>
-</odoo>
+</ocean>
 ```
 
 ## Module Development Tools
@@ -380,55 +380,55 @@ export class MyModel extends Model {
 ### 1. Development Commands
 ```bash
 # Start development server
-./odoo-bin dev --module=my_custom_module
+./ocean-bin dev --module=my_custom_module
 
 # Run tests
-./odoo-bin test my_custom_module
+./ocean-bin test my_custom_module
 
 # Check module dependencies
-./odoo-bin check-deps my_custom_module
+./ocean-bin check-deps my_custom_module
 
 # Validate module
-./odoo-bin validate my_custom_module
+./ocean-bin validate my_custom_module
 
 # Check module syntax
-./odoo-bin check-syntax my_custom_module
+./ocean-bin check-syntax my_custom_module
 
 # Check module security
-./odoo-bin check-security my_custom_module
+./ocean-bin check-security my_custom_module
 ```
 
 ### 2. Debugging Tools
 ```bash
 # Debug mode
-./odoo-bin dev --debug --module=my_custom_module
+./ocean-bin dev --debug --module=my_custom_module
 
 # Log level
-./odoo-bin dev --log-level=debug --module=my_custom_module
+./ocean-bin dev --log-level=debug --module=my_custom_module
 
 # Profile performance
-./odoo-bin dev --profile --module=my_custom_module
+./ocean-bin dev --profile --module=my_custom_module
 
 # Memory usage
-./odoo-bin dev --memory --module=my_custom_module
+./ocean-bin dev --memory --module=my_custom_module
 ```
 
 ### 3. Module Management
 ```bash
 # List modules
-./odoo-bin list-modules
+./ocean-bin list-modules
 
 # Check module status
-./odoo-bin status my_custom_module
+./ocean-bin status my_custom_module
 
 # Update module
-./odoo-bin update my_custom_module
+./ocean-bin update my_custom_module
 
 # Uninstall module
-./odoo-bin uninstall my_custom_module
+./ocean-bin uninstall my_custom_module
 
 # Reinstall module
-./odoo-bin reinstall my_custom_module
+./ocean-bin reinstall my_custom_module
 ```
 
 ## Module Testing
@@ -514,40 +514,40 @@ describe('My Module Integration', () => {
 ### 1. Module Packaging
 ```bash
 # Package module
-./odoo-bin package my_custom_module --output=dist/
+./ocean-bin package my_custom_module --output=dist/
 
 # Sign module
-./odoo-bin sign my_custom_module --key=private_key.pem
+./ocean-bin sign my_custom_module --key=private_key.pem
 
 # Create module archive
-./odoo-bin archive my_custom_module --output=my_custom_module.zip
+./ocean-bin archive my_custom_module --output=my_custom_module.zip
 ```
 
 ### 2. Module Repository
 ```bash
 # Create repository
-./odoo-bin create-repo my_repo
+./ocean-bin create-repo my_repo
 
 # Add module to repository
-./odoo-bin add-module my_custom_module --repo=my_repo
+./ocean-bin add-module my_custom_module --repo=my_repo
 
 # Publish module
-./odoo-bin publish my_custom_module --repo=my_repo
+./ocean-bin publish my_custom_module --repo=my_repo
 
 # Update module in repository
-./odoo-bin update-module my_custom_module --repo=my_repo
+./ocean-bin update-module my_custom_module --repo=my_repo
 ```
 
 ### 3. Module Installation
 ```bash
 # Install from local path
-./odoo-bin install my_custom_module --path=/local/path
+./ocean-bin install my_custom_module --path=/local/path
 
 # Install from repository
-./odoo-bin install my_custom_module --repo=https://custom-repo.com
+./ocean-bin install my_custom_module --repo=https://custom-repo.com
 
 # Install specific version
-./odoo-bin install my_custom_module@1.2.0 --repo=https://custom-repo.com
+./ocean-bin install my_custom_module@1.2.0 --repo=https://custom-repo.com
 ```
 
 ## Conclusion
@@ -561,4 +561,4 @@ This scaffolding system provides complete module development capabilities:
 ✅ **Publishing System**: Package and distribute modules  
 ✅ **Installation System**: Install custom modules easily  
 
-Users can create modules according to their specific requirements and install them later, exactly like Odoo! 🎉
+Users can create modules according to their specific requirements and install them later, exactly like Ocean ERP! 🎉

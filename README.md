@@ -7,7 +7,7 @@ A comprehensive ERP system designed specifically for the Kids' Clothing Retail I
 This is a **complete ERP system** that uses:
 - **Python** for backend development
 - **PostgreSQL** database
-- **Addons-based modular architecture** (like Odoo)
+- **Addons-based modular architecture** (custom Ocean ERP framework)
 - **XML templates** for views
 - **Python models** for business logic
 - **Modular addons** for easy customization and installation
@@ -34,7 +34,7 @@ This is a **complete ERP system** that uses:
 
 ```
 /workspace/
-├── addons/                   # Addons folder (like Odoo)
+├── addons/                   # Addons folder (Ocean ERP modules)
 │   ├── core_base/           # Core base addon
 │   ├── core_web/            # Core web addon
 │   ├── users/               # Users addon
@@ -175,7 +175,7 @@ kids_clothing_erp/
 1. **Create Model**
    ```python
    # models/new_model.py
-   from odoo import models, fields, api
+   from core_framework.orm import BaseModel, CharField, IntegerField
    
    class NewModel(models.Model):
        _name = 'new.model'
@@ -211,22 +211,22 @@ kids_clothing_erp/
 
 ## 🔧 **Configuration**
 
-### **Odoo Configuration**
+### **Ocean ERP Configuration**
 ```ini
 [options]
 db_host = localhost
 db_port = 5432
-db_user = odoo
-db_password = odoo
+db_user = ocean
+db_password = ocean
 db_name = kids_clothing_erp
 http_port = 8069
-addons_path = addons,odoo/addons
+addons_path = addons,core_framework
 ```
 
 ### **Environment Variables**
 ```bash
-export ODOO_RC=/etc/odoo/odoo.conf
-export PGPASSWORD=odoo
+export OCEAN_RC=/etc/ocean/ocean.conf
+export PGPASSWORD=ocean
 ```
 
 ## 🧪 **Testing**
@@ -234,7 +234,7 @@ export PGPASSWORD=odoo
 ### **Unit Tests**
 ```bash
 # Run tests
-python3 odoo-bin -c odoo.conf -d kids_clothing_erp --test-enable --stop-after-init
+python3 run_erp.py -c ocean.conf -d kids_clothing_erp --test-enable --stop-after-init
 ```
 
 ### **Test Coverage**
@@ -243,14 +243,14 @@ python3 odoo-bin -c odoo.conf -d kids_clothing_erp --test-enable --stop-after-in
 pip install coverage
 
 # Run with coverage
-coverage run odoo-bin -c odoo.conf -d kids_clothing_erp --test-enable --stop-after-init
+coverage run run_erp.py -c ocean.conf -d kids_clothing_erp --test-enable --stop-after-init
 coverage report
 ```
 
 ## 📚 **API Documentation**
 
-### **Odoo API**
-- **XML-RPC**: Standard Odoo XML-RPC API
+### **Ocean ERP API**
+- **XML-RPC**: Standard Ocean ERP XML-RPC API
 - **JSON-RPC**: RESTful JSON API
 - **Web Services**: SOAP web services
 
@@ -258,7 +258,7 @@ coverage report
 ```python
 import xmlrpc.client
 
-# Connect to Odoo
+# Connect to Ocean ERP
 common = xmlrpc.client.ServerProxy('http://localhost:8069/xmlrpc/2/common')
 models = xmlrpc.client.ServerProxy('http://localhost:8069/xmlrpc/2/object')
 
@@ -275,19 +275,19 @@ customer_id = models.execute_kw('kids_clothing_erp', uid, 'admin',
 
 ### **Production Setup**
 ```bash
-# Install Odoo
-sudo apt-get install odoo
+# Install Ocean ERP
+sudo apt-get install ocean-erp
 
 # Configure database
 sudo -u postgres createdb kids_clothing_erp
 
 # Install module
-sudo -u odoo odoo-bin -c /etc/odoo/odoo.conf -d kids_clothing_erp -i kids_clothing_erp
+sudo -u ocean ocean-bin -c /etc/ocean/ocean.conf -d kids_clothing_erp -i kids_clothing_erp
 ```
 
 ### **Docker Deployment**
 ```dockerfile
-FROM odoo:17.0
+FROM ocean-erp:latest
 COPY . /mnt/extra-addons/kids_clothing_erp
 ```
 
@@ -314,7 +314,7 @@ server {
 5. Submit a pull request
 
 ### **Development Guidelines**
-- Follow Odoo coding standards
+- Follow Ocean ERP coding standards
 - Use Python type hints
 - Write comprehensive tests
 - Update documentation
@@ -334,7 +334,7 @@ For support and questions:
 ## 🗺️ **Roadmap**
 
 ### **Phase 1: Core System ✅**
-- [x] Odoo Framework Setup
+- [x] Ocean ERP Framework Setup
 - [x] Basic Models and Views
 - [x] Security and Permissions
 - [x] Demo Data
@@ -353,4 +353,4 @@ For support and questions:
 
 ---
 
-**Built with ❤️ for the Kids' Clothing Retail Industry using Odoo Framework**
+**Built with ❤️ for the Kids' Clothing Retail Industry using Ocean ERP Framework**

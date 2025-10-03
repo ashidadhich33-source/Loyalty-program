@@ -1,6 +1,6 @@
-# Odoo-Style ERP Clone for Kids' Clothing Retail Industry
+# Ocean ERP-Style ERP Clone for Kids' Clothing Retail Industry
 
-This document provides a **deep, comprehensive module and model blueprint** for building an Odoo-like ERP, tailored for the kids' clothing retail sector. All standard Odoo modules (Sales, CRM, Inventory, POS, Accounting, HR, Indian Localization, etc.), advanced POS/payment features, customization, reporting, and now **bulk import/export** requirements are included.
+This document provides a **deep, comprehensive module and model blueprint** for building an Ocean ERP-like ERP, tailored for the kids' clothing retail sector. All standard Ocean ERP modules (Sales, CRM, Inventory, POS, Accounting, HR, Indian Localization, etc.), advanced POS/payment features, customization, reporting, and now **bulk import/export** requirements are included.
 
 ---
 
@@ -10,7 +10,7 @@ This document provides a **deep, comprehensive module and model blueprint** for 
 - **core_web**: Web client, UI assets, menus, notifications.
 - **users**: User, Group, Permission matrix, access rights, onboarding wizard.
 - **company**: Company creation, profile, multi-company support, logo, fiscal year, address, GSTIN, etc.
-- **database**: Multi-database, database creation and switching (Odoo-style onboarding).
+- **database**: Multi-database, database creation and switching (Ocean ERP-style onboarding).
 
 ---
 
@@ -241,9 +241,9 @@ This document provides a **deep, comprehensive module and model blueprint** for 
 
 # Conclusion
 
-This file is a complete, Odoo-style, modular ERP structure for the kids' clothing retail industry—now including:
+This file is a complete, Ocean ERP-style, modular ERP structure for the kids' clothing retail industry—now including:
 - Deep POS exchange/return/multi-payment/discount logic
-- Odoo-style onboarding (company, user, database)
+- Ocean ERP-style onboarding (company, user, database)
 - Indian localization and payment gateways
 - Bulk import/export where it matters, with sample templates
 - Fully customizable reporting and module activation

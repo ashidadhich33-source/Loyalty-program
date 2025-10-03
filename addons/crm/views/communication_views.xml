@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        <!-- CRM Communications Tree View -->
+        <record id="view_crm_communications_tree" model="ocean.ui.view">
+            <field name="name">crm.communications.tree</field>
+            <field name="model">crm.communication</field>
+            <field name="arch" type="xml">
+                <tree string="CRM Communications" decoration-muted="not is_active" decoration-success="state=='sent'" decoration-warning="state=='pending'" decoration-danger="state=='failed'">
+                    <field name="name"/>
+                    <field name="communication_type"/>
+                    <field name="direction"/>
+                    <field name="date"/>
+                    <field name="state"/>
+                    <field name="user_id"/>
+                    <field name="lead_id"/>
+                    <field name="opportunity_id"/>
+                    <field name="create_date"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- CRM Communications Form View -->
+        <record id="view_crm_communications_form" model="ocean.ui.view">
+            <field name="name">crm.communications.form</field>
+            <field name="model">crm.communication</field>
+            <field name="arch" type="xml">
+                <form string="CRM Communication">
+                    <header>
+                        <button name="action_send" string="Send" type="object" class="btn-primary" attrs="{'invisible': [('state', 'in', ['sent', 'failed'])]}"/>
+                        <button name="action_resend" string="Resend" type="object" class="btn-warning" attrs="{'invisible': [('state', '!=', 'failed')]}"/>
+                        <button name="action_cancel" string="Cancel" type="object" class="btn-danger" attrs="{'invisible': [('state', 'in', ['sent', 'cancelled'])]}"/>
+                        <field name="is_active" widget="boolean_toggle"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Communication Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="communication_type"/>
+                                <field name="direction"/>
+                                <field name="date"/>
+                                <field name="state"/>
+                                <field name="user_id"/>
+                                <field name="team_id"/>
+                            </group>
+                            <group>
+                                <field name="lead_id"/>
+                                <field name="opportunity_id"/>
+                                <field name="partner_id"/>
+                                <field name="email"/>
+                                <field name="phone"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="street"/>
+                                <field name="city"/>
+                                <field name="state"/>
+                                <field name="zip"/>
+                                <field name="country"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Communication Details" name="details">
+                                <field name="subject" placeholder="Communication subject..."/>
+                                <field name="body" placeholder="Communication body..."/>
+                                <field name="note" placeholder="Internal notes..."/>
+                            </page>
+                            <page string="Kids Clothing Info" name="kids_info">
+                                <group>
+                                    <group>
+                                        <field name="child_count"/>
+                                        <field name="child_ages"/>
+                                        <field name="age_group_interest"/>
+                                    </group>
+                                    <group>
+                                        <field name="gender_preference"/>
+                                        <field name="seasonal_interest"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- CRM Communications Search View -->
+        <record id="view_crm_communications_search" model="ocean.ui.view">
+            <field name="name">crm.communications.search</field>
+            <field name="model">crm.communication</field>
+            <field name="arch" type="xml">
+                <search string="Search Communications">
+                    <field name="name"/>
+                    <field name="communication_type"/>
+                    <field name="direction"/>
+                    <field name="date"/>
+                    <field name="state"/>
+                    <field name="user_id"/>
+                    <field name="lead_id"/>
+                    <field name="opportunity_id"/>
+                    <field name="partner_id"/>
+                    <field name="age_group_interest"/>
+                    <field name="gender_preference"/>
+                    <field name="seasonal_interest"/>
+                    <separator/>
+                    <filter string="Active" name="active" domain="[('is_active', '=', True)]"/>
+                    <filter string="Inactive" name="inactive" domain="[('is_active', '=', False)]"/>
+                    <filter string="Sent" name="sent" domain="[('state', '=', 'sent')]"/>
+                    <filter string="Pending" name="pending" domain="[('state', '=', 'pending')]"/>
+                    <filter string="Failed" name="failed" domain="[('state', '=', 'failed')]"/>
+                    <filter string="Cancelled" name="cancelled" domain="[('state', '=', 'cancelled')]"/>
+                    <separator/>
+                    <filter string="Email" name="email" domain="[('communication_type', '=', 'email')]"/>
+                    <filter string="SMS" name="sms" domain="[('communication_type', '=', 'sms')]"/>
+                    <filter string="Call" name="call" domain="[('communication_type', '=', 'call')]"/>
+                    <filter string="Letter" name="letter" domain="[('communication_type', '=', 'letter')]"/>
+                    <filter string="Meeting" name="meeting" domain="[('communication_type', '=', 'meeting')]"/>
+                    <separator/>
+                    <filter string="Inbound" name="inbound" domain="[('direction', '=', 'inbound')]"/>
+                    <filter string="Outbound" name="outbound" domain="[('direction', '=', 'outbound')]"/>
+                    <separator/>
+                    <filter string="Newborn" name="newborn" domain="[('age_group_interest', '=', 'newborn')]"/>
+                    <filter string="Infant" name="infant" domain="[('age_group_interest', '=', 'infant')]"/>
+                    <filter string="Toddler" name="toddler" domain="[('age_group_interest', '=', 'toddler')]"/>
+                    <filter string="Preschool" name="preschool" domain="[('age_group_interest', '=', 'preschool')]"/>
+                    <filter string="School" name="school" domain="[('age_group_interest', '=', 'school')]"/>
+                    <filter string="Teen" name="teen" domain="[('age_group_interest', '=', 'teen')]"/>
+                    <separator/>
+                    <filter string="Boys" name="boys" domain="[('gender_preference', '=', 'boys')]"/>
+                    <filter string="Girls" name="girls" domain="[('gender_preference', '=', 'girls')]"/>
+                    <filter string="Unisex" name="unisex" domain="[('gender_preference', '=', 'unisex')]"/>
+                    <separator/>
+                    <filter string="Summer" name="summer" domain="[('seasonal_interest', '=', 'summer')]"/>
+                    <filter string="Winter" name="winter" domain="[('seasonal_interest', '=', 'winter')]"/>
+                    <filter string="Monsoon" name="monsoon" domain="[('seasonal_interest', '=', 'monsoon')]"/>
+                    <separator/>
+                    <filter string="Today" name="today" domain="[('date', '>=', datetime.datetime.now().replace(hour=0, minute=0, second=0))]"/>
+                    <filter string="This Week" name="this_week" domain="[('date', '>=', (datetime.datetime.now() - datetime.timedelta(days=7)))]"/>
+                    <filter string="This Month" name="this_month" domain="[('date', '>=', datetime.datetime.now().replace(day=1))]"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter string="Type" name="group_type" context="{'group_by': 'communication_type'}"/>
+                        <filter string="Direction" name="group_direction" context="{'group_by': 'direction'}"/>
+                        <filter string="State" name="group_state" context="{'group_by': 'state'}"/>
+                        <filter string="User" name="group_user" context="{'group_by': 'user_id'}"/>
+                        <filter string="Lead" name="group_lead" context="{'group_by': 'lead_id'}"/>
+                        <filter string="Opportunity" name="group_opportunity" context="{'group_by': 'opportunity_id'}"/>
+                        <filter string="Age Group" name="group_age" context="{'group_by': 'age_group_interest'}"/>
+                        <filter string="Gender" name="group_gender" context="{'group_by': 'gender_preference'}"/>
+                        <filter string="Season" name="group_season" context="{'group_by': 'seasonal_interest'}"/>
+                        <filter string="Date" name="group_date" context="{'group_by': 'date'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- CRM Communications Action -->
+        <record id="action_crm_communications" model="ocean.actions.act_window">
+            <field name="name">CRM Communications</field>
+            <field name="res_model">crm.communication</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_crm_communications_tree"/>
+            <field name="search_view_id" ref="view_crm_communications_search"/>
+            <field name="context">{'search_default_active': 1}</field>
+        </record>
+        
+    </data>
+</ocean>

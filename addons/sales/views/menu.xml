@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        <!-- Sales Menu -->
+        <menuitem id="menu_sales"
+                  name="Sales"
+                  parent="menu_kids_clothing_erp"
+                  sequence="10"/>
+        
+        <!-- Sales Operations -->
+        <menuitem id="menu_sales_operations"
+                  name="Sales Operations"
+                  parent="menu_sales"
+                  sequence="10"/>
+        
+        <menuitem id="menu_sales_orders"
+                  name="Sales Orders"
+                  parent="menu_sales_operations"
+                  sequence="10"
+                  action="action_sale_orders"/>
+        
+        <menuitem id="menu_sales_quotations"
+                  name="Sales Quotations"
+                  parent="menu_sales_operations"
+                  sequence="20"
+                  action="action_sale_quotations"/>
+        
+        <menuitem id="menu_sales_deliveries"
+                  name="Sale Deliveries"
+                  parent="menu_sales_operations"
+                  sequence="30"
+                  action="action_sale_deliveries"/>
+        
+        <menuitem id="menu_sales_returns"
+                  name="Sale Returns"
+                  parent="menu_sales_operations"
+                  sequence="40"
+                  action="action_sale_returns"/>
+        
+        <!-- Sales Analytics -->
+        <menuitem id="menu_sales_analytics"
+                  name="Sales Analytics"
+                  parent="menu_sales"
+                  sequence="20"/>
+        
+        <menuitem id="menu_sales_analytics_dashboard"
+                  name="Analytics Dashboard"
+                  parent="menu_sales_analytics"
+                  sequence="10"
+                  action="action_sale_analytics"/>
+        
+        <!-- Sales Tools -->
+        <menuitem id="menu_sales_tools"
+                  name="Sales Tools"
+                  parent="menu_sales"
+                  sequence="30"/>
+        
+        <menuitem id="menu_sales_wizard"
+                  name="Sale Order Wizard"
+                  parent="menu_sales_tools"
+                  sequence="10"
+                  action="action_sale_order_wizard"/>
+        
+        <!-- Sales Configuration -->
+        <menuitem id="menu_sales_configuration"
+                  name="Configuration"
+                  parent="menu_sales"
+                  sequence="40"/>
+        
+        <menuitem id="menu_sales_settings"
+                  name="Sales Settings"
+                  parent="menu_sales_configuration"
+                  sequence="10"/>
+        
+    </data>
+</ocean>

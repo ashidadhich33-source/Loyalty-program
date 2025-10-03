@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        <!-- Sale Returns Tree View -->
+        <record id="view_sale_returns_tree" model="ocean.ui.view">
+            <field name="name">sale.returns.tree</field>
+            <field name="model">sale.return</field>
+            <field name="arch" type="xml">
+                <tree string="Sale Returns" decoration-muted="state=='draft'" decoration-success="state=='refunded'" decoration-warning="state=='processed'" decoration-danger="state=='rejected'">
+                    <field name="name"/>
+                    <field name="sale_order_id"/>
+                    <field name="partner_id"/>
+                    <field name="date_return"/>
+                    <field name="date_received"/>
+                    <field name="state"/>
+                    <field name="return_type"/>
+                    <field name="return_reason"/>
+                    <field name="amount_total"/>
+                    <field name="refund_status"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Sale Returns Form View -->
+        <record id="view_sale_returns_form" model="ocean.ui.view">
+            <field name="name">sale.returns.form</field>
+            <field name="model">sale.return</field>
+            <field name="arch" type="xml">
+                <form string="Sale Return">
+                    <header>
+                        <button name="action_confirm" string="Confirm" type="object" class="btn-primary" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                        <button name="action_receive" string="Receive" type="object" class="btn-info" attrs="{'invisible': [('state', '!=', 'confirmed')]}"/>
+                        <button name="action_process" string="Process" type="object" class="btn-success" attrs="{'invisible': [('state', '!=', 'received')]}"/>
+                        <button name="action_refund" string="Refund" type="object" class="btn-success" attrs="{'invisible': [('state', '!=', 'processed')]}"/>
+                        <button name="action_exchange" string="Exchange" type="object" class="btn-info" attrs="{'invisible': [('state', '!=', 'processed')]}"/>
+                        <button name="action_reject" string="Reject" type="object" class="btn-warning" attrs="{'invisible': [('state', 'in', ['refunded', 'exchanged', 'rejected'])]}"/>
+                        <button name="action_cancel" string="Cancel" type="object" class="btn-danger" attrs="{'invisible': [('state', 'in', ['refunded', 'exchanged', 'cancelled'])]}"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,received,processed"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Return Reference"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="sale_order_id"/>
+                                <field name="partner_id"/>
+                                <field name="date_return"/>
+                                <field name="date_received"/>
+                                <field name="date_processed"/>
+                                <field name="return_type"/>
+                                <field name="return_reason"/>
+                            </group>
+                            <group>
+                                <field name="amount_untaxed" readonly="1"/>
+                                <field name="amount_tax" readonly="1"/>
+                                <field name="amount_total" readonly="1"/>
+                                <field name="refund_method"/>
+                                <field name="refund_amount"/>
+                                <field name="refund_status"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="return_reason_notes" placeholder="Additional notes about return reason..."/>
+                            <field name="is_within_return_period" readonly="1"/>
+                            <field name="return_within_days"/>
+                        </group>
+                        <notebook>
+                            <page string="Return Lines" name="return_lines">
+                                <field name="return_line_ids" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="product_id"/>
+                                        <field name="name"/>
+                                        <field name="size"/>
+                                        <field name="color"/>
+                                        <field name="product_uom_qty"/>
+                                        <field name="qty_returned"/>
+                                        <field name="price_unit"/>
+                                        <field name="price_subtotal"/>
+                                        <field name="return_reason"/>
+                                        <field name="state"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Exchange" name="exchange">
+                                <field name="exchange_order_id"/>
+                                <field name="exchange_products"/>
+                                <button name="action_create_exchange_order" string="Create Exchange Order" type="object" class="btn-primary" attrs="{'invisible': [('return_type', '!=', 'exchange')]}"/>
+                            </page>
+                            <page string="Approval" name="approval">
+                                <field name="requires_approval"/>
+                                <field name="approved_by"/>
+                                <field name="approval_date"/>
+                                <button name="action_approve" string="Approve" type="object" class="btn-success" attrs="{'invisible': [('requires_approval', '=', False)]}"/>
+                            </page>
+                            <page string="Notes" name="notes">
+                                <field name="return_conditions"/>
+                                <field name="return_notes" placeholder="Internal notes..."/>
+                                <field name="customer_notes" placeholder="Customer notes..."/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Sale Returns Search View -->
+        <record id="view_sale_returns_search" model="ocean.ui.view">
+            <field name="name">sale.returns.search</field>
+            <field name="model">sale.return</field>
+            <field name="arch" type="xml">
+                <search string="Search Returns">
+                    <field name="name"/>
+                    <field name="sale_order_id"/>
+                    <field name="partner_id"/>
+                    <field name="date_return"/>
+                    <field name="date_received"/>
+                    <field name="state"/>
+                    <field name="return_type"/>
+                    <field name="return_reason"/>
+                    <field name="amount_total"/>
+                    <separator/>
+                    <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
+                    <filter string="Confirmed" name="confirmed" domain="[('state', '=', 'confirmed')]"/>
+                    <filter string="Received" name="received" domain="[('state', '=', 'received')]"/>
+                    <filter string="Processed" name="processed" domain="[('state', '=', 'processed')]"/>
+                    <filter string="Refunded" name="refunded" domain="[('state', '=', 'refunded')]"/>
+                    <filter string="Exchanged" name="exchanged" domain="[('state', '=', 'exchanged')]"/>
+                    <filter string="Rejected" name="rejected" domain="[('state', '=', 'rejected')]"/>
+                    <filter string="Cancelled" name="cancelled" domain="[('state', '=', 'cancelled')]"/>
+                    <separator/>
+                    <filter string="Refund" name="refund" domain="[('return_type', '=', 'refund')]"/>
+                    <filter string="Exchange" name="exchange" domain="[('return_type', '=', 'exchange')]"/>
+                    <filter string="Store Credit" name="store_credit" domain="[('return_type', '=', 'store_credit')]"/>
+                    <filter string="Repair" name="repair" domain="[('return_type', '=', 'repair')]"/>
+                    <filter string="Replacement" name="replacement" domain="[('return_type', '=', 'replacement')]"/>
+                    <separator/>
+                    <filter string="Defective" name="defective" domain="[('return_reason', '=', 'defective')]"/>
+                    <filter string="Wrong Size" name="wrong_size" domain="[('return_reason', '=', 'wrong_size')]"/>
+                    <filter string="Wrong Color" name="wrong_color" domain="[('return_reason', '=', 'wrong_color')]"/>
+                    <filter string="Not as Described" name="not_as_described" domain="[('return_reason', '=', 'not_as_described')]"/>
+                    <filter string="Damaged Shipping" name="damaged_shipping" domain="[('return_reason', '=', 'damaged_shipping')]"/>
+                    <filter string="Changed Mind" name="changed_mind" domain="[('return_reason', '=', 'changed_mind')]"/>
+                    <filter string="Gift Return" name="gift_return" domain="[('return_reason', '=', 'gift_return')]"/>
+                    <separator/>
+                    <filter string="Today" name="today" domain="[('date_return', '>=', datetime.datetime.now().replace(hour=0, minute=0, second=0))]"/>
+                    <filter string="This Week" name="this_week" domain="[('date_return', '>=', (datetime.datetime.now() - datetime.timedelta(days=7)))]"/>
+                    <filter string="This Month" name="this_month" domain="[('date_return', '>=', datetime.datetime.now().replace(day=1))]"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter string="State" name="group_state" context="{'group_by': 'state'}"/>
+                        <filter string="Sales Order" name="group_order" context="{'group_by': 'sale_order_id'}"/>
+                        <filter string="Customer" name="group_customer" context="{'group_by': 'partner_id'}"/>
+                        <filter string="Return Type" name="group_type" context="{'group_by': 'return_type'}"/>
+                        <filter string="Return Reason" name="group_reason" context="{'group_by': 'return_reason'}"/>
+                        <filter string="Date" name="group_date" context="{'group_by': 'date_return'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- Sale Returns Action -->
+        <record id="action_sale_returns" model="ocean.actions.act_window">
+            <field name="name">Sale Returns</field>
+            <field name="res_model">sale.return</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_sale_returns_tree"/>
+            <field name="search_view_id" ref="view_sale_returns_search"/>
+            <field name="context">{'search_default_draft': 1}</field>
+        </record>
+        
+    </data>
+</ocean>

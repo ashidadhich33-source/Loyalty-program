@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        <!-- CRM Lead Stages -->
+        <record id="stage_lead_new" model="crm.lead.stage">
+            <field name="name">New</field>
+            <field name="sequence">10</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="stage_lead_qualified" model="crm.lead.stage">
+            <field name="name">Qualified</field>
+            <field name="sequence">20</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="stage_lead_proposal" model="crm.lead.stage">
+            <field name="name">Proposal</field>
+            <field name="sequence">30</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="stage_lead_negotiation" model="crm.lead.stage">
+            <field name="name">Negotiation</field>
+            <field name="sequence">40</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="stage_lead_won" model="crm.lead.stage">
+            <field name="name">Won</field>
+            <field name="sequence">50</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="stage_lead_lost" model="crm.lead.stage">
+            <field name="name">Lost</field>
+            <field name="sequence">60</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <!-- CRM Opportunity Stages -->
+        <record id="stage_opportunity_new" model="crm.opportunity.stage">
+            <field name="name">New</field>
+            <field name="sequence">10</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="stage_opportunity_qualified" model="crm.opportunity.stage">
+            <field name="name">Qualified</field>
+            <field name="sequence">20</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="stage_opportunity_proposal" model="crm.opportunity.stage">
+            <field name="name">Proposal</field>
+            <field name="sequence">30</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="stage_opportunity_negotiation" model="crm.opportunity.stage">
+            <field name="name">Negotiation</field>
+            <field name="sequence">40</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="stage_opportunity_won" model="crm.opportunity.stage">
+            <field name="name">Won</field>
+            <field name="sequence">50</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="stage_opportunity_lost" model="crm.opportunity.stage">
+            <field name="name">Lost</field>
+            <field name="sequence">60</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <!-- CRM Activity Types -->
+        <record id="activity_type_call" model="crm.activity.type">
+            <field name="name">Call</field>
+            <field name="sequence">10</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="activity_type_email" model="crm.activity.type">
+            <field name="name">Email</field>
+            <field name="sequence">20</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="activity_type_meeting" model="crm.activity.type">
+            <field name="name">Meeting</field>
+            <field name="sequence">30</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="activity_type_task" model="crm.activity.type">
+            <field name="name">Task</field>
+            <field name="sequence">40</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="activity_type_note" model="crm.activity.type">
+            <field name="name">Note</field>
+            <field name="sequence">50</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <!-- CRM Communication Types -->
+        <record id="communication_type_email" model="crm.communication.type">
+            <field name="name">Email</field>
+            <field name="sequence">10</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="communication_type_sms" model="crm.communication.type">
+            <field name="name">SMS</field>
+            <field name="sequence">20</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="communication_type_call" model="crm.communication.type">
+            <field name="name">Call</field>
+            <field name="sequence">30</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="communication_type_letter" model="crm.communication.type">
+            <field name="name">Letter</field>
+            <field name="sequence">40</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="communication_type_meeting" model="crm.communication.type">
+            <field name="name">Meeting</field>
+            <field name="sequence">50</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <!-- CRM Campaign Types -->
+        <record id="campaign_type_email" model="crm.campaign.type">
+            <field name="name">Email</field>
+            <field name="sequence">10</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="campaign_type_sms" model="crm.campaign.type">
+            <field name="name">SMS</field>
+            <field name="sequence">20</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="campaign_type_social" model="crm.campaign.type">
+            <field name="name">Social Media</field>
+            <field name="sequence">30</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="campaign_type_print" model="crm.campaign.type">
+            <field name="name">Print</field>
+            <field name="sequence">40</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="campaign_type_online" model="crm.campaign.type">
+            <field name="name">Online</field>
+            <field name="sequence">50</field>
+            <field name="is_active">True</field>
+        </record>
+        
+    </data>
+</ocean>

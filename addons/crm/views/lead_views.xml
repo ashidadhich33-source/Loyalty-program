@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        <!-- CRM Leads Tree View -->
+        <record id="view_crm_leads_tree" model="ocean.ui.view">
+            <field name="name">crm.leads.tree</field>
+            <field name="model">crm.lead</field>
+            <field name="arch" type="xml">
+                <tree string="CRM Leads" decoration-muted="not is_active" decoration-success="is_converted" decoration-warning="priority=='2'" decoration-danger="priority=='3'">
+                    <field name="name"/>
+                    <field name="partner_name"/>
+                    <field name="email"/>
+                    <field name="phone"/>
+                    <field name="type"/>
+                    <field name="stage_id"/>
+                    <field name="priority"/>
+                    <field name="probability"/>
+                    <field name="expected_revenue"/>
+                    <field name="age_group_interest"/>
+                    <field name="gender_preference"/>
+                    <field name="seasonal_interest"/>
+                    <field name="user_id"/>
+                    <field name="create_date"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- CRM Leads Form View -->
+        <record id="view_crm_leads_form" model="ocean.ui.view">
+            <field name="name">crm.leads.form</field>
+            <field name="model">crm.lead</field>
+            <field name="arch" type="xml">
+                <form string="CRM Lead">
+                    <header>
+                        <button name="action_convert_to_customer" string="Convert to Customer" type="object" class="btn-primary" attrs="{'invisible': [('is_converted', '=', True)]}"/>
+                        <button name="action_convert_to_opportunity" string="Convert to Opportunity" type="object" class="btn-success" attrs="{'invisible': [('is_converted', '=', True)]}"/>
+                        <button name="action_schedule_activity" string="Schedule Activity" type="object" class="btn-info"/>
+                        <button name="action_send_communication" string="Send Communication" type="object" class="btn-secondary"/>
+                        <field name="is_active" widget="boolean_toggle"/>
+                        <field name="is_converted" widget="boolean_toggle"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Lead Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="partner_name"/>
+                                <field name="email"/>
+                                <field name="phone"/>
+                                <field name="mobile"/>
+                                <field name="title"/>
+                                <field name="function"/>
+                                <field name="website"/>
+                            </group>
+                            <group>
+                                <field name="type"/>
+                                <field name="stage_id"/>
+                                <field name="priority"/>
+                                <field name="probability"/>
+                                <field name="expected_revenue"/>
+                                <field name="user_id"/>
+                                <field name="team_id"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="street"/>
+                                <field name="city"/>
+                                <field name="state"/>
+                                <field name="zip"/>
+                                <field name="country"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Kids Clothing Info" name="kids_info">
+                                <group>
+                                    <group>
+                                        <field name="child_count"/>
+                                        <field name="child_ages"/>
+                                        <field name="age_group_interest"/>
+                                    </group>
+                                    <group>
+                                        <field name="gender_preference"/>
+                                        <field name="seasonal_interest"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Lead Source" name="source">
+                                <group>
+                                    <group>
+                                        <field name="source_id"/>
+                                        <field name="medium_id"/>
+                                        <field name="campaign_id"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Activities" name="activities">
+                                <button name="action_view_activities" string="View Activities" type="object" class="btn-primary"/>
+                                <field name="activity_ids" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="name"/>
+                                        <field name="activity_type"/>
+                                        <field name="date_deadline"/>
+                                        <field name="state"/>
+                                        <field name="user_id"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Communications" name="communications">
+                                <button name="action_view_communications" string="View Communications" type="object" class="btn-primary"/>
+                                <field name="communication_ids" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="name"/>
+                                        <field name="communication_type"/>
+                                        <field name="direction"/>
+                                        <field name="date"/>
+                                        <field name="state"/>
+                                        <field name="user_id"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Notes" name="notes">
+                                <field name="description" placeholder="Lead description..."/>
+                                <field name="note" placeholder="Internal notes..."/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- CRM Leads Search View -->
+        <record id="view_crm_leads_search" model="ocean.ui.view">
+            <field name="name">crm.leads.search</field>
+            <field name="model">crm.lead</field>
+            <field name="arch" type="xml">
+                <search string="Search Leads">
+                    <field name="name"/>
+                    <field name="partner_name"/>
+                    <field name="email"/>
+                    <field name="phone"/>
+                    <field name="type"/>
+                    <field name="stage_id"/>
+                    <field name="priority"/>
+                    <field name="user_id"/>
+                    <field name="age_group_interest"/>
+                    <field name="gender_preference"/>
+                    <field name="seasonal_interest"/>
+                    <separator/>
+                    <filter string="Active" name="active" domain="[('is_active', '=', True)]"/>
+                    <filter string="Inactive" name="inactive" domain="[('is_active', '=', False)]"/>
+                    <filter string="Converted" name="converted" domain="[('is_converted', '=', True)]"/>
+                    <filter string="Not Converted" name="not_converted" domain="[('is_converted', '=', False)]"/>
+                    <separator/>
+                    <filter string="Leads" name="leads" domain="[('type', '=', 'lead')]"/>
+                    <filter string="Opportunities" name="opportunities" domain="[('type', '=', 'opportunity')]"/>
+                    <filter string="Customers" name="customers" domain="[('type', '=', 'customer')]"/>
+                    <separator/>
+                    <filter string="High Priority" name="high_priority" domain="[('priority', 'in', ['2', '3'])]"/>
+                    <filter string="Low Priority" name="low_priority" domain="[('priority', 'in', ['0', '1'])]"/>
+                    <separator/>
+                    <filter string="Newborn" name="newborn" domain="[('age_group_interest', '=', 'newborn')]"/>
+                    <filter string="Infant" name="infant" domain="[('age_group_interest', '=', 'infant')]"/>
+                    <filter string="Toddler" name="toddler" domain="[('age_group_interest', '=', 'toddler')]"/>
+                    <filter string="Preschool" name="preschool" domain="[('age_group_interest', '=', 'preschool')]"/>
+                    <filter string="School" name="school" domain="[('age_group_interest', '=', 'school')]"/>
+                    <filter string="Teen" name="teen" domain="[('age_group_interest', '=', 'teen')]"/>
+                    <separator/>
+                    <filter string="Boys" name="boys" domain="[('gender_preference', '=', 'boys')]"/>
+                    <filter string="Girls" name="girls" domain="[('gender_preference', '=', 'girls')]"/>
+                    <filter string="Unisex" name="unisex" domain="[('gender_preference', '=', 'unisex')]"/>
+                    <separator/>
+                    <filter string="Summer" name="summer" domain="[('seasonal_interest', '=', 'summer')]"/>
+                    <filter string="Winter" name="winter" domain="[('seasonal_interest', '=', 'winter')]"/>
+                    <filter string="Monsoon" name="monsoon" domain="[('seasonal_interest', '=', 'monsoon')]"/>
+                    <separator/>
+                    <filter string="Today" name="today" domain="[('create_date', '>=', datetime.datetime.now().replace(hour=0, minute=0, second=0))]"/>
+                    <filter string="This Week" name="this_week" domain="[('create_date', '>=', (datetime.datetime.now() - datetime.timedelta(days=7)))]"/>
+                    <filter string="This Month" name="this_month" domain="[('create_date', '>=', datetime.datetime.now().replace(day=1))]"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter string="Type" name="group_type" context="{'group_by': 'type'}"/>
+                        <filter string="Stage" name="group_stage" context="{'group_by': 'stage_id'}"/>
+                        <filter string="Priority" name="group_priority" context="{'group_by': 'priority'}"/>
+                        <filter string="Salesperson" name="group_user" context="{'group_by': 'user_id'}"/>
+                        <filter string="Age Group" name="group_age" context="{'group_by': 'age_group_interest'}"/>
+                        <filter string="Gender" name="group_gender" context="{'group_by': 'gender_preference'}"/>
+                        <filter string="Season" name="group_season" context="{'group_by': 'seasonal_interest'}"/>
+                        <filter string="Date" name="group_date" context="{'group_by': 'create_date'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- CRM Leads Action -->
+        <record id="action_crm_leads" model="ocean.actions.act_window">
+            <field name="name">CRM Leads</field>
+            <field name="res_model">crm.lead</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_crm_leads_tree"/>
+            <field name="search_view_id" ref="view_crm_leads_search"/>
+            <field name="context">{'search_default_active': 1}</field>
+        </record>
+        
+    </data>
+</ocean>

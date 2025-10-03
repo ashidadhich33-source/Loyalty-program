@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_crm_lead_user,crm.lead.user,model_crm_lead,group_user,1,1,1,0
+access_crm_lead_manager,crm.lead.manager,model_crm_lead,group_manager,1,1,1,1
+access_crm_opportunity_user,crm.opportunity.user,model_crm_opportunity,group_user,1,1,1,0
+access_crm_opportunity_manager,crm.opportunity.manager,model_crm_opportunity,group_manager,1,1,1,1
+access_crm_activity_user,crm.activity.user,model_crm_activity,group_user,1,1,1,0
+access_crm_activity_manager,crm.activity.manager,model_crm_activity,group_manager,1,1,1,1
+access_crm_communication_user,crm.communication.user,model_crm_communication,group_user,1,1,1,0
+access_crm_communication_manager,crm.communication.manager,model_crm_communication,group_manager,1,1,1,1
+access_crm_campaign_user,crm.campaign.user,model_crm_campaign,group_user,1,1,1,0
+access_crm_campaign_manager,crm.campaign.manager,model_crm_campaign,group_manager,1,1,1,1

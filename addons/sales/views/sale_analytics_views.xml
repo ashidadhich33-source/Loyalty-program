@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        <!-- Sale Analytics Tree View -->
+        <record id="view_sale_analytics_tree" model="ocean.ui.view">
+            <field name="name">sale.analytics.tree</field>
+            <field name="model">sale.analytics</field>
+            <field name="arch" type="xml">
+                <tree string="Sale Analytics" decoration-info="sales_trend=='growing'" decoration-success="sales_trend=='stable'" decoration-warning="sales_trend=='declining'">
+                    <field name="name"/>
+                    <field name="order_id"/>
+                    <field name="partner_id"/>
+                    <field name="date"/>
+                    <field name="total_sales"/>
+                    <field name="total_orders"/>
+                    <field name="average_order_value"/>
+                    <field name="age_group_performance"/>
+                    <field name="gender_performance"/>
+                    <field name="seasonal_performance"/>
+                    <field name="sales_trend"/>
+                    <field name="growth_rate"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Sale Analytics Form View -->
+        <record id="view_sale_analytics_form" model="ocean.ui.view">
+            <field name="name">sale.analytics.form</field>
+            <field name="model">sale.analytics</field>
+            <field name="arch" type="xml">
+                <form string="Sale Analytics">
+                    <header>
+                        <button name="action_generate_report" string="Generate Report" type="object" class="btn-primary"/>
+                        <button name="action_export_data" string="Export Data" type="object" class="btn-info"/>
+                        <field name="is_active" widget="boolean_toggle"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Analytics Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="order_id"/>
+                                <field name="partner_id"/>
+                                <field name="date"/>
+                                <field name="period_type"/>
+                                <field name="period_start"/>
+                                <field name="period_end"/>
+                            </group>
+                            <group>
+                                <field name="total_sales"/>
+                                <field name="total_orders"/>
+                                <field name="average_order_value"/>
+                                <field name="sales_trend"/>
+                                <field name="growth_rate"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Sales Metrics" name="sales">
+                                <group>
+                                    <group>
+                                        <field name="total_sales"/>
+                                        <field name="total_orders"/>
+                                        <field name="average_order_value"/>
+                                    </group>
+                                    <group>
+                                        <field name="conversion_rate"/>
+                                        <field name="customer_satisfaction"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Product Metrics" name="products">
+                                <field name="total_products_sold"/>
+                                <field name="top_selling_products"/>
+                            </page>
+                            <page string="Age Group Analysis" name="age_group">
+                                <field name="age_group_sales"/>
+                                <field name="age_group_performance"/>
+                            </page>
+                            <page string="Gender Analysis" name="gender">
+                                <field name="gender_sales"/>
+                                <field name="gender_performance"/>
+                            </page>
+                            <page string="Seasonal Analysis" name="seasonal">
+                                <field name="seasonal_sales"/>
+                                <field name="seasonal_performance"/>
+                            </page>
+                            <page string="Customer Metrics" name="customer">
+                                <group>
+                                    <group>
+                                        <field name="total_customers"/>
+                                        <field name="new_customers"/>
+                                        <field name="returning_customers"/>
+                                    </group>
+                                    <group>
+                                        <field name="customer_retention_rate"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Return Metrics" name="returns">
+                                <group>
+                                    <group>
+                                        <field name="total_returns"/>
+                                        <field name="return_rate"/>
+                                    </group>
+                                    <group>
+                                        <field name="return_reasons"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Recommendations" name="recommendations">
+                                <field name="recommendations" nolabel="1"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Sale Analytics Search View -->
+        <record id="view_sale_analytics_search" model="ocean.ui.view">
+            <field name="name">sale.analytics.search</field>
+            <field name="model">sale.analytics</field>
+            <field name="arch" type="xml">
+                <search string="Search Analytics">
+                    <field name="name"/>
+                    <field name="order_id"/>
+                    <field name="partner_id"/>
+                    <field name="date"/>
+                    <field name="period_type"/>
+                    <field name="sales_trend"/>
+                    <separator/>
+                    <filter string="Active" name="active" domain="[('is_active', '=', True)]"/>
+                    <filter string="Inactive" name="inactive" domain="[('is_active', '=', False)]"/>
+                    <separator/>
+                    <filter string="Growing" name="growing" domain="[('sales_trend', '=', 'growing')]"/>
+                    <filter string="Stable" name="stable" domain="[('sales_trend', '=', 'stable')]"/>
+                    <filter string="Declining" name="declining" domain="[('sales_trend', '=', 'declining')]"/>
+                    <filter string="Volatile" name="volatile" domain="[('sales_trend', '=', 'volatile')]"/>
+                    <separator/>
+                    <filter string="Daily" name="daily" domain="[('period_type', '=', 'daily')]"/>
+                    <filter string="Weekly" name="weekly" domain="[('period_type', '=', 'weekly')]"/>
+                    <filter string="Monthly" name="monthly" domain="[('period_type', '=', 'monthly')]"/>
+                    <filter string="Quarterly" name="quarterly" domain="[('period_type', '=', 'quarterly')]"/>
+                    <filter string="Yearly" name="yearly" domain="[('period_type', '=', 'yearly')]"/>
+                    <separator/>
+                    <filter string="Today" name="today" domain="[('date', '>=', datetime.datetime.now().replace(hour=0, minute=0, second=0))]"/>
+                    <filter string="This Week" name="this_week" domain="[('date', '>=', (datetime.datetime.now() - datetime.timedelta(days=7)))]"/>
+                    <filter string="This Month" name="this_month" domain="[('date', '>=', datetime.datetime.now().replace(day=1))]"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter string="Order" name="group_order" context="{'group_by': 'order_id'}"/>
+                        <filter string="Customer" name="group_customer" context="{'group_by': 'partner_id'}"/>
+                        <filter string="Period Type" name="group_period" context="{'group_by': 'period_type'}"/>
+                        <filter string="Sales Trend" name="group_trend" context="{'group_by': 'sales_trend'}"/>
+                        <filter string="Date" name="group_date" context="{'group_by': 'date'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- Sale Analytics Action -->
+        <record id="action_sale_analytics" model="ocean.actions.act_window">
+            <field name="name">Sale Analytics</field>
+            <field name="res_model">sale.analytics</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_sale_analytics_tree"/>
+            <field name="search_view_id" ref="view_sale_analytics_search"/>
+            <field name="context">{'search_default_active': 1}</field>
+        </record>
+        
+    </data>
+</ocean>

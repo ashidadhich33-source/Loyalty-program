@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        <!-- CRM Lead Security Rules -->
+        <record id="rule_crm_lead_user" model="ocean.rule">
+            <field name="name">CRM Lead: User Access</field>
+            <field name="model_id" ref="model_crm_lead"/>
+            <field name="domain_force">[('user_id', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('group_user'))]"/>
+        </record>
+        
+        <record id="rule_crm_lead_manager" model="ocean.rule">
+            <field name="name">CRM Lead: Manager Access</field>
+            <field name="model_id" ref="model_crm_lead"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_manager'))]"/>
+        </record>
+        
+        <!-- CRM Opportunity Security Rules -->
+        <record id="rule_crm_opportunity_user" model="ocean.rule">
+            <field name="name">CRM Opportunity: User Access</field>
+            <field name="model_id" ref="model_crm_opportunity"/>
+            <field name="domain_force">[('user_id', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('group_user'))]"/>
+        </record>
+        
+        <record id="rule_crm_opportunity_manager" model="ocean.rule">
+            <field name="name">CRM Opportunity: Manager Access</field>
+            <field name="model_id" ref="model_crm_opportunity"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_manager'))]"/>
+        </record>
+        
+        <!-- CRM Activity Security Rules -->
+        <record id="rule_crm_activity_user" model="ocean.rule">
+            <field name="name">CRM Activity: User Access</field>
+            <field name="model_id" ref="model_crm_activity"/>
+            <field name="domain_force">[('user_id', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('group_user'))]"/>
+        </record>
+        
+        <record id="rule_crm_activity_manager" model="ocean.rule">
+            <field name="name">CRM Activity: Manager Access</field>
+            <field name="model_id" ref="model_crm_activity"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_manager'))]"/>
+        </record>
+        
+        <!-- CRM Communication Security Rules -->
+        <record id="rule_crm_communication_user" model="ocean.rule">
+            <field name="name">CRM Communication: User Access</field>
+            <field name="model_id" ref="model_crm_communication"/>
+            <field name="domain_force">[('user_id', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('group_user'))]"/>
+        </record>
+        
+        <record id="rule_crm_communication_manager" model="ocean.rule">
+            <field name="name">CRM Communication: Manager Access</field>
+            <field name="model_id" ref="model_crm_communication"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_manager'))]"/>
+        </record>
+        
+        <!-- CRM Campaign Security Rules -->
+        <record id="rule_crm_campaign_user" model="ocean.rule">
+            <field name="name">CRM Campaign: User Access</field>
+            <field name="model_id" ref="model_crm_campaign"/>
+            <field name="domain_force">[('user_id', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('group_user'))]"/>
+        </record>
+        
+        <record id="rule_crm_campaign_manager" model="ocean.rule">
+            <field name="name">CRM Campaign: Manager Access</field>
+            <field name="model_id" ref="model_crm_campaign"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_manager'))]"/>
+        </record>
+        
+    </data>
+</ocean>

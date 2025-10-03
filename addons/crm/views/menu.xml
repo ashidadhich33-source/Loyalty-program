@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        <!-- CRM Menu -->
+        <menuitem id="menu_crm" name="CRM" sequence="10"/>
+        
+        <!-- CRM Leads Menu -->
+        <menuitem id="menu_crm_leads" name="Leads" parent="menu_crm" sequence="10" action="action_crm_leads"/>
+        
+        <!-- CRM Opportunities Menu -->
+        <menuitem id="menu_crm_opportunities" name="Opportunities" parent="menu_crm" sequence="20" action="action_crm_opportunities"/>
+        
+        <!-- CRM Activities Menu -->
+        <menuitem id="menu_crm_activities" name="Activities" parent="menu_crm" sequence="30" action="action_crm_activities"/>
+        
+        <!-- CRM Communications Menu -->
+        <menuitem id="menu_crm_communications" name="Communications" parent="menu_crm" sequence="40" action="action_crm_communications"/>
+        
+        <!-- CRM Campaigns Menu -->
+        <menuitem id="menu_crm_campaigns" name="Campaigns" parent="menu_crm" sequence="50" action="action_crm_campaigns"/>
+        
+    </data>
+</ocean>

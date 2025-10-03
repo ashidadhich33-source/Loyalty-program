@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data noupdate="1">
+        
+        <!-- Demo Sales Orders -->
+        <record id="demo_sale_order_1" model="sale.order">
+            <field name="name">SO20241201001</field>
+            <field name="partner_id" ref="demo_customer_1"/>
+            <field name="date_order">2024-12-01 10:00:00</field>
+            <field name="state">sale</field>
+            <field name="age_group">toddler</field>
+            <field name="gender_preference">boys</field>
+            <field name="season">winter</field>
+            <field name="delivery_method">home_delivery</field>
+            <field name="payment_method">card</field>
+            <field name="payment_status">paid</field>
+            <field name="amount_untaxed">1500.00</field>
+            <field name="amount_tax">270.00</field>
+            <field name="amount_total">1770.00</field>
+            <field name="user_id" ref="demo_user_1"/>
+            <field name="team_id" ref="sales_team_kids_clothing"/>
+        </record>
+        
+        <record id="demo_sale_order_2" model="sale.order">
+            <field name="name">SO20241201002</field>
+            <field name="partner_id" ref="demo_customer_2"/>
+            <field name="date_order">2024-12-01 14:30:00</field>
+            <field name="state">done</field>
+            <field name="age_group">preschool</field>
+            <field name="gender_preference">girls</field>
+            <field name="season">summer</field>
+            <field name="delivery_method">store_pickup</field>
+            <field name="payment_method">cash</field>
+            <field name="payment_status">paid</field>
+            <field name="amount_untaxed">2000.00</field>
+            <field name="amount_tax">360.00</field>
+            <field name="amount_total">2360.00</field>
+            <field name="user_id" ref="demo_user_2"/>
+            <field name="team_id" ref="sales_team_store"/>
+        </record>
+        
+        <record id="demo_sale_order_3" model="sale.order">
+            <field name="name">SO20241201003</field>
+            <field name="partner_id" ref="demo_customer_3"/>
+            <field name="date_order">2024-12-01 16:45:00</field>
+            <field name="state">draft</field>
+            <field name="age_group">school</field>
+            <field name="gender_preference">unisex</field>
+            <field name="season">all_season</field>
+            <field name="delivery_method">express</field>
+            <field name="payment_method">upi</field>
+            <field name="payment_status">pending</field>
+            <field name="amount_untaxed">3000.00</field>
+            <field name="amount_tax">540.00</field>
+            <field name="amount_total">3540.00</field>
+            <field name="user_id" ref="demo_user_1"/>
+            <field name="team_id" ref="sales_team_online"/>
+        </record>
+        
+        <!-- Demo Sale Deliveries -->
+        <record id="demo_sale_delivery_1" model="sale.delivery">
+            <field name="name">DEL20241201001</field>
+            <field name="sale_order_id" ref="demo_sale_order_1"/>
+            <field name="date_delivery">2024-12-02 10:00:00</field>
+            <field name="date_actual">2024-12-02 11:30:00</field>
+            <field name="state">delivered</field>
+            <field name="delivery_method">home_delivery</field>
+            <field name="delivery_carrier_id" ref="delivery_carrier_standard"/>
+            <field name="tracking_number">TRK123456789</field>
+            <field name="delivery_charges">50.00</field>
+            <field name="delivery_charges_paid">True</field>
+            <field name="delivery_rating">5</field>
+            <field name="delivery_feedback">Excellent service, on time delivery</field>
+            <field name="user_id" ref="demo_user_3"/>
+        </record>
+        
+        <record id="demo_sale_delivery_2" model="sale.delivery">
+            <field name="name">DEL20241201002</field>
+            <field name="sale_order_id" ref="demo_sale_order_2"/>
+            <field name="date_delivery">2024-12-01 15:00:00</field>
+            <field name="date_actual">2024-12-01 15:30:00</field>
+            <field name="state">delivered</field>
+            <field name="delivery_method">store_pickup</field>
+            <field name="delivery_charges">0.00</field>
+            <field name="delivery_charges_paid">True</field>
+            <field name="delivery_rating">4</field>
+            <field name="delivery_feedback">Good service, quick pickup</field>
+            <field name="user_id" ref="demo_user_2"/>
+        </record>
+        
+        <!-- Demo Sale Returns -->
+        <record id="demo_sale_return_1" model="sale.return">
+            <field name="name">RET20241201001</field>
+            <field name="sale_order_id" ref="demo_sale_order_1"/>
+            <field name="date_return">2024-12-03 09:00:00</field>
+            <field name="date_received">2024-12-03 14:00:00</field>
+            <field name="date_processed">2024-12-03 16:00:00</field>
+            <field name="state">refunded</field>
+            <field name="return_type">refund</field>
+            <field name="return_reason">wrong_size</field>
+            <field name="return_reason_notes">Size was too small for the child</field>
+            <field name="amount_untaxed">500.00</field>
+            <field name="amount_tax">90.00</field>
+            <field name="amount_total">590.00</field>
+            <field name="refund_method">original_payment</field>
+            <field name="refund_amount">590.00</field>
+            <field name="refund_status">completed</field>
+            <field name="is_within_return_period">True</field>
+            <field name="return_within_days">30</field>
+            <field name="user_id" ref="demo_user_4"/>
+        </record>
+        
+        <record id="demo_sale_return_2" model="sale.return">
+            <field name="name">RET20241201002</field>
+            <field name="sale_order_id" ref="demo_sale_order_2"/>
+            <field name="date_return">2024-12-02 11:00:00</field>
+            <field name="date_received">2024-12-02 15:00:00</field>
+            <field name="date_processed">2024-12-02 17:00:00</field>
+            <field name="state">exchanged</field>
+            <field name="return_type">exchange</field>
+            <field name="return_reason">wrong_color</field>
+            <field name="return_reason_notes">Customer wanted different color</field>
+            <field name="amount_untaxed">800.00</field>
+            <field name="amount_tax">144.00</field>
+            <field name="amount_total">944.00</field>
+            <field name="exchange_products">Blue cotton t-shirt size 4</field>
+            <field name="is_within_return_period">True</field>
+            <field name="return_within_days">30</field>
+            <field name="user_id" ref="demo_user_4"/>
+        </record>
+        
+        <!-- Demo Sale Analytics -->
+        <record id="demo_sale_analytics_1" model="sale.analytics">
+            <field name="name">December 2024 Sales Analytics</field>
+            <field name="order_id" ref="demo_sale_order_1"/>
+            <field name="date">2024-12-01 00:00:00</field>
+            <field name="total_sales">50000.00</field>
+            <field name="total_orders">25</field>
+            <field name="average_order_value">2000.00</field>
+            <field name="total_products_sold">75</field>
+            <field name="top_selling_products">Cotton T-shirts, Denim Jeans, Winter Jackets</field>
+            <field name="age_group_sales">Toddler: 40%, Preschool: 30%, School: 20%, Teen: 10%</field>
+            <field name="age_group_performance">toddler</field>
+            <field name="gender_sales">Boys: 55%, Girls: 35%, Unisex: 10%</field>
+            <field name="gender_performance">boys</field>
+            <field name="seasonal_sales">Winter: 60%, Summer: 25%, Monsoon: 15%</field>
+            <field name="seasonal_performance">winter</field>
+            <field name="total_customers">20</field>
+            <field name="new_customers">5</field>
+            <field name="returning_customers">15</field>
+            <field name="customer_retention_rate">75.0</field>
+            <field name="total_returns">3</field>
+            <field name="return_rate">12.0</field>
+            <field name="return_reasons">Wrong Size: 50%, Wrong Color: 30%, Defective: 20%</field>
+            <field name="conversion_rate">15.0</field>
+            <field name="customer_satisfaction">4.2</field>
+            <field name="period_type">monthly</field>
+            <field name="period_start">2024-12-01 00:00:00</field>
+            <field name="period_end">2024-12-31 23:59:59</field>
+            <field name="sales_trend">growing</field>
+            <field name="growth_rate">12.5</field>
+            <field name="recommendations">Focus on toddler segment, improve size charts, expand winter collection</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="demo_sale_analytics_2" model="sale.analytics">
+            <field name="name">Weekly Sales Analytics</field>
+            <field name="order_id" ref="demo_sale_order_2"/>
+            <field name="date">2024-12-01 00:00:00</field>
+            <field name="total_sales">15000.00</field>
+            <field name="total_orders">8</field>
+            <field name="average_order_value">1875.00</field>
+            <field name="total_products_sold">20</field>
+            <field name="top_selling_products">Summer Dresses, Cotton Shorts, Sandals</field>
+            <field name="age_group_sales">Preschool: 50%, School: 30%, Teen: 20%</field>
+            <field name="age_group_performance">preschool</field>
+            <field name="gender_sales">Girls: 60%, Boys: 30%, Unisex: 10%</field>
+            <field name="gender_performance">girls</field>
+            <field name="seasonal_sales">Summer: 70%, All Season: 30%</field>
+            <field name="seasonal_performance">summer</field>
+            <field name="total_customers">6</field>
+            <field name="new_customers">2</field>
+            <field name="returning_customers">4</field>
+            <field name="customer_retention_rate">66.7</field>
+            <field name="total_returns">1</field>
+            <field name="return_rate">12.5</field>
+            <field name="return_reasons">Wrong Color: 100%</field>
+            <field name="conversion_rate">18.0</field>
+            <field name="customer_satisfaction">4.5</field>
+            <field name="period_type">weekly</field>
+            <field name="period_start">2024-11-25 00:00:00</field>
+            <field name="period_end">2024-12-01 23:59:59</field>
+            <field name="sales_trend">stable</field>
+            <field name="growth_rate">5.0</field>
+            <field name="recommendations">Maintain summer collection, focus on girls segment</field>
+            <field name="is_active">True</field>
+        </record>
+        
+    </data>
+</ocean>

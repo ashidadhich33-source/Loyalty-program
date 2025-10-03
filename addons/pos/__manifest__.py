@@ -1,23 +1,23 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Kids Clothing ERP - POS Addon
-=============================
+Ocean ERP - POS Addon
+=====================
 
-Point of Sale system for kids clothing retail.
+Point of Sale system for Ocean ERP platform.
 """
 
 {
     'name': 'POS',
     'version': '1.0.0',
     'category': 'Sales',
-    'summary': 'Point of Sale system for kids clothing retail',
+    'summary': 'Point of Sale system for Ocean ERP platform',
     'description': """
-        Point of Sale System for Kids Clothing ERP
-        ==========================================
+        Point of Sale System for Ocean ERP
+        ==================================
         
         This addon provides comprehensive POS functionality
-        specifically designed for kids clothing retail business.
+        for the Ocean ERP platform.
         
         Features:
         - Product scanning and barcode support

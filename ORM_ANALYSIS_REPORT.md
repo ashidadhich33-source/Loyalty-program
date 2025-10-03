@@ -28,7 +28,7 @@ Our Kids Clothing ERP system is now **100% standalone** with **zero Ocean ERP de
 | **Base Model** | `BaseModel` | `models.Model` | ✅ **Custom** |
 | **Field Definition** | `CharField(string='Name')` | `fields.Char(string='Name')` | ✅ **Custom** |
 | **Field Types** | `CharField, TextField, Many2OneField` | `fields.Char, fields.Text, fields.Many2one` | ✅ **Custom** |
-| **Import Pattern** | `from core_framework.orm import BaseModel` | `from odoo import models, fields` | ✅ **Custom** |
+| **Import Pattern** | `from core_framework.orm import BaseModel` | `from external_erp import models, fields` | ✅ **Custom** |
 | **Dependencies** | **Zero Ocean ERP dependencies** | Requires Ocean ERP installation | ✅ **Standalone** |
 
 ### **Field Type Mapping**
@@ -84,10 +84,10 @@ class ProductTemplate(BaseModel):
     )
 ```
 
-### **❌ WRONG - Ocean ERP ORM (Now Fixed)**
+### **❌ WRONG - External ERP ORM (Now Fixed)**
 ```python
 # This was found in 2 files and has been fixed
-from odoo import models, fields
+from external_erp import models, fields
 
 class ProductTemplate(models.Model):
     _name = 'product.template'
@@ -205,8 +205,8 @@ class Many2OneField(Field):
 
 ```bash
 # Check for any remaining Ocean ERP dependencies
-grep -r "from odoo" /workspace/addons/
-grep -r "import odoo" /workspace/addons/
+grep -r "from external_erp" /workspace/addons/
+grep -r "import external_erp" /workspace/addons/
 grep -r "fields\." /workspace/addons/
 
 # Verify our custom ORM usage

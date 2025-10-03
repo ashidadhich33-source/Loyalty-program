@@ -1,14 +1,14 @@
 /* Kids Clothing ERP - User Script */
 
-odoo.define('users.KidsClothingUsers', function (require) {
+ocean.define('users.KidsClothingUsers', function (require) {
     'use strict';
 
-    var core = require('web.core');
-    var FormController = require('web.FormController');
-    var ListController = require('web.ListController');
-    var AbstractController = require('web.AbstractController');
-    var Dialog = require('web.Dialog');
-    var rpc = require('web.rpc');
+    var core = require('ocean.core');
+    var FormController = require('ocean.FormController');
+    var ListController = require('ocean.ListController');
+    var AbstractController = require('ocean.AbstractController');
+    var Dialog = require('ocean.Dialog');
+    var rpc = require('ocean.rpc');
     var _t = core._t;
 
     // User Management Utilities

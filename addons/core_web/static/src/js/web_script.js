@@ -1,12 +1,12 @@
 /* Kids Clothing ERP - Web Script */
 
-odoo.define('core_web.KidsClothingWeb', function (require) {
+ocean.define('core_web.KidsClothingWeb', function (require) {
     'use strict';
 
-    var core = require('web.core');
-    var AbstractController = require('web.AbstractController');
-    var Dialog = require('web.Dialog');
-    var rpc = require('web.rpc');
+    var core = require('ocean.core');
+    var AbstractController = require('ocean.AbstractController');
+    var Dialog = require('ocean.Dialog');
+    var rpc = require('ocean.rpc');
     var _t = core._t;
 
     // Web Utilities

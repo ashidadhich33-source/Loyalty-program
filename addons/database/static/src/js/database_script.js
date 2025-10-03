@@ -1,13 +1,13 @@
 /* Database Management JavaScript */
 
-odoo.define('database.database_script', function (require) {
+ocean.define('database.database_script', function (require) {
     'use strict';
 
-    var core = require('web.core');
-    var AbstractAction = require('web.AbstractAction');
-    var Dialog = require('web.Dialog');
-    var rpc = require('web.rpc');
-    var utils = require('web.utils');
+    var core = require('ocean.core');
+    var AbstractAction = require('ocean.AbstractAction');
+    var Dialog = require('ocean.Dialog');
+    var rpc = require('ocean.rpc');
+    var utils = require('ocean.utils');
 
     var _t = core._t;
     var QWeb = core.qweb;

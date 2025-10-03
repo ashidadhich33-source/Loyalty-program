@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        <!-- Loyalty Points Tree View -->
+        <record id="view_loyalty_points_tree" model="ocean.ui.view">
+            <field name="name">loyalty.points.tree</field>
+            <field name="model">loyalty.points</field>
+            <field name="arch" type="xml">
+                <tree string="Loyalty Points" decoration-muted="is_expired" decoration-success="points_type=='earned'" decoration-warning="points_type=='redeemed'" decoration-danger="points_type=='expired'">
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="program_id"/>
+                    <field name="points"/>
+                    <field name="points_type"/>
+                    <field name="transaction_type"/>
+                    <field name="transaction_id"/>
+                    <field name="expiry_date"/>
+                    <field name="is_expired"/>
+                    <field name="age_group"/>
+                    <field name="gender"/>
+                    <field name="season"/>
+                    <field name="date"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Loyalty Points Form View -->
+        <record id="view_loyalty_points_form" model="ocean.ui.view">
+            <field name="name">loyalty.points.form</field>
+            <field name="model">loyalty.points</field>
+            <field name="arch" type="xml">
+                <form string="Loyalty Points">
+                    <header>
+                        <button name="action_expire_points" string="Expire Points" type="object" class="btn-warning" attrs="{'invisible': [('is_expired', '=', True)]}"/>
+                        <button name="action_send_expiry_notification" string="Send Expiry Notification" type="object" class="btn-info" attrs="{'invisible': [('is_expired', '=', True)]}"/>
+                        <button name="action_adjust_points" string="Adjust Points" type="object" class="btn-secondary"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Points Reference"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="partner_id"/>
+                                <field name="program_id"/>
+                                <field name="points"/>
+                                <field name="points_type"/>
+                                <field name="transaction_type"/>
+                                <field name="transaction_id"/>
+                            </group>
+                            <group>
+                                <field name="expiry_date"/>
+                                <field name="is_expired"/>
+                                <field name="expiry_notification_sent"/>
+                                <field name="date"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="age_group"/>
+                                <field name="gender"/>
+                                <field name="season"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Details" name="details">
+                                <field name="description" placeholder="Points description..."/>
+                                <field name="note" placeholder="Internal notes..."/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Loyalty Points Search View -->
+        <record id="view_loyalty_points_search" model="ocean.ui.view">
+            <field name="name">loyalty.points.search</field>
+            <field name="model">loyalty.points</field>
+            <field name="arch" type="xml">
+                <search string="Search Loyalty Points">
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="program_id"/>
+                    <field name="points"/>
+                    <field name="points_type"/>
+                    <field name="transaction_type"/>
+                    <field name="transaction_id"/>
+                    <field name="age_group"/>
+                    <field name="gender"/>
+                    <field name="season"/>
+                    <separator/>
+                    <filter string="Earned" name="earned" domain="[('points_type', '=', 'earned')]"/>
+                    <filter string="Redeemed" name="redeemed" domain="[('points_type', '=', 'redeemed')]"/>
+                    <filter string="Expired" name="expired" domain="[('points_type', '=', 'expired')]"/>
+                    <filter string="Adjusted" name="adjusted" domain="[('points_type', '=', 'adjusted')]"/>
+                    <filter string="Bonus" name="bonus" domain="[('points_type', '=', 'bonus')]"/>
+                    <separator/>
+                    <filter string="Purchase" name="purchase" domain="[('transaction_type', '=', 'purchase')]"/>
+                    <filter string="Redemption" name="redemption" domain="[('transaction_type', '=', 'redemption')]"/>
+                    <filter string="Bonus" name="bonus_trans" domain="[('transaction_type', '=', 'bonus')]"/>
+                    <filter string="Adjustment" name="adjustment" domain="[('transaction_type', '=', 'adjustment')]"/>
+                    <filter string="Expiry" name="expiry" domain="[('transaction_type', '=', 'expiry')]"/>
+                    <filter string="Referral" name="referral" domain="[('transaction_type', '=', 'referral')]"/>
+                    <filter string="Birthday" name="birthday" domain="[('transaction_type', '=', 'birthday')]"/>
+                    <separator/>
+                    <filter string="Expired" name="is_expired" domain="[('is_expired', '=', True)]"/>
+                    <filter string="Not Expired" name="not_expired" domain="[('is_expired', '=', False)]"/>
+                    <separator/>
+                    <filter string="Newborn" name="newborn" domain="[('age_group', '=', 'newborn')]"/>
+                    <filter string="Infant" name="infant" domain="[('age_group', '=', 'infant')]"/>
+                    <filter string="Toddler" name="toddler" domain="[('age_group', '=', 'toddler')]"/>
+                    <filter string="Preschool" name="preschool" domain="[('age_group', '=', 'preschool')]"/>
+                    <filter string="School" name="school" domain="[('age_group', '=', 'school')]"/>
+                    <filter string="Teen" name="teen" domain="[('age_group', '=', 'teen')]"/>
+                    <separator/>
+                    <filter string="Boys" name="boys" domain="[('gender', '=', 'boys')]"/>
+                    <filter string="Girls" name="girls" domain="[('gender', '=', 'girls')]"/>
+                    <filter string="Unisex" name="unisex" domain="[('gender', '=', 'unisex')]"/>
+                    <separator/>
+                    <filter string="Summer" name="summer" domain="[('season', '=', 'summer')]"/>
+                    <filter string="Winter" name="winter" domain="[('season', '=', 'winter')]"/>
+                    <filter string="Monsoon" name="monsoon" domain="[('season', '=', 'monsoon')]"/>
+                    <separator/>
+                    <filter string="Today" name="today" domain="[('date', '>=', datetime.datetime.now().replace(hour=0, minute=0, second=0))]"/>
+                    <filter string="This Week" name="this_week" domain="[('date', '>=', (datetime.datetime.now() - datetime.timedelta(days=7)))]"/>
+                    <filter string="This Month" name="this_month" domain="[('date', '>=', datetime.datetime.now().replace(day=1))]"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter string="Customer" name="group_partner" context="{'group_by': 'partner_id'}"/>
+                        <filter string="Program" name="group_program" context="{'group_by': 'program_id'}"/>
+                        <filter string="Type" name="group_type" context="{'group_by': 'points_type'}"/>
+                        <filter string="Transaction" name="group_transaction" context="{'group_by': 'transaction_type'}"/>
+                        <filter string="Age Group" name="group_age" context="{'group_by': 'age_group'}"/>
+                        <filter string="Gender" name="group_gender" context="{'group_by': 'gender'}"/>
+                        <filter string="Season" name="group_season" context="{'group_by': 'season'}"/>
+                        <filter string="Date" name="group_date" context="{'group_by': 'date'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- Loyalty Points Action -->
+        <record id="action_loyalty_points" model="ocean.actions.act_window">
+            <field name="name">Loyalty Points</field>
+            <field name="res_model">loyalty.points</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_loyalty_points_tree"/>
+            <field name="search_view_id" ref="view_loyalty_points_search"/>
+        </record>
+        
+        <!-- Loyalty Points Balance Tree View -->
+        <record id="view_loyalty_points_balance_tree" model="ocean.ui.view">
+            <field name="name">loyalty.points.balance.tree</field>
+            <field name="model">loyalty.points.balance</field>
+            <field name="arch" type="xml">
+                <tree string="Loyalty Points Balance" decoration-success="available_points > 0" decoration-warning="available_points == 0" decoration-danger="available_points < 0">
+                    <field name="partner_id"/>
+                    <field name="program_id"/>
+                    <field name="total_points"/>
+                    <field name="available_points"/>
+                    <field name="expired_points"/>
+                    <field name="redeemed_points"/>
+                    <field name="tier_id"/>
+                    <field name="tier_points"/>
+                    <field name="next_tier_id"/>
+                    <field name="next_tier_points"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Loyalty Points Balance Form View -->
+        <record id="view_loyalty_points_balance_form" model="ocean.ui.view">
+            <field name="name">loyalty.points.balance.form</field>
+            <field name="model">loyalty.points.balance</field>
+            <field name="arch" type="xml">
+                <form string="Loyalty Points Balance">
+                    <header>
+                        <button name="action_update_balance" string="Update Balance" type="object" class="btn-primary"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="partner_id" placeholder="Customer"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="program_id"/>
+                                <field name="total_points"/>
+                                <field name="available_points"/>
+                                <field name="expired_points"/>
+                                <field name="redeemed_points"/>
+                            </group>
+                            <group>
+                                <field name="tier_id"/>
+                                <field name="tier_points"/>
+                                <field name="next_tier_id"/>
+                                <field name="next_tier_points"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Loyalty Points Balance Search View -->
+        <record id="view_loyalty_points_balance_search" model="ocean.ui.view">
+            <field name="name">loyalty.points.balance.search</field>
+            <field name="model">loyalty.points.balance</field>
+            <field name="arch" type="xml">
+                <search string="Search Loyalty Points Balance">
+                    <field name="partner_id"/>
+                    <field name="program_id"/>
+                    <field name="tier_id"/>
+                    <field name="total_points"/>
+                    <field name="available_points"/>
+                    <separator/>
+                    <filter string="Has Points" name="has_points" domain="[('available_points', '>', 0)]"/>
+                    <filter string="No Points" name="no_points" domain="[('available_points', '=', 0)]"/>
+                    <filter string="Expired Points" name="expired_points" domain="[('expired_points', '>', 0)]"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter string="Customer" name="group_partner" context="{'group_by': 'partner_id'}"/>
+                        <filter string="Program" name="group_program" context="{'group_by': 'program_id'}"/>
+                        <filter string="Tier" name="group_tier" context="{'group_by': 'tier_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- Loyalty Points Balance Action -->
+        <record id="action_loyalty_points_balance" model="ocean.actions.act_window">
+            <field name="name">Loyalty Points Balance</field>
+            <field name="res_model">loyalty.points.balance</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_loyalty_points_balance_tree"/>
+            <field name="search_view_id" ref="view_loyalty_points_balance_search"/>
+        </record>
+        
+    </data>
+</ocean>

@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        <!-- Demo Loyalty Points -->
+        <record id="demo_loyalty_points_1" model="loyalty.points">
+            <field name="name">PTS-001</field>
+            <field name="partner_id" ref="res_partner_1"/>
+            <field name="program_id" ref="loyalty_program_main"/>
+            <field name="points">100</field>
+            <field name="points_type">earned</field>
+            <field name="transaction_type">purchase</field>
+            <field name="transaction_id" ref="sale_order_1"/>
+            <field name="expiry_date">2025-01-15</field>
+            <field name="is_expired">False</field>
+            <field name="expiry_notification_sent">False</field>
+            <field name="age_group">toddler</field>
+            <field name="gender">boys</field>
+            <field name="season">summer</field>
+            <field name="description">Points earned from summer clothing purchase</field>
+        </record>
+        
+        <record id="demo_loyalty_points_2" model="loyalty.points">
+            <field name="name">PTS-002</field>
+            <field name="partner_id" ref="res_partner_1"/>
+            <field name="program_id" ref="loyalty_program_main"/>
+            <field name="points">50</field>
+            <field name="points_type">earned</field>
+            <field name="transaction_type">bonus</field>
+            <field name="expiry_date">2025-01-15</field>
+            <field name="is_expired">False</field>
+            <field name="expiry_notification_sent">False</field>
+            <field name="age_group">toddler</field>
+            <field name="gender">boys</field>
+            <field name="season">summer</field>
+            <field name="description">Bonus points for first purchase</field>
+        </record>
+        
+        <record id="demo_loyalty_points_3" model="loyalty.points">
+            <field name="name">PTS-003</field>
+            <field name="partner_id" ref="res_partner_1"/>
+            <field name="program_id" ref="loyalty_program_main"/>
+            <field name="points">25</field>
+            <field name="points_type">redeemed</field>
+            <field name="transaction_type">redemption</field>
+            <field name="expiry_date">2025-01-15</field>
+            <field name="is_expired">False</field>
+            <field name="expiry_notification_sent">False</field>
+            <field name="age_group">toddler</field>
+            <field name="gender">boys</field>
+            <field name="season">summer</field>
+            <field name="description">Points redeemed for discount</field>
+        </record>
+        
+        <!-- Demo Loyalty Points Balance -->
+        <record id="demo_loyalty_points_balance_1" model="loyalty.points.balance">
+            <field name="partner_id" ref="res_partner_1"/>
+            <field name="program_id" ref="loyalty_program_main"/>
+            <field name="total_points">150</field>
+            <field name="available_points">125</field>
+            <field name="expired_points">0</field>
+            <field name="redeemed_points">25</field>
+            <field name="tier_id" ref="loyalty_tier_bronze"/>
+            <field name="tier_points">150</field>
+            <field name="next_tier_id" ref="loyalty_tier_silver"/>
+            <field name="next_tier_points">350</field>
+        </record>
+        
+        <!-- Demo Loyalty Rewards -->
+        <record id="demo_loyalty_reward_1" model="loyalty.reward">
+            <field name="name">Summer T-Shirt</field>
+            <field name="description">Free summer t-shirt for kids</field>
+            <field name="is_active">True</field>
+            <field name="points_required">200</field>
+            <field name="reward_type">product</field>
+            <field name="product_id" ref="product_template_1"/>
+            <field name="product_quantity">1</field>
+            <field name="total_quantity">50</field>
+            <field name="available_quantity">45</field>
+            <field name="redeemed_quantity">5</field>
+            <field name="age_group">toddler</field>
+            <field name="gender">unisex</field>
+            <field name="season">summer</field>
+            <field name="is_birthday_reward">False</field>
+            <field name="is_referral_reward">False</field>
+            <field name="is_tier_exclusive">False</field>
+        </record>
+        
+        <record id="demo_loyalty_reward_2" model="loyalty.reward">
+            <field name="name">Winter Jacket</field>
+            <field name="description">Free winter jacket for kids</field>
+            <field name="is_active">True</field>
+            <field name="points_required">500</field>
+            <field name="reward_type">product</field>
+            <field name="product_id" ref="product_template_2"/>
+            <field name="product_quantity">1</field>
+            <field name="total_quantity">25</field>
+            <field name="available_quantity">20</field>
+            <field name="redeemed_quantity">5</field>
+            <field name="age_group">toddler</field>
+            <field name="gender">unisex</field>
+            <field name="season">winter</field>
+            <field name="is_birthday_reward">False</field>
+            <field name="is_referral_reward">False</field>
+            <field name="is_tier_exclusive">False</field>
+        </record>
+        
+        <!-- Demo Loyalty Redemptions -->
+        <record id="demo_loyalty_redemption_1" model="loyalty.redemption">
+            <field name="name">RED-001</field>
+            <field name="partner_id" ref="res_partner_1"/>
+            <field name="reward_id" ref="demo_loyalty_reward_1"/>
+            <field name="program_id" ref="loyalty_program_main"/>
+            <field name="quantity">1</field>
+            <field name="points_used">200</field>
+            <field name="points_per_unit">200</field>
+            <field name="state">fulfilled</field>
+            <field name="fulfillment_date">2024-01-10</field>
+            <field name="fulfillment_note">Reward fulfilled successfully</field>
+            <field name="age_group">toddler</field>
+            <field name="gender">boys</field>
+            <field name="season">summer</field>
+            <field name="description">Summer t-shirt redemption</field>
+        </record>
+        
+        <!-- Demo Loyalty Vouchers -->
+        <record id="demo_loyalty_voucher_1" model="loyalty.voucher">
+            <field name="name">VOUCHER001</field>
+            <field name="template_id" ref="loyalty_voucher_template_discount_10"/>
+            <field name="partner_id" ref="res_partner_1"/>
+            <field name="program_id" ref="loyalty_program_main"/>
+            <field name="voucher_type">discount</field>
+            <field name="discount_type">percentage</field>
+            <field name="discount_value">10.0</field>
+            <field name="discount_currency_id" ref="base.USD"/>
+            <field name="min_purchase_amount">25.0</field>
+            <field name="max_discount_amount">50.0</field>
+            <field name="validity_days">30</field>
+            <field name="expiry_date">2024-02-15</field>
+            <field name="is_expired">False</field>
+            <field name="usage_count">0</field>
+            <field name="usage_limit">1</field>
+            <field name="usage_limit_per_customer">1</field>
+            <field name="is_used">False</field>
+            <field name="state">active</field>
+            <field name="age_group">toddler</field>
+            <field name="gender">boys</field>
+            <field name="season">summer</field>
+            <field name="is_birthday_voucher">False</field>
+            <field name="is_referral_voucher">False</field>
+            <field name="is_tier_exclusive">False</field>
+        </record>
+        
+        <record id="demo_loyalty_voucher_2" model="loyalty.voucher">
+            <field name="name">VOUCHER002</field>
+            <field name="template_id" ref="loyalty_voucher_template_birthday"/>
+            <field name="partner_id" ref="res_partner_1"/>
+            <field name="program_id" ref="loyalty_program_main"/>
+            <field name="voucher_type">discount</field>
+            <field name="discount_type">percentage</field>
+            <field name="discount_value">25.0</field>
+            <field name="discount_currency_id" ref="base.USD"/>
+            <field name="min_purchase_amount">50.0</field>
+            <field name="max_discount_amount">100.0</field>
+            <field name="validity_days">7</field>
+            <field name="expiry_date">2024-01-22</field>
+            <field name="is_expired">False</field>
+            <field name="usage_count">0</field>
+            <field name="usage_limit">1</field>
+            <field name="usage_limit_per_customer">1</field>
+            <field name="is_used">False</field>
+            <field name="state">active</field>
+            <field name="age_group">toddler</field>
+            <field name="gender">boys</field>
+            <field name="season">summer</field>
+            <field name="is_birthday_voucher">True</field>
+            <field name="is_referral_voucher">False</field>
+            <field name="is_tier_exclusive">False</field>
+        </record>
+        
+        <!-- Demo Loyalty Voucher Usage -->
+        <record id="demo_loyalty_voucher_usage_1" model="loyalty.voucher.usage">
+            <field name="name">VU-001</field>
+            <field name="voucher_id" ref="demo_loyalty_voucher_1"/>
+            <field name="partner_id" ref="res_partner_1"/>
+            <field name="program_id" ref="loyalty_program_main"/>
+            <field name="usage_date">2024-01-15</field>
+            <field name="order_id" ref="sale_order_1"/>
+            <field name="points_earned">10</field>
+            <field name="age_group">toddler</field>
+            <field name="gender">boys</field>
+            <field name="season">summer</field>
+            <field name="description">Voucher used for summer clothing purchase</field>
+        </record>
+        
+        <!-- Demo Loyalty Offers -->
+        <record id="demo_loyalty_offer_1" model="loyalty.offer">
+            <field name="name">New Year Special</field>
+            <field name="description">Special New Year offer for loyal customers</field>
+            <field name="is_active">True</field>
+            <field name="offer_type">promotional</field>
+            <field name="start_date">2024-01-01</field>
+            <field name="end_date">2024-01-31</field>
+            <field name="is_permanent">False</field>
+            <field name="offer_value">15.0</field>
+            <field name="offer_currency_id" ref="base.USD"/>
+            <field name="min_purchase_amount">75.0</field>
+            <field name="max_offer_amount">150.0</field>
+            <field name="points_multiplier">1.5</field>
+            <field name="bonus_points">50</field>
+            <field name="points_required">0</field>
+            <field name="customer_segment">all</field>
+            <field name="age_group">all</field>
+            <field name="gender">all</field>
+            <field name="season">all</field>
+            <field name="child_age_min">0</field>
+            <field name="child_age_max">216</field>
+            <field name="usage_limit">0</field>
+            <field name="usage_limit_per_customer">2</field>
+            <field name="is_automatic">True</field>
+            <field name="is_notification_sent">True</field>
+            <field name="total_usage">25</field>
+            <field name="total_customers">15</field>
+            <field name="total_value">375.0</field>
+        </record>
+        
+        <!-- Demo Loyalty Offer Usage -->
+        <record id="demo_loyalty_offer_usage_1" model="loyalty.offer.usage">
+            <field name="name">OU-001</field>
+            <field name="offer_id" ref="demo_loyalty_offer_1"/>
+            <field name="partner_id" ref="res_partner_1"/>
+            <field name="program_id" ref="loyalty_program_main"/>
+            <field name="usage_date">2024-01-15</field>
+            <field name="order_id" ref="sale_order_1"/>
+            <field name="offer_value">15.0</field>
+            <field name="points_earned">75</field>
+            <field name="points_used">0</field>
+            <field name="age_group">toddler</field>
+            <field name="gender">boys</field>
+            <field name="season">summer</field>
+            <field name="description">New Year special offer used</field>
+        </record>
+        
+    </data>
+</ocean>

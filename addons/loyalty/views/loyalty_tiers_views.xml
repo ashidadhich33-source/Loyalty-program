@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        <!-- Loyalty Tiers Tree View -->
+        <record id="view_loyalty_tiers_tree" model="ocean.ui.view">
+            <field name="name">loyalty.tiers.tree</field>
+            <field name="model">loyalty.tier</field>
+            <field name="arch" type="xml">
+                <tree string="Loyalty Tiers" decoration-muted="not is_active" decoration-success="is_active">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="program_id"/>
+                    <field name="sequence"/>
+                    <field name="is_active"/>
+                    <field name="min_points"/>
+                    <field name="max_points"/>
+                    <field name="min_purchases"/>
+                    <field name="min_purchase_amount"/>
+                    <field name="min_purchase_frequency"/>
+                    <field name="points_multiplier"/>
+                    <field name="discount_percentage"/>
+                    <field name="free_shipping"/>
+                    <field name="priority_support"/>
+                    <field name="exclusive_access"/>
+                    <field name="birthday_bonus_points"/>
+                    <field name="referral_bonus_points"/>
+                    <field name="seasonal_bonus_points"/>
+                    <field name="milestone_bonus_points"/>
+                    <field name="age_group_benefits"/>
+                    <field name="gender_benefits"/>
+                    <field name="seasonal_benefits"/>
+                    <field name="is_entry_tier"/>
+                    <field name="is_highest_tier"/>
+                    <field name="next_tier_id"/>
+                    <field name="previous_tier_id"/>
+                    <field name="customer_count"/>
+                    <field name="total_points_earned"/>
+                    <field name="total_purchases"/>
+                    <field name="total_purchase_amount"/>
+                    <field name="average_order_value"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Loyalty Tiers Form View -->
+        <record id="view_loyalty_tiers_form" model="ocean.ui.view">
+            <field name="name">loyalty.tiers.form</field>
+            <field name="model">loyalty.tier</field>
+            <field name="arch" type="xml">
+                <form string="Loyalty Tier">
+                    <header>
+                        <button name="action_view_customers" string="View Customers" type="object" class="btn-primary"/>
+                        <button name="action_view_analytics" string="View Analytics" type="object" class="btn-info"/>
+                        <field name="is_active" widget="boolean_toggle"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Tier Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="code"/>
+                                <field name="program_id"/>
+                                <field name="sequence"/>
+                                <field name="is_active"/>
+                                <field name="description"/>
+                            </group>
+                            <group>
+                                <field name="is_entry_tier"/>
+                                <field name="is_highest_tier"/>
+                                <field name="next_tier_id"/>
+                                <field name="previous_tier_id"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="min_points"/>
+                                <field name="max_points"/>
+                                <field name="min_purchases"/>
+                                <field name="min_purchase_amount"/>
+                                <field name="min_purchase_frequency"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="points_multiplier"/>
+                                <field name="discount_percentage"/>
+                                <field name="free_shipping"/>
+                                <field name="priority_support"/>
+                                <field name="exclusive_access"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="birthday_bonus_points"/>
+                                <field name="referral_bonus_points"/>
+                                <field name="seasonal_bonus_points"/>
+                                <field name="milestone_bonus_points"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Kids Clothing Benefits" name="kids_benefits">
+                                <group>
+                                    <group>
+                                        <field name="age_group_benefits"/>
+                                        <field name="gender_benefits"/>
+                                        <field name="seasonal_benefits"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Customers" name="customers">
+                                <button name="action_view_customers" string="View Customers" type="object" class="btn-primary"/>
+                                <field name="customer_count"/>
+                                <field name="customer_ids" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="name"/>
+                                        <field name="email"/>
+                                        <field name="phone"/>
+                                        <field name="loyalty_points_balance"/>
+                                        <field name="loyalty_tier_id"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Analytics" name="analytics">
+                                <button name="action_view_analytics" string="View Analytics" type="object" class="btn-primary"/>
+                                <group>
+                                    <group>
+                                        <field name="total_points_earned"/>
+                                        <field name="total_purchases"/>
+                                        <field name="total_purchase_amount"/>
+                                        <field name="average_order_value"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Loyalty Tiers Search View -->
+        <record id="view_loyalty_tiers_search" model="ocean.ui.view">
+            <field name="name">loyalty.tiers.search</field>
+            <field name="model">loyalty.tier</field>
+            <field name="arch" type="xml">
+                <search string="Search Loyalty Tiers">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="description"/>
+                    <field name="program_id"/>
+                    <field name="min_points"/>
+                    <field name="max_points"/>
+                    <field name="points_multiplier"/>
+                    <field name="discount_percentage"/>
+                    <field name="age_group_benefits"/>
+                    <field name="gender_benefits"/>
+                    <field name="seasonal_benefits"/>
+                    <separator/>
+                    <filter string="Active" name="active" domain="[('is_active', '=', True)]"/>
+                    <filter string="Inactive" name="inactive" domain="[('is_active', '=', False)]"/>
+                    <filter string="Entry Tier" name="entry_tier" domain="[('is_entry_tier', '=', True)]"/>
+                    <filter string="Highest Tier" name="highest_tier" domain="[('is_highest_tier', '=', True)]"/>
+                    <filter string="Free Shipping" name="free_shipping" domain="[('free_shipping', '=', True)]"/>
+                    <filter string="Priority Support" name="priority_support" domain="[('priority_support', '=', True)]"/>
+                    <filter string="Exclusive Access" name="exclusive_access" domain="[('exclusive_access', '=', True)]"/>
+                    <separator/>
+                    <filter string="Newborn" name="newborn" domain="[('age_group_benefits', '=', 'newborn')]"/>
+                    <filter string="Infant" name="infant" domain="[('age_group_benefits', '=', 'infant')]"/>
+                    <filter string="Toddler" name="toddler" domain="[('age_group_benefits', '=', 'toddler')]"/>
+                    <filter string="Preschool" name="preschool" domain="[('age_group_benefits', '=', 'preschool')]"/>
+                    <filter string="School" name="school" domain="[('age_group_benefits', '=', 'school')]"/>
+                    <filter string="Teen" name="teen" domain="[('age_group_benefits', '=', 'teen')]"/>
+                    <filter string="All Age Groups" name="all_ages" domain="[('age_group_benefits', '=', 'all')]"/>
+                    <separator/>
+                    <filter string="Boys" name="boys" domain="[('gender_benefits', '=', 'boys')]"/>
+                    <filter string="Girls" name="girls" domain="[('gender_benefits', '=', 'girls')]"/>
+                    <filter string="Unisex" name="unisex" domain="[('gender_benefits', '=', 'unisex')]"/>
+                    <filter string="All Genders" name="all_genders" domain="[('gender_benefits', '=', 'all')]"/>
+                    <separator/>
+                    <filter string="Summer" name="summer" domain="[('seasonal_benefits', '=', 'summer')]"/>
+                    <filter string="Winter" name="winter" domain="[('seasonal_benefits', '=', 'winter')]"/>
+                    <filter string="Monsoon" name="monsoon" domain="[('seasonal_benefits', '=', 'monsoon')]"/>
+                    <filter string="All Seasons" name="all_seasons" domain="[('seasonal_benefits', '=', 'all')]"/>
+                    <separator/>
+                    <filter string="Today" name="today" domain="[('create_date', '>=', datetime.datetime.now().replace(hour=0, minute=0, second=0))]"/>
+                    <filter string="This Week" name="this_week" domain="[('create_date', '>=', (datetime.datetime.now() - datetime.timedelta(days=7)))]"/>
+                    <filter string="This Month" name="this_month" domain="[('create_date', '>=', datetime.datetime.now().replace(day=1))]"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter string="Program" name="group_program" context="{'group_by': 'program_id'}"/>
+                        <filter string="Age Group" name="group_age" context="{'group_by': 'age_group_benefits'}"/>
+                        <filter string="Gender" name="group_gender" context="{'group_by': 'gender_benefits'}"/>
+                        <filter string="Season" name="group_season" context="{'group_by': 'seasonal_benefits'}"/>
+                        <filter string="Date" name="group_date" context="{'group_by': 'create_date'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- Loyalty Tiers Action -->
+        <record id="action_loyalty_tiers" model="ocean.actions.act_window">
+            <field name="name">Loyalty Tiers</field>
+            <field name="res_model">loyalty.tier</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_loyalty_tiers_tree"/>
+            <field name="search_view_id" ref="view_loyalty_tiers_search"/>
+            <field name="context">{'search_default_active': 1}</field>
+        </record>
+        
+    </data>
+</ocean>

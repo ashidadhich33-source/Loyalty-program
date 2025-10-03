@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        <!-- Loyalty Offers Tree View -->
+        <record id="view_loyalty_offers_tree" model="ocean.ui.view">
+            <field name="name">loyalty.offers.tree</field>
+            <field name="model">loyalty.offer</field>
+            <field name="arch" type="xml">
+                <tree string="Loyalty Offers" decoration-muted="not is_active" decoration-success="is_active">
+                    <field name="name"/>
+                    <field name="is_active"/>
+                    <field name="offer_type"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="is_permanent"/>
+                    <field name="offer_value"/>
+                    <field name="offer_currency_id"/>
+                    <field name="min_purchase_amount"/>
+                    <field name="max_offer_amount"/>
+                    <field name="points_multiplier"/>
+                    <field name="bonus_points"/>
+                    <field name="points_required"/>
+                    <field name="customer_segment"/>
+                    <field name="tier_id"/>
+                    <field name="age_group"/>
+                    <field name="gender"/>
+                    <field name="season"/>
+                    <field name="child_age_min"/>
+                    <field name="child_age_max"/>
+                    <field name="is_automatic"/>
+                    <field name="is_notification_sent"/>
+                    <field name="total_usage"/>
+                    <field name="total_customers"/>
+                    <field name="total_value"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Loyalty Offers Form View -->
+        <record id="view_loyalty_offers_form" model="ocean.ui.view">
+            <field name="name">loyalty.offers.form</field>
+            <field name="model">loyalty.offer</field>
+            <field name="arch" type="xml">
+                <form string="Loyalty Offer">
+                    <header>
+                        <button name="action_activate" string="Activate" type="object" class="btn-success" attrs="{'invisible': [('is_active', '=', True)]}"/>
+                        <button name="action_deactivate" string="Deactivate" type="object" class="btn-danger" attrs="{'invisible': [('is_active', '=', False)]}"/>
+                        <button name="action_send_notification" string="Send Notification" type="object" class="btn-info"/>
+                        <button name="action_view_usage" string="View Usage" type="object" class="btn-primary"/>
+                        <field name="is_active" widget="boolean_toggle"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Offer Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="description"/>
+                                <field name="is_active"/>
+                                <field name="offer_type"/>
+                                <field name="start_date"/>
+                                <field name="end_date"/>
+                                <field name="is_permanent"/>
+                            </group>
+                            <group>
+                                <field name="offer_value"/>
+                                <field name="offer_currency_id"/>
+                                <field name="min_purchase_amount"/>
+                                <field name="max_offer_amount"/>
+                                <field name="points_multiplier"/>
+                                <field name="bonus_points"/>
+                                <field name="points_required"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="customer_segment"/>
+                                <field name="tier_id"/>
+                                <field name="age_group"/>
+                                <field name="gender"/>
+                                <field name="season"/>
+                            </group>
+                            <group>
+                                <field name="child_age_min"/>
+                                <field name="child_age_max"/>
+                                <field name="usage_limit"/>
+                                <field name="usage_limit_per_customer"/>
+                                <field name="is_automatic"/>
+                                <field name="is_notification_sent"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Products" name="products">
+                                <field name="product_ids" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="product_id"/>
+                                        <field name="sequence"/>
+                                        <field name="is_required"/>
+                                        <field name="min_quantity"/>
+                                        <field name="max_quantity"/>
+                                        <field name="discount_percentage"/>
+                                        <field name="discount_amount"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Categories" name="categories">
+                                <field name="category_ids" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="category_id"/>
+                                        <field name="sequence"/>
+                                        <field name="is_required"/>
+                                        <field name="min_quantity"/>
+                                        <field name="max_quantity"/>
+                                        <field name="discount_percentage"/>
+                                        <field name="discount_amount"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Analytics" name="analytics">
+                                <button name="action_view_usage" string="View Usage" type="object" class="btn-primary"/>
+                                <group>
+                                    <group>
+                                        <field name="total_usage"/>
+                                        <field name="total_customers"/>
+                                        <field name="total_value"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Loyalty Offers Search View -->
+        <record id="view_loyalty_offers_search" model="ocean.ui.view">
+            <field name="name">loyalty.offers.search</field>
+            <field name="model">loyalty.offer</field>
+            <field name="arch" type="xml">
+                <search string="Search Loyalty Offers">
+                    <field name="name"/>
+                    <field name="description"/>
+                    <field name="offer_type"/>
+                    <field name="offer_value"/>
+                    <field name="customer_segment"/>
+                    <field name="tier_id"/>
+                    <field name="age_group"/>
+                    <field name="gender"/>
+                    <field name="season"/>
+                    <field name="child_age_min"/>
+                    <field name="child_age_max"/>
+                    <separator/>
+                    <filter string="Active" name="active" domain="[('is_active', '=', True)]"/>
+                    <filter string="Inactive" name="inactive" domain="[('is_active', '=', False)]"/>
+                    <filter string="Permanent" name="permanent" domain="[('is_permanent', '=', True)]"/>
+                    <filter string="Temporary" name="temporary" domain="[('is_permanent', '=', False)]"/>
+                    <filter string="Automatic" name="automatic" domain="[('is_automatic', '=', True)]"/>
+                    <filter string="Manual" name="manual" domain="[('is_automatic', '=', False)]"/>
+                    <separator/>
+                    <filter string="Birthday" name="birthday" domain="[('offer_type', '=', 'birthday')]"/>
+                    <filter string="Referral" name="referral" domain="[('offer_type', '=', 'referral')]"/>
+                    <filter string="Seasonal" name="seasonal" domain="[('offer_type', '=', 'seasonal')]"/>
+                    <filter string="Promotional" name="promotional" domain="[('offer_type', '=', 'promotional')]"/>
+                    <filter string="Tier Upgrade" name="tier_upgrade" domain="[('offer_type', '=', 'tier_upgrade')]"/>
+                    <filter string="Points Bonus" name="points_bonus" domain="[('offer_type', '=', 'points_bonus')]"/>
+                    <filter string="First Purchase" name="first_purchase" domain="[('offer_type', '=', 'first_purchase')]"/>
+                    <filter string="Loyalty Milestone" name="loyalty_milestone" domain="[('offer_type', '=', 'loyalty_milestone')]"/>
+                    <separator/>
+                    <filter string="All Customers" name="all_customers" domain="[('customer_segment', '=', 'all')]"/>
+                    <filter string="New Customers" name="new_customers" domain="[('customer_segment', '=', 'new')]"/>
+                    <filter string="Existing Customers" name="existing_customers" domain="[('customer_segment', '=', 'existing')]"/>
+                    <filter string="Tier Based" name="tier_based" domain="[('customer_segment', '=', 'tier_based')]"/>
+                    <filter string="Age Group Based" name="age_group_based" domain="[('customer_segment', '=', 'age_group')]"/>
+                    <filter string="Gender Based" name="gender_based" domain="[('customer_segment', '=', 'gender')]"/>
+                    <filter string="Seasonal Based" name="seasonal_based" domain="[('customer_segment', '=', 'seasonal')]"/>
+                    <separator/>
+                    <filter string="Newborn" name="newborn" domain="[('age_group', '=', 'newborn')]"/>
+                    <filter string="Infant" name="infant" domain="[('age_group', '=', 'infant')]"/>
+                    <filter string="Toddler" name="toddler" domain="[('age_group', '=', 'toddler')]"/>
+                    <filter string="Preschool" name="preschool" domain="[('age_group', '=', 'preschool')]"/>
+                    <filter string="School" name="school" domain="[('age_group', '=', 'school')]"/>
+                    <filter string="Teen" name="teen" domain="[('age_group', '=', 'teen')]"/>
+                    <filter string="All Age Groups" name="all_ages" domain="[('age_group', '=', 'all')]"/>
+                    <separator/>
+                    <filter string="Boys" name="boys" domain="[('gender', '=', 'boys')]"/>
+                    <filter string="Girls" name="girls" domain="[('gender', '=', 'girls')]"/>
+                    <filter string="Unisex" name="unisex" domain="[('gender', '=', 'unisex')]"/>
+                    <filter string="All Genders" name="all_genders" domain="[('gender', '=', 'all')]"/>
+                    <separator/>
+                    <filter string="Summer" name="summer" domain="[('season', '=', 'summer')]"/>
+                    <filter string="Winter" name="winter" domain="[('season', '=', 'winter')]"/>
+                    <filter string="Monsoon" name="monsoon" domain="[('season', '=', 'monsoon')]"/>
+                    <filter string="All Seasons" name="all_seasons" domain="[('season', '=', 'all')]"/>
+                    <separator/>
+                    <filter string="Today" name="today" domain="[('start_date', '>=', datetime.datetime.now().replace(hour=0, minute=0, second=0))]"/>
+                    <filter string="This Week" name="this_week" domain="[('start_date', '>=', (datetime.datetime.now() - datetime.timedelta(days=7)))]"/>
+                    <filter string="This Month" name="this_month" domain="[('start_date', '>=', datetime.datetime.now().replace(day=1))]"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter string="Type" name="group_type" context="{'group_by': 'offer_type'}"/>
+                        <filter string="Customer Segment" name="group_segment" context="{'group_by': 'customer_segment'}"/>
+                        <filter string="Tier" name="group_tier" context="{'group_by': 'tier_id'}"/>
+                        <filter string="Age Group" name="group_age" context="{'group_by': 'age_group'}"/>
+                        <filter string="Gender" name="group_gender" context="{'group_by': 'gender'}"/>
+                        <filter string="Season" name="group_season" context="{'group_by': 'season'}"/>
+                        <filter string="Start Date" name="group_start" context="{'group_by': 'start_date'}"/>
+                        <filter string="End Date" name="group_end" context="{'group_by': 'end_date'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- Loyalty Offers Action -->
+        <record id="action_loyalty_offers" model="ocean.actions.act_window">
+            <field name="name">Loyalty Offers</field>
+            <field name="res_model">loyalty.offer</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_loyalty_offers_tree"/>
+            <field name="search_view_id" ref="view_loyalty_offers_search"/>
+            <field name="context">{'search_default_active': 1}</field>
+        </record>
+        
+    </data>
+</ocean>

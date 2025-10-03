@@ -1,0 +1,572 @@
+/* Loyalty Styles for Ocean ERP */
+
+/* Loyalty Program Styles */
+.o_loyalty_program_activate {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.o_loyalty_program_activate:hover {
+    background-color: #218838;
+}
+
+.o_loyalty_program_deactivate {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.o_loyalty_program_deactivate:hover {
+    background-color: #c82333;
+}
+
+.o_loyalty_program_view_customers {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.o_loyalty_program_view_customers:hover {
+    background-color: #0056b3;
+}
+
+.o_loyalty_program_view_analytics {
+    background-color: #17a2b8;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.o_loyalty_program_view_analytics:hover {
+    background-color: #138496;
+}
+
+/* Loyalty Points Styles */
+.o_loyalty_points_expire {
+    background-color: #ffc107;
+    color: #212529;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.o_loyalty_points_expire:hover {
+    background-color: #e0a800;
+}
+
+.o_loyalty_points_send_notification {
+    background-color: #17a2b8;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.o_loyalty_points_send_notification:hover {
+    background-color: #138496;
+}
+
+.o_loyalty_points_adjust {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.o_loyalty_points_adjust:hover {
+    background-color: #5a6268;
+}
+
+/* Loyalty Reward Styles */
+.o_loyalty_reward_redeem {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.o_loyalty_reward_redeem:hover {
+    background-color: #218838;
+}
+
+/* Loyalty Voucher Styles */
+.o_loyalty_voucher_activate {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.o_loyalty_voucher_activate:hover {
+    background-color: #218838;
+}
+
+.o_loyalty_voucher_use {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.o_loyalty_voucher_use:hover {
+    background-color: #0056b3;
+}
+
+.o_loyalty_voucher_cancel {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.o_loyalty_voucher_cancel:hover {
+    background-color: #c82333;
+}
+
+.o_loyalty_voucher_expire {
+    background-color: #ffc107;
+    color: #212529;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.o_loyalty_voucher_expire:hover {
+    background-color: #e0a800;
+}
+
+/* Loyalty Offer Styles */
+.o_loyalty_offer_activate {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.o_loyalty_offer_activate:hover {
+    background-color: #218838;
+}
+
+.o_loyalty_offer_deactivate {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.o_loyalty_offer_deactivate:hover {
+    background-color: #c82333;
+}
+
+.o_loyalty_offer_send_notification {
+    background-color: #17a2b8;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.o_loyalty_offer_send_notification:hover {
+    background-color: #138496;
+}
+
+.o_loyalty_offer_view_usage {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.o_loyalty_offer_view_usage:hover {
+    background-color: #0056b3;
+}
+
+/* Loyalty Tier Styles */
+.o_loyalty_tier_view_customers {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.o_loyalty_tier_view_customers:hover {
+    background-color: #0056b3;
+}
+
+.o_loyalty_tier_view_analytics {
+    background-color: #17a2b8;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.o_loyalty_tier_view_analytics:hover {
+    background-color: #138496;
+}
+
+/* Loyalty Analytics Styles */
+.o_loyalty_analytics_generate {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.o_loyalty_analytics_generate:hover {
+    background-color: #218838;
+}
+
+.o_loyalty_analytics_export {
+    background-color: #17a2b8;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.o_loyalty_analytics_export:hover {
+    background-color: #138496;
+}
+
+/* Loyalty Tree View Styles */
+.o_loyalty_tree .o_loyalty_program_activate,
+.o_loyalty_tree .o_loyalty_points_expire,
+.o_loyalty_tree .o_loyalty_reward_redeem,
+.o_loyalty_tree .o_loyalty_voucher_activate,
+.o_loyalty_tree .o_loyalty_offer_activate,
+.o_loyalty_tree .o_loyalty_tier_view_customers,
+.o_loyalty_tree .o_loyalty_analytics_generate {
+    display: inline-block;
+    margin-right: 5px;
+}
+
+/* Loyalty Form View Styles */
+.o_loyalty_form .o_loyalty_program_activate,
+.o_loyalty_form .o_loyalty_points_expire,
+.o_loyalty_form .o_loyalty_reward_redeem,
+.o_loyalty_form .o_loyalty_voucher_activate,
+.o_loyalty_form .o_loyalty_offer_activate,
+.o_loyalty_form .o_loyalty_tier_view_customers,
+.o_loyalty_form .o_loyalty_analytics_generate {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+/* Loyalty Status Indicators */
+.o_loyalty_status_active {
+    color: #28a745;
+    font-weight: bold;
+}
+
+.o_loyalty_status_inactive {
+    color: #6c757d;
+    font-weight: bold;
+}
+
+.o_loyalty_status_expired {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+.o_loyalty_status_used {
+    color: #28a745;
+    font-weight: bold;
+}
+
+.o_loyalty_status_draft {
+    color: #6c757d;
+    font-weight: bold;
+}
+
+.o_loyalty_status_confirmed {
+    color: #ffc107;
+    font-weight: bold;
+}
+
+.o_loyalty_status_fulfilled {
+    color: #28a745;
+    font-weight: bold;
+}
+
+.o_loyalty_status_cancelled {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+/* Loyalty Points Type Indicators */
+.o_loyalty_points_earned {
+    color: #28a745;
+    font-weight: bold;
+}
+
+.o_loyalty_points_redeemed {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+.o_loyalty_points_expired {
+    color: #6c757d;
+    font-weight: bold;
+}
+
+.o_loyalty_points_adjusted {
+    color: #ffc107;
+    font-weight: bold;
+}
+
+.o_loyalty_points_bonus {
+    color: #17a2b8;
+    font-weight: bold;
+}
+
+/* Loyalty Reward Type Indicators */
+.o_loyalty_reward_product {
+    color: #007bff;
+    font-weight: bold;
+}
+
+.o_loyalty_reward_discount {
+    color: #28a745;
+    font-weight: bold;
+}
+
+.o_loyalty_reward_voucher {
+    color: #ffc107;
+    font-weight: bold;
+}
+
+.o_loyalty_reward_service {
+    color: #17a2b8;
+    font-weight: bold;
+}
+
+.o_loyalty_reward_experience {
+    color: #6f42c1;
+    font-weight: bold;
+}
+
+/* Loyalty Voucher Type Indicators */
+.o_loyalty_voucher_discount {
+    color: #28a745;
+    font-weight: bold;
+}
+
+.o_loyalty_voucher_product {
+    color: #007bff;
+    font-weight: bold;
+}
+
+.o_loyalty_voucher_points {
+    color: #ffc107;
+    font-weight: bold;
+}
+
+.o_loyalty_voucher_cash {
+    color: #17a2b8;
+    font-weight: bold;
+}
+
+/* Loyalty Offer Type Indicators */
+.o_loyalty_offer_birthday {
+    color: #e83e8c;
+    font-weight: bold;
+}
+
+.o_loyalty_offer_referral {
+    color: #28a745;
+    font-weight: bold;
+}
+
+.o_loyalty_offer_seasonal {
+    color: #17a2b8;
+    font-weight: bold;
+}
+
+.o_loyalty_offer_promotional {
+    color: #ffc107;
+    font-weight: bold;
+}
+
+.o_loyalty_offer_tier_upgrade {
+    color: #6f42c1;
+    font-weight: bold;
+}
+
+.o_loyalty_offer_points_bonus {
+    color: #fd7e14;
+    font-weight: bold;
+}
+
+.o_loyalty_offer_first_purchase {
+    color: #20c997;
+    font-weight: bold;
+}
+
+.o_loyalty_offer_loyalty_milestone {
+    color: #6c757d;
+    font-weight: bold;
+}
+
+/* Loyalty Tier Indicators */
+.o_loyalty_tier_bronze {
+    color: #cd7f32;
+    font-weight: bold;
+}
+
+.o_loyalty_tier_silver {
+    color: #c0c0c0;
+    font-weight: bold;
+}
+
+.o_loyalty_tier_gold {
+    color: #ffd700;
+    font-weight: bold;
+}
+
+.o_loyalty_tier_platinum {
+    color: #e5e4e2;
+    font-weight: bold;
+}
+
+/* Loyalty Age Group Indicators */
+.o_loyalty_age_newborn {
+    color: #e83e8c;
+    font-weight: bold;
+}
+
+.o_loyalty_age_infant {
+    color: #fd7e14;
+    font-weight: bold;
+}
+
+.o_loyalty_age_toddler {
+    color: #20c997;
+    font-weight: bold;
+}
+
+.o_loyalty_age_preschool {
+    color: #6f42c1;
+    font-weight: bold;
+}
+
+.o_loyalty_age_school {
+    color: #007bff;
+    font-weight: bold;
+}
+
+.o_loyalty_age_teen {
+    color: #6c757d;
+    font-weight: bold;
+}
+
+/* Loyalty Gender Indicators */
+.o_loyalty_gender_boys {
+    color: #007bff;
+    font-weight: bold;
+}
+
+.o_loyalty_gender_girls {
+    color: #e83e8c;
+    font-weight: bold;
+}
+
+.o_loyalty_gender_unisex {
+    color: #6c757d;
+    font-weight: bold;
+}
+
+/* Loyalty Seasonal Indicators */
+.o_loyalty_season_summer {
+    color: #ffc107;
+    font-weight: bold;
+}
+
+.o_loyalty_season_winter {
+    color: #17a2b8;
+    font-weight: bold;
+}
+
+.o_loyalty_season_monsoon {
+    color: #6f42c1;
+    font-weight: bold;
+}
+
+/* Loyalty ROI Indicators */
+.o_loyalty_roi_positive {
+    color: #28a745;
+    font-weight: bold;
+}
+
+.o_loyalty_roi_zero {
+    color: #6c757d;
+    font-weight: bold;
+}
+
+.o_loyalty_roi_negative {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+/* Loyalty Responsive Design */
+@media (max-width: 768px) {
+    .o_loyalty_program_activate,
+    .o_loyalty_points_expire,
+    .o_loyalty_reward_redeem,
+    .o_loyalty_voucher_activate,
+    .o_loyalty_offer_activate,
+    .o_loyalty_tier_view_customers,
+    .o_loyalty_analytics_generate {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+    
+    .o_loyalty_tree .o_loyalty_program_activate,
+    .o_loyalty_tree .o_loyalty_points_expire,
+    .o_loyalty_tree .o_loyalty_reward_redeem,
+    .o_loyalty_tree .o_loyalty_voucher_activate,
+    .o_loyalty_tree .o_loyalty_offer_activate,
+    .o_loyalty_tree .o_loyalty_tier_view_customers,
+    .o_loyalty_tree .o_loyalty_analytics_generate {
+        display: block;
+        margin-bottom: 5px;
+    }
+}

@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        <!-- Loyalty Programs Tree View -->
+        <record id="view_loyalty_programs_tree" model="ocean.ui.view">
+            <field name="name">loyalty.programs.tree</field>
+            <field name="model">loyalty.program</field>
+            <field name="arch" type="xml">
+                <tree string="Loyalty Programs" decoration-muted="not is_active" decoration-success="is_active">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="is_active"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="points_per_currency"/>
+                    <field name="currency_id"/>
+                    <field name="customer_count"/>
+                    <field name="total_points_earned"/>
+                    <field name="total_points_redeemed"/>
+                    <field name="age_group_focus"/>
+                    <field name="gender_focus"/>
+                    <field name="seasonal_focus"/>
+                    <field name="birthday_offers"/>
+                    <field name="referral_program"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Loyalty Programs Form View -->
+        <record id="view_loyalty_programs_form" model="ocean.ui.view">
+            <field name="name">loyalty.programs.form</field>
+            <field name="model">loyalty.program</field>
+            <field name="arch" type="xml">
+                <form string="Loyalty Program">
+                    <header>
+                        <button name="action_activate" string="Activate" type="object" class="btn-success" attrs="{'invisible': [('is_active', '=', True)]}"/>
+                        <button name="action_deactivate" string="Deactivate" type="object" class="btn-danger" attrs="{'invisible': [('is_active', '=', False)]}"/>
+                        <button name="action_view_customers" string="View Customers" type="object" class="btn-primary"/>
+                        <button name="action_view_analytics" string="View Analytics" type="object" class="btn-info"/>
+                        <field name="is_active" widget="boolean_toggle"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Program Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="code"/>
+                                <field name="description"/>
+                                <field name="start_date"/>
+                                <field name="end_date"/>
+                            </group>
+                            <group>
+                                <field name="points_per_currency"/>
+                                <field name="currency_id"/>
+                                <field name="min_points_redemption"/>
+                                <field name="max_points_redemption"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="points_expiry_days"/>
+                                <field name="expiry_notification_days"/>
+                                <field name="tier_based"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Kids Clothing Focus" name="kids_focus">
+                                <group>
+                                    <group>
+                                        <field name="age_group_focus"/>
+                                        <field name="gender_focus"/>
+                                        <field name="seasonal_focus"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Special Features" name="special_features">
+                                <group>
+                                    <group>
+                                        <field name="birthday_offers"/>
+                                        <field name="referral_program"/>
+                                        <field name="referral_points"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Tiers" name="tiers">
+                                <field name="tier_ids" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="name"/>
+                                        <field name="sequence"/>
+                                        <field name="min_points"/>
+                                        <field name="max_points"/>
+                                        <field name="points_multiplier"/>
+                                        <field name="discount_percentage"/>
+                                        <field name="free_shipping"/>
+                                        <field name="priority_support"/>
+                                        <field name="exclusive_access"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Customers" name="customers">
+                                <button name="action_view_customers" string="View Customers" type="object" class="btn-primary"/>
+                                <field name="customer_count"/>
+                                <field name="customer_ids" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="name"/>
+                                        <field name="email"/>
+                                        <field name="phone"/>
+                                        <field name="loyalty_tier_id"/>
+                                        <field name="loyalty_points_balance"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Analytics" name="analytics">
+                                <button name="action_view_analytics" string="View Analytics" type="object" class="btn-primary"/>
+                                <group>
+                                    <group>
+                                        <field name="total_points_earned"/>
+                                        <field name="total_points_redeemed"/>
+                                        <field name="total_rewards_given"/>
+                                        <field name="total_vouchers_issued"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Loyalty Programs Search View -->
+        <record id="view_loyalty_programs_search" model="ocean.ui.view">
+            <field name="name">loyalty.programs.search</field>
+            <field name="model">loyalty.program</field>
+            <field name="arch" type="xml">
+                <search string="Search Loyalty Programs">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="description"/>
+                    <field name="currency_id"/>
+                    <field name="age_group_focus"/>
+                    <field name="gender_focus"/>
+                    <field name="seasonal_focus"/>
+                    <separator/>
+                    <filter string="Active" name="active" domain="[('is_active', '=', True)]"/>
+                    <filter string="Inactive" name="inactive" domain="[('is_active', '=', False)]"/>
+                    <filter string="Tier Based" name="tier_based" domain="[('tier_based', '=', True)]"/>
+                    <filter string="Birthday Offers" name="birthday_offers" domain="[('birthday_offers', '=', True)]"/>
+                    <filter string="Referral Program" name="referral_program" domain="[('referral_program', '=', True)]"/>
+                    <separator/>
+                    <filter string="Newborn" name="newborn" domain="[('age_group_focus', '=', 'newborn')]"/>
+                    <filter string="Infant" name="infant" domain="[('age_group_focus', '=', 'infant')]"/>
+                    <filter string="Toddler" name="toddler" domain="[('age_group_focus', '=', 'toddler')]"/>
+                    <filter string="Preschool" name="preschool" domain="[('age_group_focus', '=', 'preschool')]"/>
+                    <filter string="School" name="school" domain="[('age_group_focus', '=', 'school')]"/>
+                    <filter string="Teen" name="teen" domain="[('age_group_focus', '=', 'teen')]"/>
+                    <filter string="All Age Groups" name="all_ages" domain="[('age_group_focus', '=', 'all')]"/>
+                    <separator/>
+                    <filter string="Boys" name="boys" domain="[('gender_focus', '=', 'boys')]"/>
+                    <filter string="Girls" name="girls" domain="[('gender_focus', '=', 'girls')]"/>
+                    <filter string="Unisex" name="unisex" domain="[('gender_focus', '=', 'unisex')]"/>
+                    <filter string="All Genders" name="all_genders" domain="[('gender_focus', '=', 'all')]"/>
+                    <separator/>
+                    <filter string="Summer" name="summer" domain="[('seasonal_focus', '=', 'summer')]"/>
+                    <filter string="Winter" name="winter" domain="[('seasonal_focus', '=', 'winter')]"/>
+                    <filter string="Monsoon" name="monsoon" domain="[('seasonal_focus', '=', 'monsoon')]"/>
+                    <filter string="All Seasons" name="all_seasons" domain="[('seasonal_focus', '=', 'all')]"/>
+                    <separator/>
+                    <filter string="Today" name="today" domain="[('create_date', '>=', datetime.datetime.now().replace(hour=0, minute=0, second=0))]"/>
+                    <filter string="This Week" name="this_week" domain="[('create_date', '>=', (datetime.datetime.now() - datetime.timedelta(days=7)))]"/>
+                    <filter string="This Month" name="this_month" domain="[('create_date', '>=', datetime.datetime.now().replace(day=1))]"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter string="Currency" name="group_currency" context="{'group_by': 'currency_id'}"/>
+                        <filter string="Age Group" name="group_age" context="{'group_by': 'age_group_focus'}"/>
+                        <filter string="Gender" name="group_gender" context="{'group_by': 'gender_focus'}"/>
+                        <filter string="Season" name="group_season" context="{'group_by': 'seasonal_focus'}"/>
+                        <filter string="Date" name="group_date" context="{'group_by': 'create_date'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- Loyalty Programs Action -->
+        <record id="action_loyalty_programs" model="ocean.actions.act_window">
+            <field name="name">Loyalty Programs</field>
+            <field name="res_model">loyalty.program</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_loyalty_programs_tree"/>
+            <field name="search_view_id" ref="view_loyalty_programs_search"/>
+            <field name="context">{'search_default_active': 1}</field>
+        </record>
+        
+    </data>
+</ocean>

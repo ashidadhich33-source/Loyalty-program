@@ -60,7 +60,7 @@
     ],
     'data': [
         'security/security.xml',
-        'security/ir.model.access.csv',
+        'security/ocean.model.access.csv',
         'data/data.xml',
         'views/product_template_views.xml',
         'views/product_variant_views.xml',

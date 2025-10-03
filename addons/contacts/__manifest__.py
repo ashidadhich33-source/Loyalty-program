@@ -38,7 +38,7 @@ Features:
     'data': [
         # Security
         'security/security.xml',
-        'security/ir.model.access.csv',
+        'security/ocean.model.access.csv',
         
         # Data
         'data/data.xml',

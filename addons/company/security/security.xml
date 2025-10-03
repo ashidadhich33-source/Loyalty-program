@@ -39,7 +39,7 @@
         </record>
         
         <!-- Security Rules -->
-        <record id="rule_res_company_own" model="ir.rule">
+        <record id="rule_res_company_own" model="ocean.rule">
             <field name="name">Company: Own Company</field>
             <field name="model_id" ref="model_res_company"/>
             <field name="domain_force">[('id', 'in', company_ids)]</field>
@@ -50,7 +50,7 @@
             <field name="perm_unlink" eval="False"/>
         </record>
         
-        <record id="rule_res_company_company" model="ir.rule">
+        <record id="rule_res_company_company" model="ocean.rule">
             <field name="name">Company: Company</field>
             <field name="model_id" ref="model_res_company"/>
             <field name="domain_force">[('id', 'in', company_ids)]</field>
@@ -61,7 +61,7 @@
             <field name="perm_unlink" eval="False"/>
         </record>
         
-        <record id="rule_company_branch_own" model="ir.rule">
+        <record id="rule_company_branch_own" model="ocean.rule">
             <field name="name">Company Branch: Own Company</field>
             <field name="model_id" ref="model_company_branch"/>
             <field name="domain_force">[('company_id', 'in', company_ids)]</field>
@@ -72,7 +72,7 @@
             <field name="perm_unlink" eval="False"/>
         </record>
         
-        <record id="rule_company_branch_company" model="ir.rule">
+        <record id="rule_company_branch_company" model="ocean.rule">
             <field name="name">Company Branch: Company</field>
             <field name="model_id" ref="model_company_branch"/>
             <field name="domain_force">[('company_id', 'in', company_ids)]</field>
@@ -83,7 +83,7 @@
             <field name="perm_unlink" eval="True"/>
         </record>
         
-        <record id="rule_company_location_own" model="ir.rule">
+        <record id="rule_company_location_own" model="ocean.rule">
             <field name="name">Company Location: Own Company</field>
             <field name="model_id" ref="model_company_location"/>
             <field name="domain_force">[('company_id', 'in', company_ids)]</field>
@@ -94,7 +94,7 @@
             <field name="perm_unlink" eval="False"/>
         </record>
         
-        <record id="rule_company_location_company" model="ir.rule">
+        <record id="rule_company_location_company" model="ocean.rule">
             <field name="name">Company Location: Company</field>
             <field name="model_id" ref="model_company_location"/>
             <field name="domain_force">[('company_id', 'in', company_ids)]</field>
@@ -105,7 +105,7 @@
             <field name="perm_unlink" eval="True"/>
         </record>
         
-        <record id="rule_financial_year_own" model="ir.rule">
+        <record id="rule_financial_year_own" model="ocean.rule">
             <field name="name">Financial Year: Own Company</field>
             <field name="model_id" ref="model_financial_year"/>
             <field name="domain_force">[('company_id', 'in', company_ids)]</field>
@@ -116,7 +116,7 @@
             <field name="perm_unlink" eval="False"/>
         </record>
         
-        <record id="rule_financial_year_company" model="ir.rule">
+        <record id="rule_financial_year_company" model="ocean.rule">
             <field name="name">Financial Year: Company</field>
             <field name="model_id" ref="model_financial_year"/>
             <field name="domain_force">[('company_id', 'in', company_ids)]</field>
@@ -127,7 +127,7 @@
             <field name="perm_unlink" eval="True"/>
         </record>
         
-        <record id="rule_company_settings_own" model="ir.rule">
+        <record id="rule_company_settings_own" model="ocean.rule">
             <field name="name">Company Settings: Own Company</field>
             <field name="model_id" ref="model_company_settings"/>
             <field name="domain_force">[('company_id', 'in', company_ids)]</field>
@@ -138,7 +138,7 @@
             <field name="perm_unlink" eval="False"/>
         </record>
         
-        <record id="rule_company_settings_company" model="ir.rule">
+        <record id="rule_company_settings_company" model="ocean.rule">
             <field name="name">Company Settings: Company</field>
             <field name="model_id" ref="model_company_settings"/>
             <field name="domain_force">[('company_id', 'in', company_ids)]</field>
@@ -149,7 +149,7 @@
             <field name="perm_unlink" eval="True"/>
         </record>
         
-        <record id="rule_company_analytics_own" model="ir.rule">
+        <record id="rule_company_analytics_own" model="ocean.rule">
             <field name="name">Company Analytics: Own Company</field>
             <field name="model_id" ref="model_company_analytics"/>
             <field name="domain_force">[('company_id', 'in', company_ids)]</field>
@@ -160,7 +160,7 @@
             <field name="perm_unlink" eval="False"/>
         </record>
         
-        <record id="rule_company_analytics_company" model="ir.rule">
+        <record id="rule_company_analytics_company" model="ocean.rule">
             <field name="name">Company Analytics: Company</field>
             <field name="model_id" ref="model_company_analytics"/>
             <field name="domain_force">[('company_id', 'in', company_ids)]</field>

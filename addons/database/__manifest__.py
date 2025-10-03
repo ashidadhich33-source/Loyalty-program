@@ -33,7 +33,7 @@
     'license': 'LGPL-3',
     'depends': ['core_base', 'core_web', 'users', 'company'],
     'data': [
-        'security/ir.model.access.csv',
+        'security/ocean.model.access.csv',
         'security/security.xml',
         'data/data.xml',
         'views/menu.xml',

@@ -46,7 +46,7 @@ class TestResConfigSettings(TestCase):
         config.set_values()
         
         # Check if parameters are set correctly
-        params = self.env['ir.config_parameter'].sudo()
+        params = self.env['ocean.config_parameter'].sudo()
         self.assertEqual(params.get_param('core_base.enable_child_profiles'), 'False')
         self.assertEqual(params.get_param('core_base.enable_loyalty_program'), 'False')
     

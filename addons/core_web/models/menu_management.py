@@ -59,7 +59,7 @@ class MenuManagement(BaseModel):
     )
     
     action_id = fields.Many2one(
-        'ir.actions.act_window',
+        'ocean.actions.act_window',
         string='Action',
         help='Action to execute when menu is clicked'
     )
@@ -71,7 +71,7 @@ class MenuManagement(BaseModel):
     
     # Access control
     group_ids = fields.Many2many(
-        'res.groups',
+        'ocean.groups',
         'menu_group_rel',
         'menu_id',
         'group_id',
@@ -257,7 +257,7 @@ class MenuManagement(BaseModel):
         if self.action_id:
             return self.action_id.read()[0]
         elif self.url:
-            return {'type': 'ir.actions.act_url', 'url': self.url}
+            return {'type': 'ocean.actions.act_url', 'url': self.url}
         
         return {}
     

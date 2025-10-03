@@ -4,7 +4,7 @@
         <!-- Groups Tree View -->
         <record id="view_groups_tree" model="ocean.ui.view">
             <field name="name">groups.tree</field>
-            <field name="model">res.groups</field>
+            <field name="model">ocean.groups</field>
             <field name="arch" type="xml">
                 <tree string="Groups" decoration-muted="not is_active" decoration-info="is_system_group">
                     <field name="name"/>
@@ -23,7 +23,7 @@
         <!-- Groups Form View -->
         <record id="view_groups_form" model="ocean.ui.view">
             <field name="name">groups.form</field>
-            <field name="model">res.groups</field>
+            <field name="model">ocean.groups</field>
             <field name="arch" type="xml">
                 <form string="Group">
                     <header>
@@ -94,7 +94,7 @@
         <!-- Groups Search View -->
         <record id="view_groups_search" model="ocean.ui.view">
             <field name="name">groups.search</field>
-            <field name="model">res.groups</field>
+            <field name="model">ocean.groups</field>
             <field name="arch" type="xml">
                 <search string="Search Groups">
                     <field name="name"/>
@@ -127,7 +127,7 @@
         <!-- Groups Action -->
         <record id="action_groups" model="ocean.actions.act_window">
             <field name="name">Groups</field>
-            <field name="res_model">res.groups</field>
+            <field name="res_model">ocean.groups</field>
             <field name="view_mode">tree,form</field>
             <field name="view_id" ref="view_groups_tree"/>
             <field name="search_view_id" ref="view_groups_search"/>

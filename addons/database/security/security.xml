@@ -51,7 +51,7 @@
         </record>
         
         <!-- Security Rules -->
-        <record id="rule_database_info_own" model="ir.rule">
+        <record id="rule_database_info_own" model="ocean.rule">
             <field name="name">Database Info: Own Database</field>
             <field name="model_id" ref="model_database_info"/>
             <field name="domain_force">[('id', 'in', database_ids)]</field>
@@ -62,7 +62,7 @@
             <field name="perm_unlink" eval="False"/>
         </record>
         
-        <record id="rule_database_info_database" model="ir.rule">
+        <record id="rule_database_info_database" model="ocean.rule">
             <field name="name">Database Info: Database</field>
             <field name="model_id" ref="model_database_info"/>
             <field name="domain_force">[('id', 'in', database_ids)]</field>
@@ -73,7 +73,7 @@
             <field name="perm_unlink" eval="False"/>
         </record>
         
-        <record id="rule_database_connection_own" model="ir.rule">
+        <record id="rule_database_connection_own" model="ocean.rule">
             <field name="name">Database Connection: Own Database</field>
             <field name="model_id" ref="model_database_connection"/>
             <field name="domain_force">[('database_id', 'in', database_ids)]</field>
@@ -84,7 +84,7 @@
             <field name="perm_unlink" eval="False"/>
         </record>
         
-        <record id="rule_database_connection_database" model="ir.rule">
+        <record id="rule_database_connection_database" model="ocean.rule">
             <field name="name">Database Connection: Database</field>
             <field name="model_id" ref="model_database_connection"/>
             <field name="domain_force">[('database_id', 'in', database_ids)]</field>
@@ -95,7 +95,7 @@
             <field name="perm_unlink" eval="True"/>
         </record>
         
-        <record id="rule_database_backup_own" model="ir.rule">
+        <record id="rule_database_backup_own" model="ocean.rule">
             <field name="name">Database Backup: Own Database</field>
             <field name="model_id" ref="model_database_backup"/>
             <field name="domain_force">[('database_id', 'in', database_ids)]</field>
@@ -106,7 +106,7 @@
             <field name="perm_unlink" eval="False"/>
         </record>
         
-        <record id="rule_database_backup_database" model="ir.rule">
+        <record id="rule_database_backup_database" model="ocean.rule">
             <field name="name">Database Backup: Database</field>
             <field name="model_id" ref="model_database_backup"/>
             <field name="domain_force">[('database_id', 'in', database_ids)]</field>
@@ -117,7 +117,7 @@
             <field name="perm_unlink" eval="True"/>
         </record>
         
-        <record id="rule_database_migration_own" model="ir.rule">
+        <record id="rule_database_migration_own" model="ocean.rule">
             <field name="name">Database Migration: Own Database</field>
             <field name="model_id" ref="model_database_migration"/>
             <field name="domain_force">[('database_id', 'in', database_ids)]</field>
@@ -128,7 +128,7 @@
             <field name="perm_unlink" eval="False"/>
         </record>
         
-        <record id="rule_database_migration_database" model="ir.rule">
+        <record id="rule_database_migration_database" model="ocean.rule">
             <field name="name">Database Migration: Database</field>
             <field name="model_id" ref="model_database_migration"/>
             <field name="domain_force">[('database_id', 'in', database_ids)]</field>
@@ -139,7 +139,7 @@
             <field name="perm_unlink" eval="True"/>
         </record>
         
-        <record id="rule_database_monitoring_own" model="ir.rule">
+        <record id="rule_database_monitoring_own" model="ocean.rule">
             <field name="name">Database Monitoring: Own Database</field>
             <field name="model_id" ref="model_database_monitoring"/>
             <field name="domain_force">[('database_id', 'in', database_ids)]</field>
@@ -150,7 +150,7 @@
             <field name="perm_unlink" eval="False"/>
         </record>
         
-        <record id="rule_database_monitoring_database" model="ir.rule">
+        <record id="rule_database_monitoring_database" model="ocean.rule">
             <field name="name">Database Monitoring: Database</field>
             <field name="model_id" ref="model_database_monitoring"/>
             <field name="domain_force">[('database_id', 'in', database_ids)]</field>
@@ -161,7 +161,7 @@
             <field name="perm_unlink" eval="True"/>
         </record>
         
-        <record id="rule_database_analytics_own" model="ir.rule">
+        <record id="rule_database_analytics_own" model="ocean.rule">
             <field name="name">Database Analytics: Own Database</field>
             <field name="model_id" ref="model_database_analytics"/>
             <field name="domain_force">[('database_id', 'in', database_ids)]</field>
@@ -172,7 +172,7 @@
             <field name="perm_unlink" eval="False"/>
         </record>
         
-        <record id="rule_database_analytics_database" model="ir.rule">
+        <record id="rule_database_analytics_database" model="ocean.rule">
             <field name="name">Database Analytics: Database</field>
             <field name="model_id" ref="model_database_analytics"/>
             <field name="domain_force">[('database_id', 'in', database_ids)]</field>
@@ -183,7 +183,7 @@
             <field name="perm_unlink" eval="True"/>
         </record>
         
-        <record id="rule_database_security_own" model="ir.rule">
+        <record id="rule_database_security_own" model="ocean.rule">
             <field name="name">Database Security: Own Database</field>
             <field name="model_id" ref="model_database_security"/>
             <field name="domain_force">[('database_id', 'in', database_ids)]</field>
@@ -194,7 +194,7 @@
             <field name="perm_unlink" eval="False"/>
         </record>
         
-        <record id="rule_database_security_database" model="ir.rule">
+        <record id="rule_database_security_database" model="ocean.rule">
             <field name="name">Database Security: Database</field>
             <field name="model_id" ref="model_database_security"/>
             <field name="domain_force">[('database_id', 'in', database_ids)]</field>
@@ -205,7 +205,7 @@
             <field name="perm_unlink" eval="True"/>
         </record>
         
-        <record id="rule_database_maintenance_own" model="ir.rule">
+        <record id="rule_database_maintenance_own" model="ocean.rule">
             <field name="name">Database Maintenance: Own Database</field>
             <field name="model_id" ref="model_database_maintenance"/>
             <field name="domain_force">[('database_id', 'in', database_ids)]</field>
@@ -216,7 +216,7 @@
             <field name="perm_unlink" eval="False"/>
         </record>
         
-        <record id="rule_database_maintenance_database" model="ir.rule">
+        <record id="rule_database_maintenance_database" model="ocean.rule">
             <field name="name">Database Maintenance: Database</field>
             <field name="model_id" ref="model_database_maintenance"/>
             <field name="domain_force">[('database_id', 'in', database_ids)]</field>

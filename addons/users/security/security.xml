@@ -27,7 +27,7 @@
         </record>
         
         <!-- Security Rules -->
-        <record id="rule_res_users_own_record" model="ir.rule">
+        <record id="rule_res_users_own_record" model="ocean.rule">
             <field name="name">Users: Own Record</field>
             <field name="model_id" ref="model_res_users"/>
             <field name="domain_force">[('id', '=', user.id)]</field>
@@ -38,7 +38,7 @@
             <field name="perm_unlink" eval="False"/>
         </record>
         
-        <record id="rule_res_users_company" model="ir.rule">
+        <record id="rule_res_users_company" model="ocean.rule">
             <field name="name">Users: Company</field>
             <field name="model_id" ref="model_res_users"/>
             <field name="domain_force">[('company_ids', 'in', company_ids)]</field>
@@ -49,7 +49,7 @@
             <field name="perm_unlink" eval="False"/>
         </record>
         
-        <record id="rule_user_permissions_own" model="ir.rule">
+        <record id="rule_user_permissions_own" model="ocean.rule">
             <field name="name">User Permissions: Own</field>
             <field name="model_id" ref="model_user_permissions"/>
             <field name="domain_force">[('user_id', '=', user.id)]</field>
@@ -60,7 +60,7 @@
             <field name="perm_unlink" eval="False"/>
         </record>
         
-        <record id="rule_user_permissions_company" model="ir.rule">
+        <record id="rule_user_permissions_company" model="ocean.rule">
             <field name="name">User Permissions: Company</field>
             <field name="model_id" ref="model_user_permissions"/>
             <field name="domain_force">[('user_id.company_ids', 'in', company_ids)]</field>
@@ -71,7 +71,7 @@
             <field name="perm_unlink" eval="True"/>
         </record>
         
-        <record id="rule_access_rights_own" model="ir.rule">
+        <record id="rule_access_rights_own" model="ocean.rule">
             <field name="name">Access Rights: Own</field>
             <field name="model_id" ref="model_access_rights"/>
             <field name="domain_force">[('user_id', '=', user.id)]</field>
@@ -82,7 +82,7 @@
             <field name="perm_unlink" eval="False"/>
         </record>
         
-        <record id="rule_access_rights_company" model="ir.rule">
+        <record id="rule_access_rights_company" model="ocean.rule">
             <field name="name">Access Rights: Company</field>
             <field name="model_id" ref="model_access_rights"/>
             <field name="domain_force">[('user_id.company_ids', 'in', company_ids)]</field>
@@ -93,7 +93,7 @@
             <field name="perm_unlink" eval="True"/>
         </record>
         
-        <record id="rule_user_activity_own" model="ir.rule">
+        <record id="rule_user_activity_own" model="ocean.rule">
             <field name="name">User Activity: Own</field>
             <field name="model_id" ref="model_user_activity"/>
             <field name="domain_force">[('user_id', '=', user.id)]</field>
@@ -104,7 +104,7 @@
             <field name="perm_unlink" eval="False"/>
         </record>
         
-        <record id="rule_user_activity_company" model="ir.rule">
+        <record id="rule_user_activity_company" model="ocean.rule">
             <field name="name">User Activity: Company</field>
             <field name="model_id" ref="model_user_activity"/>
             <field name="domain_force">[('user_id.company_ids', 'in', company_ids)]</field>
@@ -115,7 +115,7 @@
             <field name="perm_unlink" eval="False"/>
         </record>
         
-        <record id="rule_user_preferences_own" model="ir.rule">
+        <record id="rule_user_preferences_own" model="ocean.rule">
             <field name="name">User Preferences: Own</field>
             <field name="model_id" ref="model_user_preferences"/>
             <field name="domain_force">[('user_id', '=', user.id)]</field>
@@ -126,7 +126,7 @@
             <field name="perm_unlink" eval="True"/>
         </record>
         
-        <record id="rule_user_preferences_company" model="ir.rule">
+        <record id="rule_user_preferences_company" model="ocean.rule">
             <field name="name">User Preferences: Company</field>
             <field name="model_id" ref="model_user_preferences"/>
             <field name="domain_force">[('user_id.company_ids', 'in', company_ids)]</field>

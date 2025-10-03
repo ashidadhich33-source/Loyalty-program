@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data noupdate="1">
+        
+        <!-- POS Configuration Security -->
+        <record id="group_pos_user" model="res.groups">
+            <field name="name">POS User</field>
+            <field name="category_id" ref="base.module_category_sales"/>
+            <field name="comment">Can use POS system</field>
+        </record>
+        
+        <record id="group_pos_manager" model="res.groups">
+            <field name="name">POS Manager</field>
+            <field name="category_id" ref="base.module_category_sales"/>
+            <field name="implied_ids" eval="[(4, ref('group_pos_user'))]"/>
+            <field name="comment">Can manage POS system</field>
+        </record>
+        
+        <!-- POS Cashier Group -->
+        <record id="group_pos_cashier" model="res.groups">
+            <field name="name">POS Cashier</field>
+            <field name="category_id" ref="base.module_category_sales"/>
+            <field name="comment">Can process POS transactions</field>
+        </record>
+        
+    </data>
+</ocean>

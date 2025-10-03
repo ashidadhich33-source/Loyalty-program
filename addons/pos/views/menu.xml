@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data noupdate="1">
+        
+        <!-- POS Menu -->
+        <menuitem id="menu_pos_root" 
+                  name="Point of Sale" 
+                  sequence="20" 
+                  web_icon="pos,static/description/icon.png"/>
+        
+        <!-- POS Configuration Menu -->
+        <menuitem id="menu_pos_config" 
+                  name="Configuration" 
+                  parent="menu_pos_root" 
+                  sequence="10"/>
+        
+        <menuitem id="menu_pos_config_list" 
+                  name="POS Configurations" 
+                  parent="menu_pos_config" 
+                  action="action_pos_config" 
+                  sequence="10"/>
+        
+        <!-- POS Operations Menu -->
+        <menuitem id="menu_pos_operations" 
+                  name="Operations" 
+                  parent="menu_pos_root" 
+                  sequence="20"/>
+        
+        <menuitem id="menu_pos_sessions" 
+                  name="Sessions" 
+                  parent="menu_pos_operations" 
+                  action="action_pos_session" 
+                  sequence="10"/>
+        
+        <menuitem id="menu_pos_orders" 
+                  name="Orders" 
+                  parent="menu_pos_operations" 
+                  action="action_pos_order" 
+                  sequence="20"/>
+        
+        <menuitem id="menu_pos_receipts" 
+                  name="Receipts" 
+                  parent="menu_pos_operations" 
+                  action="action_pos_receipt" 
+                  sequence="30"/>
+        
+        <!-- POS Reports Menu -->
+        <menuitem id="menu_pos_reports" 
+                  name="Reports" 
+                  parent="menu_pos_root" 
+                  sequence="30"/>
+        
+        <menuitem id="menu_pos_analytics" 
+                  name="Analytics" 
+                  parent="menu_pos_reports" 
+                  action="action_pos_analytics" 
+                  sequence="10"/>
+        
+        <!-- POS Interface Menu -->
+        <menuitem id="menu_pos_interface" 
+                  name="POS Interface" 
+                  parent="menu_pos_root" 
+                  action="action_pos_interface" 
+                  sequence="5"/>
+        
+    </data>
+</ocean>

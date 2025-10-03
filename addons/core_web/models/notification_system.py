@@ -17,165 +17,176 @@ class NotificationSystem(BaseModel):
     _order = 'create_date desc'
     
     # Basic fields
-    name = fields.Char(
+    name = CharField(
         string='Title',
+        size=255,
         required=True,
         help='Notification title'
     )
     
-    message = fields.Text(
+    message = TextField(
         string='Message',
         required=True,
         help='Notification message'
     )
     
-    type = fields.Selection([
+    type = SelectionField(
+        string='Type',
+        selection=[
         ('info', 'Information'),
         ('success', 'Success'),
         ('warning', 'Warning'),
         ('error', 'Error'),
         ('reminder', 'Reminder'),
         ('alert', 'Alert'),
-    ], string='Type', default='info', help='Notification type')
+    ],
+        default='info',
+        help='Notification type'
+    )
     
-    priority = fields.Selection([
+    priority = SelectionField(
+        string='Priority',
+        selection=[
         ('low', 'Low'),
         ('normal', 'Normal'),
         ('high', 'High'),
         ('urgent', 'Urgent'),
-    ], string='Priority', default='normal', help='Notification priority')
-    
-    # User and recipient fields
-    user_id = fields.Many2one(
-        'res.users',
-        string='User',
-        default=lambda self: self.env.user,
-        help='User who created the notification'
+    ],
+        default='normal',
+        help='Notification priority'
     )
     
-    recipient_ids = fields.Many2many(
-        'res.users',
-        'notification_recipient_rel',
-        'notification_id',
-        'user_id',
-        string='Recipients',
-        help='Users who will receive this notification'
+    # User and recipient fields
+    user_id = Many2OneField('res.users', string='User', default=lambda self: self.env.user, help='User who created the notification'
+    )
+    
+    recipient_ids = Many2ManyField('res.users', string='Recipients', help='Users who will receive this notification'
     )
     
     # Status and delivery
-    status = fields.Selection([
+    status = SelectionField(
+        string='Status',
+        selection=[
         ('draft', 'Draft'),
         ('sent', 'Sent'),
         ('delivered', 'Delivered'),
         ('read', 'Read'),
         ('failed', 'Failed'),
-    ], string='Status', default='draft', help='Notification status')
+    ],
+        default='draft',
+        help='Notification status'
+    )
     
-    delivery_method = fields.Selection([
+    delivery_method = SelectionField(
+        string='Delivery Method',
+        selection=[
         ('in_app', 'In-App'),
         ('email', 'Email'),
         ('sms', 'SMS'),
         ('whatsapp', 'WhatsApp'),
         ('push', 'Push Notification'),
-    ], string='Delivery Method', default='in_app', help='How to deliver the notification')
+    ],
+        default='in_app',
+        help='How to deliver the notification'
+    )
     
     # Timestamps
-    sent_date = fields.Datetime(
+    sent_date = DateFieldtime(
         string='Sent Date',
         help='When the notification was sent'
     )
     
-    delivered_date = fields.Datetime(
+    delivered_date = DateFieldtime(
         string='Delivered Date',
         help='When the notification was delivered'
     )
     
-    read_date = fields.Datetime(
+    read_date = DateFieldtime(
         string='Read Date',
         help='When the notification was read'
     )
     
     # Additional fields
-    icon = fields.Char(
+    icon = CharField(
         string='Icon',
         help='Icon class for the notification'
     )
     
-    action_url = fields.Char(
+    action_url = CharField(
         string='Action URL',
         help='URL to navigate to when notification is clicked'
     )
     
-    action_text = fields.Char(
+    action_text = CharField(
         string='Action Text',
         help='Text for the action button'
     )
     
-    expires_date = fields.Datetime(
+    expires_date = DateFieldtime(
         string='Expires Date',
         help='When the notification expires'
     )
     
-    is_auto_dismiss = fields.Boolean(
+    is_auto_dismiss = BooleanField(
         string='Auto Dismiss',
         default=True,
         help='Automatically dismiss after a certain time'
     )
     
-    auto_dismiss_delay = fields.Integer(
+    auto_dismiss_delay = IntegerField(
         string='Auto Dismiss Delay (seconds)',
         default=5,
         help='Delay before auto dismiss in seconds'
     )
     
     # Related record fields
-    model_name = fields.Char(
+    model_name = CharField(
         string='Model',
         help='Related model name'
     )
     
-    record_id = fields.Integer(
+    record_id = IntegerField(
         string='Record ID',
         help='Related record ID'
     )
     
     # Grouping and categorization
-    category = fields.Char(
+    category = CharField(
         string='Category',
         help='Notification category for grouping'
     )
     
-    group_id = fields.Many2one(
+    group_id = Many2OneField(
         'notification.group',
         string='Group',
         help='Notification group'
     )
     
     # Template and content
-    template_id = fields.Many2one(
+    template_id = Many2OneField(
         'notification.template',
         string='Template',
         help='Notification template'
     )
     
-    template_data = fields.Text(
+    template_data = TextField(
         string='Template Data',
         help='JSON data for template rendering'
     )
     
     # Delivery tracking
-    delivery_attempts = fields.Integer(
+    delivery_attempts = IntegerField(
         string='Delivery Attempts',
         default=0,
         help='Number of delivery attempts'
     )
     
-    last_delivery_attempt = fields.Datetime(
+    last_delivery_attempt = DateFieldtime(
         string='Last Delivery Attempt',
         help='Last delivery attempt timestamp'
     )
     
-    delivery_error = fields.Text(
+    delivery_error = TextField(
         string='Delivery Error',
         help='Error message from last delivery attempt'
     )
@@ -188,7 +199,7 @@ class NotificationSystem(BaseModel):
         
         if 'expires_date' not in vals and vals.get('is_auto_dismiss', True):
             delay = vals.get('auto_dismiss_delay', 5)
-            vals['expires_date'] = fields.Datetime.now() + timedelta(seconds=delay)
+            vals['expires_date'] = DateFieldtime.now() + timedelta(seconds=delay)
         
         return super(NotificationSystem, self).create(vals)
     
@@ -213,9 +224,9 @@ class NotificationSystem(BaseModel):
             try:
                 # Update status to sent
                 notification.status = 'sent'
-                notification.sent_date = fields.Datetime.now()
+                notification.sent_date = DateFieldtime.now()
                 notification.delivery_attempts += 1
-                notification.last_delivery_attempt = fields.Datetime.now()
+                notification.last_delivery_attempt = DateFieldtime.now()
                 
                 # Send based on delivery method
                 if notification.delivery_method == 'in_app':
@@ -231,7 +242,7 @@ class NotificationSystem(BaseModel):
                 
                 # Mark as delivered
                 notification.status = 'delivered'
-                notification.delivered_date = fields.Datetime.now()
+                notification.delivered_date = DateFieldtime.now()
                 
             except Exception as e:
                 _logger.error(f"Failed to send notification {notification.id}: {str(e)}")
@@ -246,7 +257,7 @@ class NotificationSystem(BaseModel):
                 'notification_id': notification.id,
                 'user_id': recipient.id,
                 'status': 'delivered',
-                'delivered_date': fields.Datetime.now(),
+                'delivered_date': DateFieldtime.now(),
             })
     
     def _send_email_notification(self, notification):
@@ -272,12 +283,12 @@ class NotificationSystem(BaseModel):
     def mark_as_read(self):
         """Mark notification as read"""
         self.status = 'read'
-        self.read_date = fields.Datetime.now()
+        self.read_date = DateFieldtime.now()
     
     def mark_as_delivered(self):
         """Mark notification as delivered"""
         self.status = 'delivered'
-        self.delivered_date = fields.Datetime.now()
+        self.delivered_date = DateFieldtime.now()
     
     def dismiss_notification(self):
         """Dismiss the notification"""
@@ -346,7 +357,7 @@ class NotificationSystem(BaseModel):
     def cleanup_expired_notifications(self):
         """Clean up expired notifications"""
         expired_notifications = self.search([
-            ('expires_date', '<', fields.Datetime.now()),
+            ('expires_date', '<', DateFieldtime.now()),
             ('status', 'in', ['delivered', 'read']),
         ])
         
@@ -395,42 +406,46 @@ class NotificationRecipient(models.Model):
     _description = 'Notification Recipient'
     _order = 'create_date desc'
     
-    notification_id = fields.Many2one(
+    notification_id = Many2OneField(
         'notification.system',
         string='Notification',
         required=True,
         ondelete='cascade'
     )
     
-    user_id = fields.Many2one(
+    user_id = Many2OneField(
         'res.users',
         string='User',
         required=True
     )
     
-    status = fields.Selection([
+    status = SelectionField(
+        string='Status',
+        selection=[
         ('pending', 'Pending'),
         ('delivered', 'Delivered'),
         ('read', 'Read'),
         ('failed', 'Failed'),
-    ], string='Status', default='pending')
+    ],
+        default='pending'
+    )
     
-    delivered_date = fields.Datetime(
+    delivered_date = DateFieldtime(
         string='Delivered Date'
     )
     
-    read_date = fields.Datetime(
+    read_date = DateFieldtime(
         string='Read Date'
     )
     
-    error_message = fields.Text(
+    error_message = TextField(
         string='Error Message'
     )
     
     def mark_as_read(self):
         """Mark notification as read for this recipient"""
         self.status = 'read'
-        self.read_date = fields.Datetime.now()
+        self.read_date = DateFieldtime.now()
         
         # Update main notification status if all recipients have read
         notification = self.notification_id
@@ -450,44 +465,52 @@ class NotificationTemplate(models.Model):
     _name = 'notification.template'
     _description = 'Notification Template'
     
-    name = fields.Char(
+    name = CharField(
         string='Template Name',
         required=True
     )
     
-    subject = fields.Char(
+    subject = CharField(
         string='Subject',
         help='Notification subject template'
     )
     
-    body = fields.Text(
+    body = TextField(
         string='Body',
         help='Notification body template'
     )
     
-    type = fields.Selection([
+    type = SelectionField(
+        string='Type',
+        selection=[
         ('info', 'Information'),
         ('success', 'Success'),
         ('warning', 'Warning'),
         ('error', 'Error'),
         ('reminder', 'Reminder'),
         ('alert', 'Alert'),
-    ], string='Type', default='info')
+    ],
+        default='info'
+    )
     
-    delivery_method = fields.Selection([
+    delivery_method = SelectionField(
+        string='Delivery Method',
+        selection=[
         ('in_app', 'In-App'),
         ('email', 'Email'),
         ('sms', 'SMS'),
         ('whatsapp', 'WhatsApp'),
         ('push', 'Push Notification'),
-    ], string='Delivery Method', default='in_app')
+    ],
+        default='in_app'
+    )
     
-    is_active = fields.Boolean(
+    is_active = BooleanField(
         string='Active',
         default=True
     )
     
-    variables = fields.Text(
+    variables = TextField(
         string='Variables',
         help='Available variables for this template'
     )

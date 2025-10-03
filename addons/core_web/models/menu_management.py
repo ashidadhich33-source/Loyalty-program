@@ -15,177 +15,165 @@ class MenuManagement(BaseModel):
     _order = 'sequence, name'
     
     # Basic fields
-    name = fields.Char(
+    name = CharField(
         string='Menu Name',
+        size=255,
         required=True,
         help='Display name of the menu item'
+    
     )
     
-    technical_name = fields.Char(
+    technical_name = CharField(
         string='Technical Name',
+        size=255,
         required=True,
         help='Technical name for the menu item'
+    
     )
     
-    description = fields.Text(
+    description = TextField(
         string='Description',
         help='Description of the menu item'
     )
     
     # Menu structure
-    parent_id = fields.Many2one(
+    parent_id = Many2OneField(
         'menu.management',
         string='Parent Menu',
         help='Parent menu item'
     )
     
-    child_ids = fields.One2many(
-        'menu.management',
-        'parent_id',
-        string='Child Menus',
-        help='Child menu items'
+    child_ids = One2ManyField('menu.management', inverse_name='parent_id', string='Child Menus', help='Child menu items'
     )
     
-    sequence = fields.Integer(
+    sequence = IntegerField(
         string='Sequence',
         default=10,
         help='Menu sequence order'
     )
     
     # Menu properties
-    icon = fields.Char(
+    icon = CharField(
         string='Icon',
         help='Icon class for the menu item'
     )
     
-    action_id = fields.Many2one(
+    action_id = Many2OneField(
         'ocean.actions.act_window',
         string='Action',
         help='Action to execute when menu is clicked'
     )
     
-    url = fields.Char(
+    url = CharField(
         string='URL',
         help='URL to navigate to when menu is clicked'
     )
     
     # Access control
-    group_ids = fields.Many2many(
-        'ocean.groups',
-        'menu_group_rel',
-        'menu_id',
-        'group_id',
-        string='Groups',
-        help='User groups that can access this menu'
+    group_ids = Many2ManyField('ocean.groups', string='Groups', help='User groups that can access this menu'
     )
     
-    user_ids = fields.Many2many(
-        'res.users',
-        'menu_user_rel',
-        'menu_id',
-        'user_id',
-        string='Users',
-        help='Specific users who can access this menu'
+    user_ids = Many2ManyField('res.users', string='Users', help='Specific users who can access this menu'
     )
     
     # Menu state
-    is_active = fields.Boolean(
+    is_active = BooleanField(
         string='Active',
         default=True,
         help='Whether the menu is active'
     )
     
-    is_visible = fields.Boolean(
+    is_visible = BooleanField(
         string='Visible',
         default=True,
         help='Whether the menu is visible'
     )
     
-    is_clickable = fields.Boolean(
+    is_clickable = BooleanField(
         string='Clickable',
         default=True,
         help='Whether the menu is clickable'
     )
     
     # Menu styling
-    css_class = fields.Char(
+    css_class = CharField(
         string='CSS Class',
         help='CSS class for menu styling'
     )
     
-    badge_text = fields.Char(
+    badge_text = CharField(
         string='Badge Text',
         help='Badge text to display on menu'
     )
     
-    badge_color = fields.Char(
+    badge_color = CharField(
         string='Badge Color',
         help='Badge color (CSS color value)'
     )
     
     # Menu behavior
-    open_in_new_tab = fields.Boolean(
+    open_in_new_tab = BooleanField(
         string='Open in New Tab',
         default=False,
         help='Open menu in new tab'
     )
     
-    confirm_before_action = fields.Boolean(
+    confirm_before_action = BooleanField(
         string='Confirm Before Action',
         default=False,
         help='Show confirmation dialog before action'
     )
     
-    confirmation_message = fields.Text(
+    confirmation_message = TextField(
         string='Confirmation Message',
         help='Message to show in confirmation dialog'
     )
     
     # Menu permissions
-    require_permission = fields.Boolean(
+    require_permission = BooleanField(
         string='Require Permission',
         default=False,
         help='Require specific permission to access'
     )
     
-    permission_name = fields.Char(
+    permission_name = CharField(
         string='Permission Name',
         help='Name of the required permission'
     )
     
     # Menu analytics
-    click_count = fields.Integer(
+    click_count = IntegerField(
         string='Click Count',
         default=0,
         help='Number of times menu was clicked'
     )
     
-    last_clicked = fields.Datetime(
+    last_clicked = DateFieldtime(
         string='Last Clicked',
         help='When menu was last clicked'
     )
     
     # Menu customization
-    is_customizable = fields.Boolean(
+    is_customizable = BooleanField(
         string='Customizable',
         default=True,
         help='Whether menu can be customized by users'
     )
     
-    is_system_menu = fields.Boolean(
+    is_system_menu = BooleanField(
         string='System Menu',
         default=False,
         help='Whether this is a system menu (cannot be deleted)'
     )
     
     # Menu dependencies
-    depends_on = fields.Char(
+    depends_on = CharField(
         string='Depends On',
         help='Comma-separated list of menu technical names this menu depends on'
     )
     
     # Menu conditions
-    condition = fields.Text(
+    condition = TextField(
         string='Condition',
         help='Python condition to evaluate for menu visibility'
     )
@@ -251,7 +239,7 @@ class MenuManagement(BaseModel):
     def click_menu(self):
         """Handle menu click"""
         self.click_count += 1
-        self.last_clicked = fields.Datetime.now()
+        self.last_clicked = DateFieldtime.now()
         
         # Execute menu action
         if self.action_id:

@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        <!-- Discount Approval Workflows Tree View -->
+        <record id="view_discount_approval_workflows_tree" model="ocean.ui.view">
+            <field name="name">discount.approval.workflows.tree</field>
+            <field name="model">discount.approval.workflow</field>
+            <field name="arch" type="xml">
+                <tree string="Discount Approval Workflows" decoration-muted="not is_active" decoration-success="is_active">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="is_active"/>
+                    <field name="program_id"/>
+                    <field name="step_count"/>
+                    <field name="auto_approve"/>
+                    <field name="require_all_approvers"/>
+                    <field name="allow_self_approval"/>
+                    <field name="escalation_days"/>
+                    <field name="age_group_target"/>
+                    <field name="gender_target"/>
+                    <field name="season_target"/>
+                    <field name="total_requests"/>
+                    <field name="approved_requests"/>
+                    <field name="rejected_requests"/>
+                    <field name="pending_requests"/>
+                    <field name="approval_rate"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Discount Approval Workflows Form View -->
+        <record id="view_discount_approval_workflows_form" model="ocean.ui.view">
+            <field name="name">discount.approval.workflows.form</field>
+            <field name="model">discount.approval.workflow</field>
+            <field name="arch" type="xml">
+                <form string="Discount Approval Workflow">
+                    <header>
+                        <button name="action_activate" string="Activate" type="object" class="btn-success" attrs="{'invisible': [('is_active', '=', True)]}"/>
+                        <button name="action_deactivate" string="Deactivate" type="object" class="btn-danger" attrs="{'invisible': [('is_active', '=', False)]}"/>
+                        <button name="action_view_requests" string="View Requests" type="object" class="btn-primary"/>
+                        <field name="is_active" widget="boolean_toggle"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Workflow Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="code"/>
+                                <field name="description"/>
+                                <field name="is_active"/>
+                                <field name="program_id"/>
+                                <field name="step_count"/>
+                            </group>
+                            <group>
+                                <field name="auto_approve"/>
+                                <field name="require_all_approvers"/>
+                                <field name="allow_self_approval"/>
+                                <field name="escalation_days"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Kids Clothing Target" name="kids_target">
+                                <group>
+                                    <group>
+                                        <field name="age_group_target"/>
+                                        <field name="gender_target"/>
+                                        <field name="season_target"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Approval Steps" name="steps">
+                                <field name="step_ids" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="name"/>
+                                        <field name="sequence"/>
+                                        <field name="is_active"/>
+                                        <field name="step_type"/>
+                                        <field name="approval_type"/>
+                                        <field name="condition_field"/>
+                                        <field name="condition_operator"/>
+                                        <field name="condition_value"/>
+                                        <field name="timeout_days"/>
+                                        <field name="escalation_user_id"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Analytics" name="analytics">
+                                <button name="action_view_requests" string="View Requests" type="object" class="btn-primary"/>
+                                <group>
+                                    <group>
+                                        <field name="total_requests"/>
+                                        <field name="approved_requests"/>
+                                        <field name="rejected_requests"/>
+                                        <field name="pending_requests"/>
+                                        <field name="approval_rate"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Discount Approval Workflows Search View -->
+        <record id="view_discount_approval_workflows_search" model="ocean.ui.view">
+            <field name="name">discount.approval.workflows.search</field>
+            <field name="model">discount.approval.workflow</field>
+            <field name="arch" type="xml">
+                <search string="Search Discount Approval Workflows">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="description"/>
+                    <field name="program_id"/>
+                    <field name="age_group_target"/>
+                    <field name="gender_target"/>
+                    <field name="season_target"/>
+                    <separator/>
+                    <filter string="Active" name="active" domain="[('is_active', '=', True)]"/>
+                    <filter string="Inactive" name="inactive" domain="[('is_active', '=', False)]"/>
+                    <filter string="Auto Approve" name="auto_approve" domain="[('auto_approve', '=', True)]"/>
+                    <filter string="Require All Approvers" name="require_all" domain="[('require_all_approvers', '=', True)]"/>
+                    <filter string="Allow Self Approval" name="self_approval" domain="[('allow_self_approval', '=', True)]"/>
+                    <separator/>
+                    <filter string="Newborn" name="newborn" domain="[('age_group_target', '=', 'newborn')]"/>
+                    <filter string="Infant" name="infant" domain="[('age_group_target', '=', 'infant')]"/>
+                    <filter string="Toddler" name="toddler" domain="[('age_group_target', '=', 'toddler')]"/>
+                    <filter string="Preschool" name="preschool" domain="[('age_group_target', '=', 'preschool')]"/>
+                    <filter string="School" name="school" domain="[('age_group_target', '=', 'school')]"/>
+                    <filter string="Teen" name="teen" domain="[('age_group_target', '=', 'teen')]"/>
+                    <filter string="All Age Groups" name="all_ages" domain="[('age_group_target', '=', 'all')]"/>
+                    <separator/>
+                    <filter string="Boys" name="boys" domain="[('gender_target', '=', 'boys')]"/>
+                    <filter string="Girls" name="girls" domain="[('gender_target', '=', 'girls')]"/>
+                    <filter string="Unisex" name="unisex" domain="[('gender_target', '=', 'unisex')]"/>
+                    <filter string="All Genders" name="all_genders" domain="[('gender_target', '=', 'all')]"/>
+                    <separator/>
+                    <filter string="Summer" name="summer" domain="[('season_target', '=', 'summer')]"/>
+                    <filter string="Winter" name="winter" domain="[('season_target', '=', 'winter')]"/>
+                    <filter string="Monsoon" name="monsoon" domain="[('season_target', '=', 'monsoon')]"/>
+                    <filter string="All Seasons" name="all_seasons" domain="[('season_target', '=', 'all')]"/>
+                    <separator/>
+                    <filter string="Today" name="today" domain="[('create_date', '>=', datetime.datetime.now().replace(hour=0, minute=0, second=0))]"/>
+                    <filter string="This Week" name="this_week" domain="[('create_date', '>=', (datetime.datetime.now() - datetime.timedelta(days=7)))]"/>
+                    <filter string="This Month" name="this_month" domain="[('create_date', '>=', datetime.datetime.now().replace(day=1))]"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter string="Program" name="group_program" context="{'group_by': 'program_id'}"/>
+                        <filter string="Age Group" name="group_age" context="{'group_by': 'age_group_target'}"/>
+                        <filter string="Gender" name="group_gender" context="{'group_by': 'gender_target'}"/>
+                        <filter string="Season" name="group_season" context="{'group_by': 'season_target'}"/>
+                        <filter string="Date" name="group_date" context="{'group_by': 'create_date'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- Discount Approval Workflows Action -->
+        <record id="action_discount_approval_workflows" model="ocean.actions.act_window">
+            <field name="name">Discount Approval Workflows</field>
+            <field name="res_model">discount.approval.workflow</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_discount_approval_workflows_tree"/>
+            <field name="search_view_id" ref="view_discount_approval_workflows_search"/>
+            <field name="context">{'search_default_active': 1}</field>
+        </record>
+        
+        <!-- Discount Approval Requests Tree View -->
+        <record id="view_discount_approval_requests_tree" model="ocean.ui.view">
+            <field name="name">discount.approval.requests.tree</field>
+            <field name="model">discount.approval.request</field>
+            <field name="arch" type="xml">
+                <tree string="Discount Approval Requests" decoration-muted="state=='cancelled'" decoration-success="state=='approved'" decoration-warning="state=='in_progress'" decoration-danger="state=='rejected'">
+                    <field name="name"/>
+                    <field name="program_id"/>
+                    <field name="workflow_id"/>
+                    <field name="partner_id"/>
+                    <field name="order_id"/>
+                    <field name="request_type"/>
+                    <field name="discount_type"/>
+                    <field name="discount_value"/>
+                    <field name="discount_currency_id"/>
+                    <field name="min_purchase_amount"/>
+                    <field name="max_discount_amount"/>
+                    <field name="state"/>
+                    <field name="current_step_id"/>
+                    <field name="approved_by"/>
+                    <field name="approved_date"/>
+                    <field name="rejected_by"/>
+                    <field name="rejected_date"/>
+                    <field name="rejection_reason"/>
+                    <field name="age_group"/>
+                    <field name="gender"/>
+                    <field name="season"/>
+                    <field name="description"/>
+                    <field name="justification"/>
+                    <field name="note"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Discount Approval Requests Form View -->
+        <record id="view_discount_approval_requests_form" model="ocean.ui.view">
+            <field name="name">discount.approval.requests.form</field>
+            <field name="model">discount.approval.request</field>
+            <field name="arch" type="xml">
+                <form string="Discount Approval Request">
+                    <header>
+                        <button name="action_submit" string="Submit" type="object" class="btn-primary" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                        <button name="action_approve" string="Approve" type="object" class="btn-success" attrs="{'invisible': [('state', 'not in', ['submitted', 'in_progress'])]}"/>
+                        <button name="action_reject" string="Reject" type="object" class="btn-danger" attrs="{'invisible': [('state', 'not in', ['submitted', 'in_progress'])]}"/>
+                        <button name="action_cancel" string="Cancel" type="object" class="btn-warning" attrs="{'invisible': [('state', 'in', ['approved', 'rejected', 'cancelled'])]}"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Request Reference"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="program_id"/>
+                                <field name="workflow_id"/>
+                                <field name="partner_id"/>
+                                <field name="order_id"/>
+                                <field name="request_type"/>
+                                <field name="state"/>
+                            </group>
+                            <group>
+                                <field name="current_step_id"/>
+                                <field name="approved_by"/>
+                                <field name="approved_date"/>
+                                <field name="rejected_by"/>
+                                <field name="rejected_date"/>
+                                <field name="rejection_reason"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="discount_type"/>
+                                <field name="discount_value"/>
+                                <field name="discount_currency_id"/>
+                                <field name="min_purchase_amount"/>
+                                <field name="max_discount_amount"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Kids Clothing Context" name="kids_context">
+                                <group>
+                                    <group>
+                                        <field name="age_group"/>
+                                        <field name="gender"/>
+                                        <field name="season"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Details" name="details">
+                                <field name="description" placeholder="Request description..."/>
+                                <field name="justification" placeholder="Justification for the request..."/>
+                                <field name="note" placeholder="Internal notes..."/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Discount Approval Requests Search View -->
+        <record id="view_discount_approval_requests_search" model="ocean.ui.view">
+            <field name="name">discount.approval.requests.search</field>
+            <field name="model">discount.approval.request</field>
+            <field name="arch" type="xml">
+                <search string="Search Discount Approval Requests">
+                    <field name="name"/>
+                    <field name="program_id"/>
+                    <field name="workflow_id"/>
+                    <field name="partner_id"/>
+                    <field name="order_id"/>
+                    <field name="request_type"/>
+                    <field name="discount_type"/>
+                    <field name="discount_value"/>
+                    <field name="state"/>
+                    <field name="age_group"/>
+                    <field name="gender"/>
+                    <field name="season"/>
+                    <separator/>
+                    <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
+                    <filter string="Submitted" name="submitted" domain="[('state', '=', 'submitted')]"/>
+                    <filter string="In Progress" name="in_progress" domain="[('state', '=', 'in_progress')]"/>
+                    <filter string="Approved" name="approved" domain="[('state', '=', 'approved')]"/>
+                    <filter string="Rejected" name="rejected" domain="[('state', '=', 'rejected')]"/>
+                    <filter string="Cancelled" name="cancelled" domain="[('state', '=', 'cancelled')]"/>
+                    <separator/>
+                    <filter string="Discount Request" name="discount" domain="[('request_type', '=', 'discount')]"/>
+                    <filter string="Coupon Request" name="coupon" domain="[('request_type', '=', 'coupon')]"/>
+                    <filter string="Bulk Request" name="bulk" domain="[('request_type', '=', 'bulk')]"/>
+                    <filter string="Special Request" name="special" domain="[('request_type', '=', 'special')]"/>
+                    <separator/>
+                    <filter string="Percentage" name="percentage" domain="[('discount_type', '=', 'percentage')]"/>
+                    <filter string="Fixed Amount" name="fixed" domain="[('discount_type', '=', 'fixed')]"/>
+                    <filter string="Buy X Get Y" name="buy_x_get_y" domain="[('discount_type', '=', 'buy_x_get_y')]"/>
+                    <filter string="Free Shipping" name="free_shipping" domain="[('discount_type', '=', 'free_shipping')]"/>
+                    <filter string="Loyalty Points" name="loyalty_points" domain="[('discount_type', '=', 'loyalty_points')]"/>
+                    <separator/>
+                    <filter string="Newborn" name="newborn" domain="[('age_group', '=', 'newborn')]"/>
+                    <filter string="Infant" name="infant" domain="[('age_group', '=', 'infant')]"/>
+                    <filter string="Toddler" name="toddler" domain="[('age_group', '=', 'toddler')]"/>
+                    <filter string="Preschool" name="preschool" domain="[('age_group', '=', 'preschool')]"/>
+                    <filter string="School" name="school" domain="[('age_group', '=', 'school')]"/>
+                    <filter string="Teen" name="teen" domain="[('age_group', '=', 'teen')]"/>
+                    <separator/>
+                    <filter string="Boys" name="boys" domain="[('gender', '=', 'boys')]"/>
+                    <filter string="Girls" name="girls" domain="[('gender', '=', 'girls')]"/>
+                    <filter string="Unisex" name="unisex" domain="[('gender', '=', 'unisex')]"/>
+                    <separator/>
+                    <filter string="Summer" name="summer" domain="[('season', '=', 'summer')]"/>
+                    <filter string="Winter" name="winter" domain="[('season', '=', 'winter')]"/>
+                    <filter string="Monsoon" name="monsoon" domain="[('season', '=', 'monsoon')]"/>
+                    <separator/>
+                    <filter string="Today" name="today" domain="[('create_date', '>=', datetime.datetime.now().replace(hour=0, minute=0, second=0))]"/>
+                    <filter string="This Week" name="this_week" domain="[('create_date', '>=', (datetime.datetime.now() - datetime.timedelta(days=7)))]"/>
+                    <filter string="This Month" name="this_month" domain="[('create_date', '>=', datetime.datetime.now().replace(day=1))]"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter string="Program" name="group_program" context="{'group_by': 'program_id'}"/>
+                        <filter string="Workflow" name="group_workflow" context="{'group_by': 'workflow_id'}"/>
+                        <filter string="Customer" name="group_partner" context="{'group_by': 'partner_id'}"/>
+                        <filter string="Type" name="group_type" context="{'group_by': 'request_type'}"/>
+                        <filter string="State" name="group_state" context="{'group_by': 'state'}"/>
+                        <filter string="Age Group" name="group_age" context="{'group_by': 'age_group'}"/>
+                        <filter string="Gender" name="group_gender" context="{'group_by': 'gender'}"/>
+                        <filter string="Season" name="group_season" context="{'group_by': 'season'}"/>
+                        <filter string="Date" name="group_date" context="{'group_by': 'create_date'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- Discount Approval Requests Action -->
+        <record id="action_discount_approval_requests" model="ocean.actions.act_window">
+            <field name="name">Discount Approval Requests</field>
+            <field name="res_model">discount.approval.request</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_discount_approval_requests_tree"/>
+            <field name="search_view_id" ref="view_discount_approval_requests_search"/>
+        </record>
+        
+    </data>
+</ocean>

@@ -25,7 +25,7 @@
     'license': 'LGPL-3',
     'depends': ['core_base'],
     'data': [
-        'security/ir.model.access.csv',
+        'security/ocean.model.access.csv',
         'data/data.xml',
         'views/menu.xml',
         'views/web_assets.xml',

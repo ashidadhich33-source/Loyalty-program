@@ -1,0 +1,352 @@
+/* CRM Styles for Ocean ERP */
+
+/* CRM Lead Styles */
+.o_crm_lead_convert {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.o_crm_lead_convert:hover {
+    background-color: #218838;
+}
+
+.o_crm_lead_schedule_activity {
+    background-color: #17a2b8;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.o_crm_lead_schedule_activity:hover {
+    background-color: #138496;
+}
+
+.o_crm_lead_send_communication {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.o_crm_lead_send_communication:hover {
+    background-color: #5a6268;
+}
+
+/* CRM Opportunity Styles */
+.o_crm_opportunity_convert {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.o_crm_opportunity_convert:hover {
+    background-color: #218838;
+}
+
+.o_crm_opportunity_schedule_activity {
+    background-color: #17a2b8;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.o_crm_opportunity_schedule_activity:hover {
+    background-color: #138496;
+}
+
+.o_crm_opportunity_send_communication {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.o_crm_opportunity_send_communication:hover {
+    background-color: #5a6268;
+}
+
+/* CRM Activity Styles */
+.o_crm_activity_mark_done {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.o_crm_activity_mark_done:hover {
+    background-color: #218838;
+}
+
+.o_crm_activity_mark_in_progress {
+    background-color: #ffc107;
+    color: #212529;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.o_crm_activity_mark_in_progress:hover {
+    background-color: #e0a800;
+}
+
+.o_crm_activity_cancel {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.o_crm_activity_cancel:hover {
+    background-color: #c82333;
+}
+
+/* CRM Communication Styles */
+.o_crm_communication_send {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.o_crm_communication_send:hover {
+    background-color: #218838;
+}
+
+.o_crm_communication_resend {
+    background-color: #ffc107;
+    color: #212529;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.o_crm_communication_resend:hover {
+    background-color: #e0a800;
+}
+
+.o_crm_communication_cancel {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.o_crm_communication_cancel:hover {
+    background-color: #c82333;
+}
+
+/* CRM Campaign Styles */
+.o_crm_campaign_activate {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.o_crm_campaign_activate:hover {
+    background-color: #218838;
+}
+
+.o_crm_campaign_pause {
+    background-color: #ffc107;
+    color: #212529;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.o_crm_campaign_pause:hover {
+    background-color: #e0a800;
+}
+
+.o_crm_campaign_cancel {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.o_crm_campaign_cancel:hover {
+    background-color: #c82333;
+}
+
+/* CRM Tree View Styles */
+.o_crm_tree .o_crm_lead_convert,
+.o_crm_tree .o_crm_opportunity_convert,
+.o_crm_tree .o_crm_activity_mark_done,
+.o_crm_tree .o_crm_communication_send,
+.o_crm_tree .o_crm_campaign_activate {
+    display: inline-block;
+    margin-right: 5px;
+}
+
+/* CRM Form View Styles */
+.o_crm_form .o_crm_lead_convert,
+.o_crm_form .o_crm_opportunity_convert,
+.o_crm_form .o_crm_activity_mark_done,
+.o_crm_form .o_crm_communication_send,
+.o_crm_form .o_crm_campaign_activate {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+/* CRM Status Indicators */
+.o_crm_status_active {
+    color: #28a745;
+    font-weight: bold;
+}
+
+.o_crm_status_inactive {
+    color: #6c757d;
+    font-weight: bold;
+}
+
+.o_crm_status_done {
+    color: #28a745;
+    font-weight: bold;
+}
+
+.o_crm_status_pending {
+    color: #ffc107;
+    font-weight: bold;
+}
+
+.o_crm_status_cancelled {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+.o_crm_status_failed {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+/* CRM Priority Indicators */
+.o_crm_priority_low {
+    color: #28a745;
+    font-weight: bold;
+}
+
+.o_crm_priority_medium {
+    color: #ffc107;
+    font-weight: bold;
+}
+
+.o_crm_priority_high {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+/* CRM Age Group Indicators */
+.o_crm_age_newborn {
+    color: #e83e8c;
+    font-weight: bold;
+}
+
+.o_crm_age_infant {
+    color: #fd7e14;
+    font-weight: bold;
+}
+
+.o_crm_age_toddler {
+    color: #20c997;
+    font-weight: bold;
+}
+
+.o_crm_age_preschool {
+    color: #6f42c1;
+    font-weight: bold;
+}
+
+.o_crm_age_school {
+    color: #007bff;
+    font-weight: bold;
+}
+
+.o_crm_age_teen {
+    color: #6c757d;
+    font-weight: bold;
+}
+
+/* CRM Gender Indicators */
+.o_crm_gender_boys {
+    color: #007bff;
+    font-weight: bold;
+}
+
+.o_crm_gender_girls {
+    color: #e83e8c;
+    font-weight: bold;
+}
+
+.o_crm_gender_unisex {
+    color: #6c757d;
+    font-weight: bold;
+}
+
+/* CRM Seasonal Indicators */
+.o_crm_season_summer {
+    color: #ffc107;
+    font-weight: bold;
+}
+
+.o_crm_season_winter {
+    color: #17a2b8;
+    font-weight: bold;
+}
+
+.o_crm_season_monsoon {
+    color: #6f42c1;
+    font-weight: bold;
+}
+
+/* CRM Responsive Design */
+@media (max-width: 768px) {
+    .o_crm_lead_convert,
+    .o_crm_opportunity_convert,
+    .o_crm_activity_mark_done,
+    .o_crm_communication_send,
+    .o_crm_campaign_activate {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+    
+    .o_crm_tree .o_crm_lead_convert,
+    .o_crm_tree .o_crm_opportunity_convert,
+    .o_crm_tree .o_crm_activity_mark_done,
+    .o_crm_tree .o_crm_communication_send,
+    .o_crm_tree .o_crm_campaign_activate {
+        display: block;
+        margin-bottom: 5px;
+    }
+}

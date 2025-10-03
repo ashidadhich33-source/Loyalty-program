@@ -1,0 +1,13 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sale_order_user,sale.order.user,model_sale_order,group_sales_user,1,1,1,0
+access_sale_order_manager,sale.order.manager,model_sale_order,group_sales_manager,1,1,1,1
+access_sale_order_line_user,sale.order.line.user,model_sale_order_line,group_sales_user,1,1,1,0
+access_sale_order_line_manager,sale.order.line.manager,model_sale_order_line,group_sales_manager,1,1,1,1
+access_sale_delivery_user,sale.delivery.user,model_sale_delivery,group_delivery_user,1,1,1,0
+access_sale_delivery_manager,sale.delivery.manager,model_sale_delivery,group_sales_manager,1,1,1,1
+access_sale_return_user,sale.return.user,model_sale_return,group_return_user,1,1,1,0
+access_sale_return_manager,sale.return.manager,model_sale_return,group_sales_manager,1,1,1,1
+access_sale_analytics_analyst,sale.analytics.analyst,model_sale_analytics,group_sales_analyst,1,0,0,0
+access_sale_analytics_manager,sale.analytics.manager,model_sale_analytics,group_sales_manager,1,1,1,1
+access_sale_order_wizard_user,sale.order.wizard.user,model_sale_order_wizard,group_sales_user,1,1,1,0
+access_sale_order_wizard_manager,sale.order.wizard.manager,model_sale_order_wizard,group_sales_manager,1,1,1,1

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        <!-- Category Hierarchy Tree View -->
+        <record id="view_category_hierarchy_tree" model="ocean.ui.view">
+            <field name="name">category.hierarchy.tree</field>
+            <field name="model">product.category</field>
+            <field name="arch" type="xml">
+                <tree string="Category Hierarchy" decoration-muted="not is_active" create="true" edit="true" delete="true">
+                    <field name="sequence" widget="handle"/>
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="category_type"/>
+                    <field name="age_group"/>
+                    <field name="gender"/>
+                    <field name="season"/>
+                    <field name="product_count"/>
+                    <field name="margin_percentage"/>
+                    <field name="is_active"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Category Hierarchy Form View -->
+        <record id="view_category_hierarchy_form" model="ocean.ui.view">
+            <field name="name">category.hierarchy.form</field>
+            <field name="model">product.category</field>
+            <field name="arch" type="xml">
+                <form string="Category Hierarchy">
+                    <header>
+                        <button name="action_view_products" string="View Products" type="object" class="btn-primary"/>
+                        <button name="action_analyze_category" string="Analyze Category" type="object" class="btn-info"/>
+                        <field name="is_active" widget="boolean_toggle"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Category Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="code"/>
+                                <field name="category_type"/>
+                                <field name="age_group" attrs="{'invisible': [('category_type', '!=', 'age_based')]}"/>
+                                <field name="gender" attrs="{'invisible': [('category_type', '!=', 'gender')]}"/>
+                                <field name="season" attrs="{'invisible': [('category_type', '!=', 'seasonal')]}"/>
+                                <field name="parent_id"/>
+                                <field name="sequence"/>
+                            </group>
+                            <group>
+                                <field name="color"/>
+                                <field name="icon"/>
+                                <field name="margin_percentage"/>
+                                <field name="discount_percentage"/>
+                                <field name="product_count" readonly="1"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="description" placeholder="Category description..."/>
+                        </group>
+                        <notebook>
+                            <page string="Child Categories" name="children">
+                                <field name="child_ids" nolabel="1">
+                                    <tree editable="bottom" create="true" delete="true">
+                                        <field name="name"/>
+                                        <field name="code"/>
+                                        <field name="category_type"/>
+                                        <field name="age_group"/>
+                                        <field name="sequence"/>
+                                        <field name="is_active"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Analytics" name="analytics">
+                                <field name="product_count" readonly="1"/>
+                                <group>
+                                    <group>
+                                        <field name="margin_percentage"/>
+                                        <field name="discount_percentage"/>
+                                    </group>
+                                    <group>
+                                        <button name="action_analyze_category" string="Generate Analytics" type="object" class="btn-primary"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Category Hierarchy Action -->
+        <record id="action_category_hierarchy" model="ocean.actions.act_window">
+            <field name="name">Category Hierarchy</field>
+            <field name="res_model">product.category</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_category_hierarchy_tree"/>
+            <field name="context">{'search_default_active': 1}</field>
+        </record>
+        
+    </data>
+</ocean>

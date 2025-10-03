@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        <!-- Loyalty Analytics Tree View -->
+        <record id="view_loyalty_analytics_tree" model="ocean.ui.view">
+            <field name="name">loyalty.analytics.tree</field>
+            <field name="model">loyalty.analytics</field>
+            <field name="arch" type="xml">
+                <tree string="Loyalty Analytics" decoration-success="program_roi > 0" decoration-warning="program_roi == 0" decoration-danger="program_roi < 0">
+                    <field name="name"/>
+                    <field name="program_id"/>
+                    <field name="date"/>
+                    <field name="period_type"/>
+                    <field name="total_customers"/>
+                    <field name="active_customers"/>
+                    <field name="new_customers"/>
+                    <field name="churned_customers"/>
+                    <field name="customer_retention_rate"/>
+                    <field name="total_purchases"/>
+                    <field name="total_purchase_amount"/>
+                    <field name="average_order_value"/>
+                    <field name="average_purchase_frequency"/>
+                    <field name="total_points_earned"/>
+                    <field name="total_points_redeemed"/>
+                    <field name="total_points_expired"/>
+                    <field name="points_redemption_rate"/>
+                    <field name="points_expiry_rate"/>
+                    <field name="total_rewards_given"/>
+                    <field name="total_reward_value"/>
+                    <field name="average_reward_value"/>
+                    <field name="total_vouchers_issued"/>
+                    <field name="total_vouchers_used"/>
+                    <field name="total_vouchers_expired"/>
+                    <field name="voucher_usage_rate"/>
+                    <field name="voucher_expiry_rate"/>
+                    <field name="total_offers_active"/>
+                    <field name="total_offer_usage"/>
+                    <field name="total_offer_value"/>
+                    <field name="average_offer_value"/>
+                    <field name="tier_distribution"/>
+                    <field name="tier_upgrades"/>
+                    <field name="tier_downgrades"/>
+                    <field name="tier_retention_rate"/>
+                    <field name="age_group_breakdown"/>
+                    <field name="gender_breakdown"/>
+                    <field name="seasonal_breakdown"/>
+                    <field name="birthday_offers_sent"/>
+                    <field name="birthday_offers_used"/>
+                    <field name="referral_signups"/>
+                    <field name="referral_rewards_given"/>
+                    <field name="program_cost"/>
+                    <field name="program_revenue"/>
+                    <field name="program_roi"/>
+                    <field name="cost_per_customer"/>
+                    <field name="revenue_per_customer"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Loyalty Analytics Form View -->
+        <record id="view_loyalty_analytics_form" model="ocean.ui.view">
+            <field name="name">loyalty.analytics.form</field>
+            <field name="model">loyalty.analytics</field>
+            <field name="arch" type="xml">
+                <form string="Loyalty Analytics">
+                    <header>
+                        <button name="action_generate_analytics" string="Generate Analytics" type="object" class="btn-primary"/>
+                        <button name="action_export_analytics" string="Export Analytics" type="object" class="btn-info"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Analytics Reference"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="program_id"/>
+                                <field name="date"/>
+                                <field name="period_type"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Customer Metrics" name="customer_metrics">
+                                <group>
+                                    <group>
+                                        <field name="total_customers"/>
+                                        <field name="active_customers"/>
+                                        <field name="new_customers"/>
+                                        <field name="churned_customers"/>
+                                        <field name="customer_retention_rate"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Purchase Metrics" name="purchase_metrics">
+                                <group>
+                                    <group>
+                                        <field name="total_purchases"/>
+                                        <field name="total_purchase_amount"/>
+                                        <field name="average_order_value"/>
+                                        <field name="average_purchase_frequency"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Points Metrics" name="points_metrics">
+                                <group>
+                                    <group>
+                                        <field name="total_points_earned"/>
+                                        <field name="total_points_redeemed"/>
+                                        <field name="total_points_expired"/>
+                                        <field name="points_redemption_rate"/>
+                                        <field name="points_expiry_rate"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Rewards Metrics" name="rewards_metrics">
+                                <group>
+                                    <group>
+                                        <field name="total_rewards_given"/>
+                                        <field name="total_reward_value"/>
+                                        <field name="average_reward_value"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Voucher Metrics" name="voucher_metrics">
+                                <group>
+                                    <group>
+                                        <field name="total_vouchers_issued"/>
+                                        <field name="total_vouchers_used"/>
+                                        <field name="total_vouchers_expired"/>
+                                        <field name="voucher_usage_rate"/>
+                                        <field name="voucher_expiry_rate"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Offer Metrics" name="offer_metrics">
+                                <group>
+                                    <group>
+                                        <field name="total_offers_active"/>
+                                        <field name="total_offer_usage"/>
+                                        <field name="total_offer_value"/>
+                                        <field name="average_offer_value"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Tier Metrics" name="tier_metrics">
+                                <group>
+                                    <group>
+                                        <field name="tier_distribution"/>
+                                        <field name="tier_upgrades"/>
+                                        <field name="tier_downgrades"/>
+                                        <field name="tier_retention_rate"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Kids Clothing Metrics" name="kids_metrics">
+                                <group>
+                                    <group>
+                                        <field name="age_group_breakdown"/>
+                                        <field name="gender_breakdown"/>
+                                        <field name="seasonal_breakdown"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Special Metrics" name="special_metrics">
+                                <group>
+                                    <group>
+                                        <field name="birthday_offers_sent"/>
+                                        <field name="birthday_offers_used"/>
+                                        <field name="referral_signups"/>
+                                        <field name="referral_rewards_given"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Financial Metrics" name="financial_metrics">
+                                <group>
+                                    <group>
+                                        <field name="program_cost"/>
+                                        <field name="program_revenue"/>
+                                        <field name="program_roi"/>
+                                        <field name="cost_per_customer"/>
+                                        <field name="revenue_per_customer"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Loyalty Analytics Search View -->
+        <record id="view_loyalty_analytics_search" model="ocean.ui.view">
+            <field name="name">loyalty.analytics.search</field>
+            <field name="model">loyalty.analytics</field>
+            <field name="arch" type="xml">
+                <search string="Search Loyalty Analytics">
+                    <field name="name"/>
+                    <field name="program_id"/>
+                    <field name="date"/>
+                    <field name="period_type"/>
+                    <field name="total_customers"/>
+                    <field name="total_purchases"/>
+                    <field name="total_purchase_amount"/>
+                    <field name="total_points_earned"/>
+                    <field name="total_points_redeemed"/>
+                    <field name="program_roi"/>
+                    <separator/>
+                    <filter string="Daily" name="daily" domain="[('period_type', '=', 'daily')]"/>
+                    <filter string="Weekly" name="weekly" domain="[('period_type', '=', 'weekly')]"/>
+                    <filter string="Monthly" name="monthly" domain="[('period_type', '=', 'monthly')]"/>
+                    <filter string="Yearly" name="yearly" domain="[('period_type', '=', 'yearly')]"/>
+                    <separator/>
+                    <filter string="Positive ROI" name="positive_roi" domain="[('program_roi', '>', 0)]"/>
+                    <filter string="Zero ROI" name="zero_roi" domain="[('program_roi', '=', 0)]"/>
+                    <filter string="Negative ROI" name="negative_roi" domain="[('program_roi', '<', 0)]"/>
+                    <separator/>
+                    <filter string="Today" name="today" domain="[('date', '>=', datetime.datetime.now().replace(hour=0, minute=0, second=0))]"/>
+                    <filter string="This Week" name="this_week" domain="[('date', '>=', (datetime.datetime.now() - datetime.timedelta(days=7)))]"/>
+                    <filter string="This Month" name="this_month" domain="[('date', '>=', datetime.datetime.now().replace(day=1))]"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter string="Program" name="group_program" context="{'group_by': 'program_id'}"/>
+                        <filter string="Period Type" name="group_period" context="{'group_by': 'period_type'}"/>
+                        <filter string="Date" name="group_date" context="{'group_by': 'date'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- Loyalty Analytics Action -->
+        <record id="action_loyalty_analytics" model="ocean.actions.act_window">
+            <field name="name">Loyalty Analytics</field>
+            <field name="res_model">loyalty.analytics</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_loyalty_analytics_tree"/>
+            <field name="search_view_id" ref="view_loyalty_analytics_search"/>
+        </record>
+        
+    </data>
+</ocean>

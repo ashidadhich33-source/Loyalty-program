@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo>
+<ocean>
     <data>
         
         <!-- Main Contacts Menu -->
@@ -66,4 +66,4 @@
                   action="action_contact_analytics"/>
         
     </data>
-</odoo>
+</ocean>

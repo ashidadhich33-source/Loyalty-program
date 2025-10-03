@@ -6,14 +6,14 @@
 **Status**: Starting Fresh - Correct Architecture  
 **Current Phase**: Addons Structure Setup  
 **Technology Stack**: Python, PostgreSQL, Modern Web Framework  
-**Architecture**: Addons-based modular system (like Odoo)
+**Architecture**: Addons-based modular system (Ocean ERP framework)
 
 ## Zero-Error Development Principles
 This project follows strict zero-error development practices with comprehensive testing, automated quality gates, and continuous monitoring using modern web framework architecture.
 
 ## 🚨 CRITICAL ARCHITECTURE REMINDER
-**This is a STANDALONE ERP SYSTEM that mimics Odoo's functionality but is NOT Odoo.**
-- ❌ DO NOT CREATE ODOO MODULES
+**This is a STANDALONE ERP SYSTEM that uses Ocean ERP framework.**
+- ❌ DO NOT CREATE OCEAN MODULES
 - ✅ CREATE ADDONS FOR OUR CUSTOM FRAMEWORK
 - Use `core_framework/` components (ORM, addon manager, web interface)
 - Follow existing addon patterns in `addons/` directory
@@ -117,11 +117,11 @@ This project follows strict zero-error development practices with comprehensive 
 - [⏳] **categories**: Product categories (babywear, toddler, teen) (NEXT)
 - [⏳] **bulk_import**: Excel/CSV import system with templates
 
-### Sales & CRM Addons ⏳ PENDING
-- [ ] **sales**: Quotations, sales orders, delivery orders, returns
-- [ ] **crm**: Leads, opportunities, activities, communication history
-- [ ] **loyalty**: Points, rewards, vouchers, birthday offers
-- [ ] **discounts**: Discount programs, approval flows, coupon codes
+### Sales & CRM Addons ✅ COMPLETED
+- [✅] **sales**: Quotations, sales orders, delivery orders, returns
+- [✅] **crm**: Leads, opportunities, activities, communication history
+- [✅] **loyalty**: Points, rewards, vouchers, birthday offers
+- [✅] **discounts**: Discount programs, approval flows, coupon codes
 
 ### POS Addons ⏳ PENDING
 - [ ] **pos**: Product scanning, fast checkout, touchscreen UI
@@ -217,7 +217,7 @@ This project follows strict zero-error development practices with comprehensive 
 
 # Or manual installation
 pip install -r requirements.txt
-python3 run_odoo.py --install
+python3 run_erp.py --install
 ```
 
 ### Access the System
@@ -228,16 +228,16 @@ python3 run_odoo.py --install
 ### Development Commands
 ```bash
 # Start development server
-python3 run_odoo.py
+python3 run_erp.py
 
 # Install module
-python3 run_odoo.py --install
+python3 run_erp.py --install
 
 # Update module
-python3 run_odoo.py --update
+python3 run_erp.py --update
 
 # Run tests
-python3 run_odoo.py --test
+python3 run_erp.py --test
 ```
 
 ## Project Structure
@@ -252,9 +252,9 @@ kids_clothing_erp/
 ├── wizard/                  # Wizards
 ├── reports/                # Report templates
 ├── tests/                  # Unit tests
-├── odoo.conf              # Configuration
+├── ocean.conf              # Configuration
 ├── requirements.txt        # Dependencies
-├── run_odoo.py            # Server runner
+├── run_erp.py            # Server runner
 └── install.sh             # Installation script
 ```
 

@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_import_template_user,import.template.user,model_import_template,group_import_user,1,0,1,0
+access_import_template_manager,import.template.manager,model_import_template,group_import_manager,1,1,1,1
+access_import_job_user,import.job.user,model_import_job,group_import_user,1,0,1,0
+access_import_job_manager,import.job.manager,model_import_job,group_import_manager,1,1,1,1
+access_import_history_analyst,import.history.analyst,model_import_history,group_import_analyst,1,0,0,0
+access_import_history_manager,import.history.manager,model_import_history,group_import_manager,1,1,1,1
+access_import_wizard_user,import.wizard.user,model_import_wizard,group_import_user,1,1,1,0
+access_import_wizard_manager,import.wizard.manager,model_import_wizard,group_import_manager,1,1,1,1

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api, _
-from odoo.exceptions import ValidationError
+from core_framework.orm import BaseModel, CharField, TextField, BooleanField, IntegerField, DateTimeField, Many2OneField, SelectionField, FloatField, One2ManyField, Many2ManyField
+from core_framework.exceptions import ValidationError
 import logging
 import json
 from datetime import datetime, timedelta
@@ -9,7 +9,7 @@ from datetime import datetime, timedelta
 _logger = logging.getLogger(__name__)
 
 
-class NotificationSystem(models.Model):
+class NotificationSystem(BaseModel):
     """Notification system for Kids Clothing ERP"""
     
     _name = 'notification.system'

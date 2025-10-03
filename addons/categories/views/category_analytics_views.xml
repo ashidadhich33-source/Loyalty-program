@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        <!-- Category Analytics Tree View -->
+        <record id="view_category_analytics_tree" model="ocean.ui.view">
+            <field name="name">category.analytics.tree</field>
+            <field name="model">category.analytics</field>
+            <field name="arch" type="xml">
+                <tree string="Category Analytics" decoration-info="seasonal_trend=='peak'" decoration-success="seasonal_trend=='growing'" decoration-warning="seasonal_trend=='declining'">
+                    <field name="name"/>
+                    <field name="category_id"/>
+                    <field name="date"/>
+                    <field name="total_sales"/>
+                    <field name="total_quantity"/>
+                    <field name="average_order_value"/>
+                    <field name="conversion_rate"/>
+                    <field name="return_rate"/>
+                    <field name="stock_value"/>
+                    <field name="stock_turnover"/>
+                    <field name="customer_count"/>
+                    <field name="repeat_customer_rate"/>
+                    <field name="seasonal_trend"/>
+                    <field name="is_active"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Category Analytics Form View -->
+        <record id="view_category_analytics_form" model="ocean.ui.view">
+            <field name="name">category.analytics.form</field>
+            <field name="model">category.analytics</field>
+            <field name="arch" type="xml">
+                <form string="Category Analytics">
+                    <header>
+                        <button name="action_generate_report" string="Generate Report" type="object" class="btn-primary"/>
+                        <field name="is_active" widget="boolean_toggle"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Analytics Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="category_id"/>
+                                <field name="date"/>
+                                <field name="seasonal_trend"/>
+                            </group>
+                            <group>
+                                <field name="total_sales"/>
+                                <field name="total_quantity"/>
+                                <field name="average_order_value"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Sales Metrics" name="sales">
+                                <group>
+                                    <group>
+                                        <field name="total_sales"/>
+                                        <field name="total_quantity"/>
+                                        <field name="average_order_value"/>
+                                    </group>
+                                    <group>
+                                        <field name="conversion_rate"/>
+                                        <field name="return_rate"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Inventory Metrics" name="inventory">
+                                <group>
+                                    <group>
+                                        <field name="stock_value"/>
+                                        <field name="stock_turnover"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Customer Metrics" name="customer">
+                                <group>
+                                    <group>
+                                        <field name="customer_count"/>
+                                        <field name="repeat_customer_rate"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Performance Analysis" name="performance">
+                                <group>
+                                    <field name="age_group_performance"/>
+                                </group>
+                                <group>
+                                    <field name="gender_performance"/>
+                                </group>
+                            </page>
+                            <page string="Recommendations" name="recommendations">
+                                <group>
+                                    <field name="recommendations" nolabel="1"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Category Analytics Search View -->
+        <record id="view_category_analytics_search" model="ocean.ui.view">
+            <field name="name">category.analytics.search</field>
+            <field name="model">category.analytics</field>
+            <field name="arch" type="xml">
+                <search string="Search Analytics">
+                    <field name="name"/>
+                    <field name="category_id"/>
+                    <field name="date"/>
+                    <field name="seasonal_trend"/>
+                    <separator/>
+                    <filter string="Active" name="active" domain="[('is_active', '=', True)]"/>
+                    <filter string="Inactive" name="inactive" domain="[('is_active', '=', False)]"/>
+                    <separator/>
+                    <filter string="Peak Season" name="peak" domain="[('seasonal_trend', '=', 'peak')]"/>
+                    <filter string="Low Season" name="low" domain="[('seasonal_trend', '=', 'low')]"/>
+                    <filter string="Growing Trend" name="growing" domain="[('seasonal_trend', '=', 'growing')]"/>
+                    <filter string="Declining Trend" name="declining" domain="[('seasonal_trend', '=', 'declining')]"/>
+                    <separator/>
+                    <filter string="This Month" name="this_month" domain="[('date', '>=', datetime.datetime.now().replace(day=1))]"/>
+                    <filter string="Last Month" name="last_month" domain="[('date', '>=', (datetime.datetime.now().replace(day=1) - datetime.timedelta(days=1)).replace(day=1)), ('date', '&lt;', datetime.datetime.now().replace(day=1))]"/>
+                    <filter string="This Year" name="this_year" domain="[('date', '>=', datetime.datetime.now().replace(month=1, day=1))]"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter string="Category" name="group_category" context="{'group_by': 'category_id'}"/>
+                        <filter string="Date" name="group_date" context="{'group_by': 'date'}"/>
+                        <filter string="Seasonal Trend" name="group_trend" context="{'group_by': 'seasonal_trend'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- Category Analytics Action -->
+        <record id="action_category_analytics" model="ocean.actions.act_window">
+            <field name="name">Category Analytics</field>
+            <field name="res_model">category.analytics</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_category_analytics_tree"/>
+            <field name="search_view_id" ref="view_category_analytics_search"/>
+            <field name="context">{'search_default_active': 1}</field>
+        </record>
+        
+    </data>
+</ocean>

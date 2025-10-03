@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from odoo.tests.common import TransactionCase
+from core_framework.testing import TestCase
 
-class TestDatabaseAnalytics(TransactionCase):
+class TestDatabaseAnalytics(TestCase):
     
     def setUp(self):
         super().setUp()

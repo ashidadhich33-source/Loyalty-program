@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        <!-- Import History Tree View -->
+        <record id="view_import_history_tree" model="ocean.ui.view">
+            <field name="name">import.history.tree</field>
+            <field name="model">import.history</field>
+            <field name="arch" type="xml">
+                <tree string="Import History" decoration-muted="not is_successful" decoration-success="is_successful" decoration-warning="operation_type=='skip'">
+                    <field name="name"/>
+                    <field name="job_id"/>
+                    <field name="model_name"/>
+                    <field name="record_name"/>
+                    <field name="operation_type"/>
+                    <field name="validation_passed"/>
+                    <field name="is_successful"/>
+                    <field name="process_time"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Import History Form View -->
+        <record id="view_import_history_form" model="ocean.ui.view">
+            <field name="name">import.history.form</field>
+            <field name="model">import.history</field>
+            <field name="arch" type="xml">
+                <form string="Import History">
+                    <header>
+                        <button name="action_view_record" string="View Record" type="object" class="btn-primary" attrs="{'invisible': [('record_id', '=', False)]}"/>
+                        <button name="action_retry_import" string="Retry Import" type="object" class="btn-info" attrs="{'invisible': [('is_successful', '=', True)]}"/>
+                        <button name="action_rollback" string="Rollback" type="object" class="btn-warning" attrs="{'invisible': [('is_successful', '=', False)]}"/>
+                        <button name="action_export_errors" string="Export Errors" type="object" class="btn-danger" attrs="{'invisible': [('error_message', '=', False)]}"/>
+                        <field name="is_successful" widget="boolean_toggle"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="History Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="job_id"/>
+                                <field name="model_name"/>
+                                <field name="record_id"/>
+                                <field name="record_name"/>
+                                <field name="operation_type"/>
+                            </group>
+                            <group>
+                                <field name="validation_passed"/>
+                                <field name="is_successful"/>
+                                <field name="process_time"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Data" name="data">
+                                <group>
+                                    <group>
+                                        <field name="original_data" readonly="1" nolabel="1"/>
+                                    </group>
+                                    <group>
+                                        <field name="processed_data" readonly="1" nolabel="1"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Errors" name="errors">
+                                <field name="error_message" readonly="1" nolabel="1"/>
+                                <field name="error_details" readonly="1" nolabel="1"/>
+                            </page>
+                            <page string="Validation" name="validation">
+                                <field name="validation_errors" readonly="1" nolabel="1"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Import History Search View -->
+        <record id="view_import_history_search" model="ocean.ui.view">
+            <field name="name">import.history.search</field>
+            <field name="model">import.history</field>
+            <field name="arch" type="xml">
+                <search string="Search History">
+                    <field name="name"/>
+                    <field name="job_id"/>
+                    <field name="model_name"/>
+                    <field name="record_name"/>
+                    <field name="operation_type"/>
+                    <separator/>
+                    <filter string="Successful" name="successful" domain="[('is_successful', '=', True)]"/>
+                    <filter string="Failed" name="failed" domain="[('is_successful', '=', False)]"/>
+                    <filter string="Validation Passed" name="validation_passed" domain="[('validation_passed', '=', True)]"/>
+                    <filter string="Validation Failed" name="validation_failed" domain="[('validation_passed', '=', False)]"/>
+                    <separator/>
+                    <filter string="Create" name="create" domain="[('operation_type', '=', 'create')]"/>
+                    <filter string="Update" name="update" domain="[('operation_type', '=', 'update')]"/>
+                    <filter string="Skip" name="skip" domain="[('operation_type', '=', 'skip')]"/>
+                    <filter string="Error" name="error" domain="[('operation_type', '=', 'error')]"/>
+                    <separator/>
+                    <filter string="Today" name="today" domain="[('process_time', '>=', datetime.datetime.now().replace(hour=0, minute=0, second=0))]"/>
+                    <filter string="This Week" name="this_week" domain="[('process_time', '>=', (datetime.datetime.now() - datetime.timedelta(days=7)))]"/>
+                    <filter string="This Month" name="this_month" domain="[('process_time', '>=', datetime.datetime.now().replace(day=1))]"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter string="Job" name="group_job" context="{'group_by': 'job_id'}"/>
+                        <filter string="Model" name="group_model" context="{'group_by': 'model_name'}"/>
+                        <filter string="Operation" name="group_operation" context="{'group_by': 'operation_type'}"/>
+                        <filter string="Date" name="group_date" context="{'group_by': 'process_time'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- Import History Action -->
+        <record id="action_import_history" model="ocean.actions.act_window">
+            <field name="name">Import History</field>
+            <field name="res_model">import.history</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_import_history_tree"/>
+            <field name="search_view_id" ref="view_import_history_search"/>
+            <field name="context">{'search_default_successful': 1}</field>
+        </record>
+        
+    </data>
+</ocean>

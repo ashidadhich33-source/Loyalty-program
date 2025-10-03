@@ -1,7 +1,7 @@
 # Module Marketplace System
 
 ## Overview
-Complete module marketplace system that allows users to discover, install, and manage custom modules, just like Odoo's App Store.
+Complete module marketplace system that allows users to discover, install, and manage custom modules, just like Ocean ERP's App Store.
 
 ## Marketplace Features
 
@@ -577,4 +577,4 @@ This marketplace system provides complete module management capabilities:
 ✅ **Module Analytics**: Track module performance  
 ✅ **Module Reviews**: User feedback and ratings  
 
-Users can discover, install, and manage custom modules just like Odoo's App Store! 🎉
+Users can discover, install, and manage custom modules just like Ocean ERP's App Store! 🎉

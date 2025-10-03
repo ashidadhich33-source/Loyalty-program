@@ -1,9 +1,9 @@
 /* Contact Management JavaScript */
 
-odoo.define('contacts.contact_script', function (require) {
+ocean.define('contacts.contact_script', function (require) {
     'use strict';
     
-    var core = require('web.core');
+    var core = require('ocean.core');
     
     // Contact management logic will be added here
     

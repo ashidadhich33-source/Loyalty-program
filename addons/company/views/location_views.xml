@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo>
+<ocean>
     <data>
         <!-- Locations Tree View -->
-        <record id="view_locations_tree" model="ir.ui.view">
+        <record id="view_locations_tree" model="ocean.ui.view">
             <field name="name">locations.tree</field>
             <field name="model">company.location</field>
             <field name="arch" type="xml">
@@ -23,7 +23,7 @@
         </record>
         
         <!-- Locations Form View -->
-        <record id="view_locations_form" model="ir.ui.view">
+        <record id="view_locations_form" model="ocean.ui.view">
             <field name="name">locations.form</field>
             <field name="model">company.location</field>
             <field name="arch" type="xml">
@@ -129,7 +129,7 @@
         </record>
         
         <!-- Locations Search View -->
-        <record id="view_locations_search" model="ir.ui.view">
+        <record id="view_locations_search" model="ocean.ui.view">
             <field name="name">locations.search</field>
             <field name="model">company.location</field>
             <field name="arch" type="xml">
@@ -167,7 +167,7 @@
         </record>
         
         <!-- Locations Action -->
-        <record id="action_locations" model="ir.actions.act_window">
+        <record id="action_locations" model="ocean.actions.act_window">
             <field name="name">Locations</field>
             <field name="res_model">company.location</field>
             <field name="view_mode">tree,form</field>
@@ -177,4 +177,4 @@
         </record>
         
     </data>
-</odoo>
+</ocean>

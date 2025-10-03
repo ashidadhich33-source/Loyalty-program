@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo>
+<ocean>
     <data>
         <!-- Demo Companies -->
         <record id="demo_company_main" model="res.company">
@@ -284,4 +284,4 @@
         </record>
         
     </data>
-</odoo>
+</ocean>

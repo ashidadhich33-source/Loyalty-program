@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data noupdate="1">
+        
+        <!-- Default Import Templates -->
+        
+        <!-- Product Template Import -->
+        <record id="template_product_template" model="import.template">
+            <field name="name">Product Template Import</field>
+            <field name="description">Import product templates with variants and categories</field>
+            <field name="model_name">product.template</field>
+            <field name="template_type">excel</field>
+            <field name="has_header">True</field>
+            <field name="skip_empty_rows">True</field>
+            <field name="max_rows">1000</field>
+            <field name="batch_size">50</field>
+            <field name="field_mapping">{"name": "Product Name", "code": "Product Code", "description": "Description", "categ_id": "Category", "list_price": "Sale Price", "standard_price": "Cost Price"}</field>
+            <field name="validation_rules">{"required_fields": {"name": {"required": true}}, "field_types": {"list_price": {"type": "float"}, "standard_price": {"type": "float"}}}</field>
+            <field name="is_active">True</field>
+            <field name="is_default">True</field>
+        </record>
+        
+        <!-- Contact Customer Import -->
+        <record id="template_contact_customer" model="import.template">
+            <field name="name">Customer Import</field>
+            <field name="description">Import customer contacts with child profiles</field>
+            <field name="model_name">contact.customer</field>
+            <field name="template_type">excel</field>
+            <field name="has_header">True</field>
+            <field name="skip_empty_rows">True</field>
+            <field name="max_rows">500</field>
+            <field name="batch_size">25</field>
+            <field name="field_mapping">{"name": "Customer Name", "email": "Email", "phone": "Phone", "address": "Address", "city": "City", "state": "State", "zip": "ZIP Code"}</field>
+            <field name="validation_rules">{"required_fields": {"name": {"required": true}, "email": {"required": true}}, "field_types": {"email": {"type": "email"}}}</field>
+            <field name="is_active">True</field>
+            <field name="is_default">True</field>
+        </record>
+        
+        <!-- Product Category Import -->
+        <record id="template_product_category" model="import.template">
+            <field name="name">Category Import</field>
+            <field name="description">Import product categories with hierarchy</field>
+            <field name="model_name">product.category</field>
+            <field name="template_type">excel</field>
+            <field name="has_header">True</field>
+            <field name="skip_empty_rows">True</field>
+            <field name="max_rows">200</field>
+            <field name="batch_size">20</field>
+            <field name="field_mapping">{"name": "Category Name", "code": "Category Code", "description": "Description", "category_type": "Type", "age_group": "Age Group", "gender": "Gender", "season": "Season"}</field>
+            <field name="validation_rules">{"required_fields": {"name": {"required": true}}, "field_types": {"margin_percentage": {"type": "float"}}}</field>
+            <field name="is_active">True</field>
+            <field name="is_default">True</field>
+        </record>
+        
+        <!-- Company Import -->
+        <record id="template_res_company" model="import.template">
+            <field name="name">Company Import</field>
+            <field name="description">Import company information</field>
+            <field name="model_name">res.company</field>
+            <field name="template_type">excel</field>
+            <field name="has_header">True</field>
+            <field name="skip_empty_rows">True</field>
+            <field name="max_rows">50</field>
+            <field name="batch_size">10</field>
+            <field name="field_mapping">{"name": "Company Name", "email": "Email", "phone": "Phone", "website": "Website", "street": "Street", "city": "City", "state": "State", "zip": "ZIP Code", "country": "Country"}</field>
+            <field name="validation_rules">{"required_fields": {"name": {"required": true}}, "field_types": {"email": {"type": "email"}}}</field>
+            <field name="is_active">True</field>
+            <field name="is_default">True</field>
+        </record>
+        
+        <!-- User Import -->
+        <record id="template_res_users" model="import.template">
+            <field name="name">User Import</field>
+            <field name="description">Import system users with roles</field>
+            <field name="model_name">res.users</field>
+            <field name="template_type">excel</field>
+            <field name="has_header">True</field>
+            <field name="skip_empty_rows">True</field>
+            <field name="max_rows">100</field>
+            <field name="batch_size">10</field>
+            <field name="field_mapping">{"name": "Full Name", "login": "Username", "email": "Email", "phone": "Phone", "is_active": "Active"}</field>
+            <field name="validation_rules">{"required_fields": {"name": {"required": true}, "login": {"required": true}, "email": {"required": true}}, "field_types": {"email": {"type": "email"}}}</field>
+            <field name="is_active">True</field>
+            <field name="is_default">True</field>
+        </record>
+        
+    </data>
+</ocean>

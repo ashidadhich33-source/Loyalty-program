@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        <!-- Loyalty Menu -->
+        <menuitem id="menu_loyalty" name="Loyalty" sequence="20"/>
+        
+        <!-- Loyalty Programs Menu -->
+        <menuitem id="menu_loyalty_programs" name="Programs" parent="menu_loyalty" sequence="10" action="action_loyalty_programs"/>
+        
+        <!-- Loyalty Points Menu -->
+        <menuitem id="menu_loyalty_points" name="Points" parent="menu_loyalty" sequence="20" action="action_loyalty_points"/>
+        
+        <!-- Loyalty Points Balance Menu -->
+        <menuitem id="menu_loyalty_points_balance" name="Points Balance" parent="menu_loyalty" sequence="30" action="action_loyalty_points_balance"/>
+        
+        <!-- Loyalty Rewards Menu -->
+        <menuitem id="menu_loyalty_rewards" name="Rewards" parent="menu_loyalty" sequence="40" action="action_loyalty_rewards"/>
+        
+        <!-- Loyalty Redemptions Menu -->
+        <menuitem id="menu_loyalty_redemptions" name="Redemptions" parent="menu_loyalty" sequence="50" action="action_loyalty_redemptions"/>
+        
+        <!-- Loyalty Voucher Templates Menu -->
+        <menuitem id="menu_loyalty_voucher_templates" name="Voucher Templates" parent="menu_loyalty" sequence="60" action="action_loyalty_voucher_templates"/>
+        
+        <!-- Loyalty Vouchers Menu -->
+        <menuitem id="menu_loyalty_vouchers" name="Vouchers" parent="menu_loyalty" sequence="70" action="action_loyalty_vouchers"/>
+        
+        <!-- Loyalty Offers Menu -->
+        <menuitem id="menu_loyalty_offers" name="Offers" parent="menu_loyalty" sequence="80" action="action_loyalty_offers"/>
+        
+        <!-- Loyalty Tiers Menu -->
+        <menuitem id="menu_loyalty_tiers" name="Tiers" parent="menu_loyalty" sequence="90" action="action_loyalty_tiers"/>
+        
+        <!-- Loyalty Analytics Menu -->
+        <menuitem id="menu_loyalty_analytics" name="Analytics" parent="menu_loyalty" sequence="100" action="action_loyalty_analytics"/>
+        
+    </data>
+</ocean>

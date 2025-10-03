@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 class ResGroups(BaseModel):
     """Extended groups model for Kids Clothing ERP"""
     
-    _name = 'res.groups'
+    _name = 'ocean.groups'
     _description = 'Groups'
     _table = 'res_groups'
     
@@ -59,7 +59,7 @@ class ResGroups(BaseModel):
     
     child_ids = One2ManyField(
         string='Child Groups',
-        comodel_name='res.groups',
+        comodel_name='ocean.groups',
         inverse_name='parent_id',
         help='Child groups in hierarchy'
     )

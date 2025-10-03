@@ -202,13 +202,13 @@ Manages database maintenance tasks.
 
 ## Installation
 
-1. Copy the `database` folder to your Odoo addons directory
-2. Update the addons list in Odoo
+1. Copy the `database` folder to your Ocean ERP addons directory
+2. Update the addons list in Ocean ERP
 3. Install the "Database Management" module from the Apps menu
 
 ## Dependencies
 
-- `base`: Odoo base module
+- `base`: Ocean ERP base module
 - `core_base`: Kids Clothing ERP core base module
 - `core_web`: Kids Clothing ERP web module
 - `users`: Kids Clothing ERP users module

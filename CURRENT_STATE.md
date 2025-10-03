@@ -243,7 +243,7 @@
 ## 🎯 Technical Architecture
 
 ### Database Layer
-- **ORM**: Odoo ORM with PostgreSQL
+- **ORM**: Ocean ERP ORM with PostgreSQL
 - **Models**: ~35+ defined models
 - **Relationships**: Proper use of Many2one, One2many, Many2many
 - **Constraints**: Data validation and business rules
@@ -252,7 +252,7 @@
 ### Business Logic Layer
 - **Python Classes**: Clean, well-documented code
 - **Mixins**: Reusable functionality (KidsClothingMixin, PriceMixin)
-- **Inheritance**: Proper extension of base Odoo models
+- **Inheritance**: Proper extension of base Ocean ERP models
 - **Utilities**: Validation helpers, formatters, calculators
 
 ### Presentation Layer

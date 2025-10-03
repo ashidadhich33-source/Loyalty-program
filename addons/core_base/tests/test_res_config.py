@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
-from odoo.tests.common import TransactionCase
-from odoo.exceptions import ValidationError
+from core_framework.testing import TestCase
+from core_framework.exceptions import ValidationError
 
 
-class TestResConfigSettings(TransactionCase):
+class TestResConfigSettings(TestCase):
     """Test cases for res.config.settings model"""
     
     def setUp(self):
@@ -46,7 +46,7 @@ class TestResConfigSettings(TransactionCase):
         config.set_values()
         
         # Check if parameters are set correctly
-        params = self.env['ir.config_parameter'].sudo()
+        params = self.env['ocean.config_parameter'].sudo()
         self.assertEqual(params.get_param('core_base.enable_child_profiles'), 'False')
         self.assertEqual(params.get_param('core_base.enable_loyalty_program'), 'False')
     

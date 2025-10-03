@@ -1,7 +1,7 @@
 # Addon Structure Guide
 
 ## Overview
-This guide explains the correct addon structure for the Kids Clothing ERP system, following a modular architecture similar to Odoo.
+This guide explains the correct addon structure for the Kids Clothing ERP system, following a modular architecture similar to Ocean ERP.
 
 ## 📁 **Project Structure**
 

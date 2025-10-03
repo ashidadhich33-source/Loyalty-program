@@ -100,10 +100,10 @@ class DatabaseInfo(BaseModel):
         help='Version of the database'
     )
     
-    odoo_version = CharField(
-        string='Odoo Version',
+    ocean_version = CharField(
+        string='Ocean ERP Version',
         size=50,
-        help='Odoo version running on this database'
+        help='Ocean ERP version running on this database'
     )
     
     # Database size and performance
@@ -280,7 +280,7 @@ class DatabaseInfo(BaseModel):
             vals['port'] = 5432
         
         if 'user' not in vals:
-            vals['user'] = 'odoo'
+            vals['user'] = 'ocean'
         
         return super().create(vals)
     
@@ -446,7 +446,7 @@ class DatabaseInfo(BaseModel):
             'user': self.user,
             'database_type': self.database_type,
             'database_version': self.database_version,
-            'odoo_version': self.odoo_version,
+            'ocean_version': self.ocean_version,
             'database_size': self.database_size,
             'table_count': self.table_count,
             'record_count': self.record_count,
@@ -581,7 +581,7 @@ class DatabaseInfo(BaseModel):
             'user': self.user,
             'database_type': self.database_type,
             'database_version': self.database_version,
-            'odoo_version': self.odoo_version,
+            'ocean_version': self.ocean_version,
             'max_connections': self.max_connections,
             'enable_backup': self.enable_backup,
             'enable_monitoring': self.enable_monitoring,

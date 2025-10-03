@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo>
+<ocean>
     <data>
         <!-- Company Settings Tree View -->
-        <record id="view_company_settings_tree" model="ir.ui.view">
+        <record id="view_company_settings_tree" model="ocean.ui.view">
             <field name="name">company_settings.tree</field>
             <field name="model">company.settings</field>
             <field name="arch" type="xml">
@@ -21,7 +21,7 @@
         </record>
         
         <!-- Company Settings Form View -->
-        <record id="view_company_settings_form" model="ir.ui.view">
+        <record id="view_company_settings_form" model="ocean.ui.view">
             <field name="name">company_settings.form</field>
             <field name="model">company.settings</field>
             <field name="arch" type="xml">
@@ -89,7 +89,7 @@
         </record>
         
         <!-- Company Settings Search View -->
-        <record id="view_company_settings_search" model="ir.ui.view">
+        <record id="view_company_settings_search" model="ocean.ui.view">
             <field name="name">company_settings.search</field>
             <field name="model">company.settings</field>
             <field name="arch" type="xml">
@@ -130,7 +130,7 @@
         </record>
         
         <!-- Company Settings Action -->
-        <record id="action_company_settings" model="ir.actions.act_window">
+        <record id="action_company_settings" model="ocean.actions.act_window">
             <field name="name">Company Settings</field>
             <field name="res_model">company.settings</field>
             <field name="view_mode">tree,form</field>
@@ -140,4 +140,4 @@
         </record>
         
     </data>
-</odoo>
+</ocean>

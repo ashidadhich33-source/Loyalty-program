@@ -1,14 +1,14 @@
 /* Kids Clothing ERP - Core Base JavaScript */
 
-odoo.define('core_base.KidsClothingCore', function (require) {
+ocean.define('core_base.KidsClothingCore', function (require) {
     'use strict';
 
-    var core = require('web.core');
-    var FormController = require('web.FormController');
-    var ListController = require('web.ListController');
-    var AbstractController = require('web.AbstractController');
-    var Dialog = require('web.Dialog');
-    var rpc = require('web.rpc');
+    var core = require('ocean.core');
+    var FormController = require('ocean.FormController');
+    var ListController = require('ocean.ListController');
+    var AbstractController = require('ocean.AbstractController');
+    var Dialog = require('ocean.Dialog');
+    var rpc = require('ocean.rpc');
     var _t = core._t;
 
     // Age Group Utilities
@@ -318,7 +318,7 @@ odoo.define('core_base.KidsClothingCore', function (require) {
 });
 
 // System Information Dialog Template
-odoo.define('core_base.SystemInfoDialog', function (require) {
+ocean.define('core_base.SystemInfoDialog', function (require) {
     'use strict';
     
     return {
@@ -327,7 +327,7 @@ odoo.define('core_base.SystemInfoDialog', function (require) {
 });
 
 // System Information Dialog Template
-odoo.define('core_base.SystemInfoDialog', function (require) {
+ocean.define('core_base.SystemInfoDialog', function (require) {
     'use strict';
     
     return {

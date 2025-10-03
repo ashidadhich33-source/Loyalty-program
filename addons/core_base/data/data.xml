@@ -1,73 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo>
+<ocean>
     <data>
         <!-- System Parameters -->
-        <record id="param_enable_child_profiles" model="ir.config_parameter">
+        <record id="param_enable_child_profiles" model="ocean.config_parameter">
             <field name="key">core_base.enable_child_profiles</field>
             <field name="value">True</field>
         </record>
         
-        <record id="param_enable_age_based_discounts" model="ir.config_parameter">
+        <record id="param_enable_age_based_discounts" model="ocean.config_parameter">
             <field name="key">core_base.enable_age_based_discounts</field>
             <field name="value">True</field>
         </record>
         
-        <record id="param_enable_loyalty_program" model="ir.config_parameter">
+        <record id="param_enable_loyalty_program" model="ocean.config_parameter">
             <field name="key">core_base.enable_loyalty_program</field>
             <field name="value">True</field>
         </record>
         
-        <record id="param_enable_exchange_system" model="ir.config_parameter">
+        <record id="param_enable_exchange_system" model="ocean.config_parameter">
             <field name="key">core_base.enable_exchange_system</field>
             <field name="value">True</field>
         </record>
         
-        <record id="param_enable_multi_location" model="ir.config_parameter">
+        <record id="param_enable_multi_location" model="ocean.config_parameter">
             <field name="key">core_base.enable_multi_location</field>
             <field name="value">True</field>
         </record>
         
-        <record id="param_enable_stock_aging" model="ir.config_parameter">
+        <record id="param_enable_stock_aging" model="ocean.config_parameter">
             <field name="key">core_base.enable_stock_aging</field>
             <field name="value">True</field>
         </record>
         
-        <record id="param_enable_touchscreen_mode" model="ir.config_parameter">
+        <record id="param_enable_touchscreen_mode" model="ocean.config_parameter">
             <field name="key">core_base.enable_touchscreen_mode</field>
             <field name="value">True</field>
         </record>
         
-        <record id="param_enable_barcode_scanning" model="ir.config_parameter">
+        <record id="param_enable_barcode_scanning" model="ocean.config_parameter">
             <field name="key">core_base.enable_barcode_scanning</field>
             <field name="value">True</field>
         </record>
         
-        <record id="param_enable_gst" model="ir.config_parameter">
+        <record id="param_enable_gst" model="ocean.config_parameter">
             <field name="key">core_base.enable_gst</field>
             <field name="value">True</field>
         </record>
         
-        <record id="param_enable_e_invoice" model="ir.config_parameter">
+        <record id="param_enable_e_invoice" model="ocean.config_parameter">
             <field name="key">core_base.enable_e_invoice</field>
             <field name="value">True</field>
         </record>
         
-        <record id="param_enable_e_way_bill" model="ir.config_parameter">
+        <record id="param_enable_e_way_bill" model="ocean.config_parameter">
             <field name="key">core_base.enable_e_way_bill</field>
             <field name="value">True</field>
         </record>
         
-        <record id="param_enable_sms_notifications" model="ir.config_parameter">
+        <record id="param_enable_sms_notifications" model="ocean.config_parameter">
             <field name="key">core_base.enable_sms_notifications</field>
             <field name="value">True</field>
         </record>
         
-        <record id="param_enable_email_notifications" model="ir.config_parameter">
+        <record id="param_enable_email_notifications" model="ocean.config_parameter">
             <field name="key">core_base.enable_email_notifications</field>
             <field name="value">True</field>
         </record>
         
-        <record id="param_enable_whatsapp_notifications" model="ir.config_parameter">
+        <record id="param_enable_whatsapp_notifications" model="ocean.config_parameter">
             <field name="key">core_base.enable_whatsapp_notifications</field>
             <field name="value">True</field>
         </record>
@@ -166,4 +166,4 @@
         </record>
         
     </data>
-</odoo>
+</ocean>

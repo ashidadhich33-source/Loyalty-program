@@ -30,7 +30,7 @@
     'license': 'LGPL-3',
     'depends': [],
     'data': [
-        'security/ir.model.access.csv',
+        'security/ocean.model.access.csv',
         'data/data.xml',
         'views/menu.xml',
     ],

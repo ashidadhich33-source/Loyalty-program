@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        <!-- Loyalty Program Configuration -->
+        <record id="loyalty_program_main" model="loyalty.program">
+            <field name="name">Kids Clothing Loyalty Program</field>
+            <field name="code">KIDS_LOYALTY</field>
+            <field name="description">Main loyalty program for kids clothing retail</field>
+            <field name="is_active">True</field>
+            <field name="start_date">2024-01-01</field>
+            <field name="points_per_currency">1.0</field>
+            <field name="currency_id" ref="base.USD"/>
+            <field name="min_points_redemption">100</field>
+            <field name="max_points_redemption">10000</field>
+            <field name="points_expiry_days">365</field>
+            <field name="expiry_notification_days">30</field>
+            <field name="tier_based">True</field>
+            <field name="age_group_focus">all</field>
+            <field name="gender_focus">all</field>
+            <field name="seasonal_focus">all</field>
+            <field name="birthday_offers">True</field>
+            <field name="referral_program">True</field>
+            <field name="referral_points">100</field>
+        </record>
+        
+        <!-- Loyalty Tiers -->
+        <record id="loyalty_tier_bronze" model="loyalty.tier">
+            <field name="name">Bronze</field>
+            <field name="code">BRONZE</field>
+            <field name="program_id" ref="loyalty_program_main"/>
+            <field name="sequence">10</field>
+            <field name="is_active">True</field>
+            <field name="is_entry_tier">True</field>
+            <field name="min_points">0</field>
+            <field name="max_points">499</field>
+            <field name="min_purchases">0</field>
+            <field name="min_purchase_amount">0.0</field>
+            <field name="min_purchase_frequency">0</field>
+            <field name="points_multiplier">1.0</field>
+            <field name="discount_percentage">0.0</field>
+            <field name="free_shipping">False</field>
+            <field name="priority_support">False</field>
+            <field name="exclusive_access">False</field>
+            <field name="birthday_bonus_points">50</field>
+            <field name="referral_bonus_points">25</field>
+            <field name="seasonal_bonus_points">25</field>
+            <field name="milestone_bonus_points">0</field>
+            <field name="age_group_benefits">all</field>
+            <field name="gender_benefits">all</field>
+            <field name="seasonal_benefits">all</field>
+        </record>
+        
+        <record id="loyalty_tier_silver" model="loyalty.tier">
+            <field name="name">Silver</field>
+            <field name="code">SILVER</field>
+            <field name="program_id" ref="loyalty_program_main"/>
+            <field name="sequence">20</field>
+            <field name="is_active">True</field>
+            <field name="min_points">500</field>
+            <field name="max_points">999</field>
+            <field name="min_purchases">5</field>
+            <field name="min_purchase_amount">500.0</field>
+            <field name="min_purchase_frequency">30</field>
+            <field name="points_multiplier">1.2</field>
+            <field name="discount_percentage">5.0</field>
+            <field name="free_shipping">True</field>
+            <field name="priority_support">False</field>
+            <field name="exclusive_access">False</field>
+            <field name="birthday_bonus_points">100</field>
+            <field name="referral_bonus_points">50</field>
+            <field name="seasonal_bonus_points">50</field>
+            <field name="milestone_bonus_points">25</field>
+            <field name="age_group_benefits">all</field>
+            <field name="gender_benefits">all</field>
+            <field name="seasonal_benefits">all</field>
+        </record>
+        
+        <record id="loyalty_tier_gold" model="loyalty.tier">
+            <field name="name">Gold</field>
+            <field name="code">GOLD</field>
+            <field name="program_id" ref="loyalty_program_main"/>
+            <field name="sequence">30</field>
+            <field name="is_active">True</field>
+            <field name="min_points">1000</field>
+            <field name="max_points">1999</field>
+            <field name="min_purchases">10</field>
+            <field name="min_purchase_amount">1000.0</field>
+            <field name="min_purchase_frequency">20</field>
+            <field name="points_multiplier">1.5</field>
+            <field name="discount_percentage">10.0</field>
+            <field name="free_shipping">True</field>
+            <field name="priority_support">True</field>
+            <field name="exclusive_access">False</field>
+            <field name="birthday_bonus_points">200</field>
+            <field name="referral_bonus_points">100</field>
+            <field name="seasonal_bonus_points">100</field>
+            <field name="milestone_bonus_points">50</field>
+            <field name="age_group_benefits">all</field>
+            <field name="gender_benefits">all</field>
+            <field name="seasonal_benefits">all</field>
+        </record>
+        
+        <record id="loyalty_tier_platinum" model="loyalty.tier">
+            <field name="name">Platinum</field>
+            <field name="code">PLATINUM</field>
+            <field name="program_id" ref="loyalty_program_main"/>
+            <field name="sequence">40</field>
+            <field name="is_active">True</field>
+            <field name="is_highest_tier">True</field>
+            <field name="min_points">2000</field>
+            <field name="max_points">0</field>
+            <field name="min_purchases">20</field>
+            <field name="min_purchase_amount">2000.0</field>
+            <field name="min_purchase_frequency">15</field>
+            <field name="points_multiplier">2.0</field>
+            <field name="discount_percentage">15.0</field>
+            <field name="free_shipping">True</field>
+            <field name="priority_support">True</field>
+            <field name="exclusive_access">True</field>
+            <field name="birthday_bonus_points">500</field>
+            <field name="referral_bonus_points">250</field>
+            <field name="seasonal_bonus_points">250</field>
+            <field name="milestone_bonus_points">100</field>
+            <field name="age_group_benefits">all</field>
+            <field name="gender_benefits">all</field>
+            <field name="seasonal_benefits">all</field>
+        </record>
+        
+        <!-- Loyalty Rewards -->
+        <record id="loyalty_reward_discount_5" model="loyalty.reward">
+            <field name="name">5% Discount</field>
+            <field name="description">5% discount on your next purchase</field>
+            <field name="is_active">True</field>
+            <field name="points_required">100</field>
+            <field name="reward_type">discount</field>
+            <field name="discount_type">percentage</field>
+            <field name="discount_value">5.0</field>
+            <field name="total_quantity">1000</field>
+            <field name="age_group">all</field>
+            <field name="gender">all</field>
+            <field name="season">all</field>
+            <field name="is_birthday_reward">False</field>
+            <field name="is_referral_reward">False</field>
+            <field name="is_tier_exclusive">False</field>
+        </record>
+        
+        <record id="loyalty_reward_discount_10" model="loyalty.reward">
+            <field name="name">10% Discount</field>
+            <field name="description">10% discount on your next purchase</field>
+            <field name="is_active">True</field>
+            <field name="points_required">250</field>
+            <field name="reward_type">discount</field>
+            <field name="discount_type">percentage</field>
+            <field name="discount_value">10.0</field>
+            <field name="total_quantity">500</field>
+            <field name="age_group">all</field>
+            <field name="gender">all</field>
+            <field name="season">all</field>
+            <field name="is_birthday_reward">False</field>
+            <field name="is_referral_reward">False</field>
+            <field name="is_tier_exclusive">False</field>
+        </record>
+        
+        <record id="loyalty_reward_discount_15" model="loyalty.reward">
+            <field name="name">15% Discount</field>
+            <field name="description">15% discount on your next purchase</field>
+            <field name="is_active">True</field>
+            <field name="points_required">500</field>
+            <field name="reward_type">discount</field>
+            <field name="discount_type">percentage</field>
+            <field name="discount_value">15.0</field>
+            <field name="total_quantity">200</field>
+            <field name="age_group">all</field>
+            <field name="gender">all</field>
+            <field name="season">all</field>
+            <field name="is_birthday_reward">False</field>
+            <field name="is_referral_reward">False</field>
+            <field name="is_tier_exclusive">False</field>
+        </record>
+        
+        <record id="loyalty_reward_discount_20" model="loyalty.reward">
+            <field name="name">20% Discount</field>
+            <field name="description">20% discount on your next purchase</field>
+            <field name="is_active">True</field>
+            <field name="points_required">1000</field>
+            <field name="reward_type">discount</field>
+            <field name="discount_type">percentage</field>
+            <field name="discount_value">20.0</field>
+            <field name="total_quantity">100</field>
+            <field name="age_group">all</field>
+            <field name="gender">all</field>
+            <field name="season">all</field>
+            <field name="is_birthday_reward">False</field>
+            <field name="is_referral_reward">False</field>
+            <field name="is_tier_exclusive">False</field>
+        </record>
+        
+        <!-- Loyalty Voucher Templates -->
+        <record id="loyalty_voucher_template_discount_10" model="loyalty.voucher.template">
+            <field name="name">10% Discount Voucher</field>
+            <field name="code">DISC_10</field>
+            <field name="description">10% discount voucher</field>
+            <field name="is_active">True</field>
+            <field name="voucher_type">discount</field>
+            <field name="discount_type">percentage</field>
+            <field name="discount_value">10.0</field>
+            <field name="validity_days">30</field>
+            <field name="usage_limit">1</field>
+            <field name="usage_limit_per_customer">1</field>
+            <field name="age_group">all</field>
+            <field name="gender">all</field>
+            <field name="season">all</field>
+            <field name="is_birthday_voucher">False</field>
+            <field name="is_referral_voucher">False</field>
+            <field name="is_tier_exclusive">False</field>
+        </record>
+        
+        <record id="loyalty_voucher_template_discount_20" model="loyalty.voucher.template">
+            <field name="name">20% Discount Voucher</field>
+            <field name="code">DISC_20</field>
+            <field name="description">20% discount voucher</field>
+            <field name="is_active">True</field>
+            <field name="voucher_type">discount</field>
+            <field name="discount_type">percentage</field>
+            <field name="discount_value">20.0</field>
+            <field name="validity_days">30</field>
+            <field name="usage_limit">1</field>
+            <field name="usage_limit_per_customer">1</field>
+            <field name="age_group">all</field>
+            <field name="gender">all</field>
+            <field name="season">all</field>
+            <field name="is_birthday_voucher">False</field>
+            <field name="is_referral_voucher">False</field>
+            <field name="is_tier_exclusive">False</field>
+        </record>
+        
+        <record id="loyalty_voucher_template_birthday" model="loyalty.voucher.template">
+            <field name="name">Birthday Special Voucher</field>
+            <field name="code">BIRTHDAY</field>
+            <field name="description">Special birthday voucher</field>
+            <field name="is_active">True</field>
+            <field name="voucher_type">discount</field>
+            <field name="discount_type">percentage</field>
+            <field name="discount_value">25.0</field>
+            <field name="validity_days">7</field>
+            <field name="usage_limit">1</field>
+            <field name="usage_limit_per_customer">1</field>
+            <field name="age_group">all</field>
+            <field name="gender">all</field>
+            <field name="season">all</field>
+            <field name="is_birthday_voucher">True</field>
+            <field name="is_referral_voucher">False</field>
+            <field name="is_tier_exclusive">False</field>
+        </record>
+        
+        <record id="loyalty_voucher_template_referral" model="loyalty.voucher.template">
+            <field name="name">Referral Voucher</field>
+            <field name="code">REFERRAL</field>
+            <field name="description">Referral voucher</field>
+            <field name="is_active">True</field>
+            <field name="voucher_type">discount</field>
+            <field name="discount_type">percentage</field>
+            <field name="discount_value">15.0</field>
+            <field name="validity_days">30</field>
+            <field name="usage_limit">1</field>
+            <field name="usage_limit_per_customer">1</field>
+            <field name="age_group">all</field>
+            <field name="gender">all</field>
+            <field name="season">all</field>
+            <field name="is_birthday_voucher">False</field>
+            <field name="is_referral_voucher">True</field>
+            <field name="is_tier_exclusive">False</field>
+        </record>
+        
+        <!-- Loyalty Offers -->
+        <record id="loyalty_offer_birthday" model="loyalty.offer">
+            <field name="name">Birthday Special Offer</field>
+            <field name="description">Special birthday offer for loyal customers</field>
+            <field name="is_active">True</field>
+            <field name="offer_type">birthday</field>
+            <field name="start_date">2024-01-01</field>
+            <field name="is_permanent">True</field>
+            <field name="offer_value">25.0</field>
+            <field name="offer_currency_id" ref="base.USD"/>
+            <field name="min_purchase_amount">50.0</field>
+            <field name="max_offer_amount">100.0</field>
+            <field name="points_multiplier">2.0</field>
+            <field name="bonus_points">100</field>
+            <field name="points_required">0</field>
+            <field name="customer_segment">all</field>
+            <field name="age_group">all</field>
+            <field name="gender">all</field>
+            <field name="season">all</field>
+            <field name="child_age_min">0</field>
+            <field name="child_age_max">216</field>
+            <field name="usage_limit">0</field>
+            <field name="usage_limit_per_customer">1</field>
+            <field name="is_automatic">True</field>
+            <field name="is_notification_sent">False</field>
+        </record>
+        
+        <record id="loyalty_offer_referral" model="loyalty.offer">
+            <field name="name">Referral Program</field>
+            <field name="description">Referral program for loyal customers</field>
+            <field name="is_active">True</field>
+            <field name="offer_type">referral</field>
+            <field name="start_date">2024-01-01</field>
+            <field name="is_permanent">True</field>
+            <field name="offer_value">15.0</field>
+            <field name="offer_currency_id" ref="base.USD"/>
+            <field name="min_purchase_amount">25.0</field>
+            <field name="max_offer_amount">50.0</field>
+            <field name="points_multiplier">1.5</field>
+            <field name="bonus_points">50</field>
+            <field name="points_required">0</field>
+            <field name="customer_segment">all</field>
+            <field name="age_group">all</field>
+            <field name="gender">all</field>
+            <field name="season">all</field>
+            <field name="child_age_min">0</field>
+            <field name="child_age_max">216</field>
+            <field name="usage_limit">0</field>
+            <field name="usage_limit_per_customer">5</field>
+            <field name="is_automatic">True</field>
+            <field name="is_notification_sent">False</field>
+        </record>
+        
+        <record id="loyalty_offer_seasonal_summer" model="loyalty.offer">
+            <field name="name">Summer Collection Offer</field>
+            <field name="description">Special offer for summer collection</field>
+            <field name="is_active">True</field>
+            <field name="offer_type">seasonal</field>
+            <field name="start_date">2024-06-01</field>
+            <field name="end_date">2024-08-31</field>
+            <field name="is_permanent">False</field>
+            <field name="offer_value">20.0</field>
+            <field name="offer_currency_id" ref="base.USD"/>
+            <field name="min_purchase_amount">100.0</field>
+            <field name="max_offer_amount">200.0</field>
+            <field name="points_multiplier">1.5</field>
+            <field name="bonus_points">75</field>
+            <field name="points_required">0</field>
+            <field name="customer_segment">all</field>
+            <field name="age_group">all</field>
+            <field name="gender">all</field>
+            <field name="season">summer</field>
+            <field name="child_age_min">0</field>
+            <field name="child_age_max">216</field>
+            <field name="usage_limit">0</field>
+            <field name="usage_limit_per_customer">3</field>
+            <field name="is_automatic">True</field>
+            <field name="is_notification_sent">False</field>
+        </record>
+        
+        <record id="loyalty_offer_seasonal_winter" model="loyalty.offer">
+            <field name="name">Winter Collection Offer</field>
+            <field name="description">Special offer for winter collection</field>
+            <field name="is_active">True</field>
+            <field name="offer_type">seasonal</field>
+            <field name="start_date">2024-12-01</field>
+            <field name="end_date">2025-02-28</field>
+            <field name="is_permanent">False</field>
+            <field name="offer_value">20.0</field>
+            <field name="offer_currency_id" ref="base.USD"/>
+            <field name="min_purchase_amount">100.0</field>
+            <field name="max_offer_amount">200.0</field>
+            <field name="points_multiplier">1.5</field>
+            <field name="bonus_points">75</field>
+            <field name="points_required">0</field>
+            <field name="customer_segment">all</field>
+            <field name="age_group">all</field>
+            <field name="gender">all</field>
+            <field name="season">winter</field>
+            <field name="child_age_min">0</field>
+            <field name="child_age_max">216</field>
+            <field name="usage_limit">0</field>
+            <field name="usage_limit_per_customer">3</field>
+            <field name="is_automatic">True</field>
+            <field name="is_notification_sent">False</field>
+        </record>
+        
+    </data>
+</ocean>

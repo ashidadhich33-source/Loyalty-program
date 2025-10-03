@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        <!-- Loyalty Program Security Rules -->
+        <record id="rule_loyalty_program_user" model="ocean.rule">
+            <field name="name">Loyalty Program: User Access</field>
+            <field name="model_id" ref="model_loyalty_program"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_user'))]"/>
+        </record>
+        
+        <record id="rule_loyalty_program_manager" model="ocean.rule">
+            <field name="name">Loyalty Program: Manager Access</field>
+            <field name="model_id" ref="model_loyalty_program"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_manager'))]"/>
+        </record>
+        
+        <!-- Loyalty Points Security Rules -->
+        <record id="rule_loyalty_points_user" model="ocean.rule">
+            <field name="name">Loyalty Points: User Access</field>
+            <field name="model_id" ref="model_loyalty_points"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_user'))]"/>
+        </record>
+        
+        <record id="rule_loyalty_points_manager" model="ocean.rule">
+            <field name="name">Loyalty Points: Manager Access</field>
+            <field name="model_id" ref="model_loyalty_points"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_manager'))]"/>
+        </record>
+        
+        <!-- Loyalty Points Balance Security Rules -->
+        <record id="rule_loyalty_points_balance_user" model="ocean.rule">
+            <field name="name">Loyalty Points Balance: User Access</field>
+            <field name="model_id" ref="model_loyalty_points_balance"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_user'))]"/>
+        </record>
+        
+        <record id="rule_loyalty_points_balance_manager" model="ocean.rule">
+            <field name="name">Loyalty Points Balance: Manager Access</field>
+            <field name="model_id" ref="model_loyalty_points_balance"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_manager'))]"/>
+        </record>
+        
+        <!-- Loyalty Reward Security Rules -->
+        <record id="rule_loyalty_reward_user" model="ocean.rule">
+            <field name="name">Loyalty Reward: User Access</field>
+            <field name="model_id" ref="model_loyalty_reward"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_user'))]"/>
+        </record>
+        
+        <record id="rule_loyalty_reward_manager" model="ocean.rule">
+            <field name="name">Loyalty Reward: Manager Access</field>
+            <field name="model_id" ref="model_loyalty_reward"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_manager'))]"/>
+        </record>
+        
+        <!-- Loyalty Redemption Security Rules -->
+        <record id="rule_loyalty_redemption_user" model="ocean.rule">
+            <field name="name">Loyalty Redemption: User Access</field>
+            <field name="model_id" ref="model_loyalty_redemption"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_user'))]"/>
+        </record>
+        
+        <record id="rule_loyalty_redemption_manager" model="ocean.rule">
+            <field name="name">Loyalty Redemption: Manager Access</field>
+            <field name="model_id" ref="model_loyalty_redemption"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_manager'))]"/>
+        </record>
+        
+        <!-- Loyalty Voucher Template Security Rules -->
+        <record id="rule_loyalty_voucher_template_user" model="ocean.rule">
+            <field name="name">Loyalty Voucher Template: User Access</field>
+            <field name="model_id" ref="model_loyalty_voucher_template"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_user'))]"/>
+        </record>
+        
+        <record id="rule_loyalty_voucher_template_manager" model="ocean.rule">
+            <field name="name">Loyalty Voucher Template: Manager Access</field>
+            <field name="model_id" ref="model_loyalty_voucher_template"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_manager'))]"/>
+        </record>
+        
+        <!-- Loyalty Voucher Security Rules -->
+        <record id="rule_loyalty_voucher_user" model="ocean.rule">
+            <field name="name">Loyalty Voucher: User Access</field>
+            <field name="model_id" ref="model_loyalty_voucher"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_user'))]"/>
+        </record>
+        
+        <record id="rule_loyalty_voucher_manager" model="ocean.rule">
+            <field name="name">Loyalty Voucher: Manager Access</field>
+            <field name="model_id" ref="model_loyalty_voucher"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_manager'))]"/>
+        </record>
+        
+        <!-- Loyalty Voucher Usage Security Rules -->
+        <record id="rule_loyalty_voucher_usage_user" model="ocean.rule">
+            <field name="name">Loyalty Voucher Usage: User Access</field>
+            <field name="model_id" ref="model_loyalty_voucher_usage"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_user'))]"/>
+        </record>
+        
+        <record id="rule_loyalty_voucher_usage_manager" model="ocean.rule">
+            <field name="name">Loyalty Voucher Usage: Manager Access</field>
+            <field name="model_id" ref="model_loyalty_voucher_usage"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_manager'))]"/>
+        </record>
+        
+        <!-- Loyalty Offer Security Rules -->
+        <record id="rule_loyalty_offer_user" model="ocean.rule">
+            <field name="name">Loyalty Offer: User Access</field>
+            <field name="model_id" ref="model_loyalty_offer"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_user'))]"/>
+        </record>
+        
+        <record id="rule_loyalty_offer_manager" model="ocean.rule">
+            <field name="name">Loyalty Offer: Manager Access</field>
+            <field name="model_id" ref="model_loyalty_offer"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_manager'))]"/>
+        </record>
+        
+        <!-- Loyalty Offer Product Security Rules -->
+        <record id="rule_loyalty_offer_product_user" model="ocean.rule">
+            <field name="name">Loyalty Offer Product: User Access</field>
+            <field name="model_id" ref="model_loyalty_offer_product"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_user'))]"/>
+        </record>
+        
+        <record id="rule_loyalty_offer_product_manager" model="ocean.rule">
+            <field name="name">Loyalty Offer Product: Manager Access</field>
+            <field name="model_id" ref="model_loyalty_offer_product"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_manager'))]"/>
+        </record>
+        
+        <!-- Loyalty Offer Category Security Rules -->
+        <record id="rule_loyalty_offer_category_user" model="ocean.rule">
+            <field name="name">Loyalty Offer Category: User Access</field>
+            <field name="model_id" ref="model_loyalty_offer_category"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_user'))]"/>
+        </record>
+        
+        <record id="rule_loyalty_offer_category_manager" model="ocean.rule">
+            <field name="name">Loyalty Offer Category: Manager Access</field>
+            <field name="model_id" ref="model_loyalty_offer_category"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_manager'))]"/>
+        </record>
+        
+        <!-- Loyalty Offer Usage Security Rules -->
+        <record id="rule_loyalty_offer_usage_user" model="ocean.rule">
+            <field name="name">Loyalty Offer Usage: User Access</field>
+            <field name="model_id" ref="model_loyalty_offer_usage"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_user'))]"/>
+        </record>
+        
+        <record id="rule_loyalty_offer_usage_manager" model="ocean.rule">
+            <field name="name">Loyalty Offer Usage: Manager Access</field>
+            <field name="model_id" ref="model_loyalty_offer_usage"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_manager'))]"/>
+        </record>
+        
+        <!-- Loyalty Tier Security Rules -->
+        <record id="rule_loyalty_tier_user" model="ocean.rule">
+            <field name="name">Loyalty Tier: User Access</field>
+            <field name="model_id" ref="model_loyalty_tier"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_user'))]"/>
+        </record>
+        
+        <record id="rule_loyalty_tier_manager" model="ocean.rule">
+            <field name="name">Loyalty Tier: Manager Access</field>
+            <field name="model_id" ref="model_loyalty_tier"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_manager'))]"/>
+        </record>
+        
+        <!-- Loyalty Tier Analytics Security Rules -->
+        <record id="rule_loyalty_tier_analytics_user" model="ocean.rule">
+            <field name="name">Loyalty Tier Analytics: User Access</field>
+            <field name="model_id" ref="model_loyalty_tier_analytics"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_user'))]"/>
+        </record>
+        
+        <record id="rule_loyalty_tier_analytics_manager" model="ocean.rule">
+            <field name="name">Loyalty Tier Analytics: Manager Access</field>
+            <field name="model_id" ref="model_loyalty_tier_analytics"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_manager'))]"/>
+        </record>
+        
+        <!-- Loyalty Analytics Security Rules -->
+        <record id="rule_loyalty_analytics_user" model="ocean.rule">
+            <field name="name">Loyalty Analytics: User Access</field>
+            <field name="model_id" ref="model_loyalty_analytics"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_user'))]"/>
+        </record>
+        
+        <record id="rule_loyalty_analytics_manager" model="ocean.rule">
+            <field name="name">Loyalty Analytics: Manager Access</field>
+            <field name="model_id" ref="model_loyalty_analytics"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_manager'))]"/>
+        </record>
+        
+        <!-- Loyalty Customer Analytics Security Rules -->
+        <record id="rule_loyalty_customer_analytics_user" model="ocean.rule">
+            <field name="name">Loyalty Customer Analytics: User Access</field>
+            <field name="model_id" ref="model_loyalty_customer_analytics"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_user'))]"/>
+        </record>
+        
+        <record id="rule_loyalty_customer_analytics_manager" model="ocean.rule">
+            <field name="name">Loyalty Customer Analytics: Manager Access</field>
+            <field name="model_id" ref="model_loyalty_customer_analytics"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_manager'))]"/>
+        </record>
+        
+    </data>
+</ocean>

@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from odoo.tests.common import TransactionCase
-from odoo.exceptions import ValidationError
+from core_framework.testing import TestCase
+from core_framework.exceptions import ValidationError
 from datetime import date, timedelta
 
 
-class TestSystemUtils(TransactionCase):
+class TestSystemUtils(TestCase):
     """Test cases for system.utils model"""
     
     def setUp(self):

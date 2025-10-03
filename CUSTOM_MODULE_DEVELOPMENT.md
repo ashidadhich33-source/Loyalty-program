@@ -1,14 +1,14 @@
 # Custom Module Development System
 
 ## Overview
-Users can create custom modules according to their specific requirements and install them later, just like Odoo. This system provides complete module development, testing, and publishing capabilities.
+Users can create custom modules according to their specific requirements and install them later, just like Ocean ERP. This system provides complete module development, testing, and publishing capabilities.
 
 ## Module Development Workflow
 
 ### 1. Module Creation
 ```bash
 # Create new module
-./odoo-bin scaffold my_custom_module
+./ocean-bin scaffold my_custom_module
 
 # Module structure created automatically
 my_custom_module/
@@ -73,13 +73,13 @@ describe('Custom Order Module', () => {
 ### 4. Module Publishing
 ```bash
 # Package module for distribution
-./odoo-bin package my_custom_module
+./ocean-bin package my_custom_module
 
 # Publish to module repository
-./odoo-bin publish my_custom_module --repo https://custom-repo.com
+./ocean-bin publish my_custom_module --repo https://custom-repo.com
 
 # Install custom module
-./odoo-bin install my_custom_module
+./ocean-bin install my_custom_module
 ```
 
 ## Module Development Tools
@@ -87,13 +87,13 @@ describe('Custom Order Module', () => {
 ### 1. Module Scaffolding
 ```bash
 # Create module with template
-./odoo-bin scaffold my_module --template=standard
+./ocean-bin scaffold my_module --template=standard
 
 # Create module with specific template
-./odoo-bin scaffold my_module --template=ecommerce
+./ocean-bin scaffold my_module --template=ecommerce
 
 # Create module with custom template
-./odoo-bin scaffold my_module --template=custom --path=/templates/custom
+./ocean-bin scaffold my_module --template=custom --path=/templates/custom
 ```
 
 ### 2. Module Templates
@@ -111,16 +111,16 @@ Templates Available:
 ### 3. Development Environment
 ```bash
 # Start development server
-./odoo-bin dev --module=my_custom_module
+./ocean-bin dev --module=my_custom_module
 
 # Run tests
-./odoo-bin test my_custom_module
+./ocean-bin test my_custom_module
 
 # Check module dependencies
-./odoo-bin check-deps my_custom_module
+./ocean-bin check-deps my_custom_module
 
 # Validate module
-./odoo-bin validate my_custom_module
+./ocean-bin validate my_custom_module
 ```
 
 ## Module Structure
@@ -358,13 +358,13 @@ describe('Custom Module E2E', () => {
 ### 1. Module Repository
 ```bash
 # Create module repository
-./odoo-bin create-repo my_custom_repo
+./ocean-bin create-repo my_custom_repo
 
 # Add module to repository
-./odoo-bin add-module my_custom_module --repo=my_custom_repo
+./ocean-bin add-module my_custom_module --repo=my_custom_repo
 
 # Publish module
-./odoo-bin publish my_custom_module --repo=my_custom_repo
+./ocean-bin publish my_custom_module --repo=my_custom_repo
 ```
 
 ### 2. Module Marketplace
@@ -392,16 +392,16 @@ interface ModuleMarketplace {
 ### 3. Module Distribution
 ```bash
 # Package module
-./odoo-bin package my_custom_module --output=dist/
+./ocean-bin package my_custom_module --output=dist/
 
 # Sign module
-./odoo-bin sign my_custom_module --key=private_key.pem
+./ocean-bin sign my_custom_module --key=private_key.pem
 
 # Upload to repository
-./odoo-bin upload my_custom_module --repo=https://custom-repo.com
+./ocean-bin upload my_custom_module --repo=https://custom-repo.com
 
 # Install from repository
-./odoo-bin install my_custom_module --repo=https://custom-repo.com
+./ocean-bin install my_custom_module --repo=https://custom-repo.com
 ```
 
 ## Module Customization
@@ -438,7 +438,7 @@ export class ResPartnerCustom extends Model {
 ### 3. Custom Views
 ```xml
 <!-- views/custom_partner_views.xml -->
-<odoo>
+<ocean>
   <record id="view_partner_form_custom" model="ir.ui.view">
     <field name="name">res.partner.form.custom</field>
     <field name="model">res.partner</field>
@@ -451,7 +451,7 @@ export class ResPartnerCustom extends Model {
       </field>
     </field>
   </record>
-</odoo>
+</ocean>
 ```
 
 ## Module Development Best Practices
@@ -485,48 +485,48 @@ export class ResPartnerCustom extends Model {
 ### 1. Development Environment
 ```bash
 # Start development server
-./odoo-bin dev --module=my_custom_module
+./ocean-bin dev --module=my_custom_module
 
 # Run tests
-./odoo-bin test my_custom_module
+./ocean-bin test my_custom_module
 
 # Check dependencies
-./odoo-bin check-deps my_custom_module
+./ocean-bin check-deps my_custom_module
 
 # Validate module
-./odoo-bin validate my_custom_module
+./ocean-bin validate my_custom_module
 ```
 
 ### 2. Debugging Tools
 ```bash
 # Debug mode
-./odoo-bin dev --debug --module=my_custom_module
+./ocean-bin dev --debug --module=my_custom_module
 
 # Log level
-./odoo-bin dev --log-level=debug --module=my_custom_module
+./ocean-bin dev --log-level=debug --module=my_custom_module
 
 # Profile performance
-./odoo-bin dev --profile --module=my_custom_module
+./ocean-bin dev --profile --module=my_custom_module
 ```
 
 ### 3. Module Management
 ```bash
 # List installed modules
-./odoo-bin list-modules
+./ocean-bin list-modules
 
 # Check module status
-./odoo-bin status my_custom_module
+./ocean-bin status my_custom_module
 
 # Update module
-./odoo-bin update my_custom_module
+./ocean-bin update my_custom_module
 
 # Uninstall module
-./odoo-bin uninstall my_custom_module
+./ocean-bin uninstall my_custom_module
 ```
 
 ## Conclusion
 
-This system provides complete module development capabilities, just like Odoo:
+This system provides complete module development capabilities, just like Ocean ERP:
 
 ✅ **Module Creation**: Scaffold new modules with templates  
 ✅ **Development**: Full development environment with tools  
@@ -536,4 +536,4 @@ This system provides complete module development capabilities, just like Odoo:
 ✅ **Customization**: Modify existing modules  
 ✅ **Distribution**: Share modules with others  
 
-Users can create modules according to their specific requirements and install them later, exactly like Odoo! 🎉
+Users can create modules according to their specific requirements and install them later, exactly like Ocean ERP! 🎉

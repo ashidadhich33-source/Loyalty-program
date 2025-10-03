@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        <!-- Sale Order Wizard Form View -->
+        <record id="view_sale_order_wizard_form" model="ocean.ui.view">
+            <field name="name">sale.order.wizard.form</field>
+            <field name="model">sale.order.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Sale Order Wizard">
+                    <header>
+                        <button name="action_create_order" string="Create Order" type="object" class="btn-primary"/>
+                        <button name="action_create_quotation" string="Create Quotation" type="object" class="btn-success"/>
+                        <button name="action_reset" string="Reset" type="object" class="btn-secondary"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Wizard Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="partner_id" required="1"/>
+                                <field name="child_profile_id"/>
+                                <field name="date_order"/>
+                                <field name="date_required"/>
+                                <field name="user_id"/>
+                                <field name="team_id"/>
+                            </group>
+                            <group>
+                                <field name="age_group"/>
+                                <field name="gender_preference"/>
+                                <field name="season"/>
+                                <field name="delivery_method"/>
+                                <field name="payment_method"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="delivery_address_id"/>
+                            <field name="delivery_notes" placeholder="Special delivery instructions..."/>
+                        </group>
+                        <notebook>
+                            <page string="Order Lines" name="order_lines">
+                                <field name="order_line_ids" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="product_id"/>
+                                        <field name="name"/>
+                                        <field name="size"/>
+                                        <field name="color"/>
+                                        <field name="product_uom_qty"/>
+                                        <field name="price_unit"/>
+                                        <field name="discount"/>
+                                        <field name="price_subtotal"/>
+                                        <field name="age_group"/>
+                                        <field name="gender"/>
+                                        <field name="season"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Pricing" name="pricing">
+                                <group>
+                                    <group>
+                                        <field name="discount_type"/>
+                                        <field name="discount_percentage" attrs="{'invisible': [('discount_type', '!=', 'percentage')]}"/>
+                                        <field name="discount_amount" attrs="{'invisible': [('discount_type', '!=', 'fixed')]}"/>
+                                    </group>
+                                    <group>
+                                        <field name="amount_untaxed" readonly="1"/>
+                                        <field name="amount_tax" readonly="1"/>
+                                        <field name="amount_total" readonly="1"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Notes" name="notes">
+                                <field name="note" placeholder="Internal notes..."/>
+                                <field name="terms_conditions" placeholder="Terms and conditions..."/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Sale Order Wizard Action -->
+        <record id="action_sale_order_wizard" model="ocean.actions.act_window">
+            <field name="name">Sale Order Wizard</field>
+            <field name="res_model">sale.order.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_sale_order_wizard_form"/>
+            <field name="target">new</field>
+        </record>
+        
+    </data>
+</ocean>

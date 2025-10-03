@@ -362,4 +362,4 @@ Tests complete business workflows
 ```
 
 ---
-**This dependency map ensures smooth module installation and prevents conflicts, just like Odoo!**
+**This dependency map ensures smooth module installation and prevents conflicts, just like Ocean ERP!**

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data noupdate="1">
+        
+        <!-- Sales Teams -->
+        <record id="sales_team_kids_clothing" model="sales.team">
+            <field name="name">Kids Clothing Sales Team</field>
+            <field name="description">Sales team for kids clothing retail</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="sales_team_online" model="sales.team">
+            <field name="name">Online Sales Team</field>
+            <field name="description">Sales team for online orders</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="sales_team_store" model="sales.team">
+            <field name="name">Store Sales Team</field>
+            <field name="description">Sales team for physical store</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <!-- Delivery Carriers -->
+        <record id="delivery_carrier_standard" model="delivery.carrier">
+            <field name="name">Standard Delivery</field>
+            <field name="description">Standard delivery service</field>
+            <field name="delivery_time">3-5 business days</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="delivery_carrier_express" model="delivery.carrier">
+            <field name="name">Express Delivery</field>
+            <field name="description">Express delivery service</field>
+            <field name="delivery_time">1-2 business days</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="delivery_carrier_same_day" model="delivery.carrier">
+            <field name="name">Same Day Delivery</field>
+            <field name="description">Same day delivery service</field>
+            <field name="delivery_time">Same day</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <!-- Sales Sequences -->
+        <record id="seq_sale_order" model="ocean.sequence">
+            <field name="name">Sales Order Sequence</field>
+            <field name="code">sale.order</field>
+            <field name="prefix">SO</field>
+            <field name="padding">4</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+        </record>
+        
+        <record id="seq_sale_delivery" model="ocean.sequence">
+            <field name="name">Sale Delivery Sequence</field>
+            <field name="code">sale.delivery</field>
+            <field name="prefix">DEL</field>
+            <field name="padding">4</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+        </record>
+        
+        <record id="seq_sale_return" model="ocean.sequence">
+            <field name="name">Sale Return Sequence</field>
+            <field name="code">sale.return</field>
+            <field name="prefix">RET</field>
+            <field name="padding">4</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+        </record>
+        
+        <!-- Sales Configuration -->
+        <record id="config_sales_return_days" model="ocean.config_parameter">
+            <field name="key">sales.return_days</field>
+            <field name="value">30</field>
+        </record>
+        
+        <record id="config_sales_discount_limit" model="ocean.config_parameter">
+            <field name="key">sales.discount_limit</field>
+            <field name="value">20</field>
+        </record>
+        
+        <record id="config_sales_approval_limit" model="ocean.config_parameter">
+            <field name="key">sales.approval_limit</field>
+            <field name="value">10000</field>
+        </record>
+        
+        <record id="config_sales_auto_confirm" model="ocean.config_parameter">
+            <field name="key">sales.auto_confirm</field>
+            <field name="value">False</field>
+        </record>
+        
+        <record id="config_sales_auto_invoice" model="ocean.config_parameter">
+            <field name="key">sales.auto_invoice</field>
+            <field name="value">False</field>
+        </record>
+        
+        <record id="config_sales_auto_delivery" model="ocean.config_parameter">
+            <field name="key">sales.auto_delivery</field>
+            <field name="value">False</field>
+        </record>
+        
+        <!-- Sales Terms and Conditions -->
+        <record id="sales_terms_standard" model="ocean.config_parameter">
+            <field name="key">sales.terms_standard</field>
+            <field name="value">Standard terms and conditions for kids clothing sales. All products are subject to our return policy. Delivery times may vary based on location and product availability.</field>
+        </record>
+        
+        <record id="sales_terms_online" model="ocean.config_parameter">
+            <field name="key">sales.terms_online</field>
+            <field name="value">Online sales terms and conditions. Secure payment processing. Free shipping on orders above Rs. 999. Easy returns within 30 days.</field>
+        </record>
+        
+        <record id="sales_terms_store" model="ocean.config_parameter">
+            <field name="key">sales.terms_store</field>
+            <field name="value">In-store sales terms and conditions. Immediate delivery available. Exchange policy applies. Customer satisfaction guaranteed.</field>
+        </record>
+        
+    </data>
+</ocean>

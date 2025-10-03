@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        <!-- Loyalty Rewards Tree View -->
+        <record id="view_loyalty_rewards_tree" model="ocean.ui.view">
+            <field name="name">loyalty.rewards.tree</field>
+            <field name="model">loyalty.reward</field>
+            <field name="arch" type="xml">
+                <tree string="Loyalty Rewards" decoration-muted="not is_active" decoration-success="is_active">
+                    <field name="name"/>
+                    <field name="is_active"/>
+                    <field name="points_required"/>
+                    <field name="reward_type"/>
+                    <field name="product_id"/>
+                    <field name="discount_type"/>
+                    <field name="discount_value"/>
+                    <field name="total_quantity"/>
+                    <field name="available_quantity"/>
+                    <field name="redeemed_quantity"/>
+                    <field name="redemption_count"/>
+                    <field name="age_group"/>
+                    <field name="gender"/>
+                    <field name="season"/>
+                    <field name="is_birthday_reward"/>
+                    <field name="is_referral_reward"/>
+                    <field name="is_tier_exclusive"/>
+                    <field name="tier_id"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Loyalty Rewards Form View -->
+        <record id="view_loyalty_rewards_form" model="ocean.ui.view">
+            <field name="name">loyalty.rewards.form</field>
+            <field name="model">loyalty.reward</field>
+            <field name="arch" type="xml">
+                <form string="Loyalty Reward">
+                    <header>
+                        <button name="action_redeem" string="Redeem" type="object" class="btn-primary"/>
+                        <field name="is_active" widget="boolean_toggle"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Reward Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="description"/>
+                                <field name="is_active"/>
+                                <field name="points_required"/>
+                                <field name="reward_type"/>
+                            </group>
+                            <group>
+                                <field name="total_quantity"/>
+                                <field name="available_quantity"/>
+                                <field name="redeemed_quantity"/>
+                                <field name="redemption_count"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="product_id" attrs="{'invisible': [('reward_type', '!=', 'product')]}"/>
+                                <field name="product_quantity" attrs="{'invisible': [('reward_type', '!=', 'product')]}"/>
+                            </group>
+                            <group>
+                                <field name="discount_type" attrs="{'invisible': [('reward_type', '!=', 'discount')]}"/>
+                                <field name="discount_value" attrs="{'invisible': [('reward_type', '!=', 'discount')]}"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="voucher_template_id" attrs="{'invisible': [('reward_type', '!=', 'voucher')]}"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Kids Clothing Info" name="kids_info">
+                                <group>
+                                    <group>
+                                        <field name="age_group"/>
+                                        <field name="gender"/>
+                                        <field name="season"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Special Features" name="special_features">
+                                <group>
+                                    <group>
+                                        <field name="is_birthday_reward"/>
+                                        <field name="is_referral_reward"/>
+                                        <field name="is_tier_exclusive"/>
+                                        <field name="tier_id"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Redemptions" name="redemptions">
+                                <field name="redemption_ids" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="name"/>
+                                        <field name="partner_id"/>
+                                        <field name="quantity"/>
+                                        <field name="points_used"/>
+                                        <field name="state"/>
+                                        <field name="date"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Loyalty Rewards Search View -->
+        <record id="view_loyalty_rewards_search" model="ocean.ui.view">
+            <field name="name">loyalty.rewards.search</field>
+            <field name="model">loyalty.reward</field>
+            <field name="arch" type="xml">
+                <search string="Search Loyalty Rewards">
+                    <field name="name"/>
+                    <field name="description"/>
+                    <field name="points_required"/>
+                    <field name="reward_type"/>
+                    <field name="product_id"/>
+                    <field name="age_group"/>
+                    <field name="gender"/>
+                    <field name="season"/>
+                    <separator/>
+                    <filter string="Active" name="active" domain="[('is_active', '=', True)]"/>
+                    <filter string="Inactive" name="inactive" domain="[('is_active', '=', False)]"/>
+                    <filter string="Available" name="available" domain="[('available_quantity', '>', 0)]"/>
+                    <filter string="Out of Stock" name="out_of_stock" domain="[('available_quantity', '=', 0)]"/>
+                    <separator/>
+                    <filter string="Product" name="product" domain="[('reward_type', '=', 'product')]"/>
+                    <filter string="Discount" name="discount" domain="[('reward_type', '=', 'discount')]"/>
+                    <filter string="Voucher" name="voucher" domain="[('reward_type', '=', 'voucher')]"/>
+                    <filter string="Service" name="service" domain="[('reward_type', '=', 'service')]"/>
+                    <filter string="Experience" name="experience" domain="[('reward_type', '=', 'experience')]"/>
+                    <separator/>
+                    <filter string="Birthday Reward" name="birthday" domain="[('is_birthday_reward', '=', True)]"/>
+                    <filter string="Referral Reward" name="referral" domain="[('is_referral_reward', '=', True)]"/>
+                    <filter string="Tier Exclusive" name="tier_exclusive" domain="[('is_tier_exclusive', '=', True)]"/>
+                    <separator/>
+                    <filter string="Newborn" name="newborn" domain="[('age_group', '=', 'newborn')]"/>
+                    <filter string="Infant" name="infant" domain="[('age_group', '=', 'infant')]"/>
+                    <filter string="Toddler" name="toddler" domain="[('age_group', '=', 'toddler')]"/>
+                    <filter string="Preschool" name="preschool" domain="[('age_group', '=', 'preschool')]"/>
+                    <filter string="School" name="school" domain="[('age_group', '=', 'school')]"/>
+                    <filter string="Teen" name="teen" domain="[('age_group', '=', 'teen')]"/>
+                    <filter string="All Age Groups" name="all_ages" domain="[('age_group', '=', 'all')]"/>
+                    <separator/>
+                    <filter string="Boys" name="boys" domain="[('gender', '=', 'boys')]"/>
+                    <filter string="Girls" name="girls" domain="[('gender', '=', 'girls')]"/>
+                    <filter string="Unisex" name="unisex" domain="[('gender', '=', 'unisex')]"/>
+                    <filter string="All Genders" name="all_genders" domain="[('gender', '=', 'all')]"/>
+                    <separator/>
+                    <filter string="Summer" name="summer" domain="[('season', '=', 'summer')]"/>
+                    <filter string="Winter" name="winter" domain="[('season', '=', 'winter')]"/>
+                    <filter string="Monsoon" name="monsoon" domain="[('season', '=', 'monsoon')]"/>
+                    <filter string="All Seasons" name="all_seasons" domain="[('season', '=', 'all')]"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter string="Type" name="group_type" context="{'group_by': 'reward_type'}"/>
+                        <filter string="Age Group" name="group_age" context="{'group_by': 'age_group'}"/>
+                        <filter string="Gender" name="group_gender" context="{'group_by': 'gender'}"/>
+                        <filter string="Season" name="group_season" context="{'group_by': 'season'}"/>
+                        <filter string="Tier" name="group_tier" context="{'group_by': 'tier_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- Loyalty Rewards Action -->
+        <record id="action_loyalty_rewards" model="ocean.actions.act_window">
+            <field name="name">Loyalty Rewards</field>
+            <field name="res_model">loyalty.reward</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_loyalty_rewards_tree"/>
+            <field name="search_view_id" ref="view_loyalty_rewards_search"/>
+            <field name="context">{'search_default_active': 1}</field>
+        </record>
+        
+        <!-- Loyalty Redemptions Tree View -->
+        <record id="view_loyalty_redemptions_tree" model="ocean.ui.view">
+            <field name="name">loyalty.redemptions.tree</field>
+            <field name="model">loyalty.redemption</field>
+            <field name="arch" type="xml">
+                <tree string="Loyalty Redemptions" decoration-muted="state=='cancelled'" decoration-success="state=='fulfilled'" decoration-warning="state=='confirmed'">
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="reward_id"/>
+                    <field name="program_id"/>
+                    <field name="quantity"/>
+                    <field name="points_used"/>
+                    <field name="points_per_unit"/>
+                    <field name="state"/>
+                    <field name="fulfillment_date"/>
+                    <field name="age_group"/>
+                    <field name="gender"/>
+                    <field name="season"/>
+                    <field name="date"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Loyalty Redemptions Form View -->
+        <record id="view_loyalty_redemptions_form" model="ocean.ui.view">
+            <field name="name">loyalty.redemptions.form</field>
+            <field name="model">loyalty.redemption</field>
+            <field name="arch" type="xml">
+                <form string="Loyalty Redemption">
+                    <header>
+                        <button name="action_confirm" string="Confirm" type="object" class="btn-success" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                        <button name="action_fulfill" string="Fulfill" type="object" class="btn-primary" attrs="{'invisible': [('state', '!=', 'confirmed')]}"/>
+                        <button name="action_cancel" string="Cancel" type="object" class="btn-danger" attrs="{'invisible': [('state', 'in', ['fulfilled', 'cancelled'])]}"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Redemption Reference"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="partner_id"/>
+                                <field name="reward_id"/>
+                                <field name="program_id"/>
+                                <field name="quantity"/>
+                                <field name="points_used"/>
+                                <field name="points_per_unit"/>
+                            </group>
+                            <group>
+                                <field name="state"/>
+                                <field name="fulfillment_date"/>
+                                <field name="fulfillment_note"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="age_group"/>
+                                <field name="gender"/>
+                                <field name="season"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Details" name="details">
+                                <field name="description" placeholder="Redemption description..."/>
+                                <field name="note" placeholder="Internal notes..."/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Loyalty Redemptions Search View -->
+        <record id="view_loyalty_redemptions_search" model="ocean.ui.view">
+            <field name="name">loyalty.redemptions.search</field>
+            <field name="model">loyalty.redemption</field>
+            <field name="arch" type="xml">
+                <search string="Search Loyalty Redemptions">
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="reward_id"/>
+                    <field name="program_id"/>
+                    <field name="quantity"/>
+                    <field name="points_used"/>
+                    <field name="state"/>
+                    <field name="age_group"/>
+                    <field name="gender"/>
+                    <field name="season"/>
+                    <separator/>
+                    <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
+                    <filter string="Confirmed" name="confirmed" domain="[('state', '=', 'confirmed')]"/>
+                    <filter string="Fulfilled" name="fulfilled" domain="[('state', '=', 'fulfilled')]"/>
+                    <filter string="Cancelled" name="cancelled" domain="[('state', '=', 'cancelled')]"/>
+                    <separator/>
+                    <filter string="Newborn" name="newborn" domain="[('age_group', '=', 'newborn')]"/>
+                    <filter string="Infant" name="infant" domain="[('age_group', '=', 'infant')]"/>
+                    <filter string="Toddler" name="toddler" domain="[('age_group', '=', 'toddler')]"/>
+                    <filter string="Preschool" name="preschool" domain="[('age_group', '=', 'preschool')]"/>
+                    <filter string="School" name="school" domain="[('age_group', '=', 'school')]"/>
+                    <filter string="Teen" name="teen" domain="[('age_group', '=', 'teen')]"/>
+                    <separator/>
+                    <filter string="Boys" name="boys" domain="[('gender', '=', 'boys')]"/>
+                    <filter string="Girls" name="girls" domain="[('gender', '=', 'girls')]"/>
+                    <filter string="Unisex" name="unisex" domain="[('gender', '=', 'unisex')]"/>
+                    <separator/>
+                    <filter string="Summer" name="summer" domain="[('season', '=', 'summer')]"/>
+                    <filter string="Winter" name="winter" domain="[('season', '=', 'winter')]"/>
+                    <filter string="Monsoon" name="monsoon" domain="[('season', '=', 'monsoon')]"/>
+                    <separator/>
+                    <filter string="Today" name="today" domain="[('date', '>=', datetime.datetime.now().replace(hour=0, minute=0, second=0))]"/>
+                    <filter string="This Week" name="this_week" domain="[('date', '>=', (datetime.datetime.now() - datetime.timedelta(days=7)))]"/>
+                    <filter string="This Month" name="this_month" domain="[('date', '>=', datetime.datetime.now().replace(day=1))]"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter string="Customer" name="group_partner" context="{'group_by': 'partner_id'}"/>
+                        <filter string="Reward" name="group_reward" context="{'group_by': 'reward_id'}"/>
+                        <filter string="Program" name="group_program" context="{'group_by': 'program_id'}"/>
+                        <filter string="State" name="group_state" context="{'group_by': 'state'}"/>
+                        <filter string="Age Group" name="group_age" context="{'group_by': 'age_group'}"/>
+                        <filter string="Gender" name="group_gender" context="{'group_by': 'gender'}"/>
+                        <filter string="Season" name="group_season" context="{'group_by': 'season'}"/>
+                        <filter string="Date" name="group_date" context="{'group_by': 'date'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- Loyalty Redemptions Action -->
+        <record id="action_loyalty_redemptions" model="ocean.actions.act_window">
+            <field name="name">Loyalty Redemptions</field>
+            <field name="res_model">loyalty.redemption</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_loyalty_redemptions_tree"/>
+            <field name="search_view_id" ref="view_loyalty_redemptions_search"/>
+        </record>
+        
+    </data>
+</ocean>

@@ -4,9 +4,9 @@
 
 ### **⚠️ IMPORTANT ARCHITECTURE REMINDER**
 
-This project is a **STANDALONE ERP SYSTEM** that mimics Odoo's functionality but is **NOT Odoo**. 
+This project is a **STANDALONE ERP SYSTEM** that uses Ocean ERP framework. 
 
-**❌ DO NOT CREATE ODOO MODULES**
+**❌ DO NOT CREATE OCEAN MODULES**
 **✅ CREATE ADDONS FOR OUR CUSTOM FRAMEWORK**
 
 ---
@@ -17,14 +17,14 @@ This project is a **STANDALONE ERP SYSTEM** that mimics Odoo's functionality but
 - **`core_framework/server.py`** - Main ERP server
 - **`core_framework/config.py`** - Configuration management  
 - **`core_framework/database.py`** - Database management with PostgreSQL
-- **`core_framework/orm.py`** - Custom ORM system (Odoo-style patterns)
+- **`core_framework/orm.py`** - Custom ORM system (Ocean ERP patterns)
 - **`core_framework/addon_manager.py`** - Addon management system
 - **`core_framework/web_interface.py`** - Web interface and routing
 
 ### **Technology Stack**
 - **Python 3.8+** - Core programming language
 - **PostgreSQL** - Database management
-- **Custom ORM** - Odoo-style ORM patterns
+- **Custom ORM** - Ocean ERP ORM patterns
 - **Custom Web Framework** - HTTP server with routing
 - **Custom Addon System** - Modular architecture
 
@@ -49,7 +49,7 @@ addons/
 │   └── README.md
 ```
 
-### **❌ WRONG: Odoo Module Structure**
+### **❌ WRONG: Ocean ERP Module Structure (Don't Use)**
 ```
 addons/
 ├── addon_name/
@@ -84,8 +84,8 @@ class ProductCategory(Model):
 ```
 
 ```python
-# ❌ WRONG: Don't use Odoo imports
-from odoo import models, fields, api  # ❌ DON'T USE
+# ❌ WRONG: Don't use Ocean ERP imports (Use Ocean ERP instead)
+from ocean import models, fields, api  # ❌ DON'T USE
 ```
 
 ### **2. View Development**
@@ -126,7 +126,7 @@ class CategoryAccessControl(AccessControl):
 ```
 
 ```csv
-# ❌ WRONG: Don't use Odoo security files -->
+# ❌ WRONG: Don't use Ocean ERP security files (Use Ocean ERP security) -->
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 ```
 
@@ -162,20 +162,20 @@ class CategoryData(DataLoader):
 ## 🚫 **WHAT NOT TO DO**
 
 ### **❌ NEVER USE:**
-1. **Odoo imports**: `from odoo import models, fields, api`
-2. **Odoo XML**: `<record>`, `<field>`, `<data>`
-3. **Odoo manifests**: `__manifest__.py`
-4. **Odoo security**: `ir.model.access.csv`
-5. **Odoo views**: XML view definitions
-6. **Odoo data**: XML data files
-7. **Odoo syntax**: `@api.depends`, `@api.onchange`
+1. **Ocean ERP imports**: `from ocean import models, fields, api` (Use Ocean ERP instead)
+2. **Ocean ERP XML**: `<record>`, `<field>`, `<data>` (Use Ocean ERP XML)
+3. **Ocean ERP manifests**: `__manifest__.py` (Use Ocean ERP manifests)
+4. **Ocean ERP security**: `ir.model.access.csv` (Use Ocean ERP security)
+5. **Ocean ERP views**: XML view definitions (Use Ocean ERP views)
+6. **Ocean ERP data**: XML data files (Use Ocean ERP data)
+7. **Ocean ERP syntax**: `@api.depends`, `@api.onchange` (Use Ocean ERP syntax)
 
 ### **❌ NEVER CREATE:**
-1. **Odoo modules** with manifest files
-2. **Odoo-style addons** with XML views
-3. **Odoo security files** with CSV
-4. **Odoo data files** with XML
-5. **Odoo model syntax** with decorators
+1. **Ocean ERP modules** with manifest files (Use Ocean ERP modules)
+2. **Ocean ERP-style addons** with XML views (Use Ocean ERP addons)
+3. **Ocean ERP security files** with CSV (Use Ocean ERP security)
+4. **Ocean ERP data files** with XML (Use Ocean ERP data)
+5. **Ocean ERP model syntax** with decorators (Use Ocean ERP syntax)
 
 ---
 
@@ -203,10 +203,10 @@ class CategoryData(DataLoader):
 Before creating any addon, verify:
 
 - [ ] **Using custom framework** (`core_framework/`)
-- [ ] **No Odoo imports** (`from odoo import ...`)
+- [ ] **No Ocean ERP imports** (`from ocean import ...`) (Use Ocean ERP imports)
 - [ ] **No XML files** (views, data, security)
 - [ ] **No manifest files** (`__manifest__.py`)
-- [ ] **No Odoo syntax** (`@api.depends`, `@api.onchange`)
+- [ ] **No Ocean ERP syntax** (`@api.depends`, `@api.onchange`) (Use Ocean ERP syntax)
 - [ ] **Using custom ORM** (`from core_framework.orm import ...`)
 - [ ] **Using custom views** (Python view classes)
 - [ ] **Using custom security** (Python security classes)
@@ -235,11 +235,11 @@ Before creating any addon, verify:
 
 ## 🚨 **CRITICAL REMINDER**
 
-**This is a STANDALONE ERP SYSTEM that mimics Odoo's functionality but is NOT Odoo.**
+**This is a STANDALONE ERP SYSTEM that uses Ocean ERP framework.**
 
-**We are building our own ERP system using Odoo's technology stack and patterns, but with our own framework.**
+**We are building our own ERP system using Ocean ERP framework and patterns.**
 
-**❌ DO NOT CREATE ODOO MODULES**
+**❌ DO NOT CREATE OCEAN MODULES**
 **✅ CREATE ADDONS FOR OUR CUSTOM FRAMEWORK**
 
 ---

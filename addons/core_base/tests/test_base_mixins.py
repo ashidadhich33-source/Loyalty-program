@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
-from odoo.tests.common import TransactionCase
-from odoo.exceptions import ValidationError
+from core_framework.testing import TestCase
+from core_framework.exceptions import ValidationError
 
 
-class TestKidsClothingMixin(TransactionCase):
+class TestKidsClothingMixin(TestCase):
     """Test cases for kids.clothing.mixin model"""
     
     def setUp(self):
@@ -42,7 +42,7 @@ class TestKidsClothingMixin(TransactionCase):
         pass
 
 
-class TestAgeGroupMixin(TransactionCase):
+class TestAgeGroupMixin(TestCase):
     """Test cases for age.group.mixin model"""
     
     def setUp(self):

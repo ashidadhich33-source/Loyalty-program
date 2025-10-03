@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        <!-- Discount Program Security Rules -->
+        <record id="rule_discount_program_user" model="ocean.rule">
+            <field name="name">Discount Program: User Access</field>
+            <field name="model_id" ref="model_discount_program"/>
+            <field name="domain_force">[('user_id', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('group_user'))]"/>
+        </record>
+        
+        <record id="rule_discount_program_manager" model="ocean.rule">
+            <field name="name">Discount Program: Manager Access</field>
+            <field name="model_id" ref="model_discount_program"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_manager'))]"/>
+        </record>
+        
+        <!-- Discount Rule Security Rules -->
+        <record id="rule_discount_rule_user" model="ocean.rule">
+            <field name="name">Discount Rule: User Access</field>
+            <field name="model_id" ref="model_discount_rule"/>
+            <field name="domain_force">[('user_id', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('group_user'))]"/>
+        </record>
+        
+        <record id="rule_discount_rule_manager" model="ocean.rule">
+            <field name="name">Discount Rule: Manager Access</field>
+            <field name="model_id" ref="model_discount_rule"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_manager'))]"/>
+        </record>
+        
+        <!-- Discount Coupon Security Rules -->
+        <record id="rule_discount_coupon_user" model="ocean.rule">
+            <field name="name">Discount Coupon: User Access</field>
+            <field name="model_id" ref="model_discount_coupon"/>
+            <field name="domain_force">[('user_id', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('group_user'))]"/>
+        </record>
+        
+        <record id="rule_discount_coupon_manager" model="ocean.rule">
+            <field name="name">Discount Coupon: Manager Access</field>
+            <field name="model_id" ref="model_discount_coupon"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_manager'))]"/>
+        </record>
+        
+        <!-- Discount Approval Security Rules -->
+        <record id="rule_discount_approval_user" model="ocean.rule">
+            <field name="name">Discount Approval: User Access</field>
+            <field name="model_id" ref="model_discount_approval"/>
+            <field name="domain_force">[('user_id', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('group_user'))]"/>
+        </record>
+        
+        <record id="rule_discount_approval_manager" model="ocean.rule">
+            <field name="name">Discount Approval: Manager Access</field>
+            <field name="model_id" ref="model_discount_approval"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_manager'))]"/>
+        </record>
+        
+        <!-- Discount Campaign Security Rules -->
+        <record id="rule_discount_campaign_user" model="ocean.rule">
+            <field name="name">Discount Campaign: User Access</field>
+            <field name="model_id" ref="model_discount_campaign"/>
+            <field name="domain_force">[('user_id', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('group_user'))]"/>
+        </record>
+        
+        <record id="rule_discount_campaign_manager" model="ocean.rule">
+            <field name="name">Discount Campaign: Manager Access</field>
+            <field name="model_id" ref="model_discount_campaign"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_manager'))]"/>
+        </record>
+        
+        <!-- Discount Analytics Security Rules -->
+        <record id="rule_discount_analytics_user" model="ocean.rule">
+            <field name="name">Discount Analytics: User Access</field>
+            <field name="model_id" ref="model_discount_analytics"/>
+            <field name="domain_force">[('user_id', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('group_user'))]"/>
+        </record>
+        
+        <record id="rule_discount_analytics_manager" model="ocean.rule">
+            <field name="name">Discount Analytics: Manager Access</field>
+            <field name="model_id" ref="model_discount_analytics"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_manager'))]"/>
+        </record>
+        
+    </data>
+</ocean>

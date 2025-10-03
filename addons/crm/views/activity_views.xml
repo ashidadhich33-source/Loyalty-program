@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        <!-- CRM Activities Tree View -->
+        <record id="view_crm_activities_tree" model="ocean.ui.view">
+            <field name="name">crm.activities.tree</field>
+            <field name="model">crm.activity</field>
+            <field name="arch" type="xml">
+                <tree string="CRM Activities" decoration-muted="not is_active" decoration-success="state=='done'" decoration-warning="state=='in_progress'" decoration-danger="state=='cancelled'">
+                    <field name="name"/>
+                    <field name="activity_type"/>
+                    <field name="date_deadline"/>
+                    <field name="state"/>
+                    <field name="user_id"/>
+                    <field name="lead_id"/>
+                    <field name="opportunity_id"/>
+                    <field name="create_date"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- CRM Activities Form View -->
+        <record id="view_crm_activities_form" model="ocean.ui.view">
+            <field name="name">crm.activities.form</field>
+            <field name="model">crm.activity</field>
+            <field name="arch" type="xml">
+                <form string="CRM Activity">
+                    <header>
+                        <button name="action_mark_done" string="Mark Done" type="object" class="btn-success" attrs="{'invisible': [('state', '=', 'done')]}"/>
+                        <button name="action_mark_in_progress" string="Mark In Progress" type="object" class="btn-warning" attrs="{'invisible': [('state', 'in', ['done', 'in_progress'])]}"/>
+                        <button name="action_cancel" string="Cancel" type="object" class="btn-danger" attrs="{'invisible': [('state', 'in', ['done', 'cancelled'])]}"/>
+                        <field name="is_active" widget="boolean_toggle"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Activity Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="activity_type"/>
+                                <field name="date_deadline"/>
+                                <field name="state"/>
+                                <field name="user_id"/>
+                                <field name="team_id"/>
+                            </group>
+                            <group>
+                                <field name="lead_id"/>
+                                <field name="opportunity_id"/>
+                                <field name="partner_id"/>
+                                <field name="email"/>
+                                <field name="phone"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="street"/>
+                                <field name="city"/>
+                                <field name="state"/>
+                                <field name="zip"/>
+                                <field name="country"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Activity Details" name="details">
+                                <field name="description" placeholder="Activity description..."/>
+                                <field name="note" placeholder="Internal notes..."/>
+                            </page>
+                            <page string="Kids Clothing Info" name="kids_info">
+                                <group>
+                                    <group>
+                                        <field name="child_count"/>
+                                        <field name="child_ages"/>
+                                        <field name="age_group_interest"/>
+                                    </group>
+                                    <group>
+                                        <field name="gender_preference"/>
+                                        <field name="seasonal_interest"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- CRM Activities Search View -->
+        <record id="view_crm_activities_search" model="ocean.ui.view">
+            <field name="name">crm.activities.search</field>
+            <field name="model">crm.activity</field>
+            <field name="arch" type="xml">
+                <search string="Search Activities">
+                    <field name="name"/>
+                    <field name="activity_type"/>
+                    <field name="date_deadline"/>
+                    <field name="state"/>
+                    <field name="user_id"/>
+                    <field name="lead_id"/>
+                    <field name="opportunity_id"/>
+                    <field name="partner_id"/>
+                    <field name="age_group_interest"/>
+                    <field name="gender_preference"/>
+                    <field name="seasonal_interest"/>
+                    <separator/>
+                    <filter string="Active" name="active" domain="[('is_active', '=', True)]"/>
+                    <filter string="Inactive" name="inactive" domain="[('is_active', '=', False)]"/>
+                    <filter string="Done" name="done" domain="[('state', '=', 'done')]"/>
+                    <filter string="In Progress" name="in_progress" domain="[('state', '=', 'in_progress')]"/>
+                    <filter string="Pending" name="pending" domain="[('state', '=', 'pending')]"/>
+                    <filter string="Cancelled" name="cancelled" domain="[('state', '=', 'cancelled')]"/>
+                    <separator/>
+                    <filter string="Call" name="call" domain="[('activity_type', '=', 'call')]"/>
+                    <filter string="Email" name="email" domain="[('activity_type', '=', 'email')]"/>
+                    <filter string="Meeting" name="meeting" domain="[('activity_type', '=', 'meeting')]"/>
+                    <filter string="Task" name="task" domain="[('activity_type', '=', 'task')]"/>
+                    <filter string="Note" name="note" domain="[('activity_type', '=', 'note')]"/>
+                    <separator/>
+                    <filter string="Newborn" name="newborn" domain="[('age_group_interest', '=', 'newborn')]"/>
+                    <filter string="Infant" name="infant" domain="[('age_group_interest', '=', 'infant')]"/>
+                    <filter string="Toddler" name="toddler" domain="[('age_group_interest', '=', 'toddler')]"/>
+                    <filter string="Preschool" name="preschool" domain="[('age_group_interest', '=', 'preschool')]"/>
+                    <filter string="School" name="school" domain="[('age_group_interest', '=', 'school')]"/>
+                    <filter string="Teen" name="teen" domain="[('age_group_interest', '=', 'teen')]"/>
+                    <separator/>
+                    <filter string="Boys" name="boys" domain="[('gender_preference', '=', 'boys')]"/>
+                    <filter string="Girls" name="girls" domain="[('gender_preference', '=', 'girls')]"/>
+                    <filter string="Unisex" name="unisex" domain="[('gender_preference', '=', 'unisex')]"/>
+                    <separator/>
+                    <filter string="Summer" name="summer" domain="[('seasonal_interest', '=', 'summer')]"/>
+                    <filter string="Winter" name="winter" domain="[('seasonal_interest', '=', 'winter')]"/>
+                    <filter string="Monsoon" name="monsoon" domain="[('seasonal_interest', '=', 'monsoon')]"/>
+                    <separator/>
+                    <filter string="Today" name="today" domain="[('date_deadline', '>=', datetime.datetime.now().replace(hour=0, minute=0, second=0))]"/>
+                    <filter string="This Week" name="this_week" domain="[('date_deadline', '>=', (datetime.datetime.now() - datetime.timedelta(days=7)))]"/>
+                    <filter string="This Month" name="this_month" domain="[('date_deadline', '>=', datetime.datetime.now().replace(day=1))]"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter string="Type" name="group_type" context="{'group_by': 'activity_type'}"/>
+                        <filter string="State" name="group_state" context="{'group_by': 'state'}"/>
+                        <filter string="User" name="group_user" context="{'group_by': 'user_id'}"/>
+                        <filter string="Lead" name="group_lead" context="{'group_by': 'lead_id'}"/>
+                        <filter string="Opportunity" name="group_opportunity" context="{'group_by': 'opportunity_id'}"/>
+                        <filter string="Age Group" name="group_age" context="{'group_by': 'age_group_interest'}"/>
+                        <filter string="Gender" name="group_gender" context="{'group_by': 'gender_preference'}"/>
+                        <filter string="Season" name="group_season" context="{'group_by': 'seasonal_interest'}"/>
+                        <filter string="Date" name="group_date" context="{'group_by': 'date_deadline'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- CRM Activities Action -->
+        <record id="action_crm_activities" model="ocean.actions.act_window">
+            <field name="name">CRM Activities</field>
+            <field name="res_model">crm.activity</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_crm_activities_tree"/>
+            <field name="search_view_id" ref="view_crm_activities_search"/>
+            <field name="context">{'search_default_active': 1}</field>
+        </record>
+        
+    </data>
+</ocean>

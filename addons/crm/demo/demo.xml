@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        <!-- Demo CRM Leads -->
+        <record id="demo_lead_1" model="crm.lead">
+            <field name="name">New Customer Inquiry</field>
+            <field name="partner_name">John Smith</field>
+            <field name="email">john.smith@example.com</field>
+            <field name="phone">+1-555-0123</field>
+            <field name="type">lead</field>
+            <field name="stage_id" ref="stage_lead_new"/>
+            <field name="priority">1</field>
+            <field name="probability">10</field>
+            <field name="expected_revenue">500.00</field>
+            <field name="child_count">2</field>
+            <field name="child_ages">3,5</field>
+            <field name="age_group_interest">toddler</field>
+            <field name="gender_preference">boys</field>
+            <field name="seasonal_interest">summer</field>
+            <field name="description">Customer interested in summer clothing for boys aged 3 and 5</field>
+        </record>
+        
+        <record id="demo_lead_2" model="crm.lead">
+            <field name="name">Birthday Party Outfit</field>
+            <field name="partner_name">Sarah Johnson</field>
+            <field name="email">sarah.johnson@example.com</field>
+            <field name="phone">+1-555-0124</field>
+            <field name="type">lead</field>
+            <field name="stage_id" ref="stage_lead_qualified"/>
+            <field name="priority">2</field>
+            <field name="probability">25</field>
+            <field name="expected_revenue">200.00</field>
+            <field name="child_count">1</field>
+            <field name="child_ages">7</field>
+            <field name="age_group_interest">school</field>
+            <field name="gender_preference">girls</field>
+            <field name="seasonal_interest">summer</field>
+            <field name="description">Looking for a special outfit for daughter's 7th birthday party</field>
+        </record>
+        
+        <!-- Demo CRM Opportunities -->
+        <record id="demo_opportunity_1" model="crm.opportunity">
+            <field name="name">School Uniform Order</field>
+            <field name="partner_id" ref="res_partner_1"/>
+            <field name="email">contact@school.com</field>
+            <field name="phone">+1-555-0125</field>
+            <field name="type">opportunity</field>
+            <field name="stage_id" ref="stage_opportunity_proposal"/>
+            <field name="priority">2</field>
+            <field name="probability">50</field>
+            <field name="expected_revenue">5000.00</field>
+            <field name="child_count">50</field>
+            <field name="child_ages">6,7,8,9,10</field>
+            <field name="age_group_interest">school</field>
+            <field name="gender_preference">unisex</field>
+            <field name="seasonal_interest">summer</field>
+            <field name="description">Bulk order for school uniforms for 50 students</field>
+        </record>
+        
+        <!-- Demo CRM Activities -->
+        <record id="demo_activity_1" model="crm.activity">
+            <field name="name">Follow up call with John Smith</field>
+            <field name="activity_type">call</field>
+            <field name="date_deadline">2024-01-15</field>
+            <field name="state">pending</field>
+            <field name="lead_id" ref="demo_lead_1"/>
+            <field name="description">Call to discuss summer clothing requirements</field>
+        </record>
+        
+        <record id="demo_activity_2" model="crm.activity">
+            <field name="name">Send catalog to Sarah Johnson</field>
+            <field name="activity_type">email</field>
+            <field name="date_deadline">2024-01-16</field>
+            <field name="state">pending</field>
+            <field name="lead_id" ref="demo_lead_2"/>
+            <field name="description">Email catalog with birthday party outfit options</field>
+        </record>
+        
+        <!-- Demo CRM Communications -->
+        <record id="demo_communication_1" model="crm.communication">
+            <field name="name">Initial inquiry from John Smith</field>
+            <field name="communication_type">email</field>
+            <field name="direction">inbound</field>
+            <field name="date">2024-01-10</field>
+            <field name="state">sent</field>
+            <field name="lead_id" ref="demo_lead_1"/>
+            <field name="subject">Summer clothing inquiry</field>
+            <field name="body">Hi, I'm looking for summer clothing for my two boys aged 3 and 5. Do you have any recommendations?</field>
+        </record>
+        
+        <!-- Demo CRM Campaigns -->
+        <record id="demo_campaign_1" model="crm.campaign">
+            <field name="name">Summer Collection 2024</field>
+            <field name="campaign_type">email</field>
+            <field name="state">active</field>
+            <field name="start_date">2024-01-01</field>
+            <field name="end_date">2024-03-31</field>
+            <field name="budget">10000.00</field>
+            <field name="age_group_interest">toddler</field>
+            <field name="gender_preference">unisex</field>
+            <field name="seasonal_interest">summer</field>
+            <field name="description">Email campaign promoting summer collection for toddlers</field>
+        </record>
+        
+    </data>
+</ocean>

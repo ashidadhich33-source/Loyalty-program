@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        <!-- Discounts Menu -->
+        <menuitem id="menu_discounts" name="Discounts" parent="menu_main" sequence="50"/>
+        
+        <!-- Discount Programs Menu -->
+        <menuitem id="menu_discount_programs" name="Discount Programs" parent="menu_discounts" sequence="10"/>
+        <menuitem id="menu_discount_programs_list" name="Programs" parent="menu_discount_programs" action="action_discount_program" sequence="10"/>
+        <menuitem id="menu_discount_programs_analytics" name="Analytics" parent="menu_discount_programs" action="action_discount_analytics" sequence="20"/>
+        
+        <!-- Discount Rules Menu -->
+        <menuitem id="menu_discount_rules" name="Discount Rules" parent="menu_discounts" sequence="20"/>
+        <menuitem id="menu_discount_rules_list" name="Rules" parent="menu_discount_rules" action="action_discount_rule" sequence="10"/>
+        
+        <!-- Discount Coupons Menu -->
+        <menuitem id="menu_discount_coupons" name="Discount Coupons" parent="menu_discounts" sequence="30"/>
+        <menuitem id="menu_discount_coupons_list" name="Coupons" parent="menu_discount_coupons" action="action_discount_coupon" sequence="10"/>
+        
+        <!-- Discount Approvals Menu -->
+        <menuitem id="menu_discount_approvals" name="Discount Approvals" parent="menu_discounts" sequence="40"/>
+        <menuitem id="menu_discount_approvals_list" name="Approvals" parent="menu_discount_approvals" action="action_discount_approval" sequence="10"/>
+        
+        <!-- Discount Campaigns Menu -->
+        <menuitem id="menu_discount_campaigns" name="Discount Campaigns" parent="menu_discounts" sequence="50"/>
+        <menuitem id="menu_discount_campaigns_list" name="Campaigns" parent="menu_discount_campaigns" action="action_discount_campaign" sequence="10"/>
+        
+        <!-- Discount Analytics Menu -->
+        <menuitem id="menu_discount_analytics" name="Discount Analytics" parent="menu_discounts" sequence="60"/>
+        <menuitem id="menu_discount_analytics_list" name="Analytics" parent="menu_discount_analytics" action="action_discount_analytics" sequence="10"/>
+        
+    </data>
+</ocean>

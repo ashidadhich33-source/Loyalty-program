@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        <!-- Discount Program Types -->
+        <record id="discount_program_type_percentage" model="discount.program">
+            <field name="name">Percentage Discount</field>
+            <field name="type">percentage</field>
+            <field name="description">Percentage-based discount program</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="discount_program_type_fixed" model="discount.program">
+            <field name="name">Fixed Amount Discount</field>
+            <field name="type">fixed</field>
+            <field name="description">Fixed amount discount program</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="discount_program_type_buy_x_get_y" model="discount.program">
+            <field name="name">Buy X Get Y</field>
+            <field name="type">buy_x_get_y</field>
+            <field name="description">Buy X items get Y items free</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="discount_program_type_birthday" model="discount.program">
+            <field name="name">Birthday Discount</field>
+            <field name="type">birthday</field>
+            <field name="description">Special birthday discount program</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="discount_program_type_loyalty" model="discount.program">
+            <field name="name">Loyalty Discount</field>
+            <field name="type">loyalty</field>
+            <field name="description">Loyalty-based discount program</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="discount_program_type_seasonal" model="discount.program">
+            <field name="name">Seasonal Discount</field>
+            <field name="type">seasonal</field>
+            <field name="description">Seasonal discount program</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <!-- Discount Rule Types -->
+        <record id="discount_rule_type_minimum_amount" model="discount.rule">
+            <field name="name">Minimum Amount Rule</field>
+            <field name="type">minimum_amount</field>
+            <field name="description">Minimum amount required for discount</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="discount_rule_type_maximum_amount" model="discount.rule">
+            <field name="name">Maximum Amount Rule</field>
+            <field name="type">maximum_amount</field>
+            <field name="description">Maximum amount for discount</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="discount_rule_type_customer_segment" model="discount.rule">
+            <field name="name">Customer Segment Rule</field>
+            <field name="type">customer_segment</field>
+            <field name="description">Customer segment-based rule</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="discount_rule_type_product_category" model="discount.rule">
+            <field name="name">Product Category Rule</field>
+            <field name="type">product_category</field>
+            <field name="description">Product category-based rule</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="discount_rule_type_age_group" model="discount.rule">
+            <field name="name">Age Group Rule</field>
+            <field name="type">age_group</field>
+            <field name="description">Age group-based rule</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="discount_rule_type_seasonal" model="discount.rule">
+            <field name="name">Seasonal Rule</field>
+            <field name="type">seasonal</field>
+            <field name="description">Seasonal-based rule</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <!-- Discount Coupon Types -->
+        <record id="discount_coupon_type_percentage" model="discount.coupon">
+            <field name="name">Percentage Coupon</field>
+            <field name="type">percentage</field>
+            <field name="description">Percentage-based coupon</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="discount_coupon_type_fixed" model="discount.coupon">
+            <field name="name">Fixed Amount Coupon</field>
+            <field name="type">fixed</field>
+            <field name="description">Fixed amount coupon</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="discount_coupon_type_free_shipping" model="discount.coupon">
+            <field name="name">Free Shipping Coupon</field>
+            <field name="type">free_shipping</field>
+            <field name="description">Free shipping coupon</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="discount_coupon_type_buy_one_get_one" model="discount.coupon">
+            <field name="name">Buy One Get One</field>
+            <field name="type">buy_one_get_one</field>
+            <field name="description">Buy one get one free coupon</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <!-- Discount Approval Types -->
+        <record id="discount_approval_type_automatic" model="discount.approval">
+            <field name="name">Automatic Approval</field>
+            <field name="type">automatic</field>
+            <field name="description">Automatic approval for discounts</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="discount_approval_type_manual" model="discount.approval">
+            <field name="name">Manual Approval</field>
+            <field name="type">manual</field>
+            <field name="description">Manual approval for discounts</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="discount_approval_type_manager" model="discount.approval">
+            <field name="name">Manager Approval</field>
+            <field name="type">manager</field>
+            <field name="description">Manager approval for discounts</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="discount_approval_type_ceo" model="discount.approval">
+            <field name="name">CEO Approval</field>
+            <field name="type">ceo</field>
+            <field name="description">CEO approval for discounts</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <!-- Discount Campaign Types -->
+        <record id="discount_campaign_type_seasonal" model="discount.campaign">
+            <field name="name">Seasonal Campaign</field>
+            <field name="type">seasonal</field>
+            <field name="description">Seasonal discount campaign</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="discount_campaign_type_birthday" model="discount.campaign">
+            <field name="name">Birthday Campaign</field>
+            <field name="type">birthday</field>
+            <field name="description">Birthday discount campaign</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="discount_campaign_type_loyalty" model="discount.campaign">
+            <field name="name">Loyalty Campaign</field>
+            <field name="type">loyalty</field>
+            <field name="description">Loyalty discount campaign</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="discount_campaign_type_referral" model="discount.campaign">
+            <field name="name">Referral Campaign</field>
+            <field name="type">referral</field>
+            <field name="description">Referral discount campaign</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="discount_campaign_type_clearance" model="discount.campaign">
+            <field name="name">Clearance Campaign</field>
+            <field name="type">clearance</field>
+            <field name="description">Clearance discount campaign</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="discount_campaign_type_new_customer" model="discount.campaign">
+            <field name="name">New Customer Campaign</field>
+            <field name="type">new_customer</field>
+            <field name="description">New customer discount campaign</field>
+            <field name="is_active">True</field>
+        </record>
+        
+    </data>
+</ocean>

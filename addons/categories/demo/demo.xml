@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data noupdate="1">
+        
+        <!-- Demo Category Analytics -->
+        <record id="demo_analytics_newborn" model="category.analytics">
+            <field name="name">Newborn Category Analytics</field>
+            <field name="category_id" ref="category_newborn"/>
+            <field name="total_sales">15000.00</field>
+            <field name="total_quantity">150</field>
+            <field name="average_order_value">100.00</field>
+            <field name="conversion_rate">8.5</field>
+            <field name="return_rate">2.0</field>
+            <field name="stock_value">5000.00</field>
+            <field name="stock_turnover">3.0</field>
+            <field name="customer_count">45</field>
+            <field name="repeat_customer_rate">65.0</field>
+            <field name="seasonal_trend">growing</field>
+            <field name="age_group_performance">Newborn: 100%, Infant: 0%, Toddler: 0%</field>
+            <field name="gender_performance">Boys: 55%, Girls: 45%</field>
+            <field name="recommendations">Focus on organic cotton materials for newborn comfort. Consider expanding size range for better fit.</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="demo_analytics_toddler" model="category.analytics">
+            <field name="name">Toddler Category Analytics</field>
+            <field name="category_id" ref="category_toddler"/>
+            <field name="total_sales">25000.00</field>
+            <field name="total_quantity">200</field>
+            <field name="average_order_value">125.00</field>
+            <field name="conversion_rate">12.0</field>
+            <field name="return_rate">3.5</field>
+            <field name="stock_value">8000.00</field>
+            <field name="stock_turnover">3.1</field>
+            <field name="customer_count">60</field>
+            <field name="repeat_customer_rate">70.0</field>
+            <field name="seasonal_trend">peak</field>
+            <field name="age_group_performance">Toddler: 100%, Preschool: 0%, School: 0%</field>
+            <field name="gender_performance">Boys: 60%, Girls: 40%</field>
+            <field name="recommendations">Toddler category shows strong performance. Consider adding more play-friendly designs and easy-care fabrics.</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="demo_analytics_school" model="category.analytics">
+            <field name="name">School Category Analytics</field>
+            <field name="category_id" ref="category_school"/>
+            <field name="total_sales">35000.00</field>
+            <field name="total_quantity">280</field>
+            <field name="average_order_value">125.00</field>
+            <field name="conversion_rate">15.0</field>
+            <field name="return_rate">4.0</field>
+            <field name="stock_value">12000.00</field>
+            <field name="stock_turnover">2.9</field>
+            <field name="customer_count">85</field>
+            <field name="repeat_customer_rate">75.0</field>
+            <field name="seasonal_trend">average</field>
+            <field name="age_group_performance">School: 100%, Teen: 0%</field>
+            <field name="gender_performance">Boys: 50%, Girls: 50%</field>
+            <field name="recommendations">School category is performing well. Focus on durable materials and trendy designs to maintain customer interest.</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="demo_analytics_summer" model="category.analytics">
+            <field name="name">Summer Collection Analytics</field>
+            <field name="category_id" ref="category_summer"/>
+            <field name="total_sales">45000.00</field>
+            <field name="total_quantity">300</field>
+            <field name="average_order_value">150.00</field>
+            <field name="conversion_rate">18.0</field>
+            <field name="return_rate">2.5</field>
+            <field name="stock_value">15000.00</field>
+            <field name="stock_turnover">3.0</field>
+            <field name="customer_count">120</field>
+            <field name="repeat_customer_rate">80.0</field>
+            <field name="seasonal_trend">peak</field>
+            <field name="age_group_performance">All ages: 100%</field>
+            <field name="gender_performance">Boys: 45%, Girls: 55%</field>
+            <field name="recommendations">Summer collection is a top performer. Consider expanding color options and lightweight fabric varieties.</field>
+            <field name="is_active">True</field>
+        </record>
+        
+    </data>
+</ocean>

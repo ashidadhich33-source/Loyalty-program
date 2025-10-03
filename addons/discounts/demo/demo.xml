@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        <!-- Demo Discount Programs -->
+        <record id="demo_discount_program_summer" model="discount.program">
+            <field name="name">Summer Sale 2024</field>
+            <field name="type">percentage</field>
+            <field name="description">Summer sale discount program</field>
+            <field name="discount_value">20.0</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="demo_discount_program_birthday" model="discount.program">
+            <field name="name">Birthday Special</field>
+            <field name="type">percentage</field>
+            <field name="description">Birthday discount program</field>
+            <field name="discount_value">15.0</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <!-- Demo Discount Rules -->
+        <record id="demo_discount_rule_min_amount" model="discount.rule">
+            <field name="name">Minimum Amount Rule</field>
+            <field name="type">minimum_amount</field>
+            <field name="description">Minimum amount required for discount</field>
+            <field name="condition_value">100.0</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <!-- Demo Discount Coupons -->
+        <record id="demo_discount_coupon_welcome" model="discount.coupon">
+            <field name="name">WELCOME10</field>
+            <field name="type">percentage</field>
+            <field name="description">Welcome discount coupon</field>
+            <field name="discount_value">10.0</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <!-- Demo Discount Campaigns -->
+        <record id="demo_discount_campaign_summer" model="discount.campaign">
+            <field name="name">Summer Collection 2024</field>
+            <field name="type">seasonal</field>
+            <field name="description">Summer collection discount campaign</field>
+            <field name="is_active">True</field>
+        </record>
+        
+    </data>
+</ocean>

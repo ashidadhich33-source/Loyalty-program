@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        
+        <!-- Category Analytics Tree View -->
+        <record id="view_product_category_analytics_tree" model="ir.ui.view">
+            <field name="name">product.category.analytics.tree</field>
+            <field name="model">product.category.analytics</field>
+            <field name="arch" type="xml">
+                <tree string="Category Analytics" default_order="date desc">
+                    <field name="category_id"/>
+                    <field name="date"/>
+                    <field name="period_type"/>
+                    <field name="total_sales"/>
+                    <field name="total_quantity"/>
+                    <field name="total_orders"/>
+                    <field name="total_products"/>
+                    <field name="active_products"/>
+                    <field name="new_products"/>
+                    <field name="discontinued_products"/>
+                    <field name="conversion_rate"/>
+                    <field name="return_rate"/>
+                    <field name="average_rating"/>
+                    <field name="total_reviews"/>
+                    <field name="total_stock_value"/>
+                    <field name="total_stock_quantity"/>
+                    <field name="stock_turnover"/>
+                    <field name="stock_velocity"/>
+                    <field name="total_customers"/>
+                    <field name="new_customers"/>
+                    <field name="returning_customers"/>
+                    <field name="customer_retention_rate"/>
+                    <field name="total_cost"/>
+                    <field name="total_margin"/>
+                    <field name="margin_percentage"/>
+                    <field name="profit_margin"/>
+                    <field name="sales_growth"/>
+                    <field name="quantity_growth"/>
+                    <field name="customer_growth"/>
+                    <field name="product_growth"/>
+                    <field name="seasonal_index"/>
+                    <field name="peak_period"/>
+                    <field name="low_period"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Category Analytics Form View -->
+        <record id="view_product_category_analytics_form" model="ir.ui.view">
+            <field name="name">product.category.analytics.form</field>
+            <field name="model">product.category.analytics</field>
+            <field name="arch" type="xml">
+                <form string="Category Analytics">
+                    <header>
+                        <button name="generate_analytics" string="Generate Analytics" type="object" class="btn-primary"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="display_name" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group name="basic_info">
+                                <field name="category_id"/>
+                                <field name="date"/>
+                                <field name="period_type"/>
+                            </group>
+                            <group name="company">
+                                <field name="company_id"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group name="sales_analytics">
+                                <field name="total_sales"/>
+                                <field name="total_quantity"/>
+                                <field name="average_order_value"/>
+                                <field name="total_orders"/>
+                            </group>
+                            <group name="product_analytics">
+                                <field name="total_products"/>
+                                <field name="active_products"/>
+                                <field name="new_products"/>
+                                <field name="discontinued_products"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group name="performance_metrics">
+                                <field name="conversion_rate"/>
+                                <field name="return_rate"/>
+                                <field name="average_rating"/>
+                                <field name="total_reviews"/>
+                            </group>
+                            <group name="inventory_analytics">
+                                <field name="total_stock_value"/>
+                                <field name="total_stock_quantity"/>
+                                <field name="stock_turnover"/>
+                                <field name="stock_velocity"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group name="customer_analytics">
+                                <field name="total_customers"/>
+                                <field name="new_customers"/>
+                                <field name="returning_customers"/>
+                                <field name="customer_retention_rate"/>
+                            </group>
+                            <group name="financial_analytics">
+                                <field name="total_cost"/>
+                                <field name="total_margin"/>
+                                <field name="margin_percentage"/>
+                                <field name="profit_margin"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group name="growth_analytics">
+                                <field name="sales_growth"/>
+                                <field name="quantity_growth"/>
+                                <field name="customer_growth"/>
+                                <field name="product_growth"/>
+                            </group>
+                            <group name="seasonal_analytics">
+                                <field name="seasonal_index"/>
+                                <field name="peak_period"/>
+                                <field name="low_period"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Category Analytics Search View -->
+        <record id="view_product_category_analytics_search" model="ir.ui.view">
+            <field name="name">product.category.analytics.search</field>
+            <field name="model">product.category.analytics</field>
+            <field name="arch" type="xml">
+                <search string="Category Analytics">
+                    <field name="category_id"/>
+                    <field name="date"/>
+                    <field name="period_type"/>
+                    <field name="total_sales"/>
+                    <field name="total_quantity"/>
+                    <field name="total_orders"/>
+                    <field name="total_products"/>
+                    <field name="total_customers"/>
+                    <filter string="Daily" name="daily" domain="[('period_type', '=', 'daily')]"/>
+                    <filter string="Weekly" name="weekly" domain="[('period_type', '=', 'weekly')]"/>
+                    <filter string="Monthly" name="monthly" domain="[('period_type', '=', 'monthly')]"/>
+                    <filter string="Quarterly" name="quarterly" domain="[('period_type', '=', 'quarterly')]"/>
+                    <filter string="Yearly" name="yearly" domain="[('period_type', '=', 'yearly')]"/>
+                    <filter string="This Month" name="this_month" domain="[('date', '>=', datetime.datetime.now().replace(day=1)), ('date', '&lt;', (datetime.datetime.now().replace(day=1) + datetime.timedelta(days=32)).replace(day=1))]"/>
+                    <filter string="Last Month" name="last_month" domain="[('date', '>=', (datetime.datetime.now().replace(day=1) - datetime.timedelta(days=1)).replace(day=1)), ('date', '&lt;', datetime.datetime.now().replace(day=1))]"/>
+                    <filter string="This Year" name="this_year" domain="[('date', '>=', datetime.datetime.now().replace(month=1, day=1)), ('date', '&lt;', (datetime.datetime.now().replace(month=1, day=1) + datetime.timedelta(days=366)).replace(month=1, day=1))]"/>
+                    <filter string="Last Year" name="last_year" domain="[('date', '>=', (datetime.datetime.now().replace(month=1, day=1) - datetime.timedelta(days=1)).replace(month=1, day=1)), ('date', '&lt;', datetime.datetime.now().replace(month=1, day=1))]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Category" name="group_category" context="{'group_by': 'category_id'}"/>
+                        <filter string="Date" name="group_date" context="{'group_by': 'date'}"/>
+                        <filter string="Period Type" name="group_period_type" context="{'group_by': 'period_type'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- Category Analytics Pivot View -->
+        <record id="view_product_category_analytics_pivot" model="ir.ui.view">
+            <field name="name">product.category.analytics.pivot</field>
+            <field name="model">product.category.analytics</field>
+            <field name="arch" type="xml">
+                <pivot string="Category Analytics">
+                    <field name="category_id" type="row"/>
+                    <field name="date" type="col"/>
+                    <field name="total_sales" type="measure"/>
+                    <field name="total_quantity" type="measure"/>
+                    <field name="total_orders" type="measure"/>
+                    <field name="total_products" type="measure"/>
+                    <field name="total_customers" type="measure"/>
+                    <field name="total_margin" type="measure"/>
+                    <field name="margin_percentage" type="measure"/>
+                    <field name="sales_growth" type="measure"/>
+                    <field name="quantity_growth" type="measure"/>
+                    <field name="customer_growth" type="measure"/>
+                    <field name="product_growth" type="measure"/>
+                </pivot>
+            </field>
+        </record>
+        
+        <!-- Category Analytics Graph View -->
+        <record id="view_product_category_analytics_graph" model="ir.ui.view">
+            <field name="name">product.category.analytics.graph</field>
+            <field name="model">product.category.analytics</field>
+            <field name="arch" type="xml">
+                <graph string="Category Analytics" type="line">
+                    <field name="date" type="row"/>
+                    <field name="total_sales" type="measure"/>
+                    <field name="total_quantity" type="measure"/>
+                    <field name="total_orders" type="measure"/>
+                    <field name="total_products" type="measure"/>
+                    <field name="total_customers" type="measure"/>
+                    <field name="total_margin" type="measure"/>
+                    <field name="margin_percentage" type="measure"/>
+                    <field name="sales_growth" type="measure"/>
+                    <field name="quantity_growth" type="measure"/>
+                    <field name="customer_growth" type="measure"/>
+                    <field name="product_growth" type="measure"/>
+                </graph>
+            </field>
+        </record>
+        
+        <!-- Category Analytics Calendar View -->
+        <record id="view_product_category_analytics_calendar" model="ir.ui.view">
+            <field name="name">product.category.analytics.calendar</field>
+            <field name="model">product.category.analytics</field>
+            <field name="arch" type="xml">
+                <calendar string="Category Analytics" date_start="date" color="category_id">
+                    <field name="category_id"/>
+                    <field name="total_sales"/>
+                    <field name="total_quantity"/>
+                    <field name="total_orders"/>
+                    <field name="total_products"/>
+                    <field name="total_customers"/>
+                </calendar>
+            </field>
+        </record>
+        
+    </data>
+</odoo>

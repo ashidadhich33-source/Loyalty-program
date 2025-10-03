@@ -11,6 +11,14 @@
 ## Zero-Error Development Principles
 This project follows strict zero-error development practices with comprehensive testing, automated quality gates, and continuous monitoring using modern web framework architecture.
 
+## 🚨 CRITICAL ARCHITECTURE REMINDER
+**This is a STANDALONE ERP SYSTEM that mimics Odoo's functionality but is NOT Odoo.**
+- ❌ DO NOT CREATE ODOO MODULES
+- ✅ CREATE ADDONS FOR OUR CUSTOM FRAMEWORK
+- Use `core_framework/` components (ORM, addon manager, web interface)
+- Follow existing addon patterns in `addons/` directory
+- See `DEVELOPMENT_GUIDELINES.md` for detailed instructions
+
 ## Current Progress Tracking
 
 ### ✅ COMPLETED

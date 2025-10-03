@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data noupdate="1">
+        
+        <!-- Default Product Categories -->
+        
+        <!-- Age-based Categories -->
+        <record id="category_newborn" model="product.category">
+            <field name="name">Newborn (0-6 months)</field>
+            <field name="code">NEWBORN</field>
+            <field name="description">Clothing for newborns (0-6 months)</field>
+            <field name="category_type">age_based</field>
+            <field name="age_group">newborn</field>
+            <field name="gender">all</field>
+            <field name="sequence">10</field>
+            <field name="margin_percentage">40.0</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="category_infant" model="product.category">
+            <field name="name">Infant (6-12 months)</field>
+            <field name="code">INFANT</field>
+            <field name="description">Clothing for infants (6-12 months)</field>
+            <field name="category_type">age_based</field>
+            <field name="age_group">infant</field>
+            <field name="gender">all</field>
+            <field name="sequence">20</field>
+            <field name="margin_percentage">35.0</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="category_toddler" model="product.category">
+            <field name="name">Toddler (1-3 years)</field>
+            <field name="code">TODDLER</field>
+            <field name="description">Clothing for toddlers (1-3 years)</field>
+            <field name="category_type">age_based</field>
+            <field name="age_group">toddler</field>
+            <field name="gender">all</field>
+            <field name="sequence">30</field>
+            <field name="margin_percentage">30.0</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="category_preschool" model="product.category">
+            <field name="name">Preschool (3-5 years)</field>
+            <field name="code">PRESCHOOL</field>
+            <field name="description">Clothing for preschool children (3-5 years)</field>
+            <field name="category_type">age_based</field>
+            <field name="age_group">preschool</field>
+            <field name="gender">all</field>
+            <field name="sequence">40</field>
+            <field name="margin_percentage">25.0</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="category_school" model="product.category">
+            <field name="name">School (5-12 years)</field>
+            <field name="code">SCHOOL</field>
+            <field name="description">Clothing for school children (5-12 years)</field>
+            <field name="category_type">age_based</field>
+            <field name="age_group">school</field>
+            <field name="gender">all</field>
+            <field name="sequence">50</field>
+            <field name="margin_percentage">20.0</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="category_teen" model="product.category">
+            <field name="name">Teen (12+ years)</field>
+            <field name="code">TEEN</field>
+            <field name="description">Clothing for teenagers (12+ years)</field>
+            <field name="category_type">age_based</field>
+            <field name="age_group">teen</field>
+            <field name="gender">all</field>
+            <field name="sequence">60</field>
+            <field name="margin_percentage">15.0</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <!-- Seasonal Categories -->
+        <record id="category_summer" model="product.category">
+            <field name="name">Summer Collection</field>
+            <field name="code">SUMMER</field>
+            <field name="description">Summer clothing collection</field>
+            <field name="category_type">seasonal</field>
+            <field name="season">summer</field>
+            <field name="gender">all</field>
+            <field name="sequence">70</field>
+            <field name="margin_percentage">25.0</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="category_winter" model="product.category">
+            <field name="name">Winter Collection</field>
+            <field name="code">WINTER</field>
+            <field name="description">Winter clothing collection</field>
+            <field name="category_type">seasonal</field>
+            <field name="season">winter</field>
+            <field name="gender">all</field>
+            <field name="sequence">80</field>
+            <field name="margin_percentage">30.0</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="category_monsoon" model="product.category">
+            <field name="name">Monsoon Collection</field>
+            <field name="code">MONSOON</field>
+            <field name="description">Monsoon clothing collection</field>
+            <field name="category_type">seasonal</field>
+            <field name="season">monsoon</field>
+            <field name="gender">all</field>
+            <field name="sequence">90</field>
+            <field name="margin_percentage">25.0</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <!-- Gender Categories -->
+        <record id="category_boys" model="product.category">
+            <field name="name">Boys Collection</field>
+            <field name="code">BOYS</field>
+            <field name="description">Boys clothing collection</field>
+            <field name="category_type">gender</field>
+            <field name="gender">boys</field>
+            <field name="sequence">100</field>
+            <field name="margin_percentage">25.0</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="category_girls" model="product.category">
+            <field name="name">Girls Collection</field>
+            <field name="code">GIRLS</field>
+            <field name="description">Girls clothing collection</field>
+            <field name="category_type">gender</field>
+            <field name="gender">girls</field>
+            <field name="sequence">110</field>
+            <field name="margin_percentage">30.0</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="category_unisex" model="product.category">
+            <field name="name">Unisex Collection</field>
+            <field name="code">UNISEX</field>
+            <field name="description">Unisex clothing collection</field>
+            <field name="category_type">gender</field>
+            <field name="gender">unisex</field>
+            <field name="sequence">120</field>
+            <field name="margin_percentage">20.0</field>
+            <field name="is_active">True</field>
+        </record>
+        
+    </data>
+</ocean>

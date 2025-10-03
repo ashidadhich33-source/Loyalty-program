@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        <!-- Bulk Import Menu -->
+        <menuitem id="menu_bulk_import"
+                  name="Bulk Import"
+                  parent="menu_kids_clothing_erp"
+                  sequence="50"/>
+        
+        <!-- Import Operations -->
+        <menuitem id="menu_import_operations"
+                  name="Import Operations"
+                  parent="menu_bulk_import"
+                  sequence="10"/>
+        
+        <menuitem id="menu_import_wizard"
+                  name="Import Wizard"
+                  parent="menu_import_operations"
+                  sequence="10"
+                  action="action_import_wizard"/>
+        
+        <menuitem id="menu_import_jobs"
+                  name="Import Jobs"
+                  parent="menu_import_operations"
+                  sequence="20"
+                  action="action_import_jobs"/>
+        
+        <menuitem id="menu_import_history"
+                  name="Import History"
+                  parent="menu_import_operations"
+                  sequence="30"
+                  action="action_import_history"/>
+        
+        <!-- Import Templates -->
+        <menuitem id="menu_import_templates"
+                  name="Import Templates"
+                  parent="menu_bulk_import"
+                  sequence="20"/>
+        
+        <menuitem id="menu_import_templates_list"
+                  name="All Templates"
+                  parent="menu_import_templates"
+                  sequence="10"
+                  action="action_import_templates"/>
+        
+        <!-- Import Configuration -->
+        <menuitem id="menu_import_configuration"
+                  name="Configuration"
+                  parent="menu_bulk_import"
+                  sequence="30"/>
+        
+        <menuitem id="menu_import_settings"
+                  name="Import Settings"
+                  parent="menu_import_configuration"
+                  sequence="10"/>
+        
+    </data>
+</ocean>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        <!-- Categories Menu -->
+        <menuitem id="menu_categories"
+                  name="Categories"
+                  parent="menu_kids_clothing_erp"
+                  sequence="20"/>
+        
+        <!-- Categories Management -->
+        <menuitem id="menu_categories_management"
+                  name="Category Management"
+                  parent="menu_categories"
+                  sequence="10"/>
+        
+        <menuitem id="menu_categories_list"
+                  name="All Categories"
+                  parent="menu_categories_management"
+                  sequence="10"
+                  action="action_categories"/>
+        
+        <menuitem id="menu_categories_hierarchy"
+                  name="Category Hierarchy"
+                  parent="menu_categories_management"
+                  sequence="20"
+                  action="action_category_hierarchy"/>
+        
+        <!-- Categories Analytics -->
+        <menuitem id="menu_categories_analytics"
+                  name="Category Analytics"
+                  parent="menu_categories"
+                  sequence="20"/>
+        
+        <menuitem id="menu_categories_analytics_list"
+                  name="Analytics Dashboard"
+                  parent="menu_categories_analytics"
+                  sequence="10"
+                  action="action_category_analytics"/>
+        
+        <!-- Categories Configuration -->
+        <menuitem id="menu_categories_configuration"
+                  name="Configuration"
+                  parent="menu_categories"
+                  sequence="30"/>
+        
+        <menuitem id="menu_categories_settings"
+                  name="Category Settings"
+                  parent="menu_categories_configuration"
+                  sequence="10"/>
+        
+    </data>
+</ocean>

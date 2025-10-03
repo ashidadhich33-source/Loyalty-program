@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data noupdate="1">
+        
+        <!-- Demo Import Jobs -->
+        <record id="demo_import_job_1" model="import.job">
+            <field name="name">Demo Product Import</field>
+            <field name="description">Demo import job for product templates</field>
+            <field name="template_id" ref="template_product_template"/>
+            <field name="state">completed</field>
+            <field name="total_records">50</field>
+            <field name="processed_records">50</field>
+            <field name="successful_records">48</field>
+            <field name="failed_records">2</field>
+            <field name="progress_percentage">100.0</field>
+            <field name="batch_size">25</field>
+            <field name="skip_errors">True</field>
+            <field name="update_existing">False</field>
+            <field name="import_summary">Import completed successfully. 48 records imported, 2 failed.</field>
+        </record>
+        
+        <record id="demo_import_job_2" model="import.job">
+            <field name="name">Demo Customer Import</field>
+            <field name="description">Demo import job for customer contacts</field>
+            <field name="template_id" ref="template_contact_customer"/>
+            <field name="state">running</field>
+            <field name="total_records">100</field>
+            <field name="processed_records">75</field>
+            <field name="successful_records">70</field>
+            <field name="failed_records">5</field>
+            <field name="progress_percentage">75.0</field>
+            <field name="batch_size">25</field>
+            <field name="skip_errors">True</field>
+            <field name="update_existing">False</field>
+        </record>
+        
+        <!-- Demo Import History -->
+        <record id="demo_import_history_1" model="import.history">
+            <field name="name">Demo Product Import - T-Shirt</field>
+            <field name="job_id" ref="demo_import_job_1"/>
+            <field name="model_name">product.template</field>
+            <field name="record_id">1</field>
+            <field name="record_name">Kids Cotton T-Shirt</field>
+            <field name="operation_type">create</field>
+            <field name="validation_passed">True</field>
+            <field name="is_successful">True</field>
+            <field name="original_data">{"name": "Kids Cotton T-Shirt", "code": "TSH001", "description": "Comfortable cotton t-shirt", "list_price": "299.00"}</field>
+            <field name="processed_data">{"name": "Kids Cotton T-Shirt", "code": "TSH001", "description": "Comfortable cotton t-shirt", "list_price": 299.00}</field>
+        </record>
+        
+        <record id="demo_import_history_2" model="import.history">
+            <field name="name">Demo Product Import - Jeans</field>
+            <field name="job_id" ref="demo_import_job_1"/>
+            <field name="model_name">product.template</field>
+            <field name="record_id">2</field>
+            <field name="record_name">Kids Denim Jeans</field>
+            <field name="operation_type">create</field>
+            <field name="validation_passed">True</field>
+            <field name="is_successful">True</field>
+            <field name="original_data">{"name": "Kids Denim Jeans", "code": "JNS001", "description": "Durable denim jeans", "list_price": "599.00"}</field>
+            <field name="processed_data">{"name": "Kids Denim Jeans", "code": "JNS001", "description": "Durable denim jeans", "list_price": 599.00}</field>
+        </record>
+        
+        <record id="demo_import_history_3" model="import.history">
+            <field name="name">Demo Product Import - Failed</field>
+            <field name="job_id" ref="demo_import_job_1"/>
+            <field name="model_name">product.template</field>
+            <field name="operation_type">error</field>
+            <field name="validation_passed">False</field>
+            <field name="is_successful">False</field>
+            <field name="original_data">{"name": "", "code": "ERR001", "description": "Invalid product", "list_price": "invalid"}</field>
+            <field name="error_message">Validation failed: name is required, list_price must be a number</field>
+            <field name="error_details">Field validation errors: name (required), list_price (type mismatch)</field>
+        </record>
+        
+    </data>
+</ocean>

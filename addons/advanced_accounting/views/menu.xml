@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Advanced Accounting Menu -->
+        <menuitem id="menu_advanced_accounting" name="Advanced Accounting" sequence="10" web_icon="advanced_accounting,static/description/icon.png"/>
+        
+        <!-- Chart of Accounts Menu -->
+        <menuitem id="menu_chart_of_accounts" name="Chart of Accounts" parent="menu_advanced_accounting" sequence="10"/>
+        <menuitem id="menu_account_account" name="Accounts" parent="menu_chart_of_accounts" action="action_account_account" sequence="10"/>
+        
+        <!-- Journals Menu -->
+        <menuitem id="menu_journals" name="Journals" parent="menu_advanced_accounting" sequence="20"/>
+        <menuitem id="menu_account_journal" name="Journals" parent="menu_journals" action="action_account_journal" sequence="10"/>
+        
+        <!-- Journal Entries Menu -->
+        <menuitem id="menu_journal_entries" name="Journal Entries" parent="menu_advanced_accounting" sequence="30"/>
+        <menuitem id="menu_account_move" name="Journal Entries" parent="menu_journal_entries" action="action_account_move" sequence="10"/>
+        
+        <!-- Reconciliation Menu -->
+        <menuitem id="menu_reconciliation" name="Reconciliation" parent="menu_advanced_accounting" sequence="40"/>
+        
+        <!-- Budget Menu -->
+        <menuitem id="menu_budget" name="Budget" parent="menu_advanced_accounting" sequence="50"/>
+        
+        <!-- Cost Centers Menu -->
+        <menuitem id="menu_cost_centers" name="Cost Centers" parent="menu_advanced_accounting" sequence="60"/>
+        
+        <!-- Financial Reports Menu -->
+        <menuitem id="menu_financial_reports" name="Financial Reports" parent="menu_advanced_accounting" sequence="70"/>
+        
+        <!-- Fiscal Year Menu -->
+        <menuitem id="menu_fiscal_year" name="Fiscal Year" parent="menu_advanced_accounting" sequence="80"/>
+        
+    </data>
+</ocean>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Demo Chart of Accounts for Kids Clothing Business -->
+        
+        <!-- Additional Asset Accounts -->
+        <record id="demo_account_1400" model="account.account">
+            <field name="name">Prepaid Expenses</field>
+            <field name="code">1400</field>
+            <field name="account_type">asset</field>
+            <field name="parent_id" ref="account_1000"/>
+            <field name="is_active">True</field>
+            <field name="product_category">general</field>
+        </record>
+        
+        <record id="demo_account_1600" model="account.account">
+            <field name="name">Other Assets</field>
+            <field name="code">1600</field>
+            <field name="account_type">asset</field>
+            <field name="parent_id" ref="account_1000"/>
+            <field name="is_active">True</field>
+            <field name="product_category">general</field>
+        </record>
+        
+        <!-- Additional Liability Accounts -->
+        <record id="demo_account_2400" model="account.account">
+            <field name="name">Accrued Expenses</field>
+            <field name="code">2400</field>
+            <field name="account_type">liability</field>
+            <field name="parent_id" ref="account_2000"/>
+            <field name="is_active">True</field>
+            <field name="product_category">general</field>
+        </record>
+        
+        <record id="demo_account_2500" model="account.account">
+            <field name="name">Other Liabilities</field>
+            <field name="code">2500</field>
+            <field name="account_type">liability</field>
+            <field name="parent_id" ref="account_2000"/>
+            <field name="is_active">True</field>
+            <field name="product_category">general</field>
+        </record>
+        
+        <!-- Additional Income Accounts -->
+        <record id="demo_account_4200" model="account.account">
+            <field name="name">Service Revenue</field>
+            <field name="code">4200</field>
+            <field name="account_type">income</field>
+            <field name="parent_id" ref="account_4000"/>
+            <field name="is_active">True</field>
+            <field name="gst_applicable">True</field>
+            <field name="product_category">general</field>
+        </record>
+        
+        <record id="demo_account_4300" model="account.account">
+            <field name="name">Other Income</field>
+            <field name="code">4300</field>
+            <field name="account_type">other_income</field>
+            <field name="parent_id" ref="account_4000"/>
+            <field name="is_active">True</field>
+            <field name="product_category">general</field>
+        </record>
+        
+        <!-- Additional Expense Accounts -->
+        <record id="demo_account_6500" model="account.account">
+            <field name="name">Professional Fees</field>
+            <field name="code">6500</field>
+            <field name="account_type">expense</field>
+            <field name="parent_id" ref="account_6000"/>
+            <field name="is_active">True</field>
+            <field name="product_category">general</field>
+        </record>
+        
+        <record id="demo_account_6600" model="account.account">
+            <field name="name">Insurance Expense</field>
+            <field name="code">6600</field>
+            <field name="account_type">expense</field>
+            <field name="parent_id" ref="account_6000"/>
+            <field name="is_active">True</field>
+            <field name="product_category">general</field>
+        </record>
+        
+        <record id="demo_account_6700" model="account.account">
+            <field name="name">Depreciation Expense</field>
+            <field name="code">6700</field>
+            <field name="account_type">expense</field>
+            <field name="parent_id" ref="account_6000"/>
+            <field name="is_active">True</field>
+            <field name="product_category">general</field>
+        </record>
+        
+        <record id="demo_account_6800" model="account.account">
+            <field name="name">Other Expenses</field>
+            <field name="code">6800</field>
+            <field name="account_type">other_expense</field>
+            <field name="parent_id" ref="account_6000"/>
+            <field name="is_active">True</field>
+            <field name="product_category">general</field>
+        </record>
+        
+    </data>
+</ocean>

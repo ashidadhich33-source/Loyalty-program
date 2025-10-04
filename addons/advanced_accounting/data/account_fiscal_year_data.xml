@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Default Fiscal Year for Kids Clothing Business -->
+        
+        <record id="fiscal_year_2024_25" model="account.fiscal.year">
+            <field name="name">FY 2024-25</field>
+            <field name="date_from">2024-04-01</field>
+            <field name="date_to">2025-03-31</field>
+            <field name="state">active</field>
+            <field name="product_category">general</field>
+            <field name="age_group_focus">all</field>
+            <field name="season_specialization">all_seasons</field>
+        </record>
+        
+        <record id="fiscal_year_2023_24" model="account.fiscal.year">
+            <field name="name">FY 2023-24</field>
+            <field name="date_from">2023-04-01</field>
+            <field name="date_to">2024-03-31</field>
+            <field name="state">closed</field>
+            <field name="product_category">general</field>
+            <field name="age_group_focus">all</field>
+            <field name="season_specialization">all_seasons</field>
+        </record>
+        
+    </data>
+</ocean>

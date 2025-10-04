@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Account Sequences -->
+        <record id="seq_account_account" model="ir.sequence">
+            <field name="name">Account Code</field>
+            <field name="code">account.account</field>
+            <field name="prefix">ACC</field>
+            <field name="padding">4</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+        </record>
+        
+        <!-- Default Chart of Accounts for Kids Clothing Business -->
+        
+        <!-- Assets -->
+        <record id="account_1000" model="account.account">
+            <field name="name">Current Assets</field>
+            <field name="code">1000</field>
+            <field name="account_type">asset</field>
+            <field name="is_active">True</field>
+            <field name="product_category">general</field>
+        </record>
+        
+        <record id="account_1100" model="account.account">
+            <field name="name">Cash and Bank</field>
+            <field name="code">1100</field>
+            <field name="account_type">asset</field>
+            <field name="parent_id" ref="account_1000"/>
+            <field name="is_active">True</field>
+            <field name="is_reconcilable">True</field>
+            <field name="product_category">general</field>
+        </record>
+        
+        <record id="account_1110" model="account.account">
+            <field name="name">Cash in Hand</field>
+            <field name="code">1110</field>
+            <field name="account_type">asset</field>
+            <field name="parent_id" ref="account_1100"/>
+            <field name="is_active">True</field>
+            <field name="is_reconcilable">True</field>
+            <field name="product_category">general</field>
+        </record>
+        
+        <record id="account_1120" model="account.account">
+            <field name="name">Bank Account</field>
+            <field name="code">1120</field>
+            <field name="account_type">asset</field>
+            <field name="parent_id" ref="account_1100"/>
+            <field name="is_active">True</field>
+            <field name="is_reconcilable">True</field>
+            <field name="product_category">general</field>
+        </record>
+        
+        <record id="account_1200" model="account.account">
+            <field name="name">Accounts Receivable</field>
+            <field name="code">1200</field>
+            <field name="account_type">asset</field>
+            <field name="parent_id" ref="account_1000"/>
+            <field name="is_active">True</field>
+            <field name="is_reconcilable">True</field>
+            <field name="product_category">general</field>
+        </record>
+        
+        <record id="account_1300" model="account.account">
+            <field name="name">Inventory</field>
+            <field name="code">1300</field>
+            <field name="account_type">asset</field>
+            <field name="parent_id" ref="account_1000"/>
+            <field name="is_active">True</field>
+            <field name="product_category">clothing</field>
+        </record>
+        
+        <record id="account_1310" model="account.account">
+            <field name="name">Kids Clothing Inventory</field>
+            <field name="code">1310</field>
+            <field name="account_type">asset</field>
+            <field name="parent_id" ref="account_1300"/>
+            <field name="is_active">True</field>
+            <field name="product_category">clothing</field>
+            <field name="age_group_focus">all</field>
+        </record>
+        
+        <record id="account_1320" model="account.account">
+            <field name="name">Accessories Inventory</field>
+            <field name="code">1320</field>
+            <field name="account_type">asset</field>
+            <field name="parent_id" ref="account_1300"/>
+            <field name="is_active">True</field>
+            <field name="product_category">accessories</field>
+        </record>
+        
+        <record id="account_1330" model="account.account">
+            <field name="name">Shoes Inventory</field>
+            <field name="code">1330</field>
+            <field name="account_type">asset</field>
+            <field name="parent_id" ref="account_1300"/>
+            <field name="is_active">True</field>
+            <field name="product_category">shoes</field>
+        </record>
+        
+        <!-- Fixed Assets -->
+        <record id="account_1500" model="account.account">
+            <field name="name">Fixed Assets</field>
+            <field name="code">1500</field>
+            <field name="account_type">asset</field>
+            <field name="is_active">True</field>
+            <field name="product_category">general</field>
+        </record>
+        
+        <record id="account_1510" model="account.account">
+            <field name="name">Store Equipment</field>
+            <field name="code">1510</field>
+            <field name="account_type">asset</field>
+            <field name="parent_id" ref="account_1500"/>
+            <field name="is_active">True</field>
+            <field name="is_depreciated">True</field>
+            <field name="product_category">general</field>
+        </record>
+        
+        <record id="account_1520" model="account.account">
+            <field name="name">Computer Equipment</field>
+            <field name="code">1520</field>
+            <field name="account_type">asset</field>
+            <field name="parent_id" ref="account_1500"/>
+            <field name="is_active">True</field>
+            <field name="is_depreciated">True</field>
+            <field name="product_category">general</field>
+        </record>
+        
+        <!-- Liabilities -->
+        <record id="account_2000" model="account.account">
+            <field name="name">Current Liabilities</field>
+            <field name="code">2000</field>
+            <field name="account_type">liability</field>
+            <field name="is_active">True</field>
+            <field name="product_category">general</field>
+        </record>
+        
+        <record id="account_2100" model="account.account">
+            <field name="name">Accounts Payable</field>
+            <field name="code">2100</field>
+            <field name="account_type">liability</field>
+            <field name="parent_id" ref="account_2000"/>
+            <field name="is_active">True</field>
+            <field name="is_reconcilable">True</field>
+            <field name="product_category">general</field>
+        </record>
+        
+        <record id="account_2200" model="account.account">
+            <field name="name">GST Payable</field>
+            <field name="code">2200</field>
+            <field name="account_type">liability</field>
+            <field name="parent_id" ref="account_2000"/>
+            <field name="is_active">True</field>
+            <field name="gst_applicable">True</field>
+            <field name="product_category">general</field>
+        </record>
+        
+        <record id="account_2300" model="account.account">
+            <field name="name">TDS Payable</field>
+            <field name="code">2300</field>
+            <field name="account_type">liability</field>
+            <field name="parent_id" ref="account_2000"/>
+            <field name="is_active">True</field>
+            <field name="tds_applicable">True</field>
+            <field name="product_category">general</field>
+        </record>
+        
+        <!-- Equity -->
+        <record id="account_3000" model="account.account">
+            <field name="name">Equity</field>
+            <field name="code">3000</field>
+            <field name="account_type">equity</field>
+            <field name="is_active">True</field>
+            <field name="product_category">general</field>
+        </record>
+        
+        <record id="account_3100" model="account.account">
+            <field name="name">Owner's Capital</field>
+            <field name="code">3100</field>
+            <field name="account_type">equity</field>
+            <field name="parent_id" ref="account_3000"/>
+            <field name="is_active">True</field>
+            <field name="product_category">general</field>
+        </record>
+        
+        <record id="account_3200" model="account.account">
+            <field name="name">Retained Earnings</field>
+            <field name="code">3200</field>
+            <field name="account_type">equity</field>
+            <field name="parent_id" ref="account_3000"/>
+            <field name="is_active">True</field>
+            <field name="product_category">general</field>
+        </record>
+        
+        <!-- Income -->
+        <record id="account_4000" model="account.account">
+            <field name="name">Revenue</field>
+            <field name="code">4000</field>
+            <field name="account_type">income</field>
+            <field name="is_active">True</field>
+            <field name="product_category">general</field>
+        </record>
+        
+        <record id="account_4100" model="account.account">
+            <field name="name">Sales Revenue</field>
+            <field name="code">4100</field>
+            <field name="account_type">income</field>
+            <field name="parent_id" ref="account_4000"/>
+            <field name="is_active">True</field>
+            <field name="gst_applicable">True</field>
+            <field name="product_category">clothing</field>
+        </record>
+        
+        <record id="account_4110" model="account.account">
+            <field name="name">Kids Clothing Sales</field>
+            <field name="code">4110</field>
+            <field name="account_type">income</field>
+            <field name="parent_id" ref="account_4100"/>
+            <field name="is_active">True</field>
+            <field name="gst_applicable">True</field>
+            <field name="product_category">clothing</field>
+            <field name="age_group_focus">all</field>
+        </record>
+        
+        <record id="account_4120" model="account.account">
+            <field name="name">Accessories Sales</field>
+            <field name="code">4120</field>
+            <field name="account_type">income</field>
+            <field name="parent_id" ref="account_4100"/>
+            <field name="is_active">True</field>
+            <field name="gst_applicable">True</field>
+            <field name="product_category">accessories</field>
+        </record>
+        
+        <record id="account_4130" model="account.account">
+            <field name="name">Shoes Sales</field>
+            <field name="code">4130</field>
+            <field name="account_type">income</field>
+            <field name="parent_id" ref="account_4100"/>
+            <field name="is_active">True</field>
+            <field name="gst_applicable">True</field>
+            <field name="product_category">shoes</field>
+        </record>
+        
+        <!-- Cost of Sales -->
+        <record id="account_5000" model="account.account">
+            <field name="name">Cost of Sales</field>
+            <field name="code">5000</field>
+            <field name="account_type">cost_of_sales</field>
+            <field name="is_active">True</field>
+            <field name="product_category">general</field>
+        </record>
+        
+        <record id="account_5100" model="account.account">
+            <field name="name">Cost of Goods Sold</field>
+            <field name="code">5100</field>
+            <field name="account_type">cost_of_sales</field>
+            <field name="parent_id" ref="account_5000"/>
+            <field name="is_active">True</field>
+            <field name="product_category">clothing</field>
+        </record>
+        
+        <record id="account_5110" model="account.account">
+            <field name="name">Kids Clothing COGS</field>
+            <field name="code">5110</field>
+            <field name="account_type">cost_of_sales</field>
+            <field name="parent_id" ref="account_5100"/>
+            <field name="is_active">True</field>
+            <field name="product_category">clothing</field>
+            <field name="age_group_focus">all</field>
+        </record>
+        
+        <!-- Expenses -->
+        <record id="account_6000" model="account.account">
+            <field name="name">Operating Expenses</field>
+            <field name="code">6000</field>
+            <field name="account_type">expense</field>
+            <field name="is_active">True</field>
+            <field name="product_category">general</field>
+        </record>
+        
+        <record id="account_6100" model="account.account">
+            <field name="name">Rent Expense</field>
+            <field name="code">6100</field>
+            <field name="account_type">expense</field>
+            <field name="parent_id" ref="account_6000"/>
+            <field name="is_active">True</field>
+            <field name="product_category">general</field>
+        </record>
+        
+        <record id="account_6200" model="account.account">
+            <field name="name">Utilities Expense</field>
+            <field name="code">6200</field>
+            <field name="account_type">expense</field>
+            <field name="parent_id" ref="account_6000"/>
+            <field name="is_active">True</field>
+            <field name="product_category">general</field>
+        </record>
+        
+        <record id="account_6300" model="account.account">
+            <field name="name">Marketing Expense</field>
+            <field name="code">6300</field>
+            <field name="account_type">expense</field>
+            <field name="parent_id" ref="account_6000"/>
+            <field name="is_active">True</field>
+            <field name="product_category">general</field>
+        </record>
+        
+        <record id="account_6400" model="account.account">
+            <field name="name">Employee Expenses</field>
+            <field name="code">6400</field>
+            <field name="account_type">expense</field>
+            <field name="parent_id" ref="account_6000"/>
+            <field name="is_active">True</field>
+            <field name="product_category">general</field>
+        </record>
+        
+    </data>
+</ocean>

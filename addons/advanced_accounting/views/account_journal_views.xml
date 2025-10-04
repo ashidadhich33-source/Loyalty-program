@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Journal Tree View -->
+        <record id="view_account_journal_tree" model="ir.ui.view">
+            <field name="name">account.journal.tree</field>
+            <field name="model">account.journal</field>
+            <field name="arch" type="xml">
+                <tree string="Journals" decoration-muted="not is_active">
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="journal_type"/>
+                    <field name="sequence"/>
+                    <field name="is_active"/>
+                    <field name="gst_applicable"/>
+                    <field name="tds_applicable"/>
+                    <field name="age_group_focus"/>
+                    <field name="season_specialization"/>
+                    <field name="product_category"/>
+                    <field name="total_entries"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Journal Form View -->
+        <record id="view_account_journal_form" model="ir.ui.view">
+            <field name="name">account.journal.form</field>
+            <field name="model">account.journal</field>
+            <field name="arch" type="xml">
+                <form string="Journal">
+                    <header>
+                        <button name="action_view_entries" string="View Entries" type="object" class="btn-primary"/>
+                        <button name="action_create_entry" string="Create Entry" type="object" class="btn-success"/>
+                        <field name="is_active" widget="statusbar" statusbar_visible="is_active"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Journal Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="code"/>
+                                <field name="journal_type"/>
+                                <field name="sequence"/>
+                                <field name="company_id"/>
+                                <field name="currency_id"/>
+                            </group>
+                            <group>
+                                <field name="is_active"/>
+                                <field name="default_debit_account_id"/>
+                                <field name="default_credit_account_id"/>
+                                <field name="bank_id" attrs="{'invisible': [('journal_type', '!=', 'bank')]}"/>
+                                <field name="bank_account_id" attrs="{'invisible': [('journal_type', '!=', 'bank')]}"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <h3>Kids Clothing Specific</h3>
+                                <field name="age_group_focus"/>
+                                <field name="season_specialization"/>
+                                <field name="brand_focus"/>
+                                <field name="product_category"/>
+                            </group>
+                            <group>
+                                <h3>Indian Compliance</h3>
+                                <field name="gst_applicable"/>
+                                <field name="tds_applicable"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <h3>Analytics</h3>
+                                <field name="total_entries"/>
+                                <field name="total_debit"/>
+                                <field name="total_credit"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="notes"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Journal Search View -->
+        <record id="view_account_journal_search" model="ir.ui.view">
+            <field name="name">account.journal.search</field>
+            <field name="model">account.journal</field>
+            <field name="arch" type="xml">
+                <search string="Search Journals">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="journal_type"/>
+                    <field name="company_id"/>
+                    <field name="age_group_focus"/>
+                    <field name="season_specialization"/>
+                    <field name="product_category"/>
+                    <field name="brand_focus"/>
+                    <filter string="Active" name="active" domain="[('is_active', '=', True)]"/>
+                    <filter string="GST Applicable" name="gst_applicable" domain="[('gst_applicable', '=', True)]"/>
+                    <filter string="TDS Applicable" name="tds_applicable" domain="[('tds_applicable', '=', True)]"/>
+                    <separator/>
+                    <filter string="Sales" name="sales" domain="[('journal_type', '=', 'sale')]"/>
+                    <filter string="Purchase" name="purchase" domain="[('journal_type', '=', 'purchase')]"/>
+                    <filter string="Cash" name="cash" domain="[('journal_type', '=', 'cash')]"/>
+                    <filter string="Bank" name="bank" domain="[('journal_type', '=', 'bank')]"/>
+                    <filter string="General" name="general" domain="[('journal_type', '=', 'general')]"/>
+                    <separator/>
+                    <filter string="Kids Clothing" name="kids_clothing" domain="[('product_category', '=', 'clothing')]"/>
+                    <filter string="Accessories" name="accessories" domain="[('product_category', '=', 'accessories')]"/>
+                    <filter string="Shoes" name="shoes" domain="[('product_category', '=', 'shoes')]"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter string="Journal Type" name="group_journal_type" context="{'group_by': 'journal_type'}"/>
+                        <filter string="Company" name="group_company" context="{'group_by': 'company_id'}"/>
+                        <filter string="Age Group" name="group_age_group" context="{'group_by': 'age_group_focus'}"/>
+                        <filter string="Season" name="group_season" context="{'group_by': 'season_specialization'}"/>
+                        <filter string="Product Category" name="group_product_category" context="{'group_by': 'product_category'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- Journal Action -->
+        <record id="action_account_journal" model="ir.actions.act_window">
+            <field name="name">Journals</field>
+            <field name="res_model">account.journal</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_account_journal_search"/>
+            <field name="context">{}</field>
+        </record>
+        
+    </data>
+</ocean>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Accounting Dashboard View -->
+        <record id="view_account_dashboard" model="ir.ui.view">
+            <field name="name">account.dashboard</field>
+            <field name="model">account.account</field>
+            <field name="arch" type="xml">
+                <dashboard string="Accounting Dashboard">
+                    <view type="graph" ref="view_account_account_tree"/>
+                    <group>
+                        <aggregate name="total_accounts" field="id" string="Total Accounts"/>
+                        <aggregate name="active_accounts" field="id" string="Active Accounts" domain="[('is_active', '=', True)]"/>
+                        <aggregate name="reconcilable_accounts" field="id" string="Reconcilable Accounts" domain="[('is_reconcilable', '=', True)]"/>
+                    </group>
+                </dashboard>
+            </field>
+        </record>
+        
+        <!-- Accounting Dashboard Action -->
+        <record id="action_account_dashboard" model="ir.actions.act_window">
+            <field name="name">Accounting Dashboard</field>
+            <field name="res_model">account.account</field>
+            <field name="view_mode">dashboard</field>
+            <field name="view_id" ref="view_account_dashboard"/>
+            <field name="context">{}</field>
+        </record>
+        
+    </data>
+</ocean>

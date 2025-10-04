@@ -1,6 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ocean>
     <data>
-        <!-- Contact tag views will be generated -->
+        <!-- Contact Tag Tree View -->
+        <record id="view_contact_tag_tree" model="ocean.ui.view">
+            <field name="name">contact.tag.tree</field>
+            <field name="model">contact.tag</field>
+            <field name="arch" type="xml">
+                <tree string="Contact Tags" decoration-muted="not is_active" decoration-info="tag_type=='customer'" decoration-success="tag_type=='supplier'">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="tag_type"/>
+                    <field name="color"/>
+                    <field name="is_active"/>
+                    <field name="sequence"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Contact Tag Form View -->
+        <record id="view_contact_tag_form" model="ocean.ui.view">
+            <field name="name">contact.tag.form</field>
+            <field name="model">contact.tag</field>
+            <field name="arch" type="xml">
+                <form string="Contact Tag">
+                    <header>
+                        <button name="action_activate" string="Activate" type="object" class="btn-success" states="inactive"/>
+                        <button name="action_deactivate" string="Deactivate" type="object" class="btn-secondary" states="active"/>
+                        <field name="is_active" widget="statusbar" statusbar_visible="inactive,active"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Tag Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="code"/>
+                                <field name="tag_type"/>
+                                <field name="color"/>
+                                <field name="sequence"/>
+                                <field name="is_active"/>
+                            </group>
+                            <group>
+                                <field name="description"/>
+                                <field name="notes"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Kids Clothing Specific" name="kids_clothing">
+                                <group>
+                                    <group>
+                                        <field name="age_group"/>
+                                        <field name="season"/>
+                                        <field name="size_range"/>
+                                        <field name="gender"/>
+                                    </group>
+                                    <group>
+                                        <field name="special_occasion"/>
+                                        <field name="gift_wrapping"/>
+                                        <field name="gift_message"/>
+                                        <field name="care_instructions"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Contact Tag Search View -->
+        <record id="view_contact_tag_search" model="ocean.ui.view">
+            <field name="name">contact.tag.search</field>
+            <field name="model">contact.tag</field>
+            <field name="arch" type="xml">
+                <search string="Search Contact Tags">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="tag_type"/>
+                    <field name="color"/>
+                    <separator/>
+                    <filter string="Active" name="active" domain="[('is_active', '=', True)]"/>
+                    <filter string="Inactive" name="inactive" domain="[('is_active', '=', False)]"/>
+                    <filter string="Customer" name="customer" domain="[('tag_type', '=', 'customer')]"/>
+                    <filter string="Supplier" name="supplier" domain="[('tag_type', '=', 'supplier')]"/>
+                    <filter string="Vendor" name="vendor" domain="[('tag_type', '=', 'vendor')]"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter string="Tag Type" name="tag_type" context="{'group_by': 'tag_type'}"/>
+                        <filter string="Color" name="color" context="{'group_by': 'color'}"/>
+                        <filter string="Active Status" name="active_status" context="{'group_by': 'is_active'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Contact Tag Action -->
+        <record id="action_contact_tag" model="ocean.actions.act_window">
+            <field name="name">Contact Tags</field>
+            <field name="res_model">contact.tag</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_contact_tag_search"/>
+            <field name="context">{'search_default_active': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new contact tag
+                </p>
+                <p>
+                    Contact tags help categorize and organize your contacts with visual indicators.
+                </p>
+            </field>
+        </record>
     </data>
 </ocean>

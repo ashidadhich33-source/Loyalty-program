@@ -1,6 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ocean>
     <data>
-        <!-- Contact analytics views will be generated -->
+        <!-- Contact Analytics Dashboard View -->
+        <record id="view_contact_analytics_dashboard" model="ocean.ui.view">
+            <field name="name">contact.analytics.dashboard</field>
+            <field name="model">contact.analytics</field>
+            <field name="arch" type="xml">
+                <form string="Contact Analytics Dashboard">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>Contact Analytics Dashboard</h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="total_customers" readonly="1"/>
+                                <field name="total_suppliers" readonly="1"/>
+                                <field name="total_vendors" readonly="1"/>
+                                <field name="total_contacts" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="active_customers" readonly="1"/>
+                                <field name="active_suppliers" readonly="1"/>
+                                <field name="active_vendors" readonly="1"/>
+                                <field name="active_contacts" readonly="1"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Customer Analysis" name="customer_analysis">
+                                <group>
+                                    <group>
+                                        <field name="customers_by_type" readonly="1"/>
+                                        <field name="customers_by_country" readonly="1"/>
+                                        <field name="customers_by_state" readonly="1"/>
+                                    </group>
+                                    <group>
+                                        <field name="top_customers" readonly="1"/>
+                                        <field name="customer_growth_rate" readonly="1"/>
+                                        <field name="average_customer_value" readonly="1"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Kids Clothing Specific" name="kids_clothing">
+                                <group>
+                                    <group>
+                                        <field name="customers_by_age_group" readonly="1"/>
+                                        <field name="customers_by_gender" readonly="1"/>
+                                        <field name="customers_by_season" readonly="1"/>
+                                    </group>
+                                    <group>
+                                        <field name="customers_by_size_range" readonly="1"/>
+                                        <field name="customers_by_occasion" readonly="1"/>
+                                        <field name="gift_wrapping_rate" readonly="1"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Contact Analytics Action -->
+        <record id="action_contact_analytics" model="ocean.actions.act_window">
+            <field name="name">Contact Analytics</field>
+            <field name="res_model">contact.analytics</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_contact_analytics_dashboard"/>
+            <field name="target">current</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Contact Analytics Dashboard
+                </p>
+                <p>
+                    View comprehensive analytics and insights about your contacts.
+                </p>
+            </field>
+        </record>
     </data>
 </ocean>

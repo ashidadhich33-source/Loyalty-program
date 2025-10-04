@@ -1,6 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ocean>
     <data>
-        <!-- Supplier views will be generated -->
+        <!-- Supplier Tree View -->
+        <record id="view_supplier_tree" model="ocean.ui.view">
+            <field name="name">contact.supplier.tree</field>
+            <field name="model">contact.supplier</field>
+            <field name="arch" type="xml">
+                <tree string="Suppliers" decoration-muted="not is_active" decoration-info="supplier_type=='manufacturer'" decoration-success="supplier_type=='wholesaler'">
+                    <field name="name"/>
+                    <field name="email"/>
+                    <field name="phone"/>
+                    <field name="supplier_type"/>
+                    <field name="is_active"/>
+                    <field name="total_orders"/>
+                    <field name="total_purchased"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Supplier Form View -->
+        <record id="view_supplier_form" model="ocean.ui.view">
+            <field name="name">contact.supplier.form</field>
+            <field name="model">contact.supplier</field>
+            <field name="arch" type="xml">
+                <form string="Supplier">
+                    <header>
+                        <button name="action_activate" string="Activate" type="object" class="btn-success" states="inactive"/>
+                        <button name="action_deactivate" string="Deactivate" type="object" class="btn-secondary" states="active"/>
+                        <field name="is_active" widget="statusbar" statusbar_visible="inactive,active"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Supplier Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="supplier_type"/>
+                                <field name="email"/>
+                                <field name="phone"/>
+                                <field name="mobile"/>
+                                <field name="website"/>
+                            </group>
+                            <group>
+                                <field name="total_orders"/>
+                                <field name="total_purchased"/>
+                                <field name="average_order_value"/>
+                                <field name="last_order_date"/>
+                                <field name="supplier_since"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Address" name="address">
+                                <group>
+                                    <group>
+                                        <field name="street"/>
+                                        <field name="street2"/>
+                                        <field name="city"/>
+                                        <field name="state_id"/>
+                                        <field name="zip"/>
+                                        <field name="country_id"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Kids Clothing Specific" name="kids_clothing">
+                                <group>
+                                    <group>
+                                        <field name="age_group"/>
+                                        <field name="season"/>
+                                        <field name="size_range"/>
+                                        <field name="gender"/>
+                                    </group>
+                                    <group>
+                                        <field name="special_occasion"/>
+                                        <field name="gift_wrapping"/>
+                                        <field name="gift_message"/>
+                                        <field name="care_instructions"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Supplier Search View -->
+        <record id="view_supplier_search" model="ocean.ui.view">
+            <field name="name">contact.supplier.search</field>
+            <field name="model">contact.supplier</field>
+            <field name="arch" type="xml">
+                <search string="Search Suppliers">
+                    <field name="name"/>
+                    <field name="email"/>
+                    <field name="phone"/>
+                    <field name="supplier_type"/>
+                    <separator/>
+                    <filter string="Active" name="active" domain="[('is_active', '=', True)]"/>
+                    <filter string="Inactive" name="inactive" domain="[('is_active', '=', False)]"/>
+                    <filter string="Manufacturer" name="manufacturer" domain="[('supplier_type', '=', 'manufacturer')]"/>
+                    <filter string="Wholesaler" name="wholesaler" domain="[('supplier_type', '=', 'wholesaler')]"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter string="Supplier Type" name="supplier_type" context="{'group_by': 'supplier_type'}"/>
+                        <filter string="Active Status" name="active_status" context="{'group_by': 'is_active'}"/>
+                        <filter string="Country" name="country" context="{'group_by': 'country_id'}"/>
+                        <filter string="State" name="state" context="{'group_by': 'state_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Supplier Action -->
+        <record id="action_supplier" model="ocean.actions.act_window">
+            <field name="name">Suppliers</field>
+            <field name="res_model">contact.supplier</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_supplier_search"/>
+            <field name="context">{'search_default_active': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new supplier
+                </p>
+                <p>
+                    Suppliers are companies that provide products to your business.
+                </p>
+            </field>
+        </record>
     </data>
 </ocean>

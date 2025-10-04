@@ -1,6 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ocean>
     <data>
-        <!-- Contact history views will be generated -->
+        <!-- Contact History Tree View -->
+        <record id="view_contact_history_tree" model="ocean.ui.view">
+            <field name="name">contact.history.tree</field>
+            <field name="model">contact.history</field>
+            <field name="arch" type="xml">
+                <tree string="Contact History" decoration-muted="state=='cancelled'" decoration-success="state=='completed'" decoration-info="state=='pending'">
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="history_type"/>
+                    <field name="subject"/>
+                    <field name="state"/>
+                    <field name="history_date"/>
+                    <field name="user_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Contact History Form View -->
+        <record id="view_contact_history_form" model="ocean.ui.view">
+            <field name="name">contact.history.form</field>
+            <field name="model">contact.history</field>
+            <field name="arch" type="xml">
+                <form string="Contact History">
+                    <header>
+                        <button name="action_complete" string="Complete" type="object" class="btn-success" states="pending"/>
+                        <button name="action_cancel" string="Cancel" type="object" class="btn-secondary" states="pending"/>
+                        <field name="state" widget="statusbar" statusbar_visible="pending,completed,cancelled"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="subject" placeholder="History Subject"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="partner_id"/>
+                                <field name="history_type"/>
+                                <field name="history_date"/>
+                                <field name="user_id"/>
+                                <field name="priority"/>
+                            </group>
+                            <group>
+                                <field name="reference"/>
+                                <field name="related_model"/>
+                                <field name="related_id"/>
+                                <field name="state"/>
+                                <field name="duration"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Details" name="details">
+                                <field name="description" widget="text"/>
+                            </page>
+                            <page string="Kids Clothing Specific" name="kids_clothing">
+                                <group>
+                                    <group>
+                                        <field name="age_group"/>
+                                        <field name="season"/>
+                                        <field name="size_range"/>
+                                        <field name="gender"/>
+                                    </group>
+                                    <group>
+                                        <field name="special_occasion"/>
+                                        <field name="gift_wrapping"/>
+                                        <field name="gift_message"/>
+                                        <field name="care_instructions"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Contact History Search View -->
+        <record id="view_contact_history_search" model="ocean.ui.view">
+            <field name="name">contact.history.search</field>
+            <field name="model">contact.history</field>
+            <field name="arch" type="xml">
+                <search string="Search Contact History">
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="history_type"/>
+                    <field name="subject"/>
+                    <field name="user_id"/>
+                    <separator/>
+                    <filter string="Pending" name="pending" domain="[('state', '=', 'pending')]"/>
+                    <filter string="Completed" name="completed" domain="[('state', '=', 'completed')]"/>
+                    <filter string="Cancelled" name="cancelled" domain="[('state', '=', 'cancelled')]"/>
+                    <filter string="Today" name="today" domain="[('history_date', '>=', datetime.datetime.combine(context_today(), datetime.time(0,0,0))), ('history_date', '&lt;=', datetime.datetime.combine(context_today(), datetime.time(23,59,59)))]"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter string="Partner" name="partner" context="{'group_by': 'partner_id'}"/>
+                        <filter string="History Type" name="history_type" context="{'group_by': 'history_type'}"/>
+                        <filter string="State" name="state" context="{'group_by': 'state'}"/>
+                        <filter string="User" name="user" context="{'group_by': 'user_id'}"/>
+                        <filter string="History Date" name="history_date" context="{'group_by': 'history_date:day'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Contact History Action -->
+        <record id="action_contact_history" model="ocean.actions.act_window">
+            <field name="name">Contact History</field>
+            <field name="res_model">contact.history</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_contact_history_search"/>
+            <field name="context">{'search_default_today': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new contact history entry
+                </p>
+                <p>
+                    Contact history tracks all interactions and activities with contacts.
+                </p>
+            </field>
+        </record>
     </data>
 </ocean>

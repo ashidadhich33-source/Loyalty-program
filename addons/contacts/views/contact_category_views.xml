@@ -1,6 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ocean>
     <data>
-        <!-- Contact category views will be generated -->
+        <!-- Contact Category Tree View -->
+        <record id="view_contact_category_tree" model="ocean.ui.view">
+            <field name="name">contact.category.tree</field>
+            <field name="model">contact.category</field>
+            <field name="arch" type="xml">
+                <tree string="Contact Categories" decoration-muted="not is_active" decoration-info="category_type=='customer'" decoration-success="category_type=='supplier'">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="category_type"/>
+                    <field name="is_active"/>
+                    <field name="sequence"/>
+                    <field name="description"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Contact Category Form View -->
+        <record id="view_contact_category_form" model="ocean.ui.view">
+            <field name="name">contact.category.form</field>
+            <field name="model">contact.category</field>
+            <field name="arch" type="xml">
+                <form string="Contact Category">
+                    <header>
+                        <button name="action_activate" string="Activate" type="object" class="btn-success" states="inactive"/>
+                        <button name="action_deactivate" string="Deactivate" type="object" class="btn-secondary" states="active"/>
+                        <field name="is_active" widget="statusbar" statusbar_visible="inactive,active"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Category Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="code"/>
+                                <field name="category_type"/>
+                                <field name="sequence"/>
+                                <field name="is_active"/>
+                            </group>
+                            <group>
+                                <field name="description"/>
+                                <field name="notes"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Kids Clothing Specific" name="kids_clothing">
+                                <group>
+                                    <group>
+                                        <field name="age_group"/>
+                                        <field name="season"/>
+                                        <field name="size_range"/>
+                                        <field name="gender"/>
+                                    </group>
+                                    <group>
+                                        <field name="special_occasion"/>
+                                        <field name="gift_wrapping"/>
+                                        <field name="gift_message"/>
+                                        <field name="care_instructions"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Contact Category Search View -->
+        <record id="view_contact_category_search" model="ocean.ui.view">
+            <field name="name">contact.category.search</field>
+            <field name="model">contact.category</field>
+            <field name="arch" type="xml">
+                <search string="Search Contact Categories">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="category_type"/>
+                    <separator/>
+                    <filter string="Active" name="active" domain="[('is_active', '=', True)]"/>
+                    <filter string="Inactive" name="inactive" domain="[('is_active', '=', False)]"/>
+                    <filter string="Customer" name="customer" domain="[('category_type', '=', 'customer')]"/>
+                    <filter string="Supplier" name="supplier" domain="[('category_type', '=', 'supplier')]"/>
+                    <filter string="Vendor" name="vendor" domain="[('category_type', '=', 'vendor')]"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter string="Category Type" name="category_type" context="{'group_by': 'category_type'}"/>
+                        <filter string="Active Status" name="active_status" context="{'group_by': 'is_active'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Contact Category Action -->
+        <record id="action_contact_category" model="ocean.actions.act_window">
+            <field name="name">Contact Categories</field>
+            <field name="res_model">contact.category</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_contact_category_search"/>
+            <field name="context">{'search_default_active': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new contact category
+                </p>
+                <p>
+                    Contact categories help organize and classify your contacts.
+                </p>
+            </field>
+        </record>
     </data>
 </ocean>

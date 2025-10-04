@@ -1,6 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ocean>
     <data>
-        <!-- Contact address views will be generated -->
+        <!-- Contact Address Tree View -->
+        <record id="view_contact_address_tree" model="ocean.ui.view">
+            <field name="name">contact.address.tree</field>
+            <field name="model">contact.address</field>
+            <field name="arch" type="xml">
+                <tree string="Contact Addresses" decoration-muted="not is_active" decoration-info="address_type=='billing'" decoration-success="address_type=='shipping'">
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="address_type"/>
+                    <field name="street"/>
+                    <field name="city"/>
+                    <field name="country_id"/>
+                    <field name="is_active"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Contact Address Form View -->
+        <record id="view_contact_address_form" model="ocean.ui.view">
+            <field name="name">contact.address.form</field>
+            <field name="model">contact.address</field>
+            <field name="arch" type="xml">
+                <form string="Contact Address">
+                    <header>
+                        <button name="action_activate" string="Activate" type="object" class="btn-success" states="inactive"/>
+                        <button name="action_deactivate" string="Deactivate" type="object" class="btn-secondary" states="active"/>
+                        <field name="is_active" widget="statusbar" statusbar_visible="inactive,active"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Address Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="partner_id"/>
+                                <field name="address_type"/>
+                                <field name="street"/>
+                                <field name="street2"/>
+                                <field name="city"/>
+                            </group>
+                            <group>
+                                <field name="state_id"/>
+                                <field name="zip"/>
+                                <field name="country_id"/>
+                                <field name="phone"/>
+                                <field name="is_active"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Kids Clothing Specific" name="kids_clothing">
+                                <group>
+                                    <group>
+                                        <field name="age_group"/>
+                                        <field name="season"/>
+                                        <field name="size_range"/>
+                                        <field name="gender"/>
+                                    </group>
+                                    <group>
+                                        <field name="special_occasion"/>
+                                        <field name="gift_wrapping"/>
+                                        <field name="gift_message"/>
+                                        <field name="care_instructions"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Contact Address Search View -->
+        <record id="view_contact_address_search" model="ocean.ui.view">
+            <field name="name">contact.address.search</field>
+            <field name="model">contact.address</field>
+            <field name="arch" type="xml">
+                <search string="Search Contact Addresses">
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="address_type"/>
+                    <field name="city"/>
+                    <field name="country_id"/>
+                    <separator/>
+                    <filter string="Active" name="active" domain="[('is_active', '=', True)]"/>
+                    <filter string="Inactive" name="inactive" domain="[('is_active', '=', False)]"/>
+                    <filter string="Billing" name="billing" domain="[('address_type', '=', 'billing')]"/>
+                    <filter string="Shipping" name="shipping" domain="[('address_type', '=', 'shipping')]"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter string="Partner" name="partner" context="{'group_by': 'partner_id'}"/>
+                        <filter string="Address Type" name="address_type" context="{'group_by': 'address_type'}"/>
+                        <filter string="Country" name="country" context="{'group_by': 'country_id'}"/>
+                        <filter string="State" name="state" context="{'group_by': 'state_id'}"/>
+                        <filter string="Active Status" name="active_status" context="{'group_by': 'is_active'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Contact Address Action -->
+        <record id="action_contact_address" model="ocean.actions.act_window">
+            <field name="name">Contact Addresses</field>
+            <field name="res_model">contact.address</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_contact_address_search"/>
+            <field name="context">{'search_default_active': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new contact address
+                </p>
+                <p>
+                    Contact addresses store billing and shipping information for contacts.
+                </p>
+            </field>
+        </record>
     </data>
 </ocean>

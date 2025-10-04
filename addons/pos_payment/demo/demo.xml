@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data noupdate="1">
+        
+        <!-- Demo Payment Terminals -->
+        <record id="demo_payment_terminal_1" model="pos.payment.terminal">
+            <field name="name">Main Counter Terminal</field>
+            <field name="terminal_id">TERM_001</field>
+            <field name="description">Main counter payment terminal</field>
+            <field name="terminal_type">pos_machine</field>
+            <field name="is_active">True</field>
+            <field name="is_online">True</field>
+            <field name="config_id" ref="demo_pos_config_1"/>
+            <field name="location">Main Counter</field>
+            <field name="manufacturer">Verifone</field>
+            <field name="model">VX520</field>
+            <field name="serial_number">VF001234567</field>
+            <field name="firmware_version">1.2.3</field>
+            <field name="ip_address">192.168.1.100</field>
+            <field name="mac_address">00:1B:44:11:3A:B7</field>
+            <field name="port">8080</field>
+            <field name="status">active</field>
+            <field name="daily_transaction_limit">1000</field>
+            <field name="daily_amount_limit">500000.0</field>
+            <field name="requires_pin">True</field>
+            <field name="requires_signature">False</field>
+            <field name="encryption_enabled">True</field>
+            <field name="total_transactions">150</field>
+            <field name="total_amount">75000.0</field>
+            <field name="success_rate">98.5</field>
+            <field name="average_transaction_time">3.2</field>
+        </record>
+        
+        <record id="demo_payment_terminal_2" model="pos.payment.terminal">
+            <field name="name">Mobile POS Terminal</field>
+            <field name="terminal_id">TERM_002</field>
+            <field name="description">Mobile payment terminal for floor sales</field>
+            <field name="terminal_type">mobile_pos</field>
+            <field name="is_active">True</field>
+            <field name="is_online">True</field>
+            <field name="config_id" ref="demo_pos_config_1"/>
+            <field name="location">Floor Sales</field>
+            <field name="manufacturer">Square</field>
+            <field name="model">Square Reader</field>
+            <field name="serial_number">SQ001234567</field>
+            <field name="firmware_version">2.1.0</field>
+            <field name="ip_address">192.168.1.101</field>
+            <field name="mac_address">00:1B:44:11:3A:B8</field>
+            <field name="port">8080</field>
+            <field name="status">active</field>
+            <field name="daily_transaction_limit">500</field>
+            <field name="daily_amount_limit">100000.0</field>
+            <field name="requires_pin">True</field>
+            <field name="requires_signature">False</field>
+            <field name="encryption_enabled">True</field>
+            <field name="total_transactions">75</field>
+            <field name="total_amount">25000.0</field>
+            <field name="success_rate">97.0</field>
+            <field name="average_transaction_time">2.8</field>
+        </record>
+        
+        <!-- Demo Payment Transactions -->
+        <record id="demo_payment_transaction_1" model="pos.payment.transaction">
+            <field name="name">TXN-20240115001</field>
+            <field name="transaction_id">TXN_001</field>
+            <field name="session_id" ref="demo_pos_session_1"/>
+            <field name="order_id" ref="demo_pos_order_1"/>
+            <field name="payment_method_id" ref="payment_method_cash"/>
+            <field name="terminal_id" ref="demo_payment_terminal_1"/>
+            <field name="amount">500.0</field>
+            <field name="fee">0.0</field>
+            <field name="net_amount">500.0</field>
+            <field name="state">success</field>
+            <field name="transaction_type">payment</field>
+            <field name="partner_id" ref="base.partner_demo"/>
+            <field name="customer_age">6</field>
+            <field name="transaction_date">2024-01-15 16:30:00</field>
+            <field name="processing_time">1.5</field>
+            <field name="provider_response">Cash payment processed successfully</field>
+            <field name="provider_status">success</field>
+            <field name="requires_pin">False</field>
+            <field name="requires_signature">False</field>
+            <field name="pin_verified">False</field>
+            <field name="signature_verified">False</field>
+        </record>
+        
+        <record id="demo_payment_transaction_2" model="pos.payment.transaction">
+            <field name="name">TXN-20240115002</field>
+            <field name="transaction_id">TXN_002</field>
+            <field name="session_id" ref="demo_pos_session_1"/>
+            <field name="order_id" ref="demo_pos_order_2"/>
+            <field name="payment_method_id" ref="payment_method_card"/>
+            <field name="terminal_id" ref="demo_payment_terminal_1"/>
+            <field name="amount">300.0</field>
+            <field name="fee">7.5</field>
+            <field name="net_amount">292.5</field>
+            <field name="state">success</field>
+            <field name="transaction_type">payment</field>
+            <field name="partner_id" ref="base.partner_demo"/>
+            <field name="customer_age">9</field>
+            <field name="payment_reference">CARD1234</field>
+            <field name="card_number">****1234</field>
+            <field name="card_type">Visa</field>
+            <field name="card_holder_name">John Doe</field>
+            <field name="transaction_date">2024-01-15 17:15:00</field>
+            <field name="processing_time">4.2</field>
+            <field name="provider_response">Card payment processed successfully</field>
+            <field name="provider_status">success</field>
+            <field name="requires_pin">True</field>
+            <field name="requires_signature">False</field>
+            <field name="pin_verified">True</field>
+            <field name="signature_verified">False</field>
+        </record>
+        
+        <record id="demo_payment_transaction_3" model="pos.payment.transaction">
+            <field name="name">TXN-20240115003</field>
+            <field name="transaction_id">TXN_003</field>
+            <field name="session_id" ref="demo_pos_session_1"/>
+            <field name="order_id" ref="demo_pos_order_3"/>
+            <field name="payment_method_id" ref="payment_method_upi"/>
+            <field name="terminal_id" ref="demo_payment_terminal_2"/>
+            <field name="amount">200.0</field>
+            <field name="fee">3.6</field>
+            <field name="net_amount">196.4</field>
+            <field name="state">success</field>
+            <field name="transaction_type">payment</field>
+            <field name="partner_id" ref="base.partner_demo"/>
+            <field name="customer_age">12</field>
+            <field name="upi_id">customer@paytm</field>
+            <field name="transaction_date">2024-01-15 18:00:00</field>
+            <field name="processing_time">2.8</field>
+            <field name="provider_response">UPI payment processed successfully</field>
+            <field name="provider_status">success</field>
+            <field name="requires_pin">True</field>
+            <field name="requires_signature">False</field>
+            <field name="pin_verified">True</field>
+            <field name="signature_verified">False</field>
+        </record>
+        
+        <record id="demo_payment_transaction_4" model="pos.payment.transaction">
+            <field name="name">TXN-20240115004</field>
+            <field name="transaction_id">TXN_004</field>
+            <field name="session_id" ref="demo_pos_session_1"/>
+            <field name="order_id" ref="demo_pos_order_4"/>
+            <field name="payment_method_id" ref="payment_method_gift_card"/>
+            <field name="terminal_id" ref="demo_payment_terminal_1"/>
+            <field name="amount">150.0</field>
+            <field name="fee">0.0</field>
+            <field name="net_amount">150.0</field>
+            <field name="state">success</field>
+            <field name="transaction_type">payment</field>
+            <field name="partner_id" ref="base.partner_demo"/>
+            <field name="customer_age">8</field>
+            <field name="payment_reference">GC123456789</field>
+            <field name="transaction_date">2024-01-15 18:30:00</field>
+            <field name="processing_time">1.2</field>
+            <field name="provider_response">Gift card payment processed successfully</field>
+            <field name="provider_status">success</field>
+            <field name="requires_pin">False</field>
+            <field name="requires_signature">False</field>
+            <field name="pin_verified">False</field>
+            <field name="signature_verified">False</field>
+        </record>
+        
+        <record id="demo_payment_transaction_5" model="pos.payment.transaction">
+            <field name="name">TXN-20240115005</field>
+            <field name="transaction_id">TXN_005</field>
+            <field name="session_id" ref="demo_pos_session_1"/>
+            <field name="order_id" ref="demo_pos_order_5"/>
+            <field name="payment_method_id" ref="payment_method_store_credit"/>
+            <field name="terminal_id" ref="demo_payment_terminal_1"/>
+            <field name="amount">100.0</field>
+            <field name="fee">0.0</field>
+            <field name="net_amount">100.0</field>
+            <field name="state">success</field>
+            <field name="transaction_type">payment</field>
+            <field name="partner_id" ref="base.partner_demo"/>
+            <field name="customer_age">10</field>
+            <field name="payment_reference">SC987654321</field>
+            <field name="transaction_date">2024-01-15 19:00:00</field>
+            <field name="processing_time">0.8</field>
+            <field name="provider_response">Store credit payment processed successfully</field>
+            <field name="provider_status">success</field>
+            <field name="requires_pin">False</field>
+            <field name="requires_signature">False</field>
+            <field name="pin_verified">False</field>
+            <field name="signature_verified">False</field>
+        </record>
+        
+    </data>
+</ocean>

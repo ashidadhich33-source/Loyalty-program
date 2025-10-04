@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data noupdate="1">
+        
+        <!-- Return Reasons -->
+        <record id="return_reason_defective" model="pos.return.reason">
+            <field name="name">Defective Product</field>
+            <field name="code">DEFECTIVE</field>
+            <field name="description">Product is defective or has manufacturing defects</field>
+            <field name="category">quality_issue</field>
+            <field name="is_active">True</field>
+            <field name="requires_approval">True</field>
+            <field name="age_group_restriction">none</field>
+            <field name="max_return_period">30</field>
+            <field name="allow_full_refund">True</field>
+            <field name="allow_partial_refund">True</field>
+            <field name="allow_store_credit">True</field>
+            <field name="allow_exchange">True</field>
+            <field name="default_refund_percentage">100.0</field>
+            <field name="max_refund_percentage">100.0</field>
+            <field name="store_credit_percentage">0.0</field>
+            <field name="store_credit_validity_days">365</field>
+        </record>
+        
+        <record id="return_reason_damaged" model="pos.return.reason">
+            <field name="name">Damaged Product</field>
+            <field name="code">DAMAGED</field>
+            <field name="description">Product is damaged during shipping or handling</field>
+            <field name="category">quality_issue</field>
+            <field name="is_active">True</field>
+            <field name="requires_approval">True</field>
+            <field name="age_group_restriction">none</field>
+            <field name="max_return_period">30</field>
+            <field name="allow_full_refund">True</field>
+            <field name="allow_partial_refund">True</field>
+            <field name="allow_store_credit">True</field>
+            <field name="allow_exchange">True</field>
+            <field name="default_refund_percentage">100.0</field>
+            <field name="max_refund_percentage">100.0</field>
+            <field name="store_credit_percentage">0.0</field>
+            <field name="store_credit_validity_days">365</field>
+        </record>
+        
+        <record id="return_reason_wrong_size" model="pos.return.reason">
+            <field name="name">Wrong Size</field>
+            <field name="code">WRONG_SIZE</field>
+            <field name="description">Customer received wrong size</field>
+            <field name="category">size_issue</field>
+            <field name="is_active">True</field>
+            <field name="requires_approval">False</field>
+            <field name="age_group_restriction">none</field>
+            <field name="max_return_period">7</field>
+            <field name="allow_full_refund">True</field>
+            <field name="allow_partial_refund">True</field>
+            <field name="allow_store_credit">True</field>
+            <field name="allow_exchange">True</field>
+            <field name="default_refund_percentage">100.0</field>
+            <field name="max_refund_percentage">100.0</field>
+            <field name="store_credit_percentage">0.0</field>
+            <field name="store_credit_validity_days">365</field>
+        </record>
+        
+        <record id="return_reason_wrong_color" model="pos.return.reason">
+            <field name="name">Wrong Color</field>
+            <field name="code">WRONG_COLOR</field>
+            <field name="description">Customer received wrong color</field>
+            <field name="category">color_preference</field>
+            <field name="is_active">True</field>
+            <field name="requires_approval">False</field>
+            <field name="age_group_restriction">none</field>
+            <field name="max_return_period">7</field>
+            <field name="allow_full_refund">True</field>
+            <field name="allow_partial_refund">True</field>
+            <field name="allow_store_credit">True</field>
+            <field name="allow_exchange">True</field>
+            <field name="default_refund_percentage">100.0</field>
+            <field name="max_refund_percentage">100.0</field>
+            <field name="store_credit_percentage">0.0</field>
+            <field name="store_credit_validity_days">365</field>
+        </record>
+        
+        <record id="return_reason_wrong_item" model="pos.return.reason">
+            <field name="name">Wrong Item</field>
+            <field name="code">WRONG_ITEM</field>
+            <field name="description">Customer received wrong item</field>
+            <field name="category">wrong_item</field>
+            <field name="is_active">True</field>
+            <field name="requires_approval">False</field>
+            <field name="age_group_restriction">none</field>
+            <field name="max_return_period">14</field>
+            <field name="allow_full_refund">True</field>
+            <field name="allow_partial_refund">True</field>
+            <field name="allow_store_credit">True</field>
+            <field name="allow_exchange">True</field>
+            <field name="default_refund_percentage">100.0</field>
+            <field name="max_refund_percentage">100.0</field>
+            <field name="store_credit_percentage">0.0</field>
+            <field name="store_credit_validity_days">365</field>
+        </record>
+        
+        <record id="return_reason_customer_preference" model="pos.return.reason">
+            <field name="name">Customer Preference</field>
+            <field name="code">CUSTOMER_PREF</field>
+            <field name="description">Customer changed their mind</field>
+            <field name="category">customer_preference</field>
+            <field name="is_active">True</field>
+            <field name="requires_approval">False</field>
+            <field name="age_group_restriction">none</field>
+            <field name="max_return_period">7</field>
+            <field name="allow_full_refund">True</field>
+            <field name="allow_partial_refund">True</field>
+            <field name="allow_store_credit">True</field>
+            <field name="allow_exchange">True</field>
+            <field name="default_refund_percentage">80.0</field>
+            <field name="max_refund_percentage">100.0</field>
+            <field name="store_credit_percentage">20.0</field>
+            <field name="store_credit_validity_days">180</field>
+        </record>
+        
+        <record id="return_reason_toddler_special" model="pos.return.reason">
+            <field name="name">Toddler Special Policy</field>
+            <field name="code">TODDLER_SPECIAL</field>
+            <field name="description">Special return policy for toddler items</field>
+            <field name="category">customer_preference</field>
+            <field name="is_active">True</field>
+            <field name="requires_approval">False</field>
+            <field name="age_group_restriction">toddler</field>
+            <field name="max_return_period">14</field>
+            <field name="allow_full_refund">True</field>
+            <field name="allow_partial_refund">True</field>
+            <field name="allow_store_credit">True</field>
+            <field name="allow_exchange">True</field>
+            <field name="default_refund_percentage">100.0</field>
+            <field name="max_refund_percentage">100.0</field>
+            <field name="store_credit_percentage">0.0</field>
+            <field name="store_credit_validity_days">365</field>
+        </record>
+        
+    </data>
+</ocean>

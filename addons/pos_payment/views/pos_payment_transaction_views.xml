@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        <!-- POS Payment Transaction Tree View -->
+        <record id="view_pos_payment_transaction_tree" model="ocean.ui.view">
+            <field name="name">pos.payment.transaction.tree</field>
+            <field name="model">pos.payment.transaction</field>
+            <field name="arch" type="xml">
+                <tree string="POS Payment Transactions" decoration-muted="state=='cancel'" decoration-success="state=='done'" decoration-info="state=='pending'">
+                    <field name="name"/>
+                    <field name="payment_id"/>
+                    <field name="terminal_id"/>
+                    <field name="amount"/>
+                    <field name="state"/>
+                    <field name="transaction_date"/>
+                    <field name="transaction_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- POS Payment Transaction Form View -->
+        <record id="view_pos_payment_transaction_form" model="ocean.ui.view">
+            <field name="name">pos.payment.transaction.form</field>
+            <field name="model">pos.payment.transaction</field>
+            <field name="arch" type="xml">
+                <form string="POS Payment Transaction">
+                    <header>
+                        <button name="action_process" string="Process" type="object" class="btn-primary" states="pending"/>
+                        <button name="action_confirm" string="Confirm" type="object" class="btn-success" states="processed"/>
+                        <button name="action_done" string="Done" type="object" class="btn-primary" states="confirmed"/>
+                        <button name="action_cancel" string="Cancel" type="object" class="btn-secondary" states="pending,processed"/>
+                        <field name="state" widget="statusbar" statusbar_visible="pending,processed,confirmed,done,cancel"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Transaction Reference"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="payment_id"/>
+                                <field name="terminal_id"/>
+                                <field name="transaction_date"/>
+                                <field name="transaction_id"/>
+                                <field name="reference"/>
+                            </group>
+                            <group>
+                                <field name="amount"/>
+                                <field name="currency_id"/>
+                                <field name="fee_amount"/>
+                                <field name="net_amount"/>
+                                <field name="user_id"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Transaction Details" name="transaction_details">
+                                <group>
+                                    <group>
+                                        <field name="card_number"/>
+                                        <field name="card_holder_name"/>
+                                        <field name="card_expiry_date"/>
+                                        <field name="card_cvv"/>
+                                    </group>
+                                    <group>
+                                        <field name="bank_name"/>
+                                        <field name="account_number"/>
+                                        <field name="routing_number"/>
+                                        <field name="check_number"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Kids Clothing Specific" name="kids_clothing">
+                                <group>
+                                    <group>
+                                        <field name="age_group"/>
+                                        <field name="season"/>
+                                        <field name="size_range"/>
+                                        <field name="gender"/>
+                                    </group>
+                                    <group>
+                                        <field name="special_occasion"/>
+                                        <field name="gift_wrapping"/>
+                                        <field name="gift_message"/>
+                                        <field name="care_instructions"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- POS Payment Transaction Search View -->
+        <record id="view_pos_payment_transaction_search" model="ocean.ui.view">
+            <field name="name">pos.payment.transaction.search</field>
+            <field name="model">pos.payment.transaction</field>
+            <field name="arch" type="xml">
+                <search string="Search POS Payment Transactions">
+                    <field name="name"/>
+                    <field name="payment_id"/>
+                    <field name="terminal_id"/>
+                    <field name="transaction_id"/>
+                    <separator/>
+                    <filter string="Pending" name="pending" domain="[('state', '=', 'pending')]"/>
+                    <filter string="Processed" name="processed" domain="[('state', '=', 'processed')]"/>
+                    <filter string="Confirmed" name="confirmed" domain="[('state', '=', 'confirmed')]"/>
+                    <filter string="Done" name="done" domain="[('state', '=', 'done')]"/>
+                    <filter string="Cancelled" name="cancel" domain="[('state', '=', 'cancel')]"/>
+                    <filter string="Today" name="today" domain="[('transaction_date', '>=', datetime.datetime.combine(context_today(), datetime.time(0,0,0))), ('transaction_date', '&lt;=', datetime.datetime.combine(context_today(), datetime.time(23,59,59)))]"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter string="Payment" name="payment" context="{'group_by': 'payment_id'}"/>
+                        <filter string="Terminal" name="terminal" context="{'group_by': 'terminal_id'}"/>
+                        <filter string="State" name="state" context="{'group_by': 'state'}"/>
+                        <filter string="Transaction Date" name="transaction_date" context="{'group_by': 'transaction_date:day'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- POS Payment Transaction Action -->
+        <record id="action_pos_payment_transaction" model="ocean.actions.act_window">
+            <field name="name">POS Payment Transactions</field>
+            <field name="res_model">pos.payment.transaction</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_pos_payment_transaction_search"/>
+            <field name="context">{'search_default_today': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new POS payment transaction
+                </p>
+                <p>
+                    POS payment transactions track individual payment processing events.
+                </p>
+            </field>
+        </record>
+    </data>
+</ocean>

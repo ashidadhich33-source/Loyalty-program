@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        <!-- Stock Quant Tree View -->
+        <record id="view_stock_quant_tree" model="ocean.ui.view">
+            <field name="name">stock.quant.tree</field>
+            <field name="model">stock.quant</field>
+            <field name="arch" type="xml">
+                <tree string="Stock Quants" decoration-muted="quantity==0" decoration-info="quantity>0 and quantity&lt;10" decoration-success="quantity>=10">
+                    <field name="product_id"/>
+                    <field name="location_id"/>
+                    <field name="quantity"/>
+                    <field name="reserved_quantity"/>
+                    <field name="available_quantity"/>
+                    <field name="lot_id"/>
+                    <field name="package_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Stock Quant Form View -->
+        <record id="view_stock_quant_form" model="ocean.ui.view">
+            <field name="name">stock.quant.form</field>
+            <field name="model">stock.quant</field>
+            <field name="arch" type="xml">
+                <form string="Stock Quant">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="product_id" placeholder="Select Product"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="product_id"/>
+                                <field name="location_id"/>
+                                <field name="quantity"/>
+                                <field name="reserved_quantity"/>
+                                <field name="available_quantity"/>
+                            </group>
+                            <group>
+                                <field name="lot_id"/>
+                                <field name="package_id"/>
+                                <field name="owner_id"/>
+                                <field name="company_id"/>
+                                <field name="in_date"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Kids Clothing Specific" name="kids_clothing">
+                                <group>
+                                    <group>
+                                        <field name="age_group"/>
+                                        <field name="season"/>
+                                        <field name="size_range"/>
+                                        <field name="gender"/>
+                                    </group>
+                                    <group>
+                                        <field name="special_occasion"/>
+                                        <field name="gift_wrapping"/>
+                                        <field name="gift_message"/>
+                                        <field name="care_instructions"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Stock Quant Search View -->
+        <record id="view_stock_quant_search" model="ocean.ui.view">
+            <field name="name">stock.quant.search</field>
+            <field name="model">stock.quant</field>
+            <field name="arch" type="xml">
+                <search string="Search Stock Quants">
+                    <field name="product_id"/>
+                    <field name="location_id"/>
+                    <field name="lot_id"/>
+                    <field name="package_id"/>
+                    <separator/>
+                    <filter string="Available" name="available" domain="[('available_quantity', '>', 0)]"/>
+                    <filter string="Reserved" name="reserved" domain="[('reserved_quantity', '>', 0)]"/>
+                    <filter string="Zero Quantity" name="zero" domain="[('quantity', '=', 0)]"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter string="Product" name="product" context="{'group_by': 'product_id'}"/>
+                        <filter string="Location" name="location" context="{'group_by': 'location_id'}"/>
+                        <filter string="Lot" name="lot" context="{'group_by': 'lot_id'}"/>
+                        <filter string="Package" name="package" context="{'group_by': 'package_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Stock Quant Action -->
+        <record id="action_stock_quant" model="ocean.actions.act_window">
+            <field name="name">Stock Quants</field>
+            <field name="res_model">stock.quant</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_stock_quant_search"/>
+            <field name="context">{'search_default_available': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Stock Quantities
+                </p>
+                <p>
+                    Stock quants represent the actual quantities of products in specific locations.
+                </p>
+            </field>
+        </record>
+    </data>
+</ocean>

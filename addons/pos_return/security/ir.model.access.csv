@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_pos_return_manager,pos.return.manager,model_pos_return,base.group_system,1,1,1,1
+access_pos_return_user,pos.return.user,model_pos_return,base.group_user,1,1,1,0
+access_pos_return_line_manager,pos.return.line.manager,model_pos_return_line,base.group_system,1,1,1,1
+access_pos_return_line_user,pos.return.line.user,model_pos_return_line,base.group_user,1,1,1,0
+access_pos_return_reason_manager,pos.return.reason.manager,model_pos_return_reason,base.group_system,1,1,1,1
+access_pos_return_reason_user,pos.return.reason.user,model_pos_return_reason,base.group_user,1,0,0,0

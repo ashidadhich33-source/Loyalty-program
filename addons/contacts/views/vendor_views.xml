@@ -1,6 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ocean>
     <data>
-        <!-- Vendor views will be generated -->
+        <!-- Vendor Tree View -->
+        <record id="view_vendor_tree" model="ocean.ui.view">
+            <field name="name">contact.vendor.tree</field>
+            <field name="model">contact.vendor</field>
+            <field name="arch" type="xml">
+                <tree string="Vendors" decoration-muted="not is_active" decoration-info="vendor_type=='service'" decoration-success="vendor_type=='product'">
+                    <field name="name"/>
+                    <field name="email"/>
+                    <field name="phone"/>
+                    <field name="vendor_type"/>
+                    <field name="is_active"/>
+                    <field name="total_orders"/>
+                    <field name="total_spent"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Vendor Form View -->
+        <record id="view_vendor_form" model="ocean.ui.view">
+            <field name="name">contact.vendor.form</field>
+            <field name="model">contact.vendor</field>
+            <field name="arch" type="xml">
+                <form string="Vendor">
+                    <header>
+                        <button name="action_activate" string="Activate" type="object" class="btn-success" states="inactive"/>
+                        <button name="action_deactivate" string="Deactivate" type="object" class="btn-secondary" states="active"/>
+                        <field name="is_active" widget="statusbar" statusbar_visible="inactive,active"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Vendor Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="vendor_type"/>
+                                <field name="email"/>
+                                <field name="phone"/>
+                                <field name="mobile"/>
+                                <field name="website"/>
+                            </group>
+                            <group>
+                                <field name="total_orders"/>
+                                <field name="total_spent"/>
+                                <field name="average_order_value"/>
+                                <field name="last_order_date"/>
+                                <field name="vendor_since"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Address" name="address">
+                                <group>
+                                    <group>
+                                        <field name="street"/>
+                                        <field name="street2"/>
+                                        <field name="city"/>
+                                        <field name="state_id"/>
+                                        <field name="zip"/>
+                                        <field name="country_id"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Kids Clothing Specific" name="kids_clothing">
+                                <group>
+                                    <group>
+                                        <field name="age_group"/>
+                                        <field name="season"/>
+                                        <field name="size_range"/>
+                                        <field name="gender"/>
+                                    </group>
+                                    <group>
+                                        <field name="special_occasion"/>
+                                        <field name="gift_wrapping"/>
+                                        <field name="gift_message"/>
+                                        <field name="care_instructions"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Vendor Search View -->
+        <record id="view_vendor_search" model="ocean.ui.view">
+            <field name="name">contact.vendor.search</field>
+            <field name="model">contact.vendor</field>
+            <field name="arch" type="xml">
+                <search string="Search Vendors">
+                    <field name="name"/>
+                    <field name="email"/>
+                    <field name="phone"/>
+                    <field name="vendor_type"/>
+                    <separator/>
+                    <filter string="Active" name="active" domain="[('is_active', '=', True)]"/>
+                    <filter string="Inactive" name="inactive" domain="[('is_active', '=', False)]"/>
+                    <filter string="Service" name="service" domain="[('vendor_type', '=', 'service')]"/>
+                    <filter string="Product" name="product" domain="[('vendor_type', '=', 'product')]"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter string="Vendor Type" name="vendor_type" context="{'group_by': 'vendor_type'}"/>
+                        <filter string="Active Status" name="active_status" context="{'group_by': 'is_active'}"/>
+                        <filter string="Country" name="country" context="{'group_by': 'country_id'}"/>
+                        <filter string="State" name="state" context="{'group_by': 'state_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Vendor Action -->
+        <record id="action_vendor" model="ocean.actions.act_window">
+            <field name="name">Vendors</field>
+            <field name="res_model">contact.vendor</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_vendor_search"/>
+            <field name="context">{'search_default_active': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new vendor
+                </p>
+                <p>
+                    Vendors provide services or products to your business.
+                </p>
+            </field>
+        </record>
     </data>
 </ocean>

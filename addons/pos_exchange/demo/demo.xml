@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data noupdate="1">
+        
+        <!-- Demo POS Exchanges -->
+        <record id="demo_pos_exchange_1" model="pos.exchange">
+            <field name="name">EXC-20240115001</field>
+            <field name="session_id" ref="demo_pos_session_1"/>
+            <field name="user_id" ref="base.user_admin"/>
+            <field name="partner_id" ref="base.partner_demo"/>
+            <field name="original_order_id" ref="demo_pos_order_1"/>
+            <field name="state">done</field>
+            <field name="exchange_date">2024-01-15 14:30:00</field>
+            <field name="exchange_reason_id" ref="exchange_reason_size_small"/>
+            <field name="exchange_type">size_change</field>
+            <field name="customer_age">5</field>
+            <field name="within_exchange_period">True</field>
+            <field name="exchange_period_days">7</field>
+            <field name="amount_returned">500.0</field>
+            <field name="amount_charged">550.0</field>
+            <field name="amount_difference">50.0</field>
+            <field name="exchange_receipt_number">EXC-RCP-000001</field>
+            <field name="print_exchange_receipt">True</field>
+        </record>
+        
+        <record id="demo_pos_exchange_2" model="pos.exchange">
+            <field name="name">EXC-20240115002</field>
+            <field name="session_id" ref="demo_pos_session_1"/>
+            <field name="user_id" ref="base.user_admin"/>
+            <field name="partner_id" ref="base.partner_demo"/>
+            <field name="original_order_id" ref="demo_pos_order_2"/>
+            <field name="state">confirmed</field>
+            <field name="exchange_date">2024-01-15 15:15:00</field>
+            <field name="exchange_reason_id" ref="exchange_reason_color_preference"/>
+            <field name="exchange_type">color_change</field>
+            <field name="customer_age">8</field>
+            <field name="within_exchange_period">True</field>
+            <field name="exchange_period_days">7</field>
+            <field name="amount_returned">300.0</field>
+            <field name="amount_charged">320.0</field>
+            <field name="amount_difference">20.0</field>
+            <field name="exchange_receipt_number">EXC-RCP-000002</field>
+            <field name="print_exchange_receipt">True</field>
+        </record>
+        
+        <!-- Demo POS Exchange Lines -->
+        <record id="demo_pos_exchange_line_1" model="pos.exchange.line">
+            <field name="exchange_id" ref="demo_pos_exchange_1"/>
+            <field name="sequence">10</field>
+            <field name="original_product_id" ref="product_template_demo_1"/>
+            <field name="original_product_name">Kids T-Shirt</field>
+            <field name="original_product_code">TSH001</field>
+            <field name="new_product_id" ref="product_template_demo_2"/>
+            <field name="new_product_name">Kids T-Shirt</field>
+            <field name="new_product_code">TSH002</field>
+            <field name="return_qty">1.0</field>
+            <field name="exchange_qty">1.0</field>
+            <field name="original_price">500.0</field>
+            <field name="new_price">550.0</field>
+            <field name="return_amount">500.0</field>
+            <field name="charge_amount">550.0</field>
+            <field name="line_difference">50.0</field>
+            <field name="exchange_reason">size_too_small</field>
+            <field name="original_size">M</field>
+            <field name="new_size">L</field>
+            <field name="original_color">Blue</field>
+            <field name="new_color">Blue</field>
+            <field name="customer_age">5</field>
+            <field name="within_policy">True</field>
+        </record>
+        
+        <record id="demo_pos_exchange_line_2" model="pos.exchange.line">
+            <field name="exchange_id" ref="demo_pos_exchange_2"/>
+            <field name="sequence">10</field>
+            <field name="original_product_id" ref="product_template_demo_3"/>
+            <field name="original_product_name">Kids Jeans</field>
+            <field name="original_product_code">JNS001</field>
+            <field name="new_product_id" ref="product_template_demo_4"/>
+            <field name="new_product_name">Kids Jeans</field>
+            <field name="new_product_code">JNS002</field>
+            <field name="return_qty">1.0</field>
+            <field name="exchange_qty">1.0</field>
+            <field name="original_price">300.0</field>
+            <field name="new_price">320.0</field>
+            <field name="return_amount">300.0</field>
+            <field name="charge_amount">320.0</field>
+            <field name="line_difference">20.0</field>
+            <field name="exchange_reason">wrong_color</field>
+            <field name="original_size">M</field>
+            <field name="new_size">M</field>
+            <field name="original_color">Black</field>
+            <field name="new_color">Blue</field>
+            <field name="customer_age">8</field>
+            <field name="within_policy">True</field>
+        </record>
+        
+    </data>
+</ocean>

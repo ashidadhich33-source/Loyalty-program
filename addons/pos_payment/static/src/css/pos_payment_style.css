@@ -1,0 +1,577 @@
+/* POS Payment Styles for Kids Clothing ERP */
+
+.pos-payment-dashboard {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.pos-payment-dashboard h1 {
+    color: white;
+    margin-bottom: 20px;
+}
+
+.pos-payment-card {
+    background: white;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 10px 0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.pos-payment-card .payment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.pos-payment-card .payment-amount {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #28a745;
+}
+
+.pos-payment-card .payment-status {
+    padding: 3px 8px;
+    border-radius: 10px;
+    font-size: 0.8em;
+    font-weight: bold;
+}
+
+.pos-payment-card .payment-status.draft {
+    background: #ffc107;
+    color: #212529;
+}
+
+.pos-payment-card .payment-status.pending {
+    background: #17a2b8;
+    color: white;
+}
+
+.pos-payment-card .payment-status.processing {
+    background: #fd7e14;
+    color: white;
+}
+
+.pos-payment-card .payment-status.success {
+    background: #28a745;
+    color: white;
+}
+
+.pos-payment-card .payment-status.failed {
+    background: #dc3545;
+    color: white;
+}
+
+.pos-payment-card .payment-status.cancelled {
+    background: #6c757d;
+    color: white;
+}
+
+.pos-payment-card .payment-status.refunded {
+    background: #e83e8c;
+    color: white;
+}
+
+.pos-payment-method {
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 10px 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.pos-payment-method:hover {
+    border-color: #28a745;
+    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.2);
+}
+
+.pos-payment-method.selected {
+    border-color: #28a745;
+    background: #d4edda;
+}
+
+.pos-payment-method .method-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.pos-payment-method .method-name {
+    font-weight: bold;
+    color: #28a745;
+}
+
+.pos-payment-method .method-icon {
+    font-size: 1.5em;
+    color: #28a745;
+}
+
+.pos-payment-method .method-details {
+    color: #666;
+    font-size: 0.9em;
+}
+
+.pos-payment-method .method-fee {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+.pos-payment-method .method-limits {
+    color: #6c757d;
+    font-size: 0.8em;
+}
+
+.pos-payment-terminal {
+    background: white;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 10px 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.pos-payment-terminal:hover {
+    border-color: #007bff;
+    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.2);
+}
+
+.pos-payment-terminal.selected {
+    border-color: #007bff;
+    background: #e3f2fd;
+}
+
+.pos-payment-terminal .terminal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.pos-payment-terminal .terminal-name {
+    font-weight: bold;
+    color: #007bff;
+}
+
+.pos-payment-terminal .terminal-status {
+    padding: 3px 8px;
+    border-radius: 10px;
+    font-size: 0.8em;
+    font-weight: bold;
+}
+
+.pos-payment-terminal .terminal-status.active {
+    background: #28a745;
+    color: white;
+}
+
+.pos-payment-terminal .terminal-status.inactive {
+    background: #6c757d;
+    color: white;
+}
+
+.pos-payment-terminal .terminal-status.maintenance {
+    background: #ffc107;
+    color: #212529;
+}
+
+.pos-payment-terminal .terminal-status.error {
+    background: #dc3545;
+    color: white;
+}
+
+.pos-payment-terminal .terminal-status.offline {
+    background: #6c757d;
+    color: white;
+}
+
+.pos-payment-terminal .terminal-info {
+    color: #666;
+    font-size: 0.9em;
+}
+
+.pos-payment-terminal .terminal-stats {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.pos-payment-terminal .terminal-stat {
+    text-align: center;
+}
+
+.pos-payment-terminal .terminal-stat .stat-value {
+    font-weight: bold;
+    color: #007bff;
+}
+
+.pos-payment-terminal .terminal-stat .stat-label {
+    font-size: 0.8em;
+    color: #666;
+}
+
+.pos-payment-amount {
+    background: #f8f9fa;
+    border: 2px solid #28a745;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px 0;
+    text-align: center;
+}
+
+.pos-payment-amount .amount-label {
+    color: #666;
+    font-size: 0.9em;
+    margin-bottom: 5px;
+}
+
+.pos-payment-amount .amount-value {
+    font-size: 2em;
+    font-weight: bold;
+    color: #28a745;
+}
+
+.pos-payment-amount .amount-fee {
+    color: #dc3545;
+    font-size: 0.9em;
+    margin-top: 5px;
+}
+
+.pos-payment-amount .amount-net {
+    color: #28a745;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+.pos-payment-form {
+    background: white;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.pos-payment-form .form-group {
+    margin-bottom: 15px;
+}
+
+.pos-payment-form .form-label {
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.pos-payment-form .form-control {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.pos-payment-form .form-control:focus {
+    border-color: #28a745;
+    box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+}
+
+.pos-payment-form .form-control.error {
+    border-color: #dc3545;
+}
+
+.pos-payment-form .form-error {
+    color: #dc3545;
+    font-size: 0.8em;
+    margin-top: 5px;
+}
+
+.pos-payment-form .form-help {
+    color: #6c757d;
+    font-size: 0.8em;
+    margin-top: 5px;
+}
+
+.pos-payment-security {
+    background: #fff3cd;
+    border: 1px solid #ffeaa7;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 15px 0;
+}
+
+.pos-payment-security.warning {
+    background: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+.pos-payment-security.success {
+    background: #d4edda;
+    border-color: #c3e6cb;
+}
+
+.pos-payment-security .security-title {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.pos-payment-security .security-item {
+    display: flex;
+    align-items: center;
+    margin: 5px 0;
+}
+
+.pos-payment-security .security-item .security-icon {
+    margin-right: 10px;
+    color: #28a745;
+}
+
+.pos-payment-security .security-item .security-text {
+    flex: 1;
+}
+
+.pos-payment-security .security-item .security-status {
+    font-weight: bold;
+    color: #28a745;
+}
+
+.pos-payment-security .security-item .security-status.required {
+    color: #dc3545;
+}
+
+.pos-payment-security .security-item .security-status.verified {
+    color: #28a745;
+}
+
+.pos-payment-analytics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.pos-payment-stat-card {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.pos-payment-stat-card .stat-value {
+    font-size: 2em;
+    font-weight: bold;
+    color: #28a745;
+}
+
+.pos-payment-stat-card .stat-label {
+    color: #666;
+    margin-top: 5px;
+}
+
+.pos-payment-stat-card .stat-change {
+    font-size: 0.8em;
+    margin-top: 5px;
+}
+
+.pos-payment-stat-card .stat-change.positive {
+    color: #28a745;
+}
+
+.pos-payment-stat-card .stat-change.negative {
+    color: #dc3545;
+}
+
+.pos-payment-method-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.pos-payment-method-card {
+    background: white;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.pos-payment-method-card:hover {
+    border-color: #28a745;
+    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.2);
+}
+
+.pos-payment-method-card .method-name {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #28a745;
+}
+
+.pos-payment-method-card .method-description {
+    color: #666;
+    font-size: 0.9em;
+    margin-bottom: 10px;
+}
+
+.pos-payment-method-card .method-policy {
+    font-size: 0.8em;
+    color: #28a745;
+}
+
+.pos-payment-terminal-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.pos-payment-terminal-card {
+    background: white;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.pos-payment-terminal-card:hover {
+    border-color: #007bff;
+    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.2);
+}
+
+.pos-payment-terminal-card .terminal-name {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #007bff;
+}
+
+.pos-payment-terminal-card .terminal-info {
+    color: #666;
+    font-size: 0.9em;
+    margin-bottom: 10px;
+}
+
+.pos-payment-terminal-card .terminal-stats {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.pos-payment-terminal-card .terminal-stat {
+    text-align: center;
+}
+
+.pos-payment-terminal-card .terminal-stat .stat-value {
+    font-weight: bold;
+    color: #007bff;
+}
+
+.pos-payment-terminal-card .terminal-stat .stat-label {
+    font-size: 0.8em;
+    color: #666;
+}
+
+.pos-payment-receipt {
+    font-family: 'Courier New', monospace;
+    background: white;
+    padding: 20px;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.pos-payment-receipt .receipt-header {
+    text-align: center;
+    border-bottom: 1px dashed #000;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+.pos-payment-receipt .receipt-item {
+    display: flex;
+    justify-content: space-between;
+    margin: 5px 0;
+}
+
+.pos-payment-receipt .receipt-total {
+    border-top: 1px dashed #000;
+    padding-top: 10px;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.pos-payment-receipt .receipt-footer {
+    text-align: center;
+    border-top: 1px dashed #000;
+    padding-top: 10px;
+    margin-top: 10px;
+    font-size: 0.9em;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .pos-payment-dashboard {
+        padding: 15px;
+    }
+    
+    .pos-payment-method-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .pos-payment-terminal-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .pos-payment-analytics {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Animation Classes */
+.pos-payment-fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.pos-payment-slide-in {
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(0); }
+}
+
+.pos-payment-bounce {
+    animation: bounce 0.6s ease-in-out;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-10px); }
+    60% { transform: translateY(-5px); }
+}
+
+.pos-payment-pulse {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}

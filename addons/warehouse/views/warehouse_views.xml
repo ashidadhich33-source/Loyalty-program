@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Warehouse Tree View -->
+        <record id="view_warehouse_tree" model="ocean.ui.view">
+            <field name="name">warehouse.tree</field>
+            <field name="model">warehouse</field>
+            <field name="arch" type="xml">
+                <tree string="Warehouses" create="true" edit="true" delete="true">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="warehouse_type"/>
+                    <field name="company_id"/>
+                    <field name="is_active"/>
+                    <field name="is_default"/>
+                    <field name="total_area"/>
+                    <field name="storage_area"/>
+                    <field name="total_products"/>
+                    <field name="total_quantity"/>
+                    <field name="total_value"/>
+                    <field name="turnover_rate"/>
+                    <field name="accuracy_rate"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Warehouse Form View -->
+        <record id="view_warehouse_form" model="ocean.ui.view">
+            <field name="name">warehouse.form</field>
+            <field name="model">warehouse</field>
+            <field name="arch" type="xml">
+                <form string="Warehouse" create="true" edit="true" delete="true">
+                    <header>
+                        <button name="action_view_locations" type="object" string="View Locations" class="btn-primary"/>
+                        <button name="action_view_quants" type="object" string="View Stock" class="btn-secondary"/>
+                        <button name="action_view_moves" type="object" string="View Moves" class="btn-secondary"/>
+                        <button name="action_view_aging_report" type="object" string="Aging Report" class="btn-info"/>
+                        <button name="action_view_expiry_report" type="object" string="Expiry Report" class="btn-info"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Warehouse Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="code"/>
+                                <field name="warehouse_type"/>
+                                <field name="company_id"/>
+                                <field name="location_id"/>
+                                <field name="is_active"/>
+                                <field name="is_default"/>
+                            </group>
+                            <group>
+                                <field name="warehouse_type"/>
+                                <field name="age_group_specialization"/>
+                                <field name="seasonal_storage"/>
+                                <field name="operation_hours"/>
+                                <field name="timezone"/>
+                            </group>
+                        </group>
+                        <group string="Address Information">
+                            <group>
+                                <field name="street"/>
+                                <field name="street2"/>
+                                <field name="city"/>
+                                <field name="state_id"/>
+                            </group>
+                            <group>
+                                <field name="zip"/>
+                                <field name="country_id"/>
+                                <field name="phone"/>
+                                <field name="email"/>
+                            </group>
+                        </group>
+                        <group string="Physical Properties">
+                            <group>
+                                <field name="total_area"/>
+                                <field name="storage_area"/>
+                                <field name="office_area"/>
+                                <field name="max_capacity"/>
+                                <field name="current_capacity"/>
+                            </group>
+                            <group>
+                                <field name="temperature_controlled"/>
+                                <field name="min_temperature"/>
+                                <field name="max_temperature"/>
+                                <field name="humidity_controlled"/>
+                                <field name="min_humidity"/>
+                                <field name="max_humidity"/>
+                            </group>
+                        </group>
+                        <group string="Security">
+                            <group>
+                                <field name="security_level"/>
+                                <field name="requires_access_control"/>
+                            </group>
+                        </group>
+                        <group string="Statistics">
+                            <group>
+                                <field name="total_products"/>
+                                <field name="total_quantity"/>
+                                <field name="total_value"/>
+                            </group>
+                            <group>
+                                <field name="turnover_rate"/>
+                                <field name="accuracy_rate"/>
+                            </group>
+                        </group>
+                        <group string="Notes">
+                            <field name="description"/>
+                            <field name="note"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Warehouse Search View -->
+        <record id="view_warehouse_search" model="ocean.ui.view">
+            <field name="name">warehouse.search</field>
+            <field name="model">warehouse</field>
+            <field name="arch" type="xml">
+                <search string="Search Warehouses">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="warehouse_type"/>
+                    <field name="company_id"/>
+                    <field name="age_group_specialization"/>
+                    <separator/>
+                    <filter string="Active" name="active" domain="[('is_active', '=', True)]"/>
+                    <filter string="Default" name="default" domain="[('is_default', '=', True)]"/>
+                    <filter string="Temperature Controlled" name="temperature_controlled" domain="[('temperature_controlled', '=', True)]"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter string="Warehouse Type" name="group_warehouse_type" context="{'group_by': 'warehouse_type'}"/>
+                        <filter string="Company" name="group_company" context="{'group_by': 'company_id'}"/>
+                        <filter string="Age Group Specialization" name="group_age_group" context="{'group_by': 'age_group_specialization'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- Warehouse Action -->
+        <record id="action_warehouse" model="ocean.actions.act_window">
+            <field name="name">Warehouses</field>
+            <field name="res_model">warehouse</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_warehouse_search"/>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new warehouse
+                </p>
+                <p>
+                    Warehouses are used to manage inventory locations and operations.
+                </p>
+            </field>
+        </record>
+        
+    </data>
+</ocean>

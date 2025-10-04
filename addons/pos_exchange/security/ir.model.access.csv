@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_pos_exchange_manager,pos.exchange.manager,model_pos_exchange,base.group_system,1,1,1,1
+access_pos_exchange_user,pos.exchange.user,model_pos_exchange,base.group_user,1,1,1,0
+access_pos_exchange_line_manager,pos.exchange.line.manager,model_pos_exchange_line,base.group_system,1,1,1,1
+access_pos_exchange_line_user,pos.exchange.line.user,model_pos_exchange_line,base.group_user,1,1,1,0
+access_pos_exchange_reason_manager,pos.exchange.reason.manager,model_pos_exchange_reason,base.group_system,1,1,1,1
+access_pos_exchange_reason_user,pos.exchange.reason.user,model_pos_exchange_reason,base.group_user,1,0,0,0

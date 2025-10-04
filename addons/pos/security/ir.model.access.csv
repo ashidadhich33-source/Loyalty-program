@@ -1,0 +1,13 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_pos_config_manager,pos.config.manager,model_pos_config,base.group_system,1,1,1,1
+access_pos_config_user,pos.config.user,model_pos_config,base.group_user,1,0,0,0
+access_pos_session_manager,pos.session.manager,model_pos_session,base.group_system,1,1,1,1
+access_pos_session_user,pos.session.user,model_pos_session,base.group_user,1,1,1,0
+access_pos_order_manager,pos.order.manager,model_pos_order,base.group_system,1,1,1,1
+access_pos_order_user,pos.order.user,model_pos_order,base.group_user,1,1,1,0
+access_pos_order_line_manager,pos.order.line.manager,model_pos_order_line,base.group_system,1,1,1,1
+access_pos_order_line_user,pos.order.line.user,model_pos_order_line,base.group_user,1,1,1,0
+access_pos_payment_manager,pos.payment.manager,model_pos_payment,base.group_system,1,1,1,1
+access_pos_payment_user,pos.payment.user,model_pos_payment,base.group_user,1,1,1,0
+access_pos_receipt_manager,pos.receipt.manager,model_pos_receipt,base.group_system,1,1,1,1
+access_pos_receipt_user,pos.receipt.user,model_pos_receipt,base.group_user,1,1,1,0

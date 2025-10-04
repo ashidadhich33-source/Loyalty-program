@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_stock_location_manager,stock.location.manager,model_stock_location,base.group_system,1,1,1,1
+access_stock_location_user,stock.location.user,model_stock_location,base.group_user,1,0,0,0
+access_stock_move_manager,stock.move.manager,model_stock_move,base.group_system,1,1,1,1
+access_stock_move_user,stock.move.user,model_stock_move,base.group_user,1,1,1,0
+access_stock_quant_manager,stock.quant.manager,model_stock_quant,base.group_system,1,1,1,1
+access_stock_quant_user,stock.quant.user,model_stock_quant,base.group_user,1,0,0,0
+access_stock_picking_manager,stock.picking.manager,model_stock_picking,base.group_system,1,1,1,1
+access_stock_picking_user,stock.picking.user,model_stock_picking,base.group_user,1,1,1,0
+access_stock_inventory_manager,stock.inventory.manager,model_stock_inventory,base.group_system,1,1,1,1
+access_stock_inventory_user,stock.inventory.user,model_stock_inventory,base.group_user,1,0,0,0

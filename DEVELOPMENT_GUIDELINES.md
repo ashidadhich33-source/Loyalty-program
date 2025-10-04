@@ -1,13 +1,28 @@
-# Kids Clothing ERP - Development Guidelines
+# Ocean ERP Development Guidelines
 
-## 🚨 **CRITICAL: STANDALONE ERP SYSTEM**
+## 🚨 **CRITICAL: OUR OWN CUSTOM Ocean ERP FRAMEWORK**
 
-### **⚠️ IMPORTANT ARCHITECTURE REMINDER**
+### **⚠️ IMPORTANT FRAMEWORK CLARIFICATION**
 
-This project is a **STANDALONE ERP SYSTEM** that uses Ocean ERP framework. 
+**This is our OWN CUSTOM Ocean ERP Framework - NOT Odoo or any other ERP system.**
 
-**❌ DO NOT CREATE OCEAN MODULES**
-**✅ CREATE ADDONS FOR OUR CUSTOM FRAMEWORK**
+- ✅ **Custom Framework**: Built from scratch using Python, PostgreSQL, and modern web technologies
+- ✅ **Ocean ERP**: Our proprietary ERP framework with custom ORM, addon system, and web interface
+- ✅ **No External Dependencies**: No Odoo, no external ERP frameworks - completely standalone
+- ✅ **Custom Patterns**: Uses `ocean.ui.view`, `ocean.actions.act_window`, `<ocean>` XML structure
+
+### **✅ CORRECT Ocean ERP Patterns:**
+- ✅ **Views**: `model="ocean.ui.view"`
+- ✅ **Actions**: `model="ocean.actions.act_window"`
+- ✅ **XML Structure**: `<ocean>` root tag
+- ✅ **Custom ORM**: `core_framework.orm` components
+- ✅ **Custom Addon System**: `core_framework.addon_manager`
+
+### **❌ NEVER USE Odoo Patterns:**
+- ❌ **Views**: `model="ir.ui.view"` (WRONG)
+- ❌ **Actions**: `model="ir.actions.act_window"` (WRONG)
+- ❌ **XML Structure**: `<odoo>` root tag (WRONG)
+- ❌ **Odoo ORM**: Any Odoo-specific ORM patterns (WRONG)
 
 ---
 

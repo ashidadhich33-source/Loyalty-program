@@ -1,6 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ocean>
     <data>
-        <!-- Contact communication views will be generated -->
+        <!-- Contact Communication Tree View -->
+        <record id="view_contact_communication_tree" model="ocean.ui.view">
+            <field name="name">contact.communication.tree</field>
+            <field name="model">contact.communication</field>
+            <field name="arch" type="xml">
+                <tree string="Contact Communications" decoration-muted="state=='cancelled'" decoration-success="state=='completed'" decoration-info="state=='pending'">
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="communication_type"/>
+                    <field name="subject"/>
+                    <field name="state"/>
+                    <field name="communication_date"/>
+                    <field name="user_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Contact Communication Form View -->
+        <record id="view_contact_communication_form" model="ocean.ui.view">
+            <field name="name">contact.communication.form</field>
+            <field name="model">contact.communication</field>
+            <field name="arch" type="xml">
+                <form string="Contact Communication">
+                    <header>
+                        <button name="action_send" string="Send" type="object" class="btn-primary" states="draft"/>
+                        <button name="action_complete" string="Complete" type="object" class="btn-success" states="sent"/>
+                        <button name="action_cancel" string="Cancel" type="object" class="btn-secondary" states="draft,sent"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,sent,completed,cancelled"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="subject" placeholder="Communication Subject"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="partner_id"/>
+                                <field name="communication_type"/>
+                                <field name="communication_date"/>
+                                <field name="user_id"/>
+                                <field name="priority"/>
+                            </group>
+                            <group>
+                                <field name="from_email"/>
+                                <field name="to_email"/>
+                                <field name="phone_number"/>
+                                <field name="reference"/>
+                                <field name="state"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Message" name="message">
+                                <field name="message" widget="text"/>
+                            </page>
+                            <page string="Kids Clothing Specific" name="kids_clothing">
+                                <group>
+                                    <group>
+                                        <field name="age_group"/>
+                                        <field name="season"/>
+                                        <field name="size_range"/>
+                                        <field name="gender"/>
+                                    </group>
+                                    <group>
+                                        <field name="special_occasion"/>
+                                        <field name="gift_wrapping"/>
+                                        <field name="gift_message"/>
+                                        <field name="care_instructions"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Contact Communication Search View -->
+        <record id="view_contact_communication_search" model="ocean.ui.view">
+            <field name="name">contact.communication.search</field>
+            <field name="model">contact.communication</field>
+            <field name="arch" type="xml">
+                <search string="Search Contact Communications">
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="communication_type"/>
+                    <field name="subject"/>
+                    <field name="user_id"/>
+                    <separator/>
+                    <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
+                    <filter string="Sent" name="sent" domain="[('state', '=', 'sent')]"/>
+                    <filter string="Completed" name="completed" domain="[('state', '=', 'completed')]"/>
+                    <filter string="Cancelled" name="cancelled" domain="[('state', '=', 'cancelled')]"/>
+                    <filter string="Today" name="today" domain="[('communication_date', '>=', datetime.datetime.combine(context_today(), datetime.time(0,0,0))), ('communication_date', '&lt;=', datetime.datetime.combine(context_today(), datetime.time(23,59,59)))]"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter string="Partner" name="partner" context="{'group_by': 'partner_id'}"/>
+                        <filter string="Communication Type" name="communication_type" context="{'group_by': 'communication_type'}"/>
+                        <filter string="State" name="state" context="{'group_by': 'state'}"/>
+                        <filter string="User" name="user" context="{'group_by': 'user_id'}"/>
+                        <filter string="Communication Date" name="communication_date" context="{'group_by': 'communication_date:day'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Contact Communication Action -->
+        <record id="action_contact_communication" model="ocean.actions.act_window">
+            <field name="name">Contact Communications</field>
+            <field name="res_model">contact.communication</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_contact_communication_search"/>
+            <field name="context">{'search_default_today': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new contact communication
+                </p>
+                <p>
+                    Contact communications track all interactions with customers and suppliers.
+                </p>
+            </field>
+        </record>
     </data>
 </ocean>

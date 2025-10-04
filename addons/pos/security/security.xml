@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- POS Manager Group -->
+        <record id="group_pos_manager" model="ocean.groups">
+            <field name="name">POS Manager</field>
+            <field name="category_id" ref="base.module_category_sales"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        
+        <!-- POS User Group -->
+        <record id="group_pos_user" model="ocean.groups">
+            <field name="name">POS User</field>
+            <field name="category_id" ref="base.module_category_sales"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        
+        <!-- POS Cashier Group -->
+        <record id="group_pos_cashier" model="ocean.groups">
+            <field name="name">POS Cashier</field>
+            <field name="category_id" ref="base.module_category_sales"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        
+    </data>
+</ocean>

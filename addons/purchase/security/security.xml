@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        <!-- Purchase Manager Group -->
+        <record id="group_purchase_manager" model="ocean.groups">
+            <field name="name">Purchase Manager</field>
+            <field name="category_id" ref="base.module_category_purchase"/>
+            <field name="comment">Purchase managers can manage all purchase operations</field>
+        </record>
+
+        <!-- Purchase User Group -->
+        <record id="group_purchase_user" model="ocean.groups">
+            <field name="name">Purchase User</field>
+            <field name="category_id" ref="base.module_category_purchase"/>
+            <field name="comment">Purchase users can create and manage purchase orders</field>
+        </record>
+
+        <!-- Purchase Approver Group -->
+        <record id="group_purchase_approver" model="ocean.groups">
+            <field name="name">Purchase Approver</field>
+            <field name="category_id" ref="base.module_category_purchase"/>
+            <field name="comment">Purchase approvers can approve purchase orders</field>
+        </record>
+    </data>
+</ocean>

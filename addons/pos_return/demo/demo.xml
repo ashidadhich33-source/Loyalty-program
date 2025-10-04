@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data noupdate="1">
+        
+        <!-- Demo POS Returns -->
+        <record id="demo_pos_return_1" model="pos.return">
+            <field name="name">RET-20240115001</field>
+            <field name="session_id" ref="demo_pos_session_1"/>
+            <field name="user_id" ref="base.user_admin"/>
+            <field name="partner_id" ref="base.partner_demo"/>
+            <field name="original_order_id" ref="demo_pos_order_1"/>
+            <field name="state">done</field>
+            <field name="return_date">2024-01-15 16:30:00</field>
+            <field name="return_reason_id" ref="return_reason_defective"/>
+            <field name="return_type">full_return</field>
+            <field name="customer_age">6</field>
+            <field name="within_return_period">True</field>
+            <field name="return_period_days">7</field>
+            <field name="amount_returned">500.0</field>
+            <field name="amount_refunded">500.0</field>
+            <field name="refund_method">cash</field>
+            <field name="refund_percentage">100.0</field>
+            <field name="store_credit_amount">0.0</field>
+            <field name="return_receipt_number">RET-RCP-000001</field>
+            <field name="print_return_receipt">True</field>
+        </record>
+        
+        <record id="demo_pos_return_2" model="pos.return">
+            <field name="name">RET-20240115002</field>
+            <field name="session_id" ref="demo_pos_session_1"/>
+            <field name="user_id" ref="base.user_admin"/>
+            <field name="partner_id" ref="base.partner_demo"/>
+            <field name="original_order_id" ref="demo_pos_order_2"/>
+            <field name="state">confirmed</field>
+            <field name="return_date">2024-01-15 17:15:00</field>
+            <field name="return_reason_id" ref="return_reason_customer_preference"/>
+            <field name="return_type">partial_return</field>
+            <field name="customer_age">9</field>
+            <field name="within_return_period">True</field>
+            <field name="return_period_days">7</field>
+            <field name="amount_returned">300.0</field>
+            <field name="amount_refunded">240.0</field>
+            <field name="refund_method">store_credit</field>
+            <field name="refund_percentage">80.0</field>
+            <field name="store_credit_amount">60.0</field>
+            <field name="store_credit_expiry">2024-07-15 00:00:00</field>
+            <field name="return_receipt_number">RET-RCP-000002</field>
+            <field name="print_return_receipt">True</field>
+        </record>
+        
+        <!-- Demo POS Return Lines -->
+        <record id="demo_pos_return_line_1" model="pos.return.line">
+            <field name="return_id" ref="demo_pos_return_1"/>
+            <field name="sequence">10</field>
+            <field name="product_id" ref="product_template_demo_1"/>
+            <field name="product_name">Kids T-Shirt</field>
+            <field name="product_code">TSH001</field>
+            <field name="return_qty">1.0</field>
+            <field name="original_qty">1.0</field>
+            <field name="original_price">500.0</field>
+            <field name="return_amount">500.0</field>
+            <field name="refund_amount">500.0</field>
+            <field name="return_reason">defective</field>
+            <field name="product_condition">defective</field>
+            <field name="product_size">M</field>
+            <field name="product_color">Blue</field>
+            <field name="customer_age">6</field>
+            <field name="within_policy">True</field>
+            <field name="refund_percentage">100.0</field>
+            <field name="store_credit_amount">0.0</field>
+        </record>
+        
+        <record id="demo_pos_return_line_2" model="pos.return.line">
+            <field name="return_id" ref="demo_pos_return_2"/>
+            <field name="sequence">10</field>
+            <field name="product_id" ref="product_template_demo_3"/>
+            <field name="product_name">Kids Jeans</field>
+            <field name="product_code">JNS001</field>
+            <field name="return_qty">1.0</field>
+            <field name="original_qty">1.0</field>
+            <field name="original_price">300.0</field>
+            <field name="return_amount">300.0</field>
+            <field name="refund_amount">240.0</field>
+            <field name="return_reason">customer_preference</field>
+            <field name="product_condition">new</field>
+            <field name="product_size">M</field>
+            <field name="product_color">Black</field>
+            <field name="customer_age">9</field>
+            <field name="within_policy">True</field>
+            <field name="refund_percentage">80.0</field>
+            <field name="store_credit_amount">60.0</field>
+        </record>
+        
+    </data>
+</ocean>

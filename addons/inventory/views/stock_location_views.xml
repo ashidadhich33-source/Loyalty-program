@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        <!-- Stock Location Tree View -->
+        <record id="view_stock_location_tree" model="ocean.ui.view">
+            <field name="name">stock.location.tree</field>
+            <field name="model">stock.location</field>
+            <field name="arch" type="xml">
+                <tree string="Stock Locations" decoration-muted="not is_active" decoration-info="location_type=='internal'" decoration-success="location_type=='customer'">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="location_type"/>
+                    <field name="parent_id"/>
+                    <field name="is_active"/>
+                    <field name="usage"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Stock Location Form View -->
+        <record id="view_stock_location_form" model="ocean.ui.view">
+            <field name="name">stock.location.form</field>
+            <field name="model">stock.location</field>
+            <field name="arch" type="xml">
+                <form string="Stock Location">
+                    <header>
+                        <button name="action_activate" string="Activate" type="object" class="btn-success" states="inactive"/>
+                        <button name="action_deactivate" string="Deactivate" type="object" class="btn-secondary" states="active"/>
+                        <field name="is_active" widget="statusbar" statusbar_visible="inactive,active"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Location Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="code"/>
+                                <field name="location_type"/>
+                                <field name="parent_id"/>
+                                <field name="usage"/>
+                                <field name="is_active"/>
+                            </group>
+                            <group>
+                                <field name="address_id"/>
+                                <field name="contact_id"/>
+                                <field name="phone"/>
+                                <field name="email"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Kids Clothing Specific" name="kids_clothing">
+                                <group>
+                                    <group>
+                                        <field name="age_group"/>
+                                        <field name="season"/>
+                                        <field name="size_range"/>
+                                        <field name="gender"/>
+                                    </group>
+                                    <group>
+                                        <field name="special_occasion"/>
+                                        <field name="gift_wrapping"/>
+                                        <field name="gift_message"/>
+                                        <field name="care_instructions"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Stock Location Search View -->
+        <record id="view_stock_location_search" model="ocean.ui.view">
+            <field name="name">stock.location.search</field>
+            <field name="model">stock.location</field>
+            <field name="arch" type="xml">
+                <search string="Search Stock Locations">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="location_type"/>
+                    <field name="parent_id"/>
+                    <separator/>
+                    <filter string="Active" name="active" domain="[('is_active', '=', True)]"/>
+                    <filter string="Inactive" name="inactive" domain="[('is_active', '=', False)]"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter string="Location Type" name="location_type" context="{'group_by': 'location_type'}"/>
+                        <filter string="Parent Location" name="parent" context="{'group_by': 'parent_id'}"/>
+                        <filter string="Usage" name="usage" context="{'group_by': 'usage'}"/>
+                        <filter string="Active Status" name="active_status" context="{'group_by': 'is_active'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Stock Location Action -->
+        <record id="action_stock_location" model="ocean.actions.act_window">
+            <field name="name">Stock Locations</field>
+            <field name="res_model">stock.location</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_stock_location_search"/>
+            <field name="context">{'search_default_active': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new stock location
+                </p>
+                <p>
+                    Stock locations define where inventory is stored and managed.
+                </p>
+            </field>
+        </record>
+    </data>
+</ocean>

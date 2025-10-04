@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Inventory Menu -->
+        <menuitem id="menu_inventory_root" 
+                  name="Inventory" 
+                  sequence="40"/>
+        
+        <!-- Inventory Operations Menu -->
+        <menuitem id="menu_inventory_operations" 
+                  name="Operations" 
+                  parent="menu_inventory_root" 
+                  sequence="10"/>
+        
+        <menuitem id="menu_stock_pickings" 
+                  name="Transfers" 
+                  parent="menu_inventory_operations" 
+                  sequence="10"/>
+        
+        <menuitem id="menu_stock_moves" 
+                  name="Stock Moves" 
+                  parent="menu_inventory_operations" 
+                  sequence="20"/>
+        
+        <menuitem id="menu_stock_inventory" 
+                  name="Inventory Adjustments" 
+                  parent="menu_inventory_operations" 
+                  sequence="30"/>
+        
+        <!-- Inventory Configuration Menu -->
+        <menuitem id="menu_inventory_config" 
+                  name="Configuration" 
+                  parent="menu_inventory_root" 
+                  sequence="20"/>
+        
+        <menuitem id="menu_stock_locations" 
+                  name="Locations" 
+                  parent="menu_inventory_config" 
+                  sequence="10"/>
+        
+        <!-- Inventory Reports Menu -->
+        <menuitem id="menu_inventory_reports" 
+                  name="Reports" 
+                  parent="menu_inventory_root" 
+                  sequence="30"/>
+        
+        <menuitem id="menu_inventory_analytics" 
+                  name="Inventory Analytics" 
+                  parent="menu_inventory_reports" 
+                  sequence="10"/>
+        
+    </data>
+</ocean>

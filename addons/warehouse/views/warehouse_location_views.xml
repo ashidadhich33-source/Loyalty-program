@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Warehouse Location Tree View -->
+        <record id="view_warehouse_location_tree" model="ocean.ui.view">
+            <field name="name">warehouse.location.tree</field>
+            <field name="model">warehouse.location</field>
+            <field name="arch" type="xml">
+                <tree string="Warehouse Locations" create="true" edit="true" delete="true">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="warehouse_id"/>
+                    <field name="location_type"/>
+                    <field name="parent_id"/>
+                    <field name="is_active"/>
+                    <field name="is_pickable"/>
+                    <field name="is_putaway_location"/>
+                    <field name="max_capacity"/>
+                    <field name="current_capacity"/>
+                    <field name="product_count"/>
+                    <field name="total_quantity"/>
+                    <field name="total_value"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Warehouse Location Form View -->
+        <record id="view_warehouse_location_form" model="ocean.ui.view">
+            <field name="name">warehouse.location.form</field>
+            <field name="model">warehouse.location</field>
+            <field name="arch" type="xml">
+                <form string="Warehouse Location" create="true" edit="true" delete="true">
+                    <header>
+                        <button name="action_view_quants" type="object" string="View Stock" class="btn-primary"/>
+                        <button name="action_view_moves" type="object" string="View Moves" class="btn-secondary"/>
+                        <button name="action_view_pickings" type="object" string="View Pickings" class="btn-secondary"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Location Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="code"/>
+                                <field name="warehouse_id"/>
+                                <field name="stock_location_id"/>
+                                <field name="parent_id"/>
+                                <field name="location_type"/>
+                                <field name="is_active"/>
+                                <field name="is_pickable"/>
+                                <field name="is_putaway_location"/>
+                            </group>
+                            <group>
+                                <field name="posx"/>
+                                <field name="posy"/>
+                                <field name="posz"/>
+                                <field name="length"/>
+                                <field name="width"/>
+                                <field name="height"/>
+                            </group>
+                        </group>
+                        <group string="Capacity">
+                            <group>
+                                <field name="max_capacity"/>
+                                <field name="current_capacity"/>
+                                <field name="max_weight"/>
+                                <field name="current_weight"/>
+                            </group>
+                        </group>
+                        <group string="Temperature Control">
+                            <group>
+                                <field name="temperature_controlled"/>
+                                <field name="min_temperature"/>
+                                <field name="max_temperature"/>
+                            </group>
+                        </group>
+                        <group string="Kids Clothing Specific">
+                            <group>
+                                <field name="age_group_restriction"/>
+                                <field name="seasonal_storage"/>
+                            </group>
+                        </group>
+                        <group string="Security">
+                            <group>
+                                <field name="requires_access_control"/>
+                                <field name="access_level"/>
+                            </group>
+                        </group>
+                        <group string="Statistics">
+                            <group>
+                                <field name="product_count"/>
+                                <field name="total_quantity"/>
+                                <field name="total_value"/>
+                            </group>
+                            <group>
+                                <field name="pick_frequency"/>
+                                <field name="last_pick_date"/>
+                            </group>
+                        </group>
+                        <group string="Notes">
+                            <field name="description"/>
+                            <field name="note"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Warehouse Location Search View -->
+        <record id="view_warehouse_location_search" model="ocean.ui.view">
+            <field name="name">warehouse.location.search</field>
+            <field name="model">warehouse.location</field>
+            <field name="arch" type="xml">
+                <search string="Search Warehouse Locations">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="warehouse_id"/>
+                    <field name="location_type"/>
+                    <field name="age_group_restriction"/>
+                    <separator/>
+                    <filter string="Active" name="active" domain="[('is_active', '=', True)]"/>
+                    <filter string="Pickable" name="pickable" domain="[('is_pickable', '=', True)]"/>
+                    <filter string="Putaway Location" name="putaway" domain="[('is_putaway_location', '=', True)]"/>
+                    <filter string="Temperature Controlled" name="temperature_controlled" domain="[('temperature_controlled', '=', True)]"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter string="Warehouse" name="group_warehouse" context="{'group_by': 'warehouse_id'}"/>
+                        <filter string="Location Type" name="group_location_type" context="{'group_by': 'location_type'}"/>
+                        <filter string="Age Group" name="group_age_group" context="{'group_by': 'age_group_restriction'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- Warehouse Location Action -->
+        <record id="action_warehouse_location" model="ocean.actions.act_window">
+            <field name="name">Warehouse Locations</field>
+            <field name="res_model">warehouse.location</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_warehouse_location_search"/>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new warehouse location
+                </p>
+                <p>
+                    Warehouse locations help organize inventory within warehouses.
+                </p>
+            </field>
+        </record>
+        
+    </data>
+</ocean>

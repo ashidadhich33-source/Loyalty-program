@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        <!-- POS Payment Tree View -->
+        <record id="view_pos_payment_tree" model="ocean.ui.view">
+            <field name="name">pos.payment.tree</field>
+            <field name="model">pos.payment</field>
+            <field name="arch" type="xml">
+                <tree string="POS Payments" decoration-muted="state=='cancel'" decoration-success="state=='done'" decoration-info="state=='pending'">
+                    <field name="name"/>
+                    <field name="order_id"/>
+                    <field name="payment_method_id"/>
+                    <field name="amount"/>
+                    <field name="state"/>
+                    <field name="payment_date"/>
+                    <field name="transaction_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- POS Payment Form View -->
+        <record id="view_pos_payment_form" model="ocean.ui.view">
+            <field name="name">pos.payment.form</field>
+            <field name="model">pos.payment</field>
+            <field name="arch" type="xml">
+                <form string="POS Payment">
+                    <header>
+                        <button name="action_confirm" string="Confirm" type="object" class="btn-primary" states="draft"/>
+                        <button name="action_process" string="Process" type="object" class="btn-success" states="confirmed"/>
+                        <button name="action_done" string="Done" type="object" class="btn-primary" states="processed"/>
+                        <button name="action_cancel" string="Cancel" type="object" class="btn-secondary" states="draft,confirmed"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,processed,done,cancel"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Payment Reference"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="order_id"/>
+                                <field name="session_id"/>
+                                <field name="payment_method_id"/>
+                                <field name="payment_type"/>
+                                <field name="payment_date"/>
+                            </group>
+                            <group>
+                                <field name="amount"/>
+                                <field name="currency_id"/>
+                                <field name="exchange_rate"/>
+                                <field name="transaction_id"/>
+                                <field name="reference"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Payment Details" name="payment_details">
+                                <group>
+                                    <group>
+                                        <field name="card_number"/>
+                                        <field name="card_holder_name"/>
+                                        <field name="card_expiry_date"/>
+                                        <field name="card_cvv"/>
+                                    </group>
+                                    <group>
+                                        <field name="bank_name"/>
+                                        <field name="account_number"/>
+                                        <field name="routing_number"/>
+                                        <field name="check_number"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Kids Clothing Specific" name="kids_clothing">
+                                <group>
+                                    <group>
+                                        <field name="age_group"/>
+                                        <field name="season"/>
+                                        <field name="size_range"/>
+                                        <field name="gender"/>
+                                    </group>
+                                    <group>
+                                        <field name="special_occasion"/>
+                                        <field name="gift_wrapping"/>
+                                        <field name="gift_message"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- POS Payment Search View -->
+        <record id="view_pos_payment_search" model="ocean.ui.view">
+            <field name="name">pos.payment.search</field>
+            <field name="model">pos.payment</field>
+            <field name="arch" type="xml">
+                <search string="Search POS Payments">
+                    <field name="name"/>
+                    <field name="order_id"/>
+                    <field name="payment_method_id"/>
+                    <field name="transaction_id"/>
+                    <separator/>
+                    <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
+                    <filter string="Confirmed" name="confirmed" domain="[('state', '=', 'confirmed')]"/>
+                    <filter string="Processed" name="processed" domain="[('state', '=', 'processed')]"/>
+                    <filter string="Done" name="done" domain="[('state', '=', 'done')]"/>
+                    <filter string="Cancelled" name="cancel" domain="[('state', '=', 'cancel')]"/>
+                    <filter string="Today" name="today" domain="[('payment_date', '>=', datetime.datetime.combine(context_today(), datetime.time(0,0,0))), ('payment_date', '&lt;=', datetime.datetime.combine(context_today(), datetime.time(23,59,59)))]"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter string="Order" name="order" context="{'group_by': 'order_id'}"/>
+                        <filter string="Payment Method" name="payment_method" context="{'group_by': 'payment_method_id'}"/>
+                        <filter string="State" name="state" context="{'group_by': 'state'}"/>
+                        <filter string="Payment Date" name="payment_date" context="{'group_by': 'payment_date:day'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- POS Payment Action -->
+        <record id="action_pos_payment" model="ocean.actions.act_window">
+            <field name="name">POS Payments</field>
+            <field name="res_model">pos.payment</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_pos_payment_search"/>
+            <field name="context">{'search_default_today': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new POS payment
+                </p>
+                <p>
+                    POS payments track payment transactions for each order, including various payment methods.
+                </p>
+            </field>
+        </record>
+    </data>
+</ocean>

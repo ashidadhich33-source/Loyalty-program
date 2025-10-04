@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- POS Payment Menu -->
+        <menuitem id="menu_pos_payment_root" 
+                  name="POS Payment" 
+                  parent="menu_pos_root" 
+                  sequence="40"/>
+        
+        <!-- Payment Operations Menu -->
+        <menuitem id="menu_pos_payment_operations" 
+                  name="Operations" 
+                  parent="menu_pos_payment_root" 
+                  sequence="10"/>
+        
+        <menuitem id="menu_pos_payment_transactions" 
+                  name="Transactions" 
+                  parent="menu_pos_payment_operations" 
+                  sequence="10"/>
+        
+        <menuitem id="menu_pos_payment_terminals" 
+                  name="Terminals" 
+                  parent="menu_pos_payment_operations" 
+                  sequence="20"/>
+        
+        <!-- Payment Configuration Menu -->
+        <menuitem id="menu_pos_payment_config" 
+                  name="Configuration" 
+                  parent="menu_pos_payment_root" 
+                  sequence="20"/>
+        
+        <menuitem id="menu_pos_payment_methods" 
+                  name="Payment Methods" 
+                  parent="menu_pos_payment_config" 
+                  sequence="10"/>
+        
+        <!-- Payment Reports Menu -->
+        <menuitem id="menu_pos_payment_reports" 
+                  name="Reports" 
+                  parent="menu_pos_payment_root" 
+                  sequence="30"/>
+        
+        <menuitem id="menu_pos_payment_analytics" 
+                  name="Payment Analytics" 
+                  parent="menu_pos_payment_reports" 
+                  sequence="10"/>
+        
+    </data>
+</ocean>

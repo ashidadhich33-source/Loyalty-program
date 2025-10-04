@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Indian Localization Menu -->
+        <menuitem id="menu_l10n_in_root"
+                  name="Indian Localization"
+                  sequence="30"
+                  web_icon="l10n_in,static/description/icon.png"/>
+        
+        <!-- Companies -->
+        <menuitem id="menu_l10n_in_companies"
+                  name="Companies"
+                  parent="menu_l10n_in_root"
+                  sequence="10"/>
+        
+        <menuitem id="menu_res_company"
+                  name="Companies"
+                  parent="menu_l10n_in_companies"
+                  action="action_res_company"
+                  sequence="10"/>
+        
+        <!-- Partners -->
+        <menuitem id="menu_l10n_in_partners"
+                  name="Partners"
+                  parent="menu_l10n_in_root"
+                  sequence="20"/>
+        
+        <menuitem id="menu_res_partner"
+                  name="Partners"
+                  parent="menu_l10n_in_partners"
+                  action="action_res_partner"
+                  sequence="10"/>
+        
+        <!-- Geographic -->
+        <menuitem id="menu_l10n_in_geographic"
+                  name="Geographic"
+                  parent="menu_l10n_in_root"
+                  sequence="30"/>
+        
+        <menuitem id="menu_res_country_state"
+                  name="States"
+                  parent="menu_l10n_in_geographic"
+                  action="action_res_country_state"
+                  sequence="10"/>
+        
+        <menuitem id="menu_res_country_district"
+                  name="Districts"
+                  parent="menu_l10n_in_geographic"
+                  action="action_res_country_district"
+                  sequence="20"/>
+        
+        <menuitem id="menu_res_country_taluka"
+                  name="Talukas"
+                  parent="menu_l10n_in_geographic"
+                  action="action_res_country_taluka"
+                  sequence="30"/>
+        
+        <menuitem id="menu_res_country_village"
+                  name="Villages"
+                  parent="menu_l10n_in_geographic"
+                  action="action_res_country_village"
+                  sequence="40"/>
+        
+        <!-- Banking -->
+        <menuitem id="menu_l10n_in_banking"
+                  name="Banking"
+                  parent="menu_l10n_in_root"
+                  sequence="40"/>
+        
+        <menuitem id="menu_res_bank"
+                  name="Banks"
+                  parent="menu_l10n_in_banking"
+                  action="action_res_bank"
+                  sequence="10"/>
+        
+        <menuitem id="menu_res_bank_branch"
+                  name="Bank Branches"
+                  parent="menu_l10n_in_banking"
+                  action="action_res_bank_branch"
+                  sequence="20"/>
+        
+        <!-- Configuration -->
+        <menuitem id="menu_l10n_in_configuration"
+                  name="Configuration"
+                  parent="menu_l10n_in_root"
+                  sequence="50"/>
+        
+        <menuitem id="menu_res_currency"
+                  name="Currencies"
+                  parent="menu_l10n_in_configuration"
+                  action="action_res_currency"
+                  sequence="10"/>
+        
+        <menuitem id="menu_res_language"
+                  name="Languages"
+                  parent="menu_l10n_in_configuration"
+                  action="action_res_language"
+                  sequence="20"/>
+        
+    </data>
+</ocean>

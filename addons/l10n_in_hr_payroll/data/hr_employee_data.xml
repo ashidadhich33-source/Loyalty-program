@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Sample Employees -->
+        <record id="employee_john_doe" model="hr.employee">
+            <field name="name">John Doe</field>
+            <field name="employee_id">EMP001</field>
+            <field name="gender">male</field>
+            <field name="marital_status">single</field>
+            <field name="birth_date">1990-05-15</field>
+            <field name="pan">ABCDE1234F</field>
+            <field name="aadhar">123456789012</field>
+            <field name="pf_number">MH1234567890</field>
+            <field name="esi_number">1234567890</field>
+            <field name="uan">123456789012</field>
+            <field name="street">123 Main Street</field>
+            <field name="city">Mumbai</field>
+            <field name="state_id" ref="state_maharashtra"/>
+            <field name="zip">400001</field>
+            <field name="country_id" ref="base.in"/>
+            <field name="phone">+91-9876543210</field>
+            <field name="mobile">+91-9876543210</field>
+            <field name="email">john.doe@example.com</field>
+            <field name="join_date">2024-01-01</field>
+            <field name="age_group">all</field>
+            <field name="size">all</field>
+            <field name="season">all_season</field>
+            <field name="brand">Kids Brand</field>
+            <field name="color">Blue</field>
+        </record>
+        
+        <record id="employee_jane_smith" model="hr.employee">
+            <field name="name">Jane Smith</field>
+            <field name="employee_id">EMP002</field>
+            <field name="gender">female</field>
+            <field name="marital_status">married</field>
+            <field name="birth_date">1988-08-20</field>
+            <field name="pan">FGHIJ5678K</field>
+            <field name="aadhar">987654321098</field>
+            <field name="pf_number">KA9876543210</field>
+            <field name="esi_number">9876543210</field>
+            <field name="uan">987654321098</field>
+            <field name="street">456 Park Avenue</field>
+            <field name="city">Bangalore</field>
+            <field name="state_id" ref="state_karnataka"/>
+            <field name="zip">560001</field>
+            <field name="country_id" ref="base.in"/>
+            <field name="phone">+91-8765432109</field>
+            <field name="mobile">+91-8765432109</field>
+            <field name="email">jane.smith@example.com</field>
+            <field name="join_date">2024-02-01</field>
+            <field name="age_group">all</field>
+            <field name="size">all</field>
+            <field name="season">all_season</field>
+            <field name="brand">Kids Brand</field>
+            <field name="color">Pink</field>
+        </record>
+        
+        <record id="employee_mike_johnson" model="hr.employee">
+            <field name="name">Mike Johnson</field>
+            <field name="employee_id">EMP003</field>
+            <field name="gender">male</field>
+            <field name="marital_status">divorced</field>
+            <field name="birth_date">1985-12-10</field>
+            <field name="pan">KLMNO9012P</field>
+            <field name="aadhar">112233445566</field>
+            <field name="pf_number">TN1122334455</field>
+            <field name="esi_number">1122334455</field>
+            <field name="uan">112233445566</field>
+            <field name="street">789 Oak Street</field>
+            <field name="city">Chennai</field>
+            <field name="state_id" ref="state_tamil_nadu"/>
+            <field name="zip">600001</field>
+            <field name="country_id" ref="base.in"/>
+            <field name="phone">+91-7654321098</field>
+            <field name="mobile">+91-7654321098</field>
+            <field name="email">mike.johnson@example.com</field>
+            <field name="join_date">2024-03-01</field>
+            <field name="age_group">all</field>
+            <field name="size">all</field>
+            <field name="season">all_season</field>
+            <field name="brand">Kids Brand</field>
+            <field name="color">Green</field>
+        </record>
+        
+        <record id="employee_sarah_wilson" model="hr.employee">
+            <field name="name">Sarah Wilson</field>
+            <field name="employee_id">EMP004</field>
+            <field name="gender">female</field>
+            <field name="marital_status">single</field>
+            <field name="birth_date">1992-03-25</field>
+            <field name="pan">PQRST3456U</field>
+            <field name="aadhar">556677889900</field>
+            <field name="pf_number">GJ5566778899</field>
+            <field name="esi_number">5566778899</field>
+            <field name="uan">556677889900</field>
+            <field name="street">321 Pine Street</field>
+            <field name="city">Ahmedabad</field>
+            <field name="state_id" ref="state_gujarat"/>
+            <field name="zip">380001</field>
+            <field name="country_id" ref="base.in"/>
+            <field name="phone">+91-6543210987</field>
+            <field name="mobile">+91-6543210987</field>
+            <field name="email">sarah.wilson@example.com</field>
+            <field name="join_date">2024-04-01</field>
+            <field name="age_group">all</field>
+            <field name="size">all</field>
+            <field name="season">all_season</field>
+            <field name="brand">Kids Brand</field>
+            <field name="color">Yellow</field>
+        </record>
+        
+        <record id="employee_david_brown" model="hr.employee">
+            <field name="name">David Brown</field>
+            <field name="employee_id">EMP005</field>
+            <field name="gender">male</field>
+            <field name="marital_status">married</field>
+            <field name="birth_date">1987-11-30</field>
+            <field name="pan">UVWXY7890Z</field>
+            <field name="aadhar">998877665544</field>
+            <field name="pf_number">RJ9988776655</field>
+            <field name="esi_number">9988776655</field>
+            <field name="uan">998877665544</field>
+            <field name="street">654 Elm Street</field>
+            <field name="city">Jaipur</field>
+            <field name="state_id" ref="state_rajasthan"/>
+            <field name="zip">302001</field>
+            <field name="country_id" ref="base.in"/>
+            <field name="phone">+91-5432109876</field>
+            <field name="mobile">+91-5432109876</field>
+            <field name="email">david.brown@example.com</field>
+            <field name="join_date">2024-05-01</field>
+            <field name="age_group">all</field>
+            <field name="size">all</field>
+            <field name="season">all_season</field>
+            <field name="brand">Kids Brand</field>
+            <field name="color">Red</field>
+        </record>
+        
+    </data>
+</ocean>

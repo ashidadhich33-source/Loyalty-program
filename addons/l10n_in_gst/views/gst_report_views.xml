@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- GST Report Tree View -->
+        <record id="view_gst_report_tree" model="ocean.ui.view">
+            <field name="name">gst.report.tree</field>
+            <field name="model">gst.report</field>
+            <field name="arch" type="xml">
+                <tree string="GST Reports" create="true" edit="true" delete="true">
+                    <field name="name"/>
+                    <field name="report_type"/>
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                    <field name="state"/>
+                    <field name="age_group"/>
+                    <field name="size"/>
+                    <field name="season"/>
+                    <field name="brand"/>
+                    <field name="color"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- GST Report Form View -->
+        <record id="view_gst_report_form" model="ocean.ui.view">
+            <field name="name">gst.report.form</field>
+            <field name="model">gst.report</field>
+            <field name="arch" type="xml">
+                <form string="GST Report" create="true" edit="true" delete="true">
+                    <header>
+                        <button name="action_generate_report" string="Generate Report" type="object" class="btn-primary" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                        <button name="action_export_report" string="Export Report" type="object" class="btn-success" attrs="{'invisible': [('state', '!=', 'generated')]}"/>
+                        <button name="action_print_report" string="Print Report" type="object" class="btn-info" attrs="{'invisible': [('state', '!=', 'generated')]}"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,generated,exported,printed"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="GST Report Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="report_type"/>
+                                <field name="date_from"/>
+                                <field name="date_to"/>
+                            </group>
+                            <group>
+                                <field name="company_id"/>
+                            </group>
+                        </group>
+                        <group string="Kids Clothing Specific">
+                            <group>
+                                <field name="age_group"/>
+                                <field name="size"/>
+                                <field name="season"/>
+                            </group>
+                            <group>
+                                <field name="brand"/>
+                                <field name="color"/>
+                            </group>
+                        </group>
+                        <group string="Report Lines">
+                            <field name="line_ids" nolabel="1">
+                                <tree editable="bottom">
+                                    <field name="line_type"/>
+                                    <field name="description"/>
+                                    <field name="amount"/>
+                                    <field name="tax_amount"/>
+                                    <field name="total_amount"/>
+                                </tree>
+                            </field>
+                        </group>
+                        <group string="Notes">
+                            <field name="notes"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- GST Report Search View -->
+        <record id="view_gst_report_search" model="ocean.ui.view">
+            <field name="name">gst.report.search</field>
+            <field name="model">gst.report</field>
+            <field name="arch" type="xml">
+                <search string="Search GST Reports">
+                    <field name="name"/>
+                    <field name="report_type"/>
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                    <field name="state"/>
+                    <field name="age_group"/>
+                    <field name="size"/>
+                    <field name="season"/>
+                    <field name="brand"/>
+                    <field name="color"/>
+                    <separator/>
+                    <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
+                    <filter string="Generated" name="generated" domain="[('state', '=', 'generated')]"/>
+                    <filter string="Exported" name="exported" domain="[('state', '=', 'exported')]"/>
+                    <filter string="Printed" name="printed" domain="[('state', '=', 'printed')]"/>
+                    <separator/>
+                    <filter string="GST Summary" name="summary" domain="[('report_type', '=', 'summary')]"/>
+                    <filter string="GST Liability" name="liability" domain="[('report_type', '=', 'liability')]"/>
+                    <filter string="Input Tax" name="input_tax" domain="[('report_type', '=', 'input_tax')]"/>
+                    <filter string="Output Tax" name="output_tax" domain="[('report_type', '=', 'output_tax')]"/>
+                    <filter string="Reconciliation" name="reconciliation" domain="[('report_type', '=', 'reconciliation')]"/>
+                    <filter string="Audit" name="audit" domain="[('report_type', '=', 'audit')]"/>
+                    <filter string="Compliance" name="compliance" domain="[('report_type', '=', 'compliance')]"/>
+                    <separator/>
+                    <filter string="Baby (0-2)" name="age_0_2" domain="[('age_group', '=', '0-2')]"/>
+                    <filter string="Toddler (2-4)" name="age_2_4" domain="[('age_group', '=', '2-4')]"/>
+                    <filter string="Pre-school (4-6)" name="age_4_6" domain="[('age_group', '=', '4-6')]"/>
+                    <filter string="Summer" name="summer" domain="[('season', '=', 'summer')]"/>
+                    <filter string="Winter" name="winter" domain="[('season', '=', 'winter')]"/>
+                    <filter string="Monsoon" name="monsoon" domain="[('season', '=', 'monsoon')]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Report Type" name="group_report_type" context="{'group_by': 'report_type'}"/>
+                        <filter string="State" name="group_state" context="{'group_by': 'state'}"/>
+                        <filter string="Age Group" name="group_age_group" context="{'group_by': 'age_group'}"/>
+                        <filter string="Size" name="group_size" context="{'group_by': 'size'}"/>
+                        <filter string="Season" name="group_season" context="{'group_by': 'season'}"/>
+                        <filter string="Brand" name="group_brand" context="{'group_by': 'brand'}"/>
+                        <filter string="Color" name="group_color" context="{'group_by': 'color'}"/>
+                        <filter string="Company" name="group_company" context="{'group_by': 'company_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- GST Report Action -->
+        <record id="action_gst_report" model="ocean.actions.act_window">
+            <field name="name">GST Reports</field>
+            <field name="res_model">gst.report</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_gst_report_search"/>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first GST report!
+                </p>
+                <p>
+                    GST reports provide detailed analysis of tax data.
+                </p>
+            </field>
+        </record>
+        
+    </data>
+</ocean>

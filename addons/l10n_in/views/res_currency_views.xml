@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Res Currency Tree View -->
+        <record id="view_res_currency_tree" model="ocean.ui.view">
+            <field name="name">res.currency.tree</field>
+            <field name="model">res.currency</field>
+            <field name="arch" type="xml">
+                <tree string="Currencies" create="true" edit="true" delete="true">
+                    <field name="name"/>
+                    <field name="symbol"/>
+                    <field name="currency_type"/>
+                    <field name="decimal_places"/>
+                    <field name="rounding"/>
+                    <field name="age_group"/>
+                    <field name="size"/>
+                    <field name="season"/>
+                    <field name="brand"/>
+                    <field name="color"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Res Currency Form View -->
+        <record id="view_res_currency_form" model="ocean.ui.view">
+            <field name="name">res.currency.form</field>
+            <field name="model">res.currency</field>
+            <field name="arch" type="xml">
+                <form string="Currency" create="true" edit="true" delete="true">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Currency Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="symbol"/>
+                                <field name="currency_type"/>
+                                <field name="decimal_places"/>
+                                <field name="rounding"/>
+                            </group>
+                            <group>
+                                <field name="active"/>
+                            </group>
+                        </group>
+                        <group string="Kids Clothing Specific">
+                            <group>
+                                <field name="age_group"/>
+                                <field name="size"/>
+                                <field name="season"/>
+                            </group>
+                            <group>
+                                <field name="brand"/>
+                                <field name="color"/>
+                            </group>
+                        </group>
+                        <group string="Notes">
+                            <field name="notes"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Res Currency Action -->
+        <record id="action_res_currency" model="ocean.actions.act_window">
+            <field name="name">Currencies</field>
+            <field name="res_model">res.currency</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'search_default_active': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first currency!
+                </p>
+                <p>
+                    Currencies are monetary units used in transactions.
+                </p>
+            </field>
+        </record>
+        
+        <!-- Res Language Tree View -->
+        <record id="view_res_language_tree" model="ocean.ui.view">
+            <field name="name">res.language.tree</field>
+            <field name="model">res.language</field>
+            <field name="arch" type="xml">
+                <tree string="Languages" create="true" edit="true" delete="true">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="language_type"/>
+                    <field name="script"/>
+                    <field name="direction"/>
+                    <field name="age_group"/>
+                    <field name="size"/>
+                    <field name="season"/>
+                    <field name="brand"/>
+                    <field name="color"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Res Language Form View -->
+        <record id="view_res_language_form" model="ocean.ui.view">
+            <field name="name">res.language.form</field>
+            <field name="model">res.language</field>
+            <field name="arch" type="xml">
+                <form string="Language" create="true" edit="true" delete="true">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Language Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="code"/>
+                                <field name="language_type"/>
+                                <field name="script"/>
+                                <field name="direction"/>
+                            </group>
+                            <group>
+                                <field name="active"/>
+                            </group>
+                        </group>
+                        <group string="Kids Clothing Specific">
+                            <group>
+                                <field name="age_group"/>
+                                <field name="size"/>
+                                <field name="season"/>
+                            </group>
+                            <group>
+                                <field name="brand"/>
+                                <field name="color"/>
+                            </group>
+                        </group>
+                        <group string="Notes">
+                            <field name="notes"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Res Language Action -->
+        <record id="action_res_language" model="ocean.actions.act_window">
+            <field name="name">Languages</field>
+            <field name="res_model">res.language</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'search_default_active': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first language!
+                </p>
+                <p>
+                    Languages are communication systems used by people.
+                </p>
+            </field>
+        </record>
+        
+    </data>
+</ocean>

@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Sample HR Contracts -->
+        <record id="hr_contract_john_permanent" model="hr.contract">
+            <field name="name">Permanent Contract - John Doe</field>
+            <field name="employee_id" ref="employee_john_doe"/>
+            <field name="contract_type">permanent</field>
+            <field name="wage">50000</field>
+            <field name="wage_type">monthly</field>
+            <field name="date_start">2024-01-01</field>
+            <field name="pf_applicable">True</field>
+            <field name="esi_applicable">True</field>
+            <field name="professional_tax_applicable">True</field>
+            <field name="income_tax_applicable">True</field>
+            <field name="age_group">all</field>
+            <field name="size">all</field>
+            <field name="season">all_season</field>
+            <field name="brand">Kids Brand</field>
+            <field name="color">Blue</field>
+            <field name="state">open</field>
+        </record>
+        
+        <record id="hr_contract_jane_permanent" model="hr.contract">
+            <field name="name">Permanent Contract - Jane Smith</field>
+            <field name="employee_id" ref="employee_jane_smith"/>
+            <field name="contract_type">permanent</field>
+            <field name="wage">45000</field>
+            <field name="wage_type">monthly</field>
+            <field name="date_start">2024-02-01</field>
+            <field name="pf_applicable">True</field>
+            <field name="esi_applicable">True</field>
+            <field name="professional_tax_applicable">True</field>
+            <field name="income_tax_applicable">True</field>
+            <field name="age_group">all</field>
+            <field name="size">all</field>
+            <field name="season">all_season</field>
+            <field name="brand">Kids Brand</field>
+            <field name="color">Pink</field>
+            <field name="state">open</field>
+        </record>
+        
+        <record id="hr_contract_mike_temporary" model="hr.contract">
+            <field name="name">Temporary Contract - Mike Johnson</field>
+            <field name="employee_id" ref="employee_mike_johnson"/>
+            <field name="contract_type">temporary</field>
+            <field name="wage">40000</field>
+            <field name="wage_type">monthly</field>
+            <field name="date_start">2024-03-01</field>
+            <field name="date_end">2024-12-31</field>
+            <field name="pf_applicable">True</field>
+            <field name="esi_applicable">False</field>
+            <field name="professional_tax_applicable">True</field>
+            <field name="income_tax_applicable">True</field>
+            <field name="age_group">all</field>
+            <field name="size">all</field>
+            <field name="season">all_season</field>
+            <field name="brand">Kids Brand</field>
+            <field name="color">Green</field>
+            <field name="state">open</field>
+        </record>
+        
+        <record id="hr_contract_sarah_contract" model="hr.contract">
+            <field name="name">Contract - Sarah Wilson</field>
+            <field name="employee_id" ref="employee_sarah_wilson"/>
+            <field name="contract_type">contract</field>
+            <field name="wage">35000</field>
+            <field name="wage_type">monthly</field>
+            <field name="date_start">2024-04-01</field>
+            <field name="date_end">2024-09-30</field>
+            <field name="pf_applicable">False</field>
+            <field name="esi_applicable">False</field>
+            <field name="professional_tax_applicable">True</field>
+            <field name="income_tax_applicable">True</field>
+            <field name="age_group">all</field>
+            <field name="size">all</field>
+            <field name="season">all_season</field>
+            <field name="brand">Kids Brand</field>
+            <field name="color">Yellow</field>
+            <field name="state">open</field>
+        </record>
+        
+        <record id="hr_contract_david_intern" model="hr.contract">
+            <field name="name">Intern Contract - David Brown</field>
+            <field name="employee_id" ref="employee_david_brown"/>
+            <field name="contract_type">intern</field>
+            <field name="wage">15000</field>
+            <field name="wage_type">monthly</field>
+            <field name="date_start">2024-05-01</field>
+            <field name="date_end">2024-07-31</field>
+            <field name="pf_applicable">False</field>
+            <field name="esi_applicable">False</field>
+            <field name="professional_tax_applicable">False</field>
+            <field name="income_tax_applicable">False</field>
+            <field name="age_group">all</field>
+            <field name="size">all</field>
+            <field name="season">all_season</field>
+            <field name="brand">Kids Brand</field>
+            <field name="color">Red</field>
+            <field name="state">open</field>
+        </record>
+        
+        <!-- Sample Payslips -->
+        <record id="hr_payslip_john_jan_2024" model="hr.payslip">
+            <field name="name">Payslip - John Doe - January 2024</field>
+            <field name="employee_id" ref="employee_john_doe"/>
+            <field name="contract_id" ref="hr_contract_john_permanent"/>
+            <field name="date_from">2024-01-01</field>
+            <field name="date_to">2024-01-31</field>
+            <field name="basic_wage">50000</field>
+            <field name="gross_wage">50000</field>
+            <field name="net_wage">45000</field>
+            <field name="age_group">all</field>
+            <field name="size">all</field>
+            <field name="season">all_season</field>
+            <field name="brand">Kids Brand</field>
+            <field name="color">Blue</field>
+            <field name="state">done</field>
+        </record>
+        
+        <record id="hr_payslip_jane_feb_2024" model="hr.payslip">
+            <field name="name">Payslip - Jane Smith - February 2024</field>
+            <field name="employee_id" ref="employee_jane_smith"/>
+            <field name="contract_id" ref="hr_contract_jane_permanent"/>
+            <field name="date_from">2024-02-01</field>
+            <field name="date_to">2024-02-29</field>
+            <field name="basic_wage">45000</field>
+            <field name="gross_wage">45000</field>
+            <field name="net_wage">40500</field>
+            <field name="age_group">all</field>
+            <field name="size">all</field>
+            <field name="season">all_season</field>
+            <field name="brand">Kids Brand</field>
+            <field name="color">Pink</field>
+            <field name="state">done</field>
+        </record>
+        
+        <record id="hr_payslip_mike_mar_2024" model="hr.payslip">
+            <field name="name">Payslip - Mike Johnson - March 2024</field>
+            <field name="employee_id" ref="employee_mike_johnson"/>
+            <field name="contract_id" ref="hr_contract_mike_temporary"/>
+            <field name="date_from">2024-03-01</field>
+            <field name="date_to">2024-03-31</field>
+            <field name="basic_wage">40000</field>
+            <field name="gross_wage">40000</field>
+            <field name="net_wage">36000</field>
+            <field name="age_group">all</field>
+            <field name="size">all</field>
+            <field name="season">all_season</field>
+            <field name="brand">Kids Brand</field>
+            <field name="color">Green</field>
+            <field name="state">done</field>
+        </record>
+        
+    </data>
+</ocean>

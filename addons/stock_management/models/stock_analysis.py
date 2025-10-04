@@ -1,0 +1,547 @@
+# -*- coding: utf-8 -*-
+"""
+Ocean ERP - Stock Analysis Model
+================================
+
+Stock analysis management for kids clothing retail.
+"""
+
+from core_framework.orm import BaseModel, CharField, TextField, BooleanField, IntegerField, DateTimeField, Many2OneField, SelectionField, FloatField, One2ManyField
+from core_framework.exceptions import ValidationError, UserError
+from addons.core_base.models.base_mixins import KidsClothingMixin
+import logging
+
+_logger = logging.getLogger(__name__)
+
+
+class StockAnalysis(BaseModel, KidsClothingMixin):
+    """Stock Analysis Model for Ocean ERP"""
+    
+    _name = 'stock.analysis'
+    _description = 'Stock Analysis'
+    _order = 'date_from desc, name'
+    _rec_name = 'name'
+
+    name = CharField(
+        string='Analysis Name',
+        required=True,
+        help='Name of the stock analysis'
+    )
+    
+    analysis_type = SelectionField(
+        selection=[
+            ('turnover', 'Stock Turnover'),
+            ('aging', 'Stock Aging'),
+            ('seasonal', 'Seasonal Analysis'),
+            ('size_wise', 'Size-wise Analysis'),
+            ('brand_wise', 'Brand-wise Analysis'),
+            ('color_wise', 'Color-wise Analysis'),
+            ('age_group', 'Age Group Analysis'),
+            ('abc', 'ABC Analysis'),
+            ('xyz', 'XYZ Analysis'),
+            ('profitability', 'Profitability Analysis'),
+            ('slow_moving', 'Slow Moving Items'),
+            ('fast_moving', 'Fast Moving Items'),
+            ('dead_stock', 'Dead Stock Analysis'),
+        ],
+        string='Analysis Type',
+        required=True,
+        help='Type of stock analysis'
+    )
+    
+    date_from = DateTimeField(
+        string='From Date',
+        required=True,
+        help='Start date for the analysis'
+    )
+    
+    date_to = DateTimeField(
+        string='To Date',
+        required=True,
+        help='End date for the analysis'
+    )
+    
+    state = SelectionField(
+        selection=[
+            ('draft', 'Draft'),
+            ('generated', 'Generated'),
+            ('cancelled', 'Cancelled'),
+        ],
+        string='Status',
+        default='draft',
+        help='Status of the analysis'
+    )
+    
+    # Kids Clothing Specific Fields
+    age_group = SelectionField(
+        selection=[
+            ('0-2', 'Baby (0-2 years)'),
+            ('2-4', 'Toddler (2-4 years)'),
+            ('4-6', 'Pre-school (4-6 years)'),
+            ('6-8', 'Early School (6-8 years)'),
+            ('8-10', 'Middle School (8-10 years)'),
+            ('10-12', 'Late School (10-12 years)'),
+            ('12-14', 'Teen (12-14 years)'),
+            ('14-16', 'Young Adult (14-16 years)'),
+            ('all', 'All Age Groups'),
+        ],
+        string='Age Group',
+        help='Age group for the analysis'
+    )
+    
+    size = SelectionField(
+        selection=[
+            ('xs', 'XS'),
+            ('s', 'S'),
+            ('m', 'M'),
+            ('l', 'L'),
+            ('xl', 'XL'),
+            ('xxl', 'XXL'),
+            ('xxxl', 'XXXL'),
+            ('all', 'All Sizes'),
+        ],
+        string='Size',
+        help='Size for the analysis'
+    )
+    
+    season = SelectionField(
+        selection=[
+            ('summer', 'Summer'),
+            ('winter', 'Winter'),
+            ('monsoon', 'Monsoon'),
+            ('all_season', 'All Season'),
+        ],
+        string='Season',
+        help='Season for the analysis'
+    )
+    
+    brand = CharField(
+        string='Brand',
+        help='Brand for the analysis'
+    )
+    
+    color = CharField(
+        string='Color',
+        help='Color for the analysis'
+    )
+    
+    # Analysis Lines
+    line_ids = One2ManyField(
+        'stock.analysis.line',
+        'analysis_id',
+        string='Analysis Lines',
+        help='Lines for this analysis'
+    )
+    
+    # Location and Warehouse
+    location_id = Many2OneField(
+        'stock.location',
+        string='Location',
+        help='Stock location for this analysis'
+    )
+    
+    warehouse_id = Many2OneField(
+        'stock.warehouse',
+        string='Warehouse',
+        help='Warehouse for this analysis'
+    )
+    
+    # Company
+    company_id = Many2OneField(
+        'res.company',
+        string='Company',
+        help='Company this analysis belongs to'
+    )
+    
+    # Analysis Configuration
+    include_zero_stock = BooleanField(
+        string='Include Zero Stock',
+        default=False,
+        help='Include products with zero stock'
+    )
+    
+    include_inactive_products = BooleanField(
+        string='Include Inactive Products',
+        default=False,
+        help='Include inactive products'
+    )
+    
+    # Analysis Data
+    analysis_data = TextField(
+        string='Analysis Data',
+        help='Generated analysis data'
+    )
+    
+    # Generated Date
+    generated_date = DateTimeField(
+        string='Generated Date',
+        help='Date when the analysis was generated'
+    )
+    
+    # Generated By
+    generated_by = Many2OneField(
+        'res.users',
+        string='Generated By',
+        help='User who generated the analysis'
+    )
+    
+    # Summary
+    total_products = IntegerField(
+        string='Total Products',
+        compute='_compute_summary',
+        help='Total number of products analyzed'
+    )
+    
+    total_value = FloatField(
+        string='Total Value',
+        compute='_compute_summary',
+        help='Total value of analyzed products'
+    )
+    
+    total_quantity = FloatField(
+        string='Total Quantity',
+        compute='_compute_summary',
+        help='Total quantity of analyzed products'
+    )
+    
+    def _compute_summary(self):
+        """Compute summary from analysis lines"""
+        for record in self:
+            record.total_products = len(record.line_ids)
+            record.total_value = sum(record.line_ids.mapped('value'))
+            record.total_quantity = sum(record.line_ids.mapped('quantity'))
+    
+    def create(self, vals):
+        """Override create to set default values"""
+        if not vals.get('name'):
+            # Generate name from analysis type and date
+            analysis_type = vals.get('analysis_type', '')
+            date_from = vals.get('date_from', '')
+            vals['name'] = f"{analysis_type.replace('_', ' ').title()} - {date_from}"
+        
+        return super(StockAnalysis, self).create(vals)
+    
+    def action_generate(self):
+        """Generate the analysis"""
+        for record in self:
+            if record.state != 'draft':
+                raise UserError('Only draft analyses can be generated.')
+            
+            # Generate analysis data based on type
+            analysis_data = self._generate_analysis_data(record)
+            
+            record.write({
+                'state': 'generated',
+                'analysis_data': analysis_data,
+                'generated_date': self.env.context.get('generated_date'),
+                'generated_by': self.env.context.get('generated_by'),
+            })
+    
+    def _generate_analysis_data(self, record):
+        """Generate analysis data based on type"""
+        if record.analysis_type == 'turnover':
+            return self._generate_turnover_analysis(record)
+        elif record.analysis_type == 'aging':
+            return self._generate_aging_analysis(record)
+        elif record.analysis_type == 'seasonal':
+            return self._generate_seasonal_analysis(record)
+        elif record.analysis_type == 'size_wise':
+            return self._generate_size_wise_analysis(record)
+        elif record.analysis_type == 'brand_wise':
+            return self._generate_brand_wise_analysis(record)
+        elif record.analysis_type == 'color_wise':
+            return self._generate_color_wise_analysis(record)
+        elif record.analysis_type == 'age_group':
+            return self._generate_age_group_analysis(record)
+        elif record.analysis_type == 'abc':
+            return self._generate_abc_analysis(record)
+        elif record.analysis_type == 'xyz':
+            return self._generate_xyz_analysis(record)
+        elif record.analysis_type == 'profitability':
+            return self._generate_profitability_analysis(record)
+        elif record.analysis_type == 'slow_moving':
+            return self._generate_slow_moving_analysis(record)
+        elif record.analysis_type == 'fast_moving':
+            return self._generate_fast_moving_analysis(record)
+        elif record.analysis_type == 'dead_stock':
+            return self._generate_dead_stock_analysis(record)
+        else:
+            return {}
+    
+    def _generate_turnover_analysis(self, record):
+        """Generate stock turnover analysis"""
+        # This would generate turnover analysis data
+        return {}
+    
+    def _generate_aging_analysis(self, record):
+        """Generate stock aging analysis"""
+        # This would generate aging analysis data
+        return {}
+    
+    def _generate_seasonal_analysis(self, record):
+        """Generate seasonal analysis"""
+        # This would generate seasonal analysis data
+        return {}
+    
+    def _generate_size_wise_analysis(self, record):
+        """Generate size-wise analysis"""
+        # This would generate size-wise analysis data
+        return {}
+    
+    def _generate_brand_wise_analysis(self, record):
+        """Generate brand-wise analysis"""
+        # This would generate brand-wise analysis data
+        return {}
+    
+    def _generate_color_wise_analysis(self, record):
+        """Generate color-wise analysis"""
+        # This would generate color-wise analysis data
+        return {}
+    
+    def _generate_age_group_analysis(self, record):
+        """Generate age group analysis"""
+        # This would generate age group analysis data
+        return {}
+    
+    def _generate_abc_analysis(self, record):
+        """Generate ABC analysis"""
+        # This would generate ABC analysis data
+        return {}
+    
+    def _generate_xyz_analysis(self, record):
+        """Generate XYZ analysis"""
+        # This would generate XYZ analysis data
+        return {}
+    
+    def _generate_profitability_analysis(self, record):
+        """Generate profitability analysis"""
+        # This would generate profitability analysis data
+        return {}
+    
+    def _generate_slow_moving_analysis(self, record):
+        """Generate slow moving items analysis"""
+        # This would generate slow moving items analysis data
+        return {}
+    
+    def _generate_fast_moving_analysis(self, record):
+        """Generate fast moving items analysis"""
+        # This would generate fast moving items analysis data
+        return {}
+    
+    def _generate_dead_stock_analysis(self, record):
+        """Generate dead stock analysis"""
+        # This would generate dead stock analysis data
+        return {}
+    
+    def action_cancel(self):
+        """Cancel the analysis"""
+        for record in self:
+            if record.state == 'generated':
+                raise UserError('Generated analyses cannot be cancelled.')
+            
+            record.write({'state': 'cancelled'})
+    
+    def action_view_lines(self):
+        """View analysis lines"""
+        return {
+            'type': 'ocean.actions.act_window',
+            'name': 'Analysis Lines',
+            'res_model': 'stock.analysis.line',
+            'view_mode': 'tree,form',
+            'domain': [('analysis_id', '=', self.id)],
+            'context': {'default_analysis_id': self.id},
+        }
+    
+    def get_kids_clothing_analyses(self, age_group=None, size=None, season=None, brand=None, color=None):
+        """Get analyses filtered by kids clothing criteria"""
+        domain = [('state', '=', 'generated')]
+        
+        if age_group:
+            domain.append(('age_group', 'in', [age_group, 'all']))
+        
+        if size:
+            domain.append(('size', 'in', [size, 'all']))
+        
+        if season:
+            domain.append(('season', 'in', [season, 'all_season']))
+        
+        if brand:
+            domain.append(('brand', '=', brand))
+        
+        if color:
+            domain.append(('color', '=', color))
+        
+        return self.search(domain)
+
+
+class StockAnalysisLine(BaseModel, KidsClothingMixin):
+    """Stock Analysis Line Model for Ocean ERP"""
+    
+    _name = 'stock.analysis.line'
+    _description = 'Stock Analysis Line'
+    _order = 'analysis_id, sequence, id'
+
+    analysis_id = Many2OneField(
+        'stock.analysis',
+        string='Analysis',
+        required=True,
+        help='Analysis this line belongs to'
+    )
+    
+    sequence = IntegerField(
+        string='Sequence',
+        default=10,
+        help='Sequence for ordering'
+    )
+    
+    product_id = Many2OneField(
+        'product.product',
+        string='Product',
+        required=True,
+        help='Product for this line'
+    )
+    
+    product_template_id = Many2OneField(
+        'product.template',
+        string='Product Template',
+        help='Product template for this line'
+    )
+    
+    # Kids Clothing Specific Fields
+    age_group = SelectionField(
+        selection=[
+            ('0-2', 'Baby (0-2 years)'),
+            ('2-4', 'Toddler (2-4 years)'),
+            ('4-6', 'Pre-school (4-6 years)'),
+            ('6-8', 'Early School (6-8 years)'),
+            ('8-10', 'Middle School (8-10 years)'),
+            ('10-12', 'Late School (10-12 years)'),
+            ('12-14', 'Teen (12-14 years)'),
+            ('14-16', 'Young Adult (14-16 years)'),
+            ('all', 'All Age Groups'),
+        ],
+        string='Age Group',
+        help='Age group for this line'
+    )
+    
+    size = SelectionField(
+        selection=[
+            ('xs', 'XS'),
+            ('s', 'S'),
+            ('m', 'M'),
+            ('l', 'L'),
+            ('xl', 'XL'),
+            ('xxl', 'XXL'),
+            ('xxxl', 'XXXL'),
+            ('all', 'All Sizes'),
+        ],
+        string='Size',
+        help='Size for this line'
+    )
+    
+    season = SelectionField(
+        selection=[
+            ('summer', 'Summer'),
+            ('winter', 'Winter'),
+            ('monsoon', 'Monsoon'),
+            ('all_season', 'All Season'),
+        ],
+        string='Season',
+        help='Season for this line'
+    )
+    
+    brand = CharField(
+        string='Brand',
+        help='Brand for this line'
+    )
+    
+    color = CharField(
+        string='Color',
+        help='Color for this line'
+    )
+    
+    # Analysis Metrics
+    quantity = FloatField(
+        string='Quantity',
+        help='Quantity for this line'
+    )
+    
+    value = FloatField(
+        string='Value',
+        help='Value for this line'
+    )
+    
+    turnover_ratio = FloatField(
+        string='Turnover Ratio',
+        help='Turnover ratio for this line'
+    )
+    
+    days_in_stock = IntegerField(
+        string='Days in Stock',
+        help='Days in stock for this line'
+    )
+    
+    # ABC/XYZ Classification
+    abc_classification = SelectionField(
+        selection=[
+            ('a', 'A'),
+            ('b', 'B'),
+            ('c', 'C'),
+        ],
+        string='ABC Classification',
+        help='ABC classification for this line'
+    )
+    
+    xyz_classification = SelectionField(
+        selection=[
+            ('x', 'X'),
+            ('y', 'Y'),
+            ('z', 'Z'),
+        ],
+        string='XYZ Classification',
+        help='XYZ classification for this line'
+    )
+    
+    # Performance Metrics
+    sales_quantity = FloatField(
+        string='Sales Quantity',
+        help='Sales quantity for this line'
+    )
+    
+    sales_value = FloatField(
+        string='Sales Value',
+        help='Sales value for this line'
+    )
+    
+    profit_margin = FloatField(
+        string='Profit Margin',
+        help='Profit margin for this line'
+    )
+    
+    # Company
+    company_id = Many2OneField(
+        'res.company',
+        string='Company',
+        help='Company this line belongs to'
+    )
+    
+    def get_kids_clothing_lines(self, age_group=None, size=None, season=None, brand=None, color=None):
+        """Get lines filtered by kids clothing criteria"""
+        domain = []
+        
+        if age_group:
+            domain.append(('age_group', 'in', [age_group, 'all']))
+        
+        if size:
+            domain.append(('size', 'in', [size, 'all']))
+        
+        if season:
+            domain.append(('season', 'in', [season, 'all_season']))
+        
+        if brand:
+            domain.append(('brand', '=', brand))
+        
+        if color:
+            domain.append(('color', '=', color))
+        
+        return self.search(domain)

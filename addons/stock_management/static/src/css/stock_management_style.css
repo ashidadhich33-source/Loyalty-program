@@ -1,0 +1,545 @@
+/* Ocean ERP - Stock Management Styles */
+
+/* Alert Priority Styles */
+.ocean_alert_priority_urgent {
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    color: #721c24;
+}
+
+.ocean_alert_priority_high {
+    background-color: #fff3cd;
+    border-color: #ffeaa7;
+    color: #856404;
+}
+
+.ocean_alert_priority_medium {
+    background-color: #d1ecf1;
+    border-color: #bee5eb;
+    color: #0c5460;
+}
+
+.ocean_alert_priority_low {
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    color: #155724;
+}
+
+/* Alert Status Styles */
+.ocean_alert_status_draft {
+    background-color: #e2e3e5;
+    border-color: #d6d8db;
+    color: #383d41;
+}
+
+.ocean_alert_status_active {
+    background-color: #d1ecf1;
+    border-color: #bee5eb;
+    color: #0c5460;
+}
+
+.ocean_alert_status_resolved {
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    color: #155724;
+}
+
+.ocean_alert_status_cancelled {
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    color: #721c24;
+}
+
+/* Alert Type Styles */
+.ocean_alert_type_low_stock {
+    background-color: #fff3cd;
+    border-color: #ffeaa7;
+    color: #856404;
+}
+
+.ocean_alert_type_out_of_stock {
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    color: #721c24;
+}
+
+.ocean_alert_type_overstock {
+    background-color: #d1ecf1;
+    border-color: #bee5eb;
+    color: #0c5460;
+}
+
+.ocean_alert_type_expiry {
+    background-color: #e2e3e5;
+    border-color: #d6d8db;
+    color: #383d41;
+}
+
+.ocean_alert_type_seasonal {
+    background-color: #fce4ec;
+    border-color: #f8bbd9;
+    color: #880e4f;
+}
+
+.ocean_alert_type_size {
+    background-color: #e8f5e8;
+    border-color: #c8e6c9;
+    color: #2e7d32;
+}
+
+.ocean_alert_type_brand {
+    background-color: #fff8e1;
+    border-color: #ffecb3;
+    color: #f57f17;
+}
+
+.ocean_alert_type_color {
+    background-color: #f3e5f5;
+    border-color: #e1bee7;
+    color: #7b1fa2;
+}
+
+/* Kids Clothing Specific Styles */
+.ocean_age_group_baby {
+    background-color: #ffeaa7;
+    border-color: #fdcb6e;
+    color: #2d3436;
+}
+
+.ocean_age_group_toddler {
+    background-color: #a29bfe;
+    border-color: #6c5ce7;
+    color: #ffffff;
+}
+
+.ocean_age_group_preschool {
+    background-color: #fd79a8;
+    border-color: #e84393;
+    color: #ffffff;
+}
+
+.ocean_age_group_school {
+    background-color: #00b894;
+    border-color: #00a085;
+    color: #ffffff;
+}
+
+.ocean_age_group_teen {
+    background-color: #e17055;
+    border-color: #d63031;
+    color: #ffffff;
+}
+
+.ocean_age_group_all {
+    background-color: #74b9ff;
+    border-color: #0984e3;
+    color: #ffffff;
+}
+
+/* Size Styles */
+.ocean_size_xs {
+    background-color: #ffeaa7;
+    border-color: #fdcb6e;
+    color: #2d3436;
+}
+
+.ocean_size_s {
+    background-color: #a29bfe;
+    border-color: #6c5ce7;
+    color: #ffffff;
+}
+
+.ocean_size_m {
+    background-color: #fd79a8;
+    border-color: #e84393;
+    color: #ffffff;
+}
+
+.ocean_size_l {
+    background-color: #00b894;
+    border-color: #00a085;
+    color: #ffffff;
+}
+
+.ocean_size_xl {
+    background-color: #e17055;
+    border-color: #d63031;
+    color: #ffffff;
+}
+
+.ocean_size_xxl {
+    background-color: #74b9ff;
+    border-color: #0984e3;
+    color: #ffffff;
+}
+
+.ocean_size_xxxl {
+    background-color: #2d3436;
+    border-color: #636e72;
+    color: #ffffff;
+}
+
+.ocean_size_all {
+    background-color: #636e72;
+    border-color: #2d3436;
+    color: #ffffff;
+}
+
+/* Season Styles */
+.ocean_season_summer {
+    background-color: #ffeaa7;
+    border-color: #fdcb6e;
+    color: #2d3436;
+}
+
+.ocean_season_winter {
+    background-color: #74b9ff;
+    border-color: #0984e3;
+    color: #ffffff;
+}
+
+.ocean_season_monsoon {
+    background-color: #a29bfe;
+    border-color: #6c5ce7;
+    color: #ffffff;
+}
+
+.ocean_season_all_season {
+    background-color: #00b894;
+    border-color: #00a085;
+    color: #ffffff;
+}
+
+/* Brand Styles */
+.ocean_brand_popular {
+    background-color: #00b894;
+    border-color: #00a085;
+    color: #ffffff;
+}
+
+.ocean_brand_premium {
+    background-color: #e17055;
+    border-color: #d63031;
+    color: #ffffff;
+}
+
+.ocean_brand_budget {
+    background-color: #74b9ff;
+    border-color: #0984e3;
+    color: #ffffff;
+}
+
+/* Color Styles */
+.ocean_color_blue {
+    background-color: #74b9ff;
+    border-color: #0984e3;
+    color: #ffffff;
+}
+
+.ocean_color_red {
+    background-color: #e17055;
+    border-color: #d63031;
+    color: #ffffff;
+}
+
+.ocean_color_green {
+    background-color: #00b894;
+    border-color: #00a085;
+    color: #ffffff;
+}
+
+.ocean_color_yellow {
+    background-color: #ffeaa7;
+    border-color: #fdcb6e;
+    color: #2d3436;
+}
+
+.ocean_color_pink {
+    background-color: #fd79a8;
+    border-color: #e84393;
+    color: #ffffff;
+}
+
+.ocean_color_purple {
+    background-color: #a29bfe;
+    border-color: #6c5ce7;
+    color: #ffffff;
+}
+
+.ocean_color_black {
+    background-color: #2d3436;
+    border-color: #636e72;
+    color: #ffffff;
+}
+
+.ocean_color_white {
+    background-color: #ffffff;
+    border-color: #ddd;
+    color: #2d3436;
+}
+
+/* Dashboard Styles */
+.ocean_stock_dashboard {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.ocean_stock_dashboard h2 {
+    color: white;
+    margin-bottom: 15px;
+}
+
+.ocean_stock_dashboard .ocean_stat_info {
+    color: white;
+}
+
+.ocean_stock_dashboard .ocean_stat_info .ocean_stat_text {
+    color: white;
+}
+
+/* Card Styles */
+.ocean_stock_card {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease;
+}
+
+.ocean_stock_card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.ocean_stock_card h3 {
+    color: #2d3436;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #74b9ff;
+    padding-bottom: 10px;
+}
+
+/* Button Styles */
+.ocean_stock_btn_primary {
+    background-color: #74b9ff;
+    border-color: #0984e3;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.ocean_stock_btn_primary:hover {
+    background-color: #0984e3;
+}
+
+.ocean_stock_btn_success {
+    background-color: #00b894;
+    border-color: #00a085;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.ocean_stock_btn_success:hover {
+    background-color: #00a085;
+}
+
+.ocean_stock_btn_warning {
+    background-color: #ffeaa7;
+    border-color: #fdcb6e;
+    color: #2d3436;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.ocean_stock_btn_warning:hover {
+    background-color: #fdcb6e;
+}
+
+.ocean_stock_btn_danger {
+    background-color: #e17055;
+    border-color: #d63031;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.ocean_stock_btn_danger:hover {
+    background-color: #d63031;
+}
+
+/* Table Styles */
+.ocean_stock_table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.ocean_stock_table th,
+.ocean_stock_table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.ocean_stock_table th {
+    background-color: #74b9ff;
+    color: white;
+    font-weight: bold;
+}
+
+.ocean_stock_table tr:hover {
+    background-color: #f5f5f5;
+}
+
+/* Form Styles */
+.ocean_stock_form_group {
+    margin-bottom: 20px;
+}
+
+.ocean_stock_form_label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #2d3436;
+}
+
+.ocean_stock_form_input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.ocean_stock_form_input:focus {
+    outline: none;
+    border-color: #74b9ff;
+    box-shadow: 0 0 5px rgba(116, 185, 255, 0.3);
+}
+
+/* Alert Styles */
+.ocean_stock_alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border-left: 4px solid;
+}
+
+.ocean_stock_alert_info {
+    background-color: #d1ecf1;
+    border-color: #bee5eb;
+    color: #0c5460;
+}
+
+.ocean_stock_alert_success {
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    color: #155724;
+}
+
+.ocean_stock_alert_warning {
+    background-color: #fff3cd;
+    border-color: #ffeaa7;
+    color: #856404;
+}
+
+.ocean_stock_alert_danger {
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    color: #721c24;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .ocean_stock_dashboard {
+        padding: 15px;
+    }
+    
+    .ocean_stock_card {
+        padding: 15px;
+    }
+    
+    .ocean_stock_table {
+        font-size: 12px;
+    }
+    
+    .ocean_stock_table th,
+    .ocean_stock_table td {
+        padding: 8px;
+    }
+}
+
+/* Animation Styles */
+@keyframes ocean_fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.ocean_stock_fade_in {
+    animation: ocean_fadeIn 0.5s ease-in-out;
+}
+
+/* Loading Styles */
+.ocean_stock_loading {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #74b9ff;
+    border-radius: 50%;
+    animation: ocean_spin 1s linear infinite;
+}
+
+@keyframes ocean_spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Progress Bar Styles */
+.ocean_stock_progress {
+    width: 100%;
+    height: 20px;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.ocean_stock_progress_bar {
+    height: 100%;
+    background-color: #74b9ff;
+    transition: width 0.3s ease;
+}
+
+.ocean_stock_progress_bar_success {
+    background-color: #00b894;
+}
+
+.ocean_stock_progress_bar_warning {
+    background-color: #ffeaa7;
+}
+
+.ocean_stock_progress_bar_danger {
+    background-color: #e17055;
+}

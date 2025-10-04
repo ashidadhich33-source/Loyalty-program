@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Accounting Menu -->
+        <menuitem id="menu_accounting_root"
+                  name="Accounting"
+                  sequence="10"
+                  web_icon="accounting,static/description/icon.png"/>
+        
+        <!-- Chart of Accounts -->
+        <menuitem id="menu_accounting_chart_of_accounts"
+                  name="Chart of Accounts"
+                  parent="menu_accounting_root"
+                  sequence="10"/>
+        
+        <menuitem id="menu_account_account"
+                  name="Accounts"
+                  parent="menu_accounting_chart_of_accounts"
+                  action="action_account_account"
+                  sequence="10"/>
+        
+        <menuitem id="menu_account_account_type"
+                  name="Account Types"
+                  parent="menu_accounting_chart_of_accounts"
+                  action="action_account_account_type"
+                  sequence="20"/>
+        
+        <!-- Journals -->
+        <menuitem id="menu_accounting_journals"
+                  name="Journals"
+                  parent="menu_accounting_root"
+                  sequence="20"/>
+        
+        <menuitem id="menu_account_journal"
+                  name="Journals"
+                  parent="menu_accounting_journals"
+                  action="action_account_journal"
+                  sequence="10"/>
+        
+        <menuitem id="menu_account_journal_template"
+                  name="Journal Templates"
+                  parent="menu_accounting_journals"
+                  action="action_account_journal_template"
+                  sequence="20"/>
+        
+        <!-- Journal Entries -->
+        <menuitem id="menu_accounting_journal_entries"
+                  name="Journal Entries"
+                  parent="menu_accounting_root"
+                  sequence="30"/>
+        
+        <menuitem id="menu_account_move"
+                  name="Journal Entries"
+                  parent="menu_accounting_journal_entries"
+                  action="action_account_move"
+                  sequence="10"/>
+        
+        <menuitem id="menu_account_move_line"
+                  name="Journal Entry Lines"
+                  parent="menu_accounting_journal_entries"
+                  action="action_account_move_line"
+                  sequence="20"/>
+        
+        <!-- Accounting Periods -->
+        <menuitem id="menu_accounting_periods"
+                  name="Accounting Periods"
+                  parent="menu_accounting_root"
+                  sequence="40"/>
+        
+        <menuitem id="menu_account_period"
+                  name="Periods"
+                  parent="menu_accounting_periods"
+                  action="action_account_period"
+                  sequence="10"/>
+        
+        <menuitem id="menu_account_fiscal_year"
+                  name="Fiscal Years"
+                  parent="menu_accounting_periods"
+                  action="action_account_fiscal_year"
+                  sequence="20"/>
+        
+        <!-- Reconciliations -->
+        <menuitem id="menu_accounting_reconciliations"
+                  name="Reconciliations"
+                  parent="menu_accounting_root"
+                  sequence="50"/>
+        
+        <menuitem id="menu_account_reconciliation"
+                  name="Account Reconciliations"
+                  parent="menu_accounting_reconciliations"
+                  action="action_account_reconciliation"
+                  sequence="10"/>
+        
+        <menuitem id="menu_account_reconciliation_line"
+                  name="Reconciliation Lines"
+                  parent="menu_accounting_reconciliations"
+                  action="action_account_reconciliation_line"
+                  sequence="20"/>
+        
+        <!-- Reports -->
+        <menuitem id="menu_accounting_reports"
+                  name="Reports"
+                  parent="menu_accounting_root"
+                  sequence="60"/>
+        
+        <menuitem id="menu_account_report"
+                  name="Financial Reports"
+                  parent="menu_accounting_reports"
+                  action="action_account_report"
+                  sequence="10"/>
+        
+        <menuitem id="menu_account_report_line"
+                  name="Report Lines"
+                  parent="menu_accounting_reports"
+                  action="action_account_report_line"
+                  sequence="20"/>
+        
+    </data>
+</ocean>

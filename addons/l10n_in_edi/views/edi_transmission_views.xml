@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- EDI Transmission Tree View -->
+        <record id="view_edi_transmission_tree" model="ocean.ui.view">
+            <field name="name">edi.transmission.tree</field>
+            <field name="model">edi.transmission</field>
+            <field name="arch" type="xml">
+                <tree string="EDI Transmissions" create="true" edit="true" delete="true">
+                    <field name="name"/>
+                    <field name="transmission_type"/>
+                    <field name="protocol"/>
+                    <field name="state"/>
+                    <field name="host"/>
+                    <field name="port"/>
+                    <field name="transmission_date"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="age_group"/>
+                    <field name="size"/>
+                    <field name="season"/>
+                    <field name="brand"/>
+                    <field name="color"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- EDI Transmission Form View -->
+        <record id="view_edi_transmission_form" model="ocean.ui.view">
+            <field name="name">edi.transmission.form</field>
+            <field name="model">edi.transmission</field>
+            <field name="arch" type="xml">
+                <form string="EDI Transmission" create="true" edit="true" delete="true">
+                    <header>
+                        <button name="action_start" string="Start" type="object" class="btn-primary" attrs="{'invisible': [('state', '!=', 'ready')]}"/>
+                        <button name="action_complete" string="Complete" type="object" class="btn-success" attrs="{'invisible': [('state', '!=', 'sending')]}"/>
+                        <button name="action_process" string="Process" type="object" class="btn-info" attrs="{'invisible': [('state', 'not in', ['received', 'sent'])]}"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,ready,sending,sent,received,processing,processed,error,cancelled"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Transmission Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="transmission_type"/>
+                                <field name="protocol"/>
+                                <field name="company_id"/>
+                            </group>
+                            <group>
+                                <field name="partner_id"/>
+                                <field name="host"/>
+                                <field name="port"/>
+                            </group>
+                        </group>
+                        <group string="Authentication">
+                            <group>
+                                <field name="username"/>
+                                <field name="password"/>
+                            </group>
+                        </group>
+                        <group string="Kids Clothing Specific">
+                            <group>
+                                <field name="age_group"/>
+                                <field name="size"/>
+                                <field name="season"/>
+                            </group>
+                            <group>
+                                <field name="brand"/>
+                                <field name="color"/>
+                            </group>
+                        </group>
+                        <group string="Dates">
+                            <group>
+                                <field name="transmission_date"/>
+                                <field name="start_date"/>
+                            </group>
+                            <group>
+                                <field name="end_date"/>
+                            </group>
+                        </group>
+                        <group string="Notes">
+                            <field name="notes"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- EDI Transmission Search View -->
+        <record id="view_edi_transmission_search" model="ocean.ui.view">
+            <field name="name">edi.transmission.search</field>
+            <field name="model">edi.transmission</field>
+            <field name="arch" type="xml">
+                <search string="Search EDI Transmissions">
+                    <field name="name"/>
+                    <field name="transmission_type"/>
+                    <field name="protocol"/>
+                    <field name="state"/>
+                    <field name="host"/>
+                    <field name="username"/>
+                    <field name="age_group"/>
+                    <field name="size"/>
+                    <field name="season"/>
+                    <field name="brand"/>
+                    <field name="color"/>
+                    <separator/>
+                    <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
+                    <filter string="Ready" name="ready" domain="[('state', '=', 'ready')]"/>
+                    <filter string="Sending" name="sending" domain="[('state', '=', 'sending')]"/>
+                    <filter string="Sent" name="sent" domain="[('state', '=', 'sent')]"/>
+                    <filter string="Received" name="received" domain="[('state', '=', 'received')]"/>
+                    <filter string="Processing" name="processing" domain="[('state', '=', 'processing')]"/>
+                    <filter string="Processed" name="processed" domain="[('state', '=', 'processed')]"/>
+                    <filter string="Error" name="error" domain="[('state', '=', 'error')]"/>
+                    <filter string="Cancelled" name="cancelled" domain="[('state', '=', 'cancelled')]"/>
+                    <separator/>
+                    <filter string="Send" name="send" domain="[('transmission_type', '=', 'send')]"/>
+                    <filter string="Receive" name="receive" domain="[('transmission_type', '=', 'receive')]"/>
+                    <filter string="Bidirectional" name="bidirectional" domain="[('transmission_type', '=', 'bidirectional')]"/>
+                    <separator/>
+                    <filter string="FTP" name="ftp" domain="[('protocol', '=', 'ftp')]"/>
+                    <filter string="SFTP" name="sftp" domain="[('protocol', '=', 'sftp')]"/>
+                    <filter string="HTTP" name="http" domain="[('protocol', '=', 'http')]"/>
+                    <filter string="HTTPS" name="https" domain="[('protocol', '=', 'https')]"/>
+                    <filter string="AS2" name="as2" domain="[('protocol', '=', 'as2')]"/>
+                    <filter string="Email" name="email" domain="[('protocol', '=', 'email')]"/>
+                    <filter string="API" name="api" domain="[('protocol', '=', 'api')]"/>
+                    <separator/>
+                    <filter string="Baby (0-2)" name="age_0_2" domain="[('age_group', '=', '0-2')]"/>
+                    <filter string="Toddler (2-4)" name="age_2_4" domain="[('age_group', '=', '2-4')]"/>
+                    <filter string="Pre-school (4-6)" name="age_4_6" domain="[('age_group', '=', '4-6')]"/>
+                    <filter string="Summer" name="summer" domain="[('season', '=', 'summer')]"/>
+                    <filter string="Winter" name="winter" domain="[('season', '=', 'winter')]"/>
+                    <filter string="Monsoon" name="monsoon" domain="[('season', '=', 'monsoon')]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Transmission Type" name="group_transmission_type" context="{'group_by': 'transmission_type'}"/>
+                        <filter string="Protocol" name="group_protocol" context="{'group_by': 'protocol'}"/>
+                        <filter string="State" name="group_state" context="{'group_by': 'state'}"/>
+                        <filter string="Age Group" name="group_age_group" context="{'group_by': 'age_group'}"/>
+                        <filter string="Size" name="group_size" context="{'group_by': 'size'}"/>
+                        <filter string="Season" name="group_season" context="{'group_by': 'season'}"/>
+                        <filter string="Brand" name="group_brand" context="{'group_by': 'brand'}"/>
+                        <filter string="Color" name="group_color" context="{'group_by': 'color'}"/>
+                        <filter string="Company" name="group_company" context="{'group_by': 'company_id'}"/>
+                        <filter string="Partner" name="group_partner" context="{'group_by': 'partner_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- EDI Transmission Action -->
+        <record id="action_edi_transmission" model="ocean.actions.act_window">
+            <field name="name">EDI Transmissions</field>
+            <field name="res_model">edi.transmission</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_edi_transmission_search"/>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first EDI transmission!
+                </p>
+                <p>
+                    EDI transmissions handle the communication of EDI data.
+                </p>
+            </field>
+        </record>
+        
+        <!-- EDI Transmission Action -->
+        <record id="action_edi_transmission" model="ocean.actions.act_window">
+            <field name="name">EDI Transmissions</field>
+            <field name="res_model">edi.transmission</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first EDI transmission!
+                </p>
+                <p>
+                    EDI transmissions handle the sending and receiving of EDI data.
+                </p>
+            </field>
+        </record>
+        
+        <!-- EDI Acknowledgment Tree View -->
+        <record id="view_edi_acknowledgment_tree" model="ocean.ui.view">
+            <field name="name">edi.acknowledgment.tree</field>
+            <field name="model">edi.acknowledgment</field>
+            <field name="arch" type="xml">
+                <tree string="EDI Acknowledgments" create="true" edit="true" delete="true">
+                    <field name="name"/>
+                    <field name="transmission_id"/>
+                    <field name="acknowledgment_type"/>
+                    <field name="acknowledgment_code"/>
+                    <field name="state"/>
+                    <field name="acknowledgment_date"/>
+                    <field name="receive_date"/>
+                    <field name="process_date"/>
+                    <field name="age_group"/>
+                    <field name="size"/>
+                    <field name="season"/>
+                    <field name="brand"/>
+                    <field name="color"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- EDI Acknowledgment Form View -->
+        <record id="view_edi_acknowledgment_form" model="ocean.ui.view">
+            <field name="name">edi.acknowledgment.form</field>
+            <field name="model">edi.acknowledgment</field>
+            <field name="arch" type="xml">
+                <form string="EDI Acknowledgment" create="true" edit="true" delete="true">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Acknowledgment Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="transmission_id"/>
+                                <field name="acknowledgment_type"/>
+                                <field name="acknowledgment_code"/>
+                                <field name="state"/>
+                            </group>
+                            <group>
+                                <field name="company_id"/>
+                            </group>
+                        </group>
+                        <group string="Kids Clothing Specific">
+                            <group>
+                                <field name="age_group"/>
+                                <field name="size"/>
+                                <field name="season"/>
+                            </group>
+                            <group>
+                                <field name="brand"/>
+                                <field name="color"/>
+                            </group>
+                        </group>
+                        <group string="Dates">
+                            <group>
+                                <field name="acknowledgment_date"/>
+                                <field name="receive_date"/>
+                            </group>
+                            <group>
+                                <field name="process_date"/>
+                            </group>
+                        </group>
+                        <group string="Acknowledgment Message">
+                            <field name="acknowledgment_message"/>
+                        </group>
+                        <group string="Notes">
+                            <field name="notes"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- EDI Acknowledgment Action -->
+        <record id="action_edi_acknowledgment" model="ocean.actions.act_window">
+            <field name="name">EDI Acknowledgments</field>
+            <field name="res_model">edi.acknowledgment</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first EDI acknowledgment!
+                </p>
+                <p>
+                    EDI acknowledgments confirm receipt and processing of EDI transmissions.
+                </p>
+            </field>
+        </record>
+        
+    </data>
+</ocean>

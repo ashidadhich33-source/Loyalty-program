@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Stock Alert Tree View -->
+        <record id="view_stock_alert_tree" model="ocean.ui.view">
+            <field name="name">stock.alert.tree</field>
+            <field name="model">stock.alert</field>
+            <field name="arch" type="xml">
+                <tree string="Stock Alerts" create="true" edit="true" delete="true">
+                    <field name="name"/>
+                    <field name="product_id"/>
+                    <field name="alert_type"/>
+                    <field name="priority"/>
+                    <field name="current_stock"/>
+                    <field name="minimum_stock"/>
+                    <field name="maximum_stock"/>
+                    <field name="location_id"/>
+                    <field name="warehouse_id"/>
+                    <field name="age_group"/>
+                    <field name="size"/>
+                    <field name="season"/>
+                    <field name="brand"/>
+                    <field name="color"/>
+                    <field name="state"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Stock Alert Form View -->
+        <record id="view_stock_alert_form" model="ocean.ui.view">
+            <field name="name">stock.alert.form</field>
+            <field name="model">stock.alert</field>
+            <field name="arch" type="xml">
+                <form string="Stock Alert" create="true" edit="true" delete="true">
+                    <header>
+                        <button name="action_acknowledge" string="Acknowledge" type="object" class="btn-primary" attrs="{'invisible': [('state', '!=', 'new')]}"/>
+                        <button name="action_resolve" string="Resolve" type="object" class="btn-success" attrs="{'invisible': [('state', '!=', 'acknowledged')]}"/>
+                        <button name="action_close" string="Close" type="object" class="btn-secondary" attrs="{'invisible': [('state', '=', 'closed')]}"/>
+                        <field name="state" widget="statusbar" statusbar_visible="new,acknowledged,resolved,closed"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Alert Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="product_id"/>
+                                <field name="product_template_id"/>
+                                <field name="alert_type"/>
+                                <field name="priority"/>
+                                <field name="location_id"/>
+                                <field name="warehouse_id"/>
+                            </group>
+                            <group>
+                                <field name="current_stock"/>
+                                <field name="minimum_stock"/>
+                                <field name="maximum_stock"/>
+                                <field name="reorder_point"/>
+                                <field name="reorder_quantity"/>
+                                <field name="company_id"/>
+                            </group>
+                        </group>
+                        <group string="Kids Clothing Specific">
+                            <group>
+                                <field name="age_group"/>
+                                <field name="size"/>
+                                <field name="season"/>
+                            </group>
+                            <group>
+                                <field name="brand"/>
+                                <field name="color"/>
+                            </group>
+                        </group>
+                        <group string="Alert Details">
+                            <field name="message"/>
+                            <field name="notes"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Stock Alert Search View -->
+        <record id="view_stock_alert_search" model="ocean.ui.view">
+            <field name="name">stock.alert.search</field>
+            <field name="model">stock.alert</field>
+            <field name="arch" type="xml">
+                <search string="Search Stock Alerts">
+                    <field name="name"/>
+                    <field name="product_id"/>
+                    <field name="alert_type"/>
+                    <field name="priority"/>
+                    <field name="location_id"/>
+                    <field name="warehouse_id"/>
+                    <field name="age_group"/>
+                    <field name="size"/>
+                    <field name="season"/>
+                    <field name="brand"/>
+                    <field name="color"/>
+                    <separator/>
+                    <filter string="New" name="new" domain="[('state', '=', 'new')]"/>
+                    <filter string="Acknowledged" name="acknowledged" domain="[('state', '=', 'acknowledged')]"/>
+                    <filter string="Resolved" name="resolved" domain="[('state', '=', 'resolved')]"/>
+                    <filter string="Closed" name="closed" domain="[('state', '=', 'closed')]"/>
+                    <separator/>
+                    <filter string="Low Stock" name="low_stock" domain="[('alert_type', '=', 'low_stock')]"/>
+                    <filter string="Out of Stock" name="out_of_stock" domain="[('alert_type', '=', 'out_of_stock')]"/>
+                    <filter string="Overstock" name="overstock" domain="[('alert_type', '=', 'overstock')]"/>
+                    <filter string="Expiry Alert" name="expiry" domain="[('alert_type', '=', 'expiry')]"/>
+                    <filter string="Seasonal Alert" name="seasonal" domain="[('alert_type', '=', 'seasonal')]"/>
+                    <filter string="Size Alert" name="size" domain="[('alert_type', '=', 'size')]"/>
+                    <filter string="Brand Alert" name="brand" domain="[('alert_type', '=', 'brand')]"/>
+                    <filter string="Color Alert" name="color" domain="[('alert_type', '=', 'color')]"/>
+                    <separator/>
+                    <filter string="Urgent" name="urgent" domain="[('priority', '=', 'urgent')]"/>
+                    <filter string="High" name="high" domain="[('priority', '=', 'high')]"/>
+                    <filter string="Medium" name="medium" domain="[('priority', '=', 'medium')]"/>
+                    <filter string="Low" name="low" domain="[('priority', '=', 'low')]"/>
+                    <separator/>
+                    <filter string="Baby (0-2)" name="age_0_2" domain="[('age_group', '=', '0-2')]"/>
+                    <filter string="Toddler (2-4)" name="age_2_4" domain="[('age_group', '=', '2-4')]"/>
+                    <filter string="Pre-school (4-6)" name="age_4_6" domain="[('age_group', '=', '4-6')]"/>
+                    <filter string="Summer" name="summer" domain="[('season', '=', 'summer')]"/>
+                    <filter string="Winter" name="winter" domain="[('season', '=', 'winter')]"/>
+                    <filter string="Monsoon" name="monsoon" domain="[('season', '=', 'monsoon')]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Alert Type" name="group_alert_type" context="{'group_by': 'alert_type'}"/>
+                        <filter string="Priority" name="group_priority" context="{'group_by': 'priority'}"/>
+                        <filter string="State" name="group_state" context="{'group_by': 'state'}"/>
+                        <filter string="Product" name="group_product" context="{'group_by': 'product_id'}"/>
+                        <filter string="Location" name="group_location" context="{'group_by': 'location_id'}"/>
+                        <filter string="Warehouse" name="group_warehouse" context="{'group_by': 'warehouse_id'}"/>
+                        <filter string="Age Group" name="group_age_group" context="{'group_by': 'age_group'}"/>
+                        <filter string="Size" name="group_size" context="{'group_by': 'size'}"/>
+                        <filter string="Season" name="group_season" context="{'group_by': 'season'}"/>
+                        <filter string="Brand" name="group_brand" context="{'group_by': 'brand'}"/>
+                        <filter string="Color" name="group_color" context="{'group_by': 'color'}"/>
+                        <filter string="Company" name="group_company" context="{'group_by': 'company_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- Stock Alert Action -->
+        <record id="action_stock_alert" model="ocean.actions.act_window">
+            <field name="name">Stock Alerts</field>
+            <field name="res_model">stock.alert</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_stock_alert_search"/>
+            <field name="context">{'search_default_new': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first stock alert!
+                </p>
+                <p>
+                    Stock alerts help you monitor inventory levels and take timely action.
+                </p>
+            </field>
+        </record>
+        
+    </data>
+</ocean>

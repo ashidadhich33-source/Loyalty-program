@@ -1,0 +1,196 @@
+/* Ocean ERP - Indian Localization Styles */
+
+/* Company Styles */
+.company-header {
+    background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.company-info {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.company-info h4 {
+    color: #495057;
+    margin-bottom: 10px;
+}
+
+/* Partner Styles */
+.partner-card {
+    background: white;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.partner-card:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    transform: translateY(-2px);
+}
+
+/* Geographic Styles */
+.geographic-tree {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 15px;
+}
+
+.state-item {
+    background: #e3f2fd;
+    border-left: 4px solid #2196f3;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+}
+
+.district-item {
+    background: #f3e5f5;
+    border-left: 4px solid #9c27b0;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+}
+
+.taluka-item {
+    background: #e8f5e8;
+    border-left: 4px solid #4caf50;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+}
+
+.village-item {
+    background: #fff3e0;
+    border-left: 4px solid #ff9800;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+}
+
+/* Banking Styles */
+.bank-card {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 15px;
+}
+
+.bank-branch {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 10px;
+}
+
+/* Kids Clothing Specific Styles */
+.age-group-badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+    margin: 2px;
+}
+
+.age-group-0-2 { background: #ffebee; color: #c62828; }
+.age-group-2-4 { background: #f3e5f5; color: #7b1fa2; }
+.age-group-4-6 { background: #e8f5e8; color: #388e3c; }
+.age-group-6-8 { background: #e3f2fd; color: #1976d2; }
+.age-group-8-10 { background: #fff3e0; color: #f57c00; }
+.age-group-10-12 { background: #fce4ec; color: #c2185b; }
+.age-group-12-14 { background: #e0f2f1; color: #00695c; }
+.age-group-14-16 { background: #f1f8e9; color: #558b2f; }
+
+.size-badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+    margin: 2px;
+}
+
+.size-xs { background: #ffebee; color: #c62828; }
+.size-s { background: #f3e5f5; color: #7b1fa2; }
+.size-m { background: #e8f5e8; color: #388e3c; }
+.size-l { background: #e3f2fd; color: #1976d2; }
+.size-xl { background: #fff3e0; color: #f57c00; }
+.size-xxl { background: #fce4ec; color: #c2185b; }
+.size-xxxl { background: #e0f2f1; color: #00695c; }
+
+.season-badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+    margin: 2px;
+}
+
+.season-summer { background: #fff3e0; color: #f57c00; }
+.season-winter { background: #e3f2fd; color: #1976d2; }
+.season-monsoon { background: #e8f5e8; color: #388e3c; }
+.season-all_season { background: #f3e5f5; color: #7b1fa2; }
+
+/* Form Styles */
+.form-section {
+    background: white;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.form-section h3 {
+    color: #495057;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e9ecef;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .company-header {
+        padding: 15px;
+    }
+    
+    .partner-card {
+        padding: 15px;
+    }
+    
+    .bank-card {
+        padding: 15px;
+    }
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Hover Effects */
+.hover-effect {
+    transition: all 0.3s ease;
+}
+
+.hover-effect:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}

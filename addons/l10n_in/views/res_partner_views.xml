@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Res Partner Tree View -->
+        <record id="view_res_partner_tree" model="ocean.ui.view">
+            <field name="name">res.partner.tree</field>
+            <field name="model">res.partner</field>
+            <field name="arch" type="xml">
+                <tree string="Partners" create="true" edit="true" delete="true">
+                    <field name="name"/>
+                    <field name="partner_type"/>
+                    <field name="pan"/>
+                    <field name="gstin"/>
+                    <field name="aadhar"/>
+                    <field name="business_nature"/>
+                    <field name="industry_type"/>
+                    <field name="age_group"/>
+                    <field name="size"/>
+                    <field name="season"/>
+                    <field name="brand"/>
+                    <field name="color"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Res Partner Form View -->
+        <record id="view_res_partner_form" model="ocean.ui.view">
+            <field name="name">res.partner.form</field>
+            <field name="model">res.partner</field>
+            <field name="arch" type="xml">
+                <form string="Partner" create="true" edit="true" delete="true">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Partner Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="partner_type"/>
+                                <field name="business_nature"/>
+                                <field name="industry_type"/>
+                                <field name="company_id"/>
+                            </group>
+                            <group>
+                                <field name="active"/>
+                            </group>
+                        </group>
+                        <group string="Indian Specific Information">
+                            <group>
+                                <field name="pan"/>
+                                <field name="gstin"/>
+                                <field name="aadhar"/>
+                            </group>
+                        </group>
+                        <group string="Address Information">
+                            <group>
+                                <field name="street"/>
+                                <field name="street2"/>
+                                <field name="city"/>
+                                <field name="state_id"/>
+                            </group>
+                            <group>
+                                <field name="district_id"/>
+                                <field name="taluka_id"/>
+                                <field name="village_id"/>
+                                <field name="zip"/>
+                                <field name="country_id"/>
+                            </group>
+                        </group>
+                        <group string="Contact Information">
+                            <group>
+                                <field name="phone"/>
+                                <field name="mobile"/>
+                                <field name="email"/>
+                            </group>
+                        </group>
+                        <group string="Kids Clothing Specific">
+                            <group>
+                                <field name="age_group"/>
+                                <field name="size"/>
+                                <field name="season"/>
+                            </group>
+                            <group>
+                                <field name="brand"/>
+                                <field name="color"/>
+                            </group>
+                        </group>
+                        <group string="Notes">
+                            <field name="notes"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Res Partner Search View -->
+        <record id="view_res_partner_search" model="ocean.ui.view">
+            <field name="name">res.partner.search</field>
+            <field name="model">res.partner</field>
+            <field name="arch" type="xml">
+                <search string="Search Partners">
+                    <field name="name"/>
+                    <field name="partner_type"/>
+                    <field name="pan"/>
+                    <field name="gstin"/>
+                    <field name="aadhar"/>
+                    <field name="business_nature"/>
+                    <field name="industry_type"/>
+                    <field name="age_group"/>
+                    <field name="size"/>
+                    <field name="season"/>
+                    <field name="brand"/>
+                    <field name="color"/>
+                    <separator/>
+                    <filter string="Active" name="active" domain="[('active', '=', True)]"/>
+                    <filter string="Inactive" name="inactive" domain="[('active', '=', False)]"/>
+                    <filter string="Customer" name="customer" domain="[('partner_type', '=', 'customer')]"/>
+                    <filter string="Supplier" name="supplier" domain="[('partner_type', '=', 'supplier')]"/>
+                    <filter string="Both" name="both" domain="[('partner_type', '=', 'both')]"/>
+                    <separator/>
+                    <filter string="Baby (0-2)" name="age_0_2" domain="[('age_group', '=', '0-2')]"/>
+                    <filter string="Toddler (2-4)" name="age_2_4" domain="[('age_group', '=', '2-4')]"/>
+                    <filter string="Pre-school (4-6)" name="age_4_6" domain="[('age_group', '=', '4-6')]"/>
+                    <filter string="Summer" name="summer" domain="[('season', '=', 'summer')]"/>
+                    <filter string="Winter" name="winter" domain="[('season', '=', 'winter')]"/>
+                    <filter string="Monsoon" name="monsoon" domain="[('season', '=', 'monsoon')]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Partner Type" name="group_partner_type" context="{'group_by': 'partner_type'}"/>
+                        <filter string="Business Nature" name="group_business_nature" context="{'group_by': 'business_nature'}"/>
+                        <filter string="Industry Type" name="group_industry_type" context="{'group_by': 'industry_type'}"/>
+                        <filter string="Age Group" name="group_age_group" context="{'group_by': 'age_group'}"/>
+                        <filter string="Size" name="group_size" context="{'group_by': 'size'}"/>
+                        <filter string="Season" name="group_season" context="{'group_by': 'season'}"/>
+                        <filter string="Brand" name="group_brand" context="{'group_by': 'brand'}"/>
+                        <filter string="Color" name="group_color" context="{'group_by': 'color'}"/>
+                        <filter string="Company" name="group_company" context="{'group_by': 'company_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- Res Partner Action -->
+        <record id="action_res_partner" model="ocean.actions.act_window">
+            <field name="name">Partners</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_res_partner_search"/>
+            <field name="context">{'search_default_active': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first partner!
+                </p>
+                <p>
+                    Partners are customers and suppliers of your company.
+                </p>
+            </field>
+        </record>
+        
+    </data>
+</ocean>

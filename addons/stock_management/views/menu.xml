@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Stock Management Menu -->
+        <menuitem id="menu_stock_management_root"
+                  name="Stock Management"
+                  sequence="20"
+                  web_icon="stock_management,static/description/icon.png"/>
+        
+        <!-- Stock Alerts -->
+        <menuitem id="menu_stock_management_alerts"
+                  name="Stock Alerts"
+                  parent="menu_stock_management_root"
+                  sequence="10"/>
+        
+        <menuitem id="menu_stock_alert"
+                  name="Stock Alerts"
+                  parent="menu_stock_management_alerts"
+                  action="action_stock_alert"
+                  sequence="10"/>
+        
+        <!-- Reorder Rules -->
+        <menuitem id="menu_stock_management_reorder_rules"
+                  name="Reorder Rules"
+                  parent="menu_stock_management_root"
+                  sequence="20"/>
+        
+        <menuitem id="menu_stock_reorder_rule"
+                  name="Reorder Rules"
+                  parent="menu_stock_management_reorder_rules"
+                  action="action_stock_reorder_rule"
+                  sequence="10"/>
+        
+        <!-- Stock Adjustments -->
+        <menuitem id="menu_stock_management_adjustments"
+                  name="Stock Adjustments"
+                  parent="menu_stock_management_root"
+                  sequence="30"/>
+        
+        <menuitem id="menu_stock_adjustment"
+                  name="Stock Adjustments"
+                  parent="menu_stock_management_adjustments"
+                  action="action_stock_adjustment"
+                  sequence="10"/>
+        
+        <menuitem id="menu_stock_adjustment_line"
+                  name="Adjustment Lines"
+                  parent="menu_stock_management_adjustments"
+                  action="action_stock_adjustment_line"
+                  sequence="20"/>
+        
+        <!-- Stock Analysis -->
+        <menuitem id="menu_stock_management_analysis"
+                  name="Stock Analysis"
+                  parent="menu_stock_management_root"
+                  sequence="40"/>
+        
+        <menuitem id="menu_stock_analysis"
+                  name="Stock Analysis"
+                  parent="menu_stock_management_analysis"
+                  action="action_stock_analysis"
+                  sequence="10"/>
+        
+        <menuitem id="menu_stock_analysis_line"
+                  name="Analysis Lines"
+                  parent="menu_stock_management_analysis"
+                  action="action_stock_analysis_line"
+                  sequence="20"/>
+        
+    </data>
+</ocean>

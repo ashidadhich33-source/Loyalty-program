@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Stock Reorder Rule Tree View -->
+        <record id="view_stock_reorder_rule_tree" model="ocean.ui.view">
+            <field name="name">stock.reorder.rule.tree</field>
+            <field name="model">stock.reorder.rule</field>
+            <field name="arch" type="xml">
+                <tree string="Reorder Rules" create="true" edit="true" delete="true">
+                    <field name="name"/>
+                    <field name="product_id"/>
+                    <field name="minimum_stock"/>
+                    <field name="maximum_stock"/>
+                    <field name="reorder_point"/>
+                    <field name="reorder_quantity"/>
+                    <field name="lead_time"/>
+                    <field name="priority"/>
+                    <field name="state"/>
+                    <field name="auto_reorder"/>
+                    <field name="age_group"/>
+                    <field name="size"/>
+                    <field name="season"/>
+                    <field name="brand"/>
+                    <field name="color"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Stock Reorder Rule Form View -->
+        <record id="view_stock_reorder_rule_form" model="ocean.ui.view">
+            <field name="name">stock.reorder.rule.form</field>
+            <field name="model">stock.reorder.rule</field>
+            <field name="arch" type="xml">
+                <form string="Reorder Rule" create="true" edit="true" delete="true">
+                    <header>
+                        <button name="action_activate" string="Activate" type="object" class="btn-success" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                        <button name="action_suspend" string="Suspend" type="object" class="btn-warning" attrs="{'invisible': [('state', '!=', 'active')]}"/>
+                        <button name="action_cancel" string="Cancel" type="object" class="btn-danger" attrs="{'invisible': [('state', '=', 'active')]}"/>
+                        <button name="action_reactivate" string="Reactivate" type="object" class="btn-info" attrs="{'invisible': [('state', '!=', 'suspended')]}"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,active,suspended,cancelled"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Rule Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="product_id"/>
+                                <field name="product_template_id"/>
+                                <field name="priority"/>
+                                <field name="state"/>
+                                <field name="location_id"/>
+                                <field name="warehouse_id"/>
+                            </group>
+                            <group>
+                                <field name="minimum_stock"/>
+                                <field name="maximum_stock"/>
+                                <field name="reorder_quantity"/>
+                                <field name="reorder_point"/>
+                                <field name="lead_time"/>
+                                <field name="safety_stock"/>
+                            </group>
+                        </group>
+                        <group string="EOQ Configuration">
+                            <group>
+                                <field name="use_eoq"/>
+                                <field name="annual_demand"/>
+                                <field name="ordering_cost"/>
+                            </group>
+                            <group>
+                                <field name="holding_cost"/>
+                                <field name="eoq_quantity"/>
+                            </group>
+                        </group>
+                        <group string="Kids Clothing Specific">
+                            <group>
+                                <field name="age_group"/>
+                                <field name="size"/>
+                                <field name="season"/>
+                            </group>
+                            <group>
+                                <field name="brand"/>
+                                <field name="color"/>
+                            </group>
+                        </group>
+                        <group string="Auto Reorder">
+                            <group>
+                                <field name="auto_reorder"/>
+                                <field name="supplier_id"/>
+                                <field name="company_id"/>
+                            </group>
+                            <group>
+                                <field name="last_reorder_date"/>
+                                <field name="next_reorder_date"/>
+                            </group>
+                        </group>
+                        <group string="Actions">
+                            <button name="calculate_eoq" string="Calculate EOQ" type="object" class="btn-primary"/>
+                            <button name="action_view_alerts" string="View Alerts" type="object" class="btn-info"/>
+                            <button name="action_view_purchase_orders" string="View Purchase Orders" type="object" class="btn-secondary"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Stock Reorder Rule Search View -->
+        <record id="view_stock_reorder_rule_search" model="ocean.ui.view">
+            <field name="name">stock.reorder.rule.search</field>
+            <field name="model">stock.reorder.rule</field>
+            <field name="arch" type="xml">
+                <search string="Search Reorder Rules">
+                    <field name="name"/>
+                    <field name="product_id"/>
+                    <field name="priority"/>
+                    <field name="state"/>
+                    <field name="supplier_id"/>
+                    <field name="age_group"/>
+                    <field name="size"/>
+                    <field name="season"/>
+                    <field name="brand"/>
+                    <field name="color"/>
+                    <separator/>
+                    <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
+                    <filter string="Active" name="active" domain="[('state', '=', 'active')]"/>
+                    <filter string="Suspended" name="suspended" domain="[('state', '=', 'suspended')]"/>
+                    <filter string="Cancelled" name="cancelled" domain="[('state', '=', 'cancelled')]"/>
+                    <separator/>
+                    <filter string="Urgent" name="urgent" domain="[('priority', '=', 'urgent')]"/>
+                    <filter string="High" name="high" domain="[('priority', '=', 'high')]"/>
+                    <filter string="Medium" name="medium" domain="[('priority', '=', 'medium')]"/>
+                    <filter string="Low" name="low" domain="[('priority', '=', 'low')]"/>
+                    <separator/>
+                    <filter string="Auto Reorder" name="auto_reorder" domain="[('auto_reorder', '=', True)]"/>
+                    <filter string="Use EOQ" name="use_eoq" domain="[('use_eoq', '=', True)]"/>
+                    <separator/>
+                    <filter string="Baby (0-2)" name="age_0_2" domain="[('age_group', '=', '0-2')]"/>
+                    <filter string="Toddler (2-4)" name="age_2_4" domain="[('age_group', '=', '2-4')]"/>
+                    <filter string="Pre-school (4-6)" name="age_4_6" domain="[('age_group', '=', '4-6')]"/>
+                    <filter string="Summer" name="summer" domain="[('season', '=', 'summer')]"/>
+                    <filter string="Winter" name="winter" domain="[('season', '=', 'winter')]"/>
+                    <filter string="Monsoon" name="monsoon" domain="[('season', '=', 'monsoon')]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="State" name="group_state" context="{'group_by': 'state'}"/>
+                        <filter string="Priority" name="group_priority" context="{'group_by': 'priority'}"/>
+                        <filter string="Product" name="group_product" context="{'group_by': 'product_id'}"/>
+                        <filter string="Supplier" name="group_supplier" context="{'group_by': 'supplier_id'}"/>
+                        <filter string="Age Group" name="group_age_group" context="{'group_by': 'age_group'}"/>
+                        <filter string="Size" name="group_size" context="{'group_by': 'size'}"/>
+                        <filter string="Season" name="group_season" context="{'group_by': 'season'}"/>
+                        <filter string="Brand" name="group_brand" context="{'group_by': 'brand'}"/>
+                        <filter string="Color" name="group_color" context="{'group_by': 'color'}"/>
+                        <filter string="Company" name="group_company" context="{'group_by': 'company_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- Stock Reorder Rule Action -->
+        <record id="action_stock_reorder_rule" model="ocean.actions.act_window">
+            <field name="name">Reorder Rules</field>
+            <field name="res_model">stock.reorder.rule</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_stock_reorder_rule_search"/>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first reorder rule!
+                </p>
+                <p>
+                    Reorder rules help you maintain optimal inventory levels.
+                </p>
+            </field>
+        </record>
+        
+    </data>
+</ocean>

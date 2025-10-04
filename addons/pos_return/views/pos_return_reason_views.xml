@@ -1,6 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ocean>
     <data>
-        <!-- POS Return Reason views will be generated -->
+        <!-- POS Return Reason Tree View -->
+        <record id="view_pos_return_reason_tree" model="ocean.ui.view">
+            <field name="name">pos.return.reason.tree</field>
+            <field name="model">pos.return.reason</field>
+            <field name="arch" type="xml">
+                <tree string="POS Return Reasons" decoration-muted="not is_active" decoration-info="reason_type=='size_issue'" decoration-success="reason_type=='quality_issue'">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="reason_type"/>
+                    <field name="is_active"/>
+                    <field name="sequence"/>
+                    <field name="description"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- POS Return Reason Form View -->
+        <record id="view_pos_return_reason_form" model="ocean.ui.view">
+            <field name="name">pos.return.reason.form</field>
+            <field name="model">pos.return.reason</field>
+            <field name="arch" type="xml">
+                <form string="POS Return Reason">
+                    <header>
+                        <button name="action_activate" string="Activate" type="object" class="btn-success" states="inactive"/>
+                        <button name="action_deactivate" string="Deactivate" type="object" class="btn-secondary" states="active"/>
+                        <field name="is_active" widget="statusbar" statusbar_visible="inactive,active"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Reason Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="code"/>
+                                <field name="reason_type"/>
+                                <field name="sequence"/>
+                                <field name="is_active"/>
+                            </group>
+                            <group>
+                                <field name="description"/>
+                                <field name="notes"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Kids Clothing Specific" name="kids_clothing">
+                                <group>
+                                    <group>
+                                        <field name="age_group"/>
+                                        <field name="season"/>
+                                        <field name="size_range"/>
+                                        <field name="gender"/>
+                                    </group>
+                                    <group>
+                                        <field name="special_occasion"/>
+                                        <field name="gift_wrapping"/>
+                                        <field name="gift_message"/>
+                                        <field name="care_instructions"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- POS Return Reason Search View -->
+        <record id="view_pos_return_reason_search" model="ocean.ui.view">
+            <field name="name">pos.return.reason.search</field>
+            <field name="model">pos.return.reason</field>
+            <field name="arch" type="xml">
+                <search string="Search POS Return Reasons">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="reason_type"/>
+                    <separator/>
+                    <filter string="Active" name="active" domain="[('is_active', '=', True)]"/>
+                    <filter string="Inactive" name="inactive" domain="[('is_active', '=', False)]"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter string="Reason Type" name="reason_type" context="{'group_by': 'reason_type'}"/>
+                        <filter string="Active Status" name="active_status" context="{'group_by': 'is_active'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- POS Return Reason Action -->
+        <record id="action_pos_return_reason" model="ocean.actions.act_window">
+            <field name="name">POS Return Reasons</field>
+            <field name="res_model">pos.return.reason</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_pos_return_reason_search"/>
+            <field name="context">{'search_default_active': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new POS return reason
+                </p>
+                <p>
+                    POS return reasons categorize why customers want to return products.
+                </p>
+            </field>
+        </record>
     </data>
 </ocean>

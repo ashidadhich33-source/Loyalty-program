@@ -1,6 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ocean>
     <data>
-        <!-- POS Payment Method views will be generated -->
+        <!-- POS Payment Method Tree View -->
+        <record id="view_pos_payment_method_tree" model="ocean.ui.view">
+            <field name="name">pos.payment.method.tree</field>
+            <field name="model">pos.payment.method</field>
+            <field name="arch" type="xml">
+                <tree string="POS Payment Methods" decoration-muted="not is_active" decoration-info="payment_type=='cash'" decoration-success="payment_type=='card'">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="payment_type"/>
+                    <field name="is_active"/>
+                    <field name="sequence"/>
+                    <field name="fee_percentage"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- POS Payment Method Form View -->
+        <record id="view_pos_payment_method_form" model="ocean.ui.view">
+            <field name="name">pos.payment.method.form</field>
+            <field name="model">pos.payment.method</field>
+            <field name="arch" type="xml">
+                <form string="POS Payment Method">
+                    <header>
+                        <button name="action_activate" string="Activate" type="object" class="btn-success" states="inactive"/>
+                        <button name="action_deactivate" string="Deactivate" type="object" class="btn-secondary" states="active"/>
+                        <field name="is_active" widget="statusbar" statusbar_visible="inactive,active"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Payment Method Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="code"/>
+                                <field name="payment_type"/>
+                                <field name="sequence"/>
+                                <field name="is_active"/>
+                            </group>
+                            <group>
+                                <field name="fee_percentage"/>
+                                <field name="fee_fixed"/>
+                                <field name="currency_id"/>
+                                <field name="description"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Configuration" name="configuration">
+                                <group>
+                                    <group>
+                                        <field name="requires_reference"/>
+                                        <field name="requires_signature"/>
+                                        <field name="requires_receipt"/>
+                                        <field name="auto_confirm"/>
+                                    </group>
+                                    <group>
+                                        <field name="max_amount"/>
+                                        <field name="min_amount"/>
+                                        <field name="daily_limit"/>
+                                        <field name="monthly_limit"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Kids Clothing Specific" name="kids_clothing">
+                                <group>
+                                    <group>
+                                        <field name="age_group"/>
+                                        <field name="season"/>
+                                        <field name="size_range"/>
+                                        <field name="gender"/>
+                                    </group>
+                                    <group>
+                                        <field name="special_occasion"/>
+                                        <field name="gift_wrapping"/>
+                                        <field name="gift_message"/>
+                                        <field name="care_instructions"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- POS Payment Method Search View -->
+        <record id="view_pos_payment_method_search" model="ocean.ui.view">
+            <field name="name">pos.payment.method.search</field>
+            <field name="model">pos.payment.method</field>
+            <field name="arch" type="xml">
+                <search string="Search POS Payment Methods">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="payment_type"/>
+                    <separator/>
+                    <filter string="Active" name="active" domain="[('is_active', '=', True)]"/>
+                    <filter string="Inactive" name="inactive" domain="[('is_active', '=', False)]"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter string="Payment Type" name="payment_type" context="{'group_by': 'payment_type'}"/>
+                        <filter string="Active Status" name="active_status" context="{'group_by': 'is_active'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- POS Payment Method Action -->
+        <record id="action_pos_payment_method" model="ocean.actions.act_window">
+            <field name="name">POS Payment Methods</field>
+            <field name="res_model">pos.payment.method</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_pos_payment_method_search"/>
+            <field name="context">{'search_default_active': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new POS payment method
+                </p>
+                <p>
+                    POS payment methods define how customers can pay for their orders.
+                </p>
+            </field>
+        </record>
     </data>
 </ocean>

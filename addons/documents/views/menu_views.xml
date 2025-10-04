@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <!-- Documents Menu -->
+    <record id="menu_documents_root" model="ocean.ui.menu">
+        <field name="name">Documents</field>
+        <field name="sequence">80</field>
+        <field name="web_icon">documents,static/description/icon.png</field>
+    </record>
+
+    <!-- Document Management Menu -->
+    <record id="menu_document_management" model="ocean.ui.menu">
+        <field name="name">Document Management</field>
+        <field name="parent_id" ref="menu_documents_root"/>
+        <field name="sequence">10</field>
+    </record>
+
+    <!-- My Documents Menu -->
+    <record id="menu_my_documents" model="ocean.ui.menu">
+        <field name="name">My Documents</field>
+        <field name="parent_id" ref="menu_document_management"/>
+        <field name="action" ref="action_document"/>
+        <field name="sequence">10</field>
+    </record>
+
+    <!-- Shared Documents Menu -->
+    <record id="menu_shared_documents" model="ocean.ui.menu">
+        <field name="name">Shared Documents</field>
+        <field name="parent_id" ref="menu_document_management"/>
+        <field name="sequence">20</field>
+    </record>
+
+    <!-- Public Documents Menu -->
+    <record id="menu_public_documents" model="ocean.ui.menu">
+        <field name="name">Public Documents</field>
+        <field name="parent_id" ref="menu_document_management"/>
+        <field name="sequence">30</field>
+    </record>
+
+    <!-- Document Organization Menu -->
+    <record id="menu_document_organization" model="ocean.ui.menu">
+        <field name="name">Organization</field>
+        <field name="parent_id" ref="menu_documents_root"/>
+        <field name="sequence">20</field>
+    </record>
+
+    <!-- Document Folders Menu -->
+    <record id="menu_document_folders" model="ocean.ui.menu">
+        <field name="name">Folders</field>
+        <field name="parent_id" ref="menu_document_organization"/>
+        <field name="sequence">10</field>
+    </record>
+
+    <!-- Document Categories Menu -->
+    <record id="menu_document_categories" model="ocean.ui.menu">
+        <field name="name">Categories</field>
+        <field name="parent_id" ref="menu_document_organization"/>
+        <field name="sequence">20</field>
+    </record>
+
+    <!-- Document Tags Menu -->
+    <record id="menu_document_tags" model="ocean.ui.menu">
+        <field name="name">Tags</field>
+        <field name="parent_id" ref="menu_document_organization"/>
+        <field name="sequence">30</field>
+    </record>
+
+    <!-- Document Templates Menu -->
+    <record id="menu_document_templates" model="ocean.ui.menu">
+        <field name="name">Templates</field>
+        <field name="parent_id" ref="menu_documents_root"/>
+        <field name="sequence">30</field>
+    </record>
+</ocean>

@@ -22,6 +22,9 @@ from core_framework.database import DatabaseManager
 from core_framework.addon_manager import AddonManager
 from core_framework.web_interface import WebInterface
 from core_framework.orm import ORMManager
+from core_framework.auth import AuthenticationManager
+from core_framework.session import SessionManager
+from core_framework.templates import TemplateEngine, TemplateRenderer
 
 class ERPServer:
     """Main ERP Server Class"""
@@ -33,6 +36,12 @@ class ERPServer:
         self.orm_manager = ORMManager(self.config)
         self.addon_manager = AddonManager(self.config)
         self.web_interface = WebInterface(self.config)
+        
+        # Initialize new components
+        self.auth_manager = AuthenticationManager(self.config)
+        self.session_manager = SessionManager(self.config)
+        self.template_engine = TemplateEngine(self.config)
+        self.template_renderer = TemplateRenderer(self.template_engine)
         
         # Initialize logging
         self._setup_logging()
@@ -69,6 +78,18 @@ class ERPServer:
             # Initialize web interface
             self.logger.info("Setting up web interface...")
             self.web_interface.initialize()
+            
+            # Initialize authentication
+            self.logger.info("Setting up authentication...")
+            # Authentication is ready to use
+            
+            # Initialize session management
+            self.logger.info("Setting up session management...")
+            # Session management is ready to use
+            
+            # Initialize template engine
+            self.logger.info("Setting up template engine...")
+            # Template engine is ready to use
             
             self.logger.info("ERP System initialized successfully!")
             return True

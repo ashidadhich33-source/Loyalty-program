@@ -79,6 +79,23 @@ class PosOrder(BaseModel):
         help='Customer for this order'
     )
     
+    customer_id = Many2OneField(
+        'contact.customer',
+        string='Customer',
+        required=True,
+        help='Customer for this order'
+    )
+    
+    customer_type = SelectionField(
+        string='Customer Type',
+        selection=[
+            ('registered', 'Registered'),
+            ('guest', 'Guest'),
+        ],
+        default='guest',
+        help='Type of customer'
+    )
+    
     # Order State
     state = SelectionField(
         string='State',
@@ -199,6 +216,79 @@ class PosOrder(BaseModel):
         digits=(5, 2),
         default=100.0,
         help='Points required per rupee discount (e.g., 100 points = 1 rupee)'
+    )
+    
+    # Payment Information
+    payment_method = SelectionField(
+        string='Payment Method',
+        selection=[
+            ('cash', 'Cash'),
+            ('card', 'Card'),
+            ('upi', 'UPI'),
+            ('mixed', 'Mixed'),
+        ],
+        default='cash',
+        help='Payment method used'
+    )
+    
+    payment_details = TextField(
+        string='Payment Details',
+        help='Payment transaction details'
+    )
+    
+    amount_received = FloatField(
+        string='Amount Received',
+        digits=(16, 2),
+        help='Amount received from customer'
+    )
+    
+    change_amount = FloatField(
+        string='Change Amount',
+        digits=(16, 2),
+        help='Change given to customer'
+    )
+    
+    # GST Summary Fields
+    total_base_amount = FloatField(
+        string='Total Base Amount',
+        digits=(16, 2),
+        compute='_compute_gst_totals',
+        help='Total base amount for GST calculation'
+    )
+    
+    total_cgst_amount = FloatField(
+        string='Total CGST Amount',
+        digits=(16, 2),
+        compute='_compute_gst_totals',
+        help='Total Central GST amount'
+    )
+    
+    total_sgst_amount = FloatField(
+        string='Total SGST Amount',
+        digits=(16, 2),
+        compute='_compute_gst_totals',
+        help='Total State GST amount'
+    )
+    
+    total_igst_amount = FloatField(
+        string='Total IGST Amount',
+        digits=(16, 2),
+        compute='_compute_gst_totals',
+        help='Total Integrated GST amount'
+    )
+    
+    total_gst_amount = FloatField(
+        string='Total GST Amount',
+        digits=(16, 2),
+        compute='_compute_gst_totals',
+        help='Total GST amount'
+    )
+    
+    grand_total = FloatField(
+        string='Grand Total',
+        digits=(16, 2),
+        compute='_compute_gst_totals',
+        help='Grand total amount'
     )
     
     # Receipt Information
@@ -326,6 +416,65 @@ class PosOrder(BaseModel):
         self.state = 'cancel'
         return True
     
+    def _compute_gst_totals(self):
+        """Compute GST totals for the order"""
+        for order in self:
+            order.total_base_amount = sum(line.base_amount for line in order.lines)
+            order.total_cgst_amount = sum(line.cgst_amount for line in order.lines)
+            order.total_sgst_amount = sum(line.sgst_amount for line in order.lines)
+            order.total_igst_amount = sum(line.igst_amount for line in order.lines)
+            order.total_gst_amount = sum(line.total_gst_amount for line in order.lines)
+            order.grand_total = sum(line.final_price for line in order.lines)
+    
+    def validate_payment(self):
+        """Validate payment amount matches grand total"""
+        for order in self:
+            if order.amount_received != order.grand_total:
+                raise ValueError(f"Payment amount ({order.amount_received}) must equal grand total ({order.grand_total})")
+            return True
+    
+    def action_reprint_receipt(self):
+        """Reprint receipt for this order"""
+        for order in self:
+            # Generate receipt data
+            receipt_data = self._generate_receipt_data()
+            
+            # Log reprint action
+            self.env['pos.order.audit.log'].create_audit_log(
+                order_id=order.id,
+                user_id=self.env.user.id,
+                action='Receipt Reprint',
+                old_value=None,
+                new_value=receipt_data
+            )
+            
+            return receipt_data
+    
+    def _generate_receipt_data(self):
+        """Generate receipt data for printing"""
+        return {
+            'order_number': self.name,
+            'date': self.date_order.strftime('%d-%m-%Y'),
+            'time': self.date_order.strftime('%H:%M:%S'),
+            'customer': self.customer_id.name,
+            'customer_phone': self.customer_id.phone or '',
+            'lines': [{
+                'name': line.product_id.name,
+                'qty': line.qty,
+                'price': line.final_price,
+                'total': line.final_price * line.qty
+            } for line in self.lines],
+            'subtotal': self.total_base_amount,
+            'cgst': self.total_cgst_amount,
+            'sgst': self.total_sgst_amount,
+            'igst': self.total_igst_amount,
+            'total_gst': self.total_gst_amount,
+            'grand_total': self.grand_total,
+            'payment_method': self.payment_method,
+            'amount_received': self.amount_received,
+            'change': self.change_amount
+        }
+    
     def _validate_order(self):
         """Validate order before confirmation"""
         errors = []
@@ -334,14 +483,9 @@ class PosOrder(BaseModel):
         if not self.lines:
             errors.append("Order must have at least one line")
         
-        # Check if order has payments
-        if not self.payment_ids:
-            errors.append("Order must have at least one payment")
-        
         # Validate payment amount
-        total_payment = sum(payment.amount for payment in self.payment_ids)
-        if abs(total_payment - self.amount_total) > 0.01:  # Allow small rounding differences
-            errors.append("Payment amount does not match order total")
+        if self.amount_received != self.grand_total:
+            errors.append(f"Payment amount ({self.amount_received}) must equal grand total ({self.grand_total})")
         
         if errors:
             raise ValueError('\n'.join(errors))

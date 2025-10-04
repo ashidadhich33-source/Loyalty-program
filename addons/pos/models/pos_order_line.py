@@ -107,6 +107,96 @@ class PosOrderLine(BaseModel):
         help='Taxes applied to this line'
     )
     
+    # Pricing Fields
+    mrp = FloatField(
+        string='MRP',
+        digits=(16, 2),
+        help='Maximum Retail Price'
+    )
+    
+    gst_rate = FloatField(
+        string='GST Rate (%)',
+        digits=(5, 2),
+        help='GST rate percentage'
+    )
+    
+    gst_treatment = SelectionField(
+        string='GST Treatment',
+        selection=[
+            ('included', 'GST Included'),
+            ('excluded', 'GST Excluded'),
+        ],
+        default='included',
+        help='GST treatment for this line'
+    )
+    
+    # Discount Fields
+    discount_type = SelectionField(
+        string='Discount Type',
+        selection=[
+            ('percentage', 'Percentage'),
+            ('fixed', 'Fixed Amount'),
+        ],
+        default='percentage',
+        help='Type of discount applied'
+    )
+    
+    discount_rate = FloatField(
+        string='Discount Rate',
+        digits=(5, 2),
+        help='Discount rate (percentage or amount)'
+    )
+    
+    discount_amount = FloatField(
+        string='Discount Amount',
+        digits=(16, 2),
+        default=0.0,
+        help='Total discount amount for this line'
+    )
+    
+    # GST Breakdown Fields
+    base_amount = FloatField(
+        string='Base Amount',
+        digits=(16, 2),
+        compute='_compute_gst_breakdown',
+        help='Base amount for GST calculation'
+    )
+    
+    cgst_amount = FloatField(
+        string='CGST Amount',
+        digits=(16, 2),
+        compute='_compute_gst_breakdown',
+        help='Central GST amount'
+    )
+    
+    sgst_amount = FloatField(
+        string='SGST Amount',
+        digits=(16, 2),
+        compute='_compute_gst_breakdown',
+        help='State GST amount'
+    )
+    
+    igst_amount = FloatField(
+        string='IGST Amount',
+        digits=(16, 2),
+        compute='_compute_gst_breakdown',
+        help='Integrated GST amount'
+    )
+    
+    total_gst_amount = FloatField(
+        string='Total GST Amount',
+        digits=(16, 2),
+        compute='_compute_gst_breakdown',
+        help='Total GST amount'
+    )
+    
+    final_price = FloatField(
+        string='Final Price',
+        digits=(16, 2),
+        compute='_compute_gst_breakdown',
+        help='Final price including GST'
+    )
+    
     # Calculated Amounts
     price_subtotal = FloatField(
         string='Subtotal',
@@ -189,6 +279,54 @@ class PosOrderLine(BaseModel):
             self._update_amounts()
         
         return result
+    
+    def _compute_gst_breakdown(self):
+        """Compute GST breakdown for POS line"""
+        for line in self:
+            if not line.product_id:
+                line.base_amount = 0.0
+                line.cgst_amount = 0.0
+                line.sgst_amount = 0.0
+                line.igst_amount = 0.0
+                line.total_gst_amount = 0.0
+                line.final_price = 0.0
+                continue
+            
+            # Get product variant data
+            variant = line.product_id
+            line.mrp = variant.mrp or 0.0
+            line.gst_rate = variant.gst_rate or 0.0
+            
+            # Calculate base amount after discount
+            if line.discount_type == 'percentage' and line.discount_rate:
+                discount_amt = line.mrp * (line.discount_rate / 100)
+            elif line.discount_type == 'fixed' and line.discount_rate:
+                discount_amt = line.discount_rate
+            else:
+                discount_amt = 0.0
+            
+            line.discount_amount = discount_amt
+            discounted_price = line.mrp - discount_amt
+            
+            # Calculate GST breakdown based on treatment
+            if line.gst_treatment == 'included':
+                line.final_price = discounted_price
+                line.base_amount = discounted_price / (1 + line.gst_rate / 100)
+            else:
+                line.base_amount = discounted_price
+                line.final_price = discounted_price + (discounted_price * line.gst_rate / 100)
+            
+            # POS is always intra-state (company state = POS location state)
+            # So CGST + SGST (no IGST)
+            line.cgst_amount = line.base_amount * (line.gst_rate / 2 / 100)
+            line.sgst_amount = line.base_amount * (line.gst_rate / 2 / 100)
+            line.igst_amount = 0.0
+            line.total_gst_amount = line.cgst_amount + line.sgst_amount + line.igst_amount
+            
+            # Update legacy fields for compatibility
+            line.price_subtotal = line.base_amount
+            line.price_tax = line.total_gst_amount
+            line.price_total = line.final_price
     
     def _update_amounts(self):
         """Update line amounts"""

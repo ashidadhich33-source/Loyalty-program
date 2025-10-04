@@ -53,10 +53,15 @@ class ProductVariant(BaseModel, KidsClothingMixin, PriceMixin):
     style = CharField(string='Style', size=64)
     
     # Pricing
-    list_price = FloatField(string='Sales Price', digits=(16, 2))
-    standard_price = FloatField(string='Cost Price', digits=(16, 2))
+    mrp = FloatField(string='MRP', digits=(16, 2))
+    cost_price = FloatField(string='Cost Price', digits=(16, 2))
+    gst_rate = FloatField(string='GST Rate (%)', digits=(5, 2))
+    sales_price = FloatField(string='Sales Price', digits=(16, 2), compute='_compute_sales_price')
     margin = FloatField(string='Margin', digits=(16, 2), readonly=True)
     margin_percent = FloatField(string='Margin %', digits=(16, 2), readonly=True)
+    
+    # Additional Fields
+    ean_code = CharField(string='EAN Code', size=64)
     
     # Inventory
     qty_available = FloatField(string='Quantity On Hand', digits=(16, 2), readonly=True)
@@ -94,12 +99,17 @@ class ProductVariant(BaseModel, KidsClothingMixin, PriceMixin):
     create_date = DateTimeField(string='Created on', readonly=True)
     write_date = DateTimeField(string='Last Updated on', readonly=True)
     
+    def _compute_sales_price(self):
+        """Compute sales price (same as MRP)"""
+        for record in self:
+            record.sales_price = record.mrp or 0.0
+    
     def _compute_margin(self):
         """Compute margin and margin percentage"""
         for record in self:
-            if record.list_price and record.standard_price:
-                record.margin = record.list_price - record.standard_price
-                record.margin_percent = (record.margin / record.list_price) * 100
+            if record.mrp and record.cost_price:
+                record.margin = record.mrp - record.cost_price
+                record.margin_percent = (record.margin / record.mrp) * 100
             else:
                 record.margin = 0.0
                 record.margin_percent = 0.0

@@ -129,6 +129,72 @@ class SaleOrderLine(BaseModel):
         help='Total with taxes'
     )
     
+    # GST Fields
+    mrp = FloatField(
+        string='MRP',
+        digits=(16, 2),
+        help='Maximum Retail Price'
+    )
+    
+    gst_rate = FloatField(
+        string='GST Rate (%)',
+        digits=(5, 2),
+        help='GST rate percentage'
+    )
+    
+    gst_treatment = SelectionField(
+        string='GST Treatment',
+        selection=[
+            ('included', 'GST Included'),
+            ('excluded', 'GST Excluded'),
+        ],
+        default='included',
+        help='GST treatment for this line'
+    )
+    
+    # GST Breakdown Fields
+    base_amount = FloatField(
+        string='Base Amount',
+        digits=(16, 2),
+        compute='_compute_gst_breakdown',
+        help='Base amount for GST calculation'
+    )
+    
+    cgst_amount = FloatField(
+        string='CGST Amount',
+        digits=(16, 2),
+        compute='_compute_gst_breakdown',
+        help='Central GST amount'
+    )
+    
+    sgst_amount = FloatField(
+        string='SGST Amount',
+        digits=(16, 2),
+        compute='_compute_gst_breakdown',
+        help='State GST amount'
+    )
+    
+    igst_amount = FloatField(
+        string='IGST Amount',
+        digits=(16, 2),
+        compute='_compute_gst_breakdown',
+        help='Integrated GST amount'
+    )
+    
+    total_gst_amount = FloatField(
+        string='Total GST Amount',
+        digits=(16, 2),
+        compute='_compute_gst_breakdown',
+        help='Total GST amount'
+    )
+    
+    final_price = FloatField(
+        string='Final Price',
+        digits=(16, 2),
+        compute='_compute_gst_breakdown',
+        help='Final price including GST'
+    )
+    
     # Discount Information
     discount = FloatField(
         string='Discount %',
@@ -265,6 +331,61 @@ class SaleOrderLine(BaseModel):
             self._compute_amount()
         
         return result
+    
+    def _compute_gst_breakdown(self):
+        """Compute GST breakdown for sales line"""
+        for line in self:
+            if not line.product_id:
+                line.base_amount = 0.0
+                line.cgst_amount = 0.0
+                line.sgst_amount = 0.0
+                line.igst_amount = 0.0
+                line.total_gst_amount = 0.0
+                line.final_price = 0.0
+                continue
+            
+            # Get product variant data
+            variant = line.product_id
+            line.mrp = variant.mrp or 0.0
+            line.gst_rate = variant.gst_rate or 0.0
+            
+            # Calculate base amount after discount
+            subtotal = line.product_uom_qty * line.price_unit
+            if line.discount > 0:
+                discount_amount = subtotal * (line.discount / 100)
+            else:
+                discount_amount = line.discount_amount
+            
+            discounted_price = subtotal - discount_amount
+            
+            # Calculate GST breakdown based on treatment
+            if line.gst_treatment == 'included':
+                line.final_price = discounted_price
+                line.base_amount = discounted_price / (1 + line.gst_rate / 100)
+            else:
+                line.base_amount = discounted_price
+                line.final_price = discounted_price + (discounted_price * line.gst_rate / 100)
+            
+            # Determine intra-state or inter-state based on company and customer location
+            company_state = line.order_id.company_id.state
+            customer_state = line.order_id.partner_id.state if line.order_id.partner_id else company_state
+            
+            if company_state == customer_state:
+                # Intra-state: CGST + SGST
+                line.cgst_amount = line.base_amount * (line.gst_rate / 2 / 100)
+                line.sgst_amount = line.base_amount * (line.gst_rate / 2 / 100)
+                line.igst_amount = 0.0
+            else:
+                # Inter-state: IGST
+                line.cgst_amount = 0.0
+                line.sgst_amount = 0.0
+                line.igst_amount = line.base_amount * (line.gst_rate / 100)
+            
+            line.total_gst_amount = line.cgst_amount + line.sgst_amount + line.igst_amount
+            
+            # Update legacy fields for compatibility
+            line.price_subtotal = line.base_amount
+            line.price_total = line.final_price
     
     def _compute_amount(self):
         """Compute line amounts"""

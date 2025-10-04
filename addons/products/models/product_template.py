@@ -54,7 +54,12 @@ class ProductTemplate(BaseModel, KidsClothingMixin, PriceMixin):
     # Product Details
     brand_id = Many2OneField('product.brand', string='Brand')
     category_id = Many2OneField('product.category', string='Category', required=True)
+    sub_category_id = Many2OneField('product.category', string='Sub Category')
     tag_ids = Many2ManyField('product.tag', string='Tags')
+    
+    # GST Fields
+    hsn_code = CharField(string='HSN Code', size=8)
+    gst_tax_group_id = Many2OneField('account.tax.group', string='GST Tax Group')
     
     # Variants
     variant_ids = One2ManyField('product.variant', 'product_tmpl_id', string='Variants')

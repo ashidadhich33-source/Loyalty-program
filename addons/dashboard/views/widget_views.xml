@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <!-- Dashboard Widget Views -->
+    <record id="view_dashboard_widget_tree" model="ocean.ui.view">
+        <field name="name">dashboard.widget.tree</field>
+        <field name="model">dashboard.widget</field>
+        <field name="arch" type="xml">
+            <tree string="Dashboard Widgets">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="widget_type"/>
+                <field name="chart_type" attrs="{'invisible': [('widget_type', 'not in', ['chart', 'pie', 'bar', 'line', 'area'])]}"/>
+                <field name="data_source"/>
+                <field name="width"/>
+                <field name="height"/>
+                <field name="user_id"/>
+                <field name="is_public"/>
+                <field name="is_template"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_dashboard_widget_form" model="ocean.ui.view">
+        <field name="name">dashboard.widget.form</field>
+        <field name="model">dashboard.widget</field>
+        <field name="arch" type="xml">
+            <form string="Dashboard Widget">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_refresh_widget" type="object" class="oe_stat_button" icon="fa-refresh">
+                            <span>Refresh</span>
+                        </button>
+                        <button name="action_duplicate_widget" type="object" class="oe_stat_button" icon="fa-copy">
+                            <span>Duplicate</span>
+                        </button>
+                        <button name="action_create_template" type="object" class="oe_stat_button" icon="fa-star">
+                            <span>Create Template</span>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Widget Name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="title"/>
+                            <field name="widget_type"/>
+                            <field name="chart_type" attrs="{'invisible': [('widget_type', 'not in', ['chart', 'pie', 'bar', 'line', 'area'])]}"/>
+                            <field name="data_source"/>
+                        </group>
+                        <group>
+                            <field name="width"/>
+                            <field name="height"/>
+                            <field name="sequence"/>
+                            <field name="user_id"/>
+                            <field name="is_public"/>
+                            <field name="is_template"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="description"/>
+                    </group>
+                    <notebook>
+                        <page string="Data Configuration">
+                            <group>
+                                <field name="model_name" attrs="{'invisible': [('data_source', '!=', 'model')]}"/>
+                                <field name="domain" attrs="{'invisible': [('data_source', '!=', 'model')]}"/>
+                            </group>
+                            <group>
+                                <field name="sql_query" attrs="{'invisible': [('data_source', '!=', 'sql')]}" widget="ace" options="{'mode': 'sql'}"/>
+                            </group>
+                            <group>
+                                <field name="python_code" attrs="{'invisible': [('data_source', '!=', 'python')]}" widget="ace" options="{'mode': 'python'}"/>
+                            </group>
+                            <group>
+                                <field name="static_data" attrs="{'invisible': [('data_source', '!=', 'static')]}" widget="ace" options="{'mode': 'json'}"/>
+                            </group>
+                            <group>
+                                <field name="api_endpoint" attrs="{'invisible': [('data_source', '!=', 'api')]}"/>
+                            </group>
+                            <group>
+                                <field name="file_path" attrs="{'invisible': [('data_source', '!=', 'file')]}"/>
+                            </group>
+                        </page>
+                        <page string="Display Configuration">
+                            <group>
+                                <field name="background_color"/>
+                                <field name="text_color"/>
+                                <field name="border_color"/>
+                                <field name="border_width"/>
+                                <field name="border_radius"/>
+                            </group>
+                            <group>
+                                <field name="font_size"/>
+                                <field name="font_family"/>
+                            </group>
+                        </page>
+                        <page string="Chart Configuration" attrs="{'invisible': [('widget_type', 'not in', ['chart', 'pie', 'bar', 'line', 'area', 'scatter', 'radar', 'polar'])]}">
+                            <group>
+                                <field name="show_legend"/>
+                                <field name="show_grid"/>
+                                <field name="show_labels"/>
+                                <field name="show_tooltips"/>
+                            </group>
+                            <group>
+                                <field name="chart_animation"/>
+                                <field name="chart_interactive"/>
+                            </group>
+                            <group>
+                                <field name="chart_colors" widget="ace" options="{'mode': 'json'}"/>
+                            </group>
+                        </page>
+                        <page string="Refresh Configuration">
+                            <group>
+                                <field name="auto_refresh"/>
+                                <field name="refresh_interval"/>
+                                <field name="cache_duration"/>
+                            </group>
+                            <group>
+                                <field name="last_refresh"/>
+                            </group>
+                        </page>
+                        <page string="Access Control">
+                            <group>
+                                <field name="group_ids" widget="many2many_tags"/>
+                            </group>
+                        </page>
+                        <page string="Library">
+                            <group>
+                                <field name="library_id"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Widget Library Views -->
+    <record id="view_widget_library_tree" model="ocean.ui.view">
+        <field name="name">widget.library.tree</field>
+        <field name="model">widget.library</field>
+        <field name="arch" type="xml">
+            <tree string="Widget Libraries">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="category"/>
+                <field name="widget_count"/>
+                <field name="usage_count"/>
+                <field name="is_public"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_widget_library_form" model="ocean.ui.view">
+        <field name="name">widget.library.form</field>
+        <field name="model">widget.library</field>
+        <field name="arch" type="xml">
+            <form string="Widget Library">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_widgets" type="object" class="oe_stat_button" icon="fa-cubes">
+                            <field name="widget_ids" widget="statinfo" string="Widgets"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Library Name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="code"/>
+                            <field name="category"/>
+                            <field name="sequence"/>
+                        </group>
+                        <group>
+                            <field name="active"/>
+                            <field name="is_public"/>
+                            <field name="widget_count"/>
+                            <field name="usage_count"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="description"/>
+                    </group>
+                    <notebook>
+                        <page string="Widgets">
+                            <field name="widget_ids" widget="one2many">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="widget_type"/>
+                                    <field name="data_source"/>
+                                    <field name="is_template"/>
+                                    <field name="active"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Appearance">
+                            <group>
+                                <field name="icon"/>
+                                <field name="color"/>
+                            </group>
+                            <group>
+                                <field name="preview_image" widget="image"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Widget Library Kanban View -->
+    <record id="view_widget_library_kanban" model="ocean.ui.view">
+        <field name="name">widget.library.kanban</field>
+        <field name="model">widget.library</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="name"/>
+                <field name="description"/>
+                <field name="code"/>
+                <field name="category"/>
+                <field name="widget_count"/>
+                <field name="usage_count"/>
+                <field name="is_public"/>
+                <field name="active"/>
+                <field name="icon"/>
+                <field name="color"/>
+                <field name="preview_image"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_card oe_kanban_global_click">
+                            <div class="oe_kanban_content">
+                                <div class="o_kanban_record_top">
+                                    <div class="o_kanban_record_headings">
+                                        <strong class="o_kanban_record_title">
+                                            <i t-if="record.icon.raw_value" t-att-class="record.icon.raw_value" style="margin-right: 5px;"/>
+                                            <field name="name"/>
+                                        </strong>
+                                    </div>
+                                    <div class="o_kanban_record_subtitle">
+                                        <field name="description"/>
+                                    </div>
+                                </div>
+                                <div class="o_kanban_record_body">
+                                    <div class="oe_kanban_bottom_left">
+                                        <span class="badge badge-info">
+                                            <field name="category"/>
+                                        </span>
+                                    </div>
+                                    <div class="oe_kanban_bottom_right">
+                                        <span t-if="record.is_public.raw_value" class="badge badge-success">Public</span>
+                                        <span class="badge badge-primary" t-if="record.widget_count.raw_value">
+                                            <field name="widget_count"/> widgets
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Actions -->
+    <record id="action_dashboard_widget" model="ocean.actions.act_window">
+        <field name="name">Dashboard Widgets</field>
+        <field name="res_model">dashboard.widget</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first dashboard widget!
+            </p>
+            <p>
+                Create widgets to display data in your dashboards.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_widget_library" model="ocean.actions.act_window">
+        <field name="name">Widget Libraries</field>
+        <field name="res_model">widget.library</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first widget library!
+            </p>
+            <p>
+                Organize widgets into libraries for better management.
+            </p>
+        </field>
+    </record>
+</ocean>

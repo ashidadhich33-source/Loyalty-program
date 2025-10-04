@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <!-- Integrations Menu -->
+    <record id="menu_integrations_root" model="ocean.ui.menu">
+        <field name="name">Integrations</field>
+        <field name="sequence">90</field>
+        <field name="web_icon">integrations,static/description/icon.png</field>
+    </record>
+
+    <!-- Integration Management Menu -->
+    <record id="menu_integration_management" model="ocean.ui.menu">
+        <field name="name">Integration Management</field>
+        <field name="parent_id" ref="menu_integrations_root"/>
+        <field name="sequence">10</field>
+    </record>
+
+    <!-- All Integrations Menu -->
+    <record id="menu_all_integrations" model="ocean.ui.menu">
+        <field name="name">All Integrations</field>
+        <field name="parent_id" ref="menu_integration_management"/>
+        <field name="action" ref="action_integration"/>
+        <field name="sequence">10</field>
+    </record>
+
+    <!-- Active Integrations Menu -->
+    <record id="menu_active_integrations" model="ocean.ui.menu">
+        <field name="name">Active Integrations</field>
+        <field name="parent_id" ref="menu_integration_management"/>
+        <field name="sequence">20</field>
+    </record>
+
+    <!-- Integration Categories Menu -->
+    <record id="menu_integration_categories" model="ocean.ui.menu">
+        <field name="name">Integration Categories</field>
+        <field name="parent_id" ref="menu_integrations_root"/>
+        <field name="sequence">20</field>
+    </record>
+
+    <!-- Payment Gateways Menu -->
+    <record id="menu_payment_gateways" model="ocean.ui.menu">
+        <field name="name">Payment Gateways</field>
+        <field name="parent_id" ref="menu_integration_categories"/>
+        <field name="sequence">10</field>
+    </record>
+
+    <!-- Shipping Services Menu -->
+    <record id="menu_shipping_services" model="ocean.ui.menu">
+        <field name="name">Shipping Services</field>
+        <field name="parent_id" ref="menu_integration_categories"/>
+        <field name="sequence">20</field>
+    </record>
+
+    <!-- Accounting Software Menu -->
+    <record id="menu_accounting_software" model="ocean.ui.menu">
+        <field name="name">Accounting Software</field>
+        <field name="parent_id" ref="menu_integration_categories"/>
+        <field name="sequence">30</field>
+    </record>
+
+    <!-- CRM Systems Menu -->
+    <record id="menu_crm_systems" model="ocean.ui.menu">
+        <field name="name">CRM Systems</field>
+        <field name="parent_id" ref="menu_integration_categories"/>
+        <field name="sequence">40</field>
+    </record>
+
+    <!-- E-commerce Platforms Menu -->
+    <record id="menu_ecommerce_platforms" model="ocean.ui.menu">
+        <field name="name">E-commerce Platforms</field>
+        <field name="parent_id" ref="menu_integration_categories"/>
+        <field name="sequence">50</field>
+    </record>
+
+    <!-- API Management Menu -->
+    <record id="menu_api_management" model="ocean.ui.menu">
+        <field name="name">API Management</field>
+        <field name="parent_id" ref="menu_integrations_root"/>
+        <field name="sequence">30</field>
+    </record>
+
+    <!-- API Endpoints Menu -->
+    <record id="menu_api_endpoints" model="ocean.ui.menu">
+        <field name="name">API Endpoints</field>
+        <field name="parent_id" ref="menu_api_management"/>
+        <field name="sequence">10</field>
+    </record>
+
+    <!-- Webhooks Menu -->
+    <record id="menu_webhooks" model="ocean.ui.menu">
+        <field name="name">Webhooks</field>
+        <field name="parent_id" ref="menu_api_management"/>
+        <field name="sequence">20</field>
+    </record>
+
+    <!-- Integration Monitoring Menu -->
+    <record id="menu_integration_monitoring" model="ocean.ui.menu">
+        <field name="name">Monitoring</field>
+        <field name="parent_id" ref="menu_integrations_root"/>
+        <field name="sequence">40</field>
+    </record>
+
+    <!-- Integration Logs Menu -->
+    <record id="menu_integration_logs" model="ocean.ui.menu">
+        <field name="name">Integration Logs</field>
+        <field name="parent_id" ref="menu_integration_monitoring"/>
+        <field name="sequence">10</field>
+    </record>
+
+    <!-- Performance Analytics Menu -->
+    <record id="menu_performance_analytics" model="ocean.ui.menu">
+        <field name="name">Performance Analytics</field>
+        <field name="parent_id" ref="menu_integration_monitoring"/>
+        <field name="sequence">20</field>
+    </record>
+</ocean>

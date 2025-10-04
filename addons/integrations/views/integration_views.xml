@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <!-- Integration Views -->
+    <record id="view_integration_tree" model="ocean.ui.view">
+        <field name="name">integration.integration.tree</field>
+        <field name="model">integration.integration</field>
+        <field name="arch" type="xml">
+            <tree string="Integrations">
+                <field name="name"/>
+                <field name="integration_type"/>
+                <field name="provider"/>
+                <field name="status"/>
+                <field name="active"/>
+                <field name="last_sync"/>
+                <field name="success_rate"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_integration_form" model="ocean.ui.view">
+        <field name="name">integration.integration.form</field>
+        <field name="model">integration.integration</field>
+        <field name="arch" type="xml">
+            <form string="Integration">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_test_connection" type="object" class="oe_stat_button" icon="fa-plug">
+                            <span>Test Connection</span>
+                        </button>
+                        <button name="action_sync_data" type="object" class="oe_stat_button" icon="fa-refresh">
+                            <span>Sync Data</span>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Integration Name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="code"/>
+                            <field name="integration_type"/>
+                            <field name="provider"/>
+                            <field name="provider_url"/>
+                            <field name="status"/>
+                        </group>
+                        <group>
+                            <field name="active"/>
+                            <field name="auto_sync"/>
+                            <field name="sync_interval"/>
+                            <field name="sequence"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="description"/>
+                    </group>
+                    <notebook>
+                        <page string="Configuration">
+                            <field name="config_ids" widget="one2many">
+                                <tree editable="bottom">
+                                    <field name="key"/>
+                                    <field name="value"/>
+                                    <field name="description"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Endpoints">
+                            <field name="endpoint_ids" widget="one2many">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="endpoint_type"/>
+                                    <field name="url"/>
+                                    <field name="method"/>
+                                    <field name="active"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Webhooks">
+                            <field name="webhook_ids" widget="one2many">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="webhook_url"/>
+                                    <field name="event_type"/>
+                                    <field name="active"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Monitoring">
+                            <group>
+                                <group>
+                                    <field name="last_sync"/>
+                                    <field name="sync_count"/>
+                                    <field name="error_count"/>
+                                </group>
+                                <group>
+                                    <field name="success_rate"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Access Control">
+                            <group>
+                                <field name="group_ids" widget="many2many_tags"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Integration Kanban View -->
+    <record id="view_integration_kanban" model="ocean.ui.view">
+        <field name="name">integration.integration.kanban</field>
+        <field name="model">integration.integration</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="name"/>
+                <field name="integration_type"/>
+                <field name="provider"/>
+                <field name="status"/>
+                <field name="active"/>
+                <field name="last_sync"/>
+                <field name="success_rate"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_card oe_kanban_global_click">
+                            <div class="oe_kanban_content">
+                                <div class="o_kanban_record_top">
+                                    <div class="o_kanban_record_headings">
+                                        <strong class="o_kanban_record_title">
+                                            <field name="name"/>
+                                        </strong>
+                                    </div>
+                                    <div class="o_kanban_record_subtitle">
+                                        <field name="provider"/>
+                                    </div>
+                                </div>
+                                <div class="o_kanban_record_body">
+                                    <div class="oe_kanban_bottom_left">
+                                        <span class="badge badge-info">
+                                            <field name="integration_type"/>
+                                        </span>
+                                    </div>
+                                    <div class="oe_kanban_bottom_right">
+                                        <span t-if="record.active.raw_value" class="badge badge-success">Active</span>
+                                        <span t-if="record.status.raw_value == 'error'" class="badge badge-danger">Error</span>
+                                        <span class="badge badge-primary" t-if="record.success_rate.raw_value">
+                                            <field name="success_rate"/>% success
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Actions -->
+    <record id="action_integration" model="ocean.actions.act_window">
+        <field name="name">Integrations</field>
+        <field name="res_model">integration.integration</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first integration!
+            </p>
+            <p>
+                Connect with third-party services and APIs to extend your ERP functionality.
+            </p>
+        </field>
+    </record>
+</ocean>

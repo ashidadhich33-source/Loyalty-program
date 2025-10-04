@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <!-- Notification Views -->
+    <record id="view_notification_tree" model="ocean.ui.view">
+        <field name="name">notification.notification.tree</field>
+        <field name="model">notification.notification</field>
+        <field name="arch" type="xml">
+            <tree string="Notifications">
+                <field name="name"/>
+                <field name="notification_type"/>
+                <field name="priority"/>
+                <field name="status"/>
+                <field name="user_ids" widget="many2many_tags"/>
+                <field name="channel_ids" widget="many2many_tags"/>
+                <field name="create_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_notification_form" model="ocean.ui.view">
+        <field name="name">notification.notification.form</field>
+        <field name="model">notification.notification</field>
+        <field name="arch" type="xml">
+            <form string="Notification">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_send_notification" type="object" class="oe_stat_button" icon="fa-send">
+                            <span>Send</span>
+                        </button>
+                        <button name="action_schedule_notification" type="object" class="oe_stat_button" icon="fa-clock-o">
+                            <span>Schedule</span>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Notification Subject"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="notification_type"/>
+                            <field name="priority"/>
+                            <field name="status"/>
+                            <field name="template_id"/>
+                        </group>
+                        <group>
+                            <field name="scheduled_date"/>
+                            <field name="delivery_attempts"/>
+                            <field name="max_attempts"/>
+                            <field name="last_attempt"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="message"/>
+                    </group>
+                    <notebook>
+                        <page string="Recipients">
+                            <group>
+                                <field name="user_ids" widget="many2many_tags"/>
+                                <field name="group_ids" widget="many2many_tags"/>
+                            </group>
+                        </page>
+                        <page string="Channels">
+                            <field name="channel_ids" widget="many2many_tags"/>
+                        </page>
+                        <page string="Context">
+                            <field name="context_data" widget="ace" options="{'mode': 'json'}"/>
+                        </page>
+                        <page string="Delivery Log">
+                            <field name="delivery_log" readonly="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- In-App Notification Views -->
+    <record id="view_notification_in_app_tree" model="ocean.ui.view">
+        <field name="name">notification.in_app.tree</field>
+        <field name="model">notification.in_app</field>
+        <field name="arch" type="xml">
+            <tree string="In-App Notifications">
+                <field name="user_id"/>
+                <field name="subject"/>
+                <field name="notification_type"/>
+                <field name="priority"/>
+                <field name="is_read"/>
+                <field name="create_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Actions -->
+    <record id="action_notification" model="ocean.actions.act_window">
+        <field name="name">Notifications</field>
+        <field name="res_model">notification.notification</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first notification!
+            </p>
+            <p>
+                Send notifications through multiple channels including email, SMS, and in-app messages.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_notification_in_app" model="ocean.actions.act_window">
+        <field name="name">In-App Notifications</field>
+        <field name="res_model">notification.in_app</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</ocean>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <!-- Notifications Menu -->
+    <record id="menu_notifications_root" model="ocean.ui.menu">
+        <field name="name">Notifications</field>
+        <field name="sequence">70</field>
+        <field name="web_icon">notifications,static/description/icon.png</field>
+    </record>
+
+    <!-- Notification Management Menu -->
+    <record id="menu_notification_management" model="ocean.ui.menu">
+        <field name="name">Notification Management</field>
+        <field name="parent_id" ref="menu_notifications_root"/>
+        <field name="sequence">10</field>
+    </record>
+
+    <!-- Send Notifications Menu -->
+    <record id="menu_send_notifications" model="ocean.ui.menu">
+        <field name="name">Send Notifications</field>
+        <field name="parent_id" ref="menu_notification_management"/>
+        <field name="action" ref="action_notification"/>
+        <field name="sequence">10</field>
+    </record>
+
+    <!-- In-App Notifications Menu -->
+    <record id="menu_in_app_notifications" model="ocean.ui.menu">
+        <field name="name">In-App Notifications</field>
+        <field name="parent_id" ref="menu_notification_management"/>
+        <field name="action" ref="action_notification_in_app"/>
+        <field name="sequence">20</field>
+    </record>
+
+    <!-- Notification Templates Menu -->
+    <record id="menu_notification_templates" model="ocean.ui.menu">
+        <field name="name">Templates</field>
+        <field name="parent_id" ref="menu_notifications_root"/>
+        <field name="sequence">20</field>
+    </record>
+
+    <!-- Notification Rules Menu -->
+    <record id="menu_notification_rules" model="ocean.ui.menu">
+        <field name="name">Rules</field>
+        <field name="parent_id" ref="menu_notifications_root"/>
+        <field name="sequence">30</field>
+    </record>
+
+    <!-- Notification Channels Menu -->
+    <record id="menu_notification_channels" model="ocean.ui.menu">
+        <field name="name">Channels</field>
+        <field name="parent_id" ref="menu_notifications_root"/>
+        <field name="sequence">40</field>
+    </record>
+</ocean>

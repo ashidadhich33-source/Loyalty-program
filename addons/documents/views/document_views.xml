@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <!-- Document Views -->
+    <record id="view_document_tree" model="ocean.ui.view">
+        <field name="name">document.document.tree</field>
+        <field name="model">document.document</field>
+        <field name="arch" type="xml">
+            <tree string="Documents">
+                <field name="name"/>
+                <field name="filename"/>
+                <field name="document_type"/>
+                <field name="file_size"/>
+                <field name="version"/>
+                <field name="status"/>
+                <field name="user_id"/>
+                <field name="create_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_document_form" model="ocean.ui.view">
+        <field name="name">document.document.form</field>
+        <field name="model">document.document</field>
+        <field name="arch" type="xml">
+            <form string="Document">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_download_document" type="object" class="oe_stat_button" icon="fa-download">
+                            <span>Download</span>
+                        </button>
+                        <button name="action_share_document" type="object" class="oe_stat_button" icon="fa-share">
+                            <span>Share</span>
+                        </button>
+                        <button name="action_create_version" type="object" class="oe_stat_button" icon="fa-plus">
+                            <span>New Version</span>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Document Name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="filename"/>
+                            <field name="document_type"/>
+                            <field name="file_size"/>
+                            <field name="version"/>
+                            <field name="status"/>
+                        </group>
+                        <group>
+                            <field name="folder_id"/>
+                            <field name="category_id"/>
+                            <field name="user_id"/>
+                            <field name="is_public"/>
+                            <field name="is_latest_version"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="description"/>
+                    </group>
+                    <notebook>
+                        <page string="Tags">
+                            <field name="tag_ids" widget="many2many_tags"/>
+                        </page>
+                        <page string="Versions">
+                            <field name="version_ids" widget="one2many">
+                                <tree>
+                                    <field name="version"/>
+                                    <field name="filename"/>
+                                    <field name="file_size"/>
+                                    <field name="user_id"/>
+                                    <field name="create_date"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Sharing">
+                            <field name="share_ids" widget="one2many">
+                                <tree>
+                                    <field name="user_ids" widget="many2many_tags"/>
+                                    <field name="group_ids" widget="many2many_tags"/>
+                                    <field name="access_level"/>
+                                    <field name="expires_at"/>
+                                    <field name="share_token"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Analytics">
+                            <group>
+                                <field name="view_count"/>
+                                <field name="download_count"/>
+                                <field name="last_accessed"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Document Kanban View -->
+    <record id="view_document_kanban" model="ocean.ui.view">
+        <field name="name">document.document.kanban</field>
+        <field name="model">document.document</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="name"/>
+                <field name="filename"/>
+                <field name="document_type"/>
+                <field name="file_size"/>
+                <field name="version"/>
+                <field name="status"/>
+                <field name="user_id"/>
+                <field name="create_date"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_card oe_kanban_global_click">
+                            <div class="oe_kanban_content">
+                                <div class="o_kanban_record_top">
+                                    <div class="o_kanban_record_headings">
+                                        <strong class="o_kanban_record_title">
+                                            <field name="name"/>
+                                        </strong>
+                                    </div>
+                                    <div class="o_kanban_record_subtitle">
+                                        <field name="filename"/>
+                                    </div>
+                                </div>
+                                <div class="o_kanban_record_body">
+                                    <div class="oe_kanban_bottom_left">
+                                        <span class="badge badge-info">
+                                            <field name="document_type"/>
+                                        </span>
+                                        <span class="badge badge-secondary">
+                                            <field name="version"/>
+                                        </span>
+                                    </div>
+                                    <div class="oe_kanban_bottom_right">
+                                        <span t-if="record.is_public.raw_value" class="badge badge-success">Public</span>
+                                        <span t-if="record.is_latest_version.raw_value" class="badge badge-primary">Latest</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Actions -->
+    <record id="action_document" model="ocean.actions.act_window">
+        <field name="name">Documents</field>
+        <field name="res_model">document.document</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Upload your first document!
+            </p>
+            <p>
+                Store and organize your files with version control and sharing capabilities.
+            </p>
+        </field>
+    </record>
+</ocean>

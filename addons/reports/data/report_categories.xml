@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <!-- Report Categories -->
+    <record id="category_financial" model="report.category">
+        <field name="name">Financial Reports</field>
+        <field name="code">financial</field>
+        <field name="description">Financial reports including P&amp;L, Balance Sheet, and Cash Flow</field>
+        <field name="sequence">10</field>
+        <field name="icon">fa-money</field>
+        <field name="color">#28a745</field>
+    </record>
+
+    <record id="category_sales" model="report.category">
+        <field name="name">Sales Reports</field>
+        <field name="code">sales</field>
+        <field name="description">Sales analysis, revenue reports, and customer insights</field>
+        <field name="sequence">20</field>
+        <field name="icon">fa-line-chart</field>
+        <field name="color">#007bff</field>
+    </record>
+
+    <record id="category_inventory" model="report.category">
+        <field name="name">Inventory Reports</field>
+        <field name="code">inventory</field>
+        <field name="description">Stock levels, movement analysis, and valuation reports</field>
+        <field name="sequence">30</field>
+        <field name="icon">fa-cubes</field>
+        <field name="color">#ffc107</field>
+    </record>
+
+    <record id="category_purchase" model="report.category">
+        <field name="name">Purchase Reports</field>
+        <field name="code">purchase</field>
+        <field name="description">Purchase analysis, vendor performance, and cost reports</field>
+        <field name="sequence">40</field>
+        <field name="icon">fa-shopping-cart</field>
+        <field name="color">#6f42c1</field>
+    </record>
+
+    <record id="category_hr" model="report.category">
+        <field name="name">HR Reports</field>
+        <field name="code">hr</field>
+        <field name="description">Human resources reports, attendance, and payroll</field>
+        <field name="sequence">50</field>
+        <field name="icon">fa-users</field>
+        <field name="color">#e83e8c</field>
+    </record>
+
+    <record id="category_custom" model="report.category">
+        <field name="name">Custom Reports</field>
+        <field name="code">custom</field>
+        <field name="description">User-created custom reports</field>
+        <field name="sequence">100</field>
+        <field name="icon">fa-cog</field>
+        <field name="color">#6c757d</field>
+    </record>
+</ocean>

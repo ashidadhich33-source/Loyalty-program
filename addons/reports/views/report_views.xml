@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <!-- Report Category Views -->
+    <record id="view_report_category_tree" model="ocean.ui.view">
+        <field name="name">report.category.tree</field>
+        <field name="model">report.category</field>
+        <field name="arch" type="xml">
+            <tree string="Report Categories">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="parent_id"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_report_category_form" model="ocean.ui.view">
+        <field name="name">report.category.form</field>
+        <field name="model">report.category</field>
+        <field name="arch" type="xml">
+            <form string="Report Category">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_reports" type="object" class="oe_stat_button" icon="fa-file-text-o">
+                            <field name="report_ids" widget="statinfo" string="Reports"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Category Name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="code"/>
+                            <field name="sequence"/>
+                            <field name="parent_id"/>
+                        </group>
+                        <group>
+                            <field name="icon"/>
+                            <field name="color"/>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="description"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Report Template Views -->
+    <record id="view_report_template_tree" model="ocean.ui.view">
+        <field name="name">report.template.tree</field>
+        <field name="model">report.template</field>
+        <field name="arch" type="xml">
+            <tree string="Report Templates">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="category_id"/>
+                <field name="report_type"/>
+                <field name="view_type"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_report_template_form" model="ocean.ui.view">
+        <field name="name">report.template.form</field>
+        <field name="model">report.template</field>
+        <field name="arch" type="xml">
+            <form string="Report Template">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_execute_report" type="object" class="oe_stat_button" icon="fa-play">
+                            <span>Execute</span>
+                        </button>
+                        <button name="action_view_executions" type="object" class="oe_stat_button" icon="fa-history">
+                            <field name="execution_ids" widget="statinfo" string="Executions"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Report Name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="code"/>
+                            <field name="category_id"/>
+                            <field name="sequence"/>
+                            <field name="report_type"/>
+                            <field name="view_type"/>
+                        </group>
+                        <group>
+                            <field name="model_name"/>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="description"/>
+                    </group>
+                    <notebook>
+                        <page string="Configuration">
+                            <group>
+                                <field name="sql_query" widget="ace" options="{'mode': 'sql'}"/>
+                            </group>
+                            <group>
+                                <field name="python_code" widget="ace" options="{'mode': 'python'}"/>
+                            </group>
+                            <group>
+                                <field name="template_content" widget="ace"/>
+                            </group>
+                        </page>
+                        <page string="Filters">
+                            <group>
+                                <field name="default_filters"/>
+                                <field name="required_filters"/>
+                                <field name="optional_filters"/>
+                            </group>
+                        </page>
+                        <page string="Output">
+                            <group>
+                                <field name="output_formats"/>
+                            </group>
+                        </page>
+                        <page string="Access Control">
+                            <group>
+                                <field name="group_ids" widget="many2many_tags"/>
+                                <field name="user_ids" widget="many2many_tags"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Report Execution Views -->
+    <record id="view_report_execution_tree" model="ocean.ui.view">
+        <field name="name">report.execution.tree</field>
+        <field name="model">report.execution</field>
+        <field name="arch" type="xml">
+            <tree string="Report Executions">
+                <field name="name"/>
+                <field name="template_id"/>
+                <field name="user_id"/>
+                <field name="status"/>
+                <field name="record_count"/>
+                <field name="execution_time"/>
+                <field name="create_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_report_execution_form" model="ocean.ui.view">
+        <field name="name">report.execution.form</field>
+        <field name="model">report.execution</field>
+        <field name="arch" type="xml">
+            <form string="Report Execution">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_export_report" type="object" class="oe_stat_button" icon="fa-download">
+                            <span>Export</span>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="template_id"/>
+                            <field name="user_id"/>
+                            <field name="status"/>
+                        </group>
+                        <group>
+                            <field name="record_count"/>
+                            <field name="execution_time"/>
+                            <field name="create_date"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="filters"/>
+                        <field name="parameters"/>
+                    </group>
+                    <notebook>
+                        <page string="Data">
+                            <field name="data" widget="ace" readonly="1"/>
+                        </page>
+                        <page string="Error" attrs="{'invisible': [('status', '!=', 'error')]}">
+                            <field name="error_message" readonly="1"/>
+                            <field name="error_traceback" widget="ace" readonly="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Report Schedule Views -->
+    <record id="view_report_schedule_tree" model="ocean.ui.view">
+        <field name="name">report.schedule.tree</field>
+        <field name="model">report.schedule</field>
+        <field name="arch" type="xml">
+            <tree string="Report Schedules">
+                <field name="name"/>
+                <field name="template_id"/>
+                <field name="frequency"/>
+                <field name="run_time"/>
+                <field name="status"/>
+                <field name="active"/>
+                <field name="next_run_date"/>
+                <field name="last_run_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_report_schedule_form" model="ocean.ui.view">
+        <field name="name">report.schedule.form</field>
+        <field name="model">report.schedule</field>
+        <field name="arch" type="xml">
+            <form string="Report Schedule">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_execute_now" type="object" class="oe_stat_button" icon="fa-play">
+                            <span>Execute Now</span>
+                        </button>
+                        <button name="action_view_executions" type="object" class="oe_stat_button" icon="fa-history">
+                            <field name="execution_ids" widget="statinfo" string="Executions"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Schedule Name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="template_id"/>
+                            <field name="user_id"/>
+                            <field name="frequency"/>
+                            <field name="interval"/>
+                        </group>
+                        <group>
+                            <field name="run_time"/>
+                            <field name="timezone"/>
+                            <field name="status"/>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="description"/>
+                    </group>
+                    <notebook>
+                        <page string="Schedule">
+                            <group>
+                                <field name="weekdays" widget="many2many_tags"/>
+                                <field name="month_days" widget="many2many_tags"/>
+                            </group>
+                            <group>
+                                <field name="next_run_date"/>
+                                <field name="last_run_date"/>
+                                <field name="execution_count"/>
+                                <field name="success_count"/>
+                                <field name="error_count"/>
+                            </group>
+                        </page>
+                        <page string="Report Configuration">
+                            <group>
+                                <field name="filters"/>
+                                <field name="output_format"/>
+                            </group>
+                        </page>
+                        <page string="Notifications">
+                            <group>
+                                <field name="notify_on_success"/>
+                                <field name="notify_on_error"/>
+                                <field name="email_notifications"/>
+                            </group>
+                            <group>
+                                <field name="notify_users" widget="many2many_tags"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Actions -->
+    <record id="action_report_category" model="ocean.actions.act_window">
+        <field name="name">Report Categories</field>
+        <field name="res_model">report.category</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first report category!
+            </p>
+            <p>
+                Organize your reports into categories for better management.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_report_template" model="ocean.actions.act_window">
+        <field name="name">Report Templates</field>
+        <field name="res_model">report.template</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first report template!
+            </p>
+            <p>
+                Define report templates for generating various business reports.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_report_execution" model="ocean.actions.act_window">
+        <field name="name">Report Executions</field>
+        <field name="res_model">report.execution</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No report executions yet!
+            </p>
+            <p>
+                Report executions will appear here when reports are run.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_report_schedule" model="ocean.actions.act_window">
+        <field name="name">Report Schedules</field>
+        <field name="res_model">report.schedule</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first report schedule!
+            </p>
+            <p>
+                Schedule reports to run automatically at specified intervals.
+            </p>
+        </field>
+    </record>
+</ocean>

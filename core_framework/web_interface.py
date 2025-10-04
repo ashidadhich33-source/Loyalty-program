@@ -14,12 +14,18 @@ import json
 import urllib.parse
 import os
 from pathlib import Path
+from .auth import AuthenticationManager
+from .session import SessionManager
+from .templates import TemplateEngine, TemplateRenderer
 
 class ERPWebHandler(BaseHTTPRequestHandler):
     """HTTP Request Handler for ERP Web Interface"""
     
     def __init__(self, *args, erp_server=None, **kwargs):
         self.erp_server = erp_server
+        self.auth_manager = erp_server.auth_manager if erp_server else None
+        self.session_manager = erp_server.session_manager if erp_server else None
+        self.template_renderer = erp_server.template_renderer if erp_server else None
         super().__init__(*args, **kwargs)
     
     def do_GET(self):
@@ -29,6 +35,10 @@ class ERPWebHandler(BaseHTTPRequestHandler):
             
             if path == '/':
                 self._serve_home_page()
+            elif path == '/login':
+                self._serve_login_page()
+            elif path == '/logout':
+                self._serve_logout()
             elif path == '/api/status':
                 self._serve_api_status()
             elif path.startswith('/api/'):
@@ -46,7 +56,11 @@ class ERPWebHandler(BaseHTTPRequestHandler):
         try:
             path = urllib.parse.urlparse(self.path).path
             
-            if path.startswith('/api/'):
+            if path == '/api/login':
+                self._handle_login()
+            elif path == '/api/logout':
+                self._handle_logout()
+            elif path.startswith('/api/'):
                 self._handle_api_post(path)
             else:
                 self._serve_404()
@@ -166,6 +180,242 @@ class ERPWebHandler(BaseHTTPRequestHandler):
         """
         
         self._send_response(200, html_content, 'text/html')
+    
+    def _serve_login_page(self):
+        """Serve login page"""
+        html_content = """
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Login - Kids Clothing ERP</title>
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    margin: 0;
+                    padding: 0;
+                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    min-height: 100vh;
+                }
+                .login-container {
+                    background: white;
+                    padding: 40px;
+                    border-radius: 10px;
+                    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+                    width: 400px;
+                }
+                .login-header {
+                    text-align: center;
+                    margin-bottom: 30px;
+                }
+                .login-header h1 {
+                    color: #333;
+                    margin: 0;
+                }
+                .login-header p {
+                    color: #666;
+                    margin: 10px 0 0 0;
+                }
+                .form-group {
+                    margin-bottom: 20px;
+                }
+                .form-group label {
+                    display: block;
+                    margin-bottom: 5px;
+                    color: #333;
+                    font-weight: bold;
+                }
+                .form-group input {
+                    width: 100%;
+                    padding: 12px;
+                    border: 1px solid #ddd;
+                    border-radius: 5px;
+                    font-size: 16px;
+                    box-sizing: border-box;
+                }
+                .form-group input:focus {
+                    outline: none;
+                    border-color: #667eea;
+                }
+                .login-button {
+                    width: 100%;
+                    padding: 12px;
+                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                    color: white;
+                    border: none;
+                    border-radius: 5px;
+                    font-size: 16px;
+                    cursor: pointer;
+                    transition: transform 0.2s;
+                }
+                .login-button:hover {
+                    transform: translateY(-2px);
+                }
+                .error-message {
+                    color: #e74c3c;
+                    text-align: center;
+                    margin-top: 10px;
+                    display: none;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="login-container">
+                <div class="login-header">
+                    <h1>👶 Kids Clothing ERP</h1>
+                    <p>Please login to continue</p>
+                </div>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    <button type="submit" class="login-button">Login</button>
+                    <div id="errorMessage" class="error-message"></div>
+                </form>
+            </div>
+            
+            <script>
+                document.getElementById('loginForm').addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    
+                    const username = document.getElementById('username').value;
+                    const password = document.getElementById('password').value;
+                    const errorMessage = document.getElementById('errorMessage');
+                    
+                    try {
+                        const response = await fetch('/api/login', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({ username, password })
+                        });
+                        
+                        const result = await response.json();
+                        
+                        if (result.success) {
+                            window.location.href = '/';
+                        } else {
+                            errorMessage.textContent = result.message;
+                            errorMessage.style.display = 'block';
+                        }
+                    } catch (error) {
+                        errorMessage.textContent = 'Login failed. Please try again.';
+                        errorMessage.style.display = 'block';
+                    }
+                });
+            </script>
+        </body>
+        </html>
+        """
+        
+        self._send_response(200, html_content, 'text/html')
+    
+    def _serve_logout(self):
+        """Serve logout page"""
+        # Redirect to login page
+        self.send_response(302)
+        self.send_header('Location', '/login')
+        self.end_headers()
+    
+    def _handle_login(self):
+        """Handle login request"""
+        try:
+            content_length = int(self.headers['Content-Length'])
+            post_data = self.rfile.read(content_length)
+            data = json.loads(post_data.decode('utf-8'))
+            
+            username = data.get('username')
+            password = data.get('password')
+            
+            if not username or not password:
+                self._send_json_response(400, {
+                    'success': False,
+                    'message': 'Username and password are required'
+                })
+                return
+            
+            # Authenticate user
+            if self.auth_manager:
+                result = self.auth_manager.authenticate_user(username, password, self)
+                
+                if result['success']:
+                    # Set session cookie
+                    self.send_response(200)
+                    self.send_header('Content-Type', 'application/json')
+                    self.send_header('Set-Cookie', f"session_id={result['session_id']}; HttpOnly; Secure; SameSite=Strict")
+                    self.end_headers()
+                    
+                    self.wfile.write(json.dumps(result).encode('utf-8'))
+                else:
+                    self._send_json_response(401, result)
+            else:
+                self._send_json_response(500, {
+                    'success': False,
+                    'message': 'Authentication system not available'
+                })
+                
+        except Exception as e:
+            self._send_json_response(500, {
+                'success': False,
+                'message': f'Login error: {str(e)}'
+            })
+    
+    def _handle_logout(self):
+        """Handle logout request"""
+        try:
+            session_id = self._get_session_id()
+            
+            if self.auth_manager and session_id:
+                result = self.auth_manager.logout_user(session_id)
+                
+                if result['success']:
+                    # Clear session cookie
+                    self.send_response(200)
+                    self.send_header('Content-Type', 'application/json')
+                    self.send_header('Set-Cookie', 'session_id=; HttpOnly; Secure; SameSite=Strict; Max-Age=0')
+                    self.end_headers()
+                    
+                    self.wfile.write(json.dumps(result).encode('utf-8'))
+                else:
+                    self._send_json_response(400, result)
+            else:
+                self._send_json_response(200, {
+                    'success': True,
+                    'message': 'Logged out successfully'
+                })
+                
+        except Exception as e:
+            self._send_json_response(500, {
+                'success': False,
+                'message': f'Logout error: {str(e)}'
+            })
+    
+    def _get_session_id(self):
+        """Get session ID from request"""
+        # Check cookies
+        if 'cookie' in self.headers:
+            cookies = self.headers['cookie']
+            for cookie in cookies.split(';'):
+                if 'session_id=' in cookie:
+                    return cookie.split('session_id=')[1].strip()
+        
+        # Check Authorization header
+        if 'authorization' in self.headers:
+            auth_header = self.headers['authorization']
+            if auth_header.startswith('Bearer '):
+                return auth_header[7:]
+        
+        return None
     
     def _serve_api_status(self):
         """Serve API status"""

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <!-- Dashboard Menu -->
+    <record id="menu_dashboard_root" model="ocean.ui.menu">
+        <field name="name">Dashboards</field>
+        <field name="sequence">60</field>
+        <field name="web_icon">dashboard,static/description/icon.png</field>
+    </record>
+
+    <!-- Dashboard Management Menu -->
+    <record id="menu_dashboard_management" model="ocean.ui.menu">
+        <field name="name">Dashboard Management</field>
+        <field name="parent_id" ref="menu_dashboard_root"/>
+        <field name="sequence">10</field>
+    </record>
+
+    <!-- My Dashboards Menu -->
+    <record id="menu_my_dashboards" model="ocean.ui.menu">
+        <field name="name">My Dashboards</field>
+        <field name="parent_id" ref="menu_dashboard_management"/>
+        <field name="action" ref="action_dashboard"/>
+        <field name="sequence">10</field>
+    </record>
+
+    <!-- Dashboard Templates Menu -->
+    <record id="menu_dashboard_templates" model="ocean.ui.menu">
+        <field name="name">Templates</field>
+        <field name="parent_id" ref="menu_dashboard_management"/>
+        <field name="action" ref="action_dashboard_template"/>
+        <field name="sequence">20</field>
+    </record>
+
+    <!-- Widget Management Menu -->
+    <record id="menu_widget_management" model="ocean.ui.menu">
+        <field name="name">Widget Management</field>
+        <field name="parent_id" ref="menu_dashboard_root"/>
+        <field name="sequence">20</field>
+    </record>
+
+    <!-- Widget Library Menu -->
+    <record id="menu_widget_library" model="ocean.ui.menu">
+        <field name="name">Widget Library</field>
+        <field name="parent_id" ref="menu_widget_management"/>
+        <field name="action" ref="action_widget_library"/>
+        <field name="sequence">10</field>
+    </record>
+
+    <!-- Dashboard Widgets Menu -->
+    <record id="menu_dashboard_widgets" model="ocean.ui.menu">
+        <field name="name">Widgets</field>
+        <field name="parent_id" ref="menu_widget_management"/>
+        <field name="action" ref="action_dashboard_widget"/>
+        <field name="sequence">20</field>
+    </record>
+
+    <!-- Quick Access Menu -->
+    <record id="menu_quick_access" model="ocean.ui.menu">
+        <field name="name">Quick Access</field>
+        <field name="parent_id" ref="menu_dashboard_root"/>
+        <field name="sequence">30</field>
+    </record>
+
+    <!-- Create Dashboard Menu -->
+    <record id="menu_create_dashboard" model="ocean.ui.menu">
+        <field name="name">Create Dashboard</field>
+        <field name="parent_id" ref="menu_quick_access"/>
+        <field name="action" ref="action_dashboard"/>
+        <field name="sequence">10</field>
+    </record>
+
+    <!-- Create Widget Menu -->
+    <record id="menu_create_widget" model="ocean.ui.menu">
+        <field name="name">Create Widget</field>
+        <field name="parent_id" ref="menu_quick_access"/>
+        <field name="action" ref="action_dashboard_widget"/>
+        <field name="sequence">20</field>
+    </record>
+
+    <!-- Dashboard Categories Menu -->
+    <record id="menu_dashboard_categories" model="ocean.ui.menu">
+        <field name="name">Dashboard Categories</field>
+        <field name="parent_id" ref="menu_dashboard_root"/>
+        <field name="sequence">40</field>
+    </record>
+
+    <!-- Sales Dashboards Menu -->
+    <record id="menu_sales_dashboards" model="ocean.ui.menu">
+        <field name="name">Sales Dashboards</field>
+        <field name="parent_id" ref="menu_dashboard_categories"/>
+        <field name="sequence">10</field>
+    </record>
+
+    <!-- Inventory Dashboards Menu -->
+    <record id="menu_inventory_dashboards" model="ocean.ui.menu">
+        <field name="name">Inventory Dashboards</field>
+        <field name="parent_id" ref="menu_dashboard_categories"/>
+        <field name="sequence">20</field>
+    </record>
+
+    <!-- Financial Dashboards Menu -->
+    <record id="menu_financial_dashboards" model="ocean.ui.menu">
+        <field name="name">Financial Dashboards</field>
+        <field name="parent_id" ref="menu_dashboard_categories"/>
+        <field name="sequence">30</field>
+    </record>
+
+    <!-- HR Dashboards Menu -->
+    <record id="menu_hr_dashboards" model="ocean.ui.menu">
+        <field name="name">HR Dashboards</field>
+        <field name="parent_id" ref="menu_dashboard_categories"/>
+        <field name="sequence">40</field>
+    </record>
+
+    <!-- Executive Dashboards Menu -->
+    <record id="menu_executive_dashboards" model="ocean.ui.menu">
+        <field name="name">Executive Dashboards</field>
+        <field name="parent_id" ref="menu_dashboard_categories"/>
+        <field name="sequence">50</field>
+    </record>
+</ocean>

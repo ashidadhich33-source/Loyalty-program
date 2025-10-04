@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <!-- Widget Libraries -->
+    <record id="library_charts" model="widget.library">
+        <field name="name">Charts &amp; Graphs</field>
+        <field name="code">charts</field>
+        <field name="description">Collection of chart and graph widgets</field>
+        <field name="category">charts</field>
+        <field name="sequence">10</field>
+        <field name="icon">fa-bar-chart</field>
+        <field name="color">#007bff</field>
+    </record>
+
+    <record id="library_tables" model="widget.library">
+        <field name="name">Tables &amp; Lists</field>
+        <field name="code">tables</field>
+        <field name="description">Table and list display widgets</field>
+        <field name="category">tables</field>
+        <field name="sequence">20</field>
+        <field name="icon">fa-table</field>
+        <field name="color">#28a745</field>
+    </record>
+
+    <record id="library_metrics" model="widget.library">
+        <field name="name">Metrics &amp; KPIs</field>
+        <field name="code">metrics</field>
+        <field name="description">Key performance indicators and metrics</field>
+        <field name="category">metrics</field>
+        <field name="sequence">30</field>
+        <field name="icon">fa-tachometer</field>
+        <field name="color">#ffc107</field>
+    </record>
+
+    <record id="library_text" model="widget.library">
+        <field name="name">Text &amp; Content</field>
+        <field name="code">text</field>
+        <field name="description">Text blocks and content widgets</field>
+        <field name="category">text</field>
+        <field name="sequence">40</field>
+        <field name="icon">fa-font</field>
+        <field name="color">#6f42c1</field>
+    </record>
+
+    <record id="library_media" model="widget.library">
+        <field name="name">Media &amp; Images</field>
+        <field name="code">media</field>
+        <field name="description">Image and media display widgets</field>
+        <field name="category">media</field>
+        <field name="sequence">50</field>
+        <field name="icon">fa-image</field>
+        <field name="color">#e83e8c</field>
+    </record>
+
+    <record id="library_system" model="widget.library">
+        <field name="name">System Widgets</field>
+        <field name="code">system</field>
+        <field name="description">System and utility widgets</field>
+        <field name="category">system</field>
+        <field name="sequence">60</field>
+        <field name="icon">fa-cog</field>
+        <field name="color">#6c757d</field>
+    </record>
+
+    <!-- Sample Widgets -->
+    <record id="widget_sales_revenue_chart" model="dashboard.widget">
+        <field name="name">Sales Revenue Chart</field>
+        <field name="title">Sales Revenue Trend</field>
+        <field name="description">Line chart showing sales revenue over time</field>
+        <field name="widget_type">line</field>
+        <field name="chart_type">line</field>
+        <field name="data_source">model</field>
+        <field name="model_name">sale.order</field>
+        <field name="width">6</field>
+        <field name="height">300</field>
+        <field name="library_id" ref="library_charts"/>
+        <field name="is_template" eval="True"/>
+        <field name="is_public" eval="True"/>
+        <field name="background_color">#ffffff</field>
+        <field name="show_legend" eval="True"/>
+        <field name="show_grid" eval="True"/>
+        <field name="chart_animation" eval="True"/>
+    </record>
+
+    <record id="widget_top_products_table" model="dashboard.widget">
+        <field name="name">Top Products Table</field>
+        <field name="title">Top Selling Products</field>
+        <field name="description">Table showing best performing products</field>
+        <field name="widget_type">table</field>
+        <field name="data_source">model</field>
+        <field name="model_name">sale.order.line</field>
+        <field name="width">6</field>
+        <field name="height">300</field>
+        <field name="library_id" ref="library_tables"/>
+        <field name="is_template" eval="True"/>
+        <field name="is_public" eval="True"/>
+        <field name="background_color">#ffffff</field>
+    </record>
+
+    <record id="widget_total_sales_metric" model="dashboard.widget">
+        <field name="name">Total Sales Metric</field>
+        <field name="title">Total Sales</field>
+        <field name="description">Total sales amount KPI</field>
+        <field name="widget_type">metric</field>
+        <field name="data_source">model</field>
+        <field name="model_name">sale.order</field>
+        <field name="width">3</field>
+        <field name="height">150</field>
+        <field name="library_id" ref="library_metrics"/>
+        <field name="is_template" eval="True"/>
+        <field name="is_public" eval="True"/>
+        <field name="background_color">#28a745</field>
+        <field name="text_color">#ffffff</field>
+    </record>
+
+    <record id="widget_order_count_metric" model="dashboard.widget">
+        <field name="name">Order Count Metric</field>
+        <field name="title">Total Orders</field>
+        <field name="description">Total number of orders KPI</field>
+        <field name="widget_type">metric</field>
+        <field name="data_source">model</field>
+        <field name="model_name">sale.order</field>
+        <field name="width">3</field>
+        <field name="height">150</field>
+        <field name="library_id" ref="library_metrics"/>
+        <field name="is_template" eval="True"/>
+        <field name="is_public" eval="True"/>
+        <field name="background_color">#007bff</field>
+        <field name="text_color">#ffffff</field>
+    </record>
+
+    <record id="widget_customer_count_metric" model="dashboard.widget">
+        <field name="name">Customer Count Metric</field>
+        <field name="title">Total Customers</field>
+        <field name="description">Total number of customers KPI</field>
+        <field name="widget_type">metric</field>
+        <field name="data_source">model</field>
+        <field name="model_name">res.partner</field>
+        <field name="width">3</field>
+        <field name="height">150</field>
+        <field name="library_id" ref="library_metrics"/>
+        <field name="is_template" eval="True"/>
+        <field name="is_public" eval="True"/>
+        <field name="background_color">#ffc107</field>
+        <field name="text_color">#000000</field>
+    </record>
+
+    <record id="widget_revenue_gauge" model="dashboard.widget">
+        <field name="name">Revenue Gauge</field>
+        <field name="title">Revenue Progress</field>
+        <field name="description">Gauge showing revenue progress towards target</field>
+        <field name="widget_type">gauge</field>
+        <field name="data_source">model</field>
+        <field name="model_name">sale.order</field>
+        <field name="width">3</field>
+        <field name="height">200</field>
+        <field name="library_id" ref="library_metrics"/>
+        <field name="is_template" eval="True"/>
+        <field name="is_public" eval="True"/>
+        <field name="background_color">#ffffff</field>
+    </record>
+
+    <record id="widget_product_categories_pie" model="dashboard.widget">
+        <field name="name">Product Categories Pie</field>
+        <field name="title">Sales by Category</field>
+        <field name="description">Pie chart showing sales distribution by product category</field>
+        <field name="widget_type">pie</field>
+        <field name="chart_type">pie</field>
+        <field name="data_source">model</field>
+        <field name="model_name">sale.order.line</field>
+        <field name="width">6</field>
+        <field name="height">300</field>
+        <field name="library_id" ref="library_charts"/>
+        <field name="is_template" eval="True"/>
+        <field name="is_public" eval="True"/>
+        <field name="background_color">#ffffff</field>
+        <field name="show_legend" eval="True"/>
+        <field name="chart_animation" eval="True"/>
+    </record>
+
+    <record id="widget_stock_levels_bar" model="dashboard.widget">
+        <field name="name">Stock Levels Bar</field>
+        <field name="title">Current Stock Levels</field>
+        <field name="description">Bar chart showing current stock levels by product</field>
+        <field name="widget_type">bar</field>
+        <field name="chart_type">bar</field>
+        <field name="data_source">model</field>
+        <field name="model_name">stock.quant</field>
+        <field name="width">6</field>
+        <field name="height">300</field>
+        <field name="library_id" ref="library_charts"/>
+        <field name="is_template" eval="True"/>
+        <field name="is_public" eval="True"/>
+        <field name="background_color">#ffffff</field>
+        <field name="show_legend" eval="True"/>
+        <field name="show_grid" eval="True"/>
+        <field name="chart_animation" eval="True"/>
+    </record>
+
+    <record id="widget_welcome_text" model="dashboard.widget">
+        <field name="name">Welcome Text</field>
+        <field name="title">Welcome to Kids Clothing ERP</field>
+        <field name="description">Welcome message widget</field>
+        <field name="widget_type">text</field>
+        <field name="data_source">static</field>
+        <field name="static_data">{"message": "Welcome to Kids Clothing ERP Dashboard! Track your business performance with real-time insights."}</field>
+        <field name="width">12</field>
+        <field name="height">100</field>
+        <field name="library_id" ref="library_text"/>
+        <field name="is_template" eval="True"/>
+        <field name="is_public" eval="True"/>
+        <field name="background_color">#f8f9fa</field>
+        <field name="text_color">#495057</field>
+        <field name="font_size">16</field>
+    </record>
+</ocean>

@@ -403,10 +403,22 @@ class PosOrder(BaseModel):
         
         self.state = 'done'
         
-        # Update inventory if needed
+        # Update inventory
         self._update_inventory()
         
         return True
+    
+    def _update_inventory(self):
+        """Update inventory after POS sale"""
+        for order in self:
+            for line in order.lines:
+                if line.product_id:
+                    # Decrease inventory for each line
+                    self.env['stock.quant'].update_inventory_sale(
+                        product_id=line.product_id.id,
+                        quantity=line.qty,
+                        location_id=None  # Will use default internal location
+                    )
     
     def action_cancel(self):
         """Cancel the order"""

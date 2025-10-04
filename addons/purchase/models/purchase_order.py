@@ -248,6 +248,26 @@ class PurchaseOrder(BaseModel):
             record.approved_by = self.env.user.id
             record.approval_date = datetime.now()
     
+    def action_receive(self):
+        """Receive purchase order and update inventory"""
+        for record in self:
+            if record.state != 'purchase':
+                raise ValidationError("Only purchase orders can be received")
+            
+            # Update inventory for each line
+            for line in record.order_line_ids:
+                if line.product_id:
+                    self.env['stock.quant'].update_inventory_purchase(
+                        product_id=line.product_id.id,
+                        quantity=line.product_qty,
+                        cost_price=line.cost_price or line.price_unit,
+                        location_id=None  # Will use default internal location
+                    )
+            
+            record.state = 'done'
+            record.received_by = self.env.user.id
+            record.received_date = datetime.now()
+    
     def action_done(self):
         """Mark purchase order as done"""
         for record in self:

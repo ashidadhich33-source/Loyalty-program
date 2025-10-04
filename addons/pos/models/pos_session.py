@@ -55,6 +55,20 @@ class PosSession(BaseModel):
         help='Current state of the session'
     )
     
+    # Auto-close Settings
+    auto_close_time = CharField(
+        string='Auto Close Time',
+        size=10,
+        default='23:59:59',
+        help='Time to automatically close session (HH:MM:SS)'
+    )
+    
+    auto_close_enabled = BooleanField(
+        string='Auto Close Enabled',
+        default=True,
+        help='Whether to automatically close session at end of day'
+    )
+    
     # Session Timing
     start_at = DateTimeField(
         string='Start At',
@@ -200,6 +214,59 @@ class PosSession(BaseModel):
             self.config_id.current_session_id = False
         
         return True
+    
+    def action_auto_close(self):
+        """Automatically close session at end of day"""
+        if not self.auto_close_enabled:
+            return False
+        
+        # Check if it's time to close
+        current_time = datetime.now().strftime('%H:%M:%S')
+        if current_time >= self.auto_close_time:
+            # Validate all orders are complete
+            incomplete_orders = self.env['pos.order'].search([
+                ('session_id', '=', self.id),
+                ('state', '!=', 'paid')
+            ])
+            
+            if incomplete_orders:
+                # Log warning but don't close
+                logger.warning(f"Session {self.name} has {len(incomplete_orders)} incomplete orders")
+                return False
+            
+            # Close session
+            self.action_close()
+            
+            # Generate session summary
+            self._generate_session_summary()
+            
+            return True
+        
+        return False
+    
+    def _generate_session_summary(self):
+        """Generate session summary report"""
+        summary = {
+            'session_name': self.name,
+            'cashier': self.user_id.name,
+            'start_time': self.start_at.strftime('%H:%M:%S'),
+            'end_time': self.stop_at.strftime('%H:%M:%S') if self.stop_at else 'Still Open',
+            'order_count': self.order_count,
+            'total_sales': self.total_sales,
+            'total_cash': self.end_cash or 0.0,
+            'cash_difference': self.cash_difference or 0.0,
+            'gst_summary': {
+                'total_cgst': self.total_cgst or 0.0,
+                'total_sgst': self.total_sgst or 0.0,
+                'total_igst': self.total_igst or 0.0,
+                'total_gst': self.total_gst or 0.0
+            }
+        }
+        
+        # Log summary
+        logger.info(f"Session Summary: {summary}")
+        
+        return summary
     
     def action_open_cashbox(self):
         """Open cash box for cash management"""

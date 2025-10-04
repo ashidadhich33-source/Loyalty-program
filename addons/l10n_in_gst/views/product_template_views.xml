@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- GST Product Templates Tree View -->
+        <record id="view_product_template_tree" model="ir.ui.view">
+            <field name="name">product.template.tree</field>
+            <field name="model">product.template</field>
+            <field name="arch" type="xml">
+                <tree string="GST Product Templates" decoration-info="active==False">
+                    <field name="name"/>
+                    <field name="hsn_code"/>
+                    <field name="sac_code"/>
+                    <field name="gst_rate"/>
+                    <field name="gst_tax_group_id"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- GST Product Templates Form View -->
+        <record id="view_product_template_form" model="ir.ui.view">
+            <field name="name">product.template.form</field>
+            <field name="model">product.template</field>
+            <field name="arch" type="xml">
+                <form string="GST Product Template">
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
+                                <field name="active" widget="boolean_button" options='{"terminology": "archive"}'/>
+                            </button>
+                        </div>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Product Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="hsn_code"/>
+                                <field name="sac_code"/>
+                                <field name="gst_rate"/>
+                                <field name="gst_tax_group_id"/>
+                                <field name="active"/>
+                            </group>
+                            <group>
+                                <field name="age_group"/>
+                                <field name="size"/>
+                                <field name="season"/>
+                                <field name="brand"/>
+                                <field name="color"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="description"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- GST Product Templates Search View -->
+        <record id="view_product_template_search" model="ir.ui.view">
+            <field name="name">product.template.search</field>
+            <field name="model">product.template</field>
+            <field name="arch" type="xml">
+                <search string="Search GST Product Templates">
+                    <field name="name"/>
+                    <field name="hsn_code"/>
+                    <field name="sac_code"/>
+                    <field name="gst_tax_group_id"/>
+                    <field name="age_group"/>
+                    <field name="size"/>
+                    <field name="season"/>
+                    <field name="brand"/>
+                    <field name="color"/>
+                    <filter string="Active" name="active" domain="[('active', '=', True)]"/>
+                    <filter string="Inactive" name="inactive" domain="[('active', '=', False)]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="GST Tax Group" name="group_gst_tax_group" context="{'group_by': 'gst_tax_group_id'}"/>
+                        <filter string="Age Group" name="group_age_group" context="{'group_by': 'age_group'}"/>
+                        <filter string="Size" name="group_size" context="{'group_by': 'size'}"/>
+                        <filter string="Season" name="group_season" context="{'group_by': 'season'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- GST Product Templates Action -->
+        <record id="action_product_template" model="ir.actions.act_window">
+            <field name="name">GST Product Templates</field>
+            <field name="res_model">product.template</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_product_template_search"/>
+            <field name="context">{'search_default_active': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first GST Product Template!
+                </p>
+                <p>
+                    GST product templates define HSN/SAC codes and tax rates for kids clothing products.
+                </p>
+            </field>
+        </record>
+        
+    </data>
+</ocean>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- EDI Validations Tree View -->
+        <record id="view_edi_validation_tree" model="ir.ui.view">
+            <field name="name">edi.validation.tree</field>
+            <field name="model">edi.validation</field>
+            <field name="arch" type="xml">
+                <tree string="EDI Validations" decoration-success="validation_status=='passed'" decoration-danger="validation_status=='failed'" decoration-warning="validation_status=='warning'">
+                    <field name="name"/>
+                    <field name="validation_type"/>
+                    <field name="validation_status"/>
+                    <field name="validation_date"/>
+                    <field name="start_time"/>
+                    <field name="end_time"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- EDI Validations Form View -->
+        <record id="view_edi_validation_form" model="ir.ui.view">
+            <field name="name">edi.validation.form</field>
+            <field name="model">edi.validation</field>
+            <field name="arch" type="xml">
+                <form string="EDI Validation">
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_run_validation" type="object" class="oe_stat_button" icon="fa-play" string="Run Validation" attrs="{'invisible': [('validation_status', '!=', 'pending')]}"/>
+                        </div>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Validation Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="validation_type"/>
+                                <field name="validation_status"/>
+                                <field name="validation_date"/>
+                                <field name="start_time"/>
+                                <field name="end_time"/>
+                            </group>
+                            <group>
+                                <field name="age_group"/>
+                                <field name="size"/>
+                                <field name="season"/>
+                                <field name="brand"/>
+                                <field name="color"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="validation_rules" widget="text"/>
+                            <field name="validation_results" widget="text"/>
+                        </group>
+                        <group>
+                            <field name="document_id"/>
+                            <field name="notes"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- EDI Validations Search View -->
+        <record id="view_edi_validation_search" model="ir.ui.view">
+            <field name="name">edi.validation.search</field>
+            <field name="model">edi.validation</field>
+            <field name="arch" type="xml">
+                <search string="Search EDI Validations">
+                    <field name="name"/>
+                    <field name="validation_type"/>
+                    <field name="validation_status"/>
+                    <field name="document_id"/>
+                    <field name="age_group"/>
+                    <field name="size"/>
+                    <field name="season"/>
+                    <field name="brand"/>
+                    <field name="color"/>
+                    <filter string="Pending" name="pending" domain="[('validation_status', '=', 'pending')]"/>
+                    <filter string="Running" name="running" domain="[('validation_status', '=', 'running')]"/>
+                    <filter string="Passed" name="passed" domain="[('validation_status', '=', 'passed')]"/>
+                    <filter string="Failed" name="failed" domain="[('validation_status', '=', 'failed')]"/>
+                    <filter string="Warning" name="warning" domain="[('validation_status', '=', 'warning')]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Validation Type" name="group_validation_type" context="{'group_by': 'validation_type'}"/>
+                        <filter string="Validation Status" name="group_validation_status" context="{'group_by': 'validation_status'}"/>
+                        <filter string="Age Group" name="group_age_group" context="{'group_by': 'age_group'}"/>
+                        <filter string="Size" name="group_size" context="{'group_by': 'size'}"/>
+                        <filter string="Season" name="group_season" context="{'group_by': 'season'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- EDI Validations Action -->
+        <record id="action_edi_validation" model="ir.actions.act_window">
+            <field name="name">EDI Validations</field>
+            <field name="res_model">edi.validation</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_edi_validation_search"/>
+            <field name="context">{'search_default_pending': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first EDI Validation!
+                </p>
+                <p>
+                    EDI validations ensure documents comply with standards and business rules.
+                </p>
+            </field>
+        </record>
+        
+    </data>
+</ocean>

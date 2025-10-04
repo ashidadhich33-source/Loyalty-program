@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Indian Talukas Tree View -->
+        <record id="view_res_country_taluka_tree" model="ir.ui.view">
+            <field name="name">res.country.taluka.tree</field>
+            <field name="model">res.country.taluka</field>
+            <field name="arch" type="xml">
+                <tree string="Indian Talukas" decoration-info="active==False">
+                    <field name="name"/>
+                    <field name="district_id"/>
+                    <field name="state_id"/>
+                    <field name="code"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Indian Talukas Form View -->
+        <record id="view_res_country_taluka_form" model="ir.ui.view">
+            <field name="name">res.country.taluka.form</field>
+            <field name="model">res.country.taluka</field>
+            <field name="arch" type="xml">
+                <form string="Indian Taluka">
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
+                                <field name="active" widget="boolean_button" options='{"terminology": "archive"}'/>
+                            </button>
+                        </div>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Taluka Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="district_id"/>
+                                <field name="state_id"/>
+                                <field name="code"/>
+                                <field name="active"/>
+                            </group>
+                            <group>
+                                <field name="village_ids" widget="one2many">
+                                    <tree editable="bottom">
+                                        <field name="name"/>
+                                        <field name="code"/>
+                                        <field name="active"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Indian Talukas Search View -->
+        <record id="view_res_country_taluka_search" model="ir.ui.view">
+            <field name="name">res.country.taluka.search</field>
+            <field name="model">res.country.taluka</field>
+            <field name="arch" type="xml">
+                <search string="Search Talukas">
+                    <field name="name"/>
+                    <field name="district_id"/>
+                    <field name="state_id"/>
+                    <field name="code"/>
+                    <filter string="Active" name="active" domain="[('active', '=', True)]"/>
+                    <filter string="Inactive" name="inactive" domain="[('active', '=', False)]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="State" name="group_state" context="{'group_by': 'state_id'}"/>
+                        <filter string="District" name="group_district" context="{'group_by': 'district_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- Indian Talukas Action -->
+        <record id="action_res_country_taluka" model="ir.actions.act_window">
+            <field name="name">Indian Talukas</field>
+            <field name="res_model">res.country.taluka</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_res_country_taluka_search"/>
+            <field name="context">{'search_default_active': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first Indian Taluka!
+                </p>
+                <p>
+                    Indian talukas are administrative divisions within districts.
+                </p>
+            </field>
+        </record>
+        
+    </data>
+</ocean>

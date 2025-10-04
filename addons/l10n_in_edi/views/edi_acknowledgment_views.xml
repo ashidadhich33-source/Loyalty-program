@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- EDI Acknowledgments Tree View -->
+        <record id="view_edi_acknowledgment_tree" model="ir.ui.view">
+            <field name="name">edi.acknowledgment.tree</field>
+            <field name="model">edi.acknowledgment</field>
+            <field name="arch" type="xml">
+                <tree string="EDI Acknowledgments" decoration-success="state=='processed'" decoration-danger="state=='error'">
+                    <field name="name"/>
+                    <field name="transmission_id"/>
+                    <field name="acknowledgment_type"/>
+                    <field name="acknowledgment_code"/>
+                    <field name="state"/>
+                    <field name="acknowledgment_date"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- EDI Acknowledgments Form View -->
+        <record id="view_edi_acknowledgment_form" model="ir.ui.view">
+            <field name="name">edi.acknowledgment.form</field>
+            <field name="model">edi.acknowledgment</field>
+            <field name="arch" type="xml">
+                <form string="EDI Acknowledgment">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Acknowledgment Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="transmission_id"/>
+                                <field name="acknowledgment_type"/>
+                                <field name="acknowledgment_code"/>
+                                <field name="state"/>
+                                <field name="acknowledgment_date"/>
+                                <field name="receive_date"/>
+                                <field name="process_date"/>
+                            </group>
+                            <group>
+                                <field name="age_group"/>
+                                <field name="size"/>
+                                <field name="season"/>
+                                <field name="brand"/>
+                                <field name="color"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="acknowledgment_message" widget="text"/>
+                        </group>
+                        <group>
+                            <field name="notes"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- EDI Acknowledgments Search View -->
+        <record id="view_edi_acknowledgment_search" model="ir.ui.view">
+            <field name="name">edi.acknowledgment.search</field>
+            <field name="model">edi.acknowledgment</field>
+            <field name="arch" type="xml">
+                <search string="Search EDI Acknowledgments">
+                    <field name="name"/>
+                    <field name="transmission_id"/>
+                    <field name="acknowledgment_type"/>
+                    <field name="acknowledgment_code"/>
+                    <field name="age_group"/>
+                    <field name="size"/>
+                    <field name="season"/>
+                    <field name="brand"/>
+                    <field name="color"/>
+                    <filter string="Pending" name="pending" domain="[('state', '=', 'pending')]"/>
+                    <filter string="Received" name="received" domain="[('state', '=', 'received')]"/>
+                    <filter string="Processed" name="processed" domain="[('state', '=', 'processed')]"/>
+                    <filter string="Error" name="error" domain="[('state', '=', 'error')]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Transmission" name="group_transmission" context="{'group_by': 'transmission_id'}"/>
+                        <filter string="Acknowledgment Type" name="group_acknowledgment_type" context="{'group_by': 'acknowledgment_type'}"/>
+                        <filter string="State" name="group_state" context="{'group_by': 'state'}"/>
+                        <filter string="Age Group" name="group_age_group" context="{'group_by': 'age_group'}"/>
+                        <filter string="Size" name="group_size" context="{'group_by': 'size'}"/>
+                        <filter string="Season" name="group_season" context="{'group_by': 'season'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- EDI Acknowledgments Action -->
+        <record id="action_edi_acknowledgment" model="ir.actions.act_window">
+            <field name="name">EDI Acknowledgments</field>
+            <field name="res_model">edi.acknowledgment</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_edi_acknowledgment_search"/>
+            <field name="context">{'search_default_pending': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first EDI Acknowledgment!
+                </p>
+                <p>
+                    EDI acknowledgments confirm receipt and processing of EDI transmissions.
+                </p>
+            </field>
+        </record>
+        
+    </data>
+</ocean>

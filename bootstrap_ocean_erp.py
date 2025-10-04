@@ -80,8 +80,13 @@ class OceanERPBootstrap:
         
         # Check if PostgreSQL is available
         try:
-            result = subprocess.run(['psql', '--version'], 
-                                  capture_output=True, text=True, timeout=10)
+            if os.name == 'nt':  # Windows
+                result = subprocess.run(['psql', '--version'], 
+                                      capture_output=True, text=True, timeout=10, shell=True)
+            else:  # Linux/macOS
+                result = subprocess.run(['psql', '--version'], 
+                                      capture_output=True, text=True, timeout=10)
+            
             if result.returncode == 0:
                 self.logger.info(f"PostgreSQL found: {result.stdout.strip()}")
             else:
@@ -126,9 +131,14 @@ class OceanERPBootstrap:
                 return False
             
             # Install dependencies
-            result = subprocess.run([
-                sys.executable, '-m', 'pip', 'install', '-r', str(requirements_file)
-            ], capture_output=True, text=True, timeout=300)
+            if os.name == 'nt':  # Windows
+                result = subprocess.run([
+                    sys.executable, '-m', 'pip', 'install', '-r', str(requirements_file)
+                ], capture_output=True, text=True, timeout=300, shell=True)
+            else:  # Linux/macOS
+                result = subprocess.run([
+                    sys.executable, '-m', 'pip', 'install', '-r', str(requirements_file)
+                ], capture_output=True, text=True, timeout=300)
             
             if result.returncode == 0:
                 self.logger.info("Dependencies installed successfully")
@@ -256,19 +266,34 @@ class OceanERPBootstrap:
         self.logger.info("Setting up file permissions...")
         
         try:
-            # Make run_erp.py executable
-            run_script = self.project_root / 'run_erp.py'
-            if run_script.exists():
-                os.chmod(run_script, 0o755)
-                self.logger.info("Made run_erp.py executable")
+            # Make run_erp.py executable (Linux/macOS only)
+            if os.name != 'nt':  # Not Windows
+                run_script = self.project_root / 'run_erp.py'
+                if run_script.exists():
+                    os.chmod(run_script, 0o755)
+                    self.logger.info("Made run_erp.py executable")
             
-            # Set permissions for directories
-            directories = ['uploads', 'logs', 'backups', 'static']
-            for directory in directories:
-                dir_path = self.project_root / directory
-                if dir_path.exists():
-                    os.chmod(dir_path, 0o755)
-                    self.logger.info(f"Set permissions for {directory}")
+            # Set permissions for directories (Linux/macOS only)
+            if os.name != 'nt':  # Not Windows
+                directories = ['uploads', 'logs', 'backups', 'static']
+                for directory in directories:
+                    dir_path = self.project_root / directory
+                    if dir_path.exists():
+                        os.chmod(dir_path, 0o755)
+                        self.logger.info(f"Set permissions for {directory}")
+            
+            # Windows: Set permissions using icacls
+            if os.name == 'nt':  # Windows
+                directories = ['uploads', 'logs', 'backups', 'static']
+                for directory in directories:
+                    dir_path = self.project_root / directory
+                    if dir_path.exists():
+                        try:
+                            subprocess.run(['icacls', str(dir_path), '/grant', 'Everyone:F', '/T'], 
+                                         capture_output=True, shell=True)
+                            self.logger.info(f"Set permissions for {directory}")
+                        except:
+                            self.logger.warning(f"Could not set permissions for {directory}")
             
             return True
             
@@ -282,12 +307,22 @@ class OceanERPBootstrap:
         print("🌊 Ocean ERP Bootstrap Complete!")
         print("="*60)
         print("\nNext Steps:")
-        print("1. Set up PostgreSQL database:")
-        print("   sudo -u postgres createdb ocean_erp")
-        print("   sudo -u postgres createuser erp_user")
-        print("   sudo -u postgres psql -c \"GRANT ALL PRIVILEGES ON DATABASE ocean_erp TO erp_user;\"")
-        print("\n2. Start the Ocean ERP server:")
-        print("   python3 run_erp.py")
+        
+        if os.name == 'nt':  # Windows
+            print("1. Set up PostgreSQL database:")
+            print("   createdb -U postgres ocean_erp")
+            print("   createuser -U postgres erp_user")
+            print("   psql -U postgres -c \"GRANT ALL PRIVILEGES ON DATABASE ocean_erp TO erp_user;\"")
+            print("\n2. Start the Ocean ERP server:")
+            print("   python run_erp.py")
+        else:  # Linux/macOS
+            print("1. Set up PostgreSQL database:")
+            print("   sudo -u postgres createdb ocean_erp")
+            print("   sudo -u postgres createuser erp_user")
+            print("   sudo -u postgres psql -c \"GRANT ALL PRIVILEGES ON DATABASE ocean_erp TO erp_user;\"")
+            print("\n2. Start the Ocean ERP server:")
+            print("   python3 run_erp.py")
+        
         print("\n3. Open your browser and go to:")
         print("   http://localhost:8069")
         print("\n4. Complete the database setup wizard")

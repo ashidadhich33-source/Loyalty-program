@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Payment Term Tree View -->
+        <record id="view_account_payment_term_tree" model="ir.ui.view">
+            <field name="name">account.payment.term.tree</field>
+            <field name="model">account.payment.term</field>
+            <field name="arch" type="xml">
+                <tree string="Payment Terms" decoration-muted="active==False">
+                    <field name="name"/>
+                    <field name="age_group"/>
+                    <field name="season"/>
+                    <field name="gst_treatment"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Payment Term Form View -->
+        <record id="view_account_payment_term_form" model="ir.ui.view">
+            <field name="name">account.payment.term.form</field>
+            <field name="model">account.payment.term</field>
+            <field name="arch" type="xml">
+                <form string="Payment Terms">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Payment Terms Name"/>
+                            </h1>
+                        </div>
+                        
+                        <group>
+                            <group>
+                                <field name="company_id"/>
+                                <field name="age_group"/>
+                                <field name="season"/>
+                            </group>
+                            <group>
+                                <field name="gst_treatment"/>
+                                <field name="active"/>
+                            </group>
+                        </group>
+                        
+                        <group>
+                            <field name="note"/>
+                        </group>
+                        
+                        <notebook>
+                            <page string="Payment Term Lines">
+                                <field name="line_ids">
+                                    <tree editable="bottom">
+                                        <field name="name"/>
+                                        <field name="sequence"/>
+                                        <field name="value"/>
+                                        <field name="value_amount"/>
+                                        <field name="days"/>
+                                        <field name="day_of_the_month"/>
+                                        <field name="note"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Payment Term Action -->
+        <record id="action_account_payment_term" model="ir.actions.act_window">
+            <field name="name">Payment Terms</field>
+            <field name="res_model">account.payment.term</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'search_default_active': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first payment terms!
+                </p>
+                <p>
+                    Payment terms define when and how customers should pay their invoices.
+                </p>
+            </field>
+        </record>
+        
+    </data>
+</ocean>

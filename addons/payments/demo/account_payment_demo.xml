@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Demo Payment Processing -->
+        <record id="demo_payment_processing_001" model="payment.processing">
+            <field name="name">PROC/00001</field>
+            <field name="payment_id" ref="invoicing.demo_payment_001"/>
+            <field name="date">2024-01-22</field>
+            <field name="processing_reference">UPI123456789</field>
+            <field name="processing_response">Payment processed successfully</field>
+            <field name="state">success</field>
+            <field name="age_group">baby</field>
+            <field name="season">summer</field>
+            <field name="gst_treatment">regular</field>
+        </record>
+        
+        <record id="demo_payment_processing_002" model="payment.processing">
+            <field name="name">PROC/00002</field>
+            <field name="payment_id" ref="invoicing.demo_payment_002"/>
+            <field name="date">2024-01-28</field>
+            <field name="processing_reference">TXN987654321</field>
+            <field name="processing_response">Payment processed successfully</field>
+            <field name="state">success</field>
+            <field name="age_group">teen</field>
+            <field name="season">all_season</field>
+            <field name="gst_treatment">regular</field>
+        </record>
+        
+        <record id="demo_payment_processing_003" model="payment.processing">
+            <field name="name">PROC/00003</field>
+            <field name="payment_id" ref="invoicing.demo_payment_003"/>
+            <field name="date">2024-02-01</field>
+            <field name="state">draft</field>
+            <field name="age_group">kids</field>
+            <field name="season">winter</field>
+            <field name="gst_treatment">regular</field>
+        </record>
+        
+    </data>
+</ocean>

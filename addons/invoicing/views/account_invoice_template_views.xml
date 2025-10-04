@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Invoice Template Tree View -->
+        <record id="view_account_invoice_template_tree" model="ir.ui.view">
+            <field name="name">account.invoice.template.tree</field>
+            <field name="model">account.invoice.template</field>
+            <field name="arch" type="xml">
+                <tree string="Invoice Templates" decoration-muted="active==False">
+                    <field name="name"/>
+                    <field name="template_type"/>
+                    <field name="age_group"/>
+                    <field name="season"/>
+                    <field name="gst_treatment"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Invoice Template Form View -->
+        <record id="view_account_invoice_template_form" model="ir.ui.view">
+            <field name="name">account.invoice.template.form</field>
+            <field name="model">account.invoice.template</field>
+            <field name="arch" type="xml">
+                <form string="Invoice Template">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Template Name"/>
+                            </h1>
+                        </div>
+                        
+                        <group>
+                            <group>
+                                <field name="template_type"/>
+                                <field name="company_id"/>
+                                <field name="age_group"/>
+                                <field name="season"/>
+                            </group>
+                            <group>
+                                <field name="gst_treatment"/>
+                                <field name="default_payment_term_id"/>
+                                <field name="default_fiscal_position_id"/>
+                                <field name="active"/>
+                            </group>
+                        </group>
+                        
+                        <group>
+                            <field name="description"/>
+                        </group>
+                        
+                        <notebook>
+                            <page string="Header">
+                                <field name="header_html" widget="html"/>
+                            </page>
+                            
+                            <page string="Footer">
+                                <field name="footer_html" widget="html"/>
+                            </page>
+                            
+                            <page string="Notes">
+                                <field name="note"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Invoice Template Search View -->
+        <record id="view_account_invoice_template_search" model="ir.ui.view">
+            <field name="name">account.invoice.template.search</field>
+            <field name="model">account.invoice.template</field>
+            <field name="arch" type="xml">
+                <search string="Search Invoice Templates">
+                    <field name="name"/>
+                    <field name="description"/>
+                    
+                    <filter string="Active" name="active" domain="[('active', '=', True)]"/>
+                    <filter string="Inactive" name="inactive" domain="[('active', '=', False)]"/>
+                    
+                    <separator/>
+                    <filter string="Customer Invoice" name="customer" domain="[('template_type', '=', 'customer')]"/>
+                    <filter string="Supplier Invoice" name="supplier" domain="[('template_type', '=', 'supplier')]"/>
+                    <filter string="Credit Note" name="credit_note" domain="[('template_type', '=', 'credit_note')]"/>
+                    <filter string="Debit Note" name="debit_note" domain="[('template_type', '=', 'debit_note')]"/>
+                    
+                    <separator/>
+                    <filter string="Baby" name="baby" domain="[('age_group', '=', 'baby')]"/>
+                    <filter string="Toddler" name="toddler" domain="[('age_group', '=', 'toddler')]"/>
+                    <filter string="Kids" name="kids" domain="[('age_group', '=', 'kids')]"/>
+                    <filter string="Teen" name="teen" domain="[('age_group', '=', 'teen')]"/>
+                    <filter string="All Age Groups" name="all" domain="[('age_group', '=', 'all')]"/>
+                    
+                    <separator/>
+                    <filter string="Summer" name="summer" domain="[('season', '=', 'summer')]"/>
+                    <filter string="Winter" name="winter" domain="[('season', '=', 'winter')]"/>
+                    <filter string="Monsoon" name="monsoon" domain="[('season', '=', 'monsoon')]"/>
+                    <filter string="All Season" name="all_season" domain="[('season', '=', 'all_season')]"/>
+                    
+                    <separator/>
+                    <filter string="Regular" name="regular" domain="[('gst_treatment', '=', 'regular')]"/>
+                    <filter string="Composition" name="composition" domain="[('gst_treatment', '=', 'composition')]"/>
+                    <filter string="Unregistered" name="unregistered" domain="[('gst_treatment', '=', 'unregistered')]"/>
+                    
+                    <group expand="0" string="Group By">
+                        <filter string="Template Type" name="template_type" context="{'group_by': 'template_type'}"/>
+                        <filter string="Age Group" name="age_group" context="{'group_by': 'age_group'}"/>
+                        <filter string="Season" name="season" context="{'group_by': 'season'}"/>
+                        <filter string="GST Treatment" name="gst_treatment" context="{'group_by': 'gst_treatment'}"/>
+                        <filter string="Company" name="company" context="{'group_by': 'company_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- Invoice Template Action -->
+        <record id="action_account_invoice_template" model="ir.actions.act_window">
+            <field name="name">Invoice Templates</field>
+            <field name="res_model">account.invoice.template</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_account_invoice_template_search"/>
+            <field name="context">{'search_default_active': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first invoice template!
+                </p>
+                <p>
+                    Invoice templates help you customize the appearance and content of your invoices.
+                </p>
+            </field>
+        </record>
+        
+    </data>
+</ocean>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Bank Accounts -->
+        <record id="bank_account_current" model="bank.account">
+            <field name="name">Current Account</field>
+            <field name="account_number">1234567890</field>
+            <field name="bank_id" ref="l10n_in.demo_bank_001"/>
+            <field name="account_type">current</field>
+            <field name="age_group">all</field>
+            <field name="season">all_season</field>
+            <field name="gst_treatment">regular</field>
+            <field name="description">Main current account for business operations</field>
+        </record>
+        
+        <record id="bank_account_savings" model="bank.account">
+            <field name="name">Savings Account</field>
+            <field name="account_number">0987654321</field>
+            <field name="bank_id" ref="l10n_in.demo_bank_002"/>
+            <field name="account_type">savings</field>
+            <field name="age_group">all</field>
+            <field name="season">all_season</field>
+            <field name="gst_treatment">regular</field>
+            <field name="description">Savings account for surplus funds</field>
+        </record>
+        
+        <record id="bank_account_credit_card" model="bank.account">
+            <field name="name">Credit Card</field>
+            <field name="account_number">5555444433332222</field>
+            <field name="bank_id" ref="l10n_in.demo_bank_001"/>
+            <field name="account_type">credit_card</field>
+            <field name="age_group">all</field>
+            <field name="season">all_season</field>
+            <field name="gst_treatment">regular</field>
+            <field name="description">Business credit card</field>
+        </record>
+        
+    </data>
+</ocean>

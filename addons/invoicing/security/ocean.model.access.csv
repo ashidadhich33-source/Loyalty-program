@@ -1,0 +1,13 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_account_invoice_user,account.invoice.user,model_account_invoice,base.group_user,1,1,1,0
+access_account_invoice_manager,account.invoice.manager,model_account_invoice,base.group_system,1,1,1,1
+access_account_invoice_line_user,account.invoice.line.user,model_account_invoice_line,base.group_user,1,1,1,0
+access_account_invoice_line_manager,account.invoice.line.manager,model_account_invoice_line,base.group_system,1,1,1,1
+access_account_invoice_tax_user,account.invoice.tax.user,model_account_invoice_tax,base.group_user,1,0,0,0
+access_account_invoice_tax_manager,account.invoice.tax.manager,model_account_invoice_tax,base.group_system,1,1,1,1
+access_account_payment_user,account.payment.user,model_account_payment,base.group_user,1,1,1,0
+access_account_payment_manager,account.payment.manager,model_account_payment,base.group_system,1,1,1,1
+access_account_invoice_template_user,account.invoice.template.user,model_account_invoice_template,base.group_user,1,0,0,0
+access_account_invoice_template_manager,account.invoice.template.manager,model_account_invoice_template,base.group_system,1,1,1,1
+access_account_invoice_report_user,account.invoice.report.user,model_account_invoice_report,base.group_user,1,0,0,0
+access_account_invoice_report_manager,account.invoice.report.manager,model_account_invoice_report,base.group_system,1,0,0,0

@@ -1,0 +1,59 @@
+/* Invoicing Addon Styles */
+
+.invoice-header {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.invoice-footer {
+    background-color: #e9ecef;
+    padding: 15px;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+.payment-status {
+    font-weight: bold;
+}
+
+.payment-status.not_paid {
+    color: #dc3545;
+}
+
+.payment-status.paid {
+    color: #28a745;
+}
+
+.payment-status.partial {
+    color: #ffc107;
+}
+
+.age-group-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.age-group-badge.baby {
+    background-color: #e3f2fd;
+    color: #1976d2;
+}
+
+.age-group-badge.toddler {
+    background-color: #f3e5f5;
+    color: #7b1fa2;
+}
+
+.age-group-badge.kids {
+    background-color: #e8f5e8;
+    color: #388e3c;
+}
+
+.age-group-badge.teen {
+    background-color: #fff3e0;
+    color: #f57c00;
+}

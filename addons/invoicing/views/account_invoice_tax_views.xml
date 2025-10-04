@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Invoice Tax Tree View -->
+        <record id="view_account_invoice_tax_tree" model="ir.ui.view">
+            <field name="name">account.invoice.tax.tree</field>
+            <field name="model">account.invoice.tax</field>
+            <field name="arch" type="xml">
+                <tree string="Invoice Taxes">
+                    <field name="name"/>
+                    <field name="tax_id"/>
+                    <field name="base"/>
+                    <field name="amount"/>
+                    <field name="cgst_amount"/>
+                    <field name="sgst_amount"/>
+                    <field name="igst_amount"/>
+                    <field name="utgst_amount"/>
+                    <field name="cess_amount"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Invoice Tax Form View -->
+        <record id="view_account_invoice_tax_form" model="ir.ui.view">
+            <field name="name">account.invoice.tax.form</field>
+            <field name="model">account.invoice.tax</field>
+            <field name="arch" type="xml">
+                <form string="Invoice Tax">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="tax_id"/>
+                                <field name="base"/>
+                                <field name="amount"/>
+                            </group>
+                            <group>
+                                <field name="cgst_amount"/>
+                                <field name="sgst_amount"/>
+                                <field name="igst_amount"/>
+                                <field name="utgst_amount"/>
+                                <field name="cess_amount"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Invoice Tax Action -->
+        <record id="action_account_invoice_tax" model="ir.actions.act_window">
+            <field name="name">Invoice Taxes</field>
+            <field name="res_model">account.invoice.tax</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    No tax lines found!
+                </p>
+                <p>
+                    Tax lines are created automatically when you post an invoice.
+                </p>
+            </field>
+        </record>
+        
+    </data>
+</ocean>

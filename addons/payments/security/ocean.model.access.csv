@@ -1,0 +1,17 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_account_payment_method_user,account.payment.method.user,model_account_payment_method,base.group_user,1,0,0,0
+access_account_payment_method_manager,account.payment.method.manager,model_account_payment_method,base.group_system,1,1,1,1
+access_account_payment_term_user,account.payment.term.user,model_account_payment_term,base.group_user,1,0,0,0
+access_account_payment_term_manager,account.payment.term.manager,model_account_payment_term,base.group_system,1,1,1,1
+access_bank_account_user,bank.account.user,model_bank_account,base.group_user,1,1,1,0
+access_bank_account_manager,bank.account.manager,model_bank_account,base.group_system,1,1,1,1
+access_bank_statement_user,bank.statement.user,model_bank_statement,base.group_user,1,1,1,0
+access_bank_statement_manager,bank.statement.manager,model_bank_statement,base.group_system,1,1,1,1
+access_bank_statement_line_user,bank.statement.line.user,model_bank_statement_line,base.group_user,1,1,1,0
+access_bank_statement_line_manager,bank.statement.line.manager,model_bank_statement_line,base.group_system,1,1,1,1
+access_payment_reconciliation_user,payment.reconciliation.user,model_payment_reconciliation,base.group_user,1,1,1,0
+access_payment_reconciliation_manager,payment.reconciliation.manager,model_payment_reconciliation,base.group_system,1,1,1,1
+access_payment_reconciliation_line_user,payment.reconciliation.line.user,model_payment_reconciliation_line,base.group_user,1,1,1,0
+access_payment_reconciliation_line_manager,payment.reconciliation.line.manager,model_payment_reconciliation_line,base.group_system,1,1,1,1
+access_payment_processing_user,payment.processing.user,model_payment_processing,base.group_user,1,0,0,0
+access_payment_processing_manager,payment.processing.manager,model_payment_processing,base.group_system,1,1,1,1

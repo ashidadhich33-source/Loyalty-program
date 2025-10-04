@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Demo Payments -->
+        <record id="demo_payment_001" model="account.payment">
+            <field name="name">PAY/00001</field>
+            <field name="partner_id" ref="contacts.demo_customer_002"/>
+            <field name="invoice_id" ref="demo_invoice_002"/>
+            <field name="date">2024-01-22</field>
+            <field name="amount">885.00</field>
+            <field name="payment_method_id" ref="payment_method_upi"/>
+            <field name="payment_type">inbound</field>
+            <field name="payment_reference">UPI123456789</field>
+            <field name="communication">Payment for invoice INV/00002</field>
+            <field name="state">posted</field>
+            <field name="age_group">baby</field>
+            <field name="season">summer</field>
+            <field name="gst_treatment">regular</field>
+        </record>
+        
+        <record id="demo_payment_002" model="account.payment">
+            <field name="name">PAY/00002</field>
+            <field name="partner_id" ref="contacts.demo_customer_003"/>
+            <field name="invoice_id" ref="demo_invoice_003"/>
+            <field name="date">2024-01-28</field>
+            <field name="amount">885.00</field>
+            <field name="payment_method_id" ref="payment_method_bank_transfer"/>
+            <field name="payment_type">inbound</field>
+            <field name="payment_reference">TXN987654321</field>
+            <field name="communication">Partial payment for invoice INV/00003</field>
+            <field name="state">posted</field>
+            <field name="age_group">teen</field>
+            <field name="season">all_season</field>
+            <field name="gst_treatment">regular</field>
+        </record>
+        
+        <record id="demo_payment_003" model="account.payment">
+            <field name="name">PAY/00003</field>
+            <field name="partner_id" ref="contacts.demo_customer_001"/>
+            <field name="invoice_id" ref="demo_invoice_001"/>
+            <field name="date">2024-02-01</field>
+            <field name="amount">1180.00</field>
+            <field name="payment_method_id" ref="payment_method_cheque"/>
+            <field name="payment_type">inbound</field>
+            <field name="payment_reference">CHQ001234</field>
+            <field name="communication">Payment for invoice INV/00001</field>
+            <field name="state">draft</field>
+            <field name="age_group">kids</field>
+            <field name="season">winter</field>
+            <field name="gst_treatment">regular</field>
+        </record>
+        
+    </data>
+</ocean>

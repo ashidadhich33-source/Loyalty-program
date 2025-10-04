@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Bank Statement Tree View -->
+        <record id="view_bank_statement_tree" model="ir.ui.view">
+            <field name="name">bank.statement.tree</field>
+            <field name="model">bank.statement</field>
+            <field name="arch" type="xml">
+                <tree string="Bank Statements" decoration-info="state=='draft'" decoration-success="state=='confirm'" decoration-muted="state=='cancel'">
+                    <field name="name"/>
+                    <field name="date"/>
+                    <field name="bank_account_id"/>
+                    <field name="balance_start"/>
+                    <field name="balance_end"/>
+                    <field name="total_credit"/>
+                    <field name="total_debit"/>
+                    <field name="state"/>
+                    <field name="age_group"/>
+                    <field name="season"/>
+                    <field name="gst_treatment"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Bank Statement Form View -->
+        <record id="view_bank_statement_form" model="ir.ui.view">
+            <field name="name">bank.statement.form</field>
+            <field name="model">bank.statement</field>
+            <field name="arch" type="xml">
+                <form string="Bank Statement">
+                    <header>
+                        <button name="action_open" string="Open" type="object" class="btn-primary" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                        <button name="action_confirm" string="Confirm" type="object" attrs="{'invisible': [('state', '!=', 'open')]}"/>
+                        <button name="action_cancel" string="Cancel" type="object" attrs="{'invisible': [('state', 'in', ['cancel', 'confirm'])]}"/>
+                        <button name="action_draft" string="Set to Draft" type="object" attrs="{'invisible': [('state', '!=', 'cancel')]}"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,open,confirm"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Statement Reference"/>
+                            </h1>
+                        </div>
+                        
+                        <group>
+                            <group>
+                                <field name="date"/>
+                                <field name="bank_account_id"/>
+                                <field name="balance_start"/>
+                                <field name="balance_end"/>
+                            </group>
+                            <group>
+                                <field name="company_id"/>
+                                <field name="currency_id"/>
+                                <field name="total_credit"/>
+                                <field name="total_debit"/>
+                            </group>
+                        </group>
+                        
+                        <group>
+                            <group>
+                                <field name="age_group"/>
+                                <field name="season"/>
+                            </group>
+                            <group>
+                                <field name="gst_treatment"/>
+                            </group>
+                        </group>
+                        
+                        <notebook>
+                            <page string="Statement Lines">
+                                <field name="line_ids">
+                                    <tree editable="bottom">
+                                        <field name="name"/>
+                                        <field name="date"/>
+                                        <field name="amount"/>
+                                        <field name="ref"/>
+                                        <field name="partner_id"/>
+                                        <field name="age_group"/>
+                                        <field name="season"/>
+                                        <field name="gst_treatment"/>
+                                        <field name="is_reconciled"/>
+                                        <field name="note"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            
+                            <page string="Notes">
+                                <field name="note"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Bank Statement Action -->
+        <record id="action_bank_statement" model="ir.actions.act_window">
+            <field name="name">Bank Statements</field>
+            <field name="res_model">bank.statement</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'search_default_open': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first bank statement!
+                </p>
+                <p>
+                    Bank statements help you track and reconcile your banking transactions.
+                </p>
+            </field>
+        </record>
+        
+    </data>
+</ocean>

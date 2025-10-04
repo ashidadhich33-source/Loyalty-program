@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Invoice Report Tree View -->
+        <record id="view_account_invoice_report_tree" model="ir.ui.view">
+            <field name="name">account.invoice.report.tree</field>
+            <field name="model">account.invoice.report</field>
+            <field name="arch" type="xml">
+                <tree string="Invoice Report">
+                    <field name="name"/>
+                    <field name="date_invoice"/>
+                    <field name="partner_name"/>
+                    <field name="amount_total"/>
+                    <field name="amount_residual"/>
+                    <field name="state"/>
+                    <field name="payment_state"/>
+                    <field name="age_group"/>
+                    <field name="season"/>
+                    <field name="gst_treatment"/>
+                    <field name="edi_status"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Invoice Report Search View -->
+        <record id="view_account_invoice_report_search" model="ir.ui.view">
+            <field name="name">account.invoice.report.search</field>
+            <field name="model">account.invoice.report</field>
+            <field name="arch" type="xml">
+                <search string="Search Invoice Report">
+                    <field name="name"/>
+                    <field name="partner_name"/>
+                    <field name="amount_total"/>
+                    
+                    <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
+                    <filter string="Open" name="open" domain="[('state', '=', 'open')]"/>
+                    <filter string="Paid" name="paid" domain="[('state', '=', 'paid')]"/>
+                    
+                    <filter string="Not Paid" name="not_paid" domain="[('payment_state', '=', 'not_paid')]"/>
+                    <filter string="In Payment" name="in_payment" domain="[('payment_state', '=', 'in_payment')]"/>
+                    <filter string="Paid" name="payment_paid" domain="[('payment_state', '=', 'paid')]"/>
+                    <filter string="Partially Paid" name="partial" domain="[('payment_state', '=', 'partial')]"/>
+                    
+                    <separator/>
+                    <filter string="Baby" name="baby" domain="[('age_group', '=', 'baby')]"/>
+                    <filter string="Toddler" name="toddler" domain="[('age_group', '=', 'toddler')]"/>
+                    <filter string="Kids" name="kids" domain="[('age_group', '=', 'kids')]"/>
+                    <filter string="Teen" name="teen" domain="[('age_group', '=', 'teen')]"/>
+                    
+                    <separator/>
+                    <filter string="Summer" name="summer" domain="[('season', '=', 'summer')]"/>
+                    <filter string="Winter" name="winter" domain="[('season', '=', 'winter')]"/>
+                    <filter string="Monsoon" name="monsoon" domain="[('season', '=', 'monsoon')]"/>
+                    <filter string="All Season" name="all_season" domain="[('season', '=', 'all_season')]"/>
+                    
+                    <separator/>
+                    <filter string="Regular" name="regular" domain="[('gst_treatment', '=', 'regular')]"/>
+                    <filter string="Composition" name="composition" domain="[('gst_treatment', '=', 'composition')]"/>
+                    <filter string="Unregistered" name="unregistered" domain="[('gst_treatment', '=', 'unregistered')]"/>
+                    
+                    <separator/>
+                    <filter string="Not Sent" name="not_sent" domain="[('edi_status', '=', 'not_sent')]"/>
+                    <filter string="Sent" name="sent" domain="[('edi_status', '=', 'sent')]"/>
+                    <filter string="Acknowledged" name="acknowledged" domain="[('edi_status', '=', 'acknowledged')]"/>
+                    <filter string="Rejected" name="rejected" domain="[('edi_status', '=', 'rejected')]"/>
+                    
+                    <group expand="0" string="Group By">
+                        <filter string="Customer" name="partner" context="{'group_by': 'partner_id'}"/>
+                        <filter string="Invoice Date" name="date" context="{'group_by': 'date_invoice'}"/>
+                        <filter string="Status" name="state" context="{'group_by': 'state'}"/>
+                        <filter string="Payment Status" name="payment_state" context="{'group_by': 'payment_state'}"/>
+                        <filter string="Age Group" name="age_group" context="{'group_by': 'age_group'}"/>
+                        <filter string="Season" name="season" context="{'group_by': 'season'}"/>
+                        <filter string="GST Treatment" name="gst_treatment" context="{'group_by': 'gst_treatment'}"/>
+                        <filter string="EDI Status" name="edi_status" context="{'group_by': 'edi_status'}"/>
+                        <filter string="Company" name="company" context="{'group_by': 'company_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- Invoice Report Action -->
+        <record id="action_account_invoice_report" model="ir.actions.act_window">
+            <field name="name">Invoice Report</field>
+            <field name="res_model">account.invoice.report</field>
+            <field name="view_mode">tree</field>
+            <field name="search_view_id" ref="view_account_invoice_report_search"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    No invoice data found!
+                </p>
+                <p>
+                    This report shows all invoices with their current status and payment information.
+                </p>
+            </field>
+        </record>
+        
+    </data>
+</ocean>

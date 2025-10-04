@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Purchase Order - Ocean ERP</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .sidebar {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .sidebar .nav-link {
+            color: rgba(255,255,255,0.8);
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin: 5px 0;
+            transition: all 0.3s ease;
+        }
+        .sidebar .nav-link:hover {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            transform: translateX(5px);
+        }
+        .sidebar .nav-link.active {
+            background: rgba(255,255,255,0.2);
+            color: white;
+        }
+        .main-content {
+            background: #f8f9fa;
+            min-height: 100vh;
+        }
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+        .form-control, .form-select {
+            border-radius: 10px;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+        .form-control:focus, .form-select:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 10px;
+            padding: 12px 30px;
+        }
+        .logo {
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+        }
+        .logo i {
+            color: #667eea;
+            font-size: 20px;
+        }
+        .order-line {
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            background: white;
+        }
+        .gst-summary {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 20px;
+        }
+        .supplier-info {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 20px;
+        }
+        .order-summary {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 20px;
+        }
+        .barcode-input {
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            padding: 15px;
+            font-size: 18px;
+            text-align: center;
+            background: #f8f9ff;
+        }
+        .barcode-input:focus {
+            border-color: #28a745;
+            box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3 col-lg-2 sidebar p-0">
+                <div class="p-3">
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="logo">
+                            <i class="fas fa-water"></i>
+                        </div>
+                        <div>
+                            <h5 class="text-white mb-0">Ocean ERP</h5>
+                            <small class="text-white-50">Kids Clothing</small>
+                        </div>
+                    </div>
+                    
+                    <nav class="nav flex-column">
+                        <a class="nav-link" href="/dashboard">
+                            <i class="fas fa-tachometer-alt me-2"></i>Dashboard
+                        </a>
+                        <a class="nav-link" href="/products/templates">
+                            <i class="fas fa-cube me-2"></i>Product Templates
+                        </a>
+                        <a class="nav-link" href="/products/variants">
+                            <i class="fas fa-boxes me-2"></i>Product Variants
+                        </a>
+                        <a class="nav-link active" href="/purchase/orders">
+                            <i class="fas fa-shopping-cart me-2"></i>Purchase Orders
+                        </a>
+                        <a class="nav-link" href="/pos/session">
+                            <i class="fas fa-cash-register me-2"></i>POS Session
+                        </a>
+                        <a class="nav-link" href="/sales/orders">
+                            <i class="fas fa-receipt me-2"></i>Sales Orders
+                        </a>
+                        <a class="nav-link" href="/inventory/stock">
+                            <i class="fas fa-warehouse me-2"></i>Inventory
+                        </a>
+                        <a class="nav-link" href="/contacts/customers">
+                            <i class="fas fa-users me-2"></i>Customers
+                        </a>
+                        <a class="nav-link" href="/contacts/suppliers">
+                            <i class="fas fa-truck me-2"></i>Suppliers
+                        </a>
+                        <a class="nav-link" href="/reports/gst">
+                            <i class="fas fa-chart-bar me-2"></i>GST Reports
+                        </a>
+                        <a class="nav-link" href="/settings">
+                            <i class="fas fa-cog me-2"></i>Settings
+                        </a>
+                    </nav>
+                </div>
+            </div>
+            
+            <!-- Main Content -->
+            <div class="col-md-9 col-lg-10 main-content">
+                <div class="p-4">
+                    <!-- Header -->
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <div>
+                            <h2 class="mb-0">Create Purchase Order</h2>
+                            <p class="text-muted mb-0">Create a new purchase order with GST calculation and inventory tracking</p>
+                        </div>
+                        <div>
+                            <a href="/purchase/orders" class="btn btn-outline-secondary">
+                                <i class="fas fa-arrow-left me-2"></i>Back to Orders
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Form -->
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="mb-0"><i class="fas fa-shopping-cart me-2"></i>Purchase Order Information</h5>
+                                </div>
+                                <div class="card-body">
+                                    <form id="purchaseOrderForm">
+                                        <!-- Order Header -->
+                                        <div class="row mb-4">
+                                            <div class="col-12">
+                                                <h6 class="text-primary mb-3"><i class="fas fa-info-circle me-2"></i>Order Header</h6>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="name" class="form-label">Order Number</label>
+                                                <input type="text" class="form-control" id="name" name="name" 
+                                                       value="PO20241201001" readonly>
+                                                <div class="form-text">Auto-generated order number</div>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="order_date" class="form-label">Order Date <span class="text-danger">*</span></label>
+                                                <input type="date" class="form-control" id="order_date" name="order_date" 
+                                                       value="2024-12-01" required>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="partner_id" class="form-label">Supplier <span class="text-danger">*</span></label>
+                                                <select class="form-select" id="partner_id" name="partner_id" required>
+                                                    <option value="">Select Supplier</option>
+                                                    <option value="1">GINI AND JONY - Mumbai</option>
+                                                    <option value="2">LITTLE ANGELS - Delhi</option>
+                                                    <option value="3">KIDS CORNER - Bangalore</option>
+                                                    <option value="4">TINY TOTS - Chennai</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="currency_id" class="form-label">Currency</label>
+                                                <select class="form-select" id="currency_id" name="currency_id">
+                                                    <option value="1">INR - Indian Rupee</option>
+                                                    <option value="2">USD - US Dollar</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Product Selection -->
+                                        <div class="row mb-4">
+                                            <div class="col-12">
+                                                <h6 class="text-primary mb-3"><i class="fas fa-box me-2"></i>Product Selection</h6>
+                                            </div>
+                                            <div class="col-12 mb-3">
+                                                <input type="text" class="form-control barcode-input" id="productBarcode" 
+                                                       placeholder="Scan or enter product barcode..." onkeypress="handleBarcodeInput(event)">
+                                            </div>
+                                            <div class="col-12 mb-3">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" id="productSearch" 
+                                                           placeholder="Search products...">
+                                                    <button class="btn btn-outline-primary" type="button" onclick="searchProducts()">
+                                                        <i class="fas fa-search"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Order Lines -->
+                                        <div class="row mb-4">
+                                            <div class="col-12">
+                                                <h6 class="text-primary mb-3"><i class="fas fa-list me-2"></i>Order Lines</h6>
+                                            </div>
+                                            <div class="col-12" id="orderLines">
+                                                <!-- Order lines will be dynamically added here -->
+                                            </div>
+                                            <div class="col-12 mt-3">
+                                                <button type="button" class="btn btn-outline-primary" onclick="addOrderLine()">
+                                                    <i class="fas fa-plus me-2"></i>Add Product Line
+                                                </button>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Action Buttons -->
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="d-flex justify-content-between">
+                                                    <a href="/purchase/orders" class="btn btn-outline-secondary">
+                                                        <i class="fas fa-times me-2"></i>Cancel
+                                                    </a>
+                                                    <div>
+                                                        <button type="button" class="btn btn-outline-primary me-2" onclick="saveDraft()">
+                                                            <i class="fas fa-save me-2"></i>Save Draft
+                                                        </button>
+                                                        <button type="button" class="btn btn-outline-warning me-2" onclick="sendRFQ()">
+                                                            <i class="fas fa-paper-plane me-2"></i>Send RFQ
+                                                        </button>
+                                                        <button type="submit" class="btn btn-primary">
+                                                            <i class="fas fa-check me-2"></i>Create Order
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Sidebar Info -->
+                        <div class="col-lg-4">
+                            <!-- Supplier Info -->
+                            <div class="supplier-info mb-3">
+                                <h5 class="mb-3"><i class="fas fa-truck me-2"></i>Supplier Information</h5>
+                                <div id="supplierInfo">
+                                    <small class="d-block">Select a supplier to view details</small>
+                                </div>
+                            </div>
+                            
+                            <!-- Order Summary -->
+                            <div class="order-summary mb-3">
+                                <h5 class="mb-3"><i class="fas fa-calculator me-2"></i>Order Summary</h5>
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span>Subtotal:</span>
+                                    <span>₹0.00</span>
+                                </div>
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span>CGST:</span>
+                                    <span>₹0.00</span>
+                                </div>
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span>SGST:</span>
+                                    <span>₹0.00</span>
+                                </div>
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span>IGST:</span>
+                                    <span>₹0.00</span>
+                                </div>
+                                <hr>
+                                <div class="d-flex justify-content-between">
+                                    <strong>Total:</strong>
+                                    <strong>₹0.00</strong>
+                                </div>
+                            </div>
+                            
+                            <!-- GST Summary -->
+                            <div class="gst-summary mb-3">
+                                <h5 class="mb-3"><i class="fas fa-percentage me-2"></i>GST Summary</h5>
+                                <div class="mb-2">
+                                    <small class="d-block">Location: Intra-state</small>
+                                    <small class="d-block">Tax Type: CGST + SGST</small>
+                                </div>
+                                <div class="mb-2">
+                                    <small class="d-block">Input Tax Credit:</small>
+                                    <small class="d-block">CGST: ₹0.00</small>
+                                    <small class="d-block">SGST: ₹0.00</small>
+                                </div>
+                            </div>
+                            
+                            <!-- Information Card -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>Information</h5>
+                                </div>
+                                <div class="card-body">
+                                    <h6 class="text-primary">Purchase Order</h6>
+                                    <p class="small text-muted">
+                                        A purchase order is a document sent to suppliers to request goods or services. 
+                                        It includes product details, quantities, prices, and GST information.
+                                    </p>
+                                    
+                                    <h6 class="text-primary mt-3">GST Calculation</h6>
+                                    <p class="small text-muted">
+                                        GST is calculated based on supplier location:
+                                    </p>
+                                    <ul class="small text-muted">
+                                        <li>Intra-state: CGST + SGST</li>
+                                        <li>Inter-state: IGST</li>
+                                    </ul>
+                                    
+                                    <h6 class="text-primary mt-3">Inventory Update</h6>
+                                    <p class="small text-muted">
+                                        Inventory will be updated when the purchase order is received and confirmed.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Sample products data
+        const products = [
+            {
+                id: 1,
+                barcode: '685686043632',
+                name: 'Boys Blue Slim Fit Jeans',
+                size: '18',
+                color: 'BLUE',
+                mrp: 1499.00,
+                cost_price: 843.79,
+                gst_rate: 5.00,
+                stock: 25
+            },
+            {
+                id: 2,
+                barcode: '685686043633',
+                name: 'Boys Blue Slim Fit Jeans',
+                size: '20',
+                color: 'BLUE',
+                mrp: 1499.00,
+                cost_price: 843.79,
+                gst_rate: 5.00,
+                stock: 20
+            },
+            {
+                id: 3,
+                barcode: '685686043634',
+                name: 'Boys Blue Slim Fit Jeans',
+                size: '22',
+                color: 'BLUE',
+                mrp: 1499.00,
+                cost_price: 843.79,
+                gst_rate: 5.00,
+                stock: 15
+            }
+        ];
+        
+        // Sample suppliers data
+        const suppliers = [
+            {
+                id: 1,
+                name: 'GINI AND JONY',
+                location: 'Mumbai',
+                state: 'Maharashtra',
+                gstin: '27ABCDE1234F1Z5',
+                contact: '9876543210'
+            },
+            {
+                id: 2,
+                name: 'LITTLE ANGELS',
+                location: 'Delhi',
+                state: 'Delhi',
+                gstin: '07ABCDE1234F1Z5',
+                contact: '9876543211'
+            },
+            {
+                id: 3,
+                name: 'KIDS CORNER',
+                location: 'Bangalore',
+                state: 'Karnataka',
+                gstin: '29ABCDE1234F1Z5',
+                contact: '9876543212'
+            }
+        ];
+        
+        let orderLines = [];
+        let selectedSupplier = null;
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            setupEventListeners();
+        });
+        
+        // Setup event listeners
+        function setupEventListeners() {
+            // Supplier selection
+            document.getElementById('partner_id').addEventListener('change', function() {
+                const supplierId = this.value;
+                if (supplierId) {
+                    selectedSupplier = suppliers.find(s => s.id == supplierId);
+                    updateSupplierInfo();
+                } else {
+                    selectedSupplier = null;
+                    document.getElementById('supplierInfo').innerHTML = '<small class="d-block">Select a supplier to view details</small>';
+                }
+            });
+        }
+        
+        // Handle barcode input
+        function handleBarcodeInput(event) {
+            if (event.key === 'Enter') {
+                const barcode = event.target.value.trim();
+                if (barcode) {
+                    addProductByBarcode(barcode);
+                    event.target.value = '';
+                }
+            }
+        }
+        
+        // Add product by barcode
+        function addProductByBarcode(barcode) {
+            const product = products.find(p => p.barcode === barcode);
+            if (product) {
+                addOrderLine(product);
+            } else {
+                alert('Product not found!');
+            }
+        }
+        
+        // Search products
+        function searchProducts() {
+            const searchTerm = document.getElementById('productSearch').value.toLowerCase();
+            const filteredProducts = products.filter(p => 
+                p.name.toLowerCase().includes(searchTerm) || 
+                p.barcode.includes(searchTerm)
+            );
+            
+            if (filteredProducts.length === 0) {
+                alert('No products found!');
+                return;
+            }
+            
+            // Show product selection modal or dropdown
+            let options = 'Select a product:\n';
+            filteredProducts.forEach((product, index) => {
+                options += `${index + 1}. ${product.name} (${product.barcode}) - ₹${product.cost_price}\n`;
+            });
+            
+            const choice = prompt(options);
+            if (choice && !isNaN(choice)) {
+                const productIndex = parseInt(choice) - 1;
+                if (productIndex >= 0 && productIndex < filteredProducts.length) {
+                    addOrderLine(filteredProducts[productIndex]);
+                }
+            }
+        }
+        
+        // Add order line
+        function addOrderLine(product = null) {
+            const lineId = Date.now();
+            const orderLine = {
+                id: lineId,
+                product_id: product ? product.id : null,
+                product_name: product ? product.name : '',
+                barcode: product ? product.barcode : '',
+                size: product ? product.size : '',
+                color: product ? product.color : '',
+                product_qty: 1,
+                price_unit: product ? product.cost_price : 0,
+                cost_price: product ? product.cost_price : 0,
+                gst_rate: product ? product.gst_rate : 0,
+                gst_treatment: 'included',
+                subtotal: product ? product.cost_price : 0,
+                base_amount: product ? product.cost_price / (1 + product.gst_rate / 100) : 0,
+                cgst_amount: 0,
+                sgst_amount: 0,
+                igst_amount: 0,
+                total_gst_amount: 0,
+                final_price: product ? product.cost_price : 0
+            };
+            
+            orderLines.push(orderLine);
+            updateOrderLinesDisplay();
+            updateOrderSummary();
+        }
+        
+        // Update order lines display
+        function updateOrderLinesDisplay() {
+            const orderLinesContainer = document.getElementById('orderLines');
+            orderLinesContainer.innerHTML = '';
+            
+            orderLines.forEach(line => {
+                const lineElement = document.createElement('div');
+                lineElement.className = 'order-line';
+                lineElement.innerHTML = `
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-2">
+                                <label class="form-label">Product</label>
+                                <select class="form-select" onchange="updateProduct(${line.id}, this.value)">
+                                    <option value="">Select Product</option>
+                                    ${products.map(p => `<option value="${p.id}" ${p.id == line.product_id ? 'selected' : ''}>${p.name} (${p.barcode})</option>`).join('')}
+                                </select>
+                            </div>
+                            <div class="mb-2">
+                                <label class="form-label">Quantity</label>
+                                <input type="number" class="form-control" value="${line.product_qty}" 
+                                       onchange="updateQuantity(${line.id}, this.value)" min="1">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-2">
+                                <label class="form-label">Cost Price</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">₹</span>
+                                    <input type="number" class="form-control" value="${line.cost_price}" 
+                                           onchange="updatePrice(${line.id}, this.value)" step="0.01">
+                                </div>
+                            </div>
+                            <div class="mb-2">
+                                <label class="form-label">GST Treatment</label>
+                                <select class="form-select" onchange="updateGSTTreatment(${line.id}, this.value)">
+                                    <option value="included" ${line.gst_treatment === 'included' ? 'selected' : ''}>GST Included</option>
+                                    <option value="excluded" ${line.gst_treatment === 'excluded' ? 'selected' : ''}>GST Excluded</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <small class="text-muted">Subtotal: ₹${line.subtotal.toFixed(2)}</small>
+                                    <small class="text-muted d-block">GST: ₹${line.total_gst_amount.toFixed(2)}</small>
+                                </div>
+                                <div>
+                                    <button class="btn btn-sm btn-outline-danger" onclick="removeOrderLine(${line.id})">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                orderLinesContainer.appendChild(lineElement);
+            });
+        }
+        
+        // Update product
+        function updateProduct(lineId, productId) {
+            const line = orderLines.find(l => l.id === lineId);
+            if (line && productId) {
+                const product = products.find(p => p.id == productId);
+                if (product) {
+                    line.product_id = product.id;
+                    line.product_name = product.name;
+                    line.barcode = product.barcode;
+                    line.size = product.size;
+                    line.color = product.color;
+                    line.cost_price = product.cost_price;
+                    line.price_unit = product.cost_price;
+                    line.gst_rate = product.gst_rate;
+                    line.subtotal = line.product_qty * line.cost_price;
+                    calculateGST(line);
+                    updateOrderLinesDisplay();
+                    updateOrderSummary();
+                }
+            }
+        }
+        
+        // Update quantity
+        function updateQuantity(lineId, quantity) {
+            const line = orderLines.find(l => l.id === lineId);
+            if (line) {
+                line.product_qty = Math.max(1, parseInt(quantity));
+                line.subtotal = line.product_qty * line.cost_price;
+                calculateGST(line);
+                updateOrderLinesDisplay();
+                updateOrderSummary();
+            }
+        }
+        
+        // Update price
+        function updatePrice(lineId, price) {
+            const line = orderLines.find(l => l.id === lineId);
+            if (line) {
+                line.cost_price = parseFloat(price) || 0;
+                line.price_unit = line.cost_price;
+                line.subtotal = line.product_qty * line.cost_price;
+                calculateGST(line);
+                updateOrderLinesDisplay();
+                updateOrderSummary();
+            }
+        }
+        
+        // Update GST treatment
+        function updateGSTTreatment(lineId, treatment) {
+            const line = orderLines.find(l => l.id === lineId);
+            if (line) {
+                line.gst_treatment = treatment;
+                calculateGST(line);
+                updateOrderLinesDisplay();
+                updateOrderSummary();
+            }
+        }
+        
+        // Calculate GST
+        function calculateGST(line) {
+            if (line.gst_treatment === 'included') {
+                line.final_price = line.subtotal;
+                line.base_amount = line.subtotal / (1 + line.gst_rate / 100);
+            } else {
+                line.base_amount = line.subtotal;
+                line.final_price = line.subtotal * (1 + line.gst_rate / 100);
+            }
+            
+            // Determine GST type based on supplier location
+            if (selectedSupplier) {
+                const companyState = 'Maharashtra'; // Company state
+                const supplierState = selectedSupplier.state;
+                
+                if (companyState === supplierState) {
+                    // Intra-state: CGST + SGST
+                    line.cgst_amount = line.base_amount * (line.gst_rate / 2 / 100);
+                    line.sgst_amount = line.base_amount * (line.gst_rate / 2 / 100);
+                    line.igst_amount = 0;
+                } else {
+                    // Inter-state: IGST
+                    line.cgst_amount = 0;
+                    line.sgst_amount = 0;
+                    line.igst_amount = line.base_amount * (line.gst_rate / 100);
+                }
+            }
+            
+            line.total_gst_amount = line.cgst_amount + line.sgst_amount + line.igst_amount;
+        }
+        
+        // Remove order line
+        function removeOrderLine(lineId) {
+            orderLines = orderLines.filter(l => l.id !== lineId);
+            updateOrderLinesDisplay();
+            updateOrderSummary();
+        }
+        
+        // Update supplier info
+        function updateSupplierInfo() {
+            if (selectedSupplier) {
+                document.getElementById('supplierInfo').innerHTML = `
+                    <small class="d-block">Name: ${selectedSupplier.name}</small>
+                    <small class="d-block">Location: ${selectedSupplier.location}</small>
+                    <small class="d-block">State: ${selectedSupplier.state}</small>
+                    <small class="d-block">GSTIN: ${selectedSupplier.gstin}</small>
+                    <small class="d-block">Contact: ${selectedSupplier.contact}</small>
+                `;
+            }
+        }
+        
+        // Update order summary
+        function updateOrderSummary() {
+            const subtotal = orderLines.reduce((sum, line) => sum + line.subtotal, 0);
+            const totalCGST = orderLines.reduce((sum, line) => sum + line.cgst_amount, 0);
+            const totalSGST = orderLines.reduce((sum, line) => sum + line.sgst_amount, 0);
+            const totalIGST = orderLines.reduce((sum, line) => sum + line.igst_amount, 0);
+            const total = orderLines.reduce((sum, line) => sum + line.final_price, 0);
+            
+            const summary = document.querySelector('.order-summary');
+            summary.innerHTML = `
+                <h5 class="mb-3"><i class="fas fa-calculator me-2"></i>Order Summary</h5>
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Subtotal:</span>
+                    <span>₹${subtotal.toFixed(2)}</span>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                    <span>CGST:</span>
+                    <span>₹${totalCGST.toFixed(2)}</span>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                    <span>SGST:</span>
+                    <span>₹${totalSGST.toFixed(2)}</span>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                    <span>IGST:</span>
+                    <span>₹${totalIGST.toFixed(2)}</span>
+                </div>
+                <hr>
+                <div class="d-flex justify-content-between">
+                    <strong>Total:</strong>
+                    <strong>₹${total.toFixed(2)}</strong>
+                </div>
+            `;
+        }
+        
+        // Form submission
+        document.getElementById('purchaseOrderForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (orderLines.length === 0) {
+                alert('Please add at least one product line!');
+                return;
+            }
+            
+            if (!selectedSupplier) {
+                alert('Please select a supplier!');
+                return;
+            }
+            
+            // Show loading
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Creating...';
+            submitBtn.disabled = true;
+            
+            // Simulate API call
+            setTimeout(() => {
+                alert('Purchase order created successfully!');
+                window.location.href = '/purchase/orders';
+            }, 2000);
+        });
+        
+        // Save draft
+        function saveDraft() {
+            alert('Draft saved successfully!');
+        }
+        
+        // Send RFQ
+        function sendRFQ() {
+            if (orderLines.length === 0) {
+                alert('Please add at least one product line!');
+                return;
+            }
+            
+            if (!selectedSupplier) {
+                alert('Please select a supplier!');
+                return;
+            }
+            
+            alert('RFQ sent to supplier successfully!');
+        }
+    </script>
+</body>
+</html>

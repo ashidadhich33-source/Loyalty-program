@@ -77,6 +77,72 @@ class PurchaseOrderLine(BaseModel):
         help='Total amount including taxes'
     )
     
+    # GST Fields
+    cost_price = FloatField(
+        string='Cost Price',
+        digits=(16, 2),
+        help='Cost price of the product'
+    )
+    
+    gst_rate = FloatField(
+        string='GST Rate (%)',
+        digits=(5, 2),
+        help='GST rate percentage'
+    )
+    
+    gst_treatment = SelectionField(
+        string='GST Treatment',
+        selection=[
+            ('included', 'GST Included'),
+            ('excluded', 'GST Excluded'),
+        ],
+        default='included',
+        help='GST treatment for this line'
+    )
+    
+    # GST Breakdown Fields
+    base_amount = FloatField(
+        string='Base Amount',
+        digits=(16, 2),
+        compute='_compute_gst_breakdown',
+        help='Base amount for GST calculation'
+    )
+    
+    cgst_amount = FloatField(
+        string='CGST Amount',
+        digits=(16, 2),
+        compute='_compute_gst_breakdown',
+        help='Central GST amount'
+    )
+    
+    sgst_amount = FloatField(
+        string='SGST Amount',
+        digits=(16, 2),
+        compute='_compute_gst_breakdown',
+        help='State GST amount'
+    )
+    
+    igst_amount = FloatField(
+        string='IGST Amount',
+        digits=(16, 2),
+        compute='_compute_gst_breakdown',
+        help='Integrated GST amount'
+    )
+    
+    total_gst_amount = FloatField(
+        string='Total GST Amount',
+        digits=(16, 2),
+        compute='_compute_gst_breakdown',
+        help='Total GST amount'
+    )
+    
+    final_price = FloatField(
+        string='Final Price',
+        digits=(16, 2),
+        compute='_compute_gst_breakdown',
+        help='Final price including GST'
+    )
+    
     # Kids Clothing Specific Fields
     age_group = SelectionField(
         string='Age Group',
@@ -173,6 +239,56 @@ class PurchaseOrderLine(BaseModel):
             self._calculate_totals()
         
         return result
+    
+    def _compute_gst_breakdown(self):
+        """Compute GST breakdown for purchase line"""
+        for line in self:
+            if not line.product_id:
+                line.base_amount = 0.0
+                line.cgst_amount = 0.0
+                line.sgst_amount = 0.0
+                line.igst_amount = 0.0
+                line.total_gst_amount = 0.0
+                line.final_price = 0.0
+                continue
+            
+            # Get product variant data
+            variant = line.product_id
+            line.cost_price = variant.cost_price or 0.0
+            line.gst_rate = variant.gst_rate or 0.0
+            
+            # Calculate base amount
+            subtotal = line.product_qty * line.price_unit
+            
+            # Calculate GST breakdown based on treatment
+            if line.gst_treatment == 'included':
+                line.final_price = subtotal
+                line.base_amount = subtotal / (1 + line.gst_rate / 100)
+            else:
+                line.base_amount = subtotal
+                line.final_price = subtotal + (subtotal * line.gst_rate / 100)
+            
+            # Determine intra-state or inter-state based on company and supplier location
+            company_state = line.order_id.company_id.state
+            supplier_state = line.order_id.partner_id.state if line.order_id.partner_id else company_state
+            
+            if company_state == supplier_state:
+                # Intra-state: CGST + SGST
+                line.cgst_amount = line.base_amount * (line.gst_rate / 2 / 100)
+                line.sgst_amount = line.base_amount * (line.gst_rate / 2 / 100)
+                line.igst_amount = 0.0
+            else:
+                # Inter-state: IGST
+                line.cgst_amount = 0.0
+                line.sgst_amount = 0.0
+                line.igst_amount = line.base_amount * (line.gst_rate / 100)
+            
+            line.total_gst_amount = line.cgst_amount + line.sgst_amount + line.igst_amount
+            
+            # Update legacy fields for compatibility
+            line.price_subtotal = line.base_amount
+            line.price_tax = line.total_gst_amount
+            line.price_total = line.final_price
     
     def _calculate_totals(self):
         """Calculate line totals"""

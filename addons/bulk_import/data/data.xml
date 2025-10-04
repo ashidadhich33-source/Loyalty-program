@@ -14,8 +14,24 @@
             <field name="skip_empty_rows">True</field>
             <field name="max_rows">1000</field>
             <field name="batch_size">50</field>
-            <field name="field_mapping">{"name": "Product Name", "code": "Product Code", "description": "Description", "categ_id": "Category", "list_price": "Sale Price", "standard_price": "Cost Price"}</field>
-            <field name="validation_rules">{"required_fields": {"name": {"required": true}}, "field_types": {"list_price": {"type": "float"}, "standard_price": {"type": "float"}}}</field>
+            <field name="field_mapping">{"name": "Product Name", "internal_reference": "StyleCode", "description": "Item Description", "category_id": "Category", "sub_category_id": "Sub Category", "brand_id": "Brand", "gender": "Gender", "hsn_code": "HSN Code"}</field>
+            <field name="validation_rules">{"required_fields": {"name": {"required": true}, "internal_reference": {"required": true}}, "field_types": {"hsn_code": {"type": "string"}}}</field>
+            <field name="is_active">True</field>
+            <field name="is_default">True</field>
+        </record>
+        
+        <!-- Product Variant Import -->
+        <record id="template_product_variant" model="import.template">
+            <field name="name">Product Variant Import</field>
+            <field name="description">Import product variants with GST and pricing</field>
+            <field name="model_name">product.variant</field>
+            <field name="template_type">excel</field>
+            <field name="has_header">True</field>
+            <field name="skip_empty_rows">True</field>
+            <field name="max_rows">1000</field>
+            <field name="batch_size">50</field>
+            <field name="field_mapping">{"product_tmpl_id": "StyleCode", "barcode": "Barcode", "ean_code": "EAN Code", "size": "Size", "color": "Shade", "mrp": "MRP", "cost_price": "Cost Price", "gst_rate": "GST Rate"}</field>
+            <field name="validation_rules">{"required_fields": {"product_tmpl_id": {"required": true}, "barcode": {"required": true}, "size": {"required": true}}, "field_types": {"mrp": {"type": "float"}, "cost_price": {"type": "float"}, "gst_rate": {"type": "float"}}}</field>
             <field name="is_active">True</field>
             <field name="is_default">True</field>
         </record>

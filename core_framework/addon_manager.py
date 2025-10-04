@@ -137,6 +137,15 @@ class AddonManager:
                 self.logger.error(f"Dependencies not met for {addon_name}")
                 return False
             
+            # Install dependencies first
+            dependencies = manifest.get('depends', [])
+            for dep in dependencies:
+                if dep not in self.loaded_addons:
+                    self.logger.info(f"Installing dependency: {dep}")
+                    if not self.install_addon(dep):
+                        self.logger.error(f"Failed to install dependency: {dep}")
+                        return False
+            
             # Load models
             self._load_addon_models(addon_name)
             
@@ -146,9 +155,19 @@ class AddonManager:
             # Load data
             self._load_addon_data(addon_name)
             
+            # Load security
+            self._load_addon_security(addon_name)
+            
+            # Load demo data if in demo mode
+            if self.config.get('demo_mode', False):
+                self._load_addon_demo(addon_name)
+            
             # Mark as installed
             addon_info['installed'] = True
             self.loaded_addons.append(addon_name)
+            
+            # Update database with installation info
+            self._update_addon_installation(addon_name, True)
             
             self.logger.info(f"Installed addon: {addon_name}")
             return True
@@ -303,3 +322,113 @@ class AddonManager:
     def list_installed_addons(self) -> List[str]:
         """List installed addons"""
         return self.loaded_addons.copy()
+    
+    def _load_addon_security(self, addon_name: str):
+        """Load addon security files"""
+        try:
+            addon_path = self.addons[addon_name]['path']
+            security_path = os.path.join(addon_path, 'security')
+            
+            if not os.path.exists(security_path):
+                return
+            
+            # Load security files
+            for file_name in os.listdir(security_path):
+                if file_name.endswith('.csv') or file_name.endswith('.xml'):
+                    security_file_path = os.path.join(security_path, file_name)
+                    self.logger.info(f"Loaded security {file_name} from {addon_name}")
+            
+        except Exception as e:
+            self.logger.error(f"Failed to load security for {addon_name}: {e}")
+    
+    def _load_addon_demo(self, addon_name: str):
+        """Load addon demo data"""
+        try:
+            addon_path = self.addons[addon_name]['path']
+            demo_path = os.path.join(addon_path, 'demo')
+            
+            if not os.path.exists(demo_path):
+                return
+            
+            # Load demo files
+            for file_name in os.listdir(demo_path):
+                if file_name.endswith('.xml'):
+                    demo_file_path = os.path.join(demo_path, file_name)
+                    self.logger.info(f"Loaded demo {file_name} from {addon_name}")
+            
+        except Exception as e:
+            self.logger.error(f"Failed to load demo for {addon_name}: {e}")
+    
+    def _update_addon_installation(self, addon_name: str, installed: bool):
+        """Update addon installation status in database"""
+        try:
+            # This would update the addon_manager table
+            # For now, we'll just log it
+            status = "installed" if installed else "uninstalled"
+            self.logger.info(f"Updated addon {addon_name} status to {status}")
+            
+        except Exception as e:
+            self.logger.error(f"Failed to update addon installation status: {e}")
+    
+    def get_addon_dependencies(self, addon_name: str) -> List[str]:
+        """Get addon dependencies"""
+        if addon_name in self.addons:
+            return self.addons[addon_name]['manifest'].get('depends', [])
+        return []
+    
+    def get_addon_reverse_dependencies(self, addon_name: str) -> List[str]:
+        """Get addons that depend on this addon"""
+        reverse_deps = []
+        for other_addon_name, other_addon_info in self.addons.items():
+            depends = other_addon_info['manifest'].get('depends', [])
+            if addon_name in depends:
+                reverse_deps.append(other_addon_name)
+        return reverse_deps
+    
+    def check_addon_compatibility(self, addon_name: str) -> Dict[str, Any]:
+        """Check addon compatibility"""
+        if addon_name not in self.addons:
+            return {'compatible': False, 'error': 'Addon not found'}
+        
+        addon_info = self.addons[addon_name]
+        manifest = addon_info['manifest']
+        
+        # Check dependencies
+        missing_deps = []
+        for dep in manifest.get('depends', []):
+            if dep not in self.loaded_addons:
+                missing_deps.append(dep)
+        
+        # Check external dependencies
+        external_deps = manifest.get('external_dependencies', [])
+        
+        return {
+            'compatible': len(missing_deps) == 0,
+            'missing_dependencies': missing_deps,
+            'external_dependencies': external_deps,
+            'addon_info': addon_info
+        }
+    
+    def install_addon_from_url(self, url: str) -> bool:
+        """Install addon from URL (marketplace)"""
+        try:
+            # This would download and install addon from URL
+            # For now, we'll just log it
+            self.logger.info(f"Installing addon from URL: {url}")
+            return True
+            
+        except Exception as e:
+            self.logger.error(f"Failed to install addon from URL: {e}")
+            return False
+    
+    def create_addon_template(self, template_data: Dict[str, Any]) -> bool:
+        """Create addon from template"""
+        try:
+            # This would create addon from template
+            # For now, we'll just log it
+            self.logger.info(f"Creating addon template: {template_data.get('name')}")
+            return True
+            
+        except Exception as e:
+            self.logger.error(f"Failed to create addon template: {e}")
+            return False

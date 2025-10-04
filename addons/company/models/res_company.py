@@ -117,6 +117,45 @@ class ResCompany(BaseModel):
         help='Warehouse address'
     )
     
+    # Location Information
+    street = CharField(
+        string='Street',
+        size=255,
+        help='Street address'
+    )
+    
+    city = CharField(
+        string='City',
+        size=100,
+        help='City'
+    )
+    
+    state = CharField(
+        string='State',
+        size=100,
+        help='State'
+    )
+    
+    pincode = CharField(
+        string='Pincode',
+        size=10,
+        help='Pincode/ZIP code'
+    )
+    
+    country = CharField(
+        string='Country',
+        size=100,
+        default='India',
+        help='Country'
+    )
+    
+    # GST Information
+    gstin = CharField(
+        string='GSTIN',
+        size=15,
+        help='GST Registration Number'
+    )
+    
     # Contact Information
     contact_person = CharField(
         string='Contact Person',

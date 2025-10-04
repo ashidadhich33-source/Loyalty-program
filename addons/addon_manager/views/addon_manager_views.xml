@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        <!-- Addon Manager Tree View -->
+        <record id="view_addon_manager_tree" model="ocean.ui.view">
+            <field name="name">addon_manager.tree</field>
+            <field name="model">addon.manager</field>
+            <field name="arch" type="xml">
+                <tree string="Addon Manager" decoration-success="status=='installed'" decoration-muted="status=='uninstalled'" decoration-warning="status=='upgradeable'" decoration-danger="status=='broken'">
+                    <field name="name"/>
+                    <field name="technical_name"/>
+                    <field name="version"/>
+                    <field name="category"/>
+                    <field name="status"/>
+                    <field name="is_installed"/>
+                    <field name="is_application"/>
+                    <field name="author"/>
+                    <field name="rating"/>
+                    <field name="download_count"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Addon Manager Form View -->
+        <record id="view_addon_manager_form" model="ocean.ui.view">
+            <field name="name">addon_manager.form</field>
+            <field name="model">addon.manager</field>
+            <field name="arch" type="xml">
+                <form string="Addon Manager">
+                    <header>
+                        <button name="action_install" string="Install" type="object" class="btn-primary" attrs="{'invisible': [('is_installed', '=', True)]}"/>
+                        <button name="action_uninstall" string="Uninstall" type="object" class="btn-danger" attrs="{'invisible': [('is_installed', '=', False)]}"/>
+                        <button name="action_update" string="Update" type="object" class="btn-warning" attrs="{'invisible': [('status', '!=', 'upgradeable')]}"/>
+                        <button name="action_reload" string="Reload" type="object" class="btn-secondary"/>
+                        <field name="status" widget="statusbar" statusbar_visible="available,installed,upgradeable,broken"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Addon Name"/>
+                            </h1>
+                            <h3>
+                                <field name="technical_name"/>
+                            </h3>
+                        </div>
+                        
+                        <group>
+                            <group string="Basic Information">
+                                <field name="version"/>
+                                <field name="category"/>
+                                <field name="summary"/>
+                                <field name="author"/>
+                                <field name="website"/>
+                                <field name="license"/>
+                            </group>
+                            <group string="Installation Status">
+                                <field name="is_installed"/>
+                                <field name="is_application"/>
+                                <field name="auto_install"/>
+                                <field name="install_date"/>
+                                <field name="update_date"/>
+                                <field name="install_path"/>
+                            </group>
+                        </group>
+                        
+                        <group>
+                            <group string="Dependencies">
+                                <field name="depends" widget="text"/>
+                                <field name="external_dependencies" widget="text"/>
+                            </group>
+                            <group string="Marketplace">
+                                <field name="is_marketplace"/>
+                                <field name="marketplace_url"/>
+                                <field name="price"/>
+                                <field name="currency"/>
+                            </group>
+                        </group>
+                        
+                        <group>
+                            <group string="Metrics">
+                                <field name="download_count"/>
+                                <field name="rating"/>
+                                <field name="review_count"/>
+                            </group>
+                            <group string="Development">
+                                <field name="is_development"/>
+                                <field name="development_status"/>
+                            </group>
+                        </group>
+                        
+                        <group string="Description">
+                            <field name="description" nolabel="1"/>
+                        </group>
+                        
+                        <group string="Error Information" attrs="{'invisible': [('error_message', '=', False)]}">
+                            <field name="error_message" nolabel="1"/>
+                        </group>
+                        
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Addon Manager Search View -->
+        <record id="view_addon_manager_search" model="ocean.ui.view">
+            <field name="name">addon_manager.search</field>
+            <field name="model">addon.manager</field>
+            <field name="arch" type="xml">
+                <search string="Search Addons">
+                    <field name="name"/>
+                    <field name="technical_name"/>
+                    <field name="summary"/>
+                    <field name="author"/>
+                    <field name="category"/>
+                    <filter string="Installed" name="installed" domain="[('is_installed', '=', True)]"/>
+                    <filter string="Available" name="available" domain="[('is_installed', '=', False)]"/>
+                    <filter string="Applications" name="applications" domain="[('is_application', '=', True)]"/>
+                    <filter string="Broken" name="broken" domain="[('status', '=', 'broken')]"/>
+                    <filter string="Upgradeable" name="upgradeable" domain="[('status', '=', 'upgradeable')]"/>
+                    <filter string="Marketplace" name="marketplace" domain="[('is_marketplace', '=', True)]"/>
+                    <filter string="Development" name="development" domain="[('is_development', '=', True)]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Category" name="group_category" context="{'group_by': 'category'}"/>
+                        <filter string="Status" name="group_status" context="{'group_by': 'status'}"/>
+                        <filter string="Author" name="group_author" context="{'group_by': 'author'}"/>
+                        <filter string="Install Date" name="group_install_date" context="{'group_by': 'install_date:day'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- Addon Manager Action -->
+        <record id="action_addon_manager" model="ocean.actions.act_window">
+            <field name="name">Addon Manager</field>
+            <field name="res_model">addon.manager</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_addon_manager_tree"/>
+            <field name="search_view_id" ref="view_addon_manager_search"/>
+            <field name="context">{}</field>
+        </record>
+        
+        <!-- Installed Addons Action -->
+        <record id="action_installed_addons" model="ocean.actions.act_window">
+            <field name="name">Installed Addons</field>
+            <field name="res_model">addon.manager</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_addon_manager_tree"/>
+            <field name="search_view_id" ref="view_addon_manager_search"/>
+            <field name="domain">[('is_installed', '=', True)]</field>
+            <field name="context">{}</field>
+        </record>
+        
+        <!-- Available Addons Action -->
+        <record id="action_available_addons" model="ocean.actions.act_window">
+            <field name="name">Available Addons</field>
+            <field name="res_model">addon.manager</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_addon_manager_tree"/>
+            <field name="search_view_id" ref="view_addon_manager_search"/>
+            <field name="domain">[('is_installed', '=', False)]</field>
+            <field name="context">{}</field>
+        </record>
+        
+        <!-- Applications Action -->
+        <record id="action_applications" model="ocean.actions.act_window">
+            <field name="name">Applications</field>
+            <field name="res_model">addon.manager</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_addon_manager_tree"/>
+            <field name="search_view_id" ref="view_addon_manager_search"/>
+            <field name="domain">[('is_application', '=', True)]</field>
+            <field name="context">{}</field>
+        </record>
+        
+    </data>
+</ocean>

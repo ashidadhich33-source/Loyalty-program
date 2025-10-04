@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Product Variant - Ocean ERP</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .sidebar {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .sidebar .nav-link {
+            color: rgba(255,255,255,0.8);
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin: 5px 0;
+            transition: all 0.3s ease;
+        }
+        .sidebar .nav-link:hover {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            transform: translateX(5px);
+        }
+        .sidebar .nav-link.active {
+            background: rgba(255,255,255,0.2);
+            color: white;
+        }
+        .main-content {
+            background: #f8f9fa;
+            min-height: 100vh;
+        }
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+        .form-control, .form-select {
+            border-radius: 10px;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+        .form-control:focus, .form-select:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 10px;
+            padding: 12px 30px;
+        }
+        .logo {
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+        }
+        .logo i {
+            color: #667eea;
+            font-size: 20px;
+        }
+        .pricing-card {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            border-radius: 15px;
+        }
+        .gst-card {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border-radius: 15px;
+        }
+        .barcode-scanner {
+            background: #f8f9fa;
+            border: 2px dashed #dee2e6;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .barcode-scanner:hover {
+            border-color: #667eea;
+            background: #f0f2ff;
+        }
+        .barcode-scanner.active {
+            border-color: #28a745;
+            background: #f0fff4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3 col-lg-2 sidebar p-0">
+                <div class="p-3">
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="logo">
+                            <i class="fas fa-water"></i>
+                        </div>
+                        <div>
+                            <h5 class="text-white mb-0">Ocean ERP</h5>
+                            <small class="text-white-50">Kids Clothing</small>
+                        </div>
+                    </div>
+                    
+                    <nav class="nav flex-column">
+                        <a class="nav-link" href="/dashboard">
+                            <i class="fas fa-tachometer-alt me-2"></i>Dashboard
+                        </a>
+                        <a class="nav-link" href="/products/templates">
+                            <i class="fas fa-cube me-2"></i>Product Templates
+                        </a>
+                        <a class="nav-link active" href="/products/variants">
+                            <i class="fas fa-boxes me-2"></i>Product Variants
+                        </a>
+                        <a class="nav-link" href="/purchase/orders">
+                            <i class="fas fa-shopping-cart me-2"></i>Purchase Orders
+                        </a>
+                        <a class="nav-link" href="/pos/session">
+                            <i class="fas fa-cash-register me-2"></i>POS Session
+                        </a>
+                        <a class="nav-link" href="/sales/orders">
+                            <i class="fas fa-receipt me-2"></i>Sales Orders
+                        </a>
+                        <a class="nav-link" href="/inventory/stock">
+                            <i class="fas fa-warehouse me-2"></i>Inventory
+                        </a>
+                        <a class="nav-link" href="/contacts/customers">
+                            <i class="fas fa-users me-2"></i>Customers
+                        </a>
+                        <a class="nav-link" href="/contacts/suppliers">
+                            <i class="fas fa-truck me-2"></i>Suppliers
+                        </a>
+                        <a class="nav-link" href="/reports/gst">
+                            <i class="fas fa-chart-bar me-2"></i>GST Reports
+                        </a>
+                        <a class="nav-link" href="/settings">
+                            <i class="fas fa-cog me-2"></i>Settings
+                        </a>
+                    </nav>
+                </div>
+            </div>
+            
+            <!-- Main Content -->
+            <div class="col-md-9 col-lg-10 main-content">
+                <div class="p-4">
+                    <!-- Header -->
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <div>
+                            <h2 class="mb-0">Create Product Variant</h2>
+                            <p class="text-muted mb-0">Create a new product variant with barcode, pricing, and GST information</p>
+                        </div>
+                        <div>
+                            <a href="/products/variants" class="btn btn-outline-secondary">
+                                <i class="fas fa-arrow-left me-2"></i>Back to Variants
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Form -->
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="mb-0"><i class="fas fa-box me-2"></i>Product Variant Information</h5>
+                                </div>
+                                <div class="card-body">
+                                    <form id="productVariantForm">
+                                        <!-- Product Template Selection -->
+                                        <div class="row mb-4">
+                                            <div class="col-12">
+                                                <h6 class="text-primary mb-3"><i class="fas fa-cube me-2"></i>Product Template</h6>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="product_tmpl_id" class="form-label">Product Template <span class="text-danger">*</span></label>
+                                                <select class="form-select" id="product_tmpl_id" name="product_tmpl_id" required>
+                                                    <option value="">Select Product Template</option>
+                                                    <option value="1">121246526864 - Boys Blue Slim Fit Stretchable Jeans</option>
+                                                    <option value="2">121246526865 - Girls Pink Floral Dress</option>
+                                                    <option value="3">121246526866 - Boys White Cotton T-Shirt</option>
+                                                </select>
+                                                <div class="form-text">Select the product template (StyleCode) for this variant</div>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="barcode" class="form-label">Barcode <span class="text-danger">*</span></label>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" id="barcode" name="barcode" 
+                                                           placeholder="e.g., 685686043632" required>
+                                                    <button class="btn btn-outline-primary" type="button" onclick="scanBarcode()">
+                                                        <i class="fas fa-barcode me-2"></i>Scan
+                                                    </button>
+                                                </div>
+                                                <div class="form-text">Unique barcode for this variant</div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Barcode Scanner -->
+                                        <div class="row mb-4">
+                                            <div class="col-12">
+                                                <div class="barcode-scanner" onclick="startBarcodeScanner()">
+                                                    <i class="fas fa-barcode fa-3x text-muted mb-3"></i>
+                                                    <h5 class="text-muted">Click to Start Barcode Scanner</h5>
+                                                    <p class="text-muted mb-0">Scan barcode or enter manually</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Variant Attributes -->
+                                        <div class="row mb-4">
+                                            <div class="col-12">
+                                                <h6 class="text-primary mb-3"><i class="fas fa-tags me-2"></i>Variant Attributes</h6>
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <label for="size" class="form-label">Size <span class="text-danger">*</span></label>
+                                                <select class="form-select" id="size" name="size" required>
+                                                    <option value="">Select Size</option>
+                                                    <option value="18">18</option>
+                                                    <option value="20">20</option>
+                                                    <option value="22">22</option>
+                                                    <option value="24">24</option>
+                                                    <option value="26">26</option>
+                                                    <option value="28">28</option>
+                                                    <option value="30">30</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <label for="color" class="form-label">Color/Shade <span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control" id="color" name="color" 
+                                                       placeholder="e.g., BLUE" required>
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <label for="ean_code" class="form-label">EAN Code</label>
+                                                <input type="text" class="form-control" id="ean_code" name="ean_code" 
+                                                       placeholder="e.g., 8907936912167">
+                                                <div class="form-text">International product code</div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Pricing Information -->
+                                        <div class="row mb-4">
+                                            <div class="col-12">
+                                                <h6 class="text-primary mb-3"><i class="fas fa-rupee-sign me-2"></i>Pricing Information</h6>
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <label for="mrp" class="form-label">MRP <span class="text-danger">*</span></label>
+                                                <div class="input-group">
+                                                    <span class="input-group-text">₹</span>
+                                                    <input type="number" class="form-control" id="mrp" name="mrp" 
+                                                           placeholder="1499.00" step="0.01" required>
+                                                </div>
+                                                <div class="form-text">Maximum Retail Price</div>
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <label for="cost_price" class="form-label">Cost Price <span class="text-danger">*</span></label>
+                                                <div class="input-group">
+                                                    <span class="input-group-text">₹</span>
+                                                    <input type="number" class="form-control" id="cost_price" name="cost_price" 
+                                                           placeholder="843.79" step="0.01" required>
+                                                </div>
+                                                <div class="form-text">Purchase cost price</div>
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <label for="sales_price" class="form-label">Sales Price</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-text">₹</span>
+                                                    <input type="number" class="form-control" id="sales_price" name="sales_price" 
+                                                           placeholder="1499.00" step="0.01" readonly>
+                                                </div>
+                                                <div class="form-text">Auto-calculated from MRP</div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- GST Information -->
+                                        <div class="row mb-4">
+                                            <div class="col-12">
+                                                <h6 class="text-primary mb-3"><i class="fas fa-percentage me-2"></i>GST Information</h6>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="gst_rate" class="form-label">GST Rate (%) <span class="text-danger">*</span></label>
+                                                <div class="input-group">
+                                                    <input type="number" class="form-control" id="gst_rate" name="gst_rate" 
+                                                           placeholder="5.00" step="0.01" required>
+                                                    <span class="input-group-text">%</span>
+                                                </div>
+                                                <div class="form-text">GST rate percentage</div>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="gst_treatment" class="form-label">GST Treatment</label>
+                                                <select class="form-select" id="gst_treatment" name="gst_treatment">
+                                                    <option value="included">GST Included</option>
+                                                    <option value="excluded">GST Excluded</option>
+                                                </select>
+                                                <div class="form-text">Default GST treatment for sales</div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Inventory Information -->
+                                        <div class="row mb-4">
+                                            <div class="col-12">
+                                                <h6 class="text-primary mb-3"><i class="fas fa-warehouse me-2"></i>Inventory Information</h6>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="qty_available" class="form-label">Initial Quantity</label>
+                                                <input type="number" class="form-control" id="qty_available" name="qty_available" 
+                                                       placeholder="0" step="1" value="0">
+                                                <div class="form-text">Initial stock quantity (will be 0 by default)</div>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="min_qty" class="form-label">Minimum Quantity</label>
+                                                <input type="number" class="form-control" id="min_qty" name="min_qty" 
+                                                       placeholder="5" step="1">
+                                                <div class="form-text">Minimum stock level for alerts</div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Action Buttons -->
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="d-flex justify-content-between">
+                                                    <a href="/products/variants" class="btn btn-outline-secondary">
+                                                        <i class="fas fa-times me-2"></i>Cancel
+                                                    </a>
+                                                    <div>
+                                                        <button type="button" class="btn btn-outline-primary me-2" onclick="saveDraft()">
+                                                            <i class="fas fa-save me-2"></i>Save Draft
+                                                        </button>
+                                                        <button type="submit" class="btn btn-primary">
+                                                            <i class="fas fa-check me-2"></i>Create Variant
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Sidebar Info -->
+                        <div class="col-lg-4">
+                            <!-- Pricing Summary -->
+                            <div class="card pricing-card mb-3">
+                                <div class="card-body">
+                                    <h5 class="mb-3"><i class="fas fa-calculator me-2"></i>Pricing Summary</h5>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <small>MRP</small>
+                                            <h6 class="mb-0">₹1,499.00</h6>
+                                        </div>
+                                        <div class="col-6">
+                                            <small>Cost Price</small>
+                                            <h6 class="mb-0">₹843.79</h6>
+                                        </div>
+                                    </div>
+                                    <hr class="my-3">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <small>Margin</small>
+                                            <h6 class="mb-0">₹655.21</h6>
+                                        </div>
+                                        <div class="col-6">
+                                            <small>Margin %</small>
+                                            <h6 class="mb-0">43.7%</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- GST Summary -->
+                            <div class="card gst-card mb-3">
+                                <div class="card-body">
+                                    <h5 class="mb-3"><i class="fas fa-percentage me-2"></i>GST Summary</h5>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <small>GST Rate</small>
+                                            <h6 class="mb-0">5.00%</h6>
+                                        </div>
+                                        <div class="col-6">
+                                            <small>Treatment</small>
+                                            <h6 class="mb-0">Included</h6>
+                                        </div>
+                                    </div>
+                                    <hr class="my-3">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <small>Base Amount</small>
+                                            <h6 class="mb-0">₹1,427.62</h6>
+                                        </div>
+                                        <div class="col-6">
+                                            <small>GST Amount</small>
+                                            <h6 class="mb-0">₹71.38</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Information Card -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>Information</h5>
+                                </div>
+                                <div class="card-body">
+                                    <h6 class="text-primary">Product Variant</h6>
+                                    <p class="small text-muted">
+                                        A product variant represents a specific size, color, or style of a product template. 
+                                        Each variant has a unique barcode.
+                                    </p>
+                                    
+                                    <h6 class="text-primary mt-3">Barcode</h6>
+                                    <p class="small text-muted">
+                                        Each variant must have a unique barcode. This is used for:
+                                    </p>
+                                    <ul class="small text-muted">
+                                        <li>POS scanning</li>
+                                        <li>Inventory tracking</li>
+                                        <li>Sales identification</li>
+                                    </ul>
+                                    
+                                    <h6 class="text-primary mt-3">Pricing</h6>
+                                    <p class="small text-muted">
+                                        MRP is the selling price, Cost Price is the purchase price. 
+                                        Sales Price is automatically set to MRP.
+                                    </p>
+                                    
+                                    <h6 class="text-primary mt-3">GST</h6>
+                                    <p class="small text-muted">
+                                        GST rate and treatment are set at variant level. 
+                                        This allows different GST rates for different variants.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Form submission
+        document.getElementById('productVariantForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+            
+            // Show loading
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Creating...';
+            submitBtn.disabled = true;
+            
+            // Simulate API call
+            setTimeout(() => {
+                // Show success message
+                alert('Product variant created successfully!');
+                
+                // Redirect to variants list
+                window.location.href = '/products/variants';
+            }, 2000);
+        });
+        
+        // Save draft function
+        function saveDraft() {
+            const formData = new FormData(document.getElementById('productVariantForm'));
+            const data = Object.fromEntries(formData);
+            
+            // Show loading
+            const draftBtn = document.querySelector('button[onclick="saveDraft()"]');
+            const originalText = draftBtn.innerHTML;
+            draftBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Saving...';
+            draftBtn.disabled = true;
+            
+            // Simulate API call
+            setTimeout(() => {
+                alert('Draft saved successfully!');
+                draftBtn.innerHTML = originalText;
+                draftBtn.disabled = false;
+            }, 1500);
+        }
+        
+        // Barcode scanner functions
+        function scanBarcode() {
+            // Simulate barcode scanning
+            const barcodeInput = document.getElementById('barcode');
+            const scannedBarcode = prompt('Enter scanned barcode:');
+            if (scannedBarcode) {
+                barcodeInput.value = scannedBarcode;
+                barcodeInput.focus();
+            }
+        }
+        
+        function startBarcodeScanner() {
+            const scanner = document.querySelector('.barcode-scanner');
+            scanner.classList.add('active');
+            scanner.innerHTML = `
+                <i class="fas fa-barcode fa-3x text-success mb-3"></i>
+                <h5 class="text-success">Barcode Scanner Active</h5>
+                <p class="text-success mb-0">Scanning for barcode...</p>
+            `;
+            
+            // Simulate scanning
+            setTimeout(() => {
+                const barcodeInput = document.getElementById('barcode');
+                barcodeInput.value = '685686043632';
+                barcodeInput.focus();
+                
+                scanner.classList.remove('active');
+                scanner.innerHTML = `
+                    <i class="fas fa-barcode fa-3x text-muted mb-3"></i>
+                    <h5 class="text-muted">Click to Start Barcode Scanner</h5>
+                    <p class="text-muted mb-0">Scan barcode or enter manually</p>
+                `;
+            }, 2000);
+        }
+        
+        // Auto-calculate sales price from MRP
+        document.getElementById('mrp').addEventListener('input', function() {
+            const mrp = parseFloat(this.value) || 0;
+            document.getElementById('sales_price').value = mrp.toFixed(2);
+            updatePricingSummary();
+        });
+        
+        // Update pricing summary
+        function updatePricingSummary() {
+            const mrp = parseFloat(document.getElementById('mrp').value) || 0;
+            const costPrice = parseFloat(document.getElementById('cost_price').value) || 0;
+            const gstRate = parseFloat(document.getElementById('gst_rate').value) || 0;
+            
+            // Calculate margin
+            const margin = mrp - costPrice;
+            const marginPercent = mrp > 0 ? (margin / mrp) * 100 : 0;
+            
+            // Calculate GST
+            const baseAmount = mrp / (1 + gstRate / 100);
+            const gstAmount = mrp - baseAmount;
+            
+            // Update summary cards
+            const pricingCard = document.querySelector('.pricing-card .card-body');
+            if (pricingCard) {
+                pricingCard.innerHTML = `
+                    <h5 class="mb-3"><i class="fas fa-calculator me-2"></i>Pricing Summary</h5>
+                    <div class="row">
+                        <div class="col-6">
+                            <small>MRP</small>
+                            <h6 class="mb-0">₹${mrp.toFixed(2)}</h6>
+                        </div>
+                        <div class="col-6">
+                            <small>Cost Price</small>
+                            <h6 class="mb-0">₹${costPrice.toFixed(2)}</h6>
+                        </div>
+                    </div>
+                    <hr class="my-3">
+                    <div class="row">
+                        <div class="col-6">
+                            <small>Margin</small>
+                            <h6 class="mb-0">₹${margin.toFixed(2)}</h6>
+                        </div>
+                        <div class="col-6">
+                            <small>Margin %</small>
+                            <h6 class="mb-0">${marginPercent.toFixed(1)}%</h6>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            const gstCard = document.querySelector('.gst-card .card-body');
+            if (gstCard) {
+                gstCard.innerHTML = `
+                    <h5 class="mb-3"><i class="fas fa-percentage me-2"></i>GST Summary</h5>
+                    <div class="row">
+                        <div class="col-6">
+                            <small>GST Rate</small>
+                            <h6 class="mb-0">${gstRate.toFixed(2)}%</h6>
+                        </div>
+                        <div class="col-6">
+                            <small>Treatment</small>
+                            <h6 class="mb-0">Included</h6>
+                        </div>
+                    </div>
+                    <hr class="my-3">
+                    <div class="row">
+                        <div class="col-6">
+                            <small>Base Amount</small>
+                            <h6 class="mb-0">₹${baseAmount.toFixed(2)}</h6>
+                        </div>
+                        <div class="col-6">
+                            <small>GST Amount</small>
+                            <h6 class="mb-0">₹${gstAmount.toFixed(2)}</h6>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+        
+        // Update summary when inputs change
+        document.getElementById('cost_price').addEventListener('input', updatePricingSummary);
+        document.getElementById('gst_rate').addEventListener('input', updatePricingSummary);
+        
+        // Initialize summary
+        updatePricingSummary();
+    </script>
+</body>
+</html>

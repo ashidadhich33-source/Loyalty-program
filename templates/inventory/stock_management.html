@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory Management - Ocean ERP</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .sidebar {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .sidebar .nav-link {
+            color: rgba(255,255,255,0.8);
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin: 5px 0;
+            transition: all 0.3s ease;
+        }
+        .sidebar .nav-link:hover {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            transform: translateX(5px);
+        }
+        .sidebar .nav-link.active {
+            background: rgba(255,255,255,0.2);
+            color: white;
+        }
+        .main-content {
+            background: #f8f9fa;
+            min-height: 100vh;
+        }
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+        .logo {
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+        }
+        .logo i {
+            color: #667eea;
+            font-size: 20px;
+        }
+        .stock-card {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            border-radius: 15px;
+        }
+        .low-stock-card {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border-radius: 15px;
+        }
+        .value-card {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            border-radius: 15px;
+        }
+        .product-row {
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 10px;
+            background: white;
+            transition: all 0.3s ease;
+        }
+        .product-row:hover {
+            border-color: #667eea;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.1);
+        }
+        .stock-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+        }
+        .stock-high { background-color: #28a745; }
+        .stock-medium { background-color: #ffc107; }
+        .stock-low { background-color: #dc3545; }
+        .stock-out { background-color: #6c757d; }
+        .filter-tabs {
+            border-bottom: 2px solid #dee2e6;
+            margin-bottom: 20px;
+        }
+        .filter-tab {
+            padding: 10px 20px;
+            border: none;
+            background: none;
+            color: #6c757d;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        .filter-tab.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+        }
+        .filter-tab:hover {
+            color: #667eea;
+        }
+        .search-box {
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 12px 15px;
+            transition: all 0.3s ease;
+        }
+        .search-box:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3 col-lg-2 sidebar p-0">
+                <div class="p-3">
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="logo">
+                            <i class="fas fa-water"></i>
+                        </div>
+                        <div>
+                            <h5 class="text-white mb-0">Ocean ERP</h5>
+                            <small class="text-white-50">Kids Clothing</small>
+                        </div>
+                    </div>
+                    
+                    <nav class="nav flex-column">
+                        <a class="nav-link" href="/dashboard">
+                            <i class="fas fa-tachometer-alt me-2"></i>Dashboard
+                        </a>
+                        <a class="nav-link" href="/products/templates">
+                            <i class="fas fa-cube me-2"></i>Product Templates
+                        </a>
+                        <a class="nav-link" href="/products/variants">
+                            <i class="fas fa-boxes me-2"></i>Product Variants
+                        </a>
+                        <a class="nav-link" href="/purchase/orders">
+                            <i class="fas fa-shopping-cart me-2"></i>Purchase Orders
+                        </a>
+                        <a class="nav-link" href="/pos/session">
+                            <i class="fas fa-cash-register me-2"></i>POS Session
+                        </a>
+                        <a class="nav-link" href="/sales/orders">
+                            <i class="fas fa-receipt me-2"></i>Sales Orders
+                        </a>
+                        <a class="nav-link active" href="/inventory/stock">
+                            <i class="fas fa-warehouse me-2"></i>Inventory
+                        </a>
+                        <a class="nav-link" href="/contacts/customers">
+                            <i class="fas fa-users me-2"></i>Customers
+                        </a>
+                        <a class="nav-link" href="/contacts/suppliers">
+                            <i class="fas fa-truck me-2"></i>Suppliers
+                        </a>
+                        <a class="nav-link" href="/reports/gst">
+                            <i class="fas fa-chart-bar me-2"></i>GST Reports
+                        </a>
+                        <a class="nav-link" href="/settings">
+                            <i class="fas fa-cog me-2"></i>Settings
+                        </a>
+                    </nav>
+                </div>
+            </div>
+            
+            <!-- Main Content -->
+            <div class="col-md-9 col-lg-10 main-content">
+                <div class="p-4">
+                    <!-- Header -->
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <div>
+                            <h2 class="mb-0">Inventory Management</h2>
+                            <p class="text-muted mb-0">Track and manage your product inventory with real-time updates</p>
+                        </div>
+                        <div>
+                            <button class="btn btn-outline-primary me-2" onclick="exportInventory()">
+                                <i class="fas fa-download me-2"></i>Export
+                            </button>
+                            <button class="btn btn-primary" onclick="adjustInventory()">
+                                <i class="fas fa-edit me-2"></i>Adjust Inventory
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Statistics Cards -->
+                    <div class="row mb-4">
+                        <div class="col-md-3 mb-3">
+                            <div class="card stock-card">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <h6 class="card-title">Total Products</h6>
+                                            <h3 class="mb-0">1,247</h3>
+                                            <small class="opacity-75">Active variants</small>
+                                        </div>
+                                        <div class="align-self-center">
+                                            <i class="fas fa-boxes fa-2x opacity-75"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="card value-card">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <h6 class="card-title">Total Value</h6>
+                                            <h3 class="mb-0">₹12,45,230</h3>
+                                            <small class="opacity-75">At cost price</small>
+                                        </div>
+                                        <div class="align-self-center">
+                                            <i class="fas fa-rupee-sign fa-2x opacity-75"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="card low-stock-card">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <h6 class="card-title">Low Stock Items</h6>
+                                            <h3 class="mb-0">23</h3>
+                                            <small class="opacity-75">Need restocking</small>
+                                        </div>
+                                        <div class="align-self-center">
+                                            <i class="fas fa-exclamation-triangle fa-2x opacity-75"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="card stock-card">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <h6 class="card-title">Out of Stock</h6>
+                                            <h3 class="mb-0">5</h3>
+                                            <small class="opacity-75">Zero inventory</small>
+                                        </div>
+                                        <div class="align-self-center">
+                                            <i class="fas fa-times-circle fa-2x opacity-75"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Filters and Search -->
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="filter-tabs">
+                                        <button class="filter-tab active" onclick="filterStock('all')">All Products</button>
+                                        <button class="filter-tab" onclick="filterStock('low')">Low Stock</button>
+                                        <button class="filter-tab" onclick="filterStock('out')">Out of Stock</button>
+                                        <button class="filter-tab" onclick="filterStock('high')">High Stock</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control search-box" id="searchInput" 
+                                               placeholder="Search products by name, barcode, or SKU...">
+                                        <button class="btn btn-outline-primary" type="button" onclick="searchProducts()">
+                                            <i class="fas fa-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Inventory List -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0"><i class="fas fa-list me-2"></i>Product Inventory</h5>
+                        </div>
+                        <div class="card-body">
+                            <div id="inventoryList">
+                                <!-- Inventory items will be dynamically loaded -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Sample inventory data
+        const inventoryData = [
+            {
+                id: 1,
+                barcode: '685686043632',
+                name: 'Boys Blue Slim Fit Jeans',
+                size: '18',
+                color: 'BLUE',
+                brand: 'GINI AND JONY',
+                category: 'BOTTOM',
+                sub_category: 'JEANS',
+                mrp: 1499.00,
+                cost_price: 843.79,
+                qty_available: 25,
+                min_qty: 5,
+                max_qty: 100,
+                value: 21094.75,
+                last_updated: '2024-12-01 10:30:00',
+                status: 'high'
+            },
+            {
+                id: 2,
+                barcode: '685686043633',
+                name: 'Boys Blue Slim Fit Jeans',
+                size: '20',
+                color: 'BLUE',
+                brand: 'GINI AND JONY',
+                category: 'BOTTOM',
+                sub_category: 'JEANS',
+                mrp: 1499.00,
+                cost_price: 843.79,
+                qty_available: 20,
+                min_qty: 5,
+                max_qty: 100,
+                value: 16875.80,
+                last_updated: '2024-12-01 10:30:00',
+                status: 'high'
+            },
+            {
+                id: 3,
+                barcode: '685686043634',
+                name: 'Boys Blue Slim Fit Jeans',
+                size: '22',
+                color: 'BLUE',
+                brand: 'GINI AND JONY',
+                category: 'BOTTOM',
+                sub_category: 'JEANS',
+                mrp: 1499.00,
+                cost_price: 843.79,
+                qty_available: 15,
+                min_qty: 5,
+                max_qty: 100,
+                value: 12656.85,
+                last_updated: '2024-12-01 10:30:00',
+                status: 'high'
+            },
+            {
+                id: 4,
+                barcode: '685686043635',
+                name: 'Boys Blue Slim Fit Jeans',
+                size: '24',
+                color: 'BLUE',
+                brand: 'GINI AND JONY',
+                category: 'BOTTOM',
+                sub_category: 'JEANS',
+                mrp: 1699.00,
+                cost_price: 956.37,
+                qty_available: 3,
+                min_qty: 5,
+                max_qty: 100,
+                value: 2869.11,
+                last_updated: '2024-12-01 10:30:00',
+                status: 'low'
+            },
+            {
+                id: 5,
+                barcode: '685686043636',
+                name: 'Boys Blue Slim Fit Jeans',
+                size: '26',
+                color: 'BLUE',
+                brand: 'GINI AND JONY',
+                category: 'BOTTOM',
+                sub_category: 'JEANS',
+                mrp: 1699.00,
+                cost_price: 956.37,
+                qty_available: 0,
+                min_qty: 5,
+                max_qty: 100,
+                value: 0.00,
+                last_updated: '2024-12-01 10:30:00',
+                status: 'out'
+            },
+            {
+                id: 6,
+                barcode: '685686043637',
+                name: 'Boys Blue Slim Fit Jeans',
+                size: '28',
+                color: 'BLUE',
+                brand: 'GINI AND JONY',
+                category: 'BOTTOM',
+                sub_category: 'JEANS',
+                mrp: 1699.00,
+                cost_price: 956.37,
+                qty_available: 1,
+                min_qty: 5,
+                max_qty: 100,
+                value: 956.37,
+                last_updated: '2024-12-01 10:30:00',
+                status: 'low'
+            }
+        ];
+        
+        let currentFilter = 'all';
+        let filteredData = [...inventoryData];
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            loadInventory();
+            setupEventListeners();
+        });
+        
+        // Setup event listeners
+        function setupEventListeners() {
+            // Search input
+            document.getElementById('searchInput').addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                if (searchTerm) {
+                    filteredData = inventoryData.filter(item => 
+                        item.name.toLowerCase().includes(searchTerm) ||
+                        item.barcode.includes(searchTerm) ||
+                        item.brand.toLowerCase().includes(searchTerm) ||
+                        item.category.toLowerCase().includes(searchTerm)
+                    );
+                } else {
+                    filteredData = [...inventoryData];
+                }
+                loadInventory();
+            });
+        }
+        
+        // Load inventory
+        function loadInventory() {
+            const inventoryList = document.getElementById('inventoryList');
+            inventoryList.innerHTML = '';
+            
+            if (filteredData.length === 0) {
+                inventoryList.innerHTML = `
+                    <div class="text-center py-5">
+                        <i class="fas fa-box-open fa-3x text-muted mb-3"></i>
+                        <h5 class="text-muted">No products found</h5>
+                        <p class="text-muted">Try adjusting your search or filter criteria</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            filteredData.forEach(item => {
+                const itemElement = document.createElement('div');
+                itemElement.className = 'product-row';
+                itemElement.innerHTML = `
+                    <div class="row align-items-center">
+                        <div class="col-md-3">
+                            <div class="d-flex align-items-center">
+                                <span class="stock-indicator stock-${item.status}"></span>
+                                <div>
+                                    <h6 class="mb-0">${item.name}</h6>
+                                    <small class="text-muted">${item.brand} | ${item.category}</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div>
+                                <strong>${item.barcode}</strong>
+                                <small class="text-muted d-block">${item.size} | ${item.color}</small>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="text-center">
+                                <h5 class="mb-0 ${item.status === 'out' ? 'text-danger' : item.status === 'low' ? 'text-warning' : 'text-success'}">${item.qty_available}</h5>
+                                <small class="text-muted">Available</small>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="text-center">
+                                <div class="fw-bold">₹${item.mrp.toFixed(2)}</div>
+                                <small class="text-muted">MRP</small>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="text-center">
+                                <div class="fw-bold">₹${item.value.toFixed(2)}</div>
+                                <small class="text-muted">Value</small>
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="dropdown">
+                                <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#" onclick="viewProduct(${item.id})">
+                                        <i class="fas fa-eye me-2"></i>View Details
+                                    </a></li>
+                                    <li><a class="dropdown-item" href="#" onclick="adjustStock(${item.id})">
+                                        <i class="fas fa-edit me-2"></i>Adjust Stock
+                                    </a></li>
+                                    <li><a class="dropdown-item" href="#" onclick="viewHistory(${item.id})">
+                                        <i class="fas fa-history me-2"></i>Stock History
+                                    </a></li>
+                                    <li><a class="dropdown-item" href="#" onclick="createPurchaseOrder(${item.id})">
+                                        <i class="fas fa-shopping-cart me-2"></i>Create PO
+                                    </a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                inventoryList.appendChild(itemElement);
+            });
+        }
+        
+        // Filter stock
+        function filterStock(filter) {
+            currentFilter = filter;
+            
+            // Update filter tabs
+            document.querySelectorAll('.filter-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Filter data
+            if (filter === 'all') {
+                filteredData = [...inventoryData];
+            } else if (filter === 'low') {
+                filteredData = inventoryData.filter(item => item.status === 'low');
+            } else if (filter === 'out') {
+                filteredData = inventoryData.filter(item => item.status === 'out');
+            } else if (filter === 'high') {
+                filteredData = inventoryData.filter(item => item.status === 'high');
+            }
+            
+            loadInventory();
+        }
+        
+        // Search products
+        function searchProducts() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            if (searchTerm) {
+                filteredData = inventoryData.filter(item => 
+                    item.name.toLowerCase().includes(searchTerm) ||
+                    item.barcode.includes(searchTerm) ||
+                    item.brand.toLowerCase().includes(searchTerm) ||
+                    item.category.toLowerCase().includes(searchTerm)
+                );
+            } else {
+                filteredData = [...inventoryData];
+            }
+            loadInventory();
+        }
+        
+        // View product details
+        function viewProduct(productId) {
+            const product = inventoryData.find(p => p.id === productId);
+            if (product) {
+                alert(`Product Details:\n\nName: ${product.name}\nBarcode: ${product.barcode}\nSize: ${product.size}\nColor: ${product.color}\nBrand: ${product.brand}\nCategory: ${product.category}\nMRP: ₹${product.mrp}\nCost Price: ₹${product.cost_price}\nAvailable: ${product.qty_available}\nMin Qty: ${product.min_qty}\nMax Qty: ${product.max_qty}\nValue: ₹${product.value}\nLast Updated: ${product.last_updated}`);
+            }
+        }
+        
+        // Adjust stock
+        function adjustStock(productId) {
+            const product = inventoryData.find(p => p.id === productId);
+            if (product) {
+                const newQuantity = prompt(`Adjust stock for ${product.name}:\n\nCurrent quantity: ${product.qty_available}\nEnter new quantity:`, product.qty_available);
+                if (newQuantity !== null && !isNaN(newQuantity)) {
+                    const quantity = parseInt(newQuantity);
+                    if (quantity >= 0) {
+                        product.qty_available = quantity;
+                        product.value = quantity * product.cost_price;
+                        product.last_updated = new Date().toLocaleString();
+                        
+                        // Update status
+                        if (quantity === 0) {
+                            product.status = 'out';
+                        } else if (quantity <= product.min_qty) {
+                            product.status = 'low';
+                        } else {
+                            product.status = 'high';
+                        }
+                        
+                        loadInventory();
+                        alert('Stock adjusted successfully!');
+                    } else {
+                        alert('Quantity cannot be negative!');
+                    }
+                }
+            }
+        }
+        
+        // View stock history
+        function viewHistory(productId) {
+            alert('Stock History functionality - Show stock movements for this product');
+        }
+        
+        // Create purchase order
+        function createPurchaseOrder(productId) {
+            const product = inventoryData.find(p => p.id === productId);
+            if (product) {
+                const quantity = prompt(`Create purchase order for ${product.name}:\n\nCurrent quantity: ${product.qty_available}\nMin quantity: ${product.min_qty}\nEnter quantity to order:`, product.min_qty * 2);
+                if (quantity !== null && !isNaN(quantity)) {
+                    const qty = parseInt(quantity);
+                    if (qty > 0) {
+                        alert(`Purchase order created for ${qty} units of ${product.name}`);
+                        // In real implementation, this would redirect to purchase order creation
+                    }
+                }
+            }
+        }
+        
+        // Export inventory
+        function exportInventory() {
+            alert('Exporting inventory data...');
+            // In real implementation, this would generate and download an Excel/CSV file
+        }
+        
+        // Adjust inventory
+        function adjustInventory() {
+            alert('Inventory adjustment functionality - Bulk stock adjustment');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Product Template - Ocean ERP</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .sidebar {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .sidebar .nav-link {
+            color: rgba(255,255,255,0.8);
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin: 5px 0;
+            transition: all 0.3s ease;
+        }
+        .sidebar .nav-link:hover {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            transform: translateX(5px);
+        }
+        .sidebar .nav-link.active {
+            background: rgba(255,255,255,0.2);
+            color: white;
+        }
+        .main-content {
+            background: #f8f9fa;
+            min-height: 100vh;
+        }
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+        .form-control, .form-select {
+            border-radius: 10px;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+        .form-control:focus, .form-select:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 10px;
+            padding: 12px 30px;
+        }
+        .logo {
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+        }
+        .logo i {
+            color: #667eea;
+            font-size: 20px;
+        }
+        .step-indicator {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        .step {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #e9ecef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 10px;
+            position: relative;
+        }
+        .step.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .step.completed {
+            background: #28a745;
+            color: white;
+        }
+        .step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 100%;
+            width: 20px;
+            height: 2px;
+            background: #e9ecef;
+            transform: translateY(-50%);
+        }
+        .step.completed:not(:last-child)::after {
+            background: #28a745;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3 col-lg-2 sidebar p-0">
+                <div class="p-3">
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="logo">
+                            <i class="fas fa-water"></i>
+                        </div>
+                        <div>
+                            <h5 class="text-white mb-0">Ocean ERP</h5>
+                            <small class="text-white-50">Kids Clothing</small>
+                        </div>
+                    </div>
+                    
+                    <nav class="nav flex-column">
+                        <a class="nav-link" href="/dashboard">
+                            <i class="fas fa-tachometer-alt me-2"></i>Dashboard
+                        </a>
+                        <a class="nav-link active" href="/products/templates">
+                            <i class="fas fa-cube me-2"></i>Product Templates
+                        </a>
+                        <a class="nav-link" href="/products/variants">
+                            <i class="fas fa-boxes me-2"></i>Product Variants
+                        </a>
+                        <a class="nav-link" href="/purchase/orders">
+                            <i class="fas fa-shopping-cart me-2"></i>Purchase Orders
+                        </a>
+                        <a class="nav-link" href="/pos/session">
+                            <i class="fas fa-cash-register me-2"></i>POS Session
+                        </a>
+                        <a class="nav-link" href="/sales/orders">
+                            <i class="fas fa-receipt me-2"></i>Sales Orders
+                        </a>
+                        <a class="nav-link" href="/inventory/stock">
+                            <i class="fas fa-warehouse me-2"></i>Inventory
+                        </a>
+                        <a class="nav-link" href="/contacts/customers">
+                            <i class="fas fa-users me-2"></i>Customers
+                        </a>
+                        <a class="nav-link" href="/contacts/suppliers">
+                            <i class="fas fa-truck me-2"></i>Suppliers
+                        </a>
+                        <a class="nav-link" href="/reports/gst">
+                            <i class="fas fa-chart-bar me-2"></i>GST Reports
+                        </a>
+                        <a class="nav-link" href="/settings">
+                            <i class="fas fa-cog me-2"></i>Settings
+                        </a>
+                    </nav>
+                </div>
+            </div>
+            
+            <!-- Main Content -->
+            <div class="col-md-9 col-lg-10 main-content">
+                <div class="p-4">
+                    <!-- Header -->
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <div>
+                            <h2 class="mb-0">Create Product Template</h2>
+                            <p class="text-muted mb-0">Create a new product template (StyleCode) for your kids clothing items</p>
+                        </div>
+                        <div>
+                            <a href="/products/templates" class="btn btn-outline-secondary">
+                                <i class="fas fa-arrow-left me-2"></i>Back to Templates
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Step Indicator -->
+                    <div class="step-indicator">
+                        <div class="step active">1</div>
+                        <div class="step">2</div>
+                        <div class="step">3</div>
+                        <div class="step">4</div>
+                    </div>
+                    
+                    <!-- Form -->
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>Product Template Information</h5>
+                                </div>
+                                <div class="card-body">
+                                    <form id="productTemplateForm">
+                                        <!-- Basic Information -->
+                                        <div class="row mb-4">
+                                            <div class="col-12">
+                                                <h6 class="text-primary mb-3"><i class="fas fa-tag me-2"></i>Basic Information</h6>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="name" class="form-label">Product Name <span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control" id="name" name="name" 
+                                                       placeholder="e.g., Boys Blue Slim Fit Stretchable Jeans" required>
+                                                <div class="form-text">Enter the full product name</div>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="internal_reference" class="form-label">StyleCode <span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control" id="internal_reference" name="internal_reference" 
+                                                       placeholder="e.g., 121246526864" required>
+                                                <div class="form-text">Unique style code for this product</div>
+                                            </div>
+                                            <div class="col-12 mb-3">
+                                                <label for="description" class="form-label">Description</label>
+                                                <textarea class="form-control" id="description" name="description" rows="3" 
+                                                          placeholder="e.g., 5000 Boys Blue Slim Fit Stretchable Jeans"></textarea>
+                                                <div class="form-text">Detailed description of the product</div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Category & Brand -->
+                                        <div class="row mb-4">
+                                            <div class="col-12">
+                                                <h6 class="text-primary mb-3"><i class="fas fa-layer-group me-2"></i>Category & Brand</h6>
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <label for="brand_id" class="form-label">Brand</label>
+                                                <select class="form-select" id="brand_id" name="brand_id">
+                                                    <option value="">Select Brand</option>
+                                                    <option value="1">GINI AND JONY</option>
+                                                    <option value="2">LITTLE ANGELS</option>
+                                                    <option value="3">KIDS CORNER</option>
+                                                    <option value="4">TINY TOTS</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <label for="category_id" class="form-label">Category <span class="text-danger">*</span></label>
+                                                <select class="form-select" id="category_id" name="category_id" required>
+                                                    <option value="">Select Category</option>
+                                                    <option value="1">TOP</option>
+                                                    <option value="2">BOTTOM</option>
+                                                    <option value="3">DRESS</option>
+                                                    <option value="4">ACCESSORIES</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <label for="sub_category_id" class="form-label">Sub Category</label>
+                                                <select class="form-select" id="sub_category_id" name="sub_category_id">
+                                                    <option value="">Select Sub Category</option>
+                                                    <option value="1">JEANS</option>
+                                                    <option value="2">SHORTS</option>
+                                                    <option value="3">TROUSERS</option>
+                                                    <option value="4">TRACKSUIT</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Gender & Age -->
+                                        <div class="row mb-4">
+                                            <div class="col-12">
+                                                <h6 class="text-primary mb-3"><i class="fas fa-child me-2"></i>Gender & Age</h6>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="gender" class="form-label">Gender</label>
+                                                <select class="form-select" id="gender" name="gender">
+                                                    <option value="">Select Gender</option>
+                                                    <option value="boys">BOYS</option>
+                                                    <option value="girls">GIRLS</option>
+                                                    <option value="unisex">UNISEX</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="age_group" class="form-label">Age Group</label>
+                                                <select class="form-select" id="age_group" name="age_group">
+                                                    <option value="">Select Age Group</option>
+                                                    <option value="0-2">0-2 Years</option>
+                                                    <option value="2-4">2-4 Years</option>
+                                                    <option value="4-6">4-6 Years</option>
+                                                    <option value="6-8">6-8 Years</option>
+                                                    <option value="8-12">8-12 Years</option>
+                                                    <option value="12-16">12-16 Years</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- GST Information -->
+                                        <div class="row mb-4">
+                                            <div class="col-12">
+                                                <h6 class="text-primary mb-3"><i class="fas fa-percentage me-2"></i>GST Information</h6>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="hsn_code" class="form-label">HSN Code</label>
+                                                <input type="text" class="form-control" id="hsn_code" name="hsn_code" 
+                                                       placeholder="e.g., 6203" maxlength="8">
+                                                <div class="form-text">Harmonized System of Nomenclature code</div>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="gst_tax_group_id" class="form-label">GST Tax Group</label>
+                                                <select class="form-select" id="gst_tax_group_id" name="gst_tax_group_id">
+                                                    <option value="">Select GST Tax Group</option>
+                                                    <option value="1">0% GST</option>
+                                                    <option value="2">5% GST</option>
+                                                    <option value="3">12% GST</option>
+                                                    <option value="4">18% GST</option>
+                                                    <option value="5">28% GST</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Tags -->
+                                        <div class="row mb-4">
+                                            <div class="col-12">
+                                                <h6 class="text-primary mb-3"><i class="fas fa-tags me-2"></i>Tags</h6>
+                                            </div>
+                                            <div class="col-12 mb-3">
+                                                <label for="tag_ids" class="form-label">Product Tags</label>
+                                                <select class="form-select" id="tag_ids" name="tag_ids" multiple>
+                                                    <option value="1">Casual</option>
+                                                    <option value="2">Formal</option>
+                                                    <option value="3">Party Wear</option>
+                                                    <option value="4">Sports</option>
+                                                    <option value="5">Winter</option>
+                                                    <option value="6">Summer</option>
+                                                </select>
+                                                <div class="form-text">Hold Ctrl/Cmd to select multiple tags</div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Action Buttons -->
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="d-flex justify-content-between">
+                                                    <a href="/products/templates" class="btn btn-outline-secondary">
+                                                        <i class="fas fa-times me-2"></i>Cancel
+                                                    </a>
+                                                    <div>
+                                                        <button type="button" class="btn btn-outline-primary me-2" onclick="saveDraft()">
+                                                            <i class="fas fa-save me-2"></i>Save Draft
+                                                        </button>
+                                                        <button type="submit" class="btn btn-primary">
+                                                            <i class="fas fa-check me-2"></i>Create Template
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Sidebar Info -->
+                        <div class="col-lg-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>Information</h5>
+                                </div>
+                                <div class="card-body">
+                                    <h6 class="text-primary">Product Template</h6>
+                                    <p class="small text-muted">
+                                        A product template represents a style or design that can have multiple variants 
+                                        (different sizes, colors, etc.). Each template has a unique StyleCode.
+                                    </p>
+                                    
+                                    <h6 class="text-primary mt-3">StyleCode</h6>
+                                    <p class="small text-muted">
+                                        The StyleCode is a unique identifier for the product template. 
+                                        It's used to group related variants together.
+                                    </p>
+                                    
+                                    <h6 class="text-primary mt-3">GST Information</h6>
+                                    <p class="small text-muted">
+                                        HSN code and GST tax group are required for GST compliance. 
+                                        These will be inherited by all variants of this template.
+                                    </p>
+                                    
+                                    <h6 class="text-primary mt-3">Next Steps</h6>
+                                    <p class="small text-muted">
+                                        After creating the template, you can:
+                                    </p>
+                                    <ul class="small text-muted">
+                                        <li>Create product variants</li>
+                                        <li>Set pricing and inventory</li>
+                                        <li>Add product images</li>
+                                        <li>Configure GST rates</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div class="card mt-3">
+                                <div class="card-header">
+                                    <h5 class="mb-0"><i class="fas fa-lightbulb me-2"></i>Tips</h5>
+                                </div>
+                                <div class="card-body">
+                                    <ul class="small text-muted mb-0">
+                                        <li>Use descriptive product names</li>
+                                        <li>StyleCode should be unique</li>
+                                        <li>Select appropriate HSN code</li>
+                                        <li>Choose correct GST tax group</li>
+                                        <li>Add relevant tags for filtering</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Form submission
+        document.getElementById('productTemplateForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+            
+            // Show loading
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Creating...';
+            submitBtn.disabled = true;
+            
+            // Simulate API call
+            setTimeout(() => {
+                // Show success message
+                alert('Product template created successfully!');
+                
+                // Redirect to templates list
+                window.location.href = '/products/templates';
+            }, 2000);
+        });
+        
+        // Save draft function
+        function saveDraft() {
+            const formData = new FormData(document.getElementById('productTemplateForm'));
+            const data = Object.fromEntries(formData);
+            
+            // Show loading
+            const draftBtn = document.querySelector('button[onclick="saveDraft()"]');
+            const originalText = draftBtn.innerHTML;
+            draftBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Saving...';
+            draftBtn.disabled = true;
+            
+            // Simulate API call
+            setTimeout(() => {
+                alert('Draft saved successfully!');
+                draftBtn.innerHTML = originalText;
+                draftBtn.disabled = false;
+            }, 1500);
+        }
+        
+        // Category change handler
+        document.getElementById('category_id').addEventListener('change', function() {
+            const category = this.value;
+            const subCategorySelect = document.getElementById('sub_category_id');
+            
+            // Clear sub category options
+            subCategorySelect.innerHTML = '<option value="">Select Sub Category</option>';
+            
+            // Add sub categories based on main category
+            if (category === '2') { // BOTTOM
+                subCategorySelect.innerHTML += `
+                    <option value="1">JEANS</option>
+                    <option value="2">SHORTS</option>
+                    <option value="3">TROUSERS</option>
+                    <option value="4">TRACKSUIT</option>
+                `;
+            } else if (category === '1') { // TOP
+                subCategorySelect.innerHTML += `
+                    <option value="5">T-SHIRT</option>
+                    <option value="6">SHIRT</option>
+                    <option value="7">SWEATER</option>
+                    <option value="8">JACKET</option>
+                `;
+            } else if (category === '3') { // DRESS
+                subCategorySelect.innerHTML += `
+                    <option value="9">FROCK</option>
+                    <option value="10">SKIRT</option>
+                    <option value="11">LEHENGA</option>
+                `;
+            }
+        });
+    </script>
+</body>
+</html>

@@ -243,6 +243,86 @@ class StockQuant(BaseModel):
                 age_delta = datetime.now() - quant.create_date
                 quant.inventory_age_days = age_delta.days
     
+    def update_inventory_purchase(self, product_id, quantity, cost_price, location_id=None):
+        """Update inventory after purchase (increase)"""
+        if not location_id:
+            location_id = self.env['stock.location'].search([('usage', '=', 'internal')], limit=1)
+        
+        # Find existing quant or create new one
+        quant = self.search([
+            ('product_id', '=', product_id),
+            ('location_id', '=', location_id.id),
+            ('company_id', '=', self.env.user.company_id.id)
+        ], limit=1)
+        
+        if quant:
+            # Update existing quant
+            quant.quantity += quantity
+            quant.cost = cost_price
+            quant.value = quant.quantity * quant.cost
+        else:
+            # Create new quant
+            self.create({
+                'product_id': product_id,
+                'location_id': location_id.id,
+                'quantity': quantity,
+                'cost': cost_price,
+                'value': quantity * cost_price,
+                'company_id': self.env.user.company_id.id
+            })
+        
+        # Update product variant quantity
+        self._update_product_variant_quantity(product_id)
+    
+    def update_inventory_sale(self, product_id, quantity, location_id=None):
+        """Update inventory after sale/POS (decrease)"""
+        if not location_id:
+            location_id = self.env['stock.location'].search([('usage', '=', 'internal')], limit=1)
+        
+        # Find existing quant
+        quant = self.search([
+            ('product_id', '=', product_id),
+            ('location_id', '=', location_id.id),
+            ('company_id', '=', self.env.user.company_id.id)
+        ], limit=1)
+        
+        if quant:
+            if quant.quantity >= quantity:
+                quant.quantity -= quantity
+                quant.value = quant.quantity * quant.cost
+                
+                # Update product variant quantity
+                self._update_product_variant_quantity(product_id)
+            else:
+                raise ValueError(f"Insufficient inventory for product {product_id}. Available: {quant.quantity}, Required: {quantity}")
+        else:
+            raise ValueError(f"No inventory found for product {product_id}")
+    
+    def update_inventory_purchase_return(self, product_id, quantity, location_id=None):
+        """Update inventory after purchase return (decrease)"""
+        self.update_inventory_sale(product_id, quantity, location_id)
+    
+    def update_inventory_sale_return(self, product_id, quantity, cost_price, location_id=None):
+        """Update inventory after sale return (increase)"""
+        self.update_inventory_purchase(product_id, quantity, cost_price, location_id)
+    
+    def _update_product_variant_quantity(self, product_id):
+        """Update product variant quantity from stock quants"""
+        # Get all variants for this product template
+        variants = self.env['product.variant'].search([('product_tmpl_id', '=', product_id)])
+        
+        for variant in variants:
+            # Calculate total quantity for this variant
+            total_quantity = sum(
+                quant.quantity for quant in self.search([
+                    ('product_id', '=', product_id),
+                    ('company_id', '=', self.env.user.company_id.id)
+                ])
+            )
+            
+            # Update variant quantity
+            variant.qty_available = total_quantity
+    
     def _update_expiry_info(self):
         """Update expiry information"""
         for quant in self:

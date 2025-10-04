@@ -283,8 +283,60 @@ class DatabaseBackup(BaseModel):
         self.status = 'in_progress'
         self.start_time = datetime.now()
         
-        # This would need actual implementation to start backup
-        return True
+        try:
+            # Import backup manager
+            from core_framework.backup_manager import BackupManager
+            from core_framework.config import Config
+            
+            # Get configuration
+            config = Config()
+            backup_manager = BackupManager(config)
+            
+            # Prepare backup configuration
+            backup_config = {
+                'name': self.name,
+                'description': self.description,
+                'database_name': config.get('database', {}).get('name', 'ocean_erp'),
+                'backup_type': self.backup_type,
+                'compression_enabled': self.compression_enabled,
+                'encryption_enabled': self.encryption_enabled,
+                'include_data': self.include_data,
+                'include_schema': self.include_schema,
+                'include_indexes': self.include_indexes,
+            }
+            
+            # Create backup
+            result = backup_manager.create_backup(backup_config)
+            
+            if result['success']:
+                # Update backup record with results
+                updated_config = result['backup_config']
+                self.write({
+                    'backup_file': updated_config.get('backup_file'),
+                    'backup_path': updated_config.get('backup_path'),
+                    'backup_size': updated_config.get('backup_size', 0),
+                    'end_time': updated_config.get('end_time'),
+                    'duration': updated_config.get('duration', 0),
+                    'status': 'completed'
+                })
+                return True
+            else:
+                # Mark as failed
+                self.write({
+                    'status': 'failed',
+                    'error_message': result.get('error', 'Unknown error'),
+                    'end_time': datetime.now()
+                })
+                return False
+                
+        except Exception as e:
+            # Mark as failed
+            self.write({
+                'status': 'failed',
+                'error_message': str(e),
+                'end_time': datetime.now()
+            })
+            return False
     
     def action_complete_backup(self):
         """Complete backup process"""
@@ -327,10 +379,26 @@ class DatabaseBackup(BaseModel):
             return True
         
         try:
-            # This would need actual implementation to verify backup
-            self.verification_status = 'verified'
-            self.verification_time = datetime.now()
-            return True
+            # Import backup manager
+            from core_framework.backup_manager import BackupManager
+            from core_framework.config import Config
+            
+            # Get configuration
+            config = Config()
+            backup_manager = BackupManager(config)
+            
+            # Verify backup
+            result = backup_manager.verify_backup(self.backup_path)
+            
+            if result['success']:
+                self.verification_status = 'verified'
+                self.verification_time = datetime.now()
+                return True
+            else:
+                self.verification_status = 'verification_failed'
+                self.error_message = result.get('error', 'Verification failed')
+                return False
+                
         except Exception as e:
             self.verification_status = 'verification_failed'
             self.error_message = str(e)
@@ -346,8 +414,39 @@ class DatabaseBackup(BaseModel):
         if self.verification_enabled and self.verification_status != 'verified':
             raise ValueError('Backup must be verified before restoration')
         
-        # This would need actual implementation to restore backup
-        return True
+        try:
+            # Import backup manager
+            from core_framework.backup_manager import BackupManager
+            from core_framework.config import Config
+            
+            # Get configuration
+            config = Config()
+            backup_manager = BackupManager(config)
+            
+            # Prepare restore configuration
+            restore_config = {
+                'backup_path': self.backup_path,
+                'target_database': config.get('database', {}).get('name', 'ocean_erp'),
+                'restore_options': {
+                    'clean': True,  # Drop existing objects
+                    'create': True,  # Create database if not exists
+                }
+            }
+            
+            # Execute restore
+            result = backup_manager.restore_backup(restore_config)
+            
+            if result['success']:
+                self.logger.info(f"Backup restored successfully: {self.name}")
+                return True
+            else:
+                error_msg = result.get('error', 'Unknown restore error')
+                self.logger.error(f"Restore failed: {error_msg}")
+                raise ValueError(f"Restore failed: {error_msg}")
+                
+        except Exception as e:
+            self.logger.error(f"Restore error: {e}")
+            raise ValueError(f"Restore error: {str(e)}")
     
     def action_cleanup_backup(self):
         """Cleanup expired backup"""

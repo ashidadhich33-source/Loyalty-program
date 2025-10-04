@@ -187,6 +187,20 @@ class PosOrder(BaseModel):
         help='Loyalty points used in this order'
     )
     
+    loyalty_discount_amount = FloatField(
+        string='Loyalty Discount Amount',
+        digits=(12, 2),
+        default=0.0,
+        help='Discount amount from loyalty points redemption'
+    )
+    
+    loyalty_points_rate = FloatField(
+        string='Points to Rupee Rate',
+        digits=(5, 2),
+        default=100.0,
+        help='Points required per rupee discount (e.g., 100 points = 1 rupee)'
+    )
+    
     # Receipt Information
     receipt_number = CharField(
         string='Receipt Number',
@@ -350,6 +364,118 @@ class PosOrder(BaseModel):
         if self.partner_id and self.partner_id.loyalty_points > 0:
             # This would integrate with loyalty addon
             pass
+    
+    def action_redeem_loyalty_points(self, points_to_redeem):
+        """Redeem loyalty points for this order"""
+        for order in self:
+            if not order.partner_id:
+                raise UserError(_('Please select a customer to redeem loyalty points.'))
+            
+            if not order.config_id.enable_loyalty:
+                raise UserError(_('Loyalty program is not enabled for this POS.'))
+            
+            # Get customer's available points
+            customer = order.partner_id
+            available_points = customer.loyalty_points
+            
+            if points_to_redeem > available_points:
+                raise UserError(_('Insufficient loyalty points. Available: %d points') % available_points)
+            
+            if points_to_redeem <= 0:
+                raise UserError(_('Points to redeem must be greater than 0.'))
+            
+            # Calculate discount amount
+            discount_amount = points_to_redeem / order.loyalty_points_rate
+            
+            # Check if discount exceeds order amount
+            if discount_amount > order.amount_total:
+                discount_amount = order.amount_total
+                points_to_redeem = int(discount_amount * order.loyalty_points_rate)
+            
+            # Update order
+            order.loyalty_points_used = points_to_redeem
+            order.loyalty_discount_amount = discount_amount
+            
+            # Apply discount to order total
+            order.amount_total -= discount_amount
+            
+            # Create loyalty points transaction
+            order._create_loyalty_points_transaction(points_to_redeem, 'redeemed')
+            
+            return {
+                'type': 'ir.actions.client',
+                'tag': 'display_notification',
+                'params': {
+                    'title': _('Loyalty Points Redeemed'),
+                    'message': _('Successfully redeemed %d points for ₹%.2f discount') % (points_to_redeem, discount_amount),
+                    'type': 'success',
+                }
+            }
+    
+    def action_remove_loyalty_points(self):
+        """Remove loyalty points redemption from this order"""
+        for order in self:
+            if order.loyalty_points_used > 0:
+                # Restore order total
+                order.amount_total += order.loyalty_discount_amount
+                
+                # Reset loyalty fields
+                order.loyalty_points_used = 0
+                order.loyalty_discount_amount = 0.0
+                
+                return {
+                    'type': 'ir.actions.client',
+                    'tag': 'display_notification',
+                    'params': {
+                        'title': _('Loyalty Points Removed'),
+                        'message': _('Loyalty points redemption removed from order'),
+                        'type': 'info',
+                    }
+                }
+    
+    def _create_loyalty_points_transaction(self, points, transaction_type):
+        """Create loyalty points transaction"""
+        if not self.partner_id:
+            return
+        
+        # Create loyalty points record
+        loyalty_points_vals = {
+            'name': f"POS-{self.name}-{transaction_type.upper()}",
+            'partner_id': self.partner_id.id,
+            'points': points,
+            'points_type': transaction_type,
+            'transaction_type': 'purchase' if transaction_type == 'earned' else 'redemption',
+            'transaction_id': self.id,
+            'description': f'POS Order {self.name} - {transaction_type}',
+        }
+        
+        # Get loyalty program
+        loyalty_program = self.env['loyalty.program'].search([
+            ('is_active', '=', True)
+        ], limit=1)
+        
+        if loyalty_program:
+            loyalty_points_vals['program_id'] = loyalty_program.id
+        
+        self.env['loyalty.points'].create(loyalty_points_vals)
+    
+    def get_customer_loyalty_info(self):
+        """Get customer loyalty information for POS"""
+        if not self.partner_id:
+            return None
+        
+        customer = self.partner_id
+        
+        return {
+            'customer_id': customer.id,
+            'customer_name': customer.name,
+            'available_points': customer.loyalty_points,
+            'loyalty_level': customer.loyalty_level,
+            'points_rate': self.loyalty_points_rate,
+            'max_discount': customer.loyalty_points / self.loyalty_points_rate,
+            'points_used': self.loyalty_points_used,
+            'discount_amount': self.loyalty_discount_amount,
+        }
     
     def _update_inventory(self):
         """Update inventory for sold products"""

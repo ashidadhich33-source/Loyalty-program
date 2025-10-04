@@ -140,139 +140,6 @@ class POSDashboard {
     }
 }
 
-// POS Product Grid functionality
-class POSProductGrid {
-    constructor() {
-        this.init();
-    }
-    
-    init() {
-        this.bindEvents();
-        this.loadProducts();
-    }
-    
-    bindEvents() {
-        // Bind product search
-        $(document).on('input', '.pos-product-search', (e) => {
-            this.searchProducts(e.target.value);
-        });
-        
-        // Bind category filter
-        $(document).on('change', '.pos-category-filter', (e) => {
-            this.filterByCategory(e.target.value);
-        });
-        
-        // Bind product click
-        $(document).on('click', '.pos-product-card', (e) => {
-            const productId = $(e.currentTarget).data('product-id');
-            this.addToCart(productId);
-        });
-    }
-    
-    loadProducts() {
-        $.ajax({
-            url: '/pos/products',
-            type: 'GET',
-            success: (data) => {
-                this.renderProducts(data);
-            },
-            error: (error) => {
-                console.error('Error loading products:', error);
-            }
-        });
-    }
-    
-    renderProducts(products) {
-        const container = $('.pos-product-grid');
-        container.empty();
-        
-        products.forEach(product => {
-            const productCard = $(`
-                <div class="pos-product-card" data-product-id="${product.id}">
-                    <div class="product-image">
-                        ${product.image ? `<img src="${product.image}" alt="${product.name}">` : 'No Image'}
-                    </div>
-                    <div class="product-name">${product.name}</div>
-                    <div class="product-price">${this.formatCurrency(product.price)}</div>
-                    <div class="product-code">${product.code}</div>
-                </div>
-            `);
-            
-            container.append(productCard);
-        });
-    }
-    
-    searchProducts(query) {
-        $('.pos-product-card').each(function() {
-            const productName = $(this).find('.product-name').text().toLowerCase();
-            const productCode = $(this).find('.product-code').text().toLowerCase();
-            const searchQuery = query.toLowerCase();
-            
-            if (productName.includes(searchQuery) || productCode.includes(searchQuery)) {
-                $(this).show();
-            } else {
-                $(this).hide();
-            }
-        });
-    }
-    
-    filterByCategory(categoryId) {
-        if (categoryId === '') {
-            $('.pos-product-card').show();
-        } else {
-            $('.pos-product-card').each(function() {
-                const productCategory = $(this).data('category-id');
-                if (productCategory == categoryId) {
-                    $(this).show();
-                } else {
-                    $(this).hide();
-                }
-            });
-        }
-    }
-    
-    addToCart(productId) {
-        $.ajax({
-            url: '/pos/add_to_cart',
-            type: 'POST',
-            data: { product_id: productId },
-            success: (response) => {
-                this.showNotification('Product added to cart', 'success');
-                this.updateCartDisplay();
-            },
-            error: (error) => {
-                this.showNotification('Error adding product to cart', 'error');
-            }
-        });
-    }
-    
-    formatCurrency(amount) {
-        return new Intl.NumberFormat('en-IN', {
-            style: 'currency',
-            currency: 'INR'
-        }).format(amount);
-    }
-    
-    showNotification(message, type = 'info') {
-        const notification = $(`
-            <div class="pos-notification pos-notification-${type} pos-fade-in">
-                ${message}
-            </div>
-        `);
-        
-        $('body').append(notification);
-        
-        setTimeout(() => {
-            notification.remove();
-        }, 3000);
-    }
-    
-    updateCartDisplay() {
-        // This would update the cart display
-        // Implementation depends on cart structure
-    }
-}
-
 // POS Customer Management functionality
 class POSCustomerManager {
     constructor() {
@@ -409,6 +276,160 @@ class POSCustomerManager {
     }
 }
 
+// POS Loyalty Points Management functionality
+class POSLoyaltyManager {
+    constructor() {
+        this.init();
+    }
+    
+    init() {
+        this.bindEvents();
+    }
+    
+    bindEvents() {
+        // Bind loyalty points redemption button
+        $(document).on('click', '.pos-redeem-loyalty-btn', () => {
+            this.openLoyaltyWizard();
+        });
+        
+        // Bind loyalty points display
+        $(document).on('change', '.pos-customer-field', (e) => {
+            this.loadCustomerLoyaltyInfo(e.target.value);
+        });
+        
+        // Bind quick redemption buttons
+        $(document).on('click', '.pos-quick-redeem-btn', (e) => {
+            const points = $(e.currentTarget).data('points');
+            this.quickRedeemPoints(points);
+        });
+    }
+    
+    loadCustomerLoyaltyInfo(customerId) {
+        if (!customerId) {
+            $('.pos-loyalty-info').hide();
+            return;
+        }
+        
+        $.ajax({
+            url: '/pos/customer_loyalty_info',
+            type: 'GET',
+            data: { customer_id: customerId },
+            success: (loyaltyInfo) => {
+                this.displayLoyaltyInfo(loyaltyInfo);
+            },
+            error: (error) => {
+                console.error('Error loading loyalty info:', error);
+            }
+        });
+    }
+    
+    displayLoyaltyInfo(loyaltyInfo) {
+        if (loyaltyInfo.available_points > 0) {
+            $('.pos-loyalty-info').html(`
+                <div class="loyalty-card">
+                    <div class="loyalty-header">
+                        <h4>Loyalty Points</h4>
+                        <span class="loyalty-level ${loyaltyInfo.loyalty_level}">${loyaltyInfo.loyalty_level.toUpperCase()}</span>
+                    </div>
+                    <div class="loyalty-details">
+                        <div class="loyalty-points">
+                            <strong>Available Points:</strong> ${loyaltyInfo.available_points}
+                        </div>
+                        <div class="loyalty-discount">
+                            <strong>Max Discount:</strong> ₹${loyaltyInfo.max_discount.toFixed(2)}
+                        </div>
+                        <div class="loyalty-rate">
+                            <strong>Rate:</strong> ${loyaltyInfo.points_rate} points = ₹1
+                        </div>
+                    </div>
+                    <div class="loyalty-actions">
+                        <button class="pos-redeem-loyalty-btn btn btn-primary">Redeem Points</button>
+                        <div class="quick-redeem">
+                            <button class="pos-quick-redeem-btn btn btn-sm btn-outline-primary" data-points="100">100 pts</button>
+                            <button class="pos-quick-redeem-btn btn btn-sm btn-outline-primary" data-points="500">500 pts</button>
+                            <button class="pos-quick-redeem-btn btn btn-sm btn-outline-primary" data-points="1000">1000 pts</button>
+                            <button class="pos-quick-redeem-btn btn btn-sm btn-outline-primary" data-points="${loyaltyInfo.available_points}">Max</button>
+                        </div>
+                    </div>
+                </div>
+            `).show();
+        } else {
+            $('.pos-loyalty-info').html(`
+                <div class="loyalty-card no-points">
+                    <div class="loyalty-header">
+                        <h4>Loyalty Points</h4>
+                    </div>
+                    <div class="loyalty-details">
+                        <p>No loyalty points available</p>
+                        <p>Start earning points with your purchases!</p>
+                    </div>
+                </div>
+            `).show();
+        }
+    }
+    
+    openLoyaltyWizard() {
+        // Open loyalty points redemption wizard
+        const orderId = $('.pos-order-id').val();
+        if (!orderId) {
+            this.showNotification('Please save the order first', 'warning');
+            return;
+        }
+        
+        window.open(`/pos/loyalty_wizard?order_id=${orderId}`, '_blank', 'width=600,height=500');
+    }
+    
+    quickRedeemPoints(points) {
+        const orderId = $('.pos-order-id').val();
+        if (!orderId) {
+            this.showNotification('Please save the order first', 'warning');
+            return;
+        }
+        
+        if (confirm(`Redeem ${points} loyalty points?`)) {
+            $.ajax({
+                url: '/pos/redeem_loyalty_points',
+                type: 'POST',
+                data: { 
+                    order_id: orderId,
+                    points: points
+                },
+                success: (response) => {
+                    this.showNotification('Loyalty points redeemed successfully', 'success');
+                    this.updateOrderTotal(response.discount_amount);
+                    this.loadCustomerLoyaltyInfo($('.pos-customer-field').val());
+                },
+                error: (error) => {
+                    this.showNotification('Error redeeming loyalty points', 'error');
+                }
+            });
+        }
+    }
+    
+    updateOrderTotal(discountAmount) {
+        const currentTotal = parseFloat($('.pos-order-total').text());
+        const newTotal = currentTotal - discountAmount;
+        $('.pos-order-total').text(newTotal.toFixed(2));
+        
+        // Update discount display
+        $('.pos-loyalty-discount').text(`₹${discountAmount.toFixed(2)}`);
+    }
+    
+    showNotification(message, type = 'info') {
+        const notification = $(`
+            <div class="pos-notification pos-notification-${type} pos-fade-in">
+                ${message}
+            </div>
+        `);
+        
+        $('body').append(notification);
+        
+        setTimeout(() => {
+            notification.remove();
+        }, 3000);
+    }
+}
+
 // Initialize POS components when document is ready
 $(document).ready(function() {
     // Initialize dashboard if element exists
@@ -424,5 +445,10 @@ $(document).ready(function() {
     // Initialize customer manager if element exists
     if ($('.pos-customer-section').length) {
         new POSCustomerManager();
+    }
+    
+    // Initialize loyalty manager if element exists
+    if ($('.pos-loyalty-section').length) {
+        new POSLoyaltyManager();
     }
 });

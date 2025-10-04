@@ -31,6 +31,7 @@
                         <button name="action_pay" string="Pay" type="object" class="btn-success" states="confirmed"/>
                         <button name="action_done" string="Done" type="object" class="btn-primary" states="paid"/>
                         <button name="action_cancel" string="Cancel" type="object" class="btn-secondary" states="draft,confirmed"/>
+                        <button name="%(action_pos_loyalty_wizard)d" string="Redeem Loyalty Points" type="action" class="btn-info" context="{'default_order_id': active_id}" attrs="{'invisible': [('partner_id', '=', False)]}"/>
                         <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,paid,done,cancel"/>
                     </header>
                     <sheet>
@@ -63,6 +64,9 @@
                                 <field name="amount_return"/>
                                 <field name="sales_commission"/>
                                 <field name="commission_rate"/>
+                                <field name="loyalty_points_earned"/>
+                                <field name="loyalty_points_used"/>
+                                <field name="loyalty_discount_amount"/>
                             </group>
                         </group>
                         <notebook>

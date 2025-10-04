@@ -54,6 +54,7 @@
         'views/pos_session_views.xml',
         'views/pos_analytics_views.xml',
         'views/pos_customer_wizard_views.xml',
+        'views/pos_loyalty_wizard_views.xml',
     ],
     'demo': [
         'demo/demo.xml',

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data noupdate="1">
+        
+        <!-- Payment Methods -->
+        <record id="payment_method_cash" model="pos.payment.method">
+            <field name="name">Cash</field>
+            <field name="code">CASH</field>
+            <field name="description">Cash payment method</field>
+            <field name="payment_type">cash</field>
+            <field name="is_active">True</field>
+            <field name="is_default">True</field>
+            <field name="requires_confirmation">False</field>
+            <field name="payment_provider">manual</field>
+            <field name="has_fees">False</field>
+            <field name="min_amount">0.0</field>
+            <field name="max_amount">0.0</field>
+            <field name="daily_limit">0.0</field>
+            <field name="age_group_restriction">none</field>
+            <field name="requires_adult_supervision">False</field>
+            <field name="requires_pin">False</field>
+            <field name="requires_signature">False</field>
+            <field name="icon">fas fa-money-bill-wave</field>
+            <field name="color">#28a745</field>
+            <field name="sequence">10</field>
+        </record>
+        
+        <record id="payment_method_card" model="pos.payment.method">
+            <field name="name">Card Payment</field>
+            <field name="code">CARD</field>
+            <field name="description">Credit/Debit card payment</field>
+            <field name="payment_type">card</field>
+            <field name="is_active">True</field>
+            <field name="is_default">False</field>
+            <field name="requires_confirmation">True</field>
+            <field name="payment_provider">manual</field>
+            <field name="has_fees">True</field>
+            <field name="fee_type">percentage</field>
+            <field name="fee_percentage">2.5</field>
+            <field name="min_amount">10.0</field>
+            <field name="max_amount">50000.0</field>
+            <field name="daily_limit">100000.0</field>
+            <field name="age_group_restriction">none</field>
+            <field name="requires_adult_supervision">True</field>
+            <field name="requires_pin">True</field>
+            <field name="requires_signature">False</field>
+            <field name="icon">fas fa-credit-card</field>
+            <field name="color">#007bff</field>
+            <field name="sequence">20</field>
+        </record>
+        
+        <record id="payment_method_upi" model="pos.payment.method">
+            <field name="name">UPI Payment</field>
+            <field name="code">UPI</field>
+            <field name="description">UPI payment method</field>
+            <field name="payment_type">upi</field>
+            <field name="is_active">True</field>
+            <field name="is_default">False</field>
+            <field name="requires_confirmation">True</field>
+            <field name="payment_provider">razorpay</field>
+            <field name="has_fees">True</field>
+            <field name="fee_type">percentage</field>
+            <field name="fee_percentage">1.8</field>
+            <field name="min_amount">1.0</field>
+            <field name="max_amount">100000.0</field>
+            <field name="daily_limit">200000.0</field>
+            <field name="age_group_restriction">child_teen</field>
+            <field name="requires_adult_supervision">True</field>
+            <field name="requires_pin">True</field>
+            <field name="requires_signature">False</field>
+            <field name="icon">fas fa-mobile-alt</field>
+            <field name="color">#6f42c1</field>
+            <field name="sequence">30</field>
+        </record>
+        
+        <record id="payment_method_wallet" model="pos.payment.method">
+            <field name="name">Digital Wallet</field>
+            <field name="code">WALLET</field>
+            <field name="description">Digital wallet payment</field>
+            <field name="payment_type">wallet</field>
+            <field name="is_active">True</field>
+            <field name="is_default">False</field>
+            <field name="requires_confirmation">True</field>
+            <field name="payment_provider">paytm</field>
+            <field name="has_fees">True</field>
+            <field name="fee_type">percentage</field>
+            <field name="fee_percentage">2.0</field>
+            <field name="min_amount">1.0</field>
+            <field name="max_amount">50000.0</field>
+            <field name="daily_limit">100000.0</field>
+            <field name="age_group_restriction">child_teen</field>
+            <field name="requires_adult_supervision">True</field>
+            <field name="requires_pin">True</field>
+            <field name="requires_signature">False</field>
+            <field name="icon">fas fa-wallet</field>
+            <field name="color">#fd7e14</field>
+            <field name="sequence">40</field>
+        </record>
+        
+        <record id="payment_method_gift_card" model="pos.payment.method">
+            <field name="name">Gift Card</field>
+            <field name="code">GIFT_CARD</field>
+            <field name="description">Gift card payment</field>
+            <field name="payment_type">gift_card</field>
+            <field name="is_active">True</field>
+            <field name="is_default">False</field>
+            <field name="requires_confirmation">False</field>
+            <field name="payment_provider">manual</field>
+            <field name="has_fees">False</field>
+            <field name="min_amount">1.0</field>
+            <field name="max_amount">0.0</field>
+            <field name="daily_limit">0.0</field>
+            <field name="age_group_restriction">none</field>
+            <field name="requires_adult_supervision">False</field>
+            <field name="requires_pin">False</field>
+            <field name="requires_signature">False</field>
+            <field name="icon">fas fa-gift</field>
+            <field name="color">#e83e8c</field>
+            <field name="sequence">50</field>
+        </record>
+        
+        <record id="payment_method_store_credit" model="pos.payment.method">
+            <field name="name">Store Credit</field>
+            <field name="code">STORE_CREDIT</field>
+            <field name="description">Store credit payment</field>
+            <field name="payment_type">store_credit</field>
+            <field name="is_active">True</field>
+            <field name="is_default">False</field>
+            <field name="requires_confirmation">False</field>
+            <field name="payment_provider">manual</field>
+            <field name="has_fees">False</field>
+            <field name="min_amount">1.0</field>
+            <field name="max_amount">0.0</field>
+            <field name="daily_limit">0.0</field>
+            <field name="age_group_restriction">none</field>
+            <field name="requires_adult_supervision">False</field>
+            <field name="requires_pin">False</field>
+            <field name="requires_signature">False</field>
+            <field name="icon">fas fa-coins</field>
+            <field name="color">#ffc107</field>
+            <field name="sequence">60</field>
+        </record>
+        
+        <record id="payment_method_loyalty" model="pos.payment.method">
+            <field name="name">Loyalty Points</field>
+            <field name="code">LOYALTY</field>
+            <field name="description">Loyalty points payment</field>
+            <field name="payment_type">loyalty</field>
+            <field name="is_active">True</field>
+            <field name="is_default">False</field>
+            <field name="requires_confirmation">False</field>
+            <field name="payment_provider">manual</field>
+            <field name="has_fees">False</field>
+            <field name="min_amount">1.0</field>
+            <field name="max_amount">0.0</field>
+            <field name="daily_limit">0.0</field>
+            <field name="age_group_restriction">none</field>
+            <field name="requires_adult_supervision">False</field>
+            <field name="requires_pin">False</field>
+            <field name="requires_signature">False</field>
+            <field name="icon">fas fa-star</field>
+            <field name="color">#17a2b8</field>
+            <field name="sequence">70</field>
+        </record>
+        
+    </data>
+</ocean>

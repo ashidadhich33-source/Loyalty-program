@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_pos_payment_method_manager,pos.payment.method.manager,model_pos_payment_method,base.group_system,1,1,1,1
+access_pos_payment_method_user,pos.payment.method.user,model_pos_payment_method,base.group_user,1,0,0,0
+access_pos_payment_terminal_manager,pos.payment.terminal.manager,model_pos_payment_terminal,base.group_system,1,1,1,1
+access_pos_payment_terminal_user,pos.payment.terminal.user,model_pos_payment_terminal,base.group_user,1,0,0,0
+access_pos_payment_transaction_manager,pos.payment.transaction.manager,model_pos_payment_transaction,base.group_system,1,1,1,1
+access_pos_payment_transaction_user,pos.payment.transaction.user,model_pos_payment_transaction,base.group_user,1,1,1,0

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- POS Payment Manager Group -->
+        <record id="group_pos_payment_manager" model="ocean.groups">
+            <field name="name">POS Payment Manager</field>
+            <field name="category_id" ref="base.module_category_sales"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        
+        <!-- POS Payment User Group -->
+        <record id="group_pos_payment_user" model="ocean.groups">
+            <field name="name">POS Payment User</field>
+            <field name="category_id" ref="base.module_category_sales"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        
+        <!-- POS Payment Terminal Manager Group -->
+        <record id="group_pos_payment_terminal_manager" model="ocean.groups">
+            <field name="name">POS Payment Terminal Manager</field>
+            <field name="category_id" ref="base.module_category_sales"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        
+    </data>
+</ocean>

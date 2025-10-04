@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        <!-- Addon Manager Menu -->
+        <record id="menu_addon_manager_root" model="ocean.ui.menu">
+            <field name="name">Addon Manager</field>
+            <field name="sequence">100</field>
+            <field name="web_icon">addon_manager,static/description/icon.png</field>
+        </record>
+        
+        <!-- Addon Manager Main Menu -->
+        <record id="menu_addon_manager" model="ocean.ui.menu">
+            <field name="name">Addon Manager</field>
+            <field name="parent_id" ref="menu_addon_manager_root"/>
+            <field name="action" ref="action_addon_manager"/>
+            <field name="sequence">10</field>
+        </record>
+        
+        <!-- Installed Addons Menu -->
+        <record id="menu_installed_addons" model="ocean.ui.menu">
+            <field name="name">Installed Addons</field>
+            <field name="parent_id" ref="menu_addon_manager_root"/>
+            <field name="action" ref="action_installed_addons"/>
+            <field name="sequence">20</field>
+        </record>
+        
+        <!-- Available Addons Menu -->
+        <record id="menu_available_addons" model="ocean.ui.menu">
+            <field name="name">Available Addons</field>
+            <field name="parent_id" ref="menu_addon_manager_root"/>
+            <field name="action" ref="action_available_addons"/>
+            <field name="sequence">30</field>
+        </record>
+        
+        <!-- Applications Menu -->
+        <record id="menu_applications" model="ocean.ui.menu">
+            <field name="name">Applications</field>
+            <field name="parent_id" ref="menu_addon_manager_root"/>
+            <field name="action" ref="action_applications"/>
+            <field name="sequence">40</field>
+        </record>
+        
+        <!-- Addon Marketplace Menu -->
+        <record id="menu_addon_marketplace" model="ocean.ui.menu">
+            <field name="name">Addon Marketplace</field>
+            <field name="parent_id" ref="menu_addon_manager_root"/>
+            <field name="action" ref="action_addon_marketplace"/>
+            <field name="sequence">50</field>
+        </record>
+        
+        <!-- Addon Development Menu -->
+        <record id="menu_addon_development" model="ocean.ui.menu">
+            <field name="name">Addon Development</field>
+            <field name="parent_id" ref="menu_addon_manager_root"/>
+            <field name="action" ref="action_addon_development"/>
+            <field name="sequence">60</field>
+        </record>
+        
+    </data>
+</ocean>

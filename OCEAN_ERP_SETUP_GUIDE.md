@@ -778,6 +778,125 @@ Edit `erp.conf` to configure backup settings:
 }
 ```
 
+## 🔌 Addon Management System
+
+Ocean ERP includes a comprehensive addon management system similar to Odoo:
+
+### **Addon Features**
+- ✅ **Addon Discovery**: Automatic scanning of addons directory
+- ✅ **Install/Uninstall**: Easy addon installation and removal
+- ✅ **Dependency Management**: Automatic dependency resolution
+- ✅ **Addon Marketplace**: Third-party addon marketplace
+- ✅ **Development Tools**: Addon development templates and tools
+- ✅ **Version Management**: Addon version tracking and updates
+- ✅ **Compatibility Checking**: Pre-installation compatibility checks
+
+### **Using Addon System**
+
+#### **Web Interface**
+1. Go to **Addon Manager** → **Addon Manager**
+2. Browse **Available Addons** to see uninstalled addons
+3. View **Installed Addons** to manage current addons
+4. Use **Applications** to see application-type addons
+5. Check **Addon Marketplace** for third-party addons
+6. Use **Addon Development** for creating new addons
+
+#### **Command Line**
+```bash
+# List all addons
+python addon_cli.py list
+
+# List installed addons
+python addon_cli.py list --installed
+
+# Install addon
+python addon_cli.py install addon_name
+
+# Uninstall addon
+python addon_cli.py uninstall addon_name
+
+# Show addon information
+python addon_cli.py info addon_name
+
+# Check dependencies
+python addon_cli.py deps addon_name
+
+# Create new addon
+python addon_cli.py create my_addon --template basic --author "Your Name"
+```
+
+### **Addon Development**
+
+#### **Creating New Addons**
+1. Use the **Addon Development** interface
+2. Choose from templates: Basic, Model, View, Wizard, Report, Integration
+3. Fill in addon details and requirements
+4. Generate addon structure automatically
+
+#### **Addon Structure**
+```
+addons/my_addon/
+├── __manifest__.py          # Addon metadata
+├── __init__.py              # Python package init
+├── models/                  # Data models
+│   ├── __init__.py
+│   └── my_model.py
+├── views/                   # User interface
+│   ├── menu.xml
+│   └── my_views.xml
+├── security/                # Access control
+│   ├── ir.model.access.csv
+│   └── security.xml
+├── data/                    # Initial data
+│   └── data.xml
+├── demo/                    # Demo data
+│   └── demo.xml
+└── static/                 # Web assets
+    ├── src/css/
+    └── src/js/
+```
+
+#### **Addon Manifest**
+```python
+{
+    'name': 'My Addon',
+    'version': '1.0.0',
+    'category': 'Custom',
+    'summary': 'Short description',
+    'description': 'Detailed description',
+    'author': 'Your Name',
+    'website': 'https://www.yourwebsite.com',
+    'license': 'LGPL-3',
+    'depends': ['core_base', 'users'],
+    'data': [
+        'security/ir.model.access.csv',
+        'views/menu.xml',
+    ],
+    'demo': [],
+    'assets': {
+        'web.assets_backend': [],
+    },
+    'installable': True,
+    'application': False,
+    'auto_install': False,
+}
+```
+
+### **Third-Party Addons**
+
+#### **Marketplace Integration**
+- ✅ **Browse Addons**: Search and filter marketplace addons
+- ✅ **Reviews & Ratings**: User reviews and ratings system
+- ✅ **Pricing**: Free and paid addons support
+- ✅ **Downloads**: Direct download and installation
+- ✅ **Categories**: Organized by business function
+
+#### **Installing from Marketplace**
+1. Go to **Addon Manager** → **Addon Marketplace**
+2. Browse or search for addons
+3. Click **Install** on desired addon
+4. System automatically downloads and installs
+
 ## 🎉 Success!
 
 After completing the setup wizard, you'll have:
@@ -789,6 +908,7 @@ After completing the setup wizard, you'll have:
 - ✅ **Master Data**: Age groups, seasons, genders loaded
 - ✅ **System Settings**: All configurations optimized
 - ✅ **Backup System**: Comprehensive backup and restore functionality
+- ✅ **Addon Management**: Full addon system like Odoo
 
 ## 📞 Support
 

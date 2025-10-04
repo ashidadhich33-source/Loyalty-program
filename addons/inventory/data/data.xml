@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data noupdate="1">
+        
+        <!-- Stock Locations -->
+        <record id="stock_location_company" model="stock.location">
+            <field name="name">Company</field>
+            <field name="code">COMPANY</field>
+            <field name="description">Company root location</field>
+            <field name="location_type">view</field>
+            <field name="usage">view</field>
+            <field name="is_active">True</field>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+        
+        <record id="stock_location_warehouse" model="stock.location">
+            <field name="name">Main Warehouse</field>
+            <field name="code">WH</field>
+            <field name="description">Main warehouse location</field>
+            <field name="location_type">internal</field>
+            <field name="usage">internal</field>
+            <field name="is_active">True</field>
+            <field name="parent_id" ref="stock_location_company"/>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="max_capacity">10000.0</field>
+            <field name="temperature_controlled">True</field>
+            <field name="min_temperature">18.0</field>
+            <field name="max_temperature">25.0</field>
+            <field name="age_group_restriction">none</field>
+        </record>
+        
+        <record id="stock_location_receipts" model="stock.location">
+            <field name="name">Receipts</field>
+            <field name="code">RECEIPTS</field>
+            <field name="description">Receipts location</field>
+            <field name="location_type">internal</field>
+            <field name="usage">internal</field>
+            <field name="is_active">True</field>
+            <field name="parent_id" ref="stock_location_warehouse"/>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="max_capacity">1000.0</field>
+            <field name="age_group_restriction">none</field>
+        </record>
+        
+        <record id="stock_location_stock" model="stock.location">
+            <field name="name">Stock</field>
+            <field name="code">STOCK</field>
+            <field name="description">Stock location</field>
+            <field name="location_type">internal</field>
+            <field name="usage">internal</field>
+            <field name="is_active">True</field>
+            <field name="parent_id" ref="stock_location_warehouse"/>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="max_capacity">8000.0</field>
+            <field name="age_group_restriction">none</field>
+        </record>
+        
+        <record id="stock_location_toddler" model="stock.location">
+            <field name="name">Toddler Section</field>
+            <field name="code">TODDLER</field>
+            <field name="description">Toddler clothing section</field>
+            <field name="location_type">internal</field>
+            <field name="usage">internal</field>
+            <field name="is_active">True</field>
+            <field name="parent_id" ref="stock_location_stock"/>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="max_capacity">2000.0</field>
+            <field name="temperature_controlled">True</field>
+            <field name="min_temperature">20.0</field>
+            <field name="max_temperature">24.0</field>
+            <field name="age_group_restriction">toddler</field>
+            <field name="requires_access_control">True</field>
+            <field name="access_level">restricted</field>
+        </record>
+        
+        <record id="stock_location_child" model="stock.location">
+            <field name="name">Child Section</field>
+            <field name="code">CHILD</field>
+            <field name="description">Child clothing section</field>
+            <field name="location_type">internal</field>
+            <field name="usage">internal</field>
+            <field name="is_active">True</field>
+            <field name="parent_id" ref="stock_location_stock"/>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="max_capacity">3000.0</field>
+            <field name="temperature_controlled">True</field>
+            <field name="min_temperature">18.0</field>
+            <field name="max_temperature">25.0</field>
+            <field name="age_group_restriction">child</field>
+        </record>
+        
+        <record id="stock_location_teen" model="stock.location">
+            <field name="name">Teen Section</field>
+            <field name="code">TEEN</field>
+            <field name="description">Teen clothing section</field>
+            <field name="location_type">internal</field>
+            <field name="usage">internal</field>
+            <field name="is_active">True</field>
+            <field name="parent_id" ref="stock_location_stock"/>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="max_capacity">3000.0</field>
+            <field name="temperature_controlled">True</field>
+            <field name="min_temperature">18.0</field>
+            <field name="max_temperature">25.0</field>
+            <field name="age_group_restriction">teen</field>
+        </record>
+        
+        <record id="stock_location_output" model="stock.location">
+            <field name="name">Output</field>
+            <field name="code">OUTPUT</field>
+            <field name="description">Output location</field>
+            <field name="location_type">internal</field>
+            <field name="usage">internal</field>
+            <field name="is_active">True</field>
+            <field name="parent_id" ref="stock_location_warehouse"/>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="max_capacity">500.0</field>
+            <field name="age_group_restriction">none</field>
+        </record>
+        
+        <record id="stock_location_customers" model="stock.location">
+            <field name="name">Customers</field>
+            <field name="code">CUSTOMERS</field>
+            <field name="description">Customer location</field>
+            <field name="location_type">customer</field>
+            <field name="usage">customer</field>
+            <field name="is_active">True</field>
+            <field name="parent_id" ref="stock_location_company"/>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="age_group_restriction">none</field>
+        </record>
+        
+        <record id="stock_location_vendors" model="stock.location">
+            <field name="name">Vendors</field>
+            <field name="code">VENDORS</field>
+            <field name="description">Vendor location</field>
+            <field name="location_type">vendor</field>
+            <field name="usage">supplier</field>
+            <field name="is_active">True</field>
+            <field name="parent_id" ref="stock_location_company"/>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="age_group_restriction">none</field>
+        </record>
+        
+        <record id="stock_location_scrap" model="stock.location">
+            <field name="name">Scrap</field>
+            <field name="code">SCRAP</field>
+            <field name="description">Scrap location</field>
+            <field name="location_type">internal</field>
+            <field name="usage">internal</field>
+            <field name="is_active">True</field>
+            <field name="parent_id" ref="stock_location_warehouse"/>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="is_scrap_location">True</field>
+            <field name="max_capacity">100.0</field>
+            <field name="age_group_restriction">none</field>
+        </record>
+        
+        <record id="stock_location_return" model="stock.location">
+            <field name="name">Return</field>
+            <field name="code">RETURN</field>
+            <field name="description">Return location</field>
+            <field name="location_type">internal</field>
+            <field name="usage">internal</field>
+            <field name="is_active">True</field>
+            <field name="parent_id" ref="stock_location_warehouse"/>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="is_return_location">True</field>
+            <field name="max_capacity">200.0</field>
+            <field name="age_group_restriction">none</field>
+        </record>
+        
+    </data>
+</ocean>

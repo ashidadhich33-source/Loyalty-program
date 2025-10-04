@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Inventory Manager Group -->
+        <record id="group_inventory_manager" model="ocean.groups">
+            <field name="name">Inventory Manager</field>
+            <field name="category_id" ref="base.module_category_inventory"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        
+        <!-- Inventory User Group -->
+        <record id="group_inventory_user" model="ocean.groups">
+            <field name="name">Inventory User</field>
+            <field name="category_id" ref="base.module_category_inventory"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        
+        <!-- Stock Location Manager Group -->
+        <record id="group_stock_location_manager" model="ocean.groups">
+            <field name="name">Stock Location Manager</field>
+            <field name="category_id" ref="base.module_category_inventory"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        
+    </data>
+</ocean>

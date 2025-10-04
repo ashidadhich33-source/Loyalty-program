@@ -2,7 +2,7 @@
 <ocean>
     <data>
         <!-- Loyalty Tiers Tree View -->
-        <record id="view_loyalty_tiers_tree" model="ir.ui.view">
+        <record id="view_loyalty_tiers_tree" model="ocean.ui.view">
             <field name="name">loyalty.tiers.tree</field>
             <field name="model">loyalty.tier</field>
             <field name="arch" type="xml">
@@ -43,7 +43,7 @@
         </record>
         
         <!-- Loyalty Tiers Form View -->
-        <record id="view_loyalty_tiers_form" model="ir.ui.view">
+        <record id="view_loyalty_tiers_form" model="ocean.ui.view">
             <field name="name">loyalty.tiers.form</field>
             <field name="model">loyalty.tier</field>
             <field name="arch" type="xml">
@@ -141,7 +141,7 @@
         </record>
         
         <!-- Loyalty Tiers Search View -->
-        <record id="view_loyalty_tiers_search" model="ir.ui.view">
+        <record id="view_loyalty_tiers_search" model="ocean.ui.view">
             <field name="name">loyalty.tiers.search</field>
             <field name="model">loyalty.tier</field>
             <field name="arch" type="xml">
@@ -200,7 +200,7 @@
         </record>
         
         <!-- Loyalty Tiers Action -->
-        <record id="action_loyalty_tiers" model="ir.actions.act_window">
+        <record id="action_loyalty_tiers" model="ocean.actions.act_window">
             <field name="name">Loyalty Tiers</field>
             <field name="res_model">loyalty.tier</field>
             <field name="view_mode">tree,form</field>

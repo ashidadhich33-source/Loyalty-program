@@ -2,7 +2,7 @@
 <ocean>
     <data>
         <!-- Discount Campaigns Tree View -->
-        <record id="view_discount_campaigns_tree" model="ir.ui.view">
+        <record id="view_discount_campaigns_tree" model="ocean.ui.view">
             <field name="name">discount.campaigns.tree</field>
             <field name="model">discount.campaign</field>
             <field name="arch" type="xml">
@@ -35,7 +35,7 @@
         </record>
         
         <!-- Discount Campaigns Form View -->
-        <record id="view_discount_campaigns_form" model="ir.ui.view">
+        <record id="view_discount_campaigns_form" model="ocean.ui.view">
             <field name="name">discount.campaigns.form</field>
             <field name="model">discount.campaign</field>
             <field name="arch" type="xml">
@@ -160,7 +160,7 @@
         </record>
         
         <!-- Discount Campaigns Search View -->
-        <record id="view_discount_campaigns_search" model="ir.ui.view">
+        <record id="view_discount_campaigns_search" model="ocean.ui.view">
             <field name="name">discount.campaigns.search</field>
             <field name="model">discount.campaign</field>
             <field name="arch" type="xml">
@@ -241,7 +241,7 @@
         </record>
         
         <!-- Discount Campaigns Action -->
-        <record id="action_discount_campaigns" model="ir.actions.act_window">
+        <record id="action_discount_campaigns" model="ocean.actions.act_window">
             <field name="name">Discount Campaigns</field>
             <field name="res_model">discount.campaign</field>
             <field name="view_mode">tree,form</field>

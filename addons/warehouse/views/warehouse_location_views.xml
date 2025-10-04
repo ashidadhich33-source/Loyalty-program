@@ -3,7 +3,7 @@
     <data>
         
         <!-- Warehouse Location Tree View -->
-        <record id="view_warehouse_location_tree" model="ir.ui.view">
+        <record id="view_warehouse_location_tree" model="ocean.ui.view">
             <field name="name">warehouse.location.tree</field>
             <field name="model">warehouse.location</field>
             <field name="arch" type="xml">
@@ -26,7 +26,7 @@
         </record>
         
         <!-- Warehouse Location Form View -->
-        <record id="view_warehouse_location_form" model="ir.ui.view">
+        <record id="view_warehouse_location_form" model="ocean.ui.view">
             <field name="name">warehouse.location.form</field>
             <field name="model">warehouse.location</field>
             <field name="arch" type="xml">
@@ -110,7 +110,7 @@
         </record>
         
         <!-- Warehouse Location Search View -->
-        <record id="view_warehouse_location_search" model="ir.ui.view">
+        <record id="view_warehouse_location_search" model="ocean.ui.view">
             <field name="name">warehouse.location.search</field>
             <field name="model">warehouse.location</field>
             <field name="arch" type="xml">
@@ -136,7 +136,7 @@
         </record>
         
         <!-- Warehouse Location Action -->
-        <record id="action_warehouse_location" model="ir.actions.act_window">
+        <record id="action_warehouse_location" model="ocean.actions.act_window">
             <field name="name">Warehouse Locations</field>
             <field name="res_model">warehouse.location</field>
             <field name="view_mode">tree,form</field>

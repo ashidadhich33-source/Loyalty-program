@@ -2,7 +2,7 @@
 <ocean>
     <data>
         <!-- Database Maintenance Tree View -->
-        <record id="view_database_maintenance_tree" model="ir.ui.view">
+        <record id="view_database_maintenance_tree" model="ocean.ui.view">
             <field name="name">database.maintenance.tree</field>
             <field name="model">database.maintenance</field>
             <field name="arch" type="xml">
@@ -19,7 +19,7 @@
         </record>
 
         <!-- Database Maintenance Form View -->
-        <record id="view_database_maintenance_form" model="ir.ui.view">
+        <record id="view_database_maintenance_form" model="ocean.ui.view">
             <field name="name">database.maintenance.form</field>
             <field name="model">database.maintenance</field>
             <field name="arch" type="xml">
@@ -65,7 +65,7 @@
         </record>
 
         <!-- Database Maintenance Search View -->
-        <record id="view_database_maintenance_search" model="ir.ui.view">
+        <record id="view_database_maintenance_search" model="ocean.ui.view">
             <field name="name">database.maintenance.search</field>
             <field name="model">database.maintenance</field>
             <field name="arch" type="xml">
@@ -96,7 +96,7 @@
         </record>
 
         <!-- Database Maintenance Action -->
-        <record id="action_database_maintenance" model="ir.actions.act_window">
+        <record id="action_database_maintenance" model="ocean.actions.act_window">
             <field name="name">Database Maintenance</field>
             <field name="res_model">database.maintenance</field>
             <field name="view_mode">tree,form</field>

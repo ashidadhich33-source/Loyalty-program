@@ -2,7 +2,7 @@
 <ocean>
     <data>
         <!-- Sales Quotations Tree View -->
-        <record id="view_sale_quotations_tree" model="ir.ui.view">
+        <record id="view_sale_quotations_tree" model="ocean.ui.view">
             <field name="name">sale.quotations.tree</field>
             <field name="model">sale.order</field>
             <field name="arch" type="xml">
@@ -21,7 +21,7 @@
         </record>
         
         <!-- Sales Quotations Form View -->
-        <record id="view_sale_quotations_form" model="ir.ui.view">
+        <record id="view_sale_quotations_form" model="ocean.ui.view">
             <field name="name">sale.quotations.form</field>
             <field name="model">sale.order</field>
             <field name="arch" type="xml">
@@ -102,7 +102,7 @@
         </record>
         
         <!-- Sales Quotations Search View -->
-        <record id="view_sale_quotations_search" model="ir.ui.view">
+        <record id="view_sale_quotations_search" model="ocean.ui.view">
             <field name="name">sale.quotations.search</field>
             <field name="model">sale.order</field>
             <field name="arch" type="xml">
@@ -153,7 +153,7 @@
         </record>
         
         <!-- Sales Quotations Action -->
-        <record id="action_sale_quotations" model="ir.actions.act_window">
+        <record id="action_sale_quotations" model="ocean.actions.act_window">
             <field name="name">Sales Quotations</field>
             <field name="res_model">sale.order</field>
             <field name="view_mode">tree,form</field>

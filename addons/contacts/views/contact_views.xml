@@ -3,7 +3,7 @@
     <data>
         
         <!-- Contact Tree View -->
-        <record id="view_contact_tree" model="ir.ui.view">
+        <record id="view_contact_tree" model="ocean.ui.view">
             <field name="name">contact.tree</field>
             <field name="model">res.partner</field>
             <field name="arch" type="xml">
@@ -21,7 +21,7 @@
         </record>
         
         <!-- Contact Form View -->
-        <record id="view_contact_form" model="ir.ui.view">
+        <record id="view_contact_form" model="ocean.ui.view">
             <field name="name">contact.form</field>
             <field name="model">res.partner</field>
             <field name="arch" type="xml">
@@ -81,7 +81,7 @@
         </record>
         
         <!-- Contact Search View -->
-        <record id="view_contact_search" model="ir.ui.view">
+        <record id="view_contact_search" model="ocean.ui.view">
             <field name="name">contact.search</field>
             <field name="model">res.partner</field>
             <field name="arch" type="xml">
@@ -112,7 +112,7 @@
         </record>
         
         <!-- Contact Action -->
-        <record id="action_contact" model="ir.actions.act_window">
+        <record id="action_contact" model="ocean.actions.act_window">
             <field name="name">Contacts</field>
             <field name="res_model">res.partner</field>
             <field name="view_mode">tree,form</field>

@@ -2,7 +2,7 @@
 <ocean>
     <data>
         <!-- Sales Orders Tree View -->
-        <record id="view_sale_orders_tree" model="ir.ui.view">
+        <record id="view_sale_orders_tree" model="ocean.ui.view">
             <field name="name">sale.orders.tree</field>
             <field name="model">sale.order</field>
             <field name="arch" type="xml">
@@ -21,7 +21,7 @@
         </record>
         
         <!-- Sales Orders Form View -->
-        <record id="view_sale_orders_form" model="ir.ui.view">
+        <record id="view_sale_orders_form" model="ocean.ui.view">
             <field name="name">sale.orders.form</field>
             <field name="model">sale.order</field>
             <field name="arch" type="xml">
@@ -119,7 +119,7 @@
         </record>
         
         <!-- Sales Orders Search View -->
-        <record id="view_sale_orders_search" model="ir.ui.view">
+        <record id="view_sale_orders_search" model="ocean.ui.view">
             <field name="name">sale.orders.search</field>
             <field name="model">sale.order</field>
             <field name="arch" type="xml">
@@ -172,7 +172,7 @@
         </record>
         
         <!-- Sales Orders Action -->
-        <record id="action_sale_orders" model="ir.actions.act_window">
+        <record id="action_sale_orders" model="ocean.actions.act_window">
             <field name="name">Sales Orders</field>
             <field name="res_model">sale.order</field>
             <field name="view_mode">tree,form</field>

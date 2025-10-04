@@ -2,7 +2,7 @@
 <ocean>
     <data>
         <!-- Import Templates Tree View -->
-        <record id="view_import_templates_tree" model="ir.ui.view">
+        <record id="view_import_templates_tree" model="ocean.ui.view">
             <field name="name">import.templates.tree</field>
             <field name="model">import.template</field>
             <field name="arch" type="xml">
@@ -22,7 +22,7 @@
         </record>
         
         <!-- Import Templates Form View -->
-        <record id="view_import_templates_form" model="ir.ui.view">
+        <record id="view_import_templates_form" model="ocean.ui.view">
             <field name="name">import.templates.form</field>
             <field name="model">import.template</field>
             <field name="arch" type="xml">
@@ -73,7 +73,7 @@
         </record>
         
         <!-- Import Templates Search View -->
-        <record id="view_import_templates_search" model="ir.ui.view">
+        <record id="view_import_templates_search" model="ocean.ui.view">
             <field name="name">import.templates.search</field>
             <field name="model">import.template</field>
             <field name="arch" type="xml">
@@ -100,7 +100,7 @@
         </record>
         
         <!-- Import Templates Action -->
-        <record id="action_import_templates" model="ir.actions.act_window">
+        <record id="action_import_templates" model="ocean.actions.act_window">
             <field name="name">Import Templates</field>
             <field name="res_model">import.template</field>
             <field name="view_mode">tree,form</field>

@@ -2,7 +2,7 @@
 <ocean>
     <data>
         <!-- Financial Years Tree View -->
-        <record id="view_financial_years_tree" model="ir.ui.view">
+        <record id="view_financial_years_tree" model="ocean.ui.view">
             <field name="name">financial_years.tree</field>
             <field name="model">financial.year</field>
             <field name="arch" type="xml">
@@ -20,7 +20,7 @@
         </record>
         
         <!-- Financial Years Form View -->
-        <record id="view_financial_years_form" model="ir.ui.view">
+        <record id="view_financial_years_form" model="ocean.ui.view">
             <field name="name">financial_years.form</field>
             <field name="model">financial.year</field>
             <field name="arch" type="xml">
@@ -94,7 +94,7 @@
         </record>
         
         <!-- Financial Years Search View -->
-        <record id="view_financial_years_search" model="ir.ui.view">
+        <record id="view_financial_years_search" model="ocean.ui.view">
             <field name="name">financial_years.search</field>
             <field name="model">financial.year</field>
             <field name="arch" type="xml">
@@ -125,7 +125,7 @@
         </record>
         
         <!-- Financial Years Action -->
-        <record id="action_financial_years" model="ir.actions.act_window">
+        <record id="action_financial_years" model="ocean.actions.act_window">
             <field name="name">Financial Years</field>
             <field name="res_model">financial.year</field>
             <field name="view_mode">tree,form</field>

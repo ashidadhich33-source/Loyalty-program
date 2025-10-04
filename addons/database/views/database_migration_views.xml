@@ -2,7 +2,7 @@
 <ocean>
     <data>
         <!-- Database Migrations Tree View -->
-        <record id="view_database_migrations_tree" model="ir.ui.view">
+        <record id="view_database_migrations_tree" model="ocean.ui.view">
             <field name="name">database_migrations.tree</field>
             <field name="model">database.migration</field>
             <field name="arch" type="xml">
@@ -25,7 +25,7 @@
         </record>
         
         <!-- Database Migrations Form View -->
-        <record id="view_database_migrations_form" model="ir.ui.view">
+        <record id="view_database_migrations_form" model="ocean.ui.view">
             <field name="name">database_migrations.form</field>
             <field name="model">database.migration</field>
             <field name="arch" type="xml">
@@ -133,7 +133,7 @@
         </record>
         
         <!-- Database Migrations Search View -->
-        <record id="view_database_migrations_search" model="ir.ui.view">
+        <record id="view_database_migrations_search" model="ocean.ui.view">
             <field name="name">database_migrations.search</field>
             <field name="model">database.migration</field>
             <field name="arch" type="xml">
@@ -175,7 +175,7 @@
         </record>
         
         <!-- Database Migrations Action -->
-        <record id="action_database_migrations" model="ir.actions.act_window">
+        <record id="action_database_migrations" model="ocean.actions.act_window">
             <field name="name">Database Migrations</field>
             <field name="res_model">database.migration</field>
             <field name="view_mode">tree,form</field>

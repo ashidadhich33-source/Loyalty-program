@@ -3,7 +3,7 @@
     <data>
         
         <!-- Stock Expiry Tree View -->
-        <record id="view_stock_expiry_tree" model="ir.ui.view">
+        <record id="view_stock_expiry_tree" model="ocean.ui.view">
             <field name="name">stock.expiry.tree</field>
             <field name="model">stock.expiry</field>
             <field name="arch" type="xml">
@@ -24,7 +24,7 @@
         </record>
         
         <!-- Stock Expiry Form View -->
-        <record id="view_stock_expiry_form" model="ir.ui.view">
+        <record id="view_stock_expiry_form" model="ocean.ui.view">
             <field name="name">stock.expiry.form</field>
             <field name="model">stock.expiry</field>
             <field name="arch" type="xml">
@@ -85,7 +85,7 @@
         </record>
         
         <!-- Stock Expiry Search View -->
-        <record id="view_stock_expiry_search" model="ir.ui.view">
+        <record id="view_stock_expiry_search" model="ocean.ui.view">
             <field name="name">stock.expiry.search</field>
             <field name="model">stock.expiry</field>
             <field name="arch" type="xml">
@@ -117,7 +117,7 @@
         </record>
         
         <!-- Stock Expiry Action -->
-        <record id="action_stock_expiry" model="ir.actions.act_window">
+        <record id="action_stock_expiry" model="ocean.actions.act_window">
             <field name="name">Stock Expiry Reports</field>
             <field name="res_model">stock.expiry</field>
             <field name="view_mode">tree,form</field>

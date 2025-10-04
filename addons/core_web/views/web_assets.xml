@@ -2,9 +2,9 @@
 <ocean>
     <data>
         <!-- Web Assets Template -->
-        <record id="template_web_assets" model="ir.ui.view">
+        <record id="template_web_assets" model="ocean.ui.view">
             <field name="name">web.assets</field>
-            <field name="model">ir.ui.view</field>
+            <field name="model">ocean.ui.view</field>
             <field name="arch" type="xml">
                 <t t-name="web.assets">
                     <!-- CSS Assets -->
@@ -21,9 +21,9 @@
         </record>
         
         <!-- Web Header Template -->
-        <record id="template_web_header" model="ir.ui.view">
+        <record id="template_web_header" model="ocean.ui.view">
             <field name="name">web.header</field>
-            <field name="model">ir.ui.view</field>
+            <field name="model">ocean.ui.view</field>
             <field name="arch" type="xml">
                 <t t-name="web.header">
                     <div class="o_main_header">
@@ -109,9 +109,9 @@
         </record>
         
         <!-- Web Sidebar Template -->
-        <record id="template_web_sidebar" model="ir.ui.view">
+        <record id="template_web_sidebar" model="ocean.ui.view">
             <field name="name">web.sidebar</field>
-            <field name="model">ir.ui.view</field>
+            <field name="model">ocean.ui.view</field>
             <field name="arch" type="xml">
                 <t t-name="web.sidebar">
                     <div class="o_main_sidebar">
@@ -209,9 +209,9 @@
         </record>
         
         <!-- Web Footer Template -->
-        <record id="template_web_footer" model="ir.ui.view">
+        <record id="template_web_footer" model="ocean.ui.view">
             <field name="name">web.footer</field>
-            <field name="model">ir.ui.view</field>
+            <field name="model">ocean.ui.view</field>
             <field name="arch" type="xml">
                 <t t-name="web.footer">
                     <div class="o_main_footer">

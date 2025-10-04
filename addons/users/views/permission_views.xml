@@ -2,7 +2,7 @@
 <ocean>
     <data>
         <!-- Permissions Tree View -->
-        <record id="view_permissions_tree" model="ir.ui.view">
+        <record id="view_permissions_tree" model="ocean.ui.view">
             <field name="name">permissions.tree</field>
             <field name="model">user.permissions</field>
             <field name="arch" type="xml">
@@ -22,7 +22,7 @@
         </record>
         
         <!-- Permissions Form View -->
-        <record id="view_permissions_form" model="ir.ui.view">
+        <record id="view_permissions_form" model="ocean.ui.view">
             <field name="name">permissions.form</field>
             <field name="model">user.permissions</field>
             <field name="arch" type="xml">
@@ -96,7 +96,7 @@
         </record>
         
         <!-- Permissions Search View -->
-        <record id="view_permissions_search" model="ir.ui.view">
+        <record id="view_permissions_search" model="ocean.ui.view">
             <field name="name">permissions.search</field>
             <field name="model">user.permissions</field>
             <field name="arch" type="xml">
@@ -141,7 +141,7 @@
         </record>
         
         <!-- Permissions Action -->
-        <record id="action_permissions" model="ir.actions.act_window">
+        <record id="action_permissions" model="ocean.actions.act_window">
             <field name="name">Permissions</field>
             <field name="res_model">user.permissions</field>
             <field name="view_mode">tree,form</field>

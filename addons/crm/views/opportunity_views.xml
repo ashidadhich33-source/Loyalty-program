@@ -2,7 +2,7 @@
 <ocean>
     <data>
         <!-- CRM Opportunities Tree View -->
-        <record id="view_crm_opportunities_tree" model="ir.ui.view">
+        <record id="view_crm_opportunities_tree" model="ocean.ui.view">
             <field name="name">crm.opportunities.tree</field>
             <field name="model">crm.opportunity</field>
             <field name="arch" type="xml">
@@ -25,7 +25,7 @@
         </record>
         
         <!-- CRM Opportunities Form View -->
-        <record id="view_crm_opportunities_form" model="ir.ui.view">
+        <record id="view_crm_opportunities_form" model="ocean.ui.view">
             <field name="name">crm.opportunities.form</field>
             <field name="model">crm.opportunity</field>
             <field name="arch" type="xml">
@@ -130,7 +130,7 @@
         </record>
         
         <!-- CRM Opportunities Search View -->
-        <record id="view_crm_opportunities_search" model="ir.ui.view">
+        <record id="view_crm_opportunities_search" model="ocean.ui.view">
             <field name="name">crm.opportunities.search</field>
             <field name="model">crm.opportunity</field>
             <field name="arch" type="xml">
@@ -187,7 +187,7 @@
         </record>
         
         <!-- CRM Opportunities Action -->
-        <record id="action_crm_opportunities" model="ir.actions.act_window">
+        <record id="action_crm_opportunities" model="ocean.actions.act_window">
             <field name="name">CRM Opportunities</field>
             <field name="res_model">crm.opportunity</field>
             <field name="view_mode">tree,form</field>

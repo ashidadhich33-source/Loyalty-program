@@ -2,7 +2,7 @@
 <ocean>
     <data>
         <!-- System Configuration Settings Form -->
-        <record id="view_res_config_settings_form" model="ir.ui.view">
+        <record id="view_res_config_settings_form" model="ocean.ui.view">
             <field name="name">res.config.settings.form</field>
             <field name="model">res.config.settings</field>
             <field name="arch" type="xml">
@@ -59,7 +59,7 @@
         </record>
         
         <!-- System Configuration Settings Action -->
-        <record id="action_res_config_settings" model="ir.actions.act_window">
+        <record id="action_res_config_settings" model="ocean.actions.act_window">
             <field name="name">System Configuration</field>
             <field name="res_model">res.config.settings</field>
             <field name="view_mode">form</field>
@@ -68,7 +68,7 @@
         </record>
         
         <!-- System Information View -->
-        <record id="view_system_info_form" model="ir.ui.view">
+        <record id="view_system_info_form" model="ocean.ui.view">
             <field name="name">system.info.form</field>
             <field name="model">res.config.settings</field>
             <field name="arch" type="xml">
@@ -107,7 +107,7 @@
         </record>
         
         <!-- System Information Action -->
-        <record id="action_system_info" model="ir.actions.act_window">
+        <record id="action_system_info" model="ocean.actions.act_window">
             <field name="name">System Information</field>
             <field name="res_model">res.config.settings</field>
             <field name="view_mode">form</field>
@@ -116,7 +116,7 @@
         </record>
         
         <!-- System Utilities Action -->
-        <record id="action_system_utilities" model="ir.actions.act_window">
+        <record id="action_system_utilities" model="ocean.actions.act_window">
             <field name="name">System Utilities</field>
             <field name="res_model">system.utils</field>
             <field name="view_mode">form</field>

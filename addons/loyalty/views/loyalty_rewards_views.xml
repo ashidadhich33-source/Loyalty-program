@@ -2,7 +2,7 @@
 <ocean>
     <data>
         <!-- Loyalty Rewards Tree View -->
-        <record id="view_loyalty_rewards_tree" model="ir.ui.view">
+        <record id="view_loyalty_rewards_tree" model="ocean.ui.view">
             <field name="name">loyalty.rewards.tree</field>
             <field name="model">loyalty.reward</field>
             <field name="arch" type="xml">
@@ -30,7 +30,7 @@
         </record>
         
         <!-- Loyalty Rewards Form View -->
-        <record id="view_loyalty_rewards_form" model="ir.ui.view">
+        <record id="view_loyalty_rewards_form" model="ocean.ui.view">
             <field name="name">loyalty.rewards.form</field>
             <field name="model">loyalty.reward</field>
             <field name="arch" type="xml">
@@ -113,7 +113,7 @@
         </record>
         
         <!-- Loyalty Rewards Search View -->
-        <record id="view_loyalty_rewards_search" model="ir.ui.view">
+        <record id="view_loyalty_rewards_search" model="ocean.ui.view">
             <field name="name">loyalty.rewards.search</field>
             <field name="model">loyalty.reward</field>
             <field name="arch" type="xml">
@@ -172,7 +172,7 @@
         </record>
         
         <!-- Loyalty Rewards Action -->
-        <record id="action_loyalty_rewards" model="ir.actions.act_window">
+        <record id="action_loyalty_rewards" model="ocean.actions.act_window">
             <field name="name">Loyalty Rewards</field>
             <field name="res_model">loyalty.reward</field>
             <field name="view_mode">tree,form</field>
@@ -182,7 +182,7 @@
         </record>
         
         <!-- Loyalty Redemptions Tree View -->
-        <record id="view_loyalty_redemptions_tree" model="ir.ui.view">
+        <record id="view_loyalty_redemptions_tree" model="ocean.ui.view">
             <field name="name">loyalty.redemptions.tree</field>
             <field name="model">loyalty.redemption</field>
             <field name="arch" type="xml">
@@ -205,7 +205,7 @@
         </record>
         
         <!-- Loyalty Redemptions Form View -->
-        <record id="view_loyalty_redemptions_form" model="ir.ui.view">
+        <record id="view_loyalty_redemptions_form" model="ocean.ui.view">
             <field name="name">loyalty.redemptions.form</field>
             <field name="model">loyalty.redemption</field>
             <field name="arch" type="xml">
@@ -255,7 +255,7 @@
         </record>
         
         <!-- Loyalty Redemptions Search View -->
-        <record id="view_loyalty_redemptions_search" model="ir.ui.view">
+        <record id="view_loyalty_redemptions_search" model="ocean.ui.view">
             <field name="name">loyalty.redemptions.search</field>
             <field name="model">loyalty.redemption</field>
             <field name="arch" type="xml">
@@ -310,7 +310,7 @@
         </record>
         
         <!-- Loyalty Redemptions Action -->
-        <record id="action_loyalty_redemptions" model="ir.actions.act_window">
+        <record id="action_loyalty_redemptions" model="ocean.actions.act_window">
             <field name="name">Loyalty Redemptions</field>
             <field name="res_model">loyalty.redemption</field>
             <field name="view_mode">tree,form</field>

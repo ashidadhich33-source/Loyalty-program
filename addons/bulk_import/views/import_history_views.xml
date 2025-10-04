@@ -2,7 +2,7 @@
 <ocean>
     <data>
         <!-- Import History Tree View -->
-        <record id="view_import_history_tree" model="ir.ui.view">
+        <record id="view_import_history_tree" model="ocean.ui.view">
             <field name="name">import.history.tree</field>
             <field name="model">import.history</field>
             <field name="arch" type="xml">
@@ -20,7 +20,7 @@
         </record>
         
         <!-- Import History Form View -->
-        <record id="view_import_history_form" model="ir.ui.view">
+        <record id="view_import_history_form" model="ocean.ui.view">
             <field name="name">import.history.form</field>
             <field name="model">import.history</field>
             <field name="arch" type="xml">
@@ -77,7 +77,7 @@
         </record>
         
         <!-- Import History Search View -->
-        <record id="view_import_history_search" model="ir.ui.view">
+        <record id="view_import_history_search" model="ocean.ui.view">
             <field name="name">import.history.search</field>
             <field name="model">import.history</field>
             <field name="arch" type="xml">
@@ -113,7 +113,7 @@
         </record>
         
         <!-- Import History Action -->
-        <record id="action_import_history" model="ir.actions.act_window">
+        <record id="action_import_history" model="ocean.actions.act_window">
             <field name="name">Import History</field>
             <field name="res_model">import.history</field>
             <field name="view_mode">tree,form</field>

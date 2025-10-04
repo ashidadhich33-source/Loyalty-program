@@ -2,7 +2,7 @@
 <ocean>
     <data>
         <!-- Access Rights Tree View -->
-        <record id="view_access_rights_tree" model="ir.ui.view">
+        <record id="view_access_rights_tree" model="ocean.ui.view">
             <field name="name">access_rights.tree</field>
             <field name="model">access.rights</field>
             <field name="arch" type="xml">
@@ -22,7 +22,7 @@
         </record>
         
         <!-- Access Rights Form View -->
-        <record id="view_access_rights_form" model="ir.ui.view">
+        <record id="view_access_rights_form" model="ocean.ui.view">
             <field name="name">access_rights.form</field>
             <field name="model">access.rights</field>
             <field name="arch" type="xml">
@@ -99,7 +99,7 @@
         </record>
         
         <!-- Access Rights Search View -->
-        <record id="view_access_rights_search" model="ir.ui.view">
+        <record id="view_access_rights_search" model="ocean.ui.view">
             <field name="name">access_rights.search</field>
             <field name="model">access.rights</field>
             <field name="arch" type="xml">
@@ -145,7 +145,7 @@
         </record>
         
         <!-- Access Rights Action -->
-        <record id="action_access_rights" model="ir.actions.act_window">
+        <record id="action_access_rights" model="ocean.actions.act_window">
             <field name="name">Access Rights</field>
             <field name="res_model">access.rights</field>
             <field name="view_mode">tree,form</field>

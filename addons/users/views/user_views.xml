@@ -2,7 +2,7 @@
 <ocean>
     <data>
         <!-- Users Tree View -->
-        <record id="view_users_tree" model="ir.ui.view">
+        <record id="view_users_tree" model="ocean.ui.view">
             <field name="name">users.tree</field>
             <field name="model">res.users</field>
             <field name="arch" type="xml">
@@ -23,7 +23,7 @@
         </record>
         
         <!-- Users Form View -->
-        <record id="view_users_form" model="ir.ui.view">
+        <record id="view_users_form" model="ocean.ui.view">
             <field name="name">users.form</field>
             <field name="model">res.users</field>
             <field name="arch" type="xml">
@@ -162,7 +162,7 @@
         </record>
         
         <!-- Users Search View -->
-        <record id="view_users_search" model="ir.ui.view">
+        <record id="view_users_search" model="ocean.ui.view">
             <field name="name">users.search</field>
             <field name="model">res.users</field>
             <field name="arch" type="xml">
@@ -192,7 +192,7 @@
         </record>
         
         <!-- Users Action -->
-        <record id="action_users" model="ir.actions.act_window">
+        <record id="action_users" model="ocean.actions.act_window">
             <field name="name">Users</field>
             <field name="res_model">res.users</field>
             <field name="view_mode">tree,form</field>
@@ -202,7 +202,7 @@
         </record>
         
         <!-- User Statistics View -->
-        <record id="view_user_statistics" model="ir.ui.view">
+        <record id="view_user_statistics" model="ocean.ui.view">
             <field name="name">user.statistics</field>
             <field name="model">res.users</field>
             <field name="arch" type="xml">
@@ -248,7 +248,7 @@
         </record>
         
         <!-- User Statistics Action -->
-        <record id="action_user_statistics" model="ir.actions.act_window">
+        <record id="action_user_statistics" model="ocean.actions.act_window">
             <field name="name">User Statistics</field>
             <field name="res_model">res.users</field>
             <field name="view_mode">form</field>

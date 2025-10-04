@@ -2,7 +2,7 @@
 <ocean>
     <data>
         <!-- Category Hierarchy Tree View -->
-        <record id="view_category_hierarchy_tree" model="ir.ui.view">
+        <record id="view_category_hierarchy_tree" model="ocean.ui.view">
             <field name="name">category.hierarchy.tree</field>
             <field name="model">product.category</field>
             <field name="arch" type="xml">
@@ -22,7 +22,7 @@
         </record>
         
         <!-- Category Hierarchy Form View -->
-        <record id="view_category_hierarchy_form" model="ir.ui.view">
+        <record id="view_category_hierarchy_form" model="ocean.ui.view">
             <field name="name">category.hierarchy.form</field>
             <field name="model">product.category</field>
             <field name="arch" type="xml">
@@ -91,7 +91,7 @@
         </record>
         
         <!-- Category Hierarchy Action -->
-        <record id="action_category_hierarchy" model="ir.actions.act_window">
+        <record id="action_category_hierarchy" model="ocean.actions.act_window">
             <field name="name">Category Hierarchy</field>
             <field name="res_model">product.category</field>
             <field name="view_mode">tree,form</field>

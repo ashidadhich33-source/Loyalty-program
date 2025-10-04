@@ -2,7 +2,7 @@
 <ocean>
     <data>
         <!-- Groups Tree View -->
-        <record id="view_groups_tree" model="ir.ui.view">
+        <record id="view_groups_tree" model="ocean.ui.view">
             <field name="name">groups.tree</field>
             <field name="model">ocean.groups</field>
             <field name="arch" type="xml">
@@ -21,7 +21,7 @@
         </record>
         
         <!-- Groups Form View -->
-        <record id="view_groups_form" model="ir.ui.view">
+        <record id="view_groups_form" model="ocean.ui.view">
             <field name="name">groups.form</field>
             <field name="model">ocean.groups</field>
             <field name="arch" type="xml">
@@ -92,7 +92,7 @@
         </record>
         
         <!-- Groups Search View -->
-        <record id="view_groups_search" model="ir.ui.view">
+        <record id="view_groups_search" model="ocean.ui.view">
             <field name="name">groups.search</field>
             <field name="model">ocean.groups</field>
             <field name="arch" type="xml">
@@ -125,7 +125,7 @@
         </record>
         
         <!-- Groups Action -->
-        <record id="action_groups" model="ir.actions.act_window">
+        <record id="action_groups" model="ocean.actions.act_window">
             <field name="name">Groups</field>
             <field name="res_model">ocean.groups</field>
             <field name="view_mode">tree,form</field>

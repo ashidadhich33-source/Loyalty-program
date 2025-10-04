@@ -3,7 +3,7 @@
     <data>
         
         <!-- POS Configuration Tree View -->
-        <record id="view_pos_config_tree" model="ir.ui.view">
+        <record id="view_pos_config_tree" model="ocean.ui.view">
             <field name="name">pos.config.tree</field>
             <field name="model">pos.config</field>
             <field name="arch" type="xml">
@@ -23,7 +23,7 @@
         </record>
         
         <!-- POS Configuration Form View -->
-        <record id="view_pos_config_form" model="ir.ui.view">
+        <record id="view_pos_config_form" model="ocean.ui.view">
             <field name="name">pos.config.form</field>
             <field name="model">pos.config</field>
             <field name="arch" type="xml">
@@ -87,7 +87,7 @@
         </record>
         
         <!-- POS Configuration Search View -->
-        <record id="view_pos_config_search" model="ir.ui.view">
+        <record id="view_pos_config_search" model="ocean.ui.view">
             <field name="name">pos.config.search</field>
             <field name="model">pos.config</field>
             <field name="arch" type="xml">
@@ -114,7 +114,7 @@
         </record>
         
         <!-- POS Configuration Action -->
-        <record id="action_pos_config" model="ir.actions.act_window">
+        <record id="action_pos_config" model="ocean.actions.act_window">
             <field name="name">POS Configurations</field>
             <field name="res_model">pos.config</field>
             <field name="view_mode">tree,form</field>

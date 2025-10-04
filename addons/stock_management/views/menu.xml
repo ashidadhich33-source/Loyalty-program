@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        
+        <!-- Stock Management Menu -->
+        <menuitem id="menu_stock_management_root"
+                  name="Stock Management"
+                  parent="stock.menu_stock_root"
+                  sequence="50"
+                  groups="group_stock_management_user"/>
+        
+        <!-- Stock Alerts Menu -->
+        <menuitem id="menu_stock_alerts"
+                  name="Stock Alerts"
+                  parent="menu_stock_management_root"
+                  sequence="10"
+                  groups="group_stock_alert_user"/>
+        
+        <menuitem id="menu_stock_alerts_all"
+                  name="All Alerts"
+                  parent="menu_stock_alerts"
+                  action="action_stock_alert"
+                  sequence="10"
+                  groups="group_stock_alert_user"/>
+        
+        <menuitem id="menu_stock_alerts_active"
+                  name="Active Alerts"
+                  parent="menu_stock_alerts"
+                  action="action_stock_alert_active"
+                  sequence="20"
+                  groups="group_stock_alert_user"/>
+        
+        <menuitem id="menu_stock_alerts_critical"
+                  name="Critical Alerts"
+                  parent="menu_stock_alerts"
+                  action="action_stock_alert_critical"
+                  sequence="30"
+                  groups="group_stock_alert_user"/>
+        
+        <!-- Reorder Rules Menu -->
+        <menuitem id="menu_reorder_rules"
+                  name="Reorder Rules"
+                  parent="menu_stock_management_root"
+                  sequence="20"
+                  groups="group_reorder_rule_user"/>
+        
+        <menuitem id="menu_reorder_rules_all"
+                  name="All Rules"
+                  parent="menu_reorder_rules"
+                  action="action_stock_reorder_rule"
+                  sequence="10"
+                  groups="group_reorder_rule_user"/>
+        
+        <menuitem id="menu_reorder_rules_active"
+                  name="Active Rules"
+                  parent="menu_reorder_rules"
+                  action="action_stock_reorder_rule_active"
+                  sequence="20"
+                  groups="group_reorder_rule_user"/>
+        
+        <menuitem id="menu_reorder_rules_low_stock"
+                  name="Low Stock Rules"
+                  parent="menu_reorder_rules"
+                  action="action_stock_reorder_rule_low_stock"
+                  sequence="30"
+                  groups="group_reorder_rule_user"/>
+        
+        <!-- Stock Adjustments Menu -->
+        <menuitem id="menu_stock_adjustments"
+                  name="Stock Adjustments"
+                  parent="menu_stock_management_root"
+                  sequence="30"
+                  groups="group_stock_adjustment_user"/>
+        
+        <menuitem id="menu_stock_adjustments_all"
+                  name="All Adjustments"
+                  parent="menu_stock_adjustments"
+                  action="action_stock_adjustment"
+                  sequence="10"
+                  groups="group_stock_adjustment_user"/>
+        
+        <menuitem id="menu_stock_adjustments_draft"
+                  name="Draft Adjustments"
+                  parent="menu_stock_adjustments"
+                  action="action_stock_adjustment_draft"
+                  sequence="20"
+                  groups="group_stock_adjustment_user"/>
+        
+        <menuitem id="menu_stock_adjustments_pending_approval"
+                  name="Pending Approval"
+                  parent="menu_stock_adjustments"
+                  action="action_stock_adjustment_pending_approval"
+                  sequence="30"
+                  groups="group_stock_adjustment_manager"/>
+        
+        <!-- Stock Analysis Menu -->
+        <menuitem id="menu_stock_analysis"
+                  name="Stock Analysis"
+                  parent="menu_stock_management_root"
+                  sequence="40"
+                  groups="group_stock_analysis_user"/>
+        
+        <menuitem id="menu_stock_analysis_all"
+                  name="All Analysis"
+                  parent="menu_stock_analysis"
+                  action="action_stock_analysis"
+                  sequence="10"
+                  groups="group_stock_analysis_user"/>
+        
+        <menuitem id="menu_stock_analysis_turnover"
+                  name="Turnover Analysis"
+                  parent="menu_stock_analysis"
+                  action="action_stock_analysis_turnover"
+                  sequence="20"
+                  groups="group_stock_analysis_user"/>
+        
+        <menuitem id="menu_stock_analysis_aging"
+                  name="Aging Analysis"
+                  parent="menu_stock_analysis"
+                  action="action_stock_analysis_aging"
+                  sequence="30"
+                  groups="group_stock_analysis_user"/>
+        
+        <menuitem id="menu_stock_analysis_abc"
+                  name="ABC Analysis"
+                  parent="menu_stock_analysis"
+                  action="action_stock_analysis_abc"
+                  sequence="40"
+                  groups="group_stock_analysis_user"/>
+        
+        <menuitem id="menu_stock_analysis_xyz"
+                  name="XYZ Analysis"
+                  parent="menu_stock_analysis"
+                  action="action_stock_analysis_xyz"
+                  sequence="50"
+                  groups="group_stock_analysis_user"/>
+        
+        <!-- Configuration Menu -->
+        <menuitem id="menu_stock_management_config"
+                  name="Configuration"
+                  parent="menu_stock_management_root"
+                  sequence="50"
+                  groups="group_stock_management_manager"/>
+        
+        <menuitem id="menu_stock_alert_types"
+                  name="Alert Types"
+                  parent="menu_stock_management_config"
+                  action="action_stock_alert_type"
+                  sequence="10"
+                  groups="group_stock_alert_manager"/>
+        
+        <menuitem id="menu_stock_adjustment_types"
+                  name="Adjustment Types"
+                  parent="menu_stock_management_config"
+                  action="action_stock_adjustment_type"
+                  sequence="20"
+                  groups="group_stock_adjustment_manager"/>
+        
+        <menuitem id="menu_stock_analysis_types"
+                  name="Analysis Types"
+                  parent="menu_stock_management_config"
+                  action="action_stock_analysis_type"
+                  sequence="30"
+                  groups="group_stock_analysis_manager"/>
+        
+    </data>
+</odoo>

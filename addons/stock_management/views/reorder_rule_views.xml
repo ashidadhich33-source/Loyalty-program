@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        
+        <!-- Stock Reorder Rule Tree View -->
+        <record id="view_stock_reorder_rule_tree" model="ir.ui.view">
+            <field name="name">stock.reorder.rule.tree</field>
+            <field name="model">stock.reorder.rule</field>
+            <field name="arch" type="xml">
+                <tree string="Reorder Rules" decoration-danger="stock_status=='critical'" decoration-warning="stock_status=='low'" decoration-success="stock_status=='adequate'" decoration-info="stock_status=='overstock'">
+                    <field name="name"/>
+                    <field name="product_id"/>
+                    <field name="warehouse_id"/>
+                    <field name="minimum_stock"/>
+                    <field name="maximum_stock"/>
+                    <field name="reorder_qty"/>
+                    <field name="current_stock"/>
+                    <field name="stock_status"/>
+                    <field name="lead_time_days"/>
+                    <field name="safety_stock"/>
+                    <field name="age_group"/>
+                    <field name="size"/>
+                    <field name="brand"/>
+                    <field name="color"/>
+                    <field name="season"/>
+                    <field name="supplier_id"/>
+                    <field name="active"/>
+                    <field name="auto_create_po"/>
+                    <field name="days_to_reorder"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Stock Reorder Rule Form View -->
+        <record id="view_stock_reorder_rule_form" model="ir.ui.view">
+            <field name="name">stock.reorder.rule.form</field>
+            <field name="model">stock.reorder.rule</field>
+            <field name="arch" type="xml">
+                <form string="Reorder Rule">
+                    <header>
+                        <button name="action_create_purchase_order" string="Create Purchase Order" type="object" class="btn-primary" attrs="{'invisible': [('stock_status', 'not in', ['low', 'critical'])]}"/>
+                        <button name="action_update_eoq" string="Update EOQ" type="object" class="btn-secondary"/>
+                        <button name="action_analyze_demand" string="Analyze Demand" type="object" class="btn-info"/>
+                        <button name="action_optimize_rule" string="Optimize Rule" type="object" class="btn-warning"/>
+                        <field name="active" widget="boolean_button" options='{"terminology": "active"}'/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_create_purchase_order" type="object" class="oe_stat_button" icon="fa-shopping-cart" attrs="{'invisible': [('stock_status', 'not in', ['low', 'critical'])]}">
+                                <div class="o_field_widget o_stat_info">
+                                    <span class="o_stat_text">Create PO</span>
+                                </div>
+                            </button>
+                        </div>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="product_id"/>
+                                <field name="warehouse_id"/>
+                                <field name="location_id"/>
+                                <field name="supplier_id"/>
+                                <field name="supplier_product_code"/>
+                                <field name="supplier_price"/>
+                            </group>
+                            <group>
+                                <field name="minimum_stock"/>
+                                <field name="maximum_stock"/>
+                                <field name="reorder_qty"/>
+                                <field name="lead_time_days"/>
+                                <field name="safety_stock"/>
+                            </group>
+                        </group>
+                        <group string="Kids Clothing Details">
+                            <group>
+                                <field name="age_group"/>
+                                <field name="size"/>
+                                <field name="season"/>
+                            </group>
+                            <group>
+                                <field name="brand"/>
+                                <field name="color"/>
+                            </group>
+                        </group>
+                        <group string="Current Stock Status">
+                            <group>
+                                <field name="current_stock"/>
+                                <field name="stock_status"/>
+                                <field name="days_to_reorder"/>
+                            </group>
+                        </group>
+                        <group string="Economic Order Quantity (EOQ)">
+                            <group>
+                                <field name="annual_demand"/>
+                                <field name="ordering_cost"/>
+                                <field name="holding_cost"/>
+                                <field name="eoq"/>
+                            </group>
+                        </group>
+                        <group string="Configuration">
+                            <group>
+                                <field name="auto_create_po"/>
+                                <field name="auto_approve_po"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Stock Reorder Rule Search View -->
+        <record id="view_stock_reorder_rule_search" model="ir.ui.view">
+            <field name="name">stock.reorder.rule.search</field>
+            <field name="model">stock.reorder.rule</field>
+            <field name="arch" type="xml">
+                <search string="Search Reorder Rules">
+                    <field name="name"/>
+                    <field name="product_id"/>
+                    <field name="warehouse_id"/>
+                    <field name="supplier_id"/>
+                    <field name="age_group"/>
+                    <field name="size"/>
+                    <field name="brand"/>
+                    <field name="color"/>
+                    <field name="season"/>
+                    <filter string="Active" name="active" domain="[('active', '=', True)]"/>
+                    <filter string="Inactive" name="inactive" domain="[('active', '=', False)]"/>
+                    <filter string="Low Stock" name="low_stock" domain="[('stock_status', '=', 'low')]"/>
+                    <filter string="Critical Stock" name="critical_stock" domain="[('stock_status', '=', 'critical')]"/>
+                    <filter string="Overstock" name="overstock" domain="[('stock_status', '=', 'overstock')]"/>
+                    <filter string="Adequate Stock" name="adequate_stock" domain="[('stock_status', '=', 'adequate')]"/>
+                    <filter string="Auto Create PO" name="auto_create_po" domain="[('auto_create_po', '=', True)]"/>
+                    <filter string="Baby (0-2 years)" name="age_0_2" domain="[('age_group', '=', '0-2')]"/>
+                    <filter string="Toddler (2-4 years)" name="age_2_4" domain="[('age_group', '=', '2-4')]"/>
+                    <filter string="Pre-school (4-6 years)" name="age_4_6" domain="[('age_group', '=', '4-6')]"/>
+                    <filter string="Summer" name="summer" domain="[('season', '=', 'summer')]"/>
+                    <filter string="Winter" name="winter" domain="[('season', '=', 'winter')]"/>
+                    <filter string="Monsoon" name="monsoon" domain="[('season', '=', 'monsoon')]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Product" name="group_product" context="{'group_by': 'product_id'}"/>
+                        <filter string="Warehouse" name="group_warehouse" context="{'group_by': 'warehouse_id'}"/>
+                        <filter string="Supplier" name="group_supplier" context="{'group_by': 'supplier_id'}"/>
+                        <filter string="Age Group" name="group_age_group" context="{'group_by': 'age_group'}"/>
+                        <filter string="Size" name="group_size" context="{'group_by': 'size'}"/>
+                        <filter string="Brand" name="group_brand" context="{'group_by': 'brand'}"/>
+                        <filter string="Color" name="group_color" context="{'group_by': 'color'}"/>
+                        <filter string="Season" name="group_season" context="{'group_by': 'season'}"/>
+                        <filter string="Stock Status" name="group_stock_status" context="{'group_by': 'stock_status'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- Stock Reorder Rule Actions -->
+        <record id="action_stock_reorder_rule" model="ir.actions.act_window">
+            <field name="name">Reorder Rules</field>
+            <field name="res_model">stock.reorder.rule</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first reorder rule!
+                </p>
+                <p>
+                    Reorder rules help you automatically manage inventory levels and create purchase orders.
+                </p>
+            </field>
+        </record>
+        
+        <record id="action_stock_reorder_rule_active" model="ir.actions.act_window">
+            <field name="name">Active Reorder Rules</field>
+            <field name="res_model">stock.reorder.rule</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('active', '=', True)]</field>
+            <field name="context">{}</field>
+        </record>
+        
+        <record id="action_stock_reorder_rule_low_stock" model="ir.actions.act_window">
+            <field name="name">Low Stock Rules</field>
+            <field name="res_model">stock.reorder.rule</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('stock_status', 'in', ['low', 'critical'])]</field>
+            <field name="context">{}</field>
+        </record>
+        
+        <!-- Stock Reorder Rule Kanban View -->
+        <record id="view_stock_reorder_rule_kanban" model="ir.ui.view">
+            <field name="name">stock.reorder.rule.kanban</field>
+            <field name="model">stock.reorder.rule</field>
+            <field name="arch" type="xml">
+                <kanban string="Reorder Rules" class="o_kanban_small_column">
+                    <field name="stock_status"/>
+                    <field name="active"/>
+                    <field name="product_id"/>
+                    <field name="warehouse_id"/>
+                    <field name="supplier_id"/>
+                    <field name="minimum_stock"/>
+                    <field name="maximum_stock"/>
+                    <field name="reorder_qty"/>
+                    <field name="current_stock"/>
+                    <field name="age_group"/>
+                    <field name="size"/>
+                    <field name="brand"/>
+                    <field name="color"/>
+                    <field name="season"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_card oe_kanban_global_click">
+                                <div class="oe_kanban_content">
+                                    <div class="o_kanban_record_top">
+                                        <div class="o_kanban_record_headings">
+                                            <strong class="o_kanban_record_title">
+                                                <field name="name"/>
+                                            </strong>
+                                        </div>
+                                        <div class="o_kanban_record_priority">
+                                            <field name="active" widget="boolean_button" options='{"terminology": "active"}'/>
+                                        </div>
+                                    </div>
+                                    <div class="o_kanban_record_body">
+                                        <div class="o_kanban_record_details">
+                                            <div>
+                                                <strong>Product:</strong> <field name="product_id"/>
+                                            </div>
+                                            <div>
+                                                <strong>Warehouse:</strong> <field name="warehouse_id"/>
+                                            </div>
+                                            <div>
+                                                <strong>Supplier:</strong> <field name="supplier_id"/>
+                                            </div>
+                                            <div>
+                                                <strong>Min Stock:</strong> <field name="minimum_stock"/>
+                                            </div>
+                                            <div>
+                                                <strong>Max Stock:</strong> <field name="maximum_stock"/>
+                                            </div>
+                                            <div>
+                                                <strong>Reorder Qty:</strong> <field name="reorder_qty"/>
+                                            </div>
+                                            <div>
+                                                <strong>Current Stock:</strong> <field name="current_stock"/>
+                                            </div>
+                                            <div>
+                                                <strong>Status:</strong> <field name="stock_status"/>
+                                            </div>
+                                            <div>
+                                                <strong>Age Group:</strong> <field name="age_group"/>
+                                            </div>
+                                            <div>
+                                                <strong>Size:</strong> <field name="size"/>
+                                            </div>
+                                            <div>
+                                                <strong>Brand:</strong> <field name="brand"/>
+                                            </div>
+                                            <div>
+                                                <strong>Color:</strong> <field name="color"/>
+                                            </div>
+                                            <div>
+                                                <strong>Season:</strong> <field name="season"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+        
+    </data>
+</odoo>

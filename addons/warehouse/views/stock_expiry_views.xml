@@ -1,6 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ocean>
     <data>
-        <!-- Stock Expiry views will be generated -->
+        
+        <!-- Stock Expiry Tree View -->
+        <record id="view_stock_expiry_tree" model="ir.ui.view">
+            <field name="name">stock.expiry.tree</field>
+            <field name="model">stock.expiry</field>
+            <field name="arch" type="xml">
+                <tree string="Stock Expiry Reports" create="true" edit="true" delete="true">
+                    <field name="name"/>
+                    <field name="warehouse_id"/>
+                    <field name="location_id"/>
+                    <field name="product_id"/>
+                    <field name="expiry_date"/>
+                    <field name="total_quantity"/>
+                    <field name="total_value"/>
+                    <field name="expiry_status"/>
+                    <field name="action_required"/>
+                    <field name="priority"/>
+                    <field name="expiry_risk_score"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Stock Expiry Form View -->
+        <record id="view_stock_expiry_form" model="ir.ui.view">
+            <field name="name">stock.expiry.form</field>
+            <field name="model">stock.expiry</field>
+            <field name="arch" type="xml">
+                <form string="Stock Expiry Report" create="true" edit="true" delete="true">
+                    <header>
+                        <button name="action_view_warehouse" type="object" string="View Warehouse" class="btn-primary"/>
+                        <button name="action_view_location" type="object" string="View Location" class="btn-secondary"/>
+                        <button name="action_view_product" type="object" string="View Product" class="btn-secondary"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Expiry Report Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="warehouse_id"/>
+                                <field name="location_id"/>
+                                <field name="product_id"/>
+                                <field name="expiry_date"/>
+                            </group>
+                            <group>
+                                <field name="product_age_group"/>
+                                <field name="seasonal_category"/>
+                                <field name="expiry_status"/>
+                                <field name="action_required"/>
+                                <field name="priority"/>
+                            </group>
+                        </group>
+                        <group string="Expiry Categories">
+                            <group>
+                                <field name="expired_quantity"/>
+                                <field name="expiring_7_days"/>
+                                <field name="expiring_15_days"/>
+                                <field name="expiring_30_days"/>
+                            </group>
+                            <group>
+                                <field name="expiring_60_days"/>
+                                <field name="expiring_90_days"/>
+                                <field name="no_expiry"/>
+                            </group>
+                        </group>
+                        <group string="Summary">
+                            <group>
+                                <field name="total_quantity"/>
+                                <field name="total_value"/>
+                                <field name="expiry_risk_score"/>
+                                <field name="average_days_to_expiry"/>
+                            </group>
+                        </group>
+                        <group string="Notes">
+                            <field name="note"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Stock Expiry Search View -->
+        <record id="view_stock_expiry_search" model="ir.ui.view">
+            <field name="name">stock.expiry.search</field>
+            <field name="model">stock.expiry</field>
+            <field name="arch" type="xml">
+                <search string="Search Stock Expiry Reports">
+                    <field name="name"/>
+                    <field name="warehouse_id"/>
+                    <field name="location_id"/>
+                    <field name="product_id"/>
+                    <field name="expiry_status"/>
+                    <field name="action_required"/>
+                    <separator/>
+                    <filter string="Critical (Expired)" name="critical" domain="[('expiry_status', '=', 'critical')]"/>
+                    <filter string="Urgent (7 days)" name="urgent" domain="[('expiry_status', '=', 'urgent')]"/>
+                    <filter string="Warning (15 days)" name="warning" domain="[('expiry_status', '=', 'warning')]"/>
+                    <filter string="Caution (30 days)" name="caution" domain="[('expiry_status', '=', 'caution')]"/>
+                    <filter string="Normal (60+ days)" name="normal" domain="[('expiry_status', '=', 'normal')]"/>
+                    <separator/>
+                    <filter string="Action Required" name="action_required" domain="[('action_required', '!=', 'none')]"/>
+                    <filter string="High Risk" name="high_risk" domain="[('expiry_risk_score', '>', 50)]"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter string="Warehouse" name="group_warehouse" context="{'group_by': 'warehouse_id'}"/>
+                        <filter string="Expiry Status" name="group_expiry_status" context="{'group_by': 'expiry_status'}"/>
+                        <filter string="Action Required" name="group_action_required" context="{'group_by': 'action_required'}"/>
+                        <filter string="Priority" name="group_priority" context="{'group_by': 'priority'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- Stock Expiry Action -->
+        <record id="action_stock_expiry" model="ir.actions.act_window">
+            <field name="name">Stock Expiry Reports</field>
+            <field name="res_model">stock.expiry</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_stock_expiry_search"/>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new stock expiry report
+                </p>
+                <p>
+                    Stock expiry reports help track inventory expiration dates and identify items that need immediate attention.
+                </p>
+            </field>
+        </record>
+        
     </data>
 </ocean>

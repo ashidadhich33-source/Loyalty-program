@@ -1,6 +1,150 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ocean>
     <data>
-        <!-- Warehouse Operation views will be generated -->
+        
+        <!-- Warehouse Operation Tree View -->
+        <record id="view_warehouse_operation_tree" model="ir.ui.view">
+            <field name="name">warehouse.operation.tree</field>
+            <field name="model">warehouse.operation</field>
+            <field name="arch" type="xml">
+                <tree string="Warehouse Operations" create="true" edit="true" delete="true">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="warehouse_id"/>
+                    <field name="operation_type"/>
+                    <field name="state"/>
+                    <field name="priority"/>
+                    <field name="user_id"/>
+                    <field name="scheduled_date"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="estimated_duration"/>
+                    <field name="actual_duration"/>
+                    <field name="efficiency_score"/>
+                    <field name="accuracy_score"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Warehouse Operation Form View -->
+        <record id="view_warehouse_operation_form" model="ir.ui.view">
+            <field name="name">warehouse.operation.form</field>
+            <field name="model">warehouse.operation</field>
+            <field name="arch" type="xml">
+                <form string="Warehouse Operation" create="true" edit="true" delete="true">
+                    <header>
+                        <button name="action_start" type="object" string="Start" class="btn-success" states="draft"/>
+                        <button name="action_done" type="object" string="Done" class="btn-primary" states="in_progress"/>
+                        <button name="action_cancel" type="object" string="Cancel" class="btn-danger" states="draft,in_progress"/>
+                        <button name="action_view_warehouse" type="object" string="View Warehouse" class="btn-secondary"/>
+                        <button name="action_view_moves" type="object" string="View Moves" class="btn-info"/>
+                        <button name="action_view_pickings" type="object" string="View Pickings" class="btn-info"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,in_progress,done"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Operation Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="code"/>
+                                <field name="warehouse_id"/>
+                                <field name="operation_type"/>
+                                <field name="priority"/>
+                                <field name="user_id"/>
+                            </group>
+                            <group>
+                                <field name="scheduled_date"/>
+                                <field name="start_date"/>
+                                <field name="end_date"/>
+                                <field name="estimated_duration"/>
+                                <field name="actual_duration"/>
+                            </group>
+                        </group>
+                        <group string="Kids Clothing Specific">
+                            <group>
+                                <field name="customer_age"/>
+                                <field name="product_age_group"/>
+                                <field name="seasonal_category"/>
+                            </group>
+                        </group>
+                        <group string="Quality Control">
+                            <group>
+                                <field name="quality_check_required"/>
+                                <field name="quality_check_done"/>
+                                <field name="quality_notes"/>
+                            </group>
+                        </group>
+                        <group string="Performance Metrics">
+                            <group>
+                                <field name="efficiency_score"/>
+                                <field name="accuracy_score"/>
+                            </group>
+                        </group>
+                        <group string="Related Records">
+                            <group>
+                                <field name="move_ids" widget="one2many"/>
+                                <field name="picking_ids" widget="one2many"/>
+                            </group>
+                        </group>
+                        <group string="Notes">
+                            <field name="description"/>
+                            <field name="note"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Warehouse Operation Search View -->
+        <record id="view_warehouse_operation_search" model="ir.ui.view">
+            <field name="name">warehouse.operation.search</field>
+            <field name="model">warehouse.operation</field>
+            <field name="arch" type="xml">
+                <search string="Search Warehouse Operations">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="warehouse_id"/>
+                    <field name="operation_type"/>
+                    <field name="user_id"/>
+                    <separator/>
+                    <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
+                    <filter string="In Progress" name="in_progress" domain="[('state', '=', 'in_progress')]"/>
+                    <filter string="Done" name="done" domain="[('state', '=', 'done')]"/>
+                    <filter string="Cancelled" name="cancel" domain="[('state', '=', 'cancel')]"/>
+                    <separator/>
+                    <filter string="High Priority" name="high_priority" domain="[('priority', 'in', ['1', '2'])]"/>
+                    <filter string="Quality Check Required" name="quality_check" domain="[('quality_check_required', '=', True)]"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter string="Warehouse" name="group_warehouse" context="{'group_by': 'warehouse_id'}"/>
+                        <filter string="Operation Type" name="group_operation_type" context="{'group_by': 'operation_type'}"/>
+                        <filter string="State" name="group_state" context="{'group_by': 'state'}"/>
+                        <filter string="Operator" name="group_user" context="{'group_by': 'user_id'}"/>
+                        <filter string="Priority" name="group_priority" context="{'group_by': 'priority'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- Warehouse Operation Action -->
+        <record id="action_warehouse_operation" model="ir.actions.act_window">
+            <field name="name">Warehouse Operations</field>
+            <field name="res_model">warehouse.operation</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_warehouse_operation_search"/>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new warehouse operation
+                </p>
+                <p>
+                    Warehouse operations help track and manage various warehouse activities like receiving, picking, and inventory counts.
+                </p>
+            </field>
+        </record>
+        
     </data>
 </ocean>

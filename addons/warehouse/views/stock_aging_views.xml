@@ -1,6 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ocean>
     <data>
-        <!-- Stock Aging views will be generated -->
+        
+        <!-- Stock Aging Tree View -->
+        <record id="view_stock_aging_tree" model="ir.ui.view">
+            <field name="name">stock.aging.tree</field>
+            <field name="model">stock.aging</field>
+            <field name="arch" type="xml">
+                <tree string="Stock Aging Reports" create="true" edit="true" delete="true">
+                    <field name="name"/>
+                    <field name="warehouse_id"/>
+                    <field name="location_id"/>
+                    <field name="product_id"/>
+                    <field name="aging_date"/>
+                    <field name="total_quantity"/>
+                    <field name="total_value"/>
+                    <field name="aging_status"/>
+                    <field name="action_required"/>
+                    <field name="priority"/>
+                    <field name="average_age"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Stock Aging Form View -->
+        <record id="view_stock_aging_form" model="ir.ui.view">
+            <field name="name">stock.aging.form</field>
+            <field name="model">stock.aging</field>
+            <field name="arch" type="xml">
+                <form string="Stock Aging Report" create="true" edit="true" delete="true">
+                    <header>
+                        <button name="action_view_warehouse" type="object" string="View Warehouse" class="btn-primary"/>
+                        <button name="action_view_location" type="object" string="View Location" class="btn-secondary"/>
+                        <button name="action_view_product" type="object" string="View Product" class="btn-secondary"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Aging Report Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="warehouse_id"/>
+                                <field name="location_id"/>
+                                <field name="product_id"/>
+                                <field name="aging_date"/>
+                            </group>
+                            <group>
+                                <field name="product_age_group"/>
+                                <field name="seasonal_category"/>
+                                <field name="aging_status"/>
+                                <field name="action_required"/>
+                                <field name="priority"/>
+                            </group>
+                        </group>
+                        <group string="Age Categories">
+                            <group>
+                                <field name="age_0_30_days"/>
+                                <field name="age_31_60_days"/>
+                                <field name="age_61_90_days"/>
+                            </group>
+                            <group>
+                                <field name="age_91_180_days"/>
+                                <field name="age_181_365_days"/>
+                                <field name="age_over_365_days"/>
+                            </group>
+                        </group>
+                        <group string="Summary">
+                            <group>
+                                <field name="total_quantity"/>
+                                <field name="total_value"/>
+                                <field name="turnover_rate"/>
+                                <field name="average_age"/>
+                            </group>
+                        </group>
+                        <group string="Notes">
+                            <field name="note"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Stock Aging Search View -->
+        <record id="view_stock_aging_search" model="ir.ui.view">
+            <field name="name">stock.aging.search</field>
+            <field name="model">stock.aging</field>
+            <field name="arch" type="xml">
+                <search string="Search Stock Aging Reports">
+                    <field name="name"/>
+                    <field name="warehouse_id"/>
+                    <field name="location_id"/>
+                    <field name="product_id"/>
+                    <field name="aging_status"/>
+                    <field name="action_required"/>
+                    <separator/>
+                    <filter string="Fresh (0-30 days)" name="fresh" domain="[('aging_status', '=', 'fresh')]"/>
+                    <filter string="Current (31-90 days)" name="current" domain="[('aging_status', '=', 'current')]"/>
+                    <filter string="Aging (91-180 days)" name="aging" domain="[('aging_status', '=', 'aging')]"/>
+                    <filter string="Stale (181-365 days)" name="stale" domain="[('aging_status', '=', 'stale')]"/>
+                    <filter string="Obsolete (365+ days)" name="obsolete" domain="[('aging_status', '=', 'obsolete')]"/>
+                    <separator/>
+                    <filter string="Action Required" name="action_required" domain="[('action_required', '!=', 'none')]"/>
+                    <filter string="High Priority" name="high_priority" domain="[('priority', 'in', ['high', 'urgent'])]"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter string="Warehouse" name="group_warehouse" context="{'group_by': 'warehouse_id'}"/>
+                        <filter string="Aging Status" name="group_aging_status" context="{'group_by': 'aging_status'}"/>
+                        <filter string="Action Required" name="group_action_required" context="{'group_by': 'action_required'}"/>
+                        <filter string="Priority" name="group_priority" context="{'group_by': 'priority'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- Stock Aging Action -->
+        <record id="action_stock_aging" model="ir.actions.act_window">
+            <field name="name">Stock Aging Reports</field>
+            <field name="res_model">stock.aging</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_stock_aging_search"/>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new stock aging report
+                </p>
+                <p>
+                    Stock aging reports help analyze inventory age and identify items that need attention.
+                </p>
+            </field>
+        </record>
+        
     </data>
 </ocean>

@@ -17,11 +17,13 @@
         <menuitem id="menu_warehouse_operation" 
                   name="Warehouse Operations" 
                   parent="menu_warehouse_operations" 
+                  action="action_warehouse_operation"
                   sequence="10"/>
         
         <menuitem id="menu_warehouse_locations" 
                   name="Warehouse Locations" 
                   parent="menu_warehouse_operations" 
+                  action="action_warehouse_location"
                   sequence="20"/>
         
         <!-- Warehouse Reports Menu -->
@@ -33,11 +35,13 @@
         <menuitem id="menu_stock_aging" 
                   name="Stock Aging" 
                   parent="menu_warehouse_reports" 
+                  action="action_stock_aging"
                   sequence="10"/>
         
         <menuitem id="menu_stock_expiry" 
                   name="Stock Expiry" 
                   parent="menu_warehouse_reports" 
+                  action="action_stock_expiry"
                   sequence="20"/>
         
         <!-- Warehouse Configuration Menu -->
@@ -49,6 +53,7 @@
         <menuitem id="menu_warehouse_management" 
                   name="Warehouses" 
                   parent="menu_warehouse_config" 
+                  action="action_warehouse"
                   sequence="10"/>
         
     </data>

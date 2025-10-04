@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo>
+<ocean>
     <data>
         
         <!-- Main POS Menu -->
         <menuitem id="menu_pos_root" 
                   name="Point of Sale" 
-                  sequence="30" 
-                  web_icon="pos,static/description/icon.png"/>
+                  sequence="30"/>
         
         <!-- POS Configuration Menu -->
         <menuitem id="menu_pos_config" 
@@ -17,7 +16,6 @@
         <menuitem id="menu_pos_config_pos" 
                   name="POS Configurations" 
                   parent="menu_pos_config" 
-                  action="action_pos_config" 
                   sequence="10"/>
         
         <!-- POS Operations Menu -->
@@ -29,25 +27,21 @@
         <menuitem id="menu_pos_sessions" 
                   name="Sessions" 
                   parent="menu_pos_operations" 
-                  action="action_pos_session" 
                   sequence="10"/>
         
         <menuitem id="menu_pos_orders" 
                   name="Orders" 
                   parent="menu_pos_operations" 
-                  action="action_pos_order" 
                   sequence="20"/>
         
         <menuitem id="menu_pos_payments" 
                   name="Payments" 
                   parent="menu_pos_operations" 
-                  action="action_pos_payment" 
                   sequence="30"/>
         
         <menuitem id="menu_pos_receipts" 
                   name="Receipts" 
                   parent="menu_pos_operations" 
-                  action="action_pos_receipt" 
                   sequence="40"/>
         
         <!-- POS Reports Menu -->
@@ -59,15 +53,13 @@
         <menuitem id="menu_pos_analytics" 
                   name="Analytics" 
                   parent="menu_pos_reports" 
-                  action="action_pos_analytics" 
                   sequence="10"/>
         
         <!-- POS Dashboard Menu -->
         <menuitem id="menu_pos_dashboard" 
                   name="Dashboard" 
                   parent="menu_pos_root" 
-                  action="action_pos_dashboard" 
                   sequence="5"/>
         
     </data>
-</odoo>
+</ocean>

@@ -1,15 +1,16 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Kids Clothing ERP - POS Receipt Model
-=====================================
+Kids Clothing ERP - POS Receipt
+===============================
 
 POS receipt management for kids clothing retail.
 """
 
-import logging
 from core_framework.orm import BaseModel, CharField, TextField, BooleanField, IntegerField, DateTimeField, Many2OneField, SelectionField, FloatField, One2ManyField, Many2ManyField
-from core_framework.exceptions import ValidationError
+from core_framework.orm import Field
+from typing import Dict, Any, Optional
+import logging
+from datetime import datetime
 
 logger = logging.getLogger(__name__)
 
@@ -19,7 +20,6 @@ class PosReceipt(BaseModel):
     _name = 'pos.receipt'
     _description = 'POS Receipt'
     _table = 'pos_receipt'
-    _order = 'receipt_date desc'
     
     # Basic Information
     name = CharField(
@@ -192,7 +192,7 @@ class PosReceipt(BaseModel):
     def create(self, vals):
         """Override create to set defaults"""
         if 'receipt_date' not in vals:
-            vals['receipt_date'] = self.env['datetime'].now()
+            vals['receipt_date'] = datetime.now()
         
         if 'name' not in vals:
             vals['name'] = self._generate_receipt_number()
@@ -230,7 +230,7 @@ class PosReceipt(BaseModel):
     def _generate_receipt_number(self):
         """Generate unique receipt number"""
         # This would typically use a sequence
-        return f"RCP-{self.env['datetime'].now().strftime('%Y%m%d%H%M%S')}"
+        return f"RCP-{datetime.now().strftime('%Y%m%d%H%M%S')}"
     
     def _generate_receipt_content(self):
         """Generate formatted receipt content"""
@@ -299,12 +299,12 @@ class PosReceipt(BaseModel):
         """Print the receipt"""
         if not self.is_printed:
             self.is_printed = True
-            self.print_date = self.env['datetime'].now()
+            self.print_date = datetime.now()
         
         self.print_count += 1
         
         return {
-            'type': 'ocean.actions.act_report',
+            'type': 'ir.actions.report',
             'report_name': 'pos.report_receipt',
             'report_type': 'qweb-pdf',
             'data': {'ids': [self.id]},
@@ -314,19 +314,19 @@ class PosReceipt(BaseModel):
     def action_send_digital_receipt(self):
         """Send digital receipt to customer"""
         if not self.customer_email:
-            raise ValidationError("Customer email is required for digital receipt")
+            raise ValueError("Customer email is required for digital receipt")
         
         # This would integrate with email system
         # For now, just mark as sent
         self.digital_sent = True
-        self.digital_sent_date = self.env['datetime'].now()
+        self.digital_sent_date = datetime.now()
         
         return True
     
     def action_view_order(self):
         """View associated order"""
         return {
-            'type': 'ocean.actions.act_window',
+            'type': 'ir.actions.act_window',
             'name': f'Order - {self.order_id.name}',
             'res_model': 'pos.order',
             'res_id': self.order_id.id,

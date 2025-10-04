@@ -1,15 +1,16 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Kids Clothing ERP - POS Order Model
-===================================
+Kids Clothing ERP - POS Order
+=============================
 
 POS order management for kids clothing retail.
 """
 
-import logging
 from core_framework.orm import BaseModel, CharField, TextField, BooleanField, IntegerField, DateTimeField, Many2OneField, SelectionField, FloatField, One2ManyField, Many2ManyField
-from core_framework.exceptions import ValidationError
+from core_framework.orm import Field
+from typing import Dict, Any, Optional
+import logging
+from datetime import datetime
 
 logger = logging.getLogger(__name__)
 
@@ -19,7 +20,6 @@ class PosOrder(BaseModel):
     _name = 'pos.order'
     _description = 'POS Order'
     _table = 'pos_order'
-    _order = 'date_order desc, id desc'
     
     # Basic Information
     name = CharField(
@@ -202,7 +202,7 @@ class PosOrder(BaseModel):
             vals['name'] = self._generate_order_name()
         
         if 'date_order' not in vals:
-            vals['date_order'] = self.env['datetime'].now()
+            vals['date_order'] = datetime.now()
         
         if 'user_id' not in vals:
             vals['user_id'] = self.env.user.id
@@ -222,7 +222,7 @@ class PosOrder(BaseModel):
     def _generate_order_name(self):
         """Generate unique order name"""
         # This would typically use a sequence
-        return f"POS-{self.env['datetime'].now().strftime('%Y%m%d%H%M%S')}"
+        return f"POS-{datetime.now().strftime('%Y%m%d%H%M%S')}"
     
     def _update_amounts(self):
         """Update order amounts based on lines"""
@@ -250,7 +250,7 @@ class PosOrder(BaseModel):
     def action_confirm(self):
         """Confirm the order"""
         if self.state != 'draft':
-            raise ValidationError("Only draft orders can be confirmed")
+            raise ValueError("Only draft orders can be confirmed")
         
         # Validate order
         self._validate_order()
@@ -270,7 +270,7 @@ class PosOrder(BaseModel):
     def action_done(self):
         """Mark order as done"""
         if self.state not in ['paid', 'draft']:
-            raise ValidationError("Order must be paid or draft to mark as done")
+            raise ValueError("Order must be paid or draft to mark as done")
         
         self.state = 'done'
         
@@ -282,7 +282,7 @@ class PosOrder(BaseModel):
     def action_cancel(self):
         """Cancel the order"""
         if self.state == 'done':
-            raise ValidationError("Cannot cancel completed orders")
+            raise ValueError("Cannot cancel completed orders")
         
         self.state = 'cancel'
         return True
@@ -305,7 +305,7 @@ class PosOrder(BaseModel):
             errors.append("Payment amount does not match order total")
         
         if errors:
-            raise ValidationError('\n'.join(errors))
+            raise ValueError('\n'.join(errors))
     
     def _generate_receipt_number(self):
         """Generate receipt number"""
@@ -336,7 +336,7 @@ class PosOrder(BaseModel):
     def action_view_lines(self):
         """View order lines"""
         return {
-            'type': 'ocean.actions.act_window',
+            'type': 'ir.actions.act_window',
             'name': f'Order Lines - {self.name}',
             'res_model': 'pos.order.line',
             'view_mode': 'tree,form',
@@ -347,7 +347,7 @@ class PosOrder(BaseModel):
     def action_view_payments(self):
         """View order payments"""
         return {
-            'type': 'ocean.actions.act_window',
+            'type': 'ir.actions.act_window',
             'name': f'Payments - {self.name}',
             'res_model': 'pos.payment',
             'view_mode': 'tree,form',
@@ -358,7 +358,7 @@ class PosOrder(BaseModel):
     def action_print_receipt(self):
         """Print receipt for this order"""
         return {
-            'type': 'ocean.actions.act_report',
+            'type': 'ir.actions.report',
             'report_name': 'pos.report_receipt',
             'report_type': 'qweb-pdf',
             'data': {'ids': [self.id]},

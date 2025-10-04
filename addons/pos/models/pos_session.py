@@ -1,15 +1,16 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Kids Clothing ERP - POS Session Model
-=====================================
+Kids Clothing ERP - POS Session
+===============================
 
 POS session management for kids clothing retail.
 """
 
-import logging
 from core_framework.orm import BaseModel, CharField, TextField, BooleanField, IntegerField, DateTimeField, Many2OneField, SelectionField, FloatField, One2ManyField, Many2ManyField
-from core_framework.exceptions import ValidationError
+from core_framework.orm import Field
+from typing import Dict, Any, Optional
+import logging
+from datetime import datetime
 
 logger = logging.getLogger(__name__)
 
@@ -19,7 +20,6 @@ class PosSession(BaseModel):
     _name = 'pos.session'
     _description = 'POS Session'
     _table = 'pos_session'
-    _order = 'start_at desc'
     
     # Basic Information
     name = CharField(
@@ -150,7 +150,7 @@ class PosSession(BaseModel):
     def create(self, vals):
         """Override create to set defaults"""
         if 'name' not in vals:
-            vals['name'] = f"Session {self.env['datetime'].now().strftime('%Y-%m-%d %H:%M')}"
+            vals['name'] = f"Session {datetime.now().strftime('%Y-%m-%d %H:%M')}"
         
         return super().create(vals)
     
@@ -186,13 +186,13 @@ class PosSession(BaseModel):
     def action_close(self):
         """Close the POS session"""
         if self.state != 'opened':
-            raise ValidationError("Only opened sessions can be closed")
+            raise ValueError("Only opened sessions can be closed")
         
         # Update session statistics
         self._update_session_statistics()
         
         # Set end time
-        self.stop_at = self.env['datetime'].now()
+        self.stop_at = datetime.now()
         self.state = 'closed'
         
         # Update POS config
@@ -204,7 +204,7 @@ class PosSession(BaseModel):
     def action_open_cashbox(self):
         """Open cash box for cash management"""
         return {
-            'type': 'ocean.actions.act_window',
+            'type': 'ir.actions.act_window',
             'name': 'Cash Management',
             'res_model': 'pos.cashbox.wizard',
             'view_mode': 'form',
@@ -215,7 +215,7 @@ class PosSession(BaseModel):
     def action_view_orders(self):
         """View all orders in this session"""
         return {
-            'type': 'ocean.actions.act_window',
+            'type': 'ir.actions.act_window',
             'name': f'Orders - {self.name}',
             'res_model': 'pos.order',
             'view_mode': 'tree,form',
@@ -226,7 +226,7 @@ class PosSession(BaseModel):
     def action_view_payments(self):
         """View all payments in this session"""
         return {
-            'type': 'ocean.actions.act_window',
+            'type': 'ir.actions.act_window',
             'name': f'Payments - {self.name}',
             'res_model': 'pos.payment',
             'view_mode': 'tree,form',
@@ -255,7 +255,7 @@ class PosSession(BaseModel):
         if not self.start_at:
             return "N/A"
         
-        end_time = self.stop_at or self.env['datetime'].now()
+        end_time = self.stop_at or datetime.now()
         duration = end_time - self.start_at
         
         hours = duration.total_seconds() // 3600
@@ -294,6 +294,6 @@ class PosSession(BaseModel):
             errors.append("End cash amount is required when closing session")
         
         if errors:
-            raise ValidationError('\n'.join(errors))
+            raise ValueError('\n'.join(errors))
         
         return True

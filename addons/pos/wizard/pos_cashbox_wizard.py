@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
 Kids Clothing ERP - POS Cash Box Wizard
@@ -7,9 +6,11 @@ Kids Clothing ERP - POS Cash Box Wizard
 Cash management wizard for POS sessions.
 """
 
-import logging
 from core_framework.orm import BaseModel, CharField, TextField, BooleanField, IntegerField, DateTimeField, Many2OneField, SelectionField, FloatField, One2ManyField, Many2ManyField
-from core_framework.exceptions import ValidationError
+from core_framework.orm import Field
+from typing import Dict, Any, Optional
+import logging
+from datetime import datetime
 
 logger = logging.getLogger(__name__)
 
@@ -84,7 +85,7 @@ class PosCashboxWizard(BaseModel):
         """Open cash box for the session"""
         session = self.session_id
         if session.state != 'opened':
-            raise ValidationError("Session must be opened to perform cash operations")
+            raise ValueError("Session must be opened to perform cash operations")
         
         # Set starting cash amount
         if self.amount:
@@ -97,7 +98,7 @@ class PosCashboxWizard(BaseModel):
         """Close cash box for the session"""
         session = self.session_id
         if session.state != 'opened':
-            raise ValidationError("Session must be opened to perform cash operations")
+            raise ValueError("Session must be opened to perform cash operations")
         
         # Set ending cash amount
         if self.amount:
@@ -110,10 +111,10 @@ class PosCashboxWizard(BaseModel):
         """Add cash to the session"""
         session = self.session_id
         if session.state != 'opened':
-            raise ValidationError("Session must be opened to perform cash operations")
+            raise ValueError("Session must be opened to perform cash operations")
         
         if not self.amount or self.amount <= 0:
-            raise ValidationError("Amount must be greater than 0")
+            raise ValueError("Amount must be greater than 0")
         
         # Log the operation
         self._log_cash_operation(f'Cash added: {self.reason}', self.amount)
@@ -122,10 +123,10 @@ class PosCashboxWizard(BaseModel):
         """Remove cash from the session"""
         session = self.session_id
         if session.state != 'opened':
-            raise ValidationError("Session must be opened to perform cash operations")
+            raise ValueError("Session must be opened to perform cash operations")
         
         if not self.amount or self.amount <= 0:
-            raise ValidationError("Amount must be greater than 0")
+            raise ValueError("Amount must be greater than 0")
         
         # Log the operation
         self._log_cash_operation(f'Cash removed: {self.reason}', -self.amount)
@@ -134,7 +135,7 @@ class PosCashboxWizard(BaseModel):
         """Count cash in the session"""
         session = self.session_id
         if session.state != 'opened':
-            raise ValidationError("Session must be opened to perform cash operations")
+            raise ValueError("Session must be opened to perform cash operations")
         
         # Log the operation
         self._log_cash_operation('Cash counted', self.amount)

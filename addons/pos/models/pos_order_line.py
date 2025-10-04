@@ -1,15 +1,16 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Kids Clothing ERP - POS Order Line Model
-========================================
+Kids Clothing ERP - POS Order Line
+==================================
 
 POS order line management for kids clothing retail.
 """
 
-import logging
 from core_framework.orm import BaseModel, CharField, TextField, BooleanField, IntegerField, DateTimeField, Many2OneField, SelectionField, FloatField, One2ManyField, Many2ManyField
-from core_framework.exceptions import ValidationError
+from core_framework.orm import Field
+from typing import Dict, Any, Optional
+import logging
+from datetime import datetime
 
 logger = logging.getLogger(__name__)
 
@@ -19,7 +20,6 @@ class PosOrderLine(BaseModel):
     _name = 'pos.order.line'
     _description = 'POS Order Line'
     _table = 'pos_order_line'
-    _order = 'order_id, sequence, id'
     
     # Basic Information
     order_id = Many2OneField(
@@ -224,12 +224,12 @@ class PosOrderLine(BaseModel):
     def action_apply_age_discount(self):
         """Apply age-based discount to this line"""
         if not self.customer_age:
-            raise ValidationError("Customer age is required for age-based discount")
+            raise ValueError("Customer age is required for age-based discount")
         
         # Get age discount percentage from POS config
         pos_config = self.order_id.config_id
         if not pos_config.enable_age_discount:
-            raise ValidationError("Age-based discount is not enabled for this POS")
+            raise ValueError("Age-based discount is not enabled for this POS")
         
         age_discount = pos_config.age_discount_percentage
         
@@ -266,7 +266,7 @@ class PosOrderLine(BaseModel):
     def action_view_product(self):
         """View product details"""
         return {
-            'type': 'ocean.actions.act_window',
+            'type': 'ir.actions.act_window',
             'name': f'Product - {self.product_name}',
             'res_model': 'product.template',
             'res_id': self.product_id.id,
@@ -311,6 +311,6 @@ class PosOrderLine(BaseModel):
             errors.append("Discount amount must be greater than or equal to 0")
         
         if errors:
-            raise ValidationError('\n'.join(errors))
+            raise ValueError('\n'.join(errors))
         
         return True

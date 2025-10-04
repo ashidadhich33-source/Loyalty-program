@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo>
+<ocean>
     <data noupdate="1">
         
         <!-- Payment Methods -->
@@ -60,31 +60,5 @@
             <field name="age_discount_percentage">10.0</field>
         </record>
         
-        <!-- Payment Methods for Main POS -->
-        <record id="pos_config_main_payment_cash" model="pos.config.payment.method">
-            <field name="config_id" ref="pos_config_main"/>
-            <field name="payment_method_id" ref="payment_method_cash"/>
-        </record>
-        
-        <record id="pos_config_main_payment_card" model="pos.config.payment.method">
-            <field name="config_id" ref="pos_config_main"/>
-            <field name="payment_method_id" ref="payment_method_card"/>
-        </record>
-        
-        <record id="pos_config_main_payment_upi" model="pos.config.payment.method">
-            <field name="config_id" ref="pos_config_main"/>
-            <field name="payment_method_id" ref="payment_method_upi"/>
-        </record>
-        
-        <record id="pos_config_main_payment_paytm" model="pos.config.payment.method">
-            <field name="config_id" ref="pos_config_main"/>
-            <field name="payment_method_id" ref="payment_method_paytm"/>
-        </record>
-        
-        <record id="pos_config_main_payment_phonepe" model="pos.config.payment.method">
-            <field name="config_id" ref="pos_config_main"/>
-            <field name="payment_method_id" ref="payment_method_phonepe"/>
-        </record>
-        
     </data>
-</odoo>
+</ocean>

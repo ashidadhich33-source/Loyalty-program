@@ -1,15 +1,16 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Kids Clothing ERP - POS Payment Model
-=====================================
+Kids Clothing ERP - POS Payment
+===============================
 
 POS payment management for kids clothing retail.
 """
 
-import logging
 from core_framework.orm import BaseModel, CharField, TextField, BooleanField, IntegerField, DateTimeField, Many2OneField, SelectionField, FloatField, One2ManyField, Many2ManyField
-from core_framework.exceptions import ValidationError
+from core_framework.orm import Field
+from typing import Dict, Any, Optional
+import logging
+from datetime import datetime
 
 logger = logging.getLogger(__name__)
 
@@ -19,7 +20,6 @@ class PosPayment(BaseModel):
     _name = 'pos.payment'
     _description = 'POS Payment'
     _table = 'pos_payment'
-    _order = 'create_date desc'
     
     # Basic Information
     name = CharField(
@@ -140,7 +140,7 @@ class PosPayment(BaseModel):
     def create(self, vals):
         """Override create to set defaults"""
         if 'payment_date' not in vals:
-            vals['payment_date'] = self.env['datetime'].now()
+            vals['payment_date'] = datetime.now()
         
         if 'name' not in vals:
             vals['name'] = self._generate_payment_name()
@@ -159,23 +159,23 @@ class PosPayment(BaseModel):
     
     def _generate_payment_name(self):
         """Generate unique payment name"""
-        return f"PAY-{self.env['datetime'].now().strftime('%Y%m%d%H%M%S')}"
+        return f"PAY-{datetime.now().strftime('%Y%m%d%H%M%S')}"
     
     def _validate_payment_amount(self):
         """Validate payment amount"""
         for payment in self:
             if payment.amount <= 0:
-                raise ValidationError("Payment amount must be greater than 0")
+                raise ValueError("Payment amount must be greater than 0")
             
             # Check if payment method is cash and validate cash amount
             if payment.payment_method_id.is_cash:
                 if payment.cash_amount and payment.cash_amount < payment.amount:
-                    raise ValidationError("Cash amount cannot be less than payment amount")
+                    raise ValueError("Cash amount cannot be less than payment amount")
     
     def action_confirm(self):
         """Confirm the payment"""
         if self.state != 'draft':
-            raise ValidationError("Only draft payments can be confirmed")
+            raise ValueError("Only draft payments can be confirmed")
         
         # Validate payment
         self._validate_payment()
@@ -194,7 +194,7 @@ class PosPayment(BaseModel):
     def action_cancel(self):
         """Cancel the payment"""
         if self.state == 'done':
-            raise ValidationError("Cannot cancel completed payments")
+            raise ValueError("Cannot cancel completed payments")
         
         self.state = 'cancel'
         return True
@@ -221,7 +221,7 @@ class PosPayment(BaseModel):
                 errors.append("Digital payment ID is required for digital payments")
         
         if errors:
-            raise ValidationError('\n'.join(errors))
+            raise ValueError('\n'.join(errors))
     
     def _process_cash_payment(self):
         """Process cash payment"""
@@ -242,7 +242,7 @@ class PosPayment(BaseModel):
     def action_view_order(self):
         """View associated order"""
         return {
-            'type': 'ocean.actions.act_window',
+            'type': 'ir.actions.act_window',
             'name': f'Order - {self.order_id.name}',
             'res_model': 'pos.order',
             'res_id': self.order_id.id,
@@ -253,7 +253,7 @@ class PosPayment(BaseModel):
     def action_view_session(self):
         """View associated session"""
         return {
-            'type': 'ocean.actions.act_window',
+            'type': 'ir.actions.act_window',
             'name': f'Session - {self.session_id.name}',
             'res_model': 'pos.session',
             'res_id': self.session_id.id,

@@ -1,15 +1,16 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Kids Clothing ERP - POS Configuration Model
-===========================================
+Kids Clothing ERP - POS Configuration
+=====================================
 
 POS configuration management for kids clothing retail.
 """
 
-import logging
 from core_framework.orm import BaseModel, CharField, TextField, BooleanField, IntegerField, DateTimeField, Many2OneField, SelectionField, FloatField, One2ManyField, Many2ManyField
-from core_framework.exceptions import ValidationError
+from core_framework.orm import Field
+from typing import Dict, Any, Optional
+import logging
+from datetime import datetime
 
 logger = logging.getLogger(__name__)
 
@@ -19,7 +20,6 @@ class PosConfig(BaseModel):
     _name = 'pos.config'
     _description = 'POS Configuration'
     _table = 'pos_config'
-    _order = 'name'
     
     # Basic Information
     name = CharField(
@@ -191,7 +191,7 @@ class PosConfig(BaseModel):
         # Validate discount settings
         if 'max_discount_percentage' in vals:
             if vals['max_discount_percentage'] < 0 or vals['max_discount_percentage'] > 100:
-                raise ValidationError("Discount percentage must be between 0 and 100")
+                raise ValueError("Discount percentage must be between 0 and 100")
         
         return result
     
@@ -199,21 +199,21 @@ class PosConfig(BaseModel):
         """Start a new POS session"""
         # Check if there's already an active session
         if self.current_session_id and self.current_session_id.state == 'opened':
-            raise ValidationError("There is already an active session for this POS")
+            raise ValueError("There is already an active session for this POS")
         
         # Create new session
         session_vals = {
             'config_id': self.id,
             'user_id': self.env.user.id,
             'state': 'opened',
-            'start_at': self.env['datetime'].now()
+            'start_at': datetime.now()
         }
         
         session = self.env['pos.session'].create(session_vals)
         self.current_session_id = session.id
         
         return {
-            'type': 'ocean.actions.act_window',
+            'type': 'ir.actions.act_window',
             'name': f'POS Session - {self.name}',
             'res_model': 'pos.session',
             'res_id': session.id,
@@ -224,10 +224,10 @@ class PosConfig(BaseModel):
     def action_close_session(self):
         """Close the current POS session"""
         if not self.current_session_id:
-            raise ValidationError("No active session to close")
+            raise ValueError("No active session to close")
         
         if self.current_session_id.state != 'opened':
-            raise ValidationError("Session is not in opened state")
+            raise ValueError("Session is not in opened state")
         
         self.current_session_id.action_close()
         self.current_session_id = False
@@ -236,7 +236,7 @@ class PosConfig(BaseModel):
     
     def get_pos_dashboard_data(self):
         """Get dashboard data for this POS"""
-        today = self.env['datetime'].today()
+        today = datetime.now().date()
         
         # Get today's sales
         today_sales = self.env['pos.order'].search_count([
@@ -282,6 +282,6 @@ class PosConfig(BaseModel):
             errors.append("Maximum discount percentage must be between 0 and 100")
         
         if errors:
-            raise ValidationError('\n'.join(errors))
+            raise ValueError('\n'.join(errors))
         
         return True

@@ -1,0 +1,12 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_employee,access_hr_employee,model_hr_employee,base.group_user,1,1,1,1
+access_hr_contract,access_hr_contract,model_hr_contract,base.group_user,1,1,1,1
+access_hr_salary_rule,access_hr_salary_rule,model_hr_salary_rule,base.group_user,1,1,1,1
+access_hr_salary_rule_category,access_hr_salary_rule_category,model_hr_salary_rule_category,base.group_user,1,1,1,1
+access_hr_payroll_structure,access_hr_payroll_structure,model_hr_payroll_structure,base.group_user,1,1,1,1
+access_hr_payslip,access_hr_payslip,model_hr_payslip,base.group_user,1,1,1,1
+access_hr_payslip_line,access_hr_payslip_line,model_hr_payslip_line,base.group_user,1,1,1,1
+access_hr_payroll_period,access_hr_payroll_period,model_hr_payroll_period,base.group_user,1,1,1,1
+access_hr_payroll_report,access_hr_payroll_report,model_hr_payroll_report,base.group_user,1,1,1,1
+access_hr_tax_computation,access_hr_tax_computation,model_hr_tax_computation,base.group_user,1,1,1,1
+access_hr_pf_esi,access_hr_pf_esi,model_hr_pf_esi,base.group_user,1,1,1,1

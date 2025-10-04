@@ -69,7 +69,7 @@
     ],
     'data': [
         'security/security.xml',
-        'security/ir.model.access.csv',
+        'security/ocean.model.access.csv',
         'data/data.xml',
         'demo/demo.xml',
         'views/menu.xml',

@@ -42,7 +42,7 @@ Sales management for kids clothing retail including quotations, orders, and retu
         'ocean_categories',
     ],
     'data': [
-        'security/ocean.model.access.csv',
+        'security/ir.model.access.csv',
         'security/security.xml',
         'data/data.xml',
         'views/menu.xml',

@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_account_account,account.account,model_account_account,base.group_user,1,1,1,1
+access_account_journal,account.journal,model_account_journal,base.group_user,1,1,1,1
+access_account_move,account.move,model_account_move,base.group_user,1,1,1,1
+access_account_period,account.period,model_account_period,base.group_user,1,1,1,1
+access_account_reconciliation,account.reconciliation,model_account_reconciliation,base.group_user,1,1,1,1
+access_account_report,account.report,model_account_report,base.group_user,1,1,1,1

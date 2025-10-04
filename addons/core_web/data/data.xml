@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data noupdate="1">
+        
+        <!-- Core Web Configuration -->
+        <record id="web_config_default" model="res.config.settings">
+            <field name="name">Web Configuration</field>
+            <field name="web_theme">default</field>
+            <field name="enable_notifications">True</field>
+            <field name="menu_style">modern</field>
+        </record>
+        
+    </data>
+</ocean>

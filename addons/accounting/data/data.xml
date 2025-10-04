@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data noupdate="1">
+        
+        <!-- Accounting Configuration -->
+        <record id="account_config_default" model="res.config.settings">
+            <field name="name">Accounting Configuration</field>
+            <field name="currency_id" ref="base.INR"/>
+            <field name="fiscal_year_start">01-01</field>
+            <field name="fiscal_year_end">31-12</field>
+        </record>
+        
+    </data>
+</ocean>

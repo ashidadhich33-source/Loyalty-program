@@ -37,7 +37,8 @@ Purchase management for kids clothing retail.
     'author': 'Ocean ERP Team',
     'website': 'https://ocean-erp.com',
     'depends': [
-        'base',
+        'core_base',
+        'core_web',
         'inventory',
         'products',
         'contacts',

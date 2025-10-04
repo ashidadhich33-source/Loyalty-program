@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data noupdate="1">
+        
+        <!-- Demo Chart of Accounts -->
+        <record id="demo_account_assets" model="account.account">
+            <field name="name">Assets</field>
+            <field name="code">1000</field>
+            <field name="account_type">asset</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="demo_account_liabilities" model="account.account">
+            <field name="name">Liabilities</field>
+            <field name="code">2000</field>
+            <field name="account_type">liability</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="demo_account_equity" model="account.account">
+            <field name="name">Equity</field>
+            <field name="code">3000</field>
+            <field name="account_type">equity</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="demo_account_income" model="account.account">
+            <field name="name">Income</field>
+            <field name="code">4000</field>
+            <field name="account_type">income</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="demo_account_expense" model="account.account">
+            <field name="name">Expense</field>
+            <field name="code">5000</field>
+            <field name="account_type">expense</field>
+            <field name="is_active">True</field>
+        </record>
+        
+    </data>
+</ocean>

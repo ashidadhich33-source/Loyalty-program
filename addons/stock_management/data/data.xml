@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data noupdate="1">
+        
+        <!-- Stock Management Configuration -->
+        <record id="stock_config_default" model="res.config.settings">
+            <field name="name">Stock Management Configuration</field>
+            <field name="auto_reorder">True</field>
+            <field name="alert_threshold">10</field>
+            <field name="analysis_period">30</field>
+        </record>
+        
+    </data>
+</ocean>

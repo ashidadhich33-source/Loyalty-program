@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        
+        <!-- Account Types -->
+        <record id="account_type_asset" model="account.account.type">
+            <field name="name">Asset</field>
+            <field name="type">asset</field>
+            <field name="sequence">10</field>
+            <field name="include_initial_balance">True</field>
+            <field name="reconcile">False</field>
+            <field name="active">True</field>
+        </record>
+        
+        <record id="account_type_liability" model="account.account.type">
+            <field name="name">Liability</field>
+            <field name="type">liability</field>
+            <field name="sequence">20</field>
+            <field name="include_initial_balance">True</field>
+            <field name="reconcile">False</field>
+            <field name="active">True</field>
+        </record>
+        
+        <record id="account_type_equity" model="account.account.type">
+            <field name="name">Equity</field>
+            <field name="type">equity</field>
+            <field name="sequence">30</field>
+            <field name="include_initial_balance">True</field>
+            <field name="reconcile">False</field>
+            <field name="active">True</field>
+        </record>
+        
+        <record id="account_type_income" model="account.account.type">
+            <field name="name">Income</field>
+            <field name="type">income</field>
+            <field name="sequence">40</field>
+            <field name="include_initial_balance">False</field>
+            <field name="reconcile">False</field>
+            <field name="active">True</field>
+        </record>
+        
+        <record id="account_type_expense" model="account.account.type">
+            <field name="name">Expense</field>
+            <field name="type">expense</field>
+            <field name="sequence">50</field>
+            <field name="include_initial_balance">False</field>
+            <field name="reconcile">False</field>
+            <field name="active">True</field>
+        </record>
+        
+        <!-- Kids Clothing Specific Account Types -->
+        <record id="account_type_kids_clothing_asset" model="account.account.type">
+            <field name="name">Kids Clothing Asset</field>
+            <field name="type">asset</field>
+            <field name="sequence">15</field>
+            <field name="include_initial_balance">True</field>
+            <field name="reconcile">False</field>
+            <field name="age_group">all</field>
+            <field name="season">all_season</field>
+            <field name="active">True</field>
+        </record>
+        
+        <record id="account_type_kids_clothing_income" model="account.account.type">
+            <field name="name">Kids Clothing Income</field>
+            <field name="type">income</field>
+            <field name="sequence">45</field>
+            <field name="include_initial_balance">False</field>
+            <field name="reconcile">False</field>
+            <field name="age_group">all</field>
+            <field name="season">all_season</field>
+            <field name="active">True</field>
+        </record>
+        
+        <record id="account_type_kids_clothing_expense" model="account.account.type">
+            <field name="name">Kids Clothing Expense</field>
+            <field name="type">expense</field>
+            <field name="sequence">55</field>
+            <field name="include_initial_balance">False</field>
+            <field name="reconcile">False</field>
+            <field name="age_group">all</field>
+            <field name="season">all_season</field>
+            <field name="active">True</field>
+        </record>
+        
+        <!-- Chart of Accounts -->
+        <record id="account_1000" model="account.account">
+            <field name="name">Assets</field>
+            <field name="code">1000</field>
+            <field name="account_type">asset</field>
+            <field name="account_subtype">current_asset</field>
+            <field name="user_type_id" ref="account_type_asset"/>
+            <field name="reconcile">False</field>
+            <field name="active">True</field>
+        </record>
+        
+        <record id="account_1100" model="account.account">
+            <field name="name">Current Assets</field>
+            <field name="code">1100</field>
+            <field name="account_type">asset</field>
+            <field name="account_subtype">current_asset</field>
+            <field name="parent_id" ref="account_1000"/>
+            <field name="user_type_id" ref="account_type_asset"/>
+            <field name="reconcile">False</field>
+            <field name="active">True</field>
+        </record>
+        
+        <record id="account_1110" model="account.account">
+            <field name="name">Cash and Cash Equivalents</field>
+            <field name="code">1110</field>
+            <field name="account_type">asset</field>
+            <field name="account_subtype">current_asset</field>
+            <field name="parent_id" ref="account_1100"/>
+            <field name="user_type_id" ref="account_type_asset"/>
+            <field name="reconcile">True</field>
+            <field name="active">True</field>
+        </record>
+        
+        <record id="account_1120" model="account.account">
+            <field name="name">Accounts Receivable</field>
+            <field name="code">1120</field>
+            <field name="account_type">asset</field>
+            <field name="account_subtype">current_asset</field>
+            <field name="parent_id" ref="account_1100"/>
+            <field name="user_type_id" ref="account_type_asset"/>
+            <field name="reconcile">True</field>
+            <field name="active">True</field>
+        </record>
+        
+        <record id="account_1130" model="account.account">
+            <field name="name">Inventory</field>
+            <field name="code">1130</field>
+            <field name="account_type">asset</field>
+            <field name="account_subtype">current_asset</field>
+            <field name="parent_id" ref="account_1100"/>
+            <field name="user_type_id" ref="account_type_kids_clothing_asset"/>
+            <field name="reconcile">True</field>
+            <field name="age_group">all</field>
+            <field name="season">all_season</field>
+            <field name="active">True</field>
+        </record>
+        
+        <record id="account_2000" model="account.account">
+            <field name="name">Liabilities</field>
+            <field name="code">2000</field>
+            <field name="account_type">liability</field>
+            <field name="account_subtype">current_liability</field>
+            <field name="user_type_id" ref="account_type_liability"/>
+            <field name="reconcile">False</field>
+            <field name="active">True</field>
+        </record>
+        
+        <record id="account_2100" model="account.account">
+            <field name="name">Current Liabilities</field>
+            <field name="code">2100</field>
+            <field name="account_type">liability</field>
+            <field name="account_subtype">current_liability</field>
+            <field name="parent_id" ref="account_2000"/>
+            <field name="user_type_id" ref="account_type_liability"/>
+            <field name="reconcile">False</field>
+            <field name="active">True</field>
+        </record>
+        
+        <record id="account_2110" model="account.account">
+            <field name="name">Accounts Payable</field>
+            <field name="code">2110</field>
+            <field name="account_type">liability</field>
+            <field name="account_subtype">current_liability</field>
+            <field name="parent_id" ref="account_2100"/>
+            <field name="user_type_id" ref="account_type_liability"/>
+            <field name="reconcile">True</field>
+            <field name="active">True</field>
+        </record>
+        
+        <record id="account_3000" model="account.account">
+            <field name="name">Equity</field>
+            <field name="code">3000</field>
+            <field name="account_type">equity</field>
+            <field name="account_subtype">share_capital</field>
+            <field name="user_type_id" ref="account_type_equity"/>
+            <field name="reconcile">False</field>
+            <field name="active">True</field>
+        </record>
+        
+        <record id="account_4000" model="account.account">
+            <field name="name">Income</field>
+            <field name="code">4000</field>
+            <field name="account_type">income</field>
+            <field name="account_subtype">sales</field>
+            <field name="user_type_id" ref="account_type_kids_clothing_income"/>
+            <field name="reconcile">False</field>
+            <field name="age_group">all</field>
+            <field name="season">all_season</field>
+            <field name="active">True</field>
+        </record>
+        
+        <record id="account_4100" model="account.account">
+            <field name="name">Sales Revenue</field>
+            <field name="code">4100</field>
+            <field name="account_type">income</field>
+            <field name="account_subtype">sales</field>
+            <field name="parent_id" ref="account_4000"/>
+            <field name="user_type_id" ref="account_type_kids_clothing_income"/>
+            <field name="reconcile">False</field>
+            <field name="age_group">all</field>
+            <field name="season">all_season</field>
+            <field name="active">True</field>
+        </record>
+        
+        <record id="account_5000" model="account.account">
+            <field name="name">Expenses</field>
+            <field name="code">5000</field>
+            <field name="account_type">expense</field>
+            <field name="account_subtype">operating_expense</field>
+            <field name="user_type_id" ref="account_type_kids_clothing_expense"/>
+            <field name="reconcile">False</field>
+            <field name="age_group">all</field>
+            <field name="season">all_season</field>
+            <field name="active">True</field>
+        </record>
+        
+        <record id="account_5100" model="account.account">
+            <field name="name">Cost of Goods Sold</field>
+            <field name="code">5100</field>
+            <field name="account_type">expense</field>
+            <field name="account_subtype">cost_of_goods_sold</field>
+            <field name="parent_id" ref="account_5000"/>
+            <field name="user_type_id" ref="account_type_kids_clothing_expense"/>
+            <field name="reconcile">False</field>
+            <field name="age_group">all</field>
+            <field name="season">all_season</field>
+            <field name="active">True</field>
+        </record>
+        
+        <!-- Journals -->
+        <record id="journal_sales" model="account.journal">
+            <field name="name">Sales Journal</field>
+            <field name="code">SAL</field>
+            <field name="type">sale</field>
+            <field name="sequence">10</field>
+            <field name="default_account_id" ref="account_4100"/>
+            <field name="show_on_dashboard">True</field>
+            <field name="show_on_invoice">True</field>
+            <field name="age_group">all</field>
+            <field name="season">all_season</field>
+            <field name="active">True</field>
+        </record>
+        
+        <record id="journal_purchase" model="account.journal">
+            <field name="name">Purchase Journal</field>
+            <field name="code">PUR</field>
+            <field name="type">purchase</field>
+            <field name="sequence">20</field>
+            <field name="default_account_id" ref="account_2110"/>
+            <field name="show_on_dashboard">True</field>
+            <field name="show_on_invoice">True</field>
+            <field name="age_group">all</field>
+            <field name="season">all_season</field>
+            <field name="active">True</field>
+        </record>
+        
+        <record id="journal_cash" model="account.journal">
+            <field name="name">Cash Journal</field>
+            <field name="code">CSH</field>
+            <field name="type">cash</field>
+            <field name="sequence">30</field>
+            <field name="default_account_id" ref="account_1110"/>
+            <field name="show_on_dashboard">True</field>
+            <field name="show_on_invoice">False</field>
+            <field name="age_group">all</field>
+            <field name="season">all_season</field>
+            <field name="active">True</field>
+        </record>
+        
+        <record id="journal_bank" model="account.journal">
+            <field name="name">Bank Journal</field>
+            <field name="code">BNK</field>
+            <field name="type">bank</field>
+            <field name="sequence">40</field>
+            <field name="default_account_id" ref="account_1110"/>
+            <field name="show_on_dashboard">True</field>
+            <field name="show_on_invoice">False</field>
+            <field name="age_group">all</field>
+            <field name="season">all_season</field>
+            <field name="active">True</field>
+        </record>
+        
+        <record id="journal_general" model="account.journal">
+            <field name="name">General Journal</field>
+            <field name="code">GEN</field>
+            <field name="type">general</field>
+            <field name="sequence">50</field>
+            <field name="show_on_dashboard">True</field>
+            <field name="show_on_invoice">False</field>
+            <field name="age_group">all</field>
+            <field name="season">all_season</field>
+            <field name="active">True</field>
+        </record>
+        
+        <!-- Journal Templates -->
+        <record id="journal_template_sales" model="account.journal.template">
+            <field name="name">Sales Journal Template</field>
+            <field name="journal_type">sale</field>
+            <field name="sequence">10</field>
+            <field name="description">Template for sales journal entries</field>
+            <field name="age_group">all</field>
+            <field name="season">all_season</field>
+            <field name="active">True</field>
+        </record>
+        
+        <record id="journal_template_purchase" model="account.journal.template">
+            <field name="name">Purchase Journal Template</field>
+            <field name="journal_type">purchase</field>
+            <field name="sequence">20</field>
+            <field name="description">Template for purchase journal entries</field>
+            <field name="age_group">all</field>
+            <field name="season">all_season</field>
+            <field name="active">True</field>
+        </record>
+        
+        <!-- Journal Template Lines -->
+        <record id="journal_template_line_sales_1" model="account.journal.template.line">
+            <field name="template_id" ref="journal_template_sales"/>
+            <field name="sequence">10</field>
+            <field name="account_id" ref="account_1120"/>
+            <field name="name">Accounts Receivable</field>
+            <field name="debit">1000</field>
+            <field name="age_group">all</field>
+            <field name="season">all_season</field>
+        </record>
+        
+        <record id="journal_template_line_sales_2" model="account.journal.template.line">
+            <field name="template_id" ref="journal_template_sales"/>
+            <field name="sequence">20</field>
+            <field name="account_id" ref="account_4100"/>
+            <field name="name">Sales Revenue</field>
+            <field name="credit">1000</field>
+            <field name="age_group">all</field>
+            <field name="season">all_season</field>
+        </record>
+        
+        <record id="journal_template_line_purchase_1" model="account.journal.template.line">
+            <field name="template_id" ref="journal_template_purchase"/>
+            <field name="sequence">10</field>
+            <field name="account_id" ref="account_1130"/>
+            <field name="name">Inventory</field>
+            <field name="debit">1000</field>
+            <field name="age_group">all</field>
+            <field name="season">all_season</field>
+        </record>
+        
+        <record id="journal_template_line_purchase_2" model="account.journal.template.line">
+            <field name="template_id" ref="journal_template_purchase"/>
+            <field name="sequence">20</field>
+            <field name="account_id" ref="account_2110"/>
+            <field name="name">Accounts Payable</field>
+            <field name="credit">1000</field>
+            <field name="age_group">all</field>
+            <field name="season">all_season</field>
+        </record>
+        
+        <!-- Sequences -->
+        <record id="seq_account_move" model="ir.sequence">
+            <field name="name">Journal Entry</field>
+            <field name="code">account.move</field>
+            <field name="prefix">JE</field>
+            <field name="padding">5</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+        </record>
+        
+        <record id="seq_account_reconciliation" model="ir.sequence">
+            <field name="name">Account Reconciliation</field>
+            <field name="code">account.reconciliation</field>
+            <field name="prefix">REC</field>
+            <field name="padding">5</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+        </record>
+        
+    </data>
+</odoo>

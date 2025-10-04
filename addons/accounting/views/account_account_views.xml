@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        
+        <!-- Account Account Tree View -->
+        <record id="view_account_account_tree" model="ir.ui.view">
+            <field name="name">account.account.tree</field>
+            <field name="model">account.account</field>
+            <field name="arch" type="xml">
+                <tree string="Chart of Accounts" decoration-info="account_type=='asset'" decoration-warning="account_type=='liability'" decoration-success="account_type=='equity'" decoration-primary="account_type=='income'" decoration-muted="account_type=='expense'">
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="account_type"/>
+                    <field name="account_subtype"/>
+                    <field name="parent_id"/>
+                    <field name="level"/>
+                    <field name="full_code"/>
+                    <field name="balance"/>
+                    <field name="debit"/>
+                    <field name="credit"/>
+                    <field name="reconcile"/>
+                    <field name="active"/>
+                    <field name="age_group"/>
+                    <field name="size"/>
+                    <field name="season"/>
+                    <field name="brand"/>
+                    <field name="color"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Account Account Form View -->
+        <record id="view_account_account_form" model="ir.ui.view">
+            <field name="name">account.account.form</field>
+            <field name="model">account.account</field>
+            <field name="arch" type="xml">
+                <form string="Account">
+                    <header>
+                        <button name="action_view_move_lines" string="View Move Lines" type="object" class="btn-primary"/>
+                        <button name="action_reconcile" string="Reconcile" type="object" class="btn-success" attrs="{'invisible': [('reconcile', '=', False)]}"/>
+                        <button name="action_generate_report" string="Generate Report" type="object" class="btn-info"/>
+                        <field name="active" widget="boolean_button" options='{"terminology": "active"}'/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_view_move_lines" type="object" class="oe_stat_button" icon="fa-list">
+                                <div class="o_field_widget o_stat_info">
+                                    <span class="o_stat_text">Move Lines</span>
+                                </div>
+                            </button>
+                        </div>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="code"/>
+                                <field name="account_type"/>
+                                <field name="account_subtype"/>
+                                <field name="parent_id"/>
+                                <field name="level"/>
+                                <field name="full_code"/>
+                            </group>
+                            <group>
+                                <field name="balance"/>
+                                <field name="debit"/>
+                                <field name="credit"/>
+                                <field name="reconcile"/>
+                                <field name="deprecated"/>
+                            </group>
+                        </group>
+                        <group string="Kids Clothing Details">
+                            <group>
+                                <field name="age_group"/>
+                                <field name="size"/>
+                                <field name="season"/>
+                            </group>
+                            <group>
+                                <field name="brand"/>
+                                <field name="color"/>
+                            </group>
+                        </group>
+                        <group string="Account Properties">
+                            <group>
+                                <field name="user_type_id"/>
+                                <field name="company_id"/>
+                                <field name="currency_id"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Child Accounts">
+                                <field name="child_ids" readonly="1">
+                                    <tree string="Child Accounts">
+                                        <field name="code"/>
+                                        <field name="name"/>
+                                        <field name="account_type"/>
+                                        <field name="balance"/>
+                                        <field name="active"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Account Account Search View -->
+        <record id="view_account_account_search" model="ir.ui.view">
+            <field name="name">account.account.search</field>
+            <field name="model">account.account</field>
+            <field name="arch" type="xml">
+                <search string="Search Accounts">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="account_type"/>
+                    <field name="account_subtype"/>
+                    <field name="parent_id"/>
+                    <field name="age_group"/>
+                    <field name="size"/>
+                    <field name="season"/>
+                    <field name="brand"/>
+                    <field name="color"/>
+                    <filter string="Active" name="active" domain="[('active', '=', True)]"/>
+                    <filter string="Inactive" name="inactive" domain="[('active', '=', False)]"/>
+                    <filter string="Reconcilable" name="reconcilable" domain="[('reconcile', '=', True)]"/>
+                    <filter string="Deprecated" name="deprecated" domain="[('deprecated', '=', True)]"/>
+                    <filter string="Asset" name="asset" domain="[('account_type', '=', 'asset')]"/>
+                    <filter string="Liability" name="liability" domain="[('account_type', '=', 'liability')]"/>
+                    <filter string="Equity" name="equity" domain="[('account_type', '=', 'equity')]"/>
+                    <filter string="Income" name="income" domain="[('account_type', '=', 'income')]"/>
+                    <filter string="Expense" name="expense" domain="[('account_type', '=', 'expense')]"/>
+                    <filter string="Baby (0-2 years)" name="age_0_2" domain="[('age_group', '=', '0-2')]"/>
+                    <filter string="Toddler (2-4 years)" name="age_2_4" domain="[('age_group', '=', '2-4')]"/>
+                    <filter string="Pre-school (4-6 years)" name="age_4_6" domain="[('age_group', '=', '4-6')]"/>
+                    <filter string="Summer" name="summer" domain="[('season', '=', 'summer')]"/>
+                    <filter string="Winter" name="winter" domain="[('season', '=', 'winter')]"/>
+                    <filter string="Monsoon" name="monsoon" domain="[('season', '=', 'monsoon')]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Account Type" name="group_account_type" context="{'group_by': 'account_type'}"/>
+                        <filter string="Account Subtype" name="group_account_subtype" context="{'group_by': 'account_subtype'}"/>
+                        <filter string="Parent Account" name="group_parent" context="{'group_by': 'parent_id'}"/>
+                        <filter string="Age Group" name="group_age_group" context="{'group_by': 'age_group'}"/>
+                        <filter string="Size" name="group_size" context="{'group_by': 'size'}"/>
+                        <filter string="Season" name="group_season" context="{'group_by': 'season'}"/>
+                        <filter string="Brand" name="group_brand" context="{'group_by': 'brand'}"/>
+                        <filter string="Color" name="group_color" context="{'group_by': 'color'}"/>
+                        <filter string="Company" name="group_company" context="{'group_by': 'company_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- Account Account Actions -->
+        <record id="action_account_account" model="ir.actions.act_window">
+            <field name="name">Chart of Accounts</field>
+            <field name="res_model">account.account</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first account!
+                </p>
+                <p>
+                    The chart of accounts is the foundation of your accounting system.
+                </p>
+            </field>
+        </record>
+        
+        <!-- Account Account Type Tree View -->
+        <record id="view_account_account_type_tree" model="ir.ui.view">
+            <field name="name">account.account.type.tree</field>
+            <field name="model">account.account.type</field>
+            <field name="arch" type="xml">
+                <tree string="Account Types" decoration-info="type=='asset'" decoration-warning="type=='liability'" decoration-success="type=='equity'" decoration-primary="type=='income'" decoration-muted="type=='expense'">
+                    <field name="name"/>
+                    <field name="type"/>
+                    <field name="sequence"/>
+                    <field name="include_initial_balance"/>
+                    <field name="reconcile"/>
+                    <field name="active"/>
+                    <field name="age_group"/>
+                    <field name="season"/>
+                    <field name="brand"/>
+                    <field name="color"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Account Account Type Form View -->
+        <record id="view_account_account_type_form" model="ir.ui.view">
+            <field name="name">account.account.type.form</field>
+            <field name="model">account.account.type</field>
+            <field name="arch" type="xml">
+                <form string="Account Type">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="type"/>
+                                <field name="sequence"/>
+                                <field name="include_initial_balance"/>
+                                <field name="reconcile"/>
+                            </group>
+                            <group>
+                                <field name="age_group"/>
+                                <field name="season"/>
+                                <field name="brand"/>
+                                <field name="color"/>
+                            </group>
+                        </group>
+                        <group string="Company">
+                            <group>
+                                <field name="company_id"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Account Account Type Search View -->
+        <record id="view_account_account_type_search" model="ir.ui.view">
+            <field name="name">account.account.type.search</field>
+            <field name="model">account.account.type</field>
+            <field name="arch" type="xml">
+                <search string="Search Account Types">
+                    <field name="name"/>
+                    <field name="type"/>
+                    <field name="age_group"/>
+                    <field name="season"/>
+                    <field name="brand"/>
+                    <field name="color"/>
+                    <filter string="Active" name="active" domain="[('active', '=', True)]"/>
+                    <filter string="Inactive" name="inactive" domain="[('active', '=', False)]"/>
+                    <filter string="Asset" name="asset" domain="[('type', '=', 'asset')]"/>
+                    <filter string="Liability" name="liability" domain="[('type', '=', 'liability')]"/>
+                    <filter string="Equity" name="equity" domain="[('type', '=', 'equity')]"/>
+                    <filter string="Income" name="income" domain="[('type', '=', 'income')]"/>
+                    <filter string="Expense" name="expense" domain="[('type', '=', 'expense')]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Type" name="group_type" context="{'group_by': 'type'}"/>
+                        <filter string="Age Group" name="group_age_group" context="{'group_by': 'age_group'}"/>
+                        <filter string="Season" name="group_season" context="{'group_by': 'season'}"/>
+                        <filter string="Brand" name="group_brand" context="{'group_by': 'brand'}"/>
+                        <filter string="Color" name="group_color" context="{'group_by': 'color'}"/>
+                        <filter string="Company" name="group_company" context="{'group_by': 'company_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- Account Account Type Actions -->
+        <record id="action_account_account_type" model="ir.actions.act_window">
+            <field name="name">Account Types</field>
+            <field name="res_model">account.account.type</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first account type!
+                </p>
+                <p>
+                    Account types define the categories for your chart of accounts.
+                </p>
+            </field>
+        </record>
+        
+        <!-- Account Account Kanban View -->
+        <record id="view_account_account_kanban" model="ir.ui.view">
+            <field name="name">account.account.kanban</field>
+            <field name="model">account.account</field>
+            <field name="arch" type="xml">
+                <kanban string="Chart of Accounts" class="o_kanban_small_column">
+                    <field name="account_type"/>
+                    <field name="account_subtype"/>
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="balance"/>
+                    <field name="debit"/>
+                    <field name="credit"/>
+                    <field name="reconcile"/>
+                    <field name="active"/>
+                    <field name="age_group"/>
+                    <field name="size"/>
+                    <field name="season"/>
+                    <field name="brand"/>
+                    <field name="color"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_card oe_kanban_global_click">
+                                <div class="oe_kanban_content">
+                                    <div class="o_kanban_record_top">
+                                        <div class="o_kanban_record_headings">
+                                            <strong class="o_kanban_record_title">
+                                                <field name="name"/>
+                                            </strong>
+                                        </div>
+                                        <div class="o_kanban_record_priority">
+                                            <field name="active" widget="boolean_button" options='{"terminology": "active"}'/>
+                                        </div>
+                                    </div>
+                                    <div class="o_kanban_record_body">
+                                        <div class="o_kanban_record_details">
+                                            <div>
+                                                <strong>Code:</strong> <field name="code"/>
+                                            </div>
+                                            <div>
+                                                <strong>Type:</strong> <field name="account_type"/>
+                                            </div>
+                                            <div>
+                                                <strong>Subtype:</strong> <field name="account_subtype"/>
+                                            </div>
+                                            <div>
+                                                <strong>Balance:</strong> <field name="balance"/>
+                                            </div>
+                                            <div>
+                                                <strong>Debit:</strong> <field name="debit"/>
+                                            </div>
+                                            <div>
+                                                <strong>Credit:</strong> <field name="credit"/>
+                                            </div>
+                                            <div>
+                                                <strong>Reconcile:</strong> <field name="reconcile"/>
+                                            </div>
+                                            <div>
+                                                <strong>Age Group:</strong> <field name="age_group"/>
+                                            </div>
+                                            <div>
+                                                <strong>Size:</strong> <field name="size"/>
+                                            </div>
+                                            <div>
+                                                <strong>Season:</strong> <field name="season"/>
+                                            </div>
+                                            <div>
+                                                <strong>Brand:</strong> <field name="brand"/>
+                                            </div>
+                                            <div>
+                                                <strong>Color:</strong> <field name="color"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+        
+    </data>
+</odoo>

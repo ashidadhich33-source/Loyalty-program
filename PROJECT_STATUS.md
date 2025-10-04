@@ -1,4 +1,4 @@
-# ERP Development Project Status
+# Ocean ERP Development Project Status
 
 ## Project Overview
 **Project**: ERP System for Kids' Clothing Retail Industry  
@@ -6,14 +6,14 @@
 **Status**: Starting Fresh - Correct Architecture  
 **Current Phase**: Addons Structure Setup  
 **Technology Stack**: Python, PostgreSQL, Modern Web Framework  
-**Architecture**: Addons-based modular system (Ocean ERP framework)
+**Architecture**: Addons-based modular system Ocean ERP framework
 
 ## Zero-Error Development Principles
 This project follows strict zero-error development practices with comprehensive testing, automated quality gates, and continuous monitoring using modern web framework architecture.
 
 ## 🚨 CRITICAL ARCHITECTURE REMINDER
 **This is a STANDALONE ERP SYSTEM that uses Ocean ERP framework.**
-- ❌ DO NOT CREATE OCEAN MODULES
+
 - ✅ CREATE ADDONS FOR OUR CUSTOM FRAMEWORK
 - Use `core_framework/` components (ORM, addon manager, web interface)
 - Follow existing addon patterns in `addons/` directory

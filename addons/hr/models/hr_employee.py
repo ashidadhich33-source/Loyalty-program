@@ -169,6 +169,32 @@ class HrEmployee(models.Model):
         default=lambda self: self.env.company.currency_id
     )
     
+    # Sales Performance Fields
+    commission_rate = fields.Float(
+        string='Commission Rate %',
+        digits=(5, 2),
+        default=0.0,
+        help='Commission rate for sales (percentage)'
+    )
+    
+    monthly_sales_target = fields.Monetary(
+        string='Monthly Sales Target',
+        currency_field='currency_id',
+        help='Monthly sales target for this employee'
+    )
+    
+    weekly_sales_target = fields.Monetary(
+        string='Weekly Sales Target',
+        currency_field='currency_id',
+        help='Weekly sales target for this employee'
+    )
+    
+    daily_sales_target = fields.Monetary(
+        string='Daily Sales Target',
+        currency_field='currency_id',
+        help='Daily sales target for this employee'
+    )
+    
     # Additional Fields
     notes = fields.Text(
         string='Notes',
@@ -183,6 +209,46 @@ class HrEmployee(models.Model):
     leave_count = fields.Integer(
         string='Leave Count',
         compute='_compute_leave_count'
+    )
+    
+    # Sales Performance Computed Fields
+    current_month_sales = fields.Monetary(
+        string='Current Month Sales',
+        currency_field='currency_id',
+        compute='_compute_current_month_sales'
+    )
+    
+    current_week_sales = fields.Monetary(
+        string='Current Week Sales',
+        currency_field='currency_id',
+        compute='_compute_current_week_sales'
+    )
+    
+    current_day_sales = fields.Monetary(
+        string='Current Day Sales',
+        currency_field='currency_id',
+        compute='_compute_current_day_sales'
+    )
+    
+    monthly_target_achievement = fields.Float(
+        string='Monthly Target Achievement %',
+        compute='_compute_monthly_target_achievement'
+    )
+    
+    weekly_target_achievement = fields.Float(
+        string='Weekly Target Achievement %',
+        compute='_compute_weekly_target_achievement'
+    )
+    
+    daily_target_achievement = fields.Float(
+        string='Daily Target Achievement %',
+        compute='_compute_daily_target_achievement'
+    )
+    
+    total_commission_earned = fields.Monetary(
+        string='Total Commission Earned',
+        currency_field='currency_id',
+        compute='_compute_total_commission_earned'
     )
     
     @api.depends('birth_date')
@@ -209,6 +275,84 @@ class HrEmployee(models.Model):
             employee.leave_count = self.env['hr.leave'].search_count([
                 ('employee_id', '=', employee.id)
             ])
+    
+    @api.depends('name')
+    def _compute_current_month_sales(self):
+        for employee in self:
+            from datetime import datetime, date
+            today = date.today()
+            month_start = date(today.year, today.month, 1)
+            
+            orders = self.env['pos.order'].search([
+                ('employee_id', '=', employee.id),
+                ('date_order', '>=', month_start),
+                ('state', 'in', ['paid', 'done'])
+            ])
+            
+            employee.current_month_sales = sum(order.amount_total for order in orders)
+    
+    @api.depends('name')
+    def _compute_current_week_sales(self):
+        for employee in self:
+            from datetime import datetime, date, timedelta
+            today = date.today()
+            week_start = today - timedelta(days=today.weekday())
+            
+            orders = self.env['pos.order'].search([
+                ('employee_id', '=', employee.id),
+                ('date_order', '>=', week_start),
+                ('state', 'in', ['paid', 'done'])
+            ])
+            
+            employee.current_week_sales = sum(order.amount_total for order in orders)
+    
+    @api.depends('name')
+    def _compute_current_day_sales(self):
+        for employee in self:
+            from datetime import datetime, date
+            today = date.today()
+            
+            orders = self.env['pos.order'].search([
+                ('employee_id', '=', employee.id),
+                ('date_order', '>=', today),
+                ('state', 'in', ['paid', 'done'])
+            ])
+            
+            employee.current_day_sales = sum(order.amount_total for order in orders)
+    
+    @api.depends('current_month_sales', 'monthly_sales_target')
+    def _compute_monthly_target_achievement(self):
+        for employee in self:
+            if employee.monthly_sales_target > 0:
+                employee.monthly_target_achievement = (employee.current_month_sales / employee.monthly_sales_target) * 100
+            else:
+                employee.monthly_target_achievement = 0.0
+    
+    @api.depends('current_week_sales', 'weekly_sales_target')
+    def _compute_weekly_target_achievement(self):
+        for employee in self:
+            if employee.weekly_sales_target > 0:
+                employee.weekly_target_achievement = (employee.current_week_sales / employee.weekly_sales_target) * 100
+            else:
+                employee.weekly_target_achievement = 0.0
+    
+    @api.depends('current_day_sales', 'daily_sales_target')
+    def _compute_daily_target_achievement(self):
+        for employee in self:
+            if employee.daily_sales_target > 0:
+                employee.daily_target_achievement = (employee.current_day_sales / employee.daily_sales_target) * 100
+            else:
+                employee.daily_target_achievement = 0.0
+    
+    @api.depends('name')
+    def _compute_total_commission_earned(self):
+        for employee in self:
+            orders = self.env['pos.order'].search([
+                ('employee_id', '=', employee.id),
+                ('state', 'in', ['paid', 'done'])
+            ])
+            
+            employee.total_commission_earned = sum(order.sales_commission for order in orders)
     
     @api.model
     def create(self, vals):
@@ -259,6 +403,105 @@ class HrEmployee(models.Model):
         action['domain'] = [('employee_id', '=', self.id)]
         action['context'] = {'default_employee_id': self.id}
         return action
+    
+    def action_view_sales_performance(self):
+        """View sales performance for this employee"""
+        return {
+            'type': 'ir.actions.act_window',
+            'name': f'Sales Performance - {self.name}',
+            'res_model': 'pos.order',
+            'view_mode': 'tree,form',
+            'domain': [('employee_id', '=', self.id), ('state', 'in', ['paid', 'done'])],
+            'context': {'default_employee_id': self.id}
+        }
+    
+    def get_performance_summary(self):
+        """Get comprehensive performance summary"""
+        return {
+            'employee_name': self.name,
+            'department': self.department_id.name if self.department_id else 'N/A',
+            'job_position': self.job_id.name if self.job_id else 'N/A',
+            'current_month_sales': self.current_month_sales,
+            'monthly_target': self.monthly_sales_target,
+            'monthly_achievement': self.monthly_target_achievement,
+            'current_week_sales': self.current_week_sales,
+            'weekly_target': self.weekly_sales_target,
+            'weekly_achievement': self.weekly_target_achievement,
+            'current_day_sales': self.current_day_sales,
+            'daily_target': self.daily_sales_target,
+            'daily_achievement': self.daily_target_achievement,
+            'total_commission': self.total_commission_earned,
+            'commission_rate': self.commission_rate,
+            'age_group_specialization': self.age_group_specialization,
+            'season_preference': self.season_preference,
+            'brand_expertise': self.brand_expertise
+        }
+    
+    def get_age_group_performance(self, age_group=None):
+        """Get performance by age group"""
+        domain = [
+            ('employee_id', '=', self.id),
+            ('state', 'in', ['paid', 'done'])
+        ]
+        
+        if age_group:
+            # This would need to be enhanced to filter by product age group
+            pass
+        
+        orders = self.env['pos.order'].search(domain)
+        
+        age_group_sales = {}
+        for order in orders:
+            age_group_focus = order._get_age_group_focus()
+            if age_group_focus not in age_group_sales:
+                age_group_sales[age_group_focus] = 0
+            age_group_sales[age_group_focus] += order.amount_total
+        
+        return age_group_sales
+    
+    def get_season_performance(self, season=None):
+        """Get performance by season"""
+        domain = [
+            ('employee_id', '=', self.id),
+            ('state', 'in', ['paid', 'done'])
+        ]
+        
+        if season:
+            # This would need to be enhanced to filter by product season
+            pass
+        
+        orders = self.env['pos.order'].search(domain)
+        
+        season_sales = {}
+        for order in orders:
+            season_focus = order._get_season_focus()
+            if season_focus not in season_sales:
+                season_sales[season_focus] = 0
+            season_sales[season_focus] += order.amount_total
+        
+        return season_sales
+    
+    def get_brand_performance(self, brand=None):
+        """Get performance by brand"""
+        domain = [
+            ('employee_id', '=', self.id),
+            ('state', 'in', ['paid', 'done'])
+        ]
+        
+        if brand:
+            # This would need to be enhanced to filter by product brand
+            pass
+        
+        orders = self.env['pos.order'].search(domain)
+        
+        brand_sales = {}
+        for order in orders:
+            brand_focus = order._get_brand_focus()
+            if brand_focus not in brand_sales:
+                brand_sales[brand_focus] = 0
+            brand_sales[brand_focus] += order.amount_total
+        
+        return brand_sales
     
     @api.constrains('pan_number')
     def _check_pan_number(self):

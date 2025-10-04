@@ -51,6 +51,27 @@ class PosOrder(BaseModel):
         help='Cashier who processed this order'
     )
     
+    # Employee Performance Tracking
+    employee_id = Many2OneField(
+        'hr.employee',
+        string='Sales Employee',
+        help='Employee who made the sale (for performance tracking)'
+    )
+    
+    sales_commission = FloatField(
+        string='Sales Commission',
+        digits=(12, 2),
+        default=0.0,
+        help='Commission earned by the sales employee'
+    )
+    
+    commission_rate = FloatField(
+        string='Commission Rate %',
+        digits=(5, 2),
+        default=0.0,
+        help='Commission rate applied to this sale'
+    )
+    
     # Customer Information
     partner_id = Many2OneField(
         'res.partner',
@@ -246,6 +267,10 @@ class PosOrder(BaseModel):
             order.amount_tax = tax_amount
             order.amount_discount = discount_amount
             order.amount_total = untaxed_amount + tax_amount
+            
+            # Calculate commission if employee is assigned
+            if order.employee_id:
+                order._calculate_commission()
     
     def action_confirm(self):
         """Confirm the order"""
@@ -393,3 +418,86 @@ class PosOrder(BaseModel):
             payment_summary[method_name] += payment.amount
         
         return payment_summary
+    
+    def _calculate_commission(self):
+        """Calculate commission for the sales employee"""
+        for order in self:
+            if not order.employee_id:
+                order.sales_commission = 0.0
+                order.commission_rate = 0.0
+                return
+            
+            # Get employee's commission rate
+            employee = order.employee_id
+            commission_rate = getattr(employee, 'commission_rate', 0.0)
+            
+            # If no commission rate set, use default from job position
+            if not commission_rate and employee.job_id:
+                commission_rate = getattr(employee.job_id, 'commission_rate', 0.0)
+            
+            # If still no rate, use default from department
+            if not commission_rate and employee.department_id:
+                commission_rate = getattr(employee.department_id, 'commission_rate', 0.0)
+            
+            # Calculate commission on untaxed amount
+            order.commission_rate = commission_rate
+            order.sales_commission = order.amount_untaxed * (commission_rate / 100)
+    
+    def get_employee_performance_data(self):
+        """Get performance data for the sales employee"""
+        if not self.employee_id:
+            return None
+        
+        return {
+            'employee_id': self.employee_id.id,
+            'employee_name': self.employee_id.name,
+            'order_amount': self.amount_total,
+            'commission_earned': self.sales_commission,
+            'commission_rate': self.commission_rate,
+            'order_date': self.date_order,
+            'age_group_focus': self._get_age_group_focus(),
+            'season_focus': self._get_season_focus(),
+            'brand_focus': self._get_brand_focus()
+        }
+    
+    def _get_age_group_focus(self):
+        """Get primary age group focus for this order"""
+        age_groups = {}
+        for line in self.lines:
+            if hasattr(line.product_id, 'age_group'):
+                age_group = line.product_id.age_group
+                if age_group not in age_groups:
+                    age_groups[age_group] = 0
+                age_groups[age_group] += line.price_subtotal
+        
+        if age_groups:
+            return max(age_groups, key=age_groups.get)
+        return 'all'
+    
+    def _get_season_focus(self):
+        """Get primary season focus for this order"""
+        seasons = {}
+        for line in self.lines:
+            if hasattr(line.product_id, 'season'):
+                season = line.product_id.season
+                if season not in seasons:
+                    seasons[season] = 0
+                seasons[season] += line.price_subtotal
+        
+        if seasons:
+            return max(seasons, key=seasons.get)
+        return 'all_season'
+    
+    def _get_brand_focus(self):
+        """Get primary brand focus for this order"""
+        brands = {}
+        for line in self.lines:
+            if hasattr(line.product_id, 'brand_id') and line.product_id.brand_id:
+                brand = line.product_id.brand_id.name
+                if brand not in brands:
+                    brands[brand] = 0
+                brands[brand] += line.price_subtotal
+        
+        if brands:
+            return max(brands, key=brands.get)
+        return 'Multiple Brands'

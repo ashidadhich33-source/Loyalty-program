@@ -44,6 +44,9 @@
                             <button name="action_view_leaves" type="object" class="oe_stat_button" icon="fa-calendar">
                                 <field name="leave_count" widget="statinfo" string="Leaves"/>
                             </button>
+                            <button name="action_view_sales_performance" type="object" class="oe_stat_button" icon="fa-line-chart">
+                                <field name="current_month_sales" widget="statinfo" string="Monthly Sales"/>
+                            </button>
                         </div>
                         
                         <div class="oe_title">
@@ -108,6 +111,28 @@
                         <group>
                             <field name="basic_salary"/>
                         </group>
+                        
+                        <notebook>
+                            <page string="Sales Performance">
+                                <group>
+                                    <group>
+                                        <field name="commission_rate"/>
+                                        <field name="monthly_sales_target"/>
+                                        <field name="weekly_sales_target"/>
+                                        <field name="daily_sales_target"/>
+                                    </group>
+                                    <group>
+                                        <field name="current_month_sales"/>
+                                        <field name="monthly_target_achievement"/>
+                                        <field name="current_week_sales"/>
+                                        <field name="weekly_target_achievement"/>
+                                        <field name="current_day_sales"/>
+                                        <field name="daily_target_achievement"/>
+                                        <field name="total_commission_earned"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
                         
                         <group>
                             <field name="notes"/>

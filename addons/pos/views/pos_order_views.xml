@@ -10,8 +10,10 @@
                     <field name="name"/>
                     <field name="partner_id"/>
                     <field name="session_id"/>
+                    <field name="employee_id"/>
                     <field name="date_order"/>
                     <field name="amount_total"/>
+                    <field name="sales_commission"/>
                     <field name="state"/>
                     <field name="user_id"/>
                 </tree>
@@ -42,6 +44,7 @@
                                 <field name="partner_id"/>
                                 <field name="session_id"/>
                                 <field name="user_id"/>
+                                <field name="employee_id"/>
                                 <field name="date_order"/>
                                 <field name="order_type"/>
                             </group>
@@ -51,6 +54,8 @@
                                 <field name="amount_total"/>
                                 <field name="amount_paid"/>
                                 <field name="amount_return"/>
+                                <field name="sales_commission"/>
+                                <field name="commission_rate"/>
                             </group>
                         </group>
                         <notebook>
@@ -104,6 +109,7 @@
                     <field name="partner_id"/>
                     <field name="session_id"/>
                     <field name="user_id"/>
+                    <field name="employee_id"/>
                     <separator/>
                     <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
                     <filter string="Confirmed" name="confirmed" domain="[('state', '=', 'confirmed')]"/>
@@ -116,6 +122,7 @@
                         <filter string="Partner" name="partner" context="{'group_by': 'partner_id'}"/>
                         <filter string="Session" name="session" context="{'group_by': 'session_id'}"/>
                         <filter string="User" name="user" context="{'group_by': 'user_id'}"/>
+                        <filter string="Employee" name="employee" context="{'group_by': 'employee_id'}"/>
                         <filter string="State" name="state" context="{'group_by': 'state'}"/>
                         <filter string="Order Date" name="order_date" context="{'group_by': 'date_order:day'}"/>
                     </group>

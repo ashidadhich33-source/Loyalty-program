@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supplier Management - Ocean ERP</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .sidebar {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .sidebar .nav-link {
+            color: rgba(255,255,255,0.8);
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin: 5px 0;
+            transition: all 0.3s ease;
+        }
+        .sidebar .nav-link:hover {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            transform: translateX(5px);
+        }
+        .sidebar .nav-link.active {
+            background: rgba(255,255,255,0.2);
+            color: white;
+        }
+        .main-content {
+            background: #f8f9fa;
+            min-height: 100vh;
+        }
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+        .logo {
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+        }
+        .logo i {
+            color: #667eea;
+            font-size: 20px;
+        }
+        .supplier-card {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            border-radius: 15px;
+        }
+        .purchase-card {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            border-radius: 15px;
+        }
+        .payment-card {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border-radius: 15px;
+        }
+        .supplier-row {
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 10px;
+            background: white;
+            transition: all 0.3s ease;
+        }
+        .supplier-row:hover {
+            border-color: #667eea;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.1);
+        }
+        .supplier-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .status-active {
+            background: #d4edda;
+            color: #155724;
+        }
+        .status-inactive {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+        .search-box {
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 12px 15px;
+            transition: all 0.3s ease;
+        }
+        .search-box:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+        .filter-tabs {
+            border-bottom: 2px solid #dee2e6;
+            margin-bottom: 20px;
+        }
+        .filter-tab {
+            padding: 10px 20px;
+            border: none;
+            background: none;
+            color: #6c757d;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        .filter-tab.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+        }
+        .filter-tab:hover {
+            color: #667eea;
+        }
+        .rating-stars {
+            color: #ffc107;
+            font-size: 14px;
+        }
+        .payment-status {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .status-paid {
+            background: #d4edda;
+            color: #155724;
+        }
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+        .status-overdue {
+            background: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3 col-lg-2 sidebar p-0">
+                <div class="p-3">
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="logo">
+                            <i class="fas fa-water"></i>
+                        </div>
+                        <div>
+                            <h5 class="text-white mb-0">Ocean ERP</h5>
+                            <small class="text-white-50">Kids Clothing</small>
+                        </div>
+                    </div>
+                    
+                    <nav class="nav flex-column">
+                        <a class="nav-link" href="/dashboard">
+                            <i class="fas fa-tachometer-alt me-2"></i>Dashboard
+                        </a>
+                        <a class="nav-link" href="/products/templates">
+                            <i class="fas fa-cube me-2"></i>Product Templates
+                        </a>
+                        <a class="nav-link" href="/products/variants">
+                            <i class="fas fa-boxes me-2"></i>Product Variants
+                        </a>
+                        <a class="nav-link" href="/purchase/orders">
+                            <i class="fas fa-shopping-cart me-2"></i>Purchase Orders
+                        </a>
+                        <a class="nav-link" href="/pos/session">
+                            <i class="fas fa-cash-register me-2"></i>POS Session
+                        </a>
+                        <a class="nav-link" href="/sales/orders">
+                            <i class="fas fa-receipt me-2"></i>Sales Orders
+                        </a>
+                        <a class="nav-link" href="/inventory/stock">
+                            <i class="fas fa-warehouse me-2"></i>Inventory
+                        </a>
+                        <a class="nav-link" href="/contacts/customers">
+                            <i class="fas fa-users me-2"></i>Customers
+                        </a>
+                        <a class="nav-link active" href="/contacts/suppliers">
+                            <i class="fas fa-truck me-2"></i>Suppliers
+                        </a>
+                        <a class="nav-link" href="/reports/gst">
+                            <i class="fas fa-chart-bar me-2"></i>GST Reports
+                        </a>
+                        <a class="nav-link" href="/settings">
+                            <i class="fas fa-cog me-2"></i>Settings
+                        </a>
+                    </nav>
+                </div>
+            </div>
+            
+            <!-- Main Content -->
+            <div class="col-md-9 col-lg-10 main-content">
+                <div class="p-4">
+                    <!-- Header -->
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <div>
+                            <h2 class="mb-0">Supplier Management</h2>
+                            <p class="text-muted mb-0">Manage your suppliers and their information</p>
+                        </div>
+                        <div>
+                            <button class="btn btn-outline-primary me-2" onclick="exportSuppliers()">
+                                <i class="fas fa-download me-2"></i>Export
+                            </button>
+                            <button class="btn btn-primary" onclick="addNewSupplier()">
+                                <i class="fas fa-plus me-2"></i>Add Supplier
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Statistics Cards -->
+                    <div class="row mb-4">
+                        <div class="col-md-3 mb-3">
+                            <div class="card supplier-card">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <h6 class="card-title">Total Suppliers</h6>
+                                            <h3 class="mb-0">45</h3>
+                                            <small class="opacity-75">Active suppliers</small>
+                                        </div>
+                                        <div class="align-self-center">
+                                            <i class="fas fa-truck fa-2x opacity-75"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="card purchase-card">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <h6 class="card-title">Active Suppliers</h6>
+                                            <h3 class="mb-0">38</h3>
+                                            <small class="opacity-75">Made purchases</small>
+                                        </div>
+                                        <div class="align-self-center">
+                                            <i class="fas fa-handshake fa-2x opacity-75"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="card payment-card">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <h6 class="card-title">Pending Payments</h6>
+                                            <h3 class="mb-0">₹2,45,230</h3>
+                                            <small class="opacity-75">Outstanding amount</small>
+                                        </div>
+                                        <div class="align-self-center">
+                                            <i class="fas fa-money-bill-wave fa-2x opacity-75"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="card supplier-card">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <h6 class="card-title">New This Month</h6>
+                                            <h3 class="mb-0">3</h3>
+                                            <small class="opacity-75">New suppliers</small>
+                                        </div>
+                                        <div class="align-self-center">
+                                            <i class="fas fa-user-plus fa-2x opacity-75"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Filters and Search -->
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="filter-tabs">
+                                        <button class="filter-tab active" onclick="filterSuppliers('all')">All Suppliers</button>
+                                        <button class="filter-tab" onclick="filterSuppliers('active')">Active</button>
+                                        <button class="filter-tab" onclick="filterSuppliers('inactive')">Inactive</button>
+                                        <button class="filter-tab" onclick="filterSuppliers('pending')">Pending</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control search-box" id="searchInput" 
+                                               placeholder="Search suppliers by name, mobile, or email...">
+                                        <button class="btn btn-outline-primary" type="button" onclick="searchSuppliers()">
+                                            <i class="fas fa-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Supplier List -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0"><i class="fas fa-list me-2"></i>Supplier List</h5>
+                        </div>
+                        <div class="card-body">
+                            <div id="supplierList">
+                                <!-- Supplier items will be dynamically loaded -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Sample supplier data
+        const supplierData = [
+            {
+                id: 1,
+                name: 'GINI AND JONY',
+                mobile: '9876543210',
+                email: 'contact@giniandjony.com',
+                contact_person: 'Rajesh Kumar',
+                contact_type: 'supplier',
+                street: '123 Industrial Area',
+                city: 'Mumbai',
+                state: 'Maharashtra',
+                pincode: '400001',
+                country: 'India',
+                gstin: '27ABCDE1234F1Z5',
+                total_purchases: 245230.00,
+                total_orders: 25,
+                last_purchase: '2024-11-28',
+                status: 'active',
+                registration_date: '2024-01-15',
+                payment_terms: '30 days',
+                credit_limit: 500000.00,
+                rating: 4.5,
+                pending_amount: 45000.00,
+                payment_status: 'pending'
+            },
+            {
+                id: 2,
+                name: 'LITTLE ANGELS',
+                mobile: '9876543211',
+                email: 'info@littleangels.com',
+                contact_person: 'Priya Sharma',
+                contact_type: 'supplier',
+                street: '456 Business Park',
+                city: 'Delhi',
+                state: 'Delhi',
+                pincode: '110001',
+                country: 'India',
+                gstin: '07ABCDE1234F1Z5',
+                total_purchases: 187500.00,
+                total_orders: 18,
+                last_purchase: '2024-11-25',
+                status: 'active',
+                registration_date: '2024-02-20',
+                payment_terms: '15 days',
+                credit_limit: 300000.00,
+                rating: 4.2,
+                pending_amount: 25000.00,
+                payment_status: 'pending'
+            },
+            {
+                id: 3,
+                name: 'KIDS CORNER',
+                mobile: '9876543212',
+                email: 'sales@kidscorner.com',
+                contact_person: 'Amit Patel',
+                contact_type: 'supplier',
+                street: '789 Trade Center',
+                city: 'Bangalore',
+                state: 'Karnataka',
+                pincode: '560001',
+                country: 'India',
+                gstin: '29ABCDE1234F1Z5',
+                total_purchases: 132000.00,
+                total_orders: 12,
+                last_purchase: '2024-11-20',
+                status: 'active',
+                registration_date: '2024-03-10',
+                payment_terms: '45 days',
+                credit_limit: 200000.00,
+                rating: 4.0,
+                pending_amount: 0.00,
+                payment_status: 'paid'
+            },
+            {
+                id: 4,
+                name: 'TINY TOTS',
+                mobile: '9876543213',
+                email: 'orders@tinytots.com',
+                contact_person: 'Sneha Gupta',
+                contact_type: 'supplier',
+                street: '321 Commercial Street',
+                city: 'Chennai',
+                state: 'Tamil Nadu',
+                pincode: '600001',
+                country: 'India',
+                gstin: '33ABCDE1234F1Z5',
+                total_purchases: 0.00,
+                total_orders: 0,
+                last_purchase: '',
+                status: 'pending',
+                registration_date: '2024-11-30',
+                payment_terms: '30 days',
+                credit_limit: 100000.00,
+                rating: 0.0,
+                pending_amount: 0.00,
+                payment_status: 'paid'
+            },
+            {
+                id: 5,
+                name: 'CHILDREN WORLD',
+                mobile: '9876543214',
+                email: 'contact@childrenworld.com',
+                contact_person: 'Vikram Singh',
+                contact_type: 'supplier',
+                street: '654 Market Square',
+                city: 'Pune',
+                state: 'Maharashtra',
+                pincode: '411001',
+                country: 'India',
+                gstin: '27ABCDE1234F1Z6',
+                total_purchases: 87500.00,
+                total_orders: 8,
+                last_purchase: '2024-10-15',
+                status: 'inactive',
+                registration_date: '2024-04-05',
+                payment_terms: '30 days',
+                credit_limit: 150000.00,
+                rating: 3.5,
+                pending_amount: 15000.00,
+                payment_status: 'overdue'
+            }
+        ];
+        
+        let currentFilter = 'all';
+        let filteredData = [...supplierData];
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            loadSuppliers();
+            setupEventListeners();
+        });
+        
+        // Setup event listeners
+        function setupEventListeners() {
+            // Search input
+            document.getElementById('searchInput').addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                if (searchTerm) {
+                    filteredData = supplierData.filter(supplier => 
+                        supplier.name.toLowerCase().includes(searchTerm) ||
+                        supplier.mobile.includes(searchTerm) ||
+                        supplier.email.toLowerCase().includes(searchTerm) ||
+                        supplier.city.toLowerCase().includes(searchTerm) ||
+                        supplier.contact_person.toLowerCase().includes(searchTerm)
+                    );
+                } else {
+                    filteredData = [...supplierData];
+                }
+                loadSuppliers();
+            });
+        }
+        
+        // Load suppliers
+        function loadSuppliers() {
+            const supplierList = document.getElementById('supplierList');
+            supplierList.innerHTML = '';
+            
+            if (filteredData.length === 0) {
+                supplierList.innerHTML = `
+                    <div class="text-center py-5">
+                        <i class="fas fa-truck fa-3x text-muted mb-3"></i>
+                        <h5 class="text-muted">No suppliers found</h5>
+                        <p class="text-muted">Try adjusting your search or filter criteria</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            filteredData.forEach(supplier => {
+                const supplierElement = document.createElement('div');
+                supplierElement.className = 'supplier-row';
+                supplierElement.innerHTML = `
+                    <div class="row align-items-center">
+                        <div class="col-md-1">
+                            <div class="supplier-avatar">
+                                ${supplier.name.charAt(0).toUpperCase()}
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div>
+                                <h6 class="mb-0">${supplier.name}</h6>
+                                <small class="text-muted">${supplier.contact_person}</small>
+                                <small class="text-muted d-block">${supplier.mobile}</small>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div>
+                                <span class="status-badge status-${supplier.status}">${supplier.status.toUpperCase()}</span>
+                                <small class="text-muted d-block">${supplier.contact_type}</small>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div>
+                                <strong>₹${supplier.total_purchases.toFixed(2)}</strong>
+                                <small class="text-muted d-block">${supplier.total_orders} orders</small>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div>
+                                <div class="rating-stars">
+                                    ${generateStars(supplier.rating)}
+                                </div>
+                                <small class="text-muted">${supplier.rating}/5.0</small>
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <div>
+                                <span class="payment-status status-${supplier.payment_status}">${supplier.payment_status.toUpperCase()}</span>
+                                <small class="text-muted d-block">₹${supplier.pending_amount.toFixed(2)}</small>
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="dropdown">
+                                <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#" onclick="viewSupplier(${supplier.id})">
+                                        <i class="fas fa-eye me-2"></i>View Details
+                                    </a></li>
+                                    <li><a class="dropdown-item" href="#" onclick="editSupplier(${supplier.id})">
+                                        <i class="fas fa-edit me-2"></i>Edit Supplier
+                                    </a></li>
+                                    <li><a class="dropdown-item" href="#" onclick="viewOrders(${supplier.id})">
+                                        <i class="fas fa-shopping-cart me-2"></i>View Orders
+                                    </a></li>
+                                    <li><a class="dropdown-item" href="#" onclick="viewPayments(${supplier.id})">
+                                        <i class="fas fa-money-bill-wave me-2"></i>Payment History
+                                    </a></li>
+                                    <li><a class="dropdown-item" href="#" onclick="createPurchaseOrder(${supplier.id})">
+                                        <i class="fas fa-plus me-2"></i>Create PO
+                                    </a></li>
+                                    <li><a class="dropdown-item" href="#" onclick="sendMessage(${supplier.id})">
+                                        <i class="fas fa-envelope me-2"></i>Send Message
+                                    </a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                supplierList.appendChild(supplierElement);
+            });
+        }
+        
+        // Generate stars for rating
+        function generateStars(rating) {
+            let stars = '';
+            const fullStars = Math.floor(rating);
+            const hasHalfStar = rating % 1 !== 0;
+            
+            for (let i = 0; i < fullStars; i++) {
+                stars += '<i class="fas fa-star"></i>';
+            }
+            
+            if (hasHalfStar) {
+                stars += '<i class="fas fa-star-half-alt"></i>';
+            }
+            
+            const emptyStars = 5 - Math.ceil(rating);
+            for (let i = 0; i < emptyStars; i++) {
+                stars += '<i class="far fa-star"></i>';
+            }
+            
+            return stars;
+        }
+        
+        // Filter suppliers
+        function filterSuppliers(filter) {
+            currentFilter = filter;
+            
+            // Update filter tabs
+            document.querySelectorAll('.filter-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Filter data
+            if (filter === 'all') {
+                filteredData = [...supplierData];
+            } else if (filter === 'active') {
+                filteredData = supplierData.filter(supplier => supplier.status === 'active');
+            } else if (filter === 'inactive') {
+                filteredData = supplierData.filter(supplier => supplier.status === 'inactive');
+            } else if (filter === 'pending') {
+                filteredData = supplierData.filter(supplier => supplier.status === 'pending');
+            }
+            
+            loadSuppliers();
+        }
+        
+        // Search suppliers
+        function searchSuppliers() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            if (searchTerm) {
+                filteredData = supplierData.filter(supplier => 
+                    supplier.name.toLowerCase().includes(searchTerm) ||
+                    supplier.mobile.includes(searchTerm) ||
+                    supplier.email.toLowerCase().includes(searchTerm) ||
+                    supplier.city.toLowerCase().includes(searchTerm) ||
+                    supplier.contact_person.toLowerCase().includes(searchTerm)
+                );
+            } else {
+                filteredData = [...supplierData];
+            }
+            loadSuppliers();
+        }
+        
+        // View supplier details
+        function viewSupplier(supplierId) {
+            const supplier = supplierData.find(s => s.id === supplierId);
+            if (supplier) {
+                alert(`Supplier Details:\n\nName: ${supplier.name}\nContact Person: ${supplier.contact_person}\nMobile: ${supplier.mobile}\nEmail: ${supplier.email}\nAddress: ${supplier.street}, ${supplier.city}, ${supplier.state} ${supplier.pincode}\nCountry: ${supplier.country}\nGSTIN: ${supplier.gstin}\nContact Type: ${supplier.contact_type}\nTotal Purchases: ₹${supplier.total_purchases}\nTotal Orders: ${supplier.total_orders}\nLast Purchase: ${supplier.last_purchase || 'Never'}\nStatus: ${supplier.status}\nRegistration Date: ${supplier.registration_date}\nPayment Terms: ${supplier.payment_terms}\nCredit Limit: ₹${supplier.credit_limit}\nRating: ${supplier.rating}/5.0\nPending Amount: ₹${supplier.pending_amount}\nPayment Status: ${supplier.payment_status}`);
+            }
+        }
+        
+        // Edit supplier
+        function editSupplier(supplierId) {
+            alert(`Edit supplier ${supplierId} - Open supplier edit form`);
+        }
+        
+        // View orders
+        function viewOrders(supplierId) {
+            alert(`View orders for supplier ${supplierId} - Show supplier order history`);
+        }
+        
+        // View payments
+        function viewPayments(supplierId) {
+            const supplier = supplierData.find(s => s.id === supplierId);
+            if (supplier) {
+                alert(`Payment History for ${supplier.name}:\n\nTotal Purchases: ₹${supplier.total_purchases}\nPending Amount: ₹${supplier.pending_amount}\nPayment Status: ${supplier.payment_status}\nPayment Terms: ${supplier.payment_terms}\nCredit Limit: ₹${supplier.credit_limit}\nAvailable Credit: ₹${(supplier.credit_limit - supplier.pending_amount).toFixed(2)}`);
+            }
+        }
+        
+        // Create purchase order
+        function createPurchaseOrder(supplierId) {
+            const supplier = supplierData.find(s => s.id === supplierId);
+            if (supplier) {
+                alert(`Create purchase order for ${supplier.name} - Redirect to purchase order creation`);
+                // In real implementation, this would redirect to purchase order creation with supplier pre-selected
+            }
+        }
+        
+        // Send message
+        function sendMessage(supplierId) {
+            const supplier = supplierData.find(s => s.id === supplierId);
+            if (supplier) {
+                const message = prompt(`Send message to ${supplier.name} (${supplier.mobile}):`);
+                if (message) {
+                    alert(`Message sent to ${supplier.name}:\n\n"${message}"`);
+                }
+            }
+        }
+        
+        // Add new supplier
+        function addNewSupplier() {
+            alert('Add new supplier functionality - Open supplier registration form');
+        }
+        
+        // Export suppliers
+        function exportSuppliers() {
+            alert('Exporting supplier data...');
+            // In real implementation, this would generate and download an Excel/CSV file
+        }
+    </script>
+</body>
+</html>

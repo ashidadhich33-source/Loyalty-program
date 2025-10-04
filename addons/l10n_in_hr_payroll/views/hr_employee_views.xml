@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- HR Employee Tree View -->
+        <record id="view_hr_employee_tree" model="ocean.ui.view">
+            <field name="name">hr.employee.tree</field>
+            <field name="model">hr.employee</field>
+            <field name="arch" type="xml">
+                <tree string="Employees" create="true" edit="true" delete="true">
+                    <field name="name"/>
+                    <field name="employee_id"/>
+                    <field name="job_id"/>
+                    <field name="department_id"/>
+                    <field name="manager_id"/>
+                    <field name="join_date"/>
+                    <field name="pan"/>
+                    <field name="aadhar"/>
+                    <field name="pf_number"/>
+                    <field name="esi_number"/>
+                    <field name="age_group"/>
+                    <field name="size"/>
+                    <field name="season"/>
+                    <field name="brand"/>
+                    <field name="color"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- HR Employee Form View -->
+        <record id="view_hr_employee_form" model="ocean.ui.view">
+            <field name="name">hr.employee.form</field>
+            <field name="model">hr.employee</field>
+            <field name="arch" type="xml">
+                <form string="Employee" create="true" edit="true" delete="true">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Employee Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="employee_id"/>
+                                <field name="gender"/>
+                                <field name="marital_status"/>
+                                <field name="birth_date"/>
+                                <field name="job_id"/>
+                                <field name="department_id"/>
+                            </group>
+                            <group>
+                                <field name="manager_id"/>
+                                <field name="join_date"/>
+                                <field name="resignation_date"/>
+                                <field name="company_id"/>
+                                <field name="active"/>
+                            </group>
+                        </group>
+                        <group string="Indian Specific Information">
+                            <group>
+                                <field name="pan"/>
+                                <field name="aadhar"/>
+                                <field name="pf_number"/>
+                            </group>
+                            <group>
+                                <field name="esi_number"/>
+                                <field name="uan"/>
+                            </group>
+                        </group>
+                        <group string="Address Information">
+                            <group>
+                                <field name="street"/>
+                                <field name="street2"/>
+                                <field name="city"/>
+                                <field name="state_id"/>
+                            </group>
+                            <group>
+                                <field name="zip"/>
+                                <field name="country_id"/>
+                            </group>
+                        </group>
+                        <group string="Contact Information">
+                            <group>
+                                <field name="phone"/>
+                                <field name="mobile"/>
+                                <field name="email"/>
+                            </group>
+                        </group>
+                        <group string="Kids Clothing Specific">
+                            <group>
+                                <field name="age_group"/>
+                                <field name="size"/>
+                                <field name="season"/>
+                            </group>
+                            <group>
+                                <field name="brand"/>
+                                <field name="color"/>
+                            </group>
+                        </group>
+                        <group string="Notes">
+                            <field name="notes"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- HR Employee Search View -->
+        <record id="view_hr_employee_search" model="ocean.ui.view">
+            <field name="name">hr.employee.search</field>
+            <field name="model">hr.employee</field>
+            <field name="arch" type="xml">
+                <search string="Search Employees">
+                    <field name="name"/>
+                    <field name="employee_id"/>
+                    <field name="job_id"/>
+                    <field name="department_id"/>
+                    <field name="manager_id"/>
+                    <field name="pan"/>
+                    <field name="aadhar"/>
+                    <field name="pf_number"/>
+                    <field name="esi_number"/>
+                    <field name="age_group"/>
+                    <field name="size"/>
+                    <field name="season"/>
+                    <field name="brand"/>
+                    <field name="color"/>
+                    <separator/>
+                    <filter string="Active" name="active" domain="[('active', '=', True)]"/>
+                    <filter string="Inactive" name="inactive" domain="[('active', '=', False)]"/>
+                    <filter string="Male" name="male" domain="[('gender', '=', 'male')]"/>
+                    <filter string="Female" name="female" domain="[('gender', '=', 'female')]"/>
+                    <filter string="Single" name="single" domain="[('marital_status', '=', 'single')]"/>
+                    <filter string="Married" name="married" domain="[('marital_status', '=', 'married')]"/>
+                    <separator/>
+                    <filter string="Baby (0-2)" name="age_0_2" domain="[('age_group', '=', '0-2')]"/>
+                    <filter string="Toddler (2-4)" name="age_2_4" domain="[('age_group', '=', '2-4')]"/>
+                    <filter string="Pre-school (4-6)" name="age_4_6" domain="[('age_group', '=', '4-6')]"/>
+                    <filter string="Summer" name="summer" domain="[('season', '=', 'summer')]"/>
+                    <filter string="Winter" name="winter" domain="[('season', '=', 'winter')]"/>
+                    <filter string="Monsoon" name="monsoon" domain="[('season', '=', 'monsoon')]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Job Position" name="group_job" context="{'group_by': 'job_id'}"/>
+                        <filter string="Department" name="group_department" context="{'group_by': 'department_id'}"/>
+                        <filter string="Manager" name="group_manager" context="{'group_by': 'manager_id'}"/>
+                        <filter string="Gender" name="group_gender" context="{'group_by': 'gender'}"/>
+                        <filter string="Marital Status" name="group_marital_status" context="{'group_by': 'marital_status'}"/>
+                        <filter string="Age Group" name="group_age_group" context="{'group_by': 'age_group'}"/>
+                        <filter string="Size" name="group_size" context="{'group_by': 'size'}"/>
+                        <filter string="Season" name="group_season" context="{'group_by': 'season'}"/>
+                        <filter string="Brand" name="group_brand" context="{'group_by': 'brand'}"/>
+                        <filter string="Color" name="group_color" context="{'group_by': 'color'}"/>
+                        <filter string="Company" name="group_company" context="{'group_by': 'company_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- HR Employee Action -->
+        <record id="action_hr_employee" model="ocean.actions.act_window">
+            <field name="name">Employees</field>
+            <field name="res_model">hr.employee</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_hr_employee_search"/>
+            <field name="context">{'search_default_active': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first employee!
+                </p>
+                <p>
+                    Employees are the people who work for your company.
+                </p>
+            </field>
+        </record>
+        
+        <!-- HR Contract Tree View -->
+        <record id="view_hr_contract_tree" model="ocean.ui.view">
+            <field name="name">hr.contract.tree</field>
+            <field name="model">hr.contract</field>
+            <field name="arch" type="xml">
+                <tree string="Contracts" create="true" edit="true" delete="true">
+                    <field name="name"/>
+                    <field name="employee_id"/>
+                    <field name="contract_type"/>
+                    <field name="job_id"/>
+                    <field name="department_id"/>
+                    <field name="wage"/>
+                    <field name="wage_type"/>
+                    <field name="date_start"/>
+                    <field name="date_end"/>
+                    <field name="state"/>
+                    <field name="pf_applicable"/>
+                    <field name="esi_applicable"/>
+                    <field name="age_group"/>
+                    <field name="size"/>
+                    <field name="season"/>
+                    <field name="brand"/>
+                    <field name="color"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- HR Contract Form View -->
+        <record id="view_hr_contract_form" model="ocean.ui.view">
+            <field name="name">hr.contract.form</field>
+            <field name="model">hr.contract</field>
+            <field name="arch" type="xml">
+                <form string="Contract" create="true" edit="true" delete="true">
+                    <header>
+                        <button name="action_confirm" string="Confirm" type="object" class="btn-primary" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                        <button name="action_close" string="Close" type="object" class="btn-warning" attrs="{'invisible': [('state', '!=', 'open')]}"/>
+                        <button name="action_cancel" string="Cancel" type="object" class="btn-danger" attrs="{'invisible': [('state', 'not in', ['draft', 'open'])]}"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,open,close,cancel"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Contract Reference"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="employee_id"/>
+                                <field name="contract_type"/>
+                                <field name="job_id"/>
+                                <field name="department_id"/>
+                            </group>
+                            <group>
+                                <field name="wage"/>
+                                <field name="wage_type"/>
+                                <field name="date_start"/>
+                                <field name="date_end"/>
+                                <field name="company_id"/>
+                            </group>
+                        </group>
+                        <group string="Indian Payroll Applicability">
+                            <group>
+                                <field name="pf_applicable"/>
+                                <field name="esi_applicable"/>
+                            </group>
+                            <group>
+                                <field name="professional_tax_applicable"/>
+                                <field name="income_tax_applicable"/>
+                            </group>
+                        </group>
+                        <group string="Kids Clothing Specific">
+                            <group>
+                                <field name="age_group"/>
+                                <field name="size"/>
+                                <field name="season"/>
+                            </group>
+                            <group>
+                                <field name="brand"/>
+                                <field name="color"/>
+                            </group>
+                        </group>
+                        <group string="Salary Structure">
+                            <field name="struct_id"/>
+                        </group>
+                        <group string="Notes">
+                            <field name="notes"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- HR Contract Action -->
+        <record id="action_hr_contract" model="ocean.actions.act_window">
+            <field name="name">Contracts</field>
+            <field name="res_model">hr.contract</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first contract!
+                </p>
+                <p>
+                    Contracts define the employment terms and salary structure.
+                </p>
+            </field>
+        </record>
+        
+    </data>
+</ocean>

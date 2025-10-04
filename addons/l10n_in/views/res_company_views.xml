@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Res Company Tree View -->
+        <record id="view_res_company_tree" model="ocean.ui.view">
+            <field name="name">res.company.tree</field>
+            <field name="model">res.company</field>
+            <field name="arch" type="xml">
+                <tree string="Companies" create="true" edit="true" delete="true">
+                    <field name="name"/>
+                    <field name="company_type"/>
+                    <field name="cin"/>
+                    <field name="pan"/>
+                    <field name="gstin"/>
+                    <field name="city"/>
+                    <field name="state_id"/>
+                    <field name="phone"/>
+                    <field name="email"/>
+                    <field name="age_group"/>
+                    <field name="size"/>
+                    <field name="season"/>
+                    <field name="brand"/>
+                    <field name="color"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Res Company Form View -->
+        <record id="view_res_company_form" model="ocean.ui.view">
+            <field name="name">res.company.form</field>
+            <field name="model">res.company</field>
+            <field name="arch" type="xml">
+                <form string="Company" create="true" edit="true" delete="true">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Company Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="company_type"/>
+                                <field name="cin"/>
+                                <field name="pan"/>
+                                <field name="tan"/>
+                                <field name="gstin"/>
+                                <field name="iec"/>
+                            </group>
+                            <group>
+                                <field name="business_nature"/>
+                                <field name="industry_type"/>
+                                <field name="registration_date"/>
+                                <field name="incorporation_date"/>
+                                <field name="currency_id"/>
+                            </group>
+                        </group>
+                        <group string="Address Information">
+                            <group>
+                                <field name="street"/>
+                                <field name="street2"/>
+                                <field name="city"/>
+                                <field name="state_id"/>
+                            </group>
+                            <group>
+                                <field name="district_id"/>
+                                <field name="taluka_id"/>
+                                <field name="village_id"/>
+                                <field name="zip"/>
+                                <field name="country_id"/>
+                            </group>
+                        </group>
+                        <group string="Contact Information">
+                            <group>
+                                <field name="phone"/>
+                                <field name="mobile"/>
+                                <field name="email"/>
+                                <field name="website"/>
+                            </group>
+                        </group>
+                        <group string="Kids Clothing Specific">
+                            <group>
+                                <field name="age_group"/>
+                                <field name="size"/>
+                                <field name="season"/>
+                            </group>
+                            <group>
+                                <field name="brand"/>
+                                <field name="color"/>
+                            </group>
+                        </group>
+                        <group string="Fiscal Year">
+                            <group>
+                                <field name="fiscalyear_last_day"/>
+                                <field name="fiscalyear_last_month"/>
+                            </group>
+                        </group>
+                        <group string="Description">
+                            <field name="description"/>
+                            <field name="note"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Res Company Search View -->
+        <record id="view_res_company_search" model="ocean.ui.view">
+            <field name="name">res.company.search</field>
+            <field name="model">res.company</field>
+            <field name="arch" type="xml">
+                <search string="Search Companies">
+                    <field name="name"/>
+                    <field name="company_type"/>
+                    <field name="cin"/>
+                    <field name="pan"/>
+                    <field name="gstin"/>
+                    <field name="city"/>
+                    <field name="state_id"/>
+                    <field name="age_group"/>
+                    <field name="size"/>
+                    <field name="season"/>
+                    <field name="brand"/>
+                    <field name="color"/>
+                    <separator/>
+                    <filter string="Active" name="active" domain="[('active', '=', True)]"/>
+                    <filter string="Inactive" name="inactive" domain="[('active', '=', False)]"/>
+                    <filter string="Private Limited" name="private_limited" domain="[('company_type', '=', 'private_limited')]"/>
+                    <filter string="Public Limited" name="public_limited" domain="[('company_type', '=', 'public_limited')]"/>
+                    <filter string="Partnership" name="partnership" domain="[('company_type', '=', 'partnership')]"/>
+                    <filter string="Sole Proprietorship" name="sole_proprietorship" domain="[('company_type', '=', 'sole_proprietorship')]"/>
+                    <filter string="LLP" name="llp" domain="[('company_type', '=', 'llp')]"/>
+                    <separator/>
+                    <filter string="Baby (0-2)" name="age_0_2" domain="[('age_group', '=', '0-2')]"/>
+                    <filter string="Toddler (2-4)" name="age_2_4" domain="[('age_group', '=', '2-4')]"/>
+                    <filter string="Pre-school (4-6)" name="age_4_6" domain="[('age_group', '=', '4-6')]"/>
+                    <filter string="Summer" name="summer" domain="[('season', '=', 'summer')]"/>
+                    <filter string="Winter" name="winter" domain="[('season', '=', 'winter')]"/>
+                    <filter string="Monsoon" name="monsoon" domain="[('season', '=', 'monsoon')]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Company Type" name="group_company_type" context="{'group_by': 'company_type'}"/>
+                        <filter string="State" name="group_state" context="{'group_by': 'state_id'}"/>
+                        <filter string="Age Group" name="group_age_group" context="{'group_by': 'age_group'}"/>
+                        <filter string="Size" name="group_size" context="{'group_by': 'size'}"/>
+                        <filter string="Season" name="group_season" context="{'group_by': 'season'}"/>
+                        <filter string="Brand" name="group_brand" context="{'group_by': 'brand'}"/>
+                        <filter string="Color" name="group_color" context="{'group_by': 'color'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- Res Company Action -->
+        <record id="action_res_company" model="ocean.actions.act_window">
+            <field name="name">Companies</field>
+            <field name="res_model">res.company</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_res_company_search"/>
+            <field name="context">{'search_default_active': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first company!
+                </p>
+                <p>
+                    Companies are the main entities in your business.
+                </p>
+            </field>
+        </record>
+        
+    </data>
+</ocean>

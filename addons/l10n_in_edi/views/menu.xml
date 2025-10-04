@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Indian EDI Menu -->
+        <menuitem id="menu_l10n_in_edi_root"
+                  name="Indian EDI"
+                  parent="menu_l10n_in_root"
+                  sequence="20"
+                  web_icon="l10n_in_edi,static/description/icon.png"/>
+        
+        <!-- EDI Documents -->
+        <menuitem id="menu_l10n_in_edi_documents"
+                  name="EDI Documents"
+                  parent="menu_l10n_in_edi_root"
+                  sequence="10"/>
+        
+        <menuitem id="menu_edi_document"
+                  name="EDI Documents"
+                  parent="menu_l10n_in_edi_documents"
+                  action="action_edi_document"
+                  sequence="10"/>
+        
+        <menuitem id="menu_edi_transaction"
+                  name="EDI Transactions"
+                  parent="menu_l10n_in_edi_documents"
+                  action="action_edi_transaction"
+                  sequence="20"/>
+        
+        <!-- EDI Messages -->
+        <menuitem id="menu_l10n_in_edi_messages"
+                  name="EDI Messages"
+                  parent="menu_l10n_in_edi_root"
+                  sequence="20"/>
+        
+        <menuitem id="menu_edi_message"
+                  name="EDI Messages"
+                  parent="menu_l10n_in_edi_messages"
+                  action="action_edi_message"
+                  sequence="10"/>
+        
+        <menuitem id="menu_edi_envelope"
+                  name="EDI Envelopes"
+                  parent="menu_l10n_in_edi_messages"
+                  action="action_edi_envelope"
+                  sequence="20"/>
+        
+        <!-- EDI Transmission -->
+        <menuitem id="menu_l10n_in_edi_transmission"
+                  name="EDI Transmission"
+                  parent="menu_l10n_in_edi_root"
+                  sequence="30"/>
+        
+        <menuitem id="menu_edi_transmission"
+                  name="EDI Transmissions"
+                  parent="menu_l10n_in_edi_transmission"
+                  action="action_edi_transmission"
+                  sequence="10"/>
+        
+        <menuitem id="menu_edi_acknowledgment"
+                  name="EDI Acknowledgments"
+                  parent="menu_l10n_in_edi_transmission"
+                  action="action_edi_acknowledgment"
+                  sequence="20"/>
+        
+    </data>
+</ocean>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Indian GST Menu -->
+        <menuitem id="menu_l10n_in_gst_root"
+                  name="Indian GST"
+                  parent="menu_l10n_in_root"
+                  sequence="10"
+                  web_icon="l10n_in_gst,static/description/icon.png"/>
+        
+        <!-- Tax Management -->
+        <menuitem id="menu_l10n_in_gst_taxes"
+                  name="Tax Management"
+                  parent="menu_l10n_in_gst_root"
+                  sequence="10"/>
+        
+        <menuitem id="menu_account_tax"
+                  name="GST Taxes"
+                  parent="menu_l10n_in_gst_taxes"
+                  action="action_account_tax"
+                  sequence="10"/>
+        
+        <menuitem id="menu_account_tax_group"
+                  name="GST Tax Groups"
+                  parent="menu_l10n_in_gst_taxes"
+                  action="action_account_tax_group"
+                  sequence="20"/>
+        
+        <!-- GST Returns -->
+        <menuitem id="menu_l10n_in_gst_returns"
+                  name="GST Returns"
+                  parent="menu_l10n_in_gst_root"
+                  sequence="20"/>
+        
+        <menuitem id="menu_gst_return"
+                  name="GST Returns"
+                  parent="menu_l10n_in_gst_returns"
+                  action="action_gst_return"
+                  sequence="10"/>
+        
+        <!-- GST Reports -->
+        <menuitem id="menu_l10n_in_gst_reports"
+                  name="GST Reports"
+                  parent="menu_l10n_in_gst_root"
+                  sequence="30"/>
+        
+        <menuitem id="menu_gst_report"
+                  name="GST Reports"
+                  parent="menu_l10n_in_gst_reports"
+                  action="action_gst_report"
+                  sequence="10"/>
+        
+    </data>
+</ocean>

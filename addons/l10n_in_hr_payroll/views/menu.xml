@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Indian HR Payroll Menu -->
+        <menuitem id="menu_l10n_in_hr_payroll_root"
+                  name="Indian HR Payroll"
+                  parent="menu_l10n_in_root"
+                  sequence="30"
+                  web_icon="l10n_in_hr_payroll,static/description/icon.png"/>
+        
+        <!-- Employee Management -->
+        <menuitem id="menu_l10n_in_hr_payroll_employees"
+                  name="Employee Management"
+                  parent="menu_l10n_in_hr_payroll_root"
+                  sequence="10"/>
+        
+        <menuitem id="menu_hr_employee"
+                  name="Employees"
+                  parent="menu_l10n_in_hr_payroll_employees"
+                  action="action_hr_employee"
+                  sequence="10"/>
+        
+        <menuitem id="menu_hr_contract"
+                  name="Contracts"
+                  parent="menu_l10n_in_hr_payroll_employees"
+                  action="action_hr_contract"
+                  sequence="20"/>
+        
+        <!-- Payroll Management -->
+        <menuitem id="menu_l10n_in_hr_payroll_payroll"
+                  name="Payroll Management"
+                  parent="menu_l10n_in_hr_payroll_root"
+                  sequence="20"/>
+        
+        <menuitem id="menu_hr_payslip"
+                  name="Payslips"
+                  parent="menu_l10n_in_hr_payroll_payroll"
+                  action="action_hr_payslip"
+                  sequence="10"/>
+        
+        <menuitem id="menu_hr_payslip_line"
+                  name="Payslip Lines"
+                  parent="menu_l10n_in_hr_payroll_payroll"
+                  action="action_hr_payslip_line"
+                  sequence="20"/>
+        
+    </data>
+</ocean>

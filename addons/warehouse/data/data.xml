@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data noupdate="1">
+        
+        <!-- Warehouses -->
+        <record id="warehouse_main" model="warehouse">
+            <field name="name">Main Warehouse</field>
+            <field name="code">MAIN_WH</field>
+            <field name="description">Main warehouse for kids clothing</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="warehouse_type">main</field>
+            <field name="is_active">True</field>
+            <field name="is_default">True</field>
+            <field name="location_id" ref="stock_location_warehouse"/>
+            <field name="street">123 Kids Street</field>
+            <field name="city">Mumbai</field>
+            <field name="zip">400001</field>
+            <field name="phone">+91-22-12345678</field>
+            <field name="email">warehouse@kidsclothing.com</field>
+            <field name="total_area">10000.0</field>
+            <field name="storage_area">8000.0</field>
+            <field name="office_area">2000.0</field>
+            <field name="max_capacity">50000.0</field>
+            <field name="current_capacity">25000.0</field>
+            <field name="temperature_controlled">True</field>
+            <field name="min_temperature">18.0</field>
+            <field name="max_temperature">25.0</field>
+            <field name="humidity_controlled">True</field>
+            <field name="min_humidity">40.0</field>
+            <field name="max_humidity">60.0</field>
+            <field name="security_level">high</field>
+            <field name="requires_access_control">True</field>
+            <field name="age_group_specialization">mixed</field>
+            <field name="seasonal_storage">True</field>
+            <field name="operation_hours">24/7</field>
+            <field name="timezone">Asia/Kolkata</field>
+            <field name="total_products">150</field>
+            <field name="total_quantity">5000.0</field>
+            <field name="total_value">2500000.0</field>
+            <field name="turnover_rate">12.0</field>
+            <field name="accuracy_rate">98.5</field>
+        </record>
+        
+        <record id="warehouse_branch" model="warehouse">
+            <field name="name">Branch Warehouse</field>
+            <field name="code">BRANCH_WH</field>
+            <field name="description">Branch warehouse for regional distribution</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="warehouse_type">branch</field>
+            <field name="is_active">True</field>
+            <field name="is_default">False</field>
+            <field name="location_id" ref="stock_location_warehouse"/>
+            <field name="street">456 Branch Avenue</field>
+            <field name="city">Delhi</field>
+            <field name="zip">110001</field>
+            <field name="phone">+91-11-87654321</field>
+            <field name="email">branch@kidsclothing.com</field>
+            <field name="total_area">5000.0</field>
+            <field name="storage_area">4000.0</field>
+            <field name="office_area">1000.0</field>
+            <field name="max_capacity">25000.0</field>
+            <field name="current_capacity">12000.0</field>
+            <field name="temperature_controlled">True</field>
+            <field name="min_temperature">20.0</field>
+            <field name="max_temperature">24.0</field>
+            <field name="humidity_controlled">True</field>
+            <field name="min_humidity">45.0</field>
+            <field name="max_humidity">55.0</field>
+            <field name="security_level">standard</field>
+            <field name="requires_access_control">True</field>
+            <field name="age_group_specialization">child</field>
+            <field name="seasonal_storage">False</field>
+            <field name="operation_hours">8:00-20:00</field>
+            <field name="timezone">Asia/Kolkata</field>
+            <field name="total_products">75</field>
+            <field name="total_quantity">2500.0</field>
+            <field name="total_value">1250000.0</field>
+            <field name="turnover_rate">10.0</field>
+            <field name="accuracy_rate">97.0</field>
+        </record>
+        
+        <record id="warehouse_online" model="warehouse">
+            <field name="name">Online Fulfillment Center</field>
+            <field name="code">ONLINE_FC</field>
+            <field name="description">Online fulfillment center for e-commerce</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="warehouse_type">online</field>
+            <field name="is_active">True</field>
+            <field name="is_default">False</field>
+            <field name="location_id" ref="stock_location_warehouse"/>
+            <field name="street">789 E-commerce Road</field>
+            <field name="city">Bangalore</field>
+            <field name="zip">560001</field>
+            <field name="phone">+91-80-11223344</field>
+            <field name="email">online@kidsclothing.com</field>
+            <field name="total_area">8000.0</field>
+            <field name="storage_area">6000.0</field>
+            <field name="office_area">2000.0</field>
+            <field name="max_capacity">30000.0</field>
+            <field name="current_capacity">18000.0</field>
+            <field name="temperature_controlled">True</field>
+            <field name="min_temperature">22.0</field>
+            <field name="max_temperature">24.0</field>
+            <field name="humidity_controlled">True</field>
+            <field name="min_humidity">50.0</field>
+            <field name="max_humidity">60.0</field>
+            <field name="security_level">maximum</field>
+            <field name="requires_access_control">True</field>
+            <field name="age_group_specialization">mixed</field>
+            <field name="seasonal_storage">True</field>
+            <field name="operation_hours">24/7</field>
+            <field name="timezone">Asia/Kolkata</field>
+            <field name="total_products">200</field>
+            <field name="total_quantity">8000.0</field>
+            <field name="total_value">4000000.0</field>
+            <field name="turnover_rate">15.0</field>
+            <field name="accuracy_rate">99.0</field>
+        </record>
+        
+        <record id="warehouse_return" model="warehouse">
+            <field name="name">Return Center</field>
+            <field name="code">RETURN_CENTER</field>
+            <field name="description">Return center for processing returns</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="warehouse_type">return</field>
+            <field name="is_active">True</field>
+            <field name="is_default">False</field>
+            <field name="location_id" ref="stock_location_return"/>
+            <field name="street">321 Return Lane</field>
+            <field name="city">Chennai</field>
+            <field name="zip">600001</field>
+            <field name="phone">+91-44-55667788</field>
+            <field name="email">returns@kidsclothing.com</field>
+            <field name="total_area">2000.0</field>
+            <field name="storage_area">1500.0</field>
+            <field name="office_area">500.0</field>
+            <field name="max_capacity">5000.0</field>
+            <field name="current_capacity">1000.0</field>
+            <field name="temperature_controlled">False</field>
+            <field name="security_level">standard</field>
+            <field name="requires_access_control">True</field>
+            <field name="age_group_specialization">mixed</field>
+            <field name="seasonal_storage">False</field>
+            <field name="operation_hours">9:00-18:00</field>
+            <field name="timezone">Asia/Kolkata</field>
+            <field name="total_products">50</field>
+            <field name="total_quantity">500.0</field>
+            <field name="total_value">250000.0</field>
+            <field name="turnover_rate">8.0</field>
+            <field name="accuracy_rate">95.0</field>
+        </record>
+        
+    </data>
+</ocean>

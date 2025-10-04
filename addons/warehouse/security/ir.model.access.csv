@@ -1,0 +1,12 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_warehouse_manager,warehouse.manager,model_warehouse,base.group_system,1,1,1,1
+access_warehouse_user,warehouse.user,model_warehouse,base.group_user,1,0,0,0
+access_warehouse_location_manager,warehouse.location.manager,model_warehouse_location,base.group_system,1,1,1,1
+access_warehouse_location_user,warehouse.location.user,model_warehouse_location,base.group_user,1,0,0,0
+access_stock_aging_manager,stock.aging.manager,model_stock_aging,base.group_system,1,1,1,1
+access_stock_aging_user,stock.aging.user,model_stock_aging,base.group_user,1,0,0,0
+access_stock_expiry_manager,stock.expiry.manager,model_stock_expiry,base.group_system,1,1,1,1
+access_stock_expiry_user,stock.expiry.user,model_stock_expiry,base.group_user,1,0,0,0
+access_warehouse_operation_manager,warehouse.operation.manager,model_warehouse_operation,base.group_system,1,1,1,1
+access_warehouse_operation_user,warehouse.operation.user,model_warehouse_operation,base.group_user,1,1,1,0
+access_warehouse_operation_operator,warehouse.operation.operator,model_warehouse_operation,group_warehouse_operator,1,1,1,0

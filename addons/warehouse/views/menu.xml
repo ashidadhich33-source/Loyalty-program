@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Warehouse Menu -->
+        <menuitem id="menu_warehouse_root" 
+                  name="Warehouse" 
+                  parent="menu_inventory_root" 
+                  sequence="10"/>
+        
+        <!-- Warehouse Operations Menu -->
+        <menuitem id="menu_warehouse_operations" 
+                  name="Operations" 
+                  parent="menu_warehouse_root" 
+                  sequence="10"/>
+        
+        <menuitem id="menu_warehouse_operation" 
+                  name="Warehouse Operations" 
+                  parent="menu_warehouse_operations" 
+                  sequence="10"/>
+        
+        <menuitem id="menu_warehouse_locations" 
+                  name="Warehouse Locations" 
+                  parent="menu_warehouse_operations" 
+                  sequence="20"/>
+        
+        <!-- Warehouse Reports Menu -->
+        <menuitem id="menu_warehouse_reports" 
+                  name="Reports" 
+                  parent="menu_warehouse_root" 
+                  sequence="20"/>
+        
+        <menuitem id="menu_stock_aging" 
+                  name="Stock Aging" 
+                  parent="menu_warehouse_reports" 
+                  sequence="10"/>
+        
+        <menuitem id="menu_stock_expiry" 
+                  name="Stock Expiry" 
+                  parent="menu_warehouse_reports" 
+                  sequence="20"/>
+        
+        <!-- Warehouse Configuration Menu -->
+        <menuitem id="menu_warehouse_config" 
+                  name="Configuration" 
+                  parent="menu_warehouse_root" 
+                  sequence="30"/>
+        
+        <menuitem id="menu_warehouse_management" 
+                  name="Warehouses" 
+                  parent="menu_warehouse_config" 
+                  sequence="10"/>
+        
+    </data>
+</ocean>

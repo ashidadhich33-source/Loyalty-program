@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Warehouse Manager Group -->
+        <record id="group_warehouse_manager" model="ocean.groups">
+            <field name="name">Warehouse Manager</field>
+            <field name="category_id" ref="base.module_category_inventory"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        
+        <!-- Warehouse User Group -->
+        <record id="group_warehouse_user" model="ocean.groups">
+            <field name="name">Warehouse User</field>
+            <field name="category_id" ref="base.module_category_inventory"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        
+        <!-- Warehouse Operator Group -->
+        <record id="group_warehouse_operator" model="ocean.groups">
+            <field name="name">Warehouse Operator</field>
+            <field name="category_id" ref="base.module_category_inventory"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        
+    </data>
+</ocean>

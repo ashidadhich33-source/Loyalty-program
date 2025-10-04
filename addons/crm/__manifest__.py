@@ -33,12 +33,12 @@ Customer relationship management for kids clothing retail including leads, oppor
     'website': 'https://www.kidsclothingerp.com',
     'license': 'LGPL-3',
     'depends': [
-        'ocean_base',
-        'ocean_web',
-        'ocean_users',
-        'ocean_company',
-        'ocean_contacts',
-        'ocean_sales',
+        'core_base',
+        'core_web',
+        'users',
+        'company',
+        'contacts',
+        'sales',
     ],
     'data': [
         'security/ocean.model.access.csv',

@@ -1,0 +1,607 @@
+/* Frontend CSS for Kids Clothing Website */
+
+/* Global Styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Header Styles */
+.header {
+    background-color: #fff;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 20px;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #FF6B6B;
+    text-decoration: none;
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-menu li {
+    margin: 0 1rem;
+}
+
+.nav-menu a {
+    color: #333;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-menu a:hover {
+    color: #FF6B6B;
+}
+
+/* Hero Section */
+.hero-section {
+    background: linear-gradient(135deg, #FF6B6B 0%, #4ECDC4 100%);
+    color: white;
+    padding: 4rem 0;
+    text-align: center;
+}
+
+.hero-section h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.hero-section p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+}
+
+.btn {
+    display: inline-block;
+    padding: 12px 30px;
+    background-color: #FF6B6B;
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #e55a5a;
+    transform: translateY(-2px);
+}
+
+.btn-primary {
+    background-color: #FF6B6B;
+}
+
+.btn-secondary {
+    background-color: #4ECDC4;
+}
+
+.btn-secondary:hover {
+    background-color: #3bb5ab;
+}
+
+/* Featured Products */
+.featured-products {
+    padding: 4rem 0;
+    background-color: #f8f9fa;
+}
+
+.featured-products h2 {
+    text-align: center;
+    margin-bottom: 3rem;
+    color: #333;
+    font-size: 2.5rem;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.product-item {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.product-item:hover {
+    transform: translateY(-5px);
+}
+
+.product-item img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+}
+
+.product-item h3 {
+    padding: 1rem;
+    margin: 0;
+    color: #333;
+}
+
+.product-item p {
+    padding: 0 1rem;
+    color: #666;
+    margin: 0;
+}
+
+.product-item .price {
+    display: block;
+    padding: 1rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #FF6B6B;
+}
+
+/* Testimonials */
+.testimonials {
+    padding: 4rem 0;
+    background-color: white;
+}
+
+.testimonials h2 {
+    text-align: center;
+    margin-bottom: 3rem;
+    color: #333;
+    font-size: 2.5rem;
+}
+
+.testimonial-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.testimonial-item {
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.testimonial-item p {
+    font-style: italic;
+    margin-bottom: 1rem;
+    color: #666;
+}
+
+.testimonial-item cite {
+    color: #FF6B6B;
+    font-weight: 600;
+}
+
+/* Newsletter Signup */
+.newsletter-signup {
+    background: linear-gradient(135deg, #4ECDC4 0%, #44A08D 100%);
+    color: white;
+    padding: 3rem 0;
+    text-align: center;
+}
+
+.newsletter-signup h3 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.newsletter-signup p {
+    margin-bottom: 2rem;
+    opacity: 0.9;
+}
+
+.newsletter-signup form {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.newsletter-signup input {
+    flex: 1;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 25px;
+    font-size: 1rem;
+}
+
+.newsletter-signup button {
+    padding: 12px 30px;
+    background-color: #FF6B6B;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.newsletter-signup button:hover {
+    background-color: #e55a5a;
+}
+
+/* Footer */
+.footer {
+    background-color: #333;
+    color: white;
+    padding: 3rem 0 1rem;
+}
+
+.footer .container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.footer h3 {
+    color: #FF6B6B;
+    margin-bottom: 1rem;
+}
+
+.footer p, .footer a {
+    color: #ccc;
+    text-decoration: none;
+    line-height: 1.8;
+}
+
+.footer a:hover {
+    color: #FF6B6B;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 2rem;
+    margin-top: 2rem;
+    border-top: 1px solid #555;
+    color: #999;
+}
+
+/* About Page */
+.about-section {
+    padding: 4rem 0;
+}
+
+.about-section h1 {
+    text-align: center;
+    margin-bottom: 3rem;
+    color: #333;
+    font-size: 2.5rem;
+}
+
+.about-section h2 {
+    color: #FF6B6B;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+.about-section p {
+    color: #666;
+    line-height: 1.8;
+    margin-bottom: 1rem;
+}
+
+/* Contact Page */
+.contact-section {
+    padding: 4rem 0;
+}
+
+.contact-section h1 {
+    text-align: center;
+    margin-bottom: 3rem;
+    color: #333;
+    font-size: 2.5rem;
+}
+
+.contact-info {
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+}
+
+.contact-info h2 {
+    color: #FF6B6B;
+    margin-bottom: 1rem;
+}
+
+.contact-info p {
+    color: #666;
+    margin-bottom: 0.5rem;
+}
+
+.contact-form {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.contact-form h2 {
+    color: #FF6B6B;
+    margin-bottom: 1rem;
+}
+
+.contact-form form {
+    display: grid;
+    gap: 1rem;
+}
+
+.contact-form input,
+.contact-form textarea {
+    padding: 12px 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-family: inherit;
+}
+
+.contact-form textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.contact-form button {
+    padding: 12px 30px;
+    background-color: #FF6B6B;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.contact-form button:hover {
+    background-color: #e55a5a;
+}
+
+/* Products Page */
+.products-section {
+    padding: 4rem 0;
+}
+
+.products-section h1 {
+    text-align: center;
+    margin-bottom: 3rem;
+    color: #333;
+    font-size: 2.5rem;
+}
+
+.product-categories {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.category {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.category:hover {
+    transform: translateY(-5px);
+}
+
+.category h3 {
+    color: #FF6B6B;
+    margin-bottom: 1rem;
+}
+
+.category p {
+    color: #666;
+}
+
+/* Blog Page */
+.blog-section {
+    padding: 4rem 0;
+}
+
+.blog-section h1 {
+    text-align: center;
+    margin-bottom: 3rem;
+    color: #333;
+    font-size: 2.5rem;
+}
+
+.blog-posts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.blog-post {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.blog-post:hover {
+    transform: translateY(-5px);
+}
+
+.blog-post img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.blog-post-content {
+    padding: 1.5rem;
+}
+
+.blog-post h3 {
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+.blog-post p {
+    color: #666;
+    margin-bottom: 1rem;
+}
+
+.blog-post .read-more {
+    color: #FF6B6B;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.blog-post .read-more:hover {
+    text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .header .container {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .nav-menu {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .nav-menu li {
+        margin: 0.5rem 0;
+    }
+    
+    .hero-section h1 {
+        font-size: 2rem;
+    }
+    
+    .hero-section p {
+        font-size: 1rem;
+    }
+    
+    .featured-products h2,
+    .testimonials h2,
+    .about-section h1,
+    .contact-section h1,
+    .products-section h1,
+    .blog-section h1 {
+        font-size: 2rem;
+    }
+    
+    .newsletter-signup form {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .newsletter-signup input {
+        width: 100%;
+        max-width: 300px;
+    }
+    
+    .footer .container {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    
+    .product-grid,
+    .testimonial-grid,
+    .product-categories,
+    .blog-posts {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0 15px;
+    }
+    
+    .hero-section {
+        padding: 2rem 0;
+    }
+    
+    .featured-products,
+    .testimonials,
+    .about-section,
+    .contact-section,
+    .products-section,
+    .blog-section {
+        padding: 2rem 0;
+    }
+    
+    .hero-section h1 {
+        font-size: 1.5rem;
+    }
+    
+    .featured-products h2,
+    .testimonials h2,
+    .about-section h1,
+    .contact-section h1,
+    .products-section h1,
+    .blog-section h1 {
+        font-size: 1.5rem;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .header,
+    .footer,
+    .newsletter-signup {
+        display: none;
+    }
+    
+    .hero-section {
+        background: none;
+        color: #000;
+    }
+    
+    .btn {
+        background: none;
+        color: #000;
+        border: 1px solid #000;
+    }
+    
+    .product-item,
+    .testimonial-item,
+    .category,
+    .blog-post {
+        box-shadow: none;
+        border: 1px solid #ddd;
+    }
+}

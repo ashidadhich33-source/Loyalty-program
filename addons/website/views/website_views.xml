@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Website Tree View -->
+        <record id="view_website_tree" model="ir.ui.view">
+            <field name="name">website.tree</field>
+            <field name="model">website</field>
+            <field name="arch" type="xml">
+                <tree string="Websites" decoration-muted="not is_active">
+                    <field name="name"/>
+                    <field name="domain"/>
+                    <field name="url"/>
+                    <field name="is_active"/>
+                    <field name="is_default"/>
+                    <field name="sequence"/>
+                    <field name="age_group_focus"/>
+                    <field name="season_specialization"/>
+                    <field name="product_category"/>
+                    <field name="total_pages"/>
+                    <field name="total_visitors"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Website Form View -->
+        <record id="view_website_form" model="ir.ui.view">
+            <field name="name">website.form</field>
+            <field name="model">website</field>
+            <field name="arch" type="xml">
+                <form string="Website">
+                    <header>
+                        <button name="action_view_pages" string="View Pages" type="object" class="btn-primary"/>
+                        <button name="action_create_page" string="Create Page" type="object" class="btn-success"/>
+                        <button name="action_view_analytics" string="View Analytics" type="object" class="btn-info"/>
+                        <field name="is_active" widget="statusbar" statusbar_visible="is_active"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Website Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="domain"/>
+                                <field name="url"/>
+                                <field name="company_id"/>
+                                <field name="is_active"/>
+                                <field name="is_default"/>
+                                <field name="sequence"/>
+                            </group>
+                            <group>
+                                <field name="theme_id"/>
+                                <field name="color_scheme"/>
+                                <field name="primary_color"/>
+                                <field name="secondary_color"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <h3>Kids Clothing Specific</h3>
+                                <field name="age_group_focus"/>
+                                <field name="season_specialization"/>
+                                <field name="brand_focus"/>
+                                <field name="product_category"/>
+                            </group>
+                            <group>
+                                <h3>SEO Settings</h3>
+                                <field name="meta_title"/>
+                                <field name="meta_description"/>
+                                <field name="meta_keywords"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <h3>Analytics Settings</h3>
+                                <field name="google_analytics_id"/>
+                                <field name="google_tag_manager_id"/>
+                                <field name="facebook_pixel_id"/>
+                            </group>
+                            <group>
+                                <h3>Social Media</h3>
+                                <field name="facebook_url"/>
+                                <field name="instagram_url"/>
+                                <field name="twitter_url"/>
+                                <field name="youtube_url"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <h3>Contact Information</h3>
+                                <field name="contact_email"/>
+                                <field name="contact_phone"/>
+                                <field name="contact_address"/>
+                            </group>
+                            <group>
+                                <h3>Indian Compliance</h3>
+                                <field name="gst_number"/>
+                                <field name="pan_number"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <h3>Analytics</h3>
+                                <field name="total_pages"/>
+                                <field name="total_visitors"/>
+                                <field name="total_page_views"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="notes"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Website Search View -->
+        <record id="view_website_search" model="ir.ui.view">
+            <field name="name">website.search</field>
+            <field name="model">website</field>
+            <field name="arch" type="xml">
+                <search string="Search Websites">
+                    <field name="name"/>
+                    <field name="domain"/>
+                    <field name="company_id"/>
+                    <field name="age_group_focus"/>
+                    <field name="season_specialization"/>
+                    <field name="product_category"/>
+                    <field name="brand_focus"/>
+                    <filter string="Active" name="active" domain="[('is_active', '=', True)]"/>
+                    <filter string="Default" name="default" domain="[('is_default', '=', True)]"/>
+                    <separator/>
+                    <filter string="Kids Clothing" name="kids_clothing" domain="[('product_category', '=', 'clothing')]"/>
+                    <filter string="Accessories" name="accessories" domain="[('product_category', '=', 'accessories')]"/>
+                    <filter string="Shoes" name="shoes" domain="[('product_category', '=', 'shoes')]"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter string="Company" name="group_company" context="{'group_by': 'company_id'}"/>
+                        <filter string="Age Group" name="group_age_group" context="{'group_by': 'age_group_focus'}"/>
+                        <filter string="Season" name="group_season" context="{'group_by': 'season_specialization'}"/>
+                        <filter string="Product Category" name="group_product_category" context="{'group_by': 'product_category'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- Website Action -->
+        <record id="action_website" model="ir.actions.act_window">
+            <field name="name">Websites</field>
+            <field name="res_model">website</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_website_search"/>
+            <field name="context">{}</field>
+        </record>
+        
+    </data>
+</ocean>

@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Demo Website Forms for Kids Clothing Business -->
+        
+        <record id="demo_form_contact" model="website.form">
+            <field name="name">Contact Form</field>
+            <field name="title">Contact Us</field>
+            <field name="description">Send us a message and we'll get back to you soon.</field>
+            <field name="form_type">contact</field>
+            <field name="website_id" ref="website_kids_clothing"/>
+            <field name="page_id" ref="demo_page_contact"/>
+            <field name="is_active">True</field>
+            <field name="is_published">True</field>
+            <field name="sequence">10</field>
+            <field name="action_type">email</field>
+            <field name="email_to">info@kidsclothing.com</field>
+            <field name="email_subject">New Contact Form Submission</field>
+            <field name="success_message">Thank you for your message! We'll get back to you soon.</field>
+            <field name="age_group_focus">all</field>
+            <field name="season_specialization">all_seasons</field>
+            <field name="product_category">general</field>
+        </record>
+        
+        <record id="demo_form_field_name" model="website.form.field">
+            <field name="name">name</field>
+            <field name="label">Full Name</field>
+            <field name="form_id" ref="demo_form_contact"/>
+            <field name="field_type">text</field>
+            <field name="is_required">True</field>
+            <field name="placeholder">Enter your full name</field>
+            <field name="sequence">10</field>
+            <field name="age_group_focus">all</field>
+            <field name="season_specialization">all_seasons</field>
+            <field name="product_category">general</field>
+        </record>
+        
+        <record id="demo_form_field_email" model="website.form.field">
+            <field name="name">email</field>
+            <field name="label">Email Address</field>
+            <field name="form_id" ref="demo_form_contact"/>
+            <field name="field_type">email</field>
+            <field name="is_required">True</field>
+            <field name="placeholder">Enter your email address</field>
+            <field name="sequence">20</field>
+            <field name="age_group_focus">all</field>
+            <field name="season_specialization">all_seasons</field>
+            <field name="product_category">general</field>
+        </record>
+        
+        <record id="demo_form_field_phone" model="website.form.field">
+            <field name="name">phone</field>
+            <field name="label">Phone Number</field>
+            <field name="form_id" ref="demo_form_contact"/>
+            <field name="field_type">phone</field>
+            <field name="is_required">False</field>
+            <field name="placeholder">Enter your phone number</field>
+            <field name="sequence">30</field>
+            <field name="age_group_focus">all</field>
+            <field name="season_specialization">all_seasons</field>
+            <field name="product_category">general</field>
+        </record>
+        
+        <record id="demo_form_field_message" model="website.form.field">
+            <field name="name">message</field>
+            <field name="label">Message</field>
+            <field name="form_id" ref="demo_form_contact"/>
+            <field name="field_type">textarea</field>
+            <field name="is_required">True</field>
+            <field name="placeholder">Enter your message</field>
+            <field name="sequence">40</field>
+            <field name="age_group_focus">all</field>
+            <field name="season_specialization">all_seasons</field>
+            <field name="product_category">general</field>
+        </record>
+        
+        <record id="demo_form_newsletter" model="website.form">
+            <field name="name">Newsletter Signup</field>
+            <field name="title">Subscribe to Newsletter</field>
+            <field name="description">Get the latest updates and offers delivered to your inbox.</field>
+            <field name="form_type">newsletter</field>
+            <field name="website_id" ref="website_kids_clothing"/>
+            <field name="is_active">True</field>
+            <field name="is_published">True</field>
+            <field name="sequence">20</field>
+            <field name="action_type">create_contact</field>
+            <field name="success_message">Thank you for subscribing! You'll receive our newsletter soon.</field>
+            <field name="age_group_focus">all</field>
+            <field name="season_specialization">all_seasons</field>
+            <field name="product_category">general</field>
+        </record>
+        
+        <record id="demo_form_field_newsletter_email" model="website.form.field">
+            <field name="name">email</field>
+            <field name="label">Email Address</field>
+            <field name="form_id" ref="demo_form_newsletter"/>
+            <field name="field_type">email</field>
+            <field name="is_required">True</field>
+            <field name="placeholder">Enter your email address</field>
+            <field name="sequence">10</field>
+            <field name="age_group_focus">all</field>
+            <field name="season_specialization">all_seasons</field>
+            <field name="product_category">general</field>
+        </record>
+        
+        <record id="demo_form_inquiry" model="website.form">
+            <field name="name">Product Inquiry</field>
+            <field name="title">Product Inquiry</field>
+            <field name="description">Have questions about our products? Send us an inquiry.</field>
+            <field name="form_type">inquiry</field>
+            <field name="website_id" ref="website_kids_clothing"/>
+            <field name="page_id" ref="demo_page_products"/>
+            <field name="is_active">True</field>
+            <field name="is_published">True</field>
+            <field name="sequence">30</field>
+            <field name="action_type">create_lead</field>
+            <field name="success_message">Thank you for your inquiry! We'll get back to you soon.</field>
+            <field name="age_group_focus">all</field>
+            <field name="season_specialization">all_seasons</field>
+            <field name="product_category">clothing</field>
+        </record>
+        
+        <record id="demo_form_field_inquiry_name" model="website.form.field">
+            <field name="name">name</field>
+            <field name="label">Full Name</field>
+            <field name="form_id" ref="demo_form_inquiry"/>
+            <field name="field_type">text</field>
+            <field name="is_required">True</field>
+            <field name="placeholder">Enter your full name</field>
+            <field name="sequence">10</field>
+            <field name="age_group_focus">all</field>
+            <field name="season_specialization">all_seasons</field>
+            <field name="product_category">clothing</field>
+        </record>
+        
+        <record id="demo_form_field_inquiry_email" model="website.form.field">
+            <field name="name">email</field>
+            <field name="label">Email Address</field>
+            <field name="form_id" ref="demo_form_inquiry"/>
+            <field name="field_type">email</field>
+            <field name="is_required">True</field>
+            <field name="placeholder">Enter your email address</field>
+            <field name="sequence">20</field>
+            <field name="age_group_focus">all</field>
+            <field name="season_specialization">all_seasons</field>
+            <field name="product_category">clothing</field>
+        </record>
+        
+        <record id="demo_form_field_inquiry_product" model="website.form.field">
+            <field name="name">product</field>
+            <field name="label">Product of Interest</field>
+            <field name="form_id" ref="demo_form_inquiry"/>
+            <field name="field_type">select</field>
+            <field name="is_required">True</field>
+            <field name="placeholder">Select a product</field>
+            <field name="sequence">30</field>
+            <field name="age_group_focus">all</field>
+            <field name="season_specialization">all_seasons</field>
+            <field name="product_category">clothing</field>
+        </record>
+        
+        <record id="demo_form_field_option_tshirt" model="website.form.field.option">
+            <field name="name">Kids T-Shirt</field>
+            <field name="value">kids_tshirt</field>
+            <field name="field_id" ref="demo_form_field_inquiry_product"/>
+            <field name="sequence">10</field>
+            <field name="age_group_focus">all</field>
+            <field name="season_specialization">all_seasons</field>
+            <field name="product_category">clothing</field>
+        </record>
+        
+        <record id="demo_form_field_option_jeans" model="website.form.field.option">
+            <field name="name">Kids Jeans</field>
+            <field name="value">kids_jeans</field>
+            <field name="field_id" ref="demo_form_field_inquiry_product"/>
+            <field name="sequence">20</field>
+            <field name="age_group_focus">all</field>
+            <field name="season_specialization">all_seasons</field>
+            <field name="product_category">clothing</field>
+        </record>
+        
+        <record id="demo_form_field_option_dress" model="website.form.field.option">
+            <field name="name">Kids Dress</field>
+            <field name="value">kids_dress</field>
+            <field name="field_id" ref="demo_form_field_inquiry_product"/>
+            <field name="sequence">30</field>
+            <field name="age_group_focus">all</field>
+            <field name="season_specialization">all_seasons</field>
+            <field name="product_category">clothing</field>
+        </record>
+        
+        <record id="demo_form_field_inquiry_message" model="website.form.field">
+            <field name="name">message</field>
+            <field name="label">Message</field>
+            <field name="form_id" ref="demo_form_inquiry"/>
+            <field name="field_type">textarea</field>
+            <field name="is_required">True</field>
+            <field name="placeholder">Enter your inquiry</field>
+            <field name="sequence">40</field>
+            <field name="age_group_focus">all</field>
+            <field name="season_specialization">all_seasons</field>
+            <field name="product_category">clothing</field>
+        </record>
+        
+    </data>
+</ocean>

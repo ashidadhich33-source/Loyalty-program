@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Website Template Tree View -->
+        <record id="view_website_template_tree" model="ir.ui.view">
+            <field name="name">website.template.tree</field>
+            <field name="model">website.template</field>
+            <field name="arch" type="xml">
+                <tree string="Website Templates" decoration-muted="not is_active">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="template_type"/>
+                    <field name="is_active"/>
+                    <field name="is_default"/>
+                    <field name="sequence"/>
+                    <field name="age_group_focus"/>
+                    <field name="season_specialization"/>
+                    <field name="product_category"/>
+                    <field name="total_usage"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Website Template Form View -->
+        <record id="view_website_template_form" model="ir.ui.view">
+            <field name="name">website.template.form</field>
+            <field name="model">website.template</field>
+            <field name="arch" type="xml">
+                <form string="Website Template">
+                    <header>
+                        <button name="action_preview" string="Preview" type="object" class="btn-primary"/>
+                        <button name="action_duplicate" string="Duplicate" type="object" class="btn-info"/>
+                        <field name="is_active" widget="statusbar" statusbar_visible="is_active"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Template Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="code"/>
+                                <field name="template_type"/>
+                                <field name="description"/>
+                                <field name="is_active"/>
+                                <field name="is_default"/>
+                                <field name="sequence"/>
+                            </group>
+                            <group>
+                                <field name="color_scheme"/>
+                                <field name="layout_type"/>
+                                <field name="is_responsive"/>
+                                <field name="mobile_optimized"/>
+                                <field name="tablet_optimized"/>
+                                <field name="seo_friendly"/>
+                                <field name="meta_tags_included"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <h3>Kids Clothing Specific</h3>
+                                <field name="age_group_focus"/>
+                                <field name="season_specialization"/>
+                                <field name="brand_focus"/>
+                                <field name="product_category"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="HTML Content" name="html_content">
+                                <field name="html_content" widget="html"/>
+                            </page>
+                            <page string="CSS Content" name="css_content">
+                                <field name="css_content" widget="ace" options="{'mode': 'css'}"/>
+                            </page>
+                            <page string="JavaScript Content" name="js_content">
+                                <field name="js_content" widget="ace" options="{'mode': 'javascript'}"/>
+                            </page>
+                        </notebook>
+                        <group>
+                            <group>
+                                <h3>Analytics</h3>
+                                <field name="total_usage"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="notes"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Website Template Action -->
+        <record id="action_website_template" model="ir.actions.act_window">
+            <field name="name">Website Templates</field>
+            <field name="res_model">website.template</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{}</field>
+        </record>
+        
+        <!-- Website Theme Tree View -->
+        <record id="view_website_theme_tree" model="ir.ui.view">
+            <field name="name">website.theme.tree</field>
+            <field name="model">website.theme</field>
+            <field name="arch" type="xml">
+                <tree string="Website Themes" decoration-muted="not is_active">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="color_scheme"/>
+                    <field name="is_active"/>
+                    <field name="is_default"/>
+                    <field name="sequence"/>
+                    <field name="age_group_focus"/>
+                    <field name="season_specialization"/>
+                    <field name="product_category"/>
+                    <field name="total_usage"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Website Theme Form View -->
+        <record id="view_website_theme_form" model="ir.ui.view">
+            <field name="name">website.theme.form</field>
+            <field name="model">website.theme</field>
+            <field name="arch" type="xml">
+                <form string="Website Theme">
+                    <header>
+                        <button name="action_preview" string="Preview" type="object" class="btn-primary"/>
+                        <field name="is_active" widget="statusbar" statusbar_visible="is_active"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Theme Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="code"/>
+                                <field name="description"/>
+                                <field name="is_active"/>
+                                <field name="is_default"/>
+                                <field name="sequence"/>
+                            </group>
+                            <group>
+                                <field name="color_scheme"/>
+                                <field name="primary_color"/>
+                                <field name="secondary_color"/>
+                                <field name="accent_color"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <h3>Kids Clothing Specific</h3>
+                                <field name="age_group_focus"/>
+                                <field name="season_specialization"/>
+                                <field name="brand_focus"/>
+                                <field name="product_category"/>
+                            </group>
+                            <group>
+                                <h3>Typography</h3>
+                                <field name="font_family"/>
+                                <field name="font_size"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <h3>Layout</h3>
+                                <field name="layout_width"/>
+                                <field name="sidebar_position"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <h3>Analytics</h3>
+                                <field name="total_usage"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="notes"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Website Theme Action -->
+        <record id="action_website_theme" model="ir.actions.act_window">
+            <field name="name">Website Themes</field>
+            <field name="res_model">website.theme</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{}</field>
+        </record>
+        
+    </data>
+</ocean>

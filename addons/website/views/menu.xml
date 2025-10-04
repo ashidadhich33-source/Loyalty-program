@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Website Menu -->
+        <menuitem id="menu_website" name="Website" sequence="20" web_icon="website,static/description/icon.png"/>
+        
+        <!-- Website Management Menu -->
+        <menuitem id="menu_website_management" name="Website Management" parent="menu_website" sequence="10"/>
+        <menuitem id="menu_website_website" name="Websites" parent="menu_website_management" action="action_website" sequence="10"/>
+        <menuitem id="menu_website_page" name="Pages" parent="menu_website_management" action="action_website_page" sequence="20"/>
+        
+        <!-- Website Content Menu -->
+        <menuitem id="menu_website_content" name="Content Management" parent="menu_website" sequence="20"/>
+        
+        <!-- Website Forms Menu -->
+        <menuitem id="menu_website_forms" name="Forms" parent="menu_website" sequence="30"/>
+        
+        <!-- Website Analytics Menu -->
+        <menuitem id="menu_website_analytics" name="Analytics" parent="menu_website" sequence="40"/>
+        
+        <!-- Website Templates Menu -->
+        <menuitem id="menu_website_templates" name="Templates" parent="menu_website" sequence="50"/>
+        
+    </data>
+</ocean>

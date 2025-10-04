@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Demo Website Pages for Kids Clothing Business -->
+        
+        <record id="demo_page_home" model="website.page">
+            <field name="name">Home</field>
+            <field name="url">/</field>
+            <field name="title">Kids Clothing Store - Premium Children's Fashion</field>
+            <field name="website_id" ref="website_kids_clothing"/>
+            <field name="page_type">home</field>
+            <field name="template_id" ref="template_home"/>
+            <field name="is_active">True</field>
+            <field name="is_published">True</field>
+            <field name="sequence">10</field>
+            <field name="show_in_menu">True</field>
+            <field name="meta_title">Kids Clothing Store - Premium Children's Fashion</field>
+            <field name="meta_description">Discover the latest trends in kids clothing. Premium quality, comfortable, and stylish clothing for children of all ages.</field>
+            <field name="meta_keywords">kids clothing, children fashion, baby clothes, toddler clothes, kids fashion</field>
+            <field name="age_group_focus">all</field>
+            <field name="season_specialization">all_seasons</field>
+            <field name="product_category">clothing</field>
+            <field name="content">&lt;div class="hero-section"&gt;
+                &lt;h1&gt;Welcome to Kids Clothing Store&lt;/h1&gt;
+                &lt;p&gt;Discover the latest trends in kids clothing. Premium quality, comfortable, and stylish clothing for children of all ages.&lt;/p&gt;
+                &lt;a href="/products" class="btn btn-primary"&gt;Shop Now&lt;/a&gt;
+            &lt;/div&gt;
+            &lt;div class="featured-products"&gt;
+                &lt;h2&gt;Featured Products&lt;/h2&gt;
+                &lt;div class="product-grid"&gt;
+                    &lt;!-- Products will be loaded here --&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;</field>
+        </record>
+        
+        <record id="demo_page_about" model="website.page">
+            <field name="name">About Us</field>
+            <field name="url">/about</field>
+            <field name="title">About Us - Kids Clothing Store</field>
+            <field name="website_id" ref="website_kids_clothing"/>
+            <field name="page_type">about</field>
+            <field name="template_id" ref="template_about"/>
+            <field name="is_active">True</field>
+            <field name="is_published">True</field>
+            <field name="sequence">20</field>
+            <field name="show_in_menu">True</field>
+            <field name="meta_title">About Us - Kids Clothing Store</field>
+            <field name="meta_description">Learn about our story, mission, and commitment to providing the best kids clothing.</field>
+            <field name="meta_keywords">about us, kids clothing store, children fashion, our story</field>
+            <field name="age_group_focus">all</field>
+            <field name="season_specialization">all_seasons</field>
+            <field name="product_category">general</field>
+            <field name="content">&lt;div class="about-section"&gt;
+                &lt;h1&gt;About Kids Clothing Store&lt;/h1&gt;
+                &lt;p&gt;We are passionate about providing high-quality, comfortable, and stylish clothing for children of all ages. Our mission is to make every child look and feel their best.&lt;/p&gt;
+                &lt;h2&gt;Our Story&lt;/h2&gt;
+                &lt;p&gt;Founded in 2020, Kids Clothing Store has been serving families across India with premium children's fashion. We believe that every child deserves to wear clothes that are not only beautiful but also comfortable and durable.&lt;/p&gt;
+                &lt;h2&gt;Our Mission&lt;/h2&gt;
+                &lt;p&gt;To provide high-quality, affordable, and stylish clothing for children while ensuring comfort, safety, and sustainability in everything we do.&lt;/p&gt;
+            &lt;/div&gt;</field>
+        </record>
+        
+        <record id="demo_page_contact" model="website.page">
+            <field name="name">Contact Us</field>
+            <field name="url">/contact</field>
+            <field name="title">Contact Us - Kids Clothing Store</field>
+            <field name="website_id" ref="website_kids_clothing"/>
+            <field name="page_type">contact</field>
+            <field name="template_id" ref="template_contact"/>
+            <field name="is_active">True</field>
+            <field name="is_published">True</field>
+            <field name="sequence">30</field>
+            <field name="show_in_menu">True</field>
+            <field name="meta_title">Contact Us - Kids Clothing Store</field>
+            <field name="meta_description">Get in touch with us for any questions or support. We're here to help!</field>
+            <field name="meta_keywords">contact us, support, help, kids clothing</field>
+            <field name="age_group_focus">all</field>
+            <field name="season_specialization">all_seasons</field>
+            <field name="product_category">general</field>
+            <field name="content">&lt;div class="contact-section"&gt;
+                &lt;h1&gt;Contact Us&lt;/h1&gt;
+                &lt;div class="contact-info"&gt;
+                    &lt;h2&gt;Get in Touch&lt;/h2&gt;
+                    &lt;p&gt;&lt;strong&gt;Email:&lt;/strong&gt; info@kidsclothing.com&lt;/p&gt;
+                    &lt;p&gt;&lt;strong&gt;Phone:&lt;/strong&gt; +91-9876543210&lt;/p&gt;
+                    &lt;p&gt;&lt;strong&gt;Address:&lt;/strong&gt; 123 Fashion Street, Mumbai, Maharashtra 400001, India&lt;/p&gt;
+                &lt;/div&gt;
+                &lt;div class="contact-form"&gt;
+                    &lt;h2&gt;Send us a Message&lt;/h2&gt;
+                    &lt;!-- Contact form will be loaded here --&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;</field>
+        </record>
+        
+        <record id="demo_page_products" model="website.page">
+            <field name="name">Products</field>
+            <field name="url">/products</field>
+            <field name="title">Products - Kids Clothing Store</field>
+            <field name="website_id" ref="website_kids_clothing"/>
+            <field name="page_type">product</field>
+            <field name="template_id" ref="template_product"/>
+            <field name="is_active">True</field>
+            <field name="is_published">True</field>
+            <field name="sequence">40</field>
+            <field name="show_in_menu">True</field>
+            <field name="meta_title">Products - Kids Clothing Store</field>
+            <field name="meta_description">Browse our collection of premium kids clothing. Find the perfect outfit for your child.</field>
+            <field name="meta_keywords">kids clothing, children clothes, baby clothes, toddler clothes</field>
+            <field name="age_group_focus">all</field>
+            <field name="season_specialization">all_seasons</field>
+            <field name="product_category">clothing</field>
+            <field name="content">&lt;div class="products-section"&gt;
+                &lt;h1&gt;Our Products&lt;/h1&gt;
+                &lt;p&gt;Discover our wide range of premium kids clothing designed for comfort, style, and durability.&lt;/p&gt;
+                &lt;div class="product-categories"&gt;
+                    &lt;div class="category"&gt;
+                        &lt;h3&gt;Infant (0-2 years)&lt;/h3&gt;
+                        &lt;p&gt;Soft, comfortable clothing for your little ones&lt;/p&gt;
+                    &lt;/div&gt;
+                    &lt;div class="category"&gt;
+                        &lt;h3&gt;Toddler (2-4 years)&lt;/h3&gt;
+                        &lt;p&gt;Fun and colorful outfits for active toddlers&lt;/p&gt;
+                    &lt;/div&gt;
+                    &lt;div class="category"&gt;
+                        &lt;h3&gt;Preschool (4-6 years)&lt;/h3&gt;
+                        &lt;p&gt;Stylish clothing for growing preschoolers&lt;/p&gt;
+                    &lt;/div&gt;
+                    &lt;div class="category"&gt;
+                        &lt;h3&gt;School Age (6-12 years)&lt;/h3&gt;
+                        &lt;p&gt;Trendy outfits for school-going children&lt;/p&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;</field>
+        </record>
+        
+        <record id="demo_page_blog" model="website.page">
+            <field name="name">Blog</field>
+            <field name="url">/blog</field>
+            <field name="title">Blog - Kids Clothing Store</field>
+            <field name="website_id" ref="website_kids_clothing"/>
+            <field name="page_type">blog</field>
+            <field name="template_id" ref="template_blog"/>
+            <field name="is_active">True</field>
+            <field name="is_published">True</field>
+            <field name="sequence">50</field>
+            <field name="show_in_menu">True</field>
+            <field name="meta_title">Blog - Kids Clothing Store</field>
+            <field name="meta_description">Read our latest blog posts about kids fashion, parenting tips, and more.</field>
+            <field name="meta_keywords">blog, kids fashion, parenting tips, children clothing</field>
+            <field name="age_group_focus">all</field>
+            <field name="season_specialization">all_seasons</field>
+            <field name="product_category">general</field>
+            <field name="content">&lt;div class="blog-section"&gt;
+                &lt;h1&gt;Our Blog&lt;/h1&gt;
+                &lt;p&gt;Stay updated with the latest trends in kids fashion and parenting tips.&lt;/p&gt;
+                &lt;div class="blog-posts"&gt;
+                    &lt;!-- Blog posts will be loaded here --&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;</field>
+        </record>
+        
+    </data>
+</ocean>

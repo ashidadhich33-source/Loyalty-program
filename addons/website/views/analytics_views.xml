@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Website Analytics Tree View -->
+        <record id="view_website_analytics_tree" model="ir.ui.view">
+            <field name="name">website.analytics.tree</field>
+            <field name="model">website.analytics</field>
+            <field name="arch" type="xml">
+                <tree string="Website Analytics">
+                    <field name="name"/>
+                    <field name="website_id"/>
+                    <field name="page_id"/>
+                    <field name="date"/>
+                    <field name="total_visitors"/>
+                    <field name="unique_visitors"/>
+                    <field name="total_page_views"/>
+                    <field name="avg_session_duration"/>
+                    <field name="bounce_rate"/>
+                    <field name="country"/>
+                    <field name="device_type"/>
+                    <field name="traffic_source"/>
+                    <field name="conversion_rate"/>
+                    <field name="total_revenue"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Website Analytics Form View -->
+        <record id="view_website_analytics_form" model="ir.ui.view">
+            <field name="name">website.analytics.form</field>
+            <field name="model">website.analytics</field>
+            <field name="arch" type="xml">
+                <form string="Website Analytics">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Analytics Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="website_id"/>
+                                <field name="page_id"/>
+                                <field name="date"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <h3>Traffic Metrics</h3>
+                                <field name="total_visitors"/>
+                                <field name="unique_visitors"/>
+                                <field name="total_page_views"/>
+                                <field name="avg_session_duration"/>
+                                <field name="bounce_rate"/>
+                            </group>
+                            <group>
+                                <h3>Geographic Data</h3>
+                                <field name="country"/>
+                                <field name="state"/>
+                                <field name="city"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <h3>Device Information</h3>
+                                <field name="device_type"/>
+                                <field name="browser"/>
+                                <field name="operating_system"/>
+                            </group>
+                            <group>
+                                <h3>Traffic Sources</h3>
+                                <field name="traffic_source"/>
+                                <field name="referrer_url"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <h3>Kids Clothing Specific</h3>
+                                <field name="age_group_focus"/>
+                                <field name="season_specialization"/>
+                                <field name="brand_focus"/>
+                                <field name="product_category"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <h3>Conversion Metrics</h3>
+                                <field name="total_conversions"/>
+                                <field name="conversion_rate"/>
+                            </group>
+                            <group>
+                                <h3>Revenue Metrics</h3>
+                                <field name="total_revenue"/>
+                                <field name="avg_order_value"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="notes"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Website Analytics Action -->
+        <record id="action_website_analytics" model="ir.actions.act_window">
+            <field name="name">Website Analytics</field>
+            <field name="res_model">website.analytics</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{}</field>
+        </record>
+        
+        <!-- Website Visitor Tree View -->
+        <record id="view_website_visitor_tree" model="ir.ui.view">
+            <field name="name">website.visitor.tree</field>
+            <field name="model">website.visitor</field>
+            <field name="arch" type="xml">
+                <tree string="Website Visitors">
+                    <field name="name"/>
+                    <field name="visitor_id"/>
+                    <field name="website_id"/>
+                    <field name="first_visit"/>
+                    <field name="last_visit"/>
+                    <field name="total_visits"/>
+                    <field name="total_page_views"/>
+                    <field name="country"/>
+                    <field name="device_type"/>
+                    <field name="is_returning"/>
+                    <field name="is_converted"/>
+                    <field name="age_group_focus"/>
+                    <field name="season_specialization"/>
+                    <field name="product_category"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Website Visitor Form View -->
+        <record id="view_website_visitor_form" model="ir.ui.view">
+            <field name="name">website.visitor.form</field>
+            <field name="model">website.visitor</field>
+            <field name="arch" type="xml">
+                <form string="Website Visitor">
+                    <header>
+                        <button name="action_create_contact" string="Create Contact" type="object" class="btn-primary"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Visitor Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="visitor_id"/>
+                                <field name="website_id"/>
+                                <field name="first_visit"/>
+                                <field name="last_visit"/>
+                                <field name="total_visits"/>
+                                <field name="total_page_views"/>
+                            </group>
+                            <group>
+                                <field name="contact_id"/>
+                                <field name="email"/>
+                                <field name="phone"/>
+                                <field name="is_returning"/>
+                                <field name="is_converted"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <h3>Geographic Information</h3>
+                                <field name="country"/>
+                                <field name="state"/>
+                                <field name="city"/>
+                            </group>
+                            <group>
+                                <h3>Device Information</h3>
+                                <field name="device_type"/>
+                                <field name="browser"/>
+                                <field name="operating_system"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <h3>Kids Clothing Specific</h3>
+                                <field name="age_group_focus"/>
+                                <field name="season_specialization"/>
+                                <field name="brand_focus"/>
+                                <field name="product_category"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="notes"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Website Visitor Action -->
+        <record id="action_website_visitor" model="ir.actions.act_window">
+            <field name="name">Website Visitors</field>
+            <field name="res_model">website.visitor</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{}</field>
+        </record>
+        
+    </data>
+</ocean>

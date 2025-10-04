@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Website Page Tree View -->
+        <record id="view_website_page_tree" model="ir.ui.view">
+            <field name="name">website.page.tree</field>
+            <field name="model">website.page</field>
+            <field name="arch" type="xml">
+                <tree string="Website Pages" decoration-muted="not is_published" decoration-success="is_published">
+                    <field name="name"/>
+                    <field name="url"/>
+                    <field name="title"/>
+                    <field name="page_type"/>
+                    <field name="website_id"/>
+                    <field name="is_active"/>
+                    <field name="is_published"/>
+                    <field name="sequence"/>
+                    <field name="age_group_focus"/>
+                    <field name="season_specialization"/>
+                    <field name="product_category"/>
+                    <field name="total_views"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Website Page Form View -->
+        <record id="view_website_page_form" model="ir.ui.view">
+            <field name="name">website.page.form</field>
+            <field name="model">website.page</field>
+            <field name="arch" type="xml">
+                <form string="Website Page">
+                    <header>
+                        <button name="action_publish" string="Publish" type="object" class="btn-primary" states="draft"/>
+                        <button name="action_unpublish" string="Unpublish" type="object" class="btn-secondary" states="published"/>
+                        <button name="action_preview" string="Preview" type="object" class="btn-info"/>
+                        <button name="action_view_analytics" string="View Analytics" type="object" class="btn-success"/>
+                        <field name="is_published" widget="statusbar" statusbar_visible="is_published"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Page Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="url"/>
+                                <field name="title"/>
+                                <field name="website_id"/>
+                                <field name="page_type"/>
+                                <field name="template_id"/>
+                            </group>
+                            <group>
+                                <field name="is_active"/>
+                                <field name="is_published"/>
+                                <field name="sequence"/>
+                                <field name="show_in_menu"/>
+                                <field name="menu_parent_id"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <h3>Kids Clothing Specific</h3>
+                                <field name="age_group_focus"/>
+                                <field name="season_specialization"/>
+                                <field name="brand_focus"/>
+                                <field name="product_category"/>
+                            </group>
+                            <group>
+                                <h3>SEO Settings</h3>
+                                <field name="meta_title"/>
+                                <field name="meta_description"/>
+                                <field name="meta_keywords"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Content" name="content">
+                                <field name="content" widget="html"/>
+                            </page>
+                        </notebook>
+                        <group>
+                            <group>
+                                <h3>Analytics</h3>
+                                <field name="total_views"/>
+                                <field name="unique_visitors"/>
+                                <field name="bounce_rate"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="notes"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Website Page Search View -->
+        <record id="view_website_page_search" model="ir.ui.view">
+            <field name="name">website.page.search</field>
+            <field name="model">website.page</field>
+            <field name="arch" type="xml">
+                <search string="Search Website Pages">
+                    <field name="name"/>
+                    <field name="url"/>
+                    <field name="title"/>
+                    <field name="website_id"/>
+                    <field name="page_type"/>
+                    <field name="age_group_focus"/>
+                    <field name="season_specialization"/>
+                    <field name="product_category"/>
+                    <field name="brand_focus"/>
+                    <filter string="Active" name="active" domain="[('is_active', '=', True)]"/>
+                    <filter string="Published" name="published" domain="[('is_published', '=', True)]"/>
+                    <filter string="Show in Menu" name="show_in_menu" domain="[('show_in_menu', '=', True)]"/>
+                    <separator/>
+                    <filter string="Home" name="home" domain="[('page_type', '=', 'home')]"/>
+                    <filter string="Product" name="product" domain="[('page_type', '=', 'product')]"/>
+                    <filter string="Category" name="category" domain="[('page_type', '=', 'category')]"/>
+                    <filter string="About" name="about" domain="[('page_type', '=', 'about')]"/>
+                    <filter string="Contact" name="contact" domain="[('page_type', '=', 'contact')]"/>
+                    <filter string="Blog" name="blog" domain="[('page_type', '=', 'blog')]"/>
+                    <separator/>
+                    <filter string="Kids Clothing" name="kids_clothing" domain="[('product_category', '=', 'clothing')]"/>
+                    <filter string="Accessories" name="accessories" domain="[('product_category', '=', 'accessories')]"/>
+                    <filter string="Shoes" name="shoes" domain="[('product_category', '=', 'shoes')]"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter string="Website" name="group_website" context="{'group_by': 'website_id'}"/>
+                        <filter string="Page Type" name="group_page_type" context="{'group_by': 'page_type'}"/>
+                        <filter string="Age Group" name="group_age_group" context="{'group_by': 'age_group_focus'}"/>
+                        <filter string="Season" name="group_season" context="{'group_by': 'season_specialization'}"/>
+                        <filter string="Product Category" name="group_product_category" context="{'group_by': 'product_category'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- Website Page Action -->
+        <record id="action_website_page" model="ir.actions.act_window">
+            <field name="name">Website Pages</field>
+            <field name="res_model">website.page</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_website_page_search"/>
+            <field name="context">{}</field>
+        </record>
+        
+    </data>
+</ocean>

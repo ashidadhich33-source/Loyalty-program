@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- HR Payroll Periods Tree View -->
+        <record id="view_hr_payroll_period_tree" model="ir.ui.view">
+            <field name="name">hr.payroll.period.tree</field>
+            <field name="model">hr.payroll.period</field>
+            <field name="arch" type="xml">
+                <tree string="HR Payroll Periods" decoration-info="state=='draft'" decoration-success="state=='closed'">
+                    <field name="name"/>
+                    <field name="date_start"/>
+                    <field name="date_end"/>
+                    <field name="period_type"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- HR Payroll Periods Form View -->
+        <record id="view_hr_payroll_period_form" model="ir.ui.view">
+            <field name="name">hr.payroll.period.form</field>
+            <field name="model">hr.payroll.period</field>
+            <field name="arch" type="xml">
+                <form string="HR Payroll Period">
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_open" type="object" class="oe_stat_button" icon="fa-play" string="Open" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                            <button name="action_close" type="object" class="oe_stat_button" icon="fa-check" string="Close" attrs="{'invisible': [('state', '!=', 'open')]}"/>
+                            <button name="action_cancel" type="object" class="oe_stat_button" icon="fa-times" string="Cancel" attrs="{'invisible': [('state', 'not in', ['draft', 'open'])]}"/>
+                        </div>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Period Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="date_start"/>
+                                <field name="date_end"/>
+                                <field name="period_type"/>
+                                <field name="state"/>
+                            </group>
+                            <group>
+                                <field name="age_group"/>
+                                <field name="size"/>
+                                <field name="season"/>
+                                <field name="brand"/>
+                                <field name="color"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="payslip_ids" widget="one2many">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="employee_id"/>
+                                    <field name="date_from"/>
+                                    <field name="date_to"/>
+                                    <field name="state"/>
+                                </tree>
+                            </field>
+                        </group>
+                        <group>
+                            <field name="notes"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- HR Payroll Periods Search View -->
+        <record id="view_hr_payroll_period_search" model="ir.ui.view">
+            <field name="name">hr.payroll.period.search</field>
+            <field name="model">hr.payroll.period</field>
+            <field name="arch" type="xml">
+                <search string="Search HR Payroll Periods">
+                    <field name="name"/>
+                    <field name="period_type"/>
+                    <field name="age_group"/>
+                    <field name="size"/>
+                    <field name="season"/>
+                    <field name="brand"/>
+                    <field name="color"/>
+                    <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
+                    <filter string="Open" name="open" domain="[('state', '=', 'open')]"/>
+                    <filter string="Closed" name="closed" domain="[('state', '=', 'closed')]"/>
+                    <filter string="Cancelled" name="cancelled" domain="[('state', '=', 'cancelled')]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Period Type" name="group_period_type" context="{'group_by': 'period_type'}"/>
+                        <filter string="State" name="group_state" context="{'group_by': 'state'}"/>
+                        <filter string="Age Group" name="group_age_group" context="{'group_by': 'age_group'}"/>
+                        <filter string="Size" name="group_size" context="{'group_by': 'size'}"/>
+                        <filter string="Season" name="group_season" context="{'group_by': 'season'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- HR Payroll Periods Action -->
+        <record id="action_hr_payroll_period" model="ir.actions.act_window">
+            <field name="name">HR Payroll Periods</field>
+            <field name="res_model">hr.payroll.period</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_hr_payroll_period_search"/>
+            <field name="context">{'search_default_draft': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first HR Payroll Period!
+                </p>
+                <p>
+                    HR payroll periods define the time periods for salary processing and reporting.
+                </p>
+            </field>
+        </record>
+        
+    </data>
+</ocean>

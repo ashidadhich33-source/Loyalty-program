@@ -1,0 +1,17 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_employee_user,hr.employee.user,model_hr_employee,base.group_user,1,1,1,0
+access_hr_employee_manager,hr.employee.manager,model_hr_employee,base.group_system,1,1,1,1
+access_hr_department_user,hr.department.user,model_hr_department,base.group_user,1,0,0,0
+access_hr_department_manager,hr.department.manager,model_hr_department,base.group_system,1,1,1,1
+access_hr_job_user,hr.job.user,model_hr_job,base.group_user,1,0,0,0
+access_hr_job_manager,hr.job.manager,model_hr_job,base.group_system,1,1,1,1
+access_hr_shift_user,hr.shift.user,model_hr_shift,base.group_user,1,1,1,0
+access_hr_shift_manager,hr.shift.manager,model_hr_shift,base.group_system,1,1,1,1
+access_hr_attendance_user,hr.attendance.user,model_hr_attendance,base.group_user,1,1,1,0
+access_hr_attendance_manager,hr.attendance.manager,model_hr_attendance,base.group_system,1,1,1,1
+access_hr_leave_user,hr.leave.user,model_hr_leave,base.group_user,1,1,1,0
+access_hr_leave_manager,hr.leave.manager,model_hr_leave,base.group_system,1,1,1,1
+access_hr_performance_user,hr.performance.user,model_hr_performance,base.group_user,1,0,0,0
+access_hr_performance_manager,hr.performance.manager,model_hr_performance,base.group_system,1,1,1,1
+access_hr_document_user,hr.document.user,model_hr_document,base.group_user,1,1,1,0
+access_hr_document_manager,hr.document.manager,model_hr_document,base.group_system,1,1,1,1

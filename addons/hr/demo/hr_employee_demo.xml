@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Demo Employees -->
+        <record id="demo_employee_001" model="hr.employee">
+            <field name="employee_id">EMP/0001</field>
+            <field name="first_name">Rajesh</field>
+            <field name="last_name">Kumar</field>
+            <field name="name">Rajesh Kumar</field>
+            <field name="gender">male</field>
+            <field name="birth_date">1985-03-15</field>
+            <field name="work_email">rajesh.kumar@company.com</field>
+            <field name="work_phone">+91-9876543210</field>
+            <field name="mobile_phone">+91-9876543210</field>
+            <field name="department_id" ref="dept_sales"/>
+            <field name="job_id" ref="job_sales_manager"/>
+            <field name="hire_date">2020-01-15</field>
+            <field name="age_group_specialization">all</field>
+            <field name="season_preference">all_season</field>
+            <field name="brand_expertise">All Brands</field>
+            <field name="pan_number">ABCDE1234F</field>
+            <field name="aadhar_number">123456789012</field>
+            <field name="basic_salary">60000</field>
+            <field name="state">active</field>
+            <field name="active">True</field>
+        </record>
+        
+        <record id="demo_employee_002" model="hr.employee">
+            <field name="employee_id">EMP/0002</field>
+            <field name="first_name">Priya</field>
+            <field name="last_name">Sharma</field>
+            <field name="name">Priya Sharma</field>
+            <field name="gender">female</field>
+            <field name="birth_date">1990-07-22</field>
+            <field name="work_email">priya.sharma@company.com</field>
+            <field name="work_phone">+91-9876543211</field>
+            <field name="mobile_phone">+91-9876543211</field>
+            <field name="department_id" ref="dept_baby_clothing"/>
+            <field name="job_id" ref="job_baby_specialist"/>
+            <field name="hire_date">2021-06-01</field>
+            <field name="age_group_specialization">baby</field>
+            <field name="season_preference">summer</field>
+            <field name="brand_expertise">Baby Brands</field>
+            <field name="pan_number">FGHIJ5678K</field>
+            <field name="aadhar_number">234567890123</field>
+            <field name="basic_salary">28000</field>
+            <field name="state">active</field>
+            <field name="active">True</field>
+        </record>
+        
+        <record id="demo_employee_003" model="hr.employee">
+            <field name="employee_id">EMP/0003</field>
+            <field name="first_name">Amit</field>
+            <field name="last_name">Singh</field>
+            <field name="name">Amit Singh</field>
+            <field name="gender">male</field>
+            <field name="birth_date">1992-11-08</field>
+            <field name="work_email">amit.singh@company.com</field>
+            <field name="work_phone">+91-9876543212</field>
+            <field name="mobile_phone">+91-9876543212</field>
+            <field name="department_id" ref="dept_teen_clothing"/>
+            <field name="job_id" ref="job_teen_specialist"/>
+            <field name="hire_date">2022-03-10</field>
+            <field name="age_group_specialization">teen</field>
+            <field name="season_preference">winter</field>
+            <field name="brand_expertise">Teen Brands</field>
+            <field name="pan_number">KLMNO9012P</field>
+            <field name="aadhar_number">345678901234</field>
+            <field name="basic_salary">32000</field>
+            <field name="state">active</field>
+            <field name="active">True</field>
+        </record>
+        
+        <record id="demo_employee_004" model="hr.employee">
+            <field name="employee_id">EMP/0004</field>
+            <field name="first_name">Sneha</field>
+            <field name="last_name">Patel</field>
+            <field name="name">Sneha Patel</field>
+            <field name="gender">female</field>
+            <field name="birth_date">1988-05-14</field>
+            <field name="work_email">sneha.patel@company.com</field>
+            <field name="work_phone">+91-9876543213</field>
+            <field name="mobile_phone">+91-9876543213</field>
+            <field name="department_id" ref="dept_hr"/>
+            <field name="job_id" ref="job_hr_manager"/>
+            <field name="hire_date">2019-08-20</field>
+            <field name="age_group_specialization">all</field>
+            <field name="season_preference">all_season</field>
+            <field name="brand_expertise">Not Required</field>
+            <field name="pan_number">PQRST3456U</field>
+            <field name="aadhar_number">456789012345</field>
+            <field name="basic_salary">55000</field>
+            <field name="state">active</field>
+            <field name="active">True</field>
+        </record>
+        
+        <record id="demo_employee_005" model="hr.employee">
+            <field name="employee_id">EMP/0005</field>
+            <field name="first_name">Vikram</field>
+            <field name="last_name">Reddy</field>
+            <field name="name">Vikram Reddy</field>
+            <field name="gender">male</field>
+            <field name="birth_date">1995-12-03</field>
+            <field name="work_email">vikram.reddy@company.com</field>
+            <field name="work_phone">+91-9876543214</field>
+            <field name="mobile_phone">+91-9876543214</field>
+            <field name="department_id" ref="dept_operations"/>
+            <field name="job_id" ref="job_cashier"/>
+            <field name="hire_date">2023-01-05</field>
+            <field name="age_group_specialization">all</field>
+            <field name="season_preference">monsoon</field>
+            <field name="brand_expertise">Basic Product Knowledge</field>
+            <field name="pan_number">UVWXY7890Z</field>
+            <field name="aadhar_number">567890123456</field>
+            <field name="basic_salary">20000</field>
+            <field name="state">active</field>
+            <field name="active">True</field>
+        </record>
+        
+    </data>
+</ocean>

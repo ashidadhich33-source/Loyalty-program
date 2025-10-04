@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Employee Tree View -->
+        <record id="view_hr_employee_tree" model="ir.ui.view">
+            <field name="name">hr.employee.tree</field>
+            <field name="model">hr.employee</field>
+            <field name="arch" type="xml">
+                <tree string="Employees" decoration-info="state=='draft'" decoration-success="state=='active'" decoration-muted="state=='terminated'">
+                    <field name="employee_id"/>
+                    <field name="name"/>
+                    <field name="department_id"/>
+                    <field name="job_id"/>
+                    <field name="manager_id"/>
+                    <field name="hire_date"/>
+                    <field name="state"/>
+                    <field name="age_group_specialization"/>
+                    <field name="season_preference"/>
+                    <field name="brand_expertise"/>
+                    <field name="basic_salary"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Employee Form View -->
+        <record id="view_hr_employee_form" model="ir.ui.view">
+            <field name="name">hr.employee.form</field>
+            <field name="model">hr.employee</field>
+            <field name="arch" type="xml">
+                <form string="Employee">
+                    <header>
+                        <button name="action_activate" string="Activate" type="object" class="btn-primary" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                        <button name="action_deactivate" string="Deactivate" type="object" attrs="{'invisible': [('state', '!=', 'active')]}"/>
+                        <button name="action_terminate" string="Terminate" type="object" attrs="{'invisible': [('state', 'not in', ['active', 'inactive'])]}"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,active,inactive,terminated"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_view_attendance" type="object" class="oe_stat_button" icon="fa-clock-o">
+                                <field name="attendance_count" widget="statinfo" string="Attendance"/>
+                            </button>
+                            <button name="action_view_leaves" type="object" class="oe_stat_button" icon="fa-calendar">
+                                <field name="leave_count" widget="statinfo" string="Leaves"/>
+                            </button>
+                            <button name="action_view_sales_performance" type="object" class="oe_stat_button" icon="fa-line-chart">
+                                <field name="current_month_sales" widget="statinfo" string="Monthly Sales"/>
+                            </button>
+                        </div>
+                        
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Employee Name"/>
+                            </h1>
+                        </div>
+                        
+                        <group>
+                            <group>
+                                <field name="employee_id"/>
+                                <field name="first_name"/>
+                                <field name="last_name"/>
+                                <field name="gender"/>
+                                <field name="birth_date"/>
+                                <field name="age"/>
+                            </group>
+                            <group>
+                                <field name="company_id"/>
+                                <field name="department_id"/>
+                                <field name="job_id"/>
+                                <field name="manager_id"/>
+                                <field name="hire_date"/>
+                                <field name="termination_date"/>
+                            </group>
+                        </group>
+                        
+                        <group>
+                            <group>
+                                <field name="work_email"/>
+                                <field name="work_phone"/>
+                                <field name="mobile_phone"/>
+                            </group>
+                            <group>
+                                <field name="work_address_id"/>
+                                <field name="home_address_id"/>
+                            </group>
+                        </group>
+                        
+                        <group>
+                            <group>
+                                <field name="age_group_specialization"/>
+                                <field name="season_preference"/>
+                            </group>
+                            <group>
+                                <field name="brand_expertise"/>
+                                <field name="size_specialization"/>
+                            </group>
+                        </group>
+                        
+                        <group>
+                            <group>
+                                <field name="pan_number"/>
+                                <field name="aadhar_number"/>
+                            </group>
+                            <group>
+                                <field name="pf_number"/>
+                                <field name="esi_number"/>
+                            </group>
+                        </group>
+                        
+                        <group>
+                            <field name="basic_salary"/>
+                        </group>
+                        
+                        <notebook>
+                            <page string="Sales Performance">
+                                <group>
+                                    <group>
+                                        <field name="commission_rate"/>
+                                        <field name="monthly_sales_target"/>
+                                        <field name="weekly_sales_target"/>
+                                        <field name="daily_sales_target"/>
+                                    </group>
+                                    <group>
+                                        <field name="current_month_sales"/>
+                                        <field name="monthly_target_achievement"/>
+                                        <field name="current_week_sales"/>
+                                        <field name="weekly_target_achievement"/>
+                                        <field name="current_day_sales"/>
+                                        <field name="daily_target_achievement"/>
+                                        <field name="total_commission_earned"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                        
+                        <group>
+                            <field name="notes"/>
+                        </group>
+                        
+                        <div class="oe_chatter">
+                            <field name="message_follower_ids"/>
+                            <field name="activity_ids"/>
+                            <field name="message_ids"/>
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Employee Search View -->
+        <record id="view_hr_employee_search" model="ir.ui.view">
+            <field name="name">hr.employee.search</field>
+            <field name="model">hr.employee</field>
+            <field name="arch" type="xml">
+                <search string="Search Employees">
+                    <field name="name"/>
+                    <field name="employee_id"/>
+                    <field name="work_email"/>
+                    <field name="mobile_phone"/>
+                    
+                    <filter string="Active" name="active" domain="[('state', '=', 'active')]"/>
+                    <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
+                    <filter string="Inactive" name="inactive" domain="[('state', '=', 'inactive')]"/>
+                    <filter string="Terminated" name="terminated" domain="[('state', '=', 'terminated')]"/>
+                    
+                    <separator/>
+                    <filter string="Baby Specialist" name="baby" domain="[('age_group_specialization', '=', 'baby')]"/>
+                    <filter string="Toddler Specialist" name="toddler" domain="[('age_group_specialization', '=', 'toddler')]"/>
+                    <filter string="Kids Specialist" name="kids" domain="[('age_group_specialization', '=', 'kids')]"/>
+                    <filter string="Teen Specialist" name="teen" domain="[('age_group_specialization', '=', 'teen')]"/>
+                    <filter string="All Age Groups" name="all" domain="[('age_group_specialization', '=', 'all')]"/>
+                    
+                    <separator/>
+                    <filter string="Summer Preference" name="summer" domain="[('season_preference', '=', 'summer')]"/>
+                    <filter string="Winter Preference" name="winter" domain="[('season_preference', '=', 'winter')]"/>
+                    <filter string="Monsoon Preference" name="monsoon" domain="[('season_preference', '=', 'monsoon')]"/>
+                    <filter string="All Season" name="all_season" domain="[('season_preference', '=', 'all_season')]"/>
+                    
+                    <group expand="0" string="Group By">
+                        <filter string="Department" name="department" context="{'group_by': 'department_id'}"/>
+                        <filter string="Job Position" name="job" context="{'group_by': 'job_id'}"/>
+                        <filter string="Manager" name="manager" context="{'group_by': 'manager_id'}"/>
+                        <filter string="Status" name="state" context="{'group_by': 'state'}"/>
+                        <filter string="Age Group Specialization" name="age_group" context="{'group_by': 'age_group_specialization'}"/>
+                        <filter string="Season Preference" name="season" context="{'group_by': 'season_preference'}"/>
+                        <filter string="Company" name="company" context="{'group_by': 'company_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- Employee Action -->
+        <record id="action_hr_employee" model="ir.actions.act_window">
+            <field name="name">Employees</field>
+            <field name="res_model">hr.employee</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_hr_employee_search"/>
+            <field name="context">{'search_default_active': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first employee!
+                </p>
+                <p>
+                    Employees are the backbone of your organization. Manage their information, attendance, and performance.
+                </p>
+            </field>
+        </record>
+        
+    </data>
+</ocean>

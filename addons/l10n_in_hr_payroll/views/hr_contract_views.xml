@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- HR Contracts Tree View -->
+        <record id="view_hr_contract_tree" model="ir.ui.view">
+            <field name="name">hr.contract.tree</field>
+            <field name="model">hr.contract</field>
+            <field name="arch" type="xml">
+                <tree string="HR Contracts" decoration-info="state=='draft'" decoration-success="state=='open'" decoration-muted="state=='close'">
+                    <field name="name"/>
+                    <field name="employee_id"/>
+                    <field name="date_start"/>
+                    <field name="date_end"/>
+                    <field name="wage"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- HR Contracts Form View -->
+        <record id="view_hr_contract_form" model="ir.ui.view">
+            <field name="name">hr.contract.form</field>
+            <field name="model">hr.contract</field>
+            <field name="arch" type="xml">
+                <form string="HR Contract">
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_open" type="object" class="oe_stat_button" icon="fa-play" string="Open" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                            <button name="action_close" type="object" class="oe_stat_button" icon="fa-check" string="Close" attrs="{'invisible': [('state', '!=', 'open')]}"/>
+                            <button name="action_cancel" type="object" class="oe_stat_button" icon="fa-times" string="Cancel" attrs="{'invisible': [('state', 'not in', ['draft', 'open'])]}"/>
+                        </div>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Contract Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="employee_id"/>
+                                <field name="date_start"/>
+                                <field name="date_end"/>
+                                <field name="state"/>
+                            </group>
+                            <group>
+                                <field name="age_group"/>
+                                <field name="size"/>
+                                <field name="season"/>
+                                <field name="brand"/>
+                                <field name="color"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="wage"/>
+                                <field name="wage_type"/>
+                                <field name="working_hours"/>
+                            </group>
+                            <group>
+                                <field name="job_id"/>
+                                <field name="department_id"/>
+                                <field name="manager_id"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="pf_applicable"/>
+                                <field name="esi_applicable"/>
+                                <field name="professional_tax_applicable"/>
+                                <field name="income_tax_applicable"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="notes"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- HR Contracts Search View -->
+        <record id="view_hr_contract_search" model="ir.ui.view">
+            <field name="name">hr.contract.search</field>
+            <field name="model">hr.contract</field>
+            <field name="arch" type="xml">
+                <search string="Search HR Contracts">
+                    <field name="name"/>
+                    <field name="employee_id"/>
+                    <field name="job_id"/>
+                    <field name="department_id"/>
+                    <field name="age_group"/>
+                    <field name="size"/>
+                    <field name="season"/>
+                    <field name="brand"/>
+                    <field name="color"/>
+                    <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
+                    <filter string="Open" name="open" domain="[('state', '=', 'open')]"/>
+                    <filter string="Close" name="close" domain="[('state', '=', 'close')]"/>
+                    <filter string="Cancelled" name="cancelled" domain="[('state', '=', 'cancelled')]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Employee" name="group_employee" context="{'group_by': 'employee_id'}"/>
+                        <filter string="Job" name="group_job" context="{'group_by': 'job_id'}"/>
+                        <filter string="Department" name="group_department" context="{'group_by': 'department_id'}"/>
+                        <filter string="State" name="group_state" context="{'group_by': 'state'}"/>
+                        <filter string="Age Group" name="group_age_group" context="{'group_by': 'age_group'}"/>
+                        <filter string="Size" name="group_size" context="{'group_by': 'size'}"/>
+                        <filter string="Season" name="group_season" context="{'group_by': 'season'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- HR Contracts Action -->
+        <record id="action_hr_contract" model="ir.actions.act_window">
+            <field name="name">HR Contracts</field>
+            <field name="res_model">hr.contract</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_hr_contract_search"/>
+            <field name="context">{'search_default_open': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first HR Contract!
+                </p>
+                <p>
+                    HR contracts define employment terms, salary, and statutory compliance for Indian employees.
+                </p>
+            </field>
+        </record>
+        
+    </data>
+</ocean>

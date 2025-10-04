@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Main Invoicing Menu -->
+        <menuitem id="menu_invoicing_root" 
+                  name="Invoicing" 
+                  parent="menu_accounting_root"
+                  sequence="20"
+                  web_icon="invoicing,static/description/icon.png"/>
+        
+        <!-- Customer Invoicing -->
+        <menuitem id="menu_customer_invoicing" 
+                  name="Customer Invoicing" 
+                  parent="menu_invoicing_root" 
+                  sequence="10"/>
+        
+        <menuitem id="menu_customer_invoices" 
+                  name="Invoices" 
+                  parent="menu_customer_invoicing" 
+                  action="action_account_invoice" 
+                  sequence="10"/>
+        
+        <menuitem id="menu_customer_payments" 
+                  name="Payments" 
+                  parent="menu_customer_invoicing" 
+                  action="action_account_payment" 
+                  sequence="20"/>
+        
+        <!-- Invoice Templates -->
+        <menuitem id="menu_invoice_templates" 
+                  name="Templates" 
+                  parent="menu_customer_invoicing" 
+                  action="action_account_invoice_template" 
+                  sequence="30"/>
+        
+        <!-- Reports -->
+        <menuitem id="menu_invoicing_reports" 
+                  name="Reports" 
+                  parent="menu_invoicing_root" 
+                  sequence="20"/>
+        
+        <menuitem id="menu_invoice_reports" 
+                  name="Invoice Reports" 
+                  parent="menu_invoicing_reports" 
+                  action="action_account_invoice_report" 
+                  sequence="10"/>
+        
+        <menuitem id="menu_payment_reports" 
+                  name="Payment Reports" 
+                  parent="menu_invoicing_reports" 
+                  action="action_account_payment_report" 
+                  sequence="20"/>
+        
+        <!-- Configuration -->
+        <menuitem id="menu_invoicing_config" 
+                  name="Configuration" 
+                  parent="menu_invoicing_root" 
+                  sequence="30"/>
+        
+        <menuitem id="menu_payment_methods" 
+                  name="Payment Methods" 
+                  parent="menu_invoicing_config" 
+                  action="action_account_payment_method" 
+                  sequence="10"/>
+        
+        <menuitem id="menu_payment_terms" 
+                  name="Payment Terms" 
+                  parent="menu_invoicing_config" 
+                  action="action_account_payment_term" 
+                  sequence="20"/>
+        
+    </data>
+</ocean>

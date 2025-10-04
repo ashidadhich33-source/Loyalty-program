@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data noupdate="1">
+        
+        <!-- Demo GST Returns -->
+        <record id="demo_gst_return_gstr1" model="gst.return">
+            <field name="name">GSTR-1 Demo Return</field>
+            <field name="return_type">gstr1</field>
+            <field name="period">2024-01</field>
+            <field name="state">draft</field>
+            <field name="age_group">toddler,teen</field>
+            <field name="size">S,M,L,XL</field>
+            <field name="season">summer,winter</field>
+            <field name="brand">KidsFashion,StyleKids</field>
+            <field name="color">blue,red,green</field>
+        </record>
+        
+        <record id="demo_gst_return_gstr3b" model="gst.return">
+            <field name="name">GSTR-3B Demo Return</field>
+            <field name="return_type">gstr3b</field>
+            <field name="period">2024-01</field>
+            <field name="state">draft</field>
+            <field name="age_group">toddler,teen</field>
+            <field name="size">S,M,L,XL</field>
+            <field name="season">summer,winter</field>
+            <field name="brand">KidsFashion,StyleKids</field>
+            <field name="color">blue,red,green</field>
+        </record>
+        
+    </data>
+</ocean>

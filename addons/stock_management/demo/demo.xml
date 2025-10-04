@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data noupdate="1">
+        
+        <!-- Demo Reorder Rules -->
+        <record id="demo_reorder_rule_baby" model="reorder.rule">
+            <field name="name">Baby Clothes Reorder Rule</field>
+            <field name="product_category">baby</field>
+            <field name="min_qty">50</field>
+            <field name="max_qty">200</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="demo_reorder_rule_toddler" model="reorder.rule">
+            <field name="name">Toddler Clothes Reorder Rule</field>
+            <field name="product_category">toddler</field>
+            <field name="min_qty">75</field>
+            <field name="max_qty">300</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <!-- Demo Stock Alerts -->
+        <record id="demo_stock_alert_low" model="stock.alert">
+            <field name="name">Low Stock Alert</field>
+            <field name="alert_type">low_stock</field>
+            <field name="threshold">10</field>
+            <field name="is_active">True</field>
+        </record>
+        
+    </data>
+</ocean>

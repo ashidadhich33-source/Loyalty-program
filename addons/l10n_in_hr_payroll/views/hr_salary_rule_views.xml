@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- HR Salary Rules Tree View -->
+        <record id="view_hr_salary_rule_tree" model="ir.ui.view">
+            <field name="name">hr.salary.rule.tree</field>
+            <field name="model">hr.salary.rule</field>
+            <field name="arch" type="xml">
+                <tree string="HR Salary Rules" decoration-info="active==False">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="category_id"/>
+                    <field name="amount_select"/>
+                    <field name="amount_percentage"/>
+                    <field name="amount_fixed"/>
+                    <field name="sequence"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- HR Salary Rules Form View -->
+        <record id="view_hr_salary_rule_form" model="ir.ui.view">
+            <field name="name">hr.salary.rule.form</field>
+            <field name="model">hr.salary.rule</field>
+            <field name="arch" type="xml">
+                <form string="HR Salary Rule">
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
+                                <field name="active" widget="boolean_button" options='{"terminology": "archive"}'/>
+                            </button>
+                        </div>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Salary Rule Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="code"/>
+                                <field name="category_id"/>
+                                <field name="sequence"/>
+                                <field name="active"/>
+                            </group>
+                            <group>
+                                <field name="age_group"/>
+                                <field name="size"/>
+                                <field name="season"/>
+                                <field name="brand"/>
+                                <field name="color"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="amount_select"/>
+                                <field name="amount_percentage" attrs="{'invisible': [('amount_select', '!=', 'percentage')]}"/>
+                                <field name="amount_fixed" attrs="{'invisible': [('amount_select', '!=', 'fixed')]}"/>
+                                <field name="amount_python_compute" attrs="{'invisible': [('amount_select', '!=', 'code')]}" widget="text"/>
+                            </group>
+                            <group>
+                                <field name="pf_applicable"/>
+                                <field name="esi_applicable"/>
+                                <field name="professional_tax_applicable"/>
+                                <field name="income_tax_applicable"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="description"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- HR Salary Rules Search View -->
+        <record id="view_hr_salary_rule_search" model="ir.ui.view">
+            <field name="name">hr.salary.rule.search</field>
+            <field name="model">hr.salary.rule</field>
+            <field name="arch" type="xml">
+                <search string="Search HR Salary Rules">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="category_id"/>
+                    <field name="amount_select"/>
+                    <field name="age_group"/>
+                    <field name="size"/>
+                    <field name="season"/>
+                    <field name="brand"/>
+                    <field name="color"/>
+                    <filter string="Active" name="active" domain="[('active', '=', True)]"/>
+                    <filter string="Inactive" name="inactive" domain="[('active', '=', False)]"/>
+                    <filter string="PF Applicable" name="pf_applicable" domain="[('pf_applicable', '=', True)]"/>
+                    <filter string="ESI Applicable" name="esi_applicable" domain="[('esi_applicable', '=', True)]"/>
+                    <filter string="Professional Tax Applicable" name="professional_tax_applicable" domain="[('professional_tax_applicable', '=', True)]"/>
+                    <filter string="Income Tax Applicable" name="income_tax_applicable" domain="[('income_tax_applicable', '=', True)]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Category" name="group_category" context="{'group_by': 'category_id'}"/>
+                        <filter string="Amount Type" name="group_amount_select" context="{'group_by': 'amount_select'}"/>
+                        <filter string="Age Group" name="group_age_group" context="{'group_by': 'age_group'}"/>
+                        <filter string="Size" name="group_size" context="{'group_by': 'size'}"/>
+                        <filter string="Season" name="group_season" context="{'group_by': 'season'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- HR Salary Rules Action -->
+        <record id="action_hr_salary_rule" model="ir.actions.act_window">
+            <field name="name">HR Salary Rules</field>
+            <field name="res_model">hr.salary.rule</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_hr_salary_rule_search"/>
+            <field name="context">{'search_default_active': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first HR Salary Rule!
+                </p>
+                <p>
+                    HR salary rules define how salaries, allowances, and deductions are calculated for Indian employees.
+                </p>
+            </field>
+        </record>
+        
+        <!-- HR Salary Rule Categories Tree View -->
+        <record id="view_hr_salary_rule_category_tree" model="ir.ui.view">
+            <field name="name">hr.salary.rule.category.tree</field>
+            <field name="model">hr.salary.rule.category</field>
+            <field name="arch" type="xml">
+                <tree string="HR Salary Rule Categories" decoration-info="active==False">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="category_type"/>
+                    <field name="sequence"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- HR Salary Rule Categories Form View -->
+        <record id="view_hr_salary_rule_category_form" model="ir.ui.view">
+            <field name="name">hr.salary.rule.category.form</field>
+            <field name="model">hr.salary.rule.category</field>
+            <field name="arch" type="xml">
+                <form string="HR Salary Rule Category">
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
+                                <field name="active" widget="boolean_button" options='{"terminology": "archive"}'/>
+                            </button>
+                        </div>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Category Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="code"/>
+                                <field name="category_type"/>
+                                <field name="sequence"/>
+                                <field name="active"/>
+                            </group>
+                            <group>
+                                <field name="age_group"/>
+                                <field name="size"/>
+                                <field name="season"/>
+                                <field name="brand"/>
+                                <field name="color"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="description"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- HR Salary Rule Categories Search View -->
+        <record id="view_hr_salary_rule_category_search" model="ir.ui.view">
+            <field name="name">hr.salary.rule.category.search</field>
+            <field name="model">hr.salary.rule.category</field>
+            <field name="arch" type="xml">
+                <search string="Search HR Salary Rule Categories">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="category_type"/>
+                    <field name="age_group"/>
+                    <field name="size"/>
+                    <field name="season"/>
+                    <field name="brand"/>
+                    <field name="color"/>
+                    <filter string="Active" name="active" domain="[('active', '=', True)]"/>
+                    <filter string="Inactive" name="inactive" domain="[('active', '=', False)]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Category Type" name="group_category_type" context="{'group_by': 'category_type'}"/>
+                        <filter string="Age Group" name="group_age_group" context="{'group_by': 'age_group'}"/>
+                        <filter string="Size" name="group_size" context="{'group_by': 'size'}"/>
+                        <filter string="Season" name="group_season" context="{'group_by': 'season'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- HR Salary Rule Categories Action -->
+        <record id="action_hr_salary_rule_category" model="ir.actions.act_window">
+            <field name="name">HR Salary Rule Categories</field>
+            <field name="res_model">hr.salary.rule.category</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_hr_salary_rule_category_search"/>
+            <field name="context">{'search_default_active': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first HR Salary Rule Category!
+                </p>
+                <p>
+                    HR salary rule categories group salary rules by type (Basic, Allowance, Deduction, etc.).
+                </p>
+            </field>
+        </record>
+        
+    </data>
+</ocean>

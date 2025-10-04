@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Demo Budget for Kids Clothing Business -->
+        
+        <record id="demo_budget_2024_25" model="account.budget">
+            <field name="name">FY 2024-25 Budget</field>
+            <field name="fiscal_year_id" ref="fiscal_year_2024_25"/>
+            <field name="state">approved</field>
+            <field name="product_category">general</field>
+            <field name="age_group_focus">all</field>
+            <field name="season_specialization">all_seasons</field>
+        </record>
+        
+        <record id="demo_budget_line_001" model="account.budget.line">
+            <field name="budget_id" ref="demo_budget_2024_25"/>
+            <field name="name">Kids Clothing Sales Budget</field>
+            <field name="account_id" ref="account_4110"/>
+            <field name="budget_amount">500000.00</field>
+            <field name="actual_amount">35000.00</field>
+            <field name="product_category">clothing</field>
+            <field name="age_group_focus">all</field>
+        </record>
+        
+        <record id="demo_budget_line_002" model="account.budget.line">
+            <field name="budget_id" ref="demo_budget_2024_25"/>
+            <field name="name">Accessories Sales Budget</field>
+            <field name="account_id" ref="account_4120"/>
+            <field name="budget_amount">100000.00</field>
+            <field name="actual_amount">0.00</field>
+            <field name="product_category">accessories</field>
+        </record>
+        
+        <record id="demo_budget_line_003" model="account.budget.line">
+            <field name="budget_id" ref="demo_budget_2024_25"/>
+            <field name="name">Shoes Sales Budget</field>
+            <field name="account_id" ref="account_4130"/>
+            <field name="budget_amount">75000.00</field>
+            <field name="actual_amount">0.00</field>
+            <field name="product_category">shoes</field>
+        </record>
+        
+        <record id="demo_budget_line_004" model="account.budget.line">
+            <field name="budget_id" ref="demo_budget_2024_25"/>
+            <field name="name">Rent Expense Budget</field>
+            <field name="account_id" ref="account_6100"/>
+            <field name="budget_amount">120000.00</field>
+            <field name="actual_amount">10000.00</field>
+            <field name="product_category">general</field>
+        </record>
+        
+        <record id="demo_budget_line_005" model="account.budget.line">
+            <field name="budget_id" ref="demo_budget_2024_25"/>
+            <field name="name">Utilities Expense Budget</field>
+            <field name="account_id" ref="account_6200"/>
+            <field name="budget_amount">36000.00</field>
+            <field name="actual_amount">3000.00</field>
+            <field name="product_category">general</field>
+        </record>
+        
+        <record id="demo_budget_line_006" model="account.budget.line">
+            <field name="budget_id" ref="demo_budget_2024_25"/>
+            <field name="name">Marketing Expense Budget</field>
+            <field name="account_id" ref="account_6300"/>
+            <field name="budget_amount">60000.00</field>
+            <field name="actual_amount">5000.00</field>
+            <field name="product_category">general</field>
+        </record>
+        
+        <record id="demo_budget_line_007" model="account.budget.line">
+            <field name="budget_id" ref="demo_budget_2024_25"/>
+            <field name="name">Employee Expenses Budget</field>
+            <field name="account_id" ref="account_6400"/>
+            <field name="budget_amount">240000.00</field>
+            <field name="actual_amount">20000.00</field>
+            <field name="product_category">general</field>
+        </record>
+        
+    </data>
+</ocean>

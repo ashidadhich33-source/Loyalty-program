@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Demo Bank Statements -->
+        <record id="demo_bank_statement_001" model="bank.statement">
+            <field name="name">STMT/00001</field>
+            <field name="date">2024-01-31</field>
+            <field name="bank_account_id" ref="bank_account_current"/>
+            <field name="balance_start">50000.00</field>
+            <field name="balance_end">52000.00</field>
+            <field name="state">confirm</field>
+            <field name="age_group">all</field>
+            <field name="season">all_season</field>
+            <field name="gst_treatment">regular</field>
+            <field name="note">Monthly bank statement for January 2024</field>
+        </record>
+        
+        <!-- Demo Bank Statement Lines -->
+        <record id="demo_bank_statement_line_001" model="bank.statement.line">
+            <field name="statement_id" ref="demo_bank_statement_001"/>
+            <field name="name">Customer Payment - UPI</field>
+            <field name="date">2024-01-22</field>
+            <field name="amount">885.00</field>
+            <field name="ref">UPI123456789</field>
+            <field name="partner_id" ref="contacts.demo_customer_002"/>
+            <field name="age_group">baby</field>
+            <field name="season">summer</field>
+            <field name="gst_treatment">regular</field>
+            <field name="is_reconciled">True</field>
+        </record>
+        
+        <record id="demo_bank_statement_line_002" model="bank.statement.line">
+            <field name="statement_id" ref="demo_bank_statement_001"/>
+            <field name="name">Customer Payment - Bank Transfer</field>
+            <field name="date">2024-01-28</field>
+            <field name="amount">885.00</field>
+            <field name="ref">TXN987654321</field>
+            <field name="partner_id" ref="contacts.demo_customer_003"/>
+            <field name="age_group">teen</field>
+            <field name="season">all_season</field>
+            <field name="gst_treatment">regular</field>
+            <field name="is_reconciled">True</field>
+        </record>
+        
+        <record id="demo_bank_statement_line_003" model="bank.statement.line">
+            <field name="statement_id" ref="demo_bank_statement_001"/>
+            <field name="name">Bank Charges</field>
+            <field name="date">2024-01-31</field>
+            <field name="amount">-50.00</field>
+            <field name="ref">CHG001</field>
+            <field name="age_group">all</field>
+            <field name="season">all_season</field>
+            <field name="gst_treatment">regular</field>
+            <field name="is_reconciled">False</field>
+        </record>
+        
+    </data>
+</ocean>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Payment Reconciliation Tree View -->
+        <record id="view_payment_reconciliation_tree" model="ir.ui.view">
+            <field name="name">payment.reconciliation.tree</field>
+            <field name="model">payment.reconciliation</field>
+            <field name="arch" type="xml">
+                <tree string="Payment Reconciliations" decoration-info="state=='draft'" decoration-success="state=='confirm'" decoration-muted="state=='cancel'">
+                    <field name="name"/>
+                    <field name="date"/>
+                    <field name="bank_account_id"/>
+                    <field name="state"/>
+                    <field name="age_group"/>
+                    <field name="season"/>
+                    <field name="gst_treatment"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Payment Reconciliation Form View -->
+        <record id="view_payment_reconciliation_form" model="ir.ui.view">
+            <field name="name">payment.reconciliation.form</field>
+            <field name="model">payment.reconciliation</field>
+            <field name="arch" type="xml">
+                <form string="Payment Reconciliation">
+                    <header>
+                        <button name="action_open" string="Open" type="object" class="btn-primary" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                        <button name="action_confirm" string="Confirm" type="object" attrs="{'invisible': [('state', '!=', 'open')]}"/>
+                        <button name="action_cancel" string="Cancel" type="object" attrs="{'invisible': [('state', 'in', ['cancel', 'confirm'])]}"/>
+                        <button name="action_draft" string="Set to Draft" type="object" attrs="{'invisible': [('state', '!=', 'cancel')]}"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,open,confirm"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Reconciliation Reference"/>
+                            </h1>
+                        </div>
+                        
+                        <group>
+                            <group>
+                                <field name="date"/>
+                                <field name="bank_account_id"/>
+                                <field name="company_id"/>
+                                <field name="currency_id"/>
+                            </group>
+                            <group>
+                                <field name="age_group"/>
+                                <field name="season"/>
+                                <field name="gst_treatment"/>
+                            </group>
+                        </group>
+                        
+                        <notebook>
+                            <page string="Reconciliation Lines">
+                                <field name="line_ids">
+                                    <tree editable="bottom">
+                                        <field name="name"/>
+                                        <field name="date"/>
+                                        <field name="amount"/>
+                                        <field name="ref"/>
+                                        <field name="partner_id"/>
+                                        <field name="age_group"/>
+                                        <field name="season"/>
+                                        <field name="gst_treatment"/>
+                                        <field name="is_reconciled"/>
+                                        <field name="note"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            
+                            <page string="Notes">
+                                <field name="note"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Payment Reconciliation Action -->
+        <record id="action_payment_reconciliation" model="ir.actions.act_window">
+            <field name="name">Payment Reconciliations</field>
+            <field name="res_model">payment.reconciliation</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'search_default_open': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first payment reconciliation!
+                </p>
+                <p>
+                    Payment reconciliations help you match payments with bank statements.
+                </p>
+            </field>
+        </record>
+        
+    </data>
+</ocean>

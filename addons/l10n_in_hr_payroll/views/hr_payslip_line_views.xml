@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- HR Payslip Lines Tree View -->
+        <record id="view_hr_payslip_line_tree" model="ir.ui.view">
+            <field name="name">hr.payslip.line.tree</field>
+            <field name="model">hr.payslip.line</field>
+            <field name="arch" type="xml">
+                <tree string="HR Payslip Lines">
+                    <field name="payslip_id"/>
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="category_id"/>
+                    <field name="amount"/>
+                    <field name="quantity"/>
+                    <field name="rate"/>
+                    <field name="sequence"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- HR Payslip Lines Form View -->
+        <record id="view_hr_payslip_line_form" model="ir.ui.view">
+            <field name="name">hr.payslip.line.form</field>
+            <field name="model">hr.payslip.line</field>
+            <field name="arch" type="xml">
+                <form string="HR Payslip Line">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Payslip Line Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="payslip_id"/>
+                                <field name="code"/>
+                                <field name="category_id"/>
+                                <field name="sequence"/>
+                            </group>
+                            <group>
+                                <field name="age_group"/>
+                                <field name="size"/>
+                                <field name="season"/>
+                                <field name="brand"/>
+                                <field name="color"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="amount"/>
+                                <field name="quantity"/>
+                                <field name="rate"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- HR Payslip Lines Search View -->
+        <record id="view_hr_payslip_line_search" model="ir.ui.view">
+            <field name="name">hr.payslip.line.search</field>
+            <field name="model">hr.payslip.line</field>
+            <field name="arch" type="xml">
+                <search string="Search HR Payslip Lines">
+                    <field name="payslip_id"/>
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="category_id"/>
+                    <field name="age_group"/>
+                    <field name="size"/>
+                    <field name="season"/>
+                    <field name="brand"/>
+                    <field name="color"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Payslip" name="group_payslip" context="{'group_by': 'payslip_id'}"/>
+                        <filter string="Category" name="group_category" context="{'group_by': 'category_id'}"/>
+                        <filter string="Age Group" name="group_age_group" context="{'group_by': 'age_group'}"/>
+                        <filter string="Size" name="group_size" context="{'group_by': 'size'}"/>
+                        <filter string="Season" name="group_season" context="{'group_by': 'season'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- HR Payslip Lines Action -->
+        <record id="action_hr_payslip_line" model="ir.actions.act_window">
+            <field name="name">HR Payslip Lines</field>
+            <field name="res_model">hr.payslip.line</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_hr_payslip_line_search"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first HR Payslip Line!
+                </p>
+                <p>
+                    HR payslip lines contain individual salary components and calculations.
+                </p>
+            </field>
+        </record>
+        
+    </data>
+</ocean>

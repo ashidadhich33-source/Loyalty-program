@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- POS Customer Creation Wizard Form View -->
+        <record id="view_pos_customer_wizard_form" model="ir.ui.view">
+            <field name="name">pos.customer.wizard.form</field>
+            <field name="model">pos.customer.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Create New Customer">
+                    <header>
+                        <button name="action_create_customer" string="Create Customer" type="object" class="btn-primary"/>
+                        <button name="action_create_and_continue" string="Create &amp; Continue" type="object" class="btn-success"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Customer Name" class="oe_inline"/>
+                            </h1>
+                        </div>
+                        
+                        <group>
+                            <group>
+                                <field name="customer_type"/>
+                                <field name="email"/>
+                                <field name="phone"/>
+                                <field name="mobile"/>
+                            </group>
+                            <group>
+                                <field name="loyalty_program_id"/>
+                            </group>
+                        </group>
+                        
+                        <group>
+                            <group>
+                                <field name="street"/>
+                                <field name="city"/>
+                                <field name="state_id"/>
+                                <field name="zip"/>
+                                <field name="country_id"/>
+                            </group>
+                        </group>
+                        
+                        <group>
+                            <group>
+                                <field name="child_count"/>
+                                <field name="child_ages"/>
+                            </group>
+                            <group>
+                                <field name="age_group_interest"/>
+                                <field name="gender_preference"/>
+                                <field name="seasonal_interest"/>
+                            </group>
+                        </group>
+                        
+                        <group>
+                            <field name="notes"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- POS Customer Creation Wizard Action -->
+        <record id="action_pos_customer_wizard" model="ir.actions.act_window">
+            <field name="name">Create Customer</field>
+            <field name="res_model">pos.customer.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="context">{}</field>
+        </record>
+        
+    </data>
+</ocean>

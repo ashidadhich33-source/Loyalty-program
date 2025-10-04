@@ -1,0 +1,10 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_edi_document,access_edi_document,model_edi_document,base.group_user,1,1,1,1
+access_edi_transaction,access_edi_transaction,model_edi_transaction,base.group_user,1,1,1,1
+access_edi_message,access_edi_message,model_edi_message,base.group_user,1,1,1,1
+access_edi_envelope,access_edi_envelope,model_edi_envelope,base.group_user,1,1,1,1
+access_edi_validation,access_edi_validation,model_edi_validation,base.group_user,1,1,1,1
+access_edi_transmission,access_edi_transmission,model_edi_transmission,base.group_user,1,1,1,1
+access_edi_acknowledgment,access_edi_acknowledgment,model_edi_acknowledgment,base.group_user,1,1,1,1
+access_edi_error,access_edi_error,model_edi_error,base.group_user,1,1,1,1
+access_edi_configuration,access_edi_configuration,model_edi_configuration,base.group_user,1,1,1,1

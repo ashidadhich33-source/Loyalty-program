@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Default Website for Kids Clothing Business -->
+        
+        <record id="website_kids_clothing" model="website">
+            <field name="name">Kids Clothing Store</field>
+            <field name="domain">www.kidsclothing.com</field>
+            <field name="is_active">True</field>
+            <field name="is_default">True</field>
+            <field name="sequence">10</field>
+            <field name="age_group_focus">all</field>
+            <field name="season_specialization">all_seasons</field>
+            <field name="product_category">clothing</field>
+            <field name="color_scheme">bright</field>
+            <field name="primary_color">#FF6B6B</field>
+            <field name="secondary_color">#4ECDC4</field>
+            <field name="meta_title">Kids Clothing Store - Premium Children's Fashion</field>
+            <field name="meta_description">Discover the latest trends in kids clothing. Premium quality, comfortable, and stylish clothing for children of all ages.</field>
+            <field name="meta_keywords">kids clothing, children fashion, baby clothes, toddler clothes, kids fashion</field>
+            <field name="contact_email">info@kidsclothing.com</field>
+            <field name="contact_phone">+91-9876543210</field>
+            <field name="contact_address">123 Fashion Street, Mumbai, Maharashtra 400001, India</field>
+            <field name="gst_number">27ABCDE1234F1Z5</field>
+            <field name="pan_number">ABCDE1234F</field>
+            <field name="facebook_url">https://facebook.com/kidsclothing</field>
+            <field name="instagram_url">https://instagram.com/kidsclothing</field>
+            <field name="twitter_url">https://twitter.com/kidsclothing</field>
+            <field name="youtube_url">https://youtube.com/kidsclothing</field>
+        </record>
+        
+    </data>
+</ocean>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data noupdate="1">
+        
+        <!-- Demo Indian Partners -->
+        <record id="demo_partner_supplier" model="res.partner">
+            <field name="name">Mumbai Textile Mills</field>
+            <field name="is_company">True</field>
+            <field name="country_id" ref="base.in"/>
+            <field name="state_id" ref="l10n_in.state_maharashtra"/>
+            <field name="city">Mumbai</field>
+            <field name="zip">400002</field>
+            <field name="street">789 Industrial Area</field>
+            <field name="phone">+91-22-98765432</field>
+            <field name="email">sales@mumbaitxtilemills.com</field>
+            <field name="website">https://www.mumbaitxtilemills.com</field>
+            <field name="supplier_rank">1</field>
+            <field name="age_group">toddler,teen</field>
+            <field name="size">M,L,XL,XXL</field>
+            <field name="season">summer,winter</field>
+            <field name="brand">TextilePro,QualityFabrics</field>
+            <field name="color">blue,red,green,yellow</field>
+        </record>
+        
+        <record id="demo_partner_customer" model="res.partner">
+            <field name="name">Bangalore Kids Boutique</field>
+            <field name="is_company">True</field>
+            <field name="country_id" ref="base.in"/>
+            <field name="state_id" ref="l10n_in.state_karnataka"/>
+            <field name="city">Bangalore</field>
+            <field name="zip">560001</field>
+            <field name="street">321 Shopping District</field>
+            <field name="phone">+91-80-12345678</field>
+            <field name="email">orders@bangalorekidsboutique.com</field>
+            <field name="website">https://www.bangalorekidsboutique.com</field>
+            <field name="customer_rank">1</field>
+            <field name="age_group">baby,toddler,teen</field>
+            <field name="size">XS,S,M,L,XL</field>
+            <field name="season">all_season</field>
+            <field name="brand">BoutiqueStyle,PremiumKids</field>
+            <field name="color">pink,blue,green,yellow,white</field>
+        </record>
+        
+    </data>
+</ocean>

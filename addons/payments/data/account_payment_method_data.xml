@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Payment Methods -->
+        <record id="payment_method_cash" model="account.payment.method">
+            <field name="name">Cash</field>
+            <field name="code">cash</field>
+            <field name="payment_type">both</field>
+            <field name="age_group">all</field>
+            <field name="season">all_season</field>
+            <field name="gst_treatment">regular</field>
+            <field name="requires_reference">False</field>
+            <field name="requires_approval">False</field>
+            <field name="auto_reconcile">True</field>
+            <field name="description">Cash payments</field>
+        </record>
+        
+        <record id="payment_method_bank_transfer" model="account.payment.method">
+            <field name="name">Bank Transfer</field>
+            <field name="code">bank_transfer</field>
+            <field name="payment_type">both</field>
+            <field name="age_group">all</field>
+            <field name="season">all_season</field>
+            <field name="gst_treatment">regular</field>
+            <field name="requires_reference">True</field>
+            <field name="requires_approval">False</field>
+            <field name="auto_reconcile">True</field>
+            <field name="description">Bank transfer payments</field>
+        </record>
+        
+        <record id="payment_method_cheque" model="account.payment.method">
+            <field name="name">Cheque</field>
+            <field name="code">cheque</field>
+            <field name="payment_type">both</field>
+            <field name="age_group">all</field>
+            <field name="season">all_season</field>
+            <field name="gst_treatment">regular</field>
+            <field name="requires_reference">True</field>
+            <field name="requires_approval">True</field>
+            <field name="auto_reconcile">False</field>
+            <field name="description">Cheque payments</field>
+        </record>
+        
+        <record id="payment_method_upi" model="account.payment.method">
+            <field name="name">UPI</field>
+            <field name="code">upi</field>
+            <field name="payment_type">inbound</field>
+            <field name="age_group">all</field>
+            <field name="season">all_season</field>
+            <field name="gst_treatment">regular</field>
+            <field name="requires_reference">True</field>
+            <field name="requires_approval">False</field>
+            <field name="auto_reconcile">True</field>
+            <field name="description">UPI payments (PhonePe, Paytm, Google Pay)</field>
+        </record>
+        
+        <record id="payment_method_card" model="account.payment.method">
+            <field name="name">Credit/Debit Card</field>
+            <field name="code">card</field>
+            <field name="payment_type">inbound</field>
+            <field name="age_group">all</field>
+            <field name="season">all_season</field>
+            <field name="gst_treatment">regular</field>
+            <field name="requires_reference">True</field>
+            <field name="requires_approval">False</field>
+            <field name="auto_reconcile">True</field>
+            <field name="description">Credit and debit card payments</field>
+        </record>
+        
+        <record id="payment_method_wallet" model="account.payment.method">
+            <field name="name">Digital Wallet</field>
+            <field name="code">wallet</field>
+            <field name="payment_type">inbound</field>
+            <field name="age_group">all</field>
+            <field name="season">all_season</field>
+            <field name="gst_treatment">regular</field>
+            <field name="requires_reference">True</field>
+            <field name="requires_approval">False</field>
+            <field name="auto_reconcile">True</field>
+            <field name="description">Digital wallet payments</field>
+        </record>
+        
+    </data>
+</ocean>

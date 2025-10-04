@@ -51,6 +51,27 @@ class PosOrder(BaseModel):
         help='Cashier who processed this order'
     )
     
+    # Employee Performance Tracking
+    employee_id = Many2OneField(
+        'hr.employee',
+        string='Sales Employee',
+        help='Employee who made the sale (for performance tracking)'
+    )
+    
+    sales_commission = FloatField(
+        string='Sales Commission',
+        digits=(12, 2),
+        default=0.0,
+        help='Commission earned by the sales employee'
+    )
+    
+    commission_rate = FloatField(
+        string='Commission Rate %',
+        digits=(5, 2),
+        default=0.0,
+        help='Commission rate applied to this sale'
+    )
+    
     # Customer Information
     partner_id = Many2OneField(
         'res.partner',
@@ -166,6 +187,20 @@ class PosOrder(BaseModel):
         help='Loyalty points used in this order'
     )
     
+    loyalty_discount_amount = FloatField(
+        string='Loyalty Discount Amount',
+        digits=(12, 2),
+        default=0.0,
+        help='Discount amount from loyalty points redemption'
+    )
+    
+    loyalty_points_rate = FloatField(
+        string='Points to Rupee Rate',
+        digits=(5, 2),
+        default=100.0,
+        help='Points required per rupee discount (e.g., 100 points = 1 rupee)'
+    )
+    
     # Receipt Information
     receipt_number = CharField(
         string='Receipt Number',
@@ -246,6 +281,10 @@ class PosOrder(BaseModel):
             order.amount_tax = tax_amount
             order.amount_discount = discount_amount
             order.amount_total = untaxed_amount + tax_amount
+            
+            # Calculate commission if employee is assigned
+            if order.employee_id:
+                order._calculate_commission()
     
     def action_confirm(self):
         """Confirm the order"""
@@ -326,6 +365,118 @@ class PosOrder(BaseModel):
             # This would integrate with loyalty addon
             pass
     
+    def action_redeem_loyalty_points(self, points_to_redeem):
+        """Redeem loyalty points for this order"""
+        for order in self:
+            if not order.partner_id:
+                raise UserError(_('Please select a customer to redeem loyalty points.'))
+            
+            if not order.config_id.enable_loyalty:
+                raise UserError(_('Loyalty program is not enabled for this POS.'))
+            
+            # Get customer's available points
+            customer = order.partner_id
+            available_points = customer.loyalty_points
+            
+            if points_to_redeem > available_points:
+                raise UserError(_('Insufficient loyalty points. Available: %d points') % available_points)
+            
+            if points_to_redeem <= 0:
+                raise UserError(_('Points to redeem must be greater than 0.'))
+            
+            # Calculate discount amount
+            discount_amount = points_to_redeem / order.loyalty_points_rate
+            
+            # Check if discount exceeds order amount
+            if discount_amount > order.amount_total:
+                discount_amount = order.amount_total
+                points_to_redeem = int(discount_amount * order.loyalty_points_rate)
+            
+            # Update order
+            order.loyalty_points_used = points_to_redeem
+            order.loyalty_discount_amount = discount_amount
+            
+            # Apply discount to order total
+            order.amount_total -= discount_amount
+            
+            # Create loyalty points transaction
+            order._create_loyalty_points_transaction(points_to_redeem, 'redeemed')
+            
+            return {
+                'type': 'ir.actions.client',
+                'tag': 'display_notification',
+                'params': {
+                    'title': _('Loyalty Points Redeemed'),
+                    'message': _('Successfully redeemed %d points for ₹%.2f discount') % (points_to_redeem, discount_amount),
+                    'type': 'success',
+                }
+            }
+    
+    def action_remove_loyalty_points(self):
+        """Remove loyalty points redemption from this order"""
+        for order in self:
+            if order.loyalty_points_used > 0:
+                # Restore order total
+                order.amount_total += order.loyalty_discount_amount
+                
+                # Reset loyalty fields
+                order.loyalty_points_used = 0
+                order.loyalty_discount_amount = 0.0
+                
+                return {
+                    'type': 'ir.actions.client',
+                    'tag': 'display_notification',
+                    'params': {
+                        'title': _('Loyalty Points Removed'),
+                        'message': _('Loyalty points redemption removed from order'),
+                        'type': 'info',
+                    }
+                }
+    
+    def _create_loyalty_points_transaction(self, points, transaction_type):
+        """Create loyalty points transaction"""
+        if not self.partner_id:
+            return
+        
+        # Create loyalty points record
+        loyalty_points_vals = {
+            'name': f"POS-{self.name}-{transaction_type.upper()}",
+            'partner_id': self.partner_id.id,
+            'points': points,
+            'points_type': transaction_type,
+            'transaction_type': 'purchase' if transaction_type == 'earned' else 'redemption',
+            'transaction_id': self.id,
+            'description': f'POS Order {self.name} - {transaction_type}',
+        }
+        
+        # Get loyalty program
+        loyalty_program = self.env['loyalty.program'].search([
+            ('is_active', '=', True)
+        ], limit=1)
+        
+        if loyalty_program:
+            loyalty_points_vals['program_id'] = loyalty_program.id
+        
+        self.env['loyalty.points'].create(loyalty_points_vals)
+    
+    def get_customer_loyalty_info(self):
+        """Get customer loyalty information for POS"""
+        if not self.partner_id:
+            return None
+        
+        customer = self.partner_id
+        
+        return {
+            'customer_id': customer.id,
+            'customer_name': customer.name,
+            'available_points': customer.loyalty_points,
+            'loyalty_level': customer.loyalty_level,
+            'points_rate': self.loyalty_points_rate,
+            'max_discount': customer.loyalty_points / self.loyalty_points_rate,
+            'points_used': self.loyalty_points_used,
+            'discount_amount': self.loyalty_discount_amount,
+        }
+    
     def _update_inventory(self):
         """Update inventory for sold products"""
         # This would integrate with inventory addon
@@ -393,3 +544,86 @@ class PosOrder(BaseModel):
             payment_summary[method_name] += payment.amount
         
         return payment_summary
+    
+    def _calculate_commission(self):
+        """Calculate commission for the sales employee"""
+        for order in self:
+            if not order.employee_id:
+                order.sales_commission = 0.0
+                order.commission_rate = 0.0
+                return
+            
+            # Get employee's commission rate
+            employee = order.employee_id
+            commission_rate = getattr(employee, 'commission_rate', 0.0)
+            
+            # If no commission rate set, use default from job position
+            if not commission_rate and employee.job_id:
+                commission_rate = getattr(employee.job_id, 'commission_rate', 0.0)
+            
+            # If still no rate, use default from department
+            if not commission_rate and employee.department_id:
+                commission_rate = getattr(employee.department_id, 'commission_rate', 0.0)
+            
+            # Calculate commission on untaxed amount
+            order.commission_rate = commission_rate
+            order.sales_commission = order.amount_untaxed * (commission_rate / 100)
+    
+    def get_employee_performance_data(self):
+        """Get performance data for the sales employee"""
+        if not self.employee_id:
+            return None
+        
+        return {
+            'employee_id': self.employee_id.id,
+            'employee_name': self.employee_id.name,
+            'order_amount': self.amount_total,
+            'commission_earned': self.sales_commission,
+            'commission_rate': self.commission_rate,
+            'order_date': self.date_order,
+            'age_group_focus': self._get_age_group_focus(),
+            'season_focus': self._get_season_focus(),
+            'brand_focus': self._get_brand_focus()
+        }
+    
+    def _get_age_group_focus(self):
+        """Get primary age group focus for this order"""
+        age_groups = {}
+        for line in self.lines:
+            if hasattr(line.product_id, 'age_group'):
+                age_group = line.product_id.age_group
+                if age_group not in age_groups:
+                    age_groups[age_group] = 0
+                age_groups[age_group] += line.price_subtotal
+        
+        if age_groups:
+            return max(age_groups, key=age_groups.get)
+        return 'all'
+    
+    def _get_season_focus(self):
+        """Get primary season focus for this order"""
+        seasons = {}
+        for line in self.lines:
+            if hasattr(line.product_id, 'season'):
+                season = line.product_id.season
+                if season not in seasons:
+                    seasons[season] = 0
+                seasons[season] += line.price_subtotal
+        
+        if seasons:
+            return max(seasons, key=seasons.get)
+        return 'all_season'
+    
+    def _get_brand_focus(self):
+        """Get primary brand focus for this order"""
+        brands = {}
+        for line in self.lines:
+            if hasattr(line.product_id, 'brand_id') and line.product_id.brand_id:
+                brand = line.product_id.brand_id.name
+                if brand not in brands:
+                    brands[brand] = 0
+                brands[brand] += line.price_subtotal
+        
+        if brands:
+            return max(brands, key=brands.get)
+        return 'Multiple Brands'

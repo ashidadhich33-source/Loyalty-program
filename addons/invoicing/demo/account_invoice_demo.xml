@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Demo Customer Invoices -->
+        <record id="demo_invoice_001" model="account.invoice">
+            <field name="name">INV/00001</field>
+            <field name="partner_id" ref="contacts.demo_customer_001"/>
+            <field name="date_invoice">2024-01-15</field>
+            <field name="date_due">2024-02-14</field>
+            <field name="reference">PO-2024-001</field>
+            <field name="age_group">kids</field>
+            <field name="season">winter</field>
+            <field name="gst_treatment">regular</field>
+            <field name="state">open</field>
+            <field name="payment_state">not_paid</field>
+            <field name="amount_untaxed">1000.00</field>
+            <field name="amount_tax">180.00</field>
+            <field name="amount_total">1180.00</field>
+            <field name="amount_residual">1180.00</field>
+            <field name="note">Payment due within 30 days. Late payment charges may apply.</field>
+        </record>
+        
+        <record id="demo_invoice_002" model="account.invoice">
+            <field name="name">INV/00002</field>
+            <field name="partner_id" ref="contacts.demo_customer_002"/>
+            <field name="date_invoice">2024-01-20</field>
+            <field name="date_due">2024-02-19</field>
+            <field name="reference">PO-2024-002</field>
+            <field name="age_group">baby</field>
+            <field name="season">summer</field>
+            <field name="gst_treatment">regular</field>
+            <field name="state">paid</field>
+            <field name="payment_state">paid</field>
+            <field name="amount_untaxed">750.00</field>
+            <field name="amount_tax">135.00</field>
+            <field name="amount_total">885.00</field>
+            <field name="amount_residual">0.00</field>
+            <field name="note">Thank you for your prompt payment!</field>
+        </record>
+        
+        <record id="demo_invoice_003" model="account.invoice">
+            <field name="name">INV/00003</field>
+            <field name="partner_id" ref="contacts.demo_customer_003"/>
+            <field name="date_invoice">2024-01-25</field>
+            <field name="date_due">2024-02-24</field>
+            <field name="reference">PO-2024-003</field>
+            <field name="age_group">teen</field>
+            <field name="season">all_season</field>
+            <field name="gst_treatment">regular</field>
+            <field name="state">open</field>
+            <field name="payment_state">partial</field>
+            <field name="amount_untaxed">1500.00</field>
+            <field name="amount_tax">270.00</field>
+            <field name="amount_total">1770.00</field>
+            <field name="amount_residual">885.00</field>
+            <field name="note">Partial payment received. Balance due within 30 days.</field>
+        </record>
+        
+        <!-- Demo Invoice Lines -->
+        <record id="demo_invoice_line_001" model="account.invoice.line">
+            <field name="invoice_id" ref="demo_invoice_001"/>
+            <field name="product_id" ref="products.demo_product_001"/>
+            <field name="name">Winter Jacket for Kids</field>
+            <field name="quantity">2</field>
+            <field name="price_unit">500.00</field>
+            <field name="price_subtotal">1000.00</field>
+            <field name="age_group">kids</field>
+            <field name="size">M</field>
+            <field name="season">winter</field>
+            <field name="brand">KidsBrand</field>
+            <field name="color">Blue</field>
+            <field name="gender">unisex</field>
+            <field name="special_occasion">casual</field>
+        </record>
+        
+        <record id="demo_invoice_line_002" model="account.invoice.line">
+            <field name="invoice_id" ref="demo_invoice_002"/>
+            <field name="product_id" ref="products.demo_product_002"/>
+            <field name="name">Summer Dress for Baby</field>
+            <field name="quantity">3</field>
+            <field name="price_unit">250.00</field>
+            <field name="price_subtotal">750.00</field>
+            <field name="age_group">baby</field>
+            <field name="size">S</field>
+            <field name="season">summer</field>
+            <field name="brand">BabySoft</field>
+            <field name="color">Pink</field>
+            <field name="gender">girls</field>
+            <field name="special_occasion">casual</field>
+        </record>
+        
+        <record id="demo_invoice_line_003" model="account.invoice.line">
+            <field name="invoice_id" ref="demo_invoice_003"/>
+            <field name="product_id" ref="products.demo_product_003"/>
+            <field name="name">Teen T-Shirt Set</field>
+            <field name="quantity">5</field>
+            <field name="price_unit">300.00</field>
+            <field name="price_subtotal">1500.00</field>
+            <field name="age_group">teen</field>
+            <field name="size">L</field>
+            <field name="season">all_season</field>
+            <field name="brand">TeenStyle</field>
+            <field name="color">Black</field>
+            <field name="gender">boys</field>
+            <field name="special_occasion">casual</field>
+        </record>
+        
+    </data>
+</ocean>

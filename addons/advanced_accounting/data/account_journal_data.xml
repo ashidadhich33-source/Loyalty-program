@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Journal Sequences -->
+        <record id="seq_account_journal" model="ir.sequence">
+            <field name="name">Journal Code</field>
+            <field name="code">account.journal</field>
+            <field name="prefix">JRN</field>
+            <field name="padding">3</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+        </record>
+        
+        <!-- Default Journals for Kids Clothing Business -->
+        
+        <record id="journal_sales" model="account.journal">
+            <field name="name">Sales Journal</field>
+            <field name="code">SAL</field>
+            <field name="journal_type">sale</field>
+            <field name="sequence">10</field>
+            <field name="is_active">True</field>
+            <field name="gst_applicable">True</field>
+            <field name="default_debit_account_id" ref="account_1200"/>
+            <field name="default_credit_account_id" ref="account_4100"/>
+            <field name="product_category">clothing</field>
+            <field name="age_group_focus">all</field>
+        </record>
+        
+        <record id="journal_purchase" model="account.journal">
+            <field name="name">Purchase Journal</field>
+            <field name="code">PUR</field>
+            <field name="journal_type">purchase</field>
+            <field name="sequence">20</field>
+            <field name="is_active">True</field>
+            <field name="gst_applicable">True</field>
+            <field name="default_debit_account_id" ref="account_1300"/>
+            <field name="default_credit_account_id" ref="account_2100"/>
+            <field name="product_category">clothing</field>
+            <field name="age_group_focus">all</field>
+        </record>
+        
+        <record id="journal_cash" model="account.journal">
+            <field name="name">Cash Journal</field>
+            <field name="code">CSH</field>
+            <field name="journal_type">cash</field>
+            <field name="sequence">30</field>
+            <field name="is_active">True</field>
+            <field name="default_debit_account_id" ref="account_1110"/>
+            <field name="default_credit_account_id" ref="account_1110"/>
+            <field name="product_category">general</field>
+        </record>
+        
+        <record id="journal_bank" model="account.journal">
+            <field name="name">Bank Journal</field>
+            <field name="code">BNK</field>
+            <field name="journal_type">bank</field>
+            <field name="sequence">40</field>
+            <field name="is_active">True</field>
+            <field name="default_debit_account_id" ref="account_1120"/>
+            <field name="default_credit_account_id" ref="account_1120"/>
+            <field name="product_category">general</field>
+        </record>
+        
+        <record id="journal_general" model="account.journal">
+            <field name="name">General Journal</field>
+            <field name="code">GEN</field>
+            <field name="journal_type">general</field>
+            <field name="sequence">50</field>
+            <field name="is_active">True</field>
+            <field name="product_category">general</field>
+        </record>
+        
+        <record id="journal_opening" model="account.journal">
+            <field name="name">Opening Journal</field>
+            <field name="code">OPN</field>
+            <field name="journal_type">opening</field>
+            <field name="sequence">60</field>
+            <field name="is_active">True</field>
+            <field name="product_category">general</field>
+        </record>
+        
+        <record id="journal_closing" model="account.journal">
+            <field name="name">Closing Journal</field>
+            <field name="code">CLS</field>
+            <field name="journal_type">closing</field>
+            <field name="sequence">70</field>
+            <field name="is_active">True</field>
+            <field name="product_category">general</field>
+        </record>
+        
+        <record id="journal_miscellaneous" model="account.journal">
+            <field name="name">Miscellaneous Journal</field>
+            <field name="code">MSC</field>
+            <field name="journal_type">miscellaneous</field>
+            <field name="sequence">80</field>
+            <field name="is_active">True</field>
+            <field name="product_category">general</field>
+        </record>
+        
+    </data>
+</ocean>

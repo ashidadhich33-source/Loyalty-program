@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- EDI Configurations Tree View -->
+        <record id="view_edi_configuration_tree" model="ir.ui.view">
+            <field name="name">edi.configuration.tree</field>
+            <field name="model">edi.configuration</field>
+            <field name="arch" type="xml">
+                <tree string="EDI Configurations" decoration-info="active==False" decoration-success="is_default==True">
+                    <field name="name"/>
+                    <field name="configuration_type"/>
+                    <field name="edi_format"/>
+                    <field name="edi_version"/>
+                    <field name="is_default"/>
+                    <field name="is_active"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- EDI Configurations Form View -->
+        <record id="view_edi_configuration_form" model="ir.ui.view">
+            <field name="name">edi.configuration.form</field>
+            <field name="model">edi.configuration</field>
+            <field name="arch" type="xml">
+                <form string="EDI Configuration">
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_set_default" type="object" class="oe_stat_button" icon="fa-star" string="Set Default" attrs="{'invisible': [('is_default', '=', True)]}"/>
+                            <button name="action_activate" type="object" class="oe_stat_button" icon="fa-check" string="Activate" attrs="{'invisible': [('is_active', '=', True)]}"/>
+                            <button name="action_deactivate" type="object" class="oe_stat_button" icon="fa-times" string="Deactivate" attrs="{'invisible': [('is_active', '=', False)]}"/>
+                        </div>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Configuration Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="configuration_type"/>
+                                <field name="edi_format"/>
+                                <field name="edi_version"/>
+                                <field name="sequence"/>
+                                <field name="is_default"/>
+                                <field name="is_active"/>
+                            </group>
+                            <group>
+                                <field name="age_group"/>
+                                <field name="size"/>
+                                <field name="season"/>
+                                <field name="brand"/>
+                                <field name="color"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="configuration_data" widget="text"/>
+                        </group>
+                        <group>
+                            <field name="partner_id"/>
+                            <field name="description"/>
+                            <field name="notes"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- EDI Configurations Search View -->
+        <record id="view_edi_configuration_search" model="ir.ui.view">
+            <field name="name">edi.configuration.search</field>
+            <field name="model">edi.configuration</field>
+            <field name="arch" type="xml">
+                <search string="Search EDI Configurations">
+                    <field name="name"/>
+                    <field name="configuration_type"/>
+                    <field name="edi_format"/>
+                    <field name="edi_version"/>
+                    <field name="partner_id"/>
+                    <field name="age_group"/>
+                    <field name="size"/>
+                    <field name="season"/>
+                    <field name="brand"/>
+                    <field name="color"/>
+                    <filter string="Active" name="active" domain="[('is_active', '=', True)]"/>
+                    <filter string="Inactive" name="inactive" domain="[('is_active', '=', False)]"/>
+                    <filter string="Default" name="default" domain="[('is_default', '=', True)]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Configuration Type" name="group_configuration_type" context="{'group_by': 'configuration_type'}"/>
+                        <filter string="EDI Format" name="group_edi_format" context="{'group_by': 'edi_format'}"/>
+                        <filter string="Partner" name="group_partner" context="{'group_by': 'partner_id'}"/>
+                        <filter string="Age Group" name="group_age_group" context="{'group_by': 'age_group'}"/>
+                        <filter string="Size" name="group_size" context="{'group_by': 'size'}"/>
+                        <filter string="Season" name="group_season" context="{'group_by': 'season'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- EDI Configurations Action -->
+        <record id="action_edi_configuration" model="ir.actions.act_window">
+            <field name="name">EDI Configurations</field>
+            <field name="res_model">edi.configuration</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_edi_configuration_search"/>
+            <field name="context">{'search_default_active': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first EDI Configuration!
+                </p>
+                <p>
+                    EDI configurations define connection, mapping, and validation settings for EDI processing.
+                </p>
+            </field>
+        </record>
+        
+    </data>
+</ocean>

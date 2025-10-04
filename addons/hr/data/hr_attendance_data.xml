@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Attendance Types -->
+        <record id="attendance_type_present" model="hr.attendance.type">
+            <field name="name">Present</field>
+            <field name="code">PRESENT</field>
+            <field name="description">Employee is present and working</field>
+            <field name="active">True</field>
+        </record>
+        
+        <record id="attendance_type_absent" model="hr.attendance.type">
+            <field name="name">Absent</field>
+            <field name="code">ABSENT</field>
+            <field name="description">Employee is absent</field>
+            <field name="active">True</field>
+        </record>
+        
+        <record id="attendance_type_late" model="hr.attendance.type">
+            <field name="name">Late</field>
+            <field name="code">LATE</field>
+            <field name="description">Employee arrived late</field>
+            <field name="active">True</field>
+        </record>
+        
+        <record id="attendance_type_half_day" model="hr.attendance.type">
+            <field name="name">Half Day</field>
+            <field name="code">HALF_DAY</field>
+            <field name="description">Employee worked half day</field>
+            <field name="active">True</field>
+        </record>
+        
+        <record id="attendance_type_overtime" model="hr.attendance.type">
+            <field name="name">Overtime</field>
+            <field name="code">OVERTIME</field>
+            <field name="description">Employee worked overtime</field>
+            <field name="active">True</field>
+        </record>
+        
+    </data>
+</ocean>

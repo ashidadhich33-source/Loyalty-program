@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Demo Journal Entries for Kids Clothing Business -->
+        
+        <record id="demo_move_001" model="account.move">
+            <field name="name">JE-001</field>
+            <field name="ref">Opening Balance Entry</field>
+            <field name="journal_id" ref="journal_opening"/>
+            <field name="move_type">entry</field>
+            <field name="date">2024-04-01</field>
+            <field name="state">posted</field>
+            <field name="narration">Opening balance entry for FY 2024-25</field>
+        </record>
+        
+        <record id="demo_move_line_001_1" model="account.move.line">
+            <field name="move_id" ref="demo_move_001"/>
+            <field name="name">Opening Balance - Cash</field>
+            <field name="account_id" ref="account_1110"/>
+            <field name="debit">50000.00</field>
+            <field name="credit">0.00</field>
+        </record>
+        
+        <record id="demo_move_line_001_2" model="account.move.line">
+            <field name="move_id" ref="demo_move_001"/>
+            <field name="name">Opening Balance - Owner's Capital</field>
+            <field name="account_id" ref="account_3100"/>
+            <field name="debit">0.00</field>
+            <field name="credit">50000.00</field>
+        </record>
+        
+        <record id="demo_move_002" model="account.move">
+            <field name="name">JE-002</field>
+            <field name="ref">Purchase of Kids Clothing</field>
+            <field name="journal_id" ref="journal_purchase"/>
+            <field name="move_type">entry</field>
+            <field name="date">2024-04-15</field>
+            <field name="state">posted</field>
+            <field name="narration">Purchase of kids clothing inventory</field>
+            <field name="product_category">clothing</field>
+            <field name="age_group_focus">all</field>
+        </record>
+        
+        <record id="demo_move_line_002_1" model="account.move.line">
+            <field name="move_id" ref="demo_move_002"/>
+            <field name="name">Kids Clothing Inventory</field>
+            <field name="account_id" ref="account_1310"/>
+            <field name="debit">25000.00</field>
+            <field name="credit">0.00</field>
+            <field name="product_category">clothing</field>
+            <field name="age_group_focus">all</field>
+        </record>
+        
+        <record id="demo_move_line_002_2" model="account.move.line">
+            <field name="move_id" ref="demo_move_002"/>
+            <field name="name">Accounts Payable</field>
+            <field name="account_id" ref="account_2100"/>
+            <field name="debit">0.00</field>
+            <field name="credit">25000.00</field>
+        </record>
+        
+        <record id="demo_move_003" model="account.move">
+            <field name="name">JE-003</field>
+            <field name="ref">Sales of Kids Clothing</field>
+            <field name="journal_id" ref="journal_sales"/>
+            <field name="move_type">entry</field>
+            <field name="date">2024-04-20</field>
+            <field name="state">posted</field>
+            <field name="narration">Sales of kids clothing</field>
+            <field name="product_category">clothing</field>
+            <field name="age_group_focus">all</field>
+        </record>
+        
+        <record id="demo_move_line_003_1" model="account.move.line">
+            <field name="move_id" ref="demo_move_003"/>
+            <field name="name">Accounts Receivable</field>
+            <field name="account_id" ref="account_1200"/>
+            <field name="debit">35000.00</field>
+            <field name="credit">0.00</field>
+        </record>
+        
+        <record id="demo_move_line_003_2" model="account.move.line">
+            <field name="move_id" ref="demo_move_003"/>
+            <field name="name">Kids Clothing Sales</field>
+            <field name="account_id" ref="account_4110"/>
+            <field name="debit">0.00</field>
+            <field name="credit">35000.00</field>
+            <field name="product_category">clothing</field>
+            <field name="age_group_focus">all</field>
+        </record>
+        
+        <record id="demo_move_004" model="account.move">
+            <field name="name">JE-004</field>
+            <field name="ref">Cost of Goods Sold</field>
+            <field name="journal_id" ref="journal_general"/>
+            <field name="move_type">entry</field>
+            <field name="date">2024-04-20</field>
+            <field name="state">posted</field>
+            <field name="narration">Cost of goods sold for kids clothing</field>
+            <field name="product_category">clothing</field>
+            <field name="age_group_focus">all</field>
+        </record>
+        
+        <record id="demo_move_line_004_1" model="account.move.line">
+            <field name="move_id" ref="demo_move_004"/>
+            <field name="name">Kids Clothing COGS</field>
+            <field name="account_id" ref="account_5110"/>
+            <field name="debit">15000.00</field>
+            <field name="credit">0.00</field>
+            <field name="product_category">clothing</field>
+            <field name="age_group_focus">all</field>
+        </record>
+        
+        <record id="demo_move_line_004_2" model="account.move.line">
+            <field name="move_id" ref="demo_move_004"/>
+            <field name="name">Kids Clothing Inventory</field>
+            <field name="account_id" ref="account_1310"/>
+            <field name="debit">0.00</field>
+            <field name="credit">15000.00</field>
+            <field name="product_category">clothing</field>
+            <field name="age_group_focus">all</field>
+        </record>
+        
+    </data>
+</ocean>

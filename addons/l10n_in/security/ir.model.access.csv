@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_res_country_state,access_res_country_state,model_res_country_state,base.group_user,1,1,1,1
+access_res_country_district,access_res_country_district,model_res_country_district,base.group_user,1,1,1,1
+access_res_country_taluka,access_res_country_taluka,model_res_country_taluka,base.group_user,1,1,1,1
+access_res_country_village,access_res_country_village,model_res_country_village,base.group_user,1,1,1,1
+access_res_bank,access_res_bank,model_res_bank,base.group_user,1,1,1,1
+access_res_bank_branch,access_res_bank_branch,model_res_bank_branch,base.group_user,1,1,1,1
+access_res_currency,access_res_currency,model_res_currency,base.group_user,1,1,1,1
+access_res_language,access_res_language,model_res_language,base.group_user,1,1,1,1
+access_res_company,access_res_company,model_res_company,base.group_user,1,1,1,1
+access_res_partner,access_res_partner,model_res_partner,base.group_user,1,1,1,1

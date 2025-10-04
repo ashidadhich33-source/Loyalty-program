@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Payment Tree View -->
+        <record id="view_account_payment_tree" model="ir.ui.view">
+            <field name="name">account.payment.tree</field>
+            <field name="model">account.payment</field>
+            <field name="arch" type="xml">
+                <tree string="Payments" decoration-info="state=='draft'" decoration-success="state=='posted'" decoration-muted="state=='cancelled'">
+                    <field name="name"/>
+                    <field name="date"/>
+                    <field name="partner_id"/>
+                    <field name="invoice_id"/>
+                    <field name="amount"/>
+                    <field name="payment_method_id"/>
+                    <field name="state"/>
+                    <field name="age_group"/>
+                    <field name="season"/>
+                    <field name="gst_treatment"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Payment Form View -->
+        <record id="view_account_payment_form" model="ir.ui.view">
+            <field name="name">account.payment.form</field>
+            <field name="model">account.payment</field>
+            <field name="arch" type="xml">
+                <form string="Payment">
+                    <header>
+                        <button name="action_post" string="Post" type="object" class="btn-primary" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                        <button name="action_cancel" string="Cancel" type="object" attrs="{'invisible': [('state', 'in', ['cancelled', 'reconciled'])]}"/>
+                        <button name="action_draft" string="Set to Draft" type="object" attrs="{'invisible': [('state', '!=', 'cancelled')]}"/>
+                        <button name="action_reconcile" string="Reconcile" type="object" attrs="{'invisible': [('state', '!=', 'posted')]}"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,posted,reconciled"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Payment Reference"/>
+                            </h1>
+                        </div>
+                        
+                        <group>
+                            <group>
+                                <field name="partner_id"/>
+                                <field name="invoice_id"/>
+                                <field name="date"/>
+                                <field name="amount"/>
+                            </group>
+                            <group>
+                                <field name="company_id"/>
+                                <field name="currency_id"/>
+                                <field name="payment_method_id"/>
+                                <field name="payment_type"/>
+                            </group>
+                        </group>
+                        
+                        <group>
+                            <group>
+                                <field name="age_group"/>
+                                <field name="season"/>
+                            </group>
+                            <group>
+                                <field name="gst_treatment"/>
+                                <field name="payment_reference"/>
+                            </group>
+                        </group>
+                        
+                        <group>
+                            <field name="communication"/>
+                            <field name="note"/>
+                        </group>
+                        
+                        <div class="oe_chatter">
+                            <field name="message_follower_ids"/>
+                            <field name="activity_ids"/>
+                            <field name="message_ids"/>
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Payment Search View -->
+        <record id="view_account_payment_search" model="ir.ui.view">
+            <field name="name">account.payment.search</field>
+            <field name="model">account.payment</field>
+            <field name="arch" type="xml">
+                <search string="Search Payments">
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="invoice_id"/>
+                    <field name="amount"/>
+                    <field name="payment_reference"/>
+                    
+                    <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
+                    <filter string="Posted" name="posted" domain="[('state', '=', 'posted')]"/>
+                    <filter string="Reconciled" name="reconciled" domain="[('state', '=', 'reconciled')]"/>
+                    <filter string="Cancelled" name="cancelled" domain="[('state', '=', 'cancelled')]"/>
+                    
+                    <separator/>
+                    <filter string="Inbound" name="inbound" domain="[('payment_type', '=', 'inbound')]"/>
+                    <filter string="Outbound" name="outbound" domain="[('payment_type', '=', 'outbound')]"/>
+                    
+                    <separator/>
+                    <filter string="Baby" name="baby" domain="[('age_group', '=', 'baby')]"/>
+                    <filter string="Toddler" name="toddler" domain="[('age_group', '=', 'toddler')]"/>
+                    <filter string="Kids" name="kids" domain="[('age_group', '=', 'kids')]"/>
+                    <filter string="Teen" name="teen" domain="[('age_group', '=', 'teen')]"/>
+                    
+                    <separator/>
+                    <filter string="Summer" name="summer" domain="[('season', '=', 'summer')]"/>
+                    <filter string="Winter" name="winter" domain="[('season', '=', 'winter')]"/>
+                    <filter string="Monsoon" name="monsoon" domain="[('season', '=', 'monsoon')]"/>
+                    <filter string="All Season" name="all_season" domain="[('season', '=', 'all_season')]"/>
+                    
+                    <separator/>
+                    <filter string="Regular" name="regular" domain="[('gst_treatment', '=', 'regular')]"/>
+                    <filter string="Composition" name="composition" domain="[('gst_treatment', '=', 'composition')]"/>
+                    <filter string="Unregistered" name="unregistered" domain="[('gst_treatment', '=', 'unregistered')]"/>
+                    
+                    <group expand="0" string="Group By">
+                        <filter string="Customer" name="partner" context="{'group_by': 'partner_id'}"/>
+                        <filter string="Invoice" name="invoice" context="{'group_by': 'invoice_id'}"/>
+                        <filter string="Payment Date" name="date" context="{'group_by': 'date'}"/>
+                        <filter string="Status" name="state" context="{'group_by': 'state'}"/>
+                        <filter string="Payment Type" name="payment_type" context="{'group_by': 'payment_type'}"/>
+                        <filter string="Payment Method" name="payment_method" context="{'group_by': 'payment_method_id'}"/>
+                        <filter string="Age Group" name="age_group" context="{'group_by': 'age_group'}"/>
+                        <filter string="Season" name="season" context="{'group_by': 'season'}"/>
+                        <filter string="GST Treatment" name="gst_treatment" context="{'group_by': 'gst_treatment'}"/>
+                        <filter string="Company" name="company" context="{'group_by': 'company_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- Payment Action -->
+        <record id="action_account_payment" model="ir.actions.act_window">
+            <field name="name">Payments</field>
+            <field name="res_model">account.payment</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_account_payment_search"/>
+            <field name="context">{'search_default_posted': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first payment!
+                </p>
+                <p>
+                    Payments are used to record customer payments against invoices.
+                </p>
+            </field>
+        </record>
+        
+    </data>
+</ocean>

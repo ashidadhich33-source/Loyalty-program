@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Default Invoice Templates -->
+        <record id="template_customer_invoice_default" model="account.invoice.template">
+            <field name="name">Default Customer Invoice</field>
+            <field name="description">Default template for customer invoices</field>
+            <field name="template_type">customer</field>
+            <field name="age_group">all</field>
+            <field name="season">all_season</field>
+            <field name="gst_treatment">regular</field>
+            <field name="header_html">&lt;div class="header"&gt;
+                &lt;h1&gt;INVOICE&lt;/h1&gt;
+                &lt;p&gt;Kids Clothing Store&lt;/p&gt;
+            &lt;/div&gt;</field>
+            <field name="footer_html">&lt;div class="footer"&gt;
+                &lt;p&gt;Thank you for your business!&lt;/p&gt;
+                &lt;p&gt;Terms and conditions apply.&lt;/p&gt;
+            &lt;/div&gt;</field>
+            <field name="default_payment_term_id" ref="payment_term_30_days"/>
+        </record>
+        
+        <record id="template_customer_invoice_baby" model="account.invoice.template">
+            <field name="name">Baby Clothing Invoice</field>
+            <field name="description">Template for baby clothing invoices</field>
+            <field name="template_type">customer</field>
+            <field name="age_group">baby</field>
+            <field name="season">all_season</field>
+            <field name="gst_treatment">regular</field>
+            <field name="header_html">&lt;div class="header"&gt;
+                &lt;h1&gt;BABY CLOTHING INVOICE&lt;/h1&gt;
+                &lt;p&gt;Soft &amp; Safe for Little Ones&lt;/p&gt;
+            &lt;/div&gt;</field>
+            <field name="footer_html">&lt;div class="footer"&gt;
+                &lt;p&gt;Thank you for choosing our baby collection!&lt;/p&gt;
+                &lt;p&gt;All products are baby-safe and hypoallergenic.&lt;/p&gt;
+            &lt;/div&gt;</field>
+            <field name="default_payment_term_id" ref="payment_term_30_days"/>
+        </record>
+        
+        <record id="template_customer_invoice_toddler" model="account.invoice.template">
+            <field name="name">Toddler Clothing Invoice</field>
+            <field name="description">Template for toddler clothing invoices</field>
+            <field name="template_type">customer</field>
+            <field name="age_group">toddler</field>
+            <field name="season">all_season</field>
+            <field name="gst_treatment">regular</field>
+            <field name="header_html">&lt;div class="header"&gt;
+                &lt;h1&gt;TODDLER CLOTHING INVOICE&lt;/h1&gt;
+                &lt;p&gt;Comfortable &amp; Durable for Active Kids&lt;/p&gt;
+            &lt;/div&gt;</field>
+            <field name="footer_html">&lt;div class="footer"&gt;
+                &lt;p&gt;Thank you for choosing our toddler collection!&lt;/p&gt;
+                &lt;p&gt;Designed for active play and comfort.&lt;/p&gt;
+            &lt;/div&gt;</field>
+            <field name="default_payment_term_id" ref="payment_term_30_days"/>
+        </record>
+        
+        <record id="template_customer_invoice_kids" model="account.invoice.template">
+            <field name="name">Kids Clothing Invoice</field>
+            <field name="description">Template for kids clothing invoices</field>
+            <field name="template_type">customer</field>
+            <field name="age_group">kids</field>
+            <field name="season">all_season</field>
+            <field name="gst_treatment">regular</field>
+            <field name="header_html">&lt;div class="header"&gt;
+                &lt;h1&gt;KIDS CLOTHING INVOICE&lt;/h1&gt;
+                &lt;p&gt;Style &amp; Quality for Growing Kids&lt;/p&gt;
+            &lt;/div&gt;</field>
+            <field name="footer_html">&lt;div class="footer"&gt;
+                &lt;p&gt;Thank you for choosing our kids collection!&lt;/p&gt;
+                &lt;p&gt;Perfect blend of style and durability.&lt;/p&gt;
+            &lt;/div&gt;</field>
+            <field name="default_payment_term_id" ref="payment_term_30_days"/>
+        </record>
+        
+        <record id="template_customer_invoice_teen" model="account.invoice.template">
+            <field name="name">Teen Clothing Invoice</field>
+            <field name="description">Template for teen clothing invoices</field>
+            <field name="template_type">customer</field>
+            <field name="age_group">teen</field>
+            <field name="season">all_season</field>
+            <field name="gst_treatment">regular</field>
+            <field name="header_html">&lt;div class="header"&gt;
+                &lt;h1&gt;TEEN CLOTHING INVOICE&lt;/h1&gt;
+                &lt;p&gt;Trendy &amp; Cool for Teens&lt;/p&gt;
+            &lt;/div&gt;</field>
+            <field name="footer_html">&lt;div class="footer"&gt;
+                &lt;p&gt;Thank you for choosing our teen collection!&lt;/p&gt;
+                &lt;p&gt;Latest trends for young fashionistas.&lt;/p&gt;
+            &lt;/div&gt;</field>
+            <field name="default_payment_term_id" ref="payment_term_30_days"/>
+        </record>
+        
+        <record id="template_credit_note_default" model="account.invoice.template">
+            <field name="name">Default Credit Note</field>
+            <field name="description">Default template for credit notes</field>
+            <field name="template_type">credit_note</field>
+            <field name="age_group">all</field>
+            <field name="season">all_season</field>
+            <field name="gst_treatment">regular</field>
+            <field name="header_html">&lt;div class="header"&gt;
+                &lt;h1&gt;CREDIT NOTE&lt;/h1&gt;
+                &lt;p&gt;Kids Clothing Store&lt;/p&gt;
+            &lt;/div&gt;</field>
+            <field name="footer_html">&lt;div class="footer"&gt;
+                &lt;p&gt;Credit note for returned items.&lt;/p&gt;
+                &lt;p&gt;Thank you for your understanding.&lt;/p&gt;
+            &lt;/div&gt;</field>
+        </record>
+        
+        <record id="template_debit_note_default" model="account.invoice.template">
+            <field name="name">Default Debit Note</field>
+            <field name="description">Default template for debit notes</field>
+            <field name="template_type">debit_note</field>
+            <field name="age_group">all</field>
+            <field name="season">all_season</field>
+            <field name="gst_treatment">regular</field>
+            <field name="header_html">&lt;div class="header"&gt;
+                &lt;h1&gt;DEBIT NOTE&lt;/h1&gt;
+                &lt;p&gt;Kids Clothing Store&lt;/p&gt;
+            &lt;/div&gt;</field>
+            <field name="footer_html">&lt;div class="footer"&gt;
+                &lt;p&gt;Additional charges applied.&lt;/p&gt;
+                &lt;p&gt;Thank you for your business.&lt;/p&gt;
+            &lt;/div&gt;</field>
+        </record>
+        
+    </data>
+</ocean>

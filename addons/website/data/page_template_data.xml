@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Default Page Templates for Kids Clothing Business -->
+        
+        <record id="template_home" model="website.template">
+            <field name="name">Kids Clothing Home Page</field>
+            <field name="code">kids_clothing_home</field>
+            <field name="description">Home page template for kids clothing store</field>
+            <field name="template_type">home</field>
+            <field name="is_active">True</field>
+            <field name="is_default">True</field>
+            <field name="sequence">10</field>
+            <field name="age_group_focus">all</field>
+            <field name="season_specialization">all_seasons</field>
+            <field name="product_category">clothing</field>
+            <field name="color_scheme">bright</field>
+            <field name="layout_type">single_column</field>
+            <field name="is_responsive">True</field>
+            <field name="mobile_optimized">True</field>
+            <field name="tablet_optimized">True</field>
+            <field name="seo_friendly">True</field>
+            <field name="meta_tags_included">True</field>
+        </record>
+        
+        <record id="template_product" model="website.template">
+            <field name="name">Kids Clothing Product Page</field>
+            <field name="code">kids_clothing_product</field>
+            <field name="description">Product page template for kids clothing</field>
+            <field name="template_type">product</field>
+            <field name="is_active">True</field>
+            <field name="is_default">True</field>
+            <field name="sequence">20</field>
+            <field name="age_group_focus">all</field>
+            <field name="season_specialization">all_seasons</field>
+            <field name="product_category">clothing</field>
+            <field name="color_scheme">bright</field>
+            <field name="layout_type">two_column</field>
+            <field name="is_responsive">True</field>
+            <field name="mobile_optimized">True</field>
+            <field name="tablet_optimized">True</field>
+            <field name="seo_friendly">True</field>
+            <field name="meta_tags_included">True</field>
+        </record>
+        
+        <record id="template_category" model="website.template">
+            <field name="name">Kids Clothing Category Page</field>
+            <field name="code">kids_clothing_category</field>
+            <field name="description">Category page template for kids clothing</field>
+            <field name="template_type">category</field>
+            <field name="is_active">True</field>
+            <field name="is_default">True</field>
+            <field name="sequence">30</field>
+            <field name="age_group_focus">all</field>
+            <field name="season_specialization">all_seasons</field>
+            <field name="product_category">clothing</field>
+            <field name="color_scheme">bright</field>
+            <field name="layout_type">grid</field>
+            <field name="is_responsive">True</field>
+            <field name="mobile_optimized">True</field>
+            <field name="tablet_optimized">True</field>
+            <field name="seo_friendly">True</field>
+            <field name="meta_tags_included">True</field>
+        </record>
+        
+        <record id="template_about" model="website.template">
+            <field name="name">Kids Clothing About Page</field>
+            <field name="code">kids_clothing_about</field>
+            <field name="description">About page template for kids clothing store</field>
+            <field name="template_type">about</field>
+            <field name="is_active">True</field>
+            <field name="is_default">True</field>
+            <field name="sequence">40</field>
+            <field name="age_group_focus">all</field>
+            <field name="season_specialization">all_seasons</field>
+            <field name="product_category">clothing</field>
+            <field name="color_scheme">bright</field>
+            <field name="layout_type">single_column</field>
+            <field name="is_responsive">True</field>
+            <field name="mobile_optimized">True</field>
+            <field name="tablet_optimized">True</field>
+            <field name="seo_friendly">True</field>
+            <field name="meta_tags_included">True</field>
+        </record>
+        
+        <record id="template_contact" model="website.template">
+            <field name="name">Kids Clothing Contact Page</field>
+            <field name="code">kids_clothing_contact</field>
+            <field name="description">Contact page template for kids clothing store</field>
+            <field name="template_type">contact</field>
+            <field name="is_active">True</field>
+            <field name="is_default">True</field>
+            <field name="sequence">50</field>
+            <field name="age_group_focus">all</field>
+            <field name="season_specialization">all_seasons</field>
+            <field name="product_category">clothing</field>
+            <field name="color_scheme">bright</field>
+            <field name="layout_type">two_column</field>
+            <field name="is_responsive">True</field>
+            <field name="mobile_optimized">True</field>
+            <field name="tablet_optimized">True</field>
+            <field name="seo_friendly">True</field>
+            <field name="meta_tags_included">True</field>
+        </record>
+        
+        <record id="template_blog" model="website.template">
+            <field name="name">Kids Clothing Blog Page</field>
+            <field name="code">kids_clothing_blog</field>
+            <field name="description">Blog page template for kids clothing store</field>
+            <field name="template_type">blog</field>
+            <field name="is_active">True</field>
+            <field name="is_default">True</field>
+            <field name="sequence">60</field>
+            <field name="age_group_focus">all</field>
+            <field name="season_specialization">all_seasons</field>
+            <field name="product_category">clothing</field>
+            <field name="color_scheme">bright</field>
+            <field name="layout_type">masonry</field>
+            <field name="is_responsive">True</field>
+            <field name="mobile_optimized">True</field>
+            <field name="tablet_optimized">True</field>
+            <field name="seo_friendly">True</field>
+            <field name="meta_tags_included">True</field>
+        </record>
+        
+        <!-- Default Themes for Kids Clothing Business -->
+        
+        <record id="theme_bright" model="website.theme">
+            <field name="name">Bright & Colorful Theme</field>
+            <field name="code">kids_clothing_bright</field>
+            <field name="description">Bright and colorful theme for kids clothing</field>
+            <field name="is_active">True</field>
+            <field name="is_default">True</field>
+            <field name="sequence">10</field>
+            <field name="age_group_focus">all</field>
+            <field name="season_specialization">all_seasons</field>
+            <field name="product_category">clothing</field>
+            <field name="color_scheme">bright</field>
+            <field name="primary_color">#FF6B6B</field>
+            <field name="secondary_color">#4ECDC4</field>
+            <field name="accent_color">#FFE66D</field>
+            <field name="font_family">Poppins, sans-serif</field>
+            <field name="font_size">16px</field>
+            <field name="layout_width">responsive</field>
+            <field name="sidebar_position">right</field>
+        </record>
+        
+        <record id="theme_pastel" model="website.theme">
+            <field name="name">Pastel & Soft Theme</field>
+            <field name="code">kids_clothing_pastel</field>
+            <field name="description">Pastel and soft theme for kids clothing</field>
+            <field name="is_active">True</field>
+            <field name="is_default">False</field>
+            <field name="sequence">20</field>
+            <field name="age_group_focus">all</field>
+            <field name="season_specialization">all_seasons</field>
+            <field name="product_category">clothing</field>
+            <field name="color_scheme">pastel</field>
+            <field name="primary_color">#FFB3BA</field>
+            <field name="secondary_color">#BAFFC9</field>
+            <field name="accent_color">#BAE1FF</field>
+            <field name="font_family">Quicksand, sans-serif</field>
+            <field name="font_size">16px</field>
+            <field name="layout_width">responsive</field>
+            <field name="sidebar_position">right</field>
+        </record>
+        
+        <record id="theme_neutral" model="website.theme">
+            <field name="name">Neutral & Classic Theme</field>
+            <field name="code">kids_clothing_neutral</field>
+            <field name="description">Neutral and classic theme for kids clothing</field>
+            <field name="is_active">True</field>
+            <field name="is_default">False</field>
+            <field name="sequence">30</field>
+            <field name="age_group_focus">all</field>
+            <field name="season_specialization">all_seasons</field>
+            <field name="product_category">clothing</field>
+            <field name="color_scheme">neutral</field>
+            <field name="primary_color">#6C7B7F</field>
+            <field name="secondary_color">#8FA68E</field>
+            <field name="accent_color">#D4A574</field>
+            <field name="font_family">Open Sans, sans-serif</field>
+            <field name="font_size">16px</field>
+            <field name="layout_width">responsive</field>
+            <field name="sidebar_position">right</field>
+        </record>
+        
+    </data>
+</ocean>

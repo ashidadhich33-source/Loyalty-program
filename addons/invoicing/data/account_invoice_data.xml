@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Invoice Sequences -->
+        <record id="seq_account_invoice" model="ir.sequence">
+            <field name="name">Customer Invoice</field>
+            <field name="code">account.invoice</field>
+            <field name="prefix">INV/</field>
+            <field name="padding">5</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+        
+        <record id="seq_account_payment" model="ir.sequence">
+            <field name="name">Account Payment</field>
+            <field name="code">account.payment</field>
+            <field name="prefix">PAY/</field>
+            <field name="padding">5</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+        
+        <!-- Payment Methods -->
+        <record id="payment_method_cash" model="account.payment.method">
+            <field name="name">Cash</field>
+            <field name="code">cash</field>
+            <field name="payment_type">inbound</field>
+        </record>
+        
+        <record id="payment_method_bank_transfer" model="account.payment.method">
+            <field name="name">Bank Transfer</field>
+            <field name="code">bank_transfer</field>
+            <field name="payment_type">inbound</field>
+        </record>
+        
+        <record id="payment_method_cheque" model="account.payment.method">
+            <field name="name">Cheque</field>
+            <field name="code">cheque</field>
+            <field name="payment_type">inbound</field>
+        </record>
+        
+        <record id="payment_method_upi" model="account.payment.method">
+            <field name="name">UPI</field>
+            <field name="code">upi</field>
+            <field name="payment_type">inbound</field>
+        </record>
+        
+        <record id="payment_method_card" model="account.payment.method">
+            <field name="name">Credit/Debit Card</field>
+            <field name="code">card</field>
+            <field name="payment_type">inbound</field>
+        </record>
+        
+        <!-- Payment Terms -->
+        <record id="payment_term_immediate" model="account.payment.term">
+            <field name="name">Immediate Payment</field>
+            <field name="line_ids" eval="[(0, 0, {'value': 'balance', 'days': 0})]"/>
+        </record>
+        
+        <record id="payment_term_15_days" model="account.payment.term">
+            <field name="name">15 Days</field>
+            <field name="line_ids" eval="[(0, 0, {'value': 'balance', 'days': 15})]"/>
+        </record>
+        
+        <record id="payment_term_30_days" model="account.payment.term">
+            <field name="name">30 Days</field>
+            <field name="line_ids" eval="[(0, 0, {'value': 'balance', 'days': 30})]"/>
+        </record>
+        
+        <record id="payment_term_45_days" model="account.payment.term">
+            <field name="name">45 Days</field>
+            <field name="line_ids" eval="[(0, 0, {'value': 'balance', 'days': 45})]"/>
+        </record>
+        
+        <record id="payment_term_60_days" model="account.payment.term">
+            <field name="name">60 Days</field>
+            <field name="line_ids" eval="[(0, 0, {'value': 'balance', 'days': 60})]"/>
+        </record>
+        
+    </data>
+</ocean>

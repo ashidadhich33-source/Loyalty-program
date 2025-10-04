@@ -10,8 +10,10 @@
                     <field name="name"/>
                     <field name="partner_id"/>
                     <field name="session_id"/>
+                    <field name="employee_id"/>
                     <field name="date_order"/>
                     <field name="amount_total"/>
+                    <field name="sales_commission"/>
                     <field name="state"/>
                     <field name="user_id"/>
                 </tree>
@@ -29,6 +31,7 @@
                         <button name="action_pay" string="Pay" type="object" class="btn-success" states="confirmed"/>
                         <button name="action_done" string="Done" type="object" class="btn-primary" states="paid"/>
                         <button name="action_cancel" string="Cancel" type="object" class="btn-secondary" states="draft,confirmed"/>
+                        <button name="%(action_pos_loyalty_wizard)d" string="Redeem Loyalty Points" type="action" class="btn-info" context="{'default_order_id': active_id}" attrs="{'invisible': [('partner_id', '=', False)]}"/>
                         <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,paid,done,cancel"/>
                     </header>
                     <sheet>
@@ -39,9 +42,17 @@
                         </div>
                         <group>
                             <group>
-                                <field name="partner_id"/>
+                                <field name="partner_id">
+                                    <tree>
+                                        <field name="name"/>
+                                        <field name="email"/>
+                                        <field name="phone"/>
+                                    </tree>
+                                </field>
+                                <button name="%(action_pos_customer_wizard)d" string="Create New Customer" type="action" class="btn-primary" context="{'default_partner_id': partner_id}"/>
                                 <field name="session_id"/>
                                 <field name="user_id"/>
+                                <field name="employee_id"/>
                                 <field name="date_order"/>
                                 <field name="order_type"/>
                             </group>
@@ -51,6 +62,11 @@
                                 <field name="amount_total"/>
                                 <field name="amount_paid"/>
                                 <field name="amount_return"/>
+                                <field name="sales_commission"/>
+                                <field name="commission_rate"/>
+                                <field name="loyalty_points_earned"/>
+                                <field name="loyalty_points_used"/>
+                                <field name="loyalty_discount_amount"/>
                             </group>
                         </group>
                         <notebook>
@@ -104,6 +120,7 @@
                     <field name="partner_id"/>
                     <field name="session_id"/>
                     <field name="user_id"/>
+                    <field name="employee_id"/>
                     <separator/>
                     <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
                     <filter string="Confirmed" name="confirmed" domain="[('state', '=', 'confirmed')]"/>
@@ -116,6 +133,7 @@
                         <filter string="Partner" name="partner" context="{'group_by': 'partner_id'}"/>
                         <filter string="Session" name="session" context="{'group_by': 'session_id'}"/>
                         <filter string="User" name="user" context="{'group_by': 'user_id'}"/>
+                        <filter string="Employee" name="employee" context="{'group_by': 'employee_id'}"/>
                         <filter string="State" name="state" context="{'group_by': 'state'}"/>
                         <filter string="Order Date" name="order_date" context="{'group_by': 'date_order:day'}"/>
                     </group>

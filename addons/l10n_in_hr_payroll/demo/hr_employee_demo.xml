@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data noupdate="1">
+        
+        <!-- Demo HR Employees -->
+        <record id="demo_hr_employee_manager" model="hr.employee">
+            <field name="name">Rajesh Kumar</field>
+            <field name="employee_id">EMP001</field>
+            <field name="work_email">rajesh.kumar@kidsclothingindia.com</field>
+            <field name="work_phone">+91-22-12345678</field>
+            <field name="department_id" ref="hr.dep_management"/>
+            <field name="job_id" ref="hr.job_manager"/>
+            <field name="age_group">adult</field>
+            <field name="size">L,XL</field>
+            <field name="season">all_season</field>
+            <field name="brand">Professional</field>
+            <field name="color">blue,white</field>
+        </record>
+        
+        <record id="demo_hr_employee_sales" model="hr.employee">
+            <field name="name">Priya Sharma</field>
+            <field name="employee_id">EMP002</field>
+            <field name="work_email">priya.sharma@kidsclothingindia.com</field>
+            <field name="work_phone">+91-22-12345679</field>
+            <field name="department_id" ref="hr.dep_sales"/>
+            <field name="job_id" ref="hr.job_sales"/>
+            <field name="age_group">adult</field>
+            <field name="size">S,M</field>
+            <field name="season">all_season</field>
+            <field name="brand">Professional</field>
+            <field name="color">pink,white</field>
+        </record>
+        
+    </data>
+</ocean>

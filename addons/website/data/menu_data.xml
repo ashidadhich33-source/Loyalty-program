@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Default Menu Items for Kids Clothing Website -->
+        
+        <record id="menu_home" model="website.menu">
+            <field name="name">Home</field>
+            <field name="url">/</field>
+            <field name="website_id" ref="website_kids_clothing"/>
+            <field name="is_active">True</field>
+            <field name="sequence">10</field>
+            <field name="age_group_focus">all</field>
+            <field name="season_specialization">all_seasons</field>
+            <field name="product_category">general</field>
+        </record>
+        
+        <record id="menu_products" model="website.menu">
+            <field name="name">Products</field>
+            <field name="url">/products</field>
+            <field name="website_id" ref="website_kids_clothing"/>
+            <field name="is_active">True</field>
+            <field name="sequence">20</field>
+            <field name="age_group_focus">all</field>
+            <field name="season_specialization">all_seasons</field>
+            <field name="product_category">clothing</field>
+        </record>
+        
+        <record id="menu_about" model="website.menu">
+            <field name="name">About Us</field>
+            <field name="url">/about</field>
+            <field name="website_id" ref="website_kids_clothing"/>
+            <field name="is_active">True</field>
+            <field name="sequence">30</field>
+            <field name="age_group_focus">all</field>
+            <field name="season_specialization">all_seasons</field>
+            <field name="product_category">general</field>
+        </record>
+        
+        <record id="menu_contact" model="website.menu">
+            <field name="name">Contact</field>
+            <field name="url">/contact</field>
+            <field name="website_id" ref="website_kids_clothing"/>
+            <field name="is_active">True</field>
+            <field name="sequence">40</field>
+            <field name="age_group_focus">all</field>
+            <field name="season_specialization">all_seasons</field>
+            <field name="product_category">general</field>
+        </record>
+        
+        <record id="menu_blog" model="website.menu">
+            <field name="name">Blog</field>
+            <field name="url">/blog</field>
+            <field name="website_id" ref="website_kids_clothing"/>
+            <field name="is_active">True</field>
+            <field name="sequence">50</field>
+            <field name="age_group_focus">all</field>
+            <field name="season_specialization">all_seasons</field>
+            <field name="product_category">general</field>
+        </record>
+        
+    </data>
+</ocean>

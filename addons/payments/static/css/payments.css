@@ -1,0 +1,71 @@
+/* Payments Addon Styles */
+
+.payment-status {
+    font-weight: bold;
+}
+
+.payment-status.draft {
+    color: #6c757d;
+}
+
+.payment-status.processing {
+    color: #007bff;
+}
+
+.payment-status.success {
+    color: #28a745;
+}
+
+.payment-status.failed {
+    color: #dc3545;
+}
+
+.payment-status.cancelled {
+    color: #6c757d;
+}
+
+.bank-statement-header {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.reconciliation-line {
+    border-left: 3px solid #007bff;
+    padding-left: 10px;
+    margin-bottom: 10px;
+}
+
+.reconciliation-line.reconciled {
+    border-left-color: #28a745;
+    background-color: #f8fff8;
+}
+
+.payment-method-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.payment-method-badge.cash {
+    background-color: #e3f2fd;
+    color: #1976d2;
+}
+
+.payment-method-badge.upi {
+    background-color: #f3e5f5;
+    color: #7b1fa2;
+}
+
+.payment-method-badge.card {
+    background-color: #e8f5e8;
+    color: #388e3c;
+}
+
+.payment-method-badge.cheque {
+    background-color: #fff3e0;
+    color: #f57c00;
+}

@@ -1,0 +1,12 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_account_tax,access_account_tax,model_account_tax,base.group_user,1,1,1,1
+access_account_tax_group,access_account_tax_group,model_account_tax_group,base.group_user,1,1,1,1
+access_account_fiscal_position,access_account_fiscal_position,model_account_fiscal_position,base.group_user,1,1,1,1
+access_account_fiscal_position_tax,access_account_fiscal_position_tax,model_account_fiscal_position_tax,base.group_user,1,1,1,1
+access_account_chart_template,access_account_chart_template,model_account_chart_template,base.group_user,1,1,1,1
+access_product_template,access_product_template,model_product_template,base.group_user,1,1,1,1
+access_sale_order,access_sale_order,model_sale_order,base.group_user,1,1,1,1
+access_purchase_order,access_purchase_order,model_purchase_order,base.group_user,1,1,1,1
+access_account_invoice,access_account_invoice,model_account_invoice,base.group_user,1,1,1,1
+access_gst_return,access_gst_return,model_gst_return,base.group_user,1,1,1,1
+access_gst_report,access_gst_report,model_gst_report,base.group_user,1,1,1,1

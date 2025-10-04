@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Payment Processing Sequences -->
+        <record id="seq_payment_processing" model="ir.sequence">
+            <field name="name">Payment Processing</field>
+            <field name="code">payment.processing</field>
+            <field name="prefix">PROC/</field>
+            <field name="padding">5</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+        
+        <record id="seq_bank_statement" model="ir.sequence">
+            <field name="name">Bank Statement</field>
+            <field name="code">bank.statement</field>
+            <field name="prefix">STMT/</field>
+            <field name="padding">5</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+        
+        <record id="seq_payment_reconciliation" model="ir.sequence">
+            <field name="name">Payment Reconciliation</field>
+            <field name="code">payment.reconciliation</field>
+            <field name="prefix">REC/</field>
+            <field name="padding">5</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+        
+    </data>
+</ocean>

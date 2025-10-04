@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Main Payments Menu -->
+        <menuitem id="menu_payments_root" 
+                  name="Payments" 
+                  parent="menu_accounting_root"
+                  sequence="30"
+                  web_icon="payments,static/description/icon.png"/>
+        
+        <!-- Payment Processing -->
+        <menuitem id="menu_payment_processing" 
+                  name="Payment Processing" 
+                  parent="menu_payments_root" 
+                  sequence="10"/>
+        
+        <menuitem id="menu_payment_processing_list" 
+                  name="Payment Processing" 
+                  parent="menu_payment_processing" 
+                  action="action_payment_processing" 
+                  sequence="10"/>
+        
+        <!-- Bank Integration -->
+        <menuitem id="menu_bank_integration" 
+                  name="Bank Integration" 
+                  parent="menu_payments_root" 
+                  sequence="20"/>
+        
+        <menuitem id="menu_bank_accounts" 
+                  name="Bank Accounts" 
+                  parent="menu_bank_integration" 
+                  action="action_bank_account" 
+                  sequence="10"/>
+        
+        <menuitem id="menu_bank_statements" 
+                  name="Bank Statements" 
+                  parent="menu_bank_integration" 
+                  action="action_bank_statement" 
+                  sequence="20"/>
+        
+        <menuitem id="menu_payment_reconciliation" 
+                  name="Payment Reconciliation" 
+                  parent="menu_bank_integration" 
+                  action="action_payment_reconciliation" 
+                  sequence="30"/>
+        
+        <!-- Configuration -->
+        <menuitem id="menu_payments_config" 
+                  name="Configuration" 
+                  parent="menu_payments_root" 
+                  sequence="30"/>
+        
+        <menuitem id="menu_payment_methods" 
+                  name="Payment Methods" 
+                  parent="menu_payments_config" 
+                  action="action_account_payment_method" 
+                  sequence="10"/>
+        
+        <menuitem id="menu_payment_terms" 
+                  name="Payment Terms" 
+                  parent="menu_payments_config" 
+                  action="action_account_payment_term" 
+                  sequence="20"/>
+        
+    </data>
+</ocean>

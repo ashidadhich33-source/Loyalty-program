@@ -1,0 +1,277 @@
+/* Advanced Accounting CSS for Kids Clothing ERP */
+
+/* Account Tree View Styling */
+.o_account_tree .o_account_code {
+    font-weight: bold;
+    color: #2E86AB;
+}
+
+.o_account_tree .o_account_name {
+    color: #333;
+}
+
+.o_account_tree .o_account_balance {
+    text-align: right;
+    font-weight: bold;
+}
+
+.o_account_tree .o_account_type_asset {
+    color: #28a745;
+}
+
+.o_account_tree .o_account_type_liability {
+    color: #ffc107;
+}
+
+.o_account_tree .o_account_type_equity {
+    color: #17a2b8;
+}
+
+.o_account_tree .o_account_type_income {
+    color: #007bff;
+}
+
+.o_account_tree .o_account_type_expense {
+    color: #dc3545;
+}
+
+/* Journal Entry Styling */
+.o_journal_entry .o_entry_header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+    padding: 10px;
+}
+
+.o_journal_entry .o_entry_lines {
+    margin-top: 10px;
+}
+
+.o_journal_entry .o_entry_line {
+    border-bottom: 1px solid #e9ecef;
+    padding: 5px 0;
+}
+
+.o_journal_entry .o_entry_line:hover {
+    background-color: #f8f9fa;
+}
+
+.o_journal_entry .o_debit_amount {
+    color: #28a745;
+    font-weight: bold;
+}
+
+.o_journal_entry .o_credit_amount {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+.o_journal_entry .o_balance_amount {
+    color: #6c757d;
+    font-weight: bold;
+}
+
+/* Budget Styling */
+.o_budget .o_budget_header {
+    background-color: #e3f2fd;
+    border-bottom: 1px solid #bbdefb;
+    padding: 10px;
+}
+
+.o_budget .o_budget_line {
+    border-bottom: 1px solid #e0e0e0;
+    padding: 8px 0;
+}
+
+.o_budget .o_budget_amount {
+    text-align: right;
+    font-weight: bold;
+}
+
+.o_budget .o_budget_variance {
+    text-align: right;
+}
+
+.o_budget .o_budget_variance_positive {
+    color: #28a745;
+}
+
+.o_budget .o_budget_variance_negative {
+    color: #dc3545;
+}
+
+/* Cost Center Styling */
+.o_cost_center .o_cost_center_header {
+    background-color: #fff3e0;
+    border-bottom: 1px solid #ffcc02;
+    padding: 10px;
+}
+
+.o_cost_center .o_cost_center_code {
+    font-weight: bold;
+    color: #f57c00;
+}
+
+.o_cost_center .o_cost_center_name {
+    color: #333;
+}
+
+.o_cost_center .o_cost_center_profit {
+    color: #28a745;
+    font-weight: bold;
+}
+
+.o_cost_center .o_cost_center_loss {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+/* Financial Report Styling */
+.o_financial_report .o_report_header {
+    background-color: #f3e5f5;
+    border-bottom: 1px solid #ce93d8;
+    padding: 10px;
+}
+
+.o_financial_report .o_report_line {
+    border-bottom: 1px solid #e1bee7;
+    padding: 5px 0;
+}
+
+.o_financial_report .o_report_line_header {
+    font-weight: bold;
+    background-color: #f8f9fa;
+}
+
+.o_financial_report .o_report_line_total {
+    font-weight: bold;
+    border-top: 2px solid #9c27b0;
+    background-color: #f3e5f5;
+}
+
+.o_financial_report .o_report_amount {
+    text-align: right;
+    font-weight: bold;
+}
+
+/* Kids Clothing Specific Styling */
+.o_kids_clothing .o_age_group_infant {
+    color: #ff6b6b;
+}
+
+.o_kids_clothing .o_age_group_toddler {
+    color: #4ecdc4;
+}
+
+.o_kids_clothing .o_age_group_preschool {
+    color: #45b7d1;
+}
+
+.o_kids_clothing .o_age_group_school_age {
+    color: #96ceb4;
+}
+
+.o_kids_clothing .o_age_group_teen {
+    color: #feca57;
+}
+
+.o_kids_clothing .o_season_summer {
+    color: #ff9ff3;
+}
+
+.o_kids_clothing .o_season_winter {
+    color: #54a0ff;
+}
+
+.o_kids_clothing .o_season_monsoon {
+    color: #5f27cd;
+}
+
+.o_kids_clothing .o_season_festival {
+    color: #ff6348;
+}
+
+.o_kids_clothing .o_product_clothing {
+    color: #2ed573;
+}
+
+.o_kids_clothing .o_product_accessories {
+    color: #ffa502;
+}
+
+.o_kids_clothing .o_product_shoes {
+    color: #ff3838;
+}
+
+.o_kids_clothing .o_product_toys {
+    color: #3742fa;
+}
+
+.o_kids_clothing .o_product_books {
+    color: #2f3542;
+}
+
+/* Indian Compliance Styling */
+.o_indian_compliance .o_gst_applicable {
+    color: #e74c3c;
+    font-weight: bold;
+}
+
+.o_indian_compliance .o_tds_applicable {
+    color: #f39c12;
+    font-weight: bold;
+}
+
+.o_indian_compliance .o_gst_rate {
+    color: #e74c3c;
+}
+
+.o_indian_compliance .o_tds_rate {
+    color: #f39c12;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .o_account_tree .o_account_code,
+    .o_account_tree .o_account_name {
+        font-size: 12px;
+    }
+    
+    .o_journal_entry .o_entry_line {
+        padding: 3px 0;
+    }
+    
+    .o_budget .o_budget_line {
+        padding: 5px 0;
+    }
+    
+    .o_cost_center .o_cost_center_header {
+        padding: 5px;
+    }
+    
+    .o_financial_report .o_report_header {
+        padding: 5px;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .o_account_tree,
+    .o_journal_entry,
+    .o_budget,
+    .o_cost_center,
+    .o_financial_report {
+        color: #000 !important;
+        background: #fff !important;
+    }
+    
+    .o_account_tree .o_account_code,
+    .o_account_tree .o_account_name,
+    .o_journal_entry .o_debit_amount,
+    .o_journal_entry .o_credit_amount,
+    .o_budget .o_budget_amount,
+    .o_cost_center .o_cost_center_profit,
+    .o_cost_center .o_cost_center_loss,
+    .o_financial_report .o_report_amount {
+        color: #000 !important;
+    }
+}

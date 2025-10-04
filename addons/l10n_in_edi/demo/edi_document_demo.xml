@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data noupdate="1">
+        
+        <!-- Demo EDI Documents -->
+        <record id="demo_edi_document_invoice" model="edi.document">
+            <field name="name">Demo E-Invoice</field>
+            <field name="document_type">invoice</field>
+            <field name="edi_format">json</field>
+            <field name="edi_version">1.0</field>
+            <field name="state">draft</field>
+            <field name="age_group">toddler,teen</field>
+            <field name="size">S,M,L,XL</field>
+            <field name="season">summer,winter</field>
+            <field name="brand">KidsFashion,StyleKids</field>
+            <field name="color">blue,red,green</field>
+        </record>
+        
+        <record id="demo_edi_document_ewaybill" model="edi.document">
+            <field name="name">Demo E-Way Bill</field>
+            <field name="document_type">ewaybill</field>
+            <field name="edi_format">json</field>
+            <field name="edi_version">1.0</field>
+            <field name="state">draft</field>
+            <field name="age_group">toddler,teen</field>
+            <field name="size">S,M,L,XL</field>
+            <field name="season">summer,winter</field>
+            <field name="brand">KidsFashion,StyleKids</field>
+            <field name="color">blue,red,green</field>
+        </record>
+        
+    </data>
+</ocean>

@@ -1,0 +1,644 @@
+/* Website CSS for Kids Clothing ERP */
+
+/* Website Management Styling */
+.o_website_tree .o_website_name {
+    font-weight: bold;
+    color: #2E86AB;
+}
+
+.o_website_tree .o_website_domain {
+    color: #6c757d;
+    font-style: italic;
+}
+
+.o_website_tree .o_website_status {
+    text-align: center;
+}
+
+.o_website_tree .o_website_status_active {
+    color: #28a745;
+    font-weight: bold;
+}
+
+.o_website_tree .o_website_status_inactive {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+.o_website_tree .o_website_default {
+    color: #ffc107;
+    font-weight: bold;
+}
+
+/* Page Management Styling */
+.o_website_page_tree .o_page_name {
+    font-weight: bold;
+    color: #2E86AB;
+}
+
+.o_website_page_tree .o_page_url {
+    color: #6c757d;
+    font-family: monospace;
+}
+
+.o_website_page_tree .o_page_type {
+    text-align: center;
+}
+
+.o_website_page_tree .o_page_type_home {
+    color: #007bff;
+    font-weight: bold;
+}
+
+.o_website_page_tree .o_page_type_product {
+    color: #28a745;
+    font-weight: bold;
+}
+
+.o_website_page_tree .o_page_type_category {
+    color: #17a2b8;
+    font-weight: bold;
+}
+
+.o_website_page_tree .o_page_type_about {
+    color: #6f42c1;
+    font-weight: bold;
+}
+
+.o_website_page_tree .o_page_type_contact {
+    color: #fd7e14;
+    font-weight: bold;
+}
+
+.o_website_page_tree .o_page_type_blog {
+    color: #e83e8c;
+    font-weight: bold;
+}
+
+.o_website_page_tree .o_page_published {
+    color: #28a745;
+    font-weight: bold;
+}
+
+.o_website_page_tree .o_page_unpublished {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+/* Template Management Styling */
+.o_website_template_tree .o_template_name {
+    font-weight: bold;
+    color: #2E86AB;
+}
+
+.o_website_template_tree .o_template_code {
+    color: #6c757d;
+    font-family: monospace;
+}
+
+.o_website_template_tree .o_template_type {
+    text-align: center;
+}
+
+.o_website_template_tree .o_template_type_home {
+    color: #007bff;
+    font-weight: bold;
+}
+
+.o_website_template_tree .o_template_type_product {
+    color: #28a745;
+    font-weight: bold;
+}
+
+.o_website_template_tree .o_template_type_category {
+    color: #17a2b8;
+    font-weight: bold;
+}
+
+.o_website_template_tree .o_template_type_about {
+    color: #6f42c1;
+    font-weight: bold;
+}
+
+.o_website_template_tree .o_template_type_contact {
+    color: #fd7e14;
+    font-weight: bold;
+}
+
+.o_website_template_tree .o_template_type_blog {
+    color: #e83e8c;
+    font-weight: bold;
+}
+
+.o_website_template_tree .o_template_default {
+    color: #ffc107;
+    font-weight: bold;
+}
+
+.o_website_template_tree .o_template_responsive {
+    color: #28a745;
+}
+
+.o_website_template_tree .o_template_seo_friendly {
+    color: #17a2b8;
+}
+
+/* Theme Management Styling */
+.o_website_theme_tree .o_theme_name {
+    font-weight: bold;
+    color: #2E86AB;
+}
+
+.o_website_theme_tree .o_theme_code {
+    color: #6c757d;
+    font-family: monospace;
+}
+
+.o_website_theme_tree .o_theme_color_scheme {
+    text-align: center;
+}
+
+.o_website_theme_tree .o_theme_color_bright {
+    color: #ff6b6b;
+    font-weight: bold;
+}
+
+.o_website_theme_tree .o_theme_color_pastel {
+    color: #ffb3ba;
+    font-weight: bold;
+}
+
+.o_website_theme_tree .o_theme_color_neutral {
+    color: #6c7b7f;
+    font-weight: bold;
+}
+
+.o_website_theme_tree .o_theme_color_vibrant {
+    color: #ff6348;
+    font-weight: bold;
+}
+
+.o_website_theme_tree .o_theme_default {
+    color: #ffc107;
+    font-weight: bold;
+}
+
+/* Content Management Styling */
+.o_website_content_tree .o_content_name {
+    font-weight: bold;
+    color: #2E86AB;
+}
+
+.o_website_content_tree .o_content_type {
+    text-align: center;
+}
+
+.o_website_content_tree .o_content_type_text {
+    color: #007bff;
+    font-weight: bold;
+}
+
+.o_website_content_tree .o_content_type_image {
+    color: #28a745;
+    font-weight: bold;
+}
+
+.o_website_content_tree .o_content_type_video {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+.o_website_content_tree .o_content_type_gallery {
+    color: #17a2b8;
+    font-weight: bold;
+}
+
+.o_website_content_tree .o_content_type_slider {
+    color: #6f42c1;
+    font-weight: bold;
+}
+
+.o_website_content_tree .o_content_type_banner {
+    color: #fd7e14;
+    font-weight: bold;
+}
+
+.o_website_content_tree .o_content_type_testimonial {
+    color: #e83e8c;
+    font-weight: bold;
+}
+
+.o_website_content_tree .o_content_type_product_showcase {
+    color: #20c997;
+    font-weight: bold;
+}
+
+.o_website_content_tree .o_content_type_newsletter {
+    color: #6c757d;
+    font-weight: bold;
+}
+
+.o_website_content_tree .o_content_type_contact_form {
+    color: #343a40;
+    font-weight: bold;
+}
+
+.o_website_content_tree .o_content_published {
+    color: #28a745;
+    font-weight: bold;
+}
+
+.o_website_content_tree .o_content_unpublished {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+.o_website_content_tree .o_content_display_position {
+    text-align: center;
+}
+
+.o_website_content_tree .o_content_display_header {
+    color: #007bff;
+}
+
+.o_website_content_tree .o_content_display_hero {
+    color: #28a745;
+}
+
+.o_website_content_tree .o_content_display_content {
+    color: #17a2b8;
+}
+
+.o_website_content_tree .o_content_display_sidebar {
+    color: #6f42c1;
+}
+
+.o_website_content_tree .o_content_display_footer {
+    color: #fd7e14;
+}
+
+.o_website_content_tree .o_content_display_popup {
+    color: #e83e8c;
+}
+
+/* Form Management Styling */
+.o_website_form_tree .o_form_name {
+    font-weight: bold;
+    color: #2E86AB;
+}
+
+.o_website_form_tree .o_form_type {
+    text-align: center;
+}
+
+.o_website_form_tree .o_form_type_contact {
+    color: #007bff;
+    font-weight: bold;
+}
+
+.o_website_form_tree .o_form_type_newsletter {
+    color: #28a745;
+    font-weight: bold;
+}
+
+.o_website_form_tree .o_form_type_inquiry {
+    color: #17a2b8;
+    font-weight: bold;
+}
+
+.o_website_form_tree .o_form_type_feedback {
+    color: #6f42c1;
+    font-weight: bold;
+}
+
+.o_website_form_tree .o_form_type_survey {
+    color: #fd7e14;
+    font-weight: bold;
+}
+
+.o_website_form_tree .o_form_type_registration {
+    color: #e83e8c;
+    font-weight: bold;
+}
+
+.o_website_form_tree .o_form_published {
+    color: #28a745;
+    font-weight: bold;
+}
+
+.o_website_form_tree .o_form_unpublished {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+.o_website_form_tree .o_form_action_type {
+    text-align: center;
+}
+
+.o_website_form_tree .o_form_action_email {
+    color: #007bff;
+}
+
+.o_website_form_tree .o_form_action_create_lead {
+    color: #28a745;
+}
+
+.o_website_form_tree .o_form_action_create_contact {
+    color: #17a2b8;
+}
+
+.o_website_form_tree .o_form_action_redirect {
+    color: #6f42c1;
+}
+
+.o_website_form_tree .o_form_action_custom {
+    color: #fd7e14;
+}
+
+/* Form Submission Styling */
+.o_website_form_submission_tree .o_submission_name {
+    font-weight: bold;
+    color: #2E86AB;
+}
+
+.o_website_form_submission_tree .o_submission_state {
+    text-align: center;
+}
+
+.o_website_form_submission_tree .o_submission_state_new {
+    color: #007bff;
+    font-weight: bold;
+}
+
+.o_website_form_submission_tree .o_submission_state_processed {
+    color: #28a745;
+    font-weight: bold;
+}
+
+.o_website_form_submission_tree .o_submission_state_replied {
+    color: #17a2b8;
+    font-weight: bold;
+}
+
+.o_website_form_submission_tree .o_submission_state_closed {
+    color: #6c757d;
+    font-weight: bold;
+}
+
+.o_website_form_submission_tree .o_submission_contact_name {
+    color: #343a40;
+}
+
+.o_website_form_submission_tree .o_submission_contact_email {
+    color: #6c757d;
+}
+
+.o_website_form_submission_tree .o_submission_contact_phone {
+    color: #6c757d;
+}
+
+/* Analytics Styling */
+.o_website_analytics_tree .o_analytics_name {
+    font-weight: bold;
+    color: #2E86AB;
+}
+
+.o_website_analytics_tree .o_analytics_date {
+    color: #6c757d;
+}
+
+.o_website_analytics_tree .o_analytics_visitors {
+    color: #007bff;
+    font-weight: bold;
+}
+
+.o_website_analytics_tree .o_analytics_page_views {
+    color: #28a745;
+    font-weight: bold;
+}
+
+.o_website_analytics_tree .o_analytics_bounce_rate {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+.o_website_analytics_tree .o_analytics_conversion_rate {
+    color: #17a2b8;
+    font-weight: bold;
+}
+
+.o_website_analytics_tree .o_analytics_revenue {
+    color: #ffc107;
+    font-weight: bold;
+}
+
+.o_website_analytics_tree .o_analytics_country {
+    color: #6c757d;
+}
+
+.o_website_analytics_tree .o_analytics_device_type {
+    text-align: center;
+}
+
+.o_website_analytics_tree .o_analytics_device_desktop {
+    color: #007bff;
+}
+
+.o_website_analytics_tree .o_analytics_device_mobile {
+    color: #28a745;
+}
+
+.o_website_analytics_tree .o_analytics_device_tablet {
+    color: #17a2b8;
+}
+
+.o_website_analytics_tree .o_analytics_traffic_source {
+    text-align: center;
+}
+
+.o_website_analytics_tree .o_analytics_traffic_direct {
+    color: #007bff;
+}
+
+.o_website_analytics_tree .o_analytics_traffic_search {
+    color: #28a745;
+}
+
+.o_website_analytics_tree .o_analytics_traffic_social {
+    color: #17a2b8;
+}
+
+.o_website_analytics_tree .o_analytics_traffic_referral {
+    color: #6f42c1;
+}
+
+.o_website_analytics_tree .o_analytics_traffic_email {
+    color: #fd7e14;
+}
+
+.o_website_analytics_tree .o_analytics_traffic_paid {
+    color: #e83e8c;
+}
+
+.o_website_analytics_tree .o_analytics_traffic_other {
+    color: #6c757d;
+}
+
+/* Visitor Styling */
+.o_website_visitor_tree .o_visitor_name {
+    font-weight: bold;
+    color: #2E86AB;
+}
+
+.o_website_visitor_tree .o_visitor_id {
+    color: #6c757d;
+    font-family: monospace;
+}
+
+.o_website_visitor_tree .o_visitor_visits {
+    color: #007bff;
+    font-weight: bold;
+}
+
+.o_website_visitor_tree .o_visitor_page_views {
+    color: #28a745;
+    font-weight: bold;
+}
+
+.o_website_visitor_tree .o_visitor_country {
+    color: #6c757d;
+}
+
+.o_website_visitor_tree .o_visitor_device_type {
+    text-align: center;
+}
+
+.o_website_visitor_tree .o_visitor_device_desktop {
+    color: #007bff;
+}
+
+.o_website_visitor_tree .o_visitor_device_mobile {
+    color: #28a745;
+}
+
+.o_website_visitor_tree .o_visitor_device_tablet {
+    color: #17a2b8;
+}
+
+.o_website_visitor_tree .o_visitor_returning {
+    color: #28a745;
+    font-weight: bold;
+}
+
+.o_website_visitor_tree .o_visitor_converted {
+    color: #ffc107;
+    font-weight: bold;
+}
+
+/* Kids Clothing Specific Styling */
+.o_kids_clothing .o_age_group_infant {
+    color: #ff6b6b;
+}
+
+.o_kids_clothing .o_age_group_toddler {
+    color: #4ecdc4;
+}
+
+.o_kids_clothing .o_age_group_preschool {
+    color: #45b7d1;
+}
+
+.o_kids_clothing .o_age_group_school_age {
+    color: #96ceb4;
+}
+
+.o_kids_clothing .o_age_group_teen {
+    color: #feca57;
+}
+
+.o_kids_clothing .o_season_summer {
+    color: #ff9ff3;
+}
+
+.o_kids_clothing .o_season_winter {
+    color: #54a0ff;
+}
+
+.o_kids_clothing .o_season_monsoon {
+    color: #5f27cd;
+}
+
+.o_kids_clothing .o_season_festival {
+    color: #ff6348;
+}
+
+.o_kids_clothing .o_product_clothing {
+    color: #2ed573;
+}
+
+.o_kids_clothing .o_product_accessories {
+    color: #ffa502;
+}
+
+.o_kids_clothing .o_product_shoes {
+    color: #ff3838;
+}
+
+.o_kids_clothing .o_product_toys {
+    color: #3742fa;
+}
+
+.o_kids_clothing .o_product_books {
+    color: #2f3542;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .o_website_tree .o_website_name,
+    .o_website_page_tree .o_page_name,
+    .o_website_template_tree .o_template_name,
+    .o_website_theme_tree .o_theme_name,
+    .o_website_content_tree .o_content_name,
+    .o_website_form_tree .o_form_name,
+    .o_website_form_submission_tree .o_submission_name,
+    .o_website_analytics_tree .o_analytics_name,
+    .o_website_visitor_tree .o_visitor_name {
+        font-size: 12px;
+    }
+    
+    .o_website_tree .o_website_domain,
+    .o_website_page_tree .o_page_url,
+    .o_website_template_tree .o_template_code,
+    .o_website_theme_tree .o_theme_code,
+    .o_website_visitor_tree .o_visitor_id {
+        font-size: 10px;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .o_website_tree,
+    .o_website_page_tree,
+    .o_website_template_tree,
+    .o_website_theme_tree,
+    .o_website_content_tree,
+    .o_website_form_tree,
+    .o_website_form_submission_tree,
+    .o_website_analytics_tree,
+    .o_website_visitor_tree {
+        color: #000 !important;
+        background: #fff !important;
+    }
+    
+    .o_website_tree .o_website_name,
+    .o_website_page_tree .o_page_name,
+    .o_website_template_tree .o_template_name,
+    .o_website_theme_tree .o_theme_name,
+    .o_website_content_tree .o_content_name,
+    .o_website_form_tree .o_form_name,
+    .o_website_form_submission_tree .o_submission_name,
+    .o_website_analytics_tree .o_analytics_name,
+    .o_website_visitor_tree .o_visitor_name {
+        color: #000 !important;
+    }
+}

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Demo Shift Assignments -->
+        <record id="demo_shift_assignment_001" model="hr.shift.assignment">
+            <field name="employee_id" ref="demo_employee_001"/>
+            <field name="shift_id" ref="shift_morning"/>
+            <field name="date">2024-01-15</field>
+            <field name="state">assigned</field>
+        </record>
+        
+        <record id="demo_shift_assignment_002" model="hr.shift.assignment">
+            <field name="employee_id" ref="demo_employee_002"/>
+            <field name="shift_id" ref="shift_baby_specialist"/>
+            <field name="date">2024-01-15</field>
+            <field name="state">assigned</field>
+        </record>
+        
+        <record id="demo_shift_assignment_003" model="hr.shift.assignment">
+            <field name="employee_id" ref="demo_employee_003"/>
+            <field name="shift_id" ref="shift_teen_specialist"/>
+            <field name="date">2024-01-15</field>
+            <field name="state">assigned</field>
+        </record>
+        
+        <record id="demo_shift_assignment_004" model="hr.shift.assignment">
+            <field name="employee_id" ref="demo_employee_004"/>
+            <field name="shift_id" ref="shift_morning"/>
+            <field name="date">2024-01-15</field>
+            <field name="state">assigned</field>
+        </record>
+        
+        <record id="demo_shift_assignment_005" model="hr.shift.assignment">
+            <field name="employee_id" ref="demo_employee_005"/>
+            <field name="shift_id" ref="shift_morning"/>
+            <field name="date">2024-01-15</field>
+            <field name="state">assigned</field>
+        </record>
+        
+    </data>
+</ocean>

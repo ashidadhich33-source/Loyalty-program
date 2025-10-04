@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- GST Chart Templates Tree View -->
+        <record id="view_account_chart_template_tree" model="ir.ui.view">
+            <field name="name">account.chart.template.tree</field>
+            <field name="model">account.chart.template</field>
+            <field name="arch" type="xml">
+                <tree string="GST Chart Templates" decoration-info="active==False">
+                    <field name="name"/>
+                    <field name="chart_type"/>
+                    <field name="gst_compliance"/>
+                    <field name="sequence"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- GST Chart Templates Form View -->
+        <record id="view_account_chart_template_form" model="ir.ui.view">
+            <field name="name">account.chart.template.form</field>
+            <field name="model">account.chart.template</field>
+            <field name="arch" type="xml">
+                <form string="GST Chart Template">
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
+                                <field name="active" widget="boolean_button" options='{"terminology": "archive"}'/>
+                            </button>
+                        </div>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Chart Template Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="chart_type"/>
+                                <field name="gst_compliance"/>
+                                <field name="sequence"/>
+                                <field name="active"/>
+                            </group>
+                            <group>
+                                <field name="age_group"/>
+                                <field name="size"/>
+                                <field name="season"/>
+                                <field name="brand"/>
+                                <field name="color"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="description"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- GST Chart Templates Search View -->
+        <record id="view_account_chart_template_search" model="ir.ui.view">
+            <field name="name">account.chart.template.search</field>
+            <field name="model">account.chart.template</field>
+            <field name="arch" type="xml">
+                <search string="Search GST Chart Templates">
+                    <field name="name"/>
+                    <field name="chart_type"/>
+                    <field name="age_group"/>
+                    <field name="size"/>
+                    <field name="season"/>
+                    <field name="brand"/>
+                    <field name="color"/>
+                    <filter string="Active" name="active" domain="[('active', '=', True)]"/>
+                    <filter string="Inactive" name="inactive" domain="[('active', '=', False)]"/>
+                    <filter string="GST Compliant" name="gst_compliant" domain="[('gst_compliance', '=', True)]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Chart Type" name="group_chart_type" context="{'group_by': 'chart_type'}"/>
+                        <filter string="Age Group" name="group_age_group" context="{'group_by': 'age_group'}"/>
+                        <filter string="Size" name="group_size" context="{'group_by': 'size'}"/>
+                        <filter string="Season" name="group_season" context="{'group_by': 'season'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- GST Chart Templates Action -->
+        <record id="action_account_chart_template" model="ir.actions.act_window">
+            <field name="name">GST Chart Templates</field>
+            <field name="res_model">account.chart.template</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_account_chart_template_search"/>
+            <field name="context">{'search_default_active': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first GST Chart Template!
+                </p>
+                <p>
+                    GST chart templates provide pre-configured chart of accounts for Indian businesses.
+                </p>
+            </field>
+        </record>
+        
+    </data>
+</ocean>

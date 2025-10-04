@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- POS Loyalty Points Redemption Wizard Form View -->
+        <record id="view_pos_loyalty_wizard_form" model="ir.ui.view">
+            <field name="name">pos.loyalty.wizard.form</field>
+            <field name="model">pos.loyalty.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Redeem Loyalty Points">
+                    <header>
+                        <button name="action_redeem_points" string="Redeem Points" type="object" class="btn-primary" attrs="{'invisible': [('points_to_redeem', '=', 0)]}"/>
+                        <button name="action_remove_points" string="Remove Redemption" type="object" class="btn-warning" attrs="{'invisible': [('order_id.loyalty_points_used', '=', 0)]}"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="customer_name" class="oe_inline"/>
+                                <span> - Loyalty Points Redemption</span>
+                            </h1>
+                        </div>
+                        
+                        <group>
+                            <group>
+                                <field name="customer_id" invisible="1"/>
+                                <field name="order_id" invisible="1"/>
+                                <field name="available_points"/>
+                                <field name="loyalty_level"/>
+                                <field name="points_rate"/>
+                                <field name="max_discount"/>
+                            </group>
+                            <group>
+                                <field name="order_total"/>
+                                <field name="points_to_redeem"/>
+                                <field name="discount_amount"/>
+                                <field name="final_amount"/>
+                            </group>
+                        </group>
+                        
+                        <group>
+                            <group>
+                                <h3>Quick Redemption Options</h3>
+                                <field name="quick_redeem_100"/>
+                                <field name="quick_redeem_500"/>
+                                <field name="quick_redeem_1000"/>
+                                <field name="quick_redeem_max"/>
+                            </group>
+                        </group>
+                        
+                        <div class="alert alert-info" attrs="{'invisible': [('available_points', '=', 0)]}">
+                            <strong>Available Points:</strong> <field name="available_points"/> points
+                            <br/>
+                            <strong>Loyalty Level:</strong> <field name="loyalty_level"/>
+                            <br/>
+                            <strong>Maximum Discount:</strong> ₹<field name="max_discount"/>
+                        </div>
+                        
+                        <div class="alert alert-warning" attrs="{'invisible': [('available_points', '>', 0)]}">
+                            <strong>No Loyalty Points Available</strong>
+                            <br/>
+                            This customer has no loyalty points to redeem.
+                        </div>
+                        
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- POS Loyalty Points Redemption Wizard Action -->
+        <record id="action_pos_loyalty_wizard" model="ir.actions.act_window">
+            <field name="name">Redeem Loyalty Points</field>
+            <field name="res_model">pos.loyalty.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="context">{}</field>
+        </record>
+        
+    </data>
+</ocean>

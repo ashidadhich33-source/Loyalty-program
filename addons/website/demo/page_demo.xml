@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Demo Website Content for Kids Clothing Business -->
+        
+        <record id="demo_content_hero" model="website.content">
+            <field name="name">Hero Section</field>
+            <field name="title">Welcome to Kids Clothing Store</field>
+            <field name="content_type">banner</field>
+            <field name="website_id" ref="website_kids_clothing"/>
+            <field name="page_id" ref="demo_page_home"/>
+            <field name="is_active">True</field>
+            <field name="is_published">True</field>
+            <field name="sequence">10</field>
+            <field name="display_position">hero</field>
+            <field name="display_style">banner</field>
+            <field name="show_on_desktop">True</field>
+            <field name="show_on_tablet">True</field>
+            <field name="show_on_mobile">True</field>
+            <field name="age_group_focus">all</field>
+            <field name="season_specialization">all_seasons</field>
+            <field name="product_category">clothing</field>
+            <field name="text_content">&lt;div class="hero-banner"&gt;
+                &lt;h1&gt;Welcome to Kids Clothing Store&lt;/h1&gt;
+                &lt;p&gt;Discover the latest trends in kids clothing. Premium quality, comfortable, and stylish clothing for children of all ages.&lt;/p&gt;
+                &lt;a href="/products" class="btn btn-primary"&gt;Shop Now&lt;/a&gt;
+            &lt;/div&gt;</field>
+        </record>
+        
+        <record id="demo_content_featured" model="website.content">
+            <field name="name">Featured Products</field>
+            <field name="title">Featured Products</field>
+            <field name="content_type">product_showcase</field>
+            <field name="website_id" ref="website_kids_clothing"/>
+            <field name="page_id" ref="demo_page_home"/>
+            <field name="is_active">True</field>
+            <field name="is_published">True</field>
+            <field name="sequence">20</field>
+            <field name="display_position">content</field>
+            <field name="display_style">container</field>
+            <field name="show_on_desktop">True</field>
+            <field name="show_on_tablet">True</field>
+            <field name="show_on_mobile">True</field>
+            <field name="age_group_focus">all</field>
+            <field name="season_specialization">all_seasons</field>
+            <field name="product_category">clothing</field>
+            <field name="text_content">&lt;div class="featured-products"&gt;
+                &lt;h2&gt;Featured Products&lt;/h2&gt;
+                &lt;p&gt;Check out our most popular items&lt;/p&gt;
+                &lt;div class="product-grid"&gt;
+                    &lt;div class="product-item"&gt;
+                        &lt;img src="/website/static/src/img/product1.jpg" alt="Kids T-Shirt"&gt;
+                        &lt;h3&gt;Kids T-Shirt&lt;/h3&gt;
+                        &lt;p&gt;Comfortable cotton t-shirt for kids&lt;/p&gt;
+                        &lt;span class="price"&gt;₹299&lt;/span&gt;
+                    &lt;/div&gt;
+                    &lt;div class="product-item"&gt;
+                        &lt;img src="/website/static/src/img/product2.jpg" alt="Kids Jeans"&gt;
+                        &lt;h3&gt;Kids Jeans&lt;/h3&gt;
+                        &lt;p&gt;Durable denim jeans for active kids&lt;/p&gt;
+                        &lt;span class="price"&gt;₹599&lt;/span&gt;
+                    &lt;/div&gt;
+                    &lt;div class="product-item"&gt;
+                        &lt;img src="/website/static/src/img/product3.jpg" alt="Kids Dress"&gt;
+                        &lt;h3&gt;Kids Dress&lt;/h3&gt;
+                        &lt;p&gt;Beautiful dress for special occasions&lt;/p&gt;
+                        &lt;span class="price"&gt;₹799&lt;/span&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;</field>
+        </record>
+        
+        <record id="demo_content_testimonial" model="website.content">
+            <field name="name">Customer Testimonials</field>
+            <field name="title">What Our Customers Say</field>
+            <field name="content_type">testimonial</field>
+            <field name="website_id" ref="website_kids_clothing"/>
+            <field name="page_id" ref="demo_page_home"/>
+            <field name="is_active">True</field>
+            <field name="is_published">True</field>
+            <field name="sequence">30</field>
+            <field name="display_position">content</field>
+            <field name="display_style">container</field>
+            <field name="show_on_desktop">True</field>
+            <field name="show_on_tablet">True</field>
+            <field name="show_on_mobile">True</field>
+            <field name="age_group_focus">all</field>
+            <field name="season_specialization">all_seasons</field>
+            <field name="product_category">clothing</field>
+            <field name="text_content">&lt;div class="testimonials"&gt;
+                &lt;h2&gt;What Our Customers Say&lt;/h2&gt;
+                &lt;div class="testimonial-grid"&gt;
+                    &lt;div class="testimonial-item"&gt;
+                        &lt;p&gt;"Amazing quality and my daughter loves her new dress!"&lt;/p&gt;
+                        &lt;cite&gt;- Priya Sharma, Mumbai&lt;/cite&gt;
+                    &lt;/div&gt;
+                    &lt;div class="testimonial-item"&gt;
+                        &lt;p&gt;"Great customer service and fast delivery. Highly recommended!"&lt;/p&gt;
+                        &lt;cite&gt;- Rajesh Kumar, Delhi&lt;/cite&gt;
+                    &lt;/div&gt;
+                    &lt;div class="testimonial-item"&gt;
+                        &lt;p&gt;"The clothes are comfortable and stylish. Perfect for my active toddler."&lt;/p&gt;
+                        &lt;cite&gt;- Sneha Patel, Bangalore&lt;/cite&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;</field>
+        </record>
+        
+        <record id="demo_content_newsletter" model="website.content">
+            <field name="name">Newsletter Signup</field>
+            <field name="title">Stay Updated</field>
+            <field name="content_type">newsletter</field>
+            <field name="website_id" ref="website_kids_clothing"/>
+            <field name="page_id" ref="demo_page_home"/>
+            <field name="is_active">True</field>
+            <field name="is_published">True</field>
+            <field name="sequence">40</field>
+            <field name="display_position">footer</field>
+            <field name="display_style">container</field>
+            <field name="show_on_desktop">True</field>
+            <field name="show_on_tablet">True</field>
+            <field name="show_on_mobile">True</field>
+            <field name="age_group_focus">all</field>
+            <field name="season_specialization">all_seasons</field>
+            <field name="product_category">general</field>
+            <field name="text_content">&lt;div class="newsletter-signup"&gt;
+                &lt;h3&gt;Stay Updated&lt;/h3&gt;
+                &lt;p&gt;Subscribe to our newsletter for the latest trends and offers&lt;/p&gt;
+                &lt;form action="/newsletter/subscribe" method="post"&gt;
+                    &lt;input type="email" name="email" placeholder="Enter your email" required&gt;
+                    &lt;button type="submit" class="btn btn-primary"&gt;Subscribe&lt;/button&gt;
+                &lt;/form&gt;
+            &lt;/div&gt;</field>
+        </record>
+        
+    </data>
+</ocean>

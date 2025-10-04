@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Reconciliation Tree View -->
+        <record id="view_account_reconcile_tree" model="ir.ui.view">
+            <field name="name">account.reconcile.tree</field>
+            <field name="model">account.reconcile</field>
+            <field name="arch" type="xml">
+                <tree string="Reconciliations" decoration-muted="state=='cancelled'" decoration-success="state=='reconciled'" decoration-info="state=='draft'">
+                    <field name="name"/>
+                    <field name="account_id"/>
+                    <field name="date"/>
+                    <field name="total_debit"/>
+                    <field name="total_credit"/>
+                    <field name="difference"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Reconciliation Form View -->
+        <record id="view_account_reconcile_form" model="ir.ui.view">
+            <field name="name">account.reconcile.form</field>
+            <field name="model">account.reconcile</field>
+            <field name="arch" type="xml">
+                <form string="Reconciliation">
+                    <header>
+                        <button name="action_reconcile" string="Reconcile" type="object" class="btn-primary" states="draft"/>
+                        <button name="action_cancel" string="Cancel" type="object" class="btn-secondary" states="draft"/>
+                        <button name="action_draft" string="Set to Draft" type="object" class="btn-info" states="cancelled"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,reconciled,cancelled"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Reconciliation Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="account_id"/>
+                                <field name="date"/>
+                                <field name="company_id"/>
+                                <field name="currency_id"/>
+                            </group>
+                            <group>
+                                <field name="total_debit"/>
+                                <field name="total_credit"/>
+                                <field name="difference"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Reconciliation Lines" name="reconciliation_lines">
+                                <field name="line_ids">
+                                    <tree editable="bottom">
+                                        <field name="sequence"/>
+                                        <field name="name"/>
+                                        <field name="account_id"/>
+                                        <field name="partner_id"/>
+                                        <field name="debit"/>
+                                        <field name="credit"/>
+                                        <field name="balance"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                        <group>
+                            <field name="notes"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Reconciliation Action -->
+        <record id="action_account_reconcile" model="ir.actions.act_window">
+            <field name="name">Reconciliations</field>
+            <field name="res_model">account.reconcile</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{}</field>
+        </record>
+        
+    </data>
+</ocean>

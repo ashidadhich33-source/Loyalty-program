@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data noupdate="1">
+        
+        <!-- Demo GST Taxes -->
+        <record id="demo_tax_cgst_5" model="account.tax">
+            <field name="name">CGST 5%</field>
+            <field name="amount">5.0</field>
+            <field name="amount_type">percent</field>
+            <field name="type_tax_use">sale</field>
+            <field name="gst_group_type">cgst</field>
+            <field name="age_group">toddler,teen</field>
+            <field name="size">S,M,L,XL</field>
+            <field name="season">summer,winter</field>
+            <field name="brand">KidsFashion,StyleKids</field>
+            <field name="color">blue,red,green</field>
+        </record>
+        
+        <record id="demo_tax_sgst_5" model="account.tax">
+            <field name="name">SGST 5%</field>
+            <field name="amount">5.0</field>
+            <field name="amount_type">percent</field>
+            <field name="type_tax_use">sale</field>
+            <field name="gst_group_type">sgst</field>
+            <field name="age_group">toddler,teen</field>
+            <field name="size">S,M,L,XL</field>
+            <field name="season">summer,winter</field>
+            <field name="brand">KidsFashion,StyleKids</field>
+            <field name="color">blue,red,green</field>
+        </record>
+        
+        <record id="demo_tax_igst_5" model="account.tax">
+            <field name="name">IGST 5%</field>
+            <field name="amount">5.0</field>
+            <field name="amount_type">percent</field>
+            <field name="type_tax_use">sale</field>
+            <field name="gst_group_type">igst</field>
+            <field name="age_group">toddler,teen</field>
+            <field name="size">S,M,L,XL</field>
+            <field name="season">summer,winter</field>
+            <field name="brand">KidsFashion,StyleKids</field>
+            <field name="color">blue,red,green</field>
+        </record>
+        
+    </data>
+</ocean>

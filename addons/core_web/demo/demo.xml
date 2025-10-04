@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data noupdate="1">
+        
+        <!-- Demo Web Notifications -->
+        <record id="demo_notification_welcome" model="notification.system">
+            <field name="name">Welcome to Kids Clothing ERP</field>
+            <field name="message">Welcome to the Kids Clothing ERP system!</field>
+            <field name="notification_type">info</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="demo_notification_system" model="notification.system">
+            <field name="name">System Maintenance</field>
+            <field name="message">System maintenance scheduled for tonight at 2 AM.</field>
+            <field name="notification_type">warning</field>
+            <field name="is_active">True</field>
+        </record>
+        
+    </data>
+</ocean>

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- HR Shifts -->
+        <record id="shift_morning" model="hr.shift">
+            <field name="name">Morning Shift</field>
+            <field name="code">MORNING</field>
+            <field name="description">Morning shift from 9 AM to 6 PM</field>
+            <field name="start_time">9.0</field>
+            <field name="end_time">18.0</field>
+            <field name="break_duration">60</field>
+            <field name="break_start_time">13.0</field>
+            <field name="min_employees">2</field>
+            <field name="max_employees">8</field>
+            <field name="age_group_focus">all</field>
+            <field name="season_specialization">all_season</field>
+            <field name="brand_focus">All Brands</field>
+            <field name="active">True</field>
+            <field name="state">active</field>
+        </record>
+        
+        <record id="shift_evening" model="hr.shift">
+            <field name="name">Evening Shift</field>
+            <field name="code">EVENING</field>
+            <field name="description">Evening shift from 2 PM to 11 PM</field>
+            <field name="start_time">14.0</field>
+            <field name="end_time">23.0</field>
+            <field name="break_duration">60</field>
+            <field name="break_start_time">18.0</field>
+            <field name="min_employees">2</field>
+            <field name="max_employees">6</field>
+            <field name="age_group_focus">all</field>
+            <field name="season_specialization">all_season</field>
+            <field name="brand_focus">All Brands</field>
+            <field name="active">True</field>
+            <field name="state">active</field>
+        </record>
+        
+        <record id="shift_night" model="hr.shift">
+            <field name="name">Night Shift</field>
+            <field name="code">NIGHT</field>
+            <field name="description">Night shift from 10 PM to 7 AM</field>
+            <field name="start_time">22.0</field>
+            <field name="end_time">7.0</field>
+            <field name="break_duration">60</field>
+            <field name="break_start_time">2.0</field>
+            <field name="min_employees">1</field>
+            <field name="max_employees">3</field>
+            <field name="age_group_focus">all</field>
+            <field name="season_specialization">all_season</field>
+            <field name="brand_focus">All Brands</field>
+            <field name="active">True</field>
+            <field name="state">active</field>
+        </record>
+        
+        <!-- Kids Clothing Specific Shifts -->
+        <record id="shift_baby_specialist" model="hr.shift">
+            <field name="name">Baby Specialist Shift</field>
+            <field name="code">BABY_SPEC</field>
+            <field name="description">Specialized shift for baby clothing experts</field>
+            <field name="start_time">10.0</field>
+            <field name="end_time">19.0</field>
+            <field name="break_duration">60</field>
+            <field name="break_start_time">14.0</field>
+            <field name="min_employees">1</field>
+            <field name="max_employees">3</field>
+            <field name="age_group_focus">baby</field>
+            <field name="season_specialization">all_season</field>
+            <field name="brand_focus">Baby Brands</field>
+            <field name="active">True</field>
+            <field name="state">active</field>
+        </record>
+        
+        <record id="shift_teen_specialist" model="hr.shift">
+            <field name="name">Teen Specialist Shift</field>
+            <field name="code">TEEN_SPEC</field>
+            <field name="description">Specialized shift for teen clothing experts</field>
+            <field name="start_time">11.0</field>
+            <field name="end_time">20.0</field>
+            <field name="break_duration">60</field>
+            <field name="break_start_time">15.0</field>
+            <field name="min_employees">1</field>
+            <field name="max_employees">3</field>
+            <field name="age_group_focus">teen</field>
+            <field name="season_specialization">all_season</field>
+            <field name="brand_focus">Teen Brands</field>
+            <field name="active">True</field>
+            <field name="state">active</field>
+        </record>
+        
+        <!-- Seasonal Shifts -->
+        <record id="shift_summer_extended" model="hr.shift">
+            <field name="name">Summer Extended Shift</field>
+            <field name="code">SUMMER_EXT</field>
+            <field name="description">Extended hours during summer season</field>
+            <field name="start_time">8.0</field>
+            <field name="end_time">20.0</field>
+            <field name="break_duration">90</field>
+            <field name="break_start_time">13.0</field>
+            <field name="min_employees">3</field>
+            <field name="max_employees">10</field>
+            <field name="age_group_focus">all</field>
+            <field name="season_specialization">summer</field>
+            <field name="brand_focus">Summer Collections</field>
+            <field name="active">True</field>
+            <field name="state">active</field>
+        </record>
+        
+        <record id="shift_winter_extended" model="hr.shift">
+            <field name="name">Winter Extended Shift</field>
+            <field name="code">WINTER_EXT</field>
+            <field name="description">Extended hours during winter season</field>
+            <field name="start_time">9.0</field>
+            <field name="end_time">21.0</field>
+            <field name="break_duration">90</field>
+            <field name="break_start_time">14.0</field>
+            <field name="min_employees">3</field>
+            <field name="max_employees">10</field>
+            <field name="age_group_focus">all</field>
+            <field name="season_specialization">winter</field>
+            <field name="brand_focus">Winter Collections</field>
+            <field name="active">True</field>
+            <field name="state">active</field>
+        </record>
+        
+    </data>
+</ocean>

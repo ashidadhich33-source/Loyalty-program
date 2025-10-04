@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- HR Departments -->
+        <record id="dept_sales" model="hr.department">
+            <field name="name">Sales Department</field>
+            <field name="code">SALES</field>
+            <field name="description">Handles all sales activities and customer interactions</field>
+            <field name="age_group_focus">all</field>
+            <field name="season_specialization">all_season</field>
+            <field name="brand_focus">All Brands</field>
+            <field name="active">True</field>
+        </record>
+        
+        <record id="dept_marketing" model="hr.department">
+            <field name="name">Marketing Department</field>
+            <field name="code">MARKETING</field>
+            <field name="description">Handles marketing campaigns and brand promotion</field>
+            <field name="age_group_focus">all</field>
+            <field name="season_specialization">all_season</field>
+            <field name="brand_focus">All Brands</field>
+            <field name="active">True</field>
+        </record>
+        
+        <record id="dept_operations" model="hr.department">
+            <field name="name">Operations Department</field>
+            <field name="code">OPERATIONS</field>
+            <field name="description">Handles day-to-day operations and logistics</field>
+            <field name="age_group_focus">all</field>
+            <field name="season_specialization">all_season</field>
+            <field name="brand_focus">All Brands</field>
+            <field name="active">True</field>
+        </record>
+        
+        <record id="dept_hr" model="hr.department">
+            <field name="name">Human Resources</field>
+            <field name="code">HR</field>
+            <field name="description">Handles human resources and employee management</field>
+            <field name="age_group_focus">all</field>
+            <field name="season_specialization">all_season</field>
+            <field name="brand_focus">All Brands</field>
+            <field name="active">True</field>
+        </record>
+        
+        <record id="dept_finance" model="hr.department">
+            <field name="name">Finance Department</field>
+            <field name="code">FINANCE</field>
+            <field name="description">Handles financial operations and accounting</field>
+            <field name="age_group_focus">all</field>
+            <field name="season_specialization">all_season</field>
+            <field name="brand_focus">All Brands</field>
+            <field name="active">True</field>
+        </record>
+        
+        <!-- Kids Clothing Specific Departments -->
+        <record id="dept_baby_clothing" model="hr.department">
+            <field name="name">Baby Clothing Department</field>
+            <field name="code">BABY</field>
+            <field name="description">Specializes in baby clothing (0-2 years)</field>
+            <field name="age_group_focus">baby</field>
+            <field name="season_specialization">all_season</field>
+            <field name="brand_focus">Baby Brands</field>
+            <field name="active">True</field>
+        </record>
+        
+        <record id="dept_toddler_clothing" model="hr.department">
+            <field name="name">Toddler Clothing Department</field>
+            <field name="code">TODDLER</field>
+            <field name="description">Specializes in toddler clothing (2-5 years)</field>
+            <field name="age_group_focus">toddler</field>
+            <field name="season_specialization">all_season</field>
+            <field name="brand_focus">Toddler Brands</field>
+            <field name="active">True</field>
+        </record>
+        
+        <record id="dept_kids_clothing" model="hr.department">
+            <field name="name">Kids Clothing Department</field>
+            <field name="code">KIDS</field>
+            <field name="description">Specializes in kids clothing (5-12 years)</field>
+            <field name="age_group_focus">kids</field>
+            <field name="season_specialization">all_season</field>
+            <field name="brand_focus">Kids Brands</field>
+            <field name="active">True</field>
+        </record>
+        
+        <record id="dept_teen_clothing" model="hr.department">
+            <field name="name">Teen Clothing Department</field>
+            <field name="code">TEEN</field>
+            <field name="description">Specializes in teen clothing (12-16 years)</field>
+            <field name="age_group_focus">teen</field>
+            <field name="season_specialization">all_season</field>
+            <field name="brand_focus">Teen Brands</field>
+            <field name="active">True</field>
+        </record>
+        
+    </data>
+</ocean>

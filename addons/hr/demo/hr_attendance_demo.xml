@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Demo Attendance Records -->
+        <record id="demo_attendance_001" model="hr.attendance">
+            <field name="name">ATT/00001</field>
+            <field name="employee_id" ref="demo_employee_001"/>
+            <field name="check_in">2024-01-15 09:00:00</field>
+            <field name="check_out">2024-01-15 18:00:00</field>
+            <field name="shift_id" ref="shift_morning"/>
+            <field name="age_group_focus">all</field>
+            <field name="season_specialization">all_season</field>
+            <field name="brand_focus">All Brands</field>
+            <field name="state">approved</field>
+        </record>
+        
+        <record id="demo_attendance_002" model="hr.attendance">
+            <field name="name">ATT/00002</field>
+            <field name="employee_id" ref="demo_employee_002"/>
+            <field name="check_in">2024-01-15 10:00:00</field>
+            <field name="check_out">2024-01-15 19:00:00</field>
+            <field name="shift_id" ref="shift_baby_specialist"/>
+            <field name="age_group_focus">baby</field>
+            <field name="season_specialization">summer</field>
+            <field name="brand_focus">Baby Brands</field>
+            <field name="state">approved</field>
+        </record>
+        
+        <record id="demo_attendance_003" model="hr.attendance">
+            <field name="name">ATT/00003</field>
+            <field name="employee_id" ref="demo_employee_003"/>
+            <field name="check_in">2024-01-15 11:00:00</field>
+            <field name="check_out">2024-01-15 20:00:00</field>
+            <field name="shift_id" ref="shift_teen_specialist"/>
+            <field name="age_group_focus">teen</field>
+            <field name="season_specialization">winter</field>
+            <field name="brand_focus">Teen Brands</field>
+            <field name="state">approved</field>
+        </record>
+        
+        <record id="demo_attendance_004" model="hr.attendance">
+            <field name="name">ATT/00004</field>
+            <field name="employee_id" ref="demo_employee_004"/>
+            <field name="check_in">2024-01-15 09:30:00</field>
+            <field name="check_out">2024-01-15 18:30:00</field>
+            <field name="shift_id" ref="shift_morning"/>
+            <field name="age_group_focus">all</field>
+            <field name="season_specialization">all_season</field>
+            <field name="brand_focus">Not Required</field>
+            <field name="state">approved</field>
+        </record>
+        
+        <record id="demo_attendance_005" model="hr.attendance">
+            <field name="name">ATT/00005</field>
+            <field name="employee_id" ref="demo_employee_005"/>
+            <field name="check_in">2024-01-15 09:15:00</field>
+            <field name="check_out">2024-01-15 18:15:00</field>
+            <field name="shift_id" ref="shift_morning"/>
+            <field name="age_group_focus">all</field>
+            <field name="season_specialization">monsoon</field>
+            <field name="brand_focus">Basic Product Knowledge</field>
+            <field name="state">approved</field>
+        </record>
+        
+    </data>
+</ocean>

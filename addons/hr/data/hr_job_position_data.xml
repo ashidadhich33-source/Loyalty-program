@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- HR Job Positions -->
+        <record id="job_sales_manager" model="hr.job">
+            <field name="name">Sales Manager</field>
+            <field name="code">SALES_MGR</field>
+            <field name="description">Manages sales team and oversees sales operations</field>
+            <field name="department_id" ref="dept_sales"/>
+            <field name="experience_required">senior</field>
+            <field name="min_salary">50000</field>
+            <field name="max_salary">80000</field>
+            <field name="age_group_expertise">all</field>
+            <field name="season_specialization">all_season</field>
+            <field name="brand_knowledge">All Brands</field>
+            <field name="required_skills">Leadership, Sales Management, Team Building</field>
+            <field name="active">True</field>
+            <field name="state">open</field>
+        </record>
+        
+        <record id="job_sales_executive" model="hr.job">
+            <field name="name">Sales Executive</field>
+            <field name="code">SALES_EXEC</field>
+            <field name="description">Handles customer sales and product demonstrations</field>
+            <field name="department_id" ref="dept_sales"/>
+            <field name="experience_required">junior</field>
+            <field name="min_salary">25000</field>
+            <field name="max_salary">40000</field>
+            <field name="age_group_expertise">all</field>
+            <field name="season_specialization">all_season</field>
+            <field name="brand_knowledge">Kids Clothing Brands</field>
+            <field name="required_skills">Customer Service, Communication, Product Knowledge</field>
+            <field name="active">True</field>
+            <field name="state">open</field>
+        </record>
+        
+        <record id="job_store_manager" model="hr.job">
+            <field name="name">Store Manager</field>
+            <field name="code">STORE_MGR</field>
+            <field name="description">Manages store operations and staff</field>
+            <field name="department_id" ref="dept_operations"/>
+            <field name="experience_required">senior</field>
+            <field name="min_salary">40000</field>
+            <field name="max_salary">60000</field>
+            <field name="age_group_expertise">all</field>
+            <field name="season_specialization">all_season</field>
+            <field name="brand_knowledge">All Brands</field>
+            <field name="required_skills">Store Management, Inventory, Staff Management</field>
+            <field name="active">True</field>
+            <field name="state">open</field>
+        </record>
+        
+        <record id="job_cashier" model="hr.job">
+            <field name="name">Cashier</field>
+            <field name="code">CASHIER</field>
+            <field name="description">Handles cash transactions and customer billing</field>
+            <field name="department_id" ref="dept_operations"/>
+            <field name="experience_required">fresher</field>
+            <field name="min_salary">15000</field>
+            <field name="max_salary">25000</field>
+            <field name="age_group_expertise">all</field>
+            <field name="season_specialization">all_season</field>
+            <field name="brand_knowledge">Basic Product Knowledge</field>
+            <field name="required_skills">Cash Handling, Customer Service, Basic Math</field>
+            <field name="active">True</field>
+            <field name="state">open</field>
+        </record>
+        
+        <record id="job_hr_manager" model="hr.job">
+            <field name="name">HR Manager</field>
+            <field name="code">HR_MGR</field>
+            <field name="description">Manages human resources and employee relations</field>
+            <field name="department_id" ref="dept_hr"/>
+            <field name="experience_required">senior</field>
+            <field name="min_salary">45000</field>
+            <field name="max_salary">70000</field>
+            <field name="age_group_expertise">all</field>
+            <field name="season_specialization">all_season</field>
+            <field name="brand_knowledge">Not Required</field>
+            <field name="required_skills">HR Management, Recruitment, Employee Relations</field>
+            <field name="active">True</field>
+            <field name="state">open</field>
+        </record>
+        
+        <!-- Kids Clothing Specific Job Positions -->
+        <record id="job_baby_specialist" model="hr.job">
+            <field name="name">Baby Clothing Specialist</field>
+            <field name="code">BABY_SPEC</field>
+            <field name="description">Specializes in baby clothing and accessories</field>
+            <field name="department_id" ref="dept_baby_clothing"/>
+            <field name="experience_required">junior</field>
+            <field name="min_salary">20000</field>
+            <field name="max_salary">35000</field>
+            <field name="age_group_expertise">baby</field>
+            <field name="season_specialization">all_season</field>
+            <field name="brand_knowledge">Baby Brands</field>
+            <field name="size_expertise">Baby Sizes (0-24 months)</field>
+            <field name="required_skills">Baby Care Knowledge, Product Expertise</field>
+            <field name="active">True</field>
+            <field name="state">open</field>
+        </record>
+        
+        <record id="job_teen_specialist" model="hr.job">
+            <field name="name">Teen Clothing Specialist</field>
+            <field name="code">TEEN_SPEC</field>
+            <field name="description">Specializes in teen clothing and fashion trends</field>
+            <field name="department_id" ref="dept_teen_clothing"/>
+            <field name="experience_required">junior</field>
+            <field name="min_salary">22000</field>
+            <field name="max_salary">38000</field>
+            <field name="age_group_expertise">teen</field>
+            <field name="season_specialization">all_season</field>
+            <field name="brand_knowledge">Teen Brands</field>
+            <field name="size_expertise">Teen Sizes (S-XL)</field>
+            <field name="required_skills">Fashion Trends, Teen Psychology</field>
+            <field name="active">True</field>
+            <field name="state">open</field>
+        </record>
+        
+    </data>
+</ocean>

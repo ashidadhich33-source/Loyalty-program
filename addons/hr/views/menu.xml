@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Main HR Menu -->
+        <menuitem id="menu_hr_root" 
+                  name="Human Resources" 
+                  sequence="50"
+                  web_icon="hr,static/description/icon.png"/>
+        
+        <!-- Employee Management -->
+        <menuitem id="menu_employee_management" 
+                  name="Employee Management" 
+                  parent="menu_hr_root" 
+                  sequence="10"/>
+        
+        <menuitem id="menu_employees" 
+                  name="Employees" 
+                  parent="menu_employee_management" 
+                  action="action_hr_employee" 
+                  sequence="10"/>
+        
+        <menuitem id="menu_departments" 
+                  name="Departments" 
+                  parent="menu_employee_management" 
+                  action="action_hr_department" 
+                  sequence="20"/>
+        
+        <menuitem id="menu_job_positions" 
+                  name="Job Positions" 
+                  parent="menu_employee_management" 
+                  action="action_hr_job" 
+                  sequence="30"/>
+        
+        <!-- Attendance & Time -->
+        <menuitem id="menu_attendance_time" 
+                  name="Attendance & Time" 
+                  parent="menu_hr_root" 
+                  sequence="20"/>
+        
+        <menuitem id="menu_attendance" 
+                  name="Attendance" 
+                  parent="menu_attendance_time" 
+                  action="action_hr_attendance" 
+                  sequence="10"/>
+        
+        <menuitem id="menu_shifts" 
+                  name="Shifts" 
+                  parent="menu_attendance_time" 
+                  action="action_hr_shift" 
+                  sequence="20"/>
+        
+        <menuitem id="menu_leaves" 
+                  name="Leaves" 
+                  parent="menu_attendance_time" 
+                  action="action_hr_leave" 
+                  sequence="30"/>
+        
+        <!-- Performance Management -->
+        <menuitem id="menu_performance_management" 
+                  name="Performance Management" 
+                  parent="menu_hr_root" 
+                  sequence="30"/>
+        
+        <menuitem id="menu_performance_reviews" 
+                  name="Performance Reviews" 
+                  parent="menu_performance_management" 
+                  action="action_hr_performance" 
+                  sequence="10"/>
+        
+        <menuitem id="menu_employee_documents" 
+                  name="Employee Documents" 
+                  parent="menu_performance_management" 
+                  action="action_hr_document" 
+                  sequence="20"/>
+        
+    </data>
+</ocean>

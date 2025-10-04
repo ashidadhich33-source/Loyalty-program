@@ -1,0 +1,132 @@
+/* HR Addon Styles */
+
+.employee-status {
+    font-weight: bold;
+}
+
+.employee-status.draft {
+    color: #6c757d;
+}
+
+.employee-status.active {
+    color: #28a745;
+}
+
+.employee-status.inactive {
+    color: #ffc107;
+}
+
+.employee-status.terminated {
+    color: #dc3545;
+}
+
+.attendance-status {
+    font-weight: bold;
+}
+
+.attendance-status.checked_in {
+    color: #007bff;
+}
+
+.attendance-status.checked_out {
+    color: #6c757d;
+}
+
+.attendance-status.approved {
+    color: #28a745;
+}
+
+.attendance-status.rejected {
+    color: #dc3545;
+}
+
+.leave-status {
+    font-weight: bold;
+}
+
+.leave-status.draft {
+    color: #6c757d;
+}
+
+.leave-status.submitted {
+    color: #007bff;
+}
+
+.leave-status.approved {
+    color: #28a745;
+}
+
+.leave-status.rejected {
+    color: #dc3545;
+}
+
+.leave-status.cancelled {
+    color: #6c757d;
+}
+
+.performance-rating {
+    font-weight: bold;
+}
+
+.performance-rating.excellent {
+    color: #28a745;
+}
+
+.performance-rating.good {
+    color: #17a2b8;
+}
+
+.performance-rating.satisfactory {
+    color: #ffc107;
+}
+
+.performance-rating.needs_improvement {
+    color: #fd7e14;
+}
+
+.performance-rating.unsatisfactory {
+    color: #dc3545;
+}
+
+.age-group-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.age-group-badge.baby {
+    background-color: #e3f2fd;
+    color: #1976d2;
+}
+
+.age-group-badge.toddler {
+    background-color: #f3e5f5;
+    color: #7b1fa2;
+}
+
+.age-group-badge.kids {
+    background-color: #e8f5e8;
+    color: #388e3c;
+}
+
+.age-group-badge.teen {
+    background-color: #fff3e0;
+    color: #f57c00;
+}
+
+.shift-timing {
+    font-family: monospace;
+    font-weight: bold;
+}
+
+.department-hierarchy {
+    margin-left: 20px;
+}
+
+.department-hierarchy .department-child {
+    border-left: 2px solid #dee2e6;
+    padding-left: 10px;
+    margin-left: 10px;
+}

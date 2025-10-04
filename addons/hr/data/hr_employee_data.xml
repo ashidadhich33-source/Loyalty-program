@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- HR Sequences -->
+        <record id="seq_hr_employee" model="ir.sequence">
+            <field name="name">Employee</field>
+            <field name="code">hr.employee</field>
+            <field name="prefix">EMP/</field>
+            <field name="padding">4</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+        
+        <record id="seq_hr_attendance" model="ir.sequence">
+            <field name="name">Attendance</field>
+            <field name="code">hr.attendance</field>
+            <field name="prefix">ATT/</field>
+            <field name="padding">5</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+        
+        <record id="seq_hr_leave" model="ir.sequence">
+            <field name="name">Leave</field>
+            <field name="code">hr.leave</field>
+            <field name="prefix">LEAVE/</field>
+            <field name="padding">5</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+        
+        <record id="seq_hr_performance" model="ir.sequence">
+            <field name="name">Performance</field>
+            <field name="code">hr.performance</field>
+            <field name="prefix">PERF/</field>
+            <field name="padding">5</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+        
+    </data>
+</ocean>

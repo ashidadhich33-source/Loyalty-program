@@ -273,6 +273,142 @@ class POSProductGrid {
     }
 }
 
+// POS Customer Management functionality
+class POSCustomerManager {
+    constructor() {
+        this.init();
+    }
+    
+    init() {
+        this.bindEvents();
+    }
+    
+    bindEvents() {
+        // Bind customer search
+        $(document).on('input', '.pos-customer-search', (e) => {
+            this.searchCustomers(e.target.value);
+        });
+        
+        // Bind create customer button
+        $(document).on('click', '.pos-create-customer-btn', () => {
+            this.openCustomerWizard();
+        });
+        
+        // Bind customer selection
+        $(document).on('click', '.pos-customer-item', (e) => {
+            const customerId = $(e.currentTarget).data('customer-id');
+            this.selectCustomer(customerId);
+        });
+    }
+    
+    searchCustomers(query) {
+        if (query.length < 2) {
+            $('.pos-customer-results').hide();
+            return;
+        }
+        
+        $.ajax({
+            url: '/pos/search_customers',
+            type: 'GET',
+            data: { q: query },
+            success: (customers) => {
+                this.displayCustomerResults(customers);
+            },
+            error: (error) => {
+                console.error('Error searching customers:', error);
+            }
+        });
+    }
+    
+    displayCustomerResults(customers) {
+        const container = $('.pos-customer-results');
+        container.empty();
+        
+        if (customers.length === 0) {
+            container.html(`
+                <div class="pos-no-customers">
+                    <p>No customers found</p>
+                    <button class="pos-create-customer-btn btn btn-primary">Create New Customer</button>
+                </div>
+            `);
+        } else {
+            customers.forEach(customer => {
+                const customerItem = $(`
+                    <div class="pos-customer-item" data-customer-id="${customer.id}">
+                        <div class="customer-name">${customer.name}</div>
+                        <div class="customer-details">
+                            ${customer.email ? `<div class="customer-email">${customer.email}</div>` : ''}
+                            ${customer.phone ? `<div class="customer-phone">${customer.phone}</div>` : ''}
+                        </div>
+                    </div>
+                `);
+                container.append(customerItem);
+            });
+        }
+        
+        container.show();
+    }
+    
+    selectCustomer(customerId) {
+        // Set customer in POS order
+        $('.pos-customer-field').val(customerId);
+        $('.pos-customer-results').hide();
+        
+        // Load customer details
+        this.loadCustomerDetails(customerId);
+    }
+    
+    loadCustomerDetails(customerId) {
+        $.ajax({
+            url: '/pos/customer_details',
+            type: 'GET',
+            data: { customer_id: customerId },
+            success: (customer) => {
+                this.displayCustomerInfo(customer);
+            },
+            error: (error) => {
+                console.error('Error loading customer details:', error);
+            }
+        });
+    }
+    
+    displayCustomerInfo(customer) {
+        $('.pos-customer-info').html(`
+            <div class="customer-card">
+                <div class="customer-header">
+                    <h4>${customer.name}</h4>
+                    <span class="customer-type">${customer.customer_type}</span>
+                </div>
+                <div class="customer-details">
+                    ${customer.email ? `<div><strong>Email:</strong> ${customer.email}</div>` : ''}
+                    ${customer.phone ? `<div><strong>Phone:</strong> ${customer.phone}</div>` : ''}
+                    ${customer.loyalty_points ? `<div><strong>Loyalty Points:</strong> ${customer.loyalty_points}</div>` : ''}
+                    ${customer.loyalty_level ? `<div><strong>Loyalty Level:</strong> ${customer.loyalty_level}</div>` : ''}
+                </div>
+            </div>
+        `);
+    }
+    
+    openCustomerWizard() {
+        // Open customer creation wizard
+        window.open('/pos/customer_wizard', '_blank', 'width=800,height=600');
+    }
+    
+    showNotification(message, type = 'info') {
+        const notification = $(`
+            <div class="pos-notification pos-notification-${type} pos-fade-in">
+                ${message}
+            </div>
+        `);
+        
+        $('body').append(notification);
+        
+        setTimeout(() => {
+            notification.remove();
+        }, 3000);
+    }
+}
+
 // Initialize POS components when document is ready
 $(document).ready(function() {
     // Initialize dashboard if element exists
@@ -283,5 +419,10 @@ $(document).ready(function() {
     // Initialize product grid if element exists
     if ($('.pos-product-grid').length) {
         new POSProductGrid();
+    }
+    
+    // Initialize customer manager if element exists
+    if ($('.pos-customer-section').length) {
+        new POSCustomerManager();
     }
 });

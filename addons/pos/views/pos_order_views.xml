@@ -41,7 +41,14 @@
                         </div>
                         <group>
                             <group>
-                                <field name="partner_id"/>
+                                <field name="partner_id">
+                                    <tree>
+                                        <field name="name"/>
+                                        <field name="email"/>
+                                        <field name="phone"/>
+                                    </tree>
+                                </field>
+                                <button name="%(action_pos_customer_wizard)d" string="Create New Customer" type="action" class="btn-primary" context="{'default_partner_id': partner_id}"/>
                                 <field name="session_id"/>
                                 <field name="user_id"/>
                                 <field name="employee_id"/>

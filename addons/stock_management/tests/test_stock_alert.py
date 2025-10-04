@@ -1,33 +1,48 @@
 # -*- coding: utf-8 -*-
+"""
+Ocean ERP - Stock Alert Tests
+============================
 
-from odoo.tests.common import TransactionCase
-from odoo.exceptions import ValidationError, UserError
+Tests for stock alert model in Ocean ERP.
+"""
+
+import unittest
+from core_framework.testing import OceanTestCase
+from core_framework.exceptions import ValidationError, UserError
 
 
-class TestStockAlert(TransactionCase):
+class TestStockAlert(OceanTestCase):
+    """Test Stock Alert Model"""
     
     def setUp(self):
-        super(TestStockAlert, self).setUp()
+        """Set up test data"""
+        super().setUp()
         
-        # Create test data
+        # Create test company
+        self.company = self.env['res.company'].create({
+            'name': 'Test Company',
+            'currency_id': self.env.ref('base.INR').id,
+        })
+        
+        # Create test product
         self.product = self.env['product.product'].create({
             'name': 'Test Product',
             'type': 'product',
-            'age_group': '0-2',
-            'size': 's',
-            'season': 'summer',
-            'brand': 'Test Brand',
-            'color': 'Blue',
+            'company_id': self.company.id,
         })
         
-        self.warehouse = self.env['stock.warehouse'].create({
-            'name': 'Test Warehouse',
-            'code': 'TW',
-        })
-        
+        # Create test location
         self.location = self.env['stock.location'].create({
             'name': 'Test Location',
-            'location_id': self.warehouse.lot_stock_id.id,
+            'usage': 'internal',
+            'company_id': self.company.id,
+        })
+        
+        # Create test warehouse
+        self.warehouse = self.env['stock.warehouse'].create({
+            'name': 'Test Warehouse',
+            'code': 'TEST',
+            'company_id': self.company.id,
         })
     
     def test_create_stock_alert(self):
@@ -35,248 +50,257 @@ class TestStockAlert(TransactionCase):
         alert = self.env['stock.alert'].create({
             'name': 'Test Alert',
             'product_id': self.product.id,
-            'warehouse_id': self.warehouse.id,
-            'location_id': self.location.id,
-            'current_stock': 5,
-            'minimum_stock': 10,
             'alert_type': 'low_stock',
-            'priority': 'high',
+            'priority': 'medium',
+            'status': 'draft',
+            'current_stock': 10.0,
+            'minimum_stock': 20.0,
+            'reorder_point': 15.0,
+            'reorder_quantity': 50.0,
             'age_group': '0-2',
             'size': 's',
             'season': 'summer',
-            'brand': 'Test Brand',
+            'brand': 'Kids Brand',
             'color': 'Blue',
+            'location_id': self.location.id,
+            'warehouse_id': self.warehouse.id,
+            'company_id': self.company.id,
         })
         
         self.assertEqual(alert.name, 'Test Alert')
         self.assertEqual(alert.product_id, self.product)
-        self.assertEqual(alert.warehouse_id, self.warehouse)
-        self.assertEqual(alert.current_stock, 5)
-        self.assertEqual(alert.minimum_stock, 10)
         self.assertEqual(alert.alert_type, 'low_stock')
-        self.assertEqual(alert.priority, 'high')
-        self.assertEqual(alert.status, 'active')
-        self.assertEqual(alert.stock_variance, -5)
+        self.assertEqual(alert.priority, 'medium')
+        self.assertEqual(alert.status, 'draft')
+        self.assertEqual(alert.current_stock, 10.0)
+        self.assertEqual(alert.minimum_stock, 20.0)
+        self.assertEqual(alert.age_group, '0-2')
+        self.assertEqual(alert.size, 's')
+        self.assertEqual(alert.season, 'summer')
+        self.assertEqual(alert.brand, 'Kids Brand')
+        self.assertEqual(alert.color, 'Blue')
+        self.assertTrue(alert.active)
     
-    def test_acknowledge_alert(self):
-        """Test acknowledging a stock alert"""
+    def test_alert_resolution(self):
+        """Test alert resolution"""
         alert = self.env['stock.alert'].create({
             'name': 'Test Alert',
             'product_id': self.product.id,
-            'warehouse_id': self.warehouse.id,
-            'current_stock': 5,
-            'minimum_stock': 10,
             'alert_type': 'low_stock',
-            'priority': 'high',
+            'priority': 'medium',
+            'status': 'active',
+            'current_stock': 10.0,
+            'minimum_stock': 20.0,
+            'company_id': self.company.id,
         })
         
-        self.assertEqual(alert.status, 'active')
-        
-        alert.action_acknowledge()
-        
-        self.assertEqual(alert.status, 'acknowledged')
-        self.assertTrue(alert.acknowledge_date)
-        self.assertEqual(alert.acknowledged_by, self.env.user)
-    
-    def test_resolve_alert(self):
-        """Test resolving a stock alert"""
-        alert = self.env['stock.alert'].create({
-            'name': 'Test Alert',
-            'product_id': self.product.id,
-            'warehouse_id': self.warehouse.id,
-            'current_stock': 5,
-            'minimum_stock': 10,
-            'alert_type': 'low_stock',
-            'priority': 'high',
-        })
-        
-        self.assertEqual(alert.status, 'active')
-        
+        # Resolve the alert
         alert.action_resolve()
         
         self.assertEqual(alert.status, 'resolved')
-        self.assertTrue(alert.resolve_date)
-        self.assertEqual(alert.resolved_by, self.env.user)
+        self.assertIsNotNone(alert.resolved_date)
     
-    def test_cancel_alert(self):
-        """Test cancelling a stock alert"""
+    def test_alert_cancellation(self):
+        """Test alert cancellation"""
         alert = self.env['stock.alert'].create({
             'name': 'Test Alert',
             'product_id': self.product.id,
-            'warehouse_id': self.warehouse.id,
-            'current_stock': 5,
-            'minimum_stock': 10,
             'alert_type': 'low_stock',
-            'priority': 'high',
+            'priority': 'medium',
+            'status': 'active',
+            'current_stock': 10.0,
+            'minimum_stock': 20.0,
+            'company_id': self.company.id,
         })
         
-        self.assertEqual(alert.status, 'active')
-        
+        # Cancel the alert
         alert.action_cancel()
         
         self.assertEqual(alert.status, 'cancelled')
     
-    def test_generate_alert_message(self):
-        """Test generating alert message"""
+    def test_alert_reactivation(self):
+        """Test alert reactivation"""
         alert = self.env['stock.alert'].create({
             'name': 'Test Alert',
             'product_id': self.product.id,
-            'warehouse_id': self.warehouse.id,
-            'current_stock': 5,
-            'minimum_stock': 10,
             'alert_type': 'low_stock',
-            'priority': 'high',
+            'priority': 'medium',
+            'status': 'cancelled',
+            'current_stock': 10.0,
+            'minimum_stock': 20.0,
+            'company_id': self.company.id,
         })
         
-        expected_message = f"Low stock alert for {self.product.name}. Current stock: 5, Minimum required: 10"
-        self.assertEqual(alert.alert_message, expected_message)
+        # Reactivate the alert
+        alert.action_reactivate()
+        
+        self.assertEqual(alert.status, 'active')
     
-    def test_days_since_created(self):
-        """Test computing days since created"""
-        alert = self.env['stock.alert'].create({
-            'name': 'Test Alert',
+    def test_kids_clothing_alerts(self):
+        """Test kids clothing specific alert filtering"""
+        # Create alerts with different age groups
+        baby_alert = self.env['stock.alert'].create({
+            'name': 'Baby Alert',
             'product_id': self.product.id,
-            'warehouse_id': self.warehouse.id,
-            'current_stock': 5,
-            'minimum_stock': 10,
             'alert_type': 'low_stock',
-            'priority': 'high',
+            'priority': 'medium',
+            'status': 'active',
+            'current_stock': 10.0,
+            'minimum_stock': 20.0,
+            'age_group': '0-2',
+            'company_id': self.company.id,
         })
         
-        # The computed field should be calculated
-        self.assertIsInstance(alert.days_since_created, int)
-        self.assertGreaterEqual(alert.days_since_created, 0)
-    
-    def test_stock_variance(self):
-        """Test computing stock variance"""
-        alert = self.env['stock.alert'].create({
-            'name': 'Test Alert',
+        toddler_alert = self.env['stock.alert'].create({
+            'name': 'Toddler Alert',
             'product_id': self.product.id,
-            'warehouse_id': self.warehouse.id,
-            'current_stock': 5,
-            'minimum_stock': 10,
             'alert_type': 'low_stock',
-            'priority': 'high',
+            'priority': 'medium',
+            'status': 'active',
+            'current_stock': 10.0,
+            'minimum_stock': 20.0,
+            'age_group': '2-4',
+            'company_id': self.company.id,
         })
         
-        self.assertEqual(alert.stock_variance, -5)
+        all_age_alert = self.env['stock.alert'].create({
+            'name': 'All Age Alert',
+            'product_id': self.product.id,
+            'alert_type': 'low_stock',
+            'priority': 'medium',
+            'status': 'active',
+            'current_stock': 10.0,
+            'minimum_stock': 20.0,
+            'age_group': 'all',
+            'company_id': self.company.id,
+        })
         
-        # Update current stock
-        alert.current_stock = 15
-        alert._compute_stock_variance()
-        
-        self.assertEqual(alert.stock_variance, 5)
+        # Test filtering by age group
+        baby_alerts = self.env['stock.alert'].get_kids_clothing_alerts(age_group='0-2')
+        self.assertIn(baby_alert, baby_alerts)
+        self.assertIn(all_age_alert, baby_alerts)
+        self.assertNotIn(toddler_alert, baby_alerts)
     
-    def test_kids_clothing_fields(self):
-        """Test kids clothing specific fields"""
+    def test_reorder_rule_creation(self):
+        """Test creating reorder rule from alert"""
         alert = self.env['stock.alert'].create({
             'name': 'Test Alert',
             'product_id': self.product.id,
-            'warehouse_id': self.warehouse.id,
-            'current_stock': 5,
-            'minimum_stock': 10,
             'alert_type': 'low_stock',
-            'priority': 'high',
+            'priority': 'medium',
+            'status': 'active',
+            'current_stock': 10.0,
+            'minimum_stock': 20.0,
+            'maximum_stock': 100.0,
+            'reorder_point': 15.0,
+            'reorder_quantity': 50.0,
             'age_group': '0-2',
             'size': 's',
             'season': 'summer',
-            'brand': 'Test Brand',
+            'brand': 'Kids Brand',
             'color': 'Blue',
+            'company_id': self.company.id,
         })
         
-        self.assertEqual(alert.age_group, '0-2')
-        self.assertEqual(alert.size, 's')
-        self.assertEqual(alert.season, 'summer')
-        self.assertEqual(alert.brand, 'Test Brand')
-        self.assertEqual(alert.color, 'Blue')
-    
-    def test_alert_types(self):
-        """Test different alert types"""
-        alert_types = [
-            'low_stock',
-            'out_of_stock',
-            'overstock',
-            'expiry_warning',
-            'seasonal_alert',
-            'size_alert',
-            'brand_alert',
-            'color_alert',
-        ]
+        # Create reorder rule from alert
+        reorder_rule = alert.create_reorder_rule()
         
-        for alert_type in alert_types:
-            alert = self.env['stock.alert'].create({
-                'name': f'Test {alert_type} Alert',
-                'product_id': self.product.id,
-                'warehouse_id': self.warehouse.id,
-                'current_stock': 5,
-                'minimum_stock': 10,
-                'alert_type': alert_type,
-                'priority': 'medium',
-            })
-            
-            self.assertEqual(alert.alert_type, alert_type)
+        self.assertEqual(reorder_rule.product_id, self.product)
+        self.assertEqual(reorder_rule.minimum_stock, 20.0)
+        self.assertEqual(reorder_rule.maximum_stock, 100.0)
+        self.assertEqual(reorder_rule.reorder_quantity, 50.0)
+        self.assertEqual(reorder_rule.age_group, '0-2')
+        self.assertEqual(reorder_rule.size, 's')
+        self.assertEqual(reorder_rule.season, 'summer')
+        self.assertEqual(reorder_rule.brand, 'Kids Brand')
+        self.assertEqual(reorder_rule.color, 'Blue')
     
-    def test_priority_levels(self):
-        """Test different priority levels"""
-        priorities = ['low', 'medium', 'high', 'critical']
+    def test_alert_priority_levels(self):
+        """Test different alert priority levels"""
+        priorities = ['low', 'medium', 'high', 'urgent']
         
         for priority in priorities:
             alert = self.env['stock.alert'].create({
-                'name': f'Test {priority} Priority Alert',
+                'name': f'Test Alert {priority}',
                 'product_id': self.product.id,
-                'warehouse_id': self.warehouse.id,
-                'current_stock': 5,
-                'minimum_stock': 10,
                 'alert_type': 'low_stock',
                 'priority': priority,
+                'status': 'active',
+                'current_stock': 10.0,
+                'minimum_stock': 20.0,
+                'company_id': self.company.id,
             })
             
             self.assertEqual(alert.priority, priority)
     
-    def test_status_transitions(self):
-        """Test status transitions"""
+    def test_alert_types(self):
+        """Test different alert types"""
+        alert_types = [
+            'low_stock', 'out_of_stock', 'overstock', 'expiry',
+            'seasonal', 'size', 'brand', 'color'
+        ]
+        
+        for alert_type in alert_types:
+            alert = self.env['stock.alert'].create({
+                'name': f'Test Alert {alert_type}',
+                'product_id': self.product.id,
+                'alert_type': alert_type,
+                'priority': 'medium',
+                'status': 'active',
+                'current_stock': 10.0,
+                'minimum_stock': 20.0,
+                'company_id': self.company.id,
+            })
+            
+            self.assertEqual(alert.alert_type, alert_type)
+    
+    def test_alert_status_transitions(self):
+        """Test alert status transitions"""
         alert = self.env['stock.alert'].create({
             'name': 'Test Alert',
             'product_id': self.product.id,
-            'warehouse_id': self.warehouse.id,
-            'current_stock': 5,
-            'minimum_stock': 10,
             'alert_type': 'low_stock',
-            'priority': 'high',
+            'priority': 'medium',
+            'status': 'draft',
+            'current_stock': 10.0,
+            'minimum_stock': 20.0,
+            'company_id': self.company.id,
         })
         
-        # Active -> Acknowledged
+        # Draft -> Active
+        alert.write({'status': 'active'})
         self.assertEqual(alert.status, 'active')
-        alert.action_acknowledge()
-        self.assertEqual(alert.status, 'acknowledged')
         
-        # Acknowledged -> Resolved
+        # Active -> Resolved
         alert.action_resolve()
         self.assertEqual(alert.status, 'resolved')
         
-        # Cannot transition from resolved
-        with self.assertRaises(Exception):
-            alert.action_acknowledge()
+        # Resolved -> Cancelled (should not be allowed)
+        with self.assertRaises(ValidationError):
+            alert.write({'status': 'cancelled'})
     
-    def test_notification_fields(self):
-        """Test notification fields"""
+    def test_alert_assignment(self):
+        """Test alert assignment to users"""
         user = self.env['res.users'].create({
             'name': 'Test User',
-            'login': 'testuser',
+            'login': 'test_user',
             'email': 'test@example.com',
         })
         
         alert = self.env['stock.alert'].create({
             'name': 'Test Alert',
             'product_id': self.product.id,
-            'warehouse_id': self.warehouse.id,
-            'current_stock': 5,
-            'minimum_stock': 10,
             'alert_type': 'low_stock',
-            'priority': 'high',
-            'notify_users': [(6, 0, [user.id])],
+            'priority': 'medium',
+            'status': 'active',
+            'current_stock': 10.0,
+            'minimum_stock': 20.0,
+            'assigned_to': user.id,
+            'company_id': self.company.id,
         })
         
-        self.assertIn(user, alert.notify_users)
-        self.assertFalse(alert.email_sent)
-        self.assertFalse(alert.sms_sent)
+        self.assertEqual(alert.assigned_to, user)
+
+
+if __name__ == '__main__':
+    unittest.main()

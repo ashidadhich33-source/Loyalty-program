@@ -6,14 +6,15 @@ Ocean ERP - Account Account Model
 Chart of accounts management for kids clothing retail.
 """
 
-from core_framework.orm import Model, fields
+from core_framework.orm import BaseModel, CharField, TextField, BooleanField, IntegerField, DateTimeField, Many2OneField, SelectionField, FloatField
 from core_framework.exceptions import ValidationError, UserError
+from addons.core_base.models.base_mixins import KidsClothingMixin
 import logging
 
 _logger = logging.getLogger(__name__)
 
 
-class AccountAccount(Model):
+class AccountAccount(BaseModel, KidsClothingMixin):
     """Account Account Model for Ocean ERP"""
     
     _name = 'account.account'
@@ -21,204 +22,131 @@ class AccountAccount(Model):
     _order = 'code'
     _rec_name = 'name'
 
-    name = fields.Char(
+    name = CharField(
         string='Account Name',
         required=True,
         help='Name of the account'
     )
     
-    code = fields.Char(
+    code = CharField(
         string='Account Code',
         required=True,
         help='Account code for identification'
     )
     
-    account_type = fields.Selection([
-        ('asset', 'Asset'),
-        ('liability', 'Liability'),
-        ('equity', 'Equity'),
-        ('income', 'Income'),
-        ('expense', 'Expense'),
-    ], string='Account Type', required=True, help='Type of account')
+    account_type = SelectionField(
+        selection=[
+            ('asset', 'Asset'),
+            ('liability', 'Liability'),
+            ('equity', 'Equity'),
+            ('income', 'Income'),
+            ('expense', 'Expense'),
+        ],
+        string='Account Type',
+        required=True,
+        help='Type of account'
+    )
     
-    account_subtype = fields.Selection([
-        # Asset subtypes
-        ('current_asset', 'Current Asset'),
-        ('fixed_asset', 'Fixed Asset'),
-        ('intangible_asset', 'Intangible Asset'),
-        ('other_asset', 'Other Asset'),
-        # Liability subtypes
-        ('current_liability', 'Current Liability'),
-        ('long_term_liability', 'Long Term Liability'),
-        ('other_liability', 'Other Liability'),
-        # Equity subtypes
-        ('share_capital', 'Share Capital'),
-        ('retained_earnings', 'Retained Earnings'),
-        ('other_equity', 'Other Equity'),
-        # Income subtypes
-        ('sales', 'Sales'),
-        ('other_income', 'Other Income'),
-        # Expense subtypes
-        ('cost_of_goods_sold', 'Cost of Goods Sold'),
-        ('operating_expense', 'Operating Expense'),
-        ('administrative_expense', 'Administrative Expense'),
-        ('selling_expense', 'Selling Expense'),
-        ('other_expense', 'Other Expense'),
-    ], string='Account Subtype', help='Subtype of account')
+    account_subtype = SelectionField(
+        selection=[
+            # Asset subtypes
+            ('current_asset', 'Current Asset'),
+            ('fixed_asset', 'Fixed Asset'),
+            ('intangible_asset', 'Intangible Asset'),
+            ('other_asset', 'Other Asset'),
+            # Liability subtypes
+            ('current_liability', 'Current Liability'),
+            ('long_term_liability', 'Long Term Liability'),
+            ('other_liability', 'Other Liability'),
+            # Equity subtypes
+            ('share_capital', 'Share Capital'),
+            ('retained_earnings', 'Retained Earnings'),
+            ('other_equity', 'Other Equity'),
+            # Income subtypes
+            ('sales', 'Sales'),
+            ('other_income', 'Other Income'),
+            # Expense subtypes
+            ('cost_of_goods_sold', 'Cost of Goods Sold'),
+            ('operating_expense', 'Operating Expense'),
+            ('administrative_expense', 'Administrative Expense'),
+            ('selling_expense', 'Selling Expense'),
+            ('other_expense', 'Other Expense'),
+        ],
+        string='Account Subtype',
+        help='Subtype of account'
+    )
     
-    parent_id = fields.Many2one(
+    parent_id = Many2OneField(
         'account.account',
         string='Parent Account',
         help='Parent account in hierarchy'
     )
     
-    child_ids = fields.One2many(
+    child_ids = One2ManyField(
         'account.account',
         'parent_id',
         string='Child Accounts',
         help='Child accounts'
     )
     
-    currency_id = fields.Many2one(
+    currency_id = Many2OneField(
         'res.currency',
         string='Currency',
-        default=lambda self: self.env.company.currency_id,
         help='Currency for this account'
     )
     
-    # Kids Clothing Specific Fields
-    age_group = fields.Selection([
-        ('0-2', 'Baby (0-2 years)'),
-        ('2-4', 'Toddler (2-4 years)'),
-        ('4-6', 'Pre-school (4-6 years)'),
-        ('6-8', 'Early School (6-8 years)'),
-        ('8-10', 'Middle School (8-10 years)'),
-        ('10-12', 'Late School (10-12 years)'),
-        ('12-14', 'Teen (12-14 years)'),
-        ('14-16', 'Young Adult (14-16 years)'),
-        ('all', 'All Age Groups'),
-    ], string='Age Group', help='Age group for the product')
-    
-    size = fields.Selection([
-        ('xs', 'XS'),
-        ('s', 'S'),
-        ('m', 'M'),
-        ('l', 'L'),
-        ('xl', 'XL'),
-        ('xxl', 'XXL'),
-        ('xxxl', 'XXXL'),
-        ('all', 'All Sizes'),
-    ], string='Size', help='Size of the product')
-    
-    season = fields.Selection([
-        ('summer', 'Summer'),
-        ('winter', 'Winter'),
-        ('monsoon', 'Monsoon'),
-        ('all_season', 'All Season'),
-    ], string='Season', help='Season for the product')
-    
-    brand = fields.Char(
-        string='Brand',
-        help='Brand of the product'
-    )
-    
-    color = fields.Char(
-        string='Color',
-        help='Color of the product'
-    )
-    
     # Account Configuration
-    reconcile = fields.Boolean(
+    reconcile = BooleanField(
         string='Allow Reconciliation',
         default=False,
         help='Allow reconciliation of this account'
     )
     
-    deprecated = fields.Boolean(
+    deprecated = BooleanField(
         string='Deprecated',
         default=False,
         help='Mark account as deprecated'
     )
     
-    active = fields.Boolean(
-        string='Active',
-        default=True,
-        help='Whether the account is active'
-    )
-    
     # Account Properties
-    user_type_id = fields.Many2one(
+    user_type_id = Many2OneField(
         'account.account.type',
         string='Account Type',
         help='Account type for this account'
     )
     
-    company_id = fields.Many2one(
+    company_id = Many2OneField(
         'res.company',
         string='Company',
-        default=lambda self: self.env.company,
         help='Company this account belongs to'
     )
     
     # Financial Information
-    balance = fields.Float(
+    balance = FloatField(
         string='Balance',
-        compute='_compute_balance',
         help='Current balance of the account'
     )
     
-    debit = fields.Float(
+    debit = FloatField(
         string='Debit',
-        compute='_compute_balance',
         help='Total debit amount'
     )
     
-    credit = fields.Float(
+    credit = FloatField(
         string='Credit',
-        compute='_compute_balance',
         help='Total credit amount'
     )
     
     # Account Hierarchy
-    level = fields.Integer(
+    level = IntegerField(
         string='Level',
-        compute='_compute_level',
         help='Level in account hierarchy'
     )
     
-    full_code = fields.Char(
+    full_code = CharField(
         string='Full Code',
-        compute='_compute_full_code',
         help='Full account code including parent codes'
     )
-    
-    def _compute_balance(self):
-        """Compute account balance from move lines"""
-        for record in self:
-            move_lines = self.env['account.move.line'].search([
-                ('account_id', '=', record.id)
-            ])
-            record.debit = sum(move_lines.mapped('debit'))
-            record.credit = sum(move_lines.mapped('credit'))
-            record.balance = record.debit - record.credit
-    
-    def _compute_level(self):
-        """Compute account level in hierarchy"""
-        for record in self:
-            level = 0
-            parent = record.parent_id
-            while parent:
-                level += 1
-                parent = parent.parent_id
-            record.level = level
-    
-    def _compute_full_code(self):
-        """Compute full account code"""
-        for record in self:
-            if record.parent_id:
-                record.full_code = f"{record.parent_id.full_code}.{record.code}"
-            else:
-                record.full_code = record.code
     
     def create(self, vals):
         """Override create to set default values"""
@@ -339,85 +267,53 @@ class AccountAccount(Model):
         pass
 
 
-class AccountAccountType(Model):
+class AccountAccountType(BaseModel, KidsClothingMixin):
     """Account Type Model for Ocean ERP"""
     
     _name = 'account.account.type'
     _description = 'Account Type'
     _order = 'sequence, name'
 
-    name = fields.Char(
+    name = CharField(
         string='Name',
         required=True,
         help='Name of the account type'
     )
     
-    type = fields.Selection([
-        ('asset', 'Asset'),
-        ('liability', 'Liability'),
-        ('equity', 'Equity'),
-        ('income', 'Income'),
-        ('expense', 'Expense'),
-    ], string='Type', required=True, help='Type of account')
+    type = SelectionField(
+        selection=[
+            ('asset', 'Asset'),
+            ('liability', 'Liability'),
+            ('equity', 'Equity'),
+            ('income', 'Income'),
+            ('expense', 'Expense'),
+        ],
+        string='Type',
+        required=True,
+        help='Type of account'
+    )
     
-    sequence = fields.Integer(
+    sequence = IntegerField(
         string='Sequence',
         default=10,
         help='Sequence for ordering'
     )
     
-    active = fields.Boolean(
-        string='Active',
-        default=True,
-        help='Whether the account type is active'
-    )
-    
-    # Kids Clothing Specific Fields
-    age_group = fields.Selection([
-        ('0-2', 'Baby (0-2 years)'),
-        ('2-4', 'Toddler (2-4 years)'),
-        ('4-6', 'Pre-school (4-6 years)'),
-        ('6-8', 'Early School (6-8 years)'),
-        ('8-10', 'Middle School (8-10 years)'),
-        ('10-12', 'Late School (10-12 years)'),
-        ('12-14', 'Teen (12-14 years)'),
-        ('14-16', 'Young Adult (14-16 years)'),
-        ('all', 'All Age Groups'),
-    ], string='Age Group', help='Age group for the product')
-    
-    season = fields.Selection([
-        ('summer', 'Summer'),
-        ('winter', 'Winter'),
-        ('monsoon', 'Monsoon'),
-        ('all_season', 'All Season'),
-    ], string='Season', help='Season for the product')
-    
-    brand = fields.Char(
-        string='Brand',
-        help='Brand of the product'
-    )
-    
-    color = fields.Char(
-        string='Color',
-        help='Color of the product'
-    )
-    
     # Account Type Properties
-    include_initial_balance = fields.Boolean(
+    include_initial_balance = BooleanField(
         string='Include Initial Balance',
         default=False,
         help='Include initial balance in reports'
     )
     
-    reconcile = fields.Boolean(
+    reconcile = BooleanField(
         string='Allow Reconciliation',
         default=False,
         help='Allow reconciliation for this account type'
     )
     
-    company_id = fields.Many2one(
+    company_id = Many2OneField(
         'res.company',
         string='Company',
-        default=lambda self: self.env.company,
         help='Company this account type belongs to'
     )

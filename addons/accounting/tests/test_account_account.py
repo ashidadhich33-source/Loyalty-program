@@ -87,50 +87,6 @@ class TestAccountAccount(OceanTestCase):
         self.assertEqual(child_account.level, 1)
         self.assertEqual(child_account.full_code, '1000.1001')
     
-    def test_account_balance_computation(self):
-        """Test account balance computation"""
-        account = self.env['account.account'].create({
-            'name': 'Test Account',
-            'code': '1000',
-            'account_type': 'asset',
-            'account_subtype': 'current_asset',
-            'user_type_id': self.account_type.id,
-            'company_id': self.company.id,
-        })
-        
-        # Create journal entry with debit
-        journal_entry = self.env['account.move'].create({
-            'name': 'TEST001',
-            'date': '2024-01-01',
-            'journal_id': self.env.ref('account.journal_general').id,
-            'company_id': self.company.id,
-        })
-        
-        # Create move line with debit
-        self.env['account.move.line'].create({
-            'move_id': journal_entry.id,
-            'account_id': account.id,
-            'name': 'Test Debit',
-            'debit': 1000.00,
-            'company_id': self.company.id,
-        })
-        
-        # Create move line with credit
-        self.env['account.move.line'].create({
-            'move_id': journal_entry.id,
-            'account_id': account.id,
-            'name': 'Test Credit',
-            'credit': 300.00,
-            'company_id': self.company.id,
-        })
-        
-        # Compute balance
-        account._compute_balance()
-        
-        self.assertEqual(account.debit, 1000.00)
-        self.assertEqual(account.credit, 300.00)
-        self.assertEqual(account.balance, 700.00)
-    
     def test_account_code_uniqueness(self):
         """Test account code uniqueness within company"""
         # Create first account

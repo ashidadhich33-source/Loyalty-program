@@ -1,532 +1,506 @@
-/* Stock Management JavaScript */
+/* Ocean ERP - Stock Management JavaScript */
 
-odoo.define('stock_management.stock_management', function (require) {
-    'use strict';
+/**
+ * Ocean ERP Stock Management Module
+ * =================================
+ * 
+ * JavaScript functionality for the stock management addon in Ocean ERP.
+ */
 
-    var core = require('web.core');
-    var ListView = require('web.ListView');
-    var FormView = require('web.FormView');
-    var KanbanView = require('web.KanbanView');
-    var AbstractAction = require('web.AbstractAction');
-    var Dialog = require('web.Dialog');
-    var rpc = require('web.rpc');
-
-    var _t = core._t;
-
-    // Stock Alert Management
-    var StockAlertManager = AbstractAction.extend({
-        template: 'stock_management.StockAlertManager',
+class OceanStockManagement {
+    constructor() {
+        this.init();
+    }
+    
+    init() {
+        this.bindEvents();
+        this.loadDashboardData();
+    }
+    
+    bindEvents() {
+        // Bind form events
+        this.bindFormEvents();
         
-        init: function (parent, action) {
-            this._super.apply(this, arguments);
-            this.action = action;
-        },
+        // Bind button events
+        this.bindButtonEvents();
         
-        start: function () {
-            this._super.apply(this, arguments);
-            this.loadStockAlerts();
-        },
+        // Bind table events
+        this.bindTableEvents();
+    }
+    
+    bindFormEvents() {
+        // Alert form events
+        document.addEventListener('change', (e) => {
+            if (e.target.matches('.ocean_alert_form input[name="alert_type"]')) {
+                this.onAlertTypeChange(e.target.value);
+            }
+        });
         
-        loadStockAlerts: function () {
-            var self = this;
-            rpc.query({
-                model: 'stock.alert',
-                method: 'search_read',
-                args: [[], ['name', 'product_id', 'warehouse_id', 'alert_type', 'priority', 'status', 'current_stock', 'minimum_stock']],
-            }).then(function (alerts) {
-                self.renderStockAlerts(alerts);
-            });
-        },
+        // Product change
+        document.addEventListener('change', (e) => {
+            if (e.target.matches('.ocean_alert_form select[name="product_id"]')) {
+                this.onProductChange(e.target.value);
+            }
+        });
         
-        renderStockAlerts: function (alerts) {
-            var self = this;
-            var $alertsContainer = this.$('.o_stock_alerts_container');
-            
-            alerts.forEach(function (alert) {
-                var $alert = self.createAlertElement(alert);
-                $alertsContainer.append($alert);
-            });
-        },
+        // Priority change
+        document.addEventListener('change', (e) => {
+            if (e.target.matches('.ocean_alert_form select[name="priority"]')) {
+                this.onPriorityChange(e.target.value);
+            }
+        });
+    }
+    
+    bindButtonEvents() {
+        // Resolve alert button
+        document.addEventListener('click', (e) => {
+            if (e.target.matches('.ocean_btn_resolve')) {
+                this.resolveAlert(e.target.dataset.alertId);
+            }
+        });
         
-        createAlertElement: function (alert) {
-            var priorityClass = 'o_stock_alert_priority_' + alert.priority;
-            var statusClass = 'o_stock_alert_status_' + alert.status;
-            
-            var $alert = $('<div>')
-                .addClass('o_stock_alert_card')
-                .addClass(priorityClass)
-                .addClass(statusClass)
-                .html(
-                    '<div class="o_alert_header">' +
-                        '<h4>' + alert.name + '</h4>' +
-                        '<span class="o_alert_priority">' + alert.priority + '</span>' +
-                    '</div>' +
-                    '<div class="o_alert_body">' +
-                        '<p><strong>Product:</strong> ' + alert.product_id[1] + '</p>' +
-                        '<p><strong>Warehouse:</strong> ' + alert.warehouse_id[1] + '</p>' +
-                        '<p><strong>Type:</strong> ' + alert.alert_type + '</p>' +
-                        '<p><strong>Stock:</strong> ' + alert.current_stock + ' / ' + alert.minimum_stock + '</p>' +
-                    '</div>' +
-                    '<div class="o_alert_actions">' +
-                        '<button class="o_stock_btn_primary o_acknowledge_btn">Acknowledge</button>' +
-                        '<button class="o_stock_btn_success o_resolve_btn">Resolve</button>' +
-                    '</div>'
-                );
-            
-            // Add click handlers
-            $alert.find('.o_acknowledge_btn').on('click', function () {
-                self.acknowledgeAlert(alert.id);
-            });
-            
-            $alert.find('.o_resolve_btn').on('click', function () {
-                self.resolveAlert(alert.id);
-            });
-            
-            return $alert;
-        },
+        // Cancel alert button
+        document.addEventListener('click', (e) => {
+            if (e.target.matches('.ocean_btn_cancel')) {
+                this.cancelAlert(e.target.dataset.alertId);
+            }
+        });
         
-        acknowledgeAlert: function (alertId) {
-            var self = this;
-            rpc.query({
-                model: 'stock.alert',
-                method: 'action_acknowledge',
-                args: [alertId],
-            }).then(function () {
-                self.loadStockAlerts();
-            });
-        },
+        // Reactivate alert button
+        document.addEventListener('click', (e) => {
+            if (e.target.matches('.ocean_btn_reactivate')) {
+                this.reactivateAlert(e.target.dataset.alertId);
+            }
+        });
         
-        resolveAlert: function (alertId) {
-            var self = this;
-            rpc.query({
-                model: 'stock.alert',
-                method: 'action_resolve',
-                args: [alertId],
-            }).then(function () {
-                self.loadStockAlerts();
-            });
+        // Create reorder rule button
+        document.addEventListener('click', (e) => {
+            if (e.target.matches('.ocean_btn_create_reorder_rule')) {
+                this.createReorderRule(e.target.dataset.alertId);
+            }
+        });
+        
+        // Generate purchase order button
+        document.addEventListener('click', (e) => {
+            if (e.target.matches('.ocean_btn_generate_purchase_order')) {
+                this.generatePurchaseOrder(e.target.dataset.alertId);
+            }
+        });
+    }
+    
+    bindTableEvents() {
+        // Table row click events
+        document.addEventListener('click', (e) => {
+            if (e.target.matches('.ocean_alert_table tbody tr')) {
+                this.selectAlertRow(e.target);
+            }
+        });
+        
+        // Sort events
+        document.addEventListener('click', (e) => {
+            if (e.target.matches('.ocean_alert_table th[data-sort]')) {
+                this.sortTable(e.target.dataset.sort);
+            }
+        });
+    }
+    
+    onAlertTypeChange(alertType) {
+        // Update alert message based on type
+        const messageField = document.querySelector('.ocean_alert_form textarea[name="message"]');
+        if (messageField) {
+            this.updateAlertMessage(messageField, alertType);
         }
-    });
-
-    // Reorder Rule Management
-    var ReorderRuleManager = AbstractAction.extend({
-        template: 'stock_management.ReorderRuleManager',
         
-        init: function (parent, action) {
-            this._super.apply(this, arguments);
-            this.action = action;
-        },
-        
-        start: function () {
-            this._super.apply(this, arguments);
-            this.loadReorderRules();
-        },
-        
-        loadReorderRules: function () {
-            var self = this;
-            rpc.query({
-                model: 'stock.reorder.rule',
-                method: 'search_read',
-                args: [[], ['name', 'product_id', 'warehouse_id', 'minimum_stock', 'maximum_stock', 'reorder_qty', 'current_stock', 'stock_status']],
-            }).then(function (rules) {
-                self.renderReorderRules(rules);
-            });
-        },
-        
-        renderReorderRules: function (rules) {
-            var self = this;
-            var $rulesContainer = this.$('.o_reorder_rules_container');
-            
-            rules.forEach(function (rule) {
-                var $rule = self.createRuleElement(rule);
-                $rulesContainer.append($rule);
-            });
-        },
-        
-        createRuleElement: function (rule) {
-            var statusClass = 'o_stock_status_' + rule.stock_status;
-            
-            var $rule = $('<div>')
-                .addClass('o_reorder_rule_card')
-                .addClass(statusClass)
-                .html(
-                    '<div class="o_rule_header">' +
-                        '<h4>' + rule.name + '</h4>' +
-                        '<span class="o_rule_status">' + rule.stock_status + '</span>' +
-                    '</div>' +
-                    '<div class="o_rule_body">' +
-                        '<p><strong>Product:</strong> ' + rule.product_id[1] + '</p>' +
-                        '<p><strong>Warehouse:</strong> ' + rule.warehouse_id[1] + '</p>' +
-                        '<p><strong>Min Stock:</strong> ' + rule.minimum_stock + '</p>' +
-                        '<p><strong>Max Stock:</strong> ' + rule.maximum_stock + '</p>' +
-                        '<p><strong>Reorder Qty:</strong> ' + rule.reorder_qty + '</p>' +
-                        '<p><strong>Current Stock:</strong> ' + rule.current_stock + '</p>' +
-                    '</div>' +
-                    '<div class="o_rule_actions">' +
-                        '<button class="o_stock_btn_primary o_create_po_btn">Create PO</button>' +
-                        '<button class="o_stock_btn_warning o_optimize_btn">Optimize</button>' +
-                    '</div>'
-                );
-            
-            // Add click handlers
-            $rule.find('.o_create_po_btn').on('click', function () {
-                self.createPurchaseOrder(rule.id);
-            });
-            
-            $rule.find('.o_optimize_btn').on('click', function () {
-                self.optimizeRule(rule.id);
-            });
-            
-            return $rule;
-        },
-        
-        createPurchaseOrder: function (ruleId) {
-            var self = this;
-            rpc.query({
-                model: 'stock.reorder.rule',
-                method: 'action_create_purchase_order',
-                args: [ruleId],
-            }).then(function (result) {
-                if (result) {
-                    self.do_action(result);
-                }
-            });
-        },
-        
-        optimizeRule: function (ruleId) {
-            var self = this;
-            rpc.query({
-                model: 'stock.reorder.rule',
-                method: 'action_optimize_rule',
-                args: [ruleId],
-            }).then(function () {
-                self.loadReorderRules();
-            });
+        // Update action required based on type
+        const actionField = document.querySelector('.ocean_alert_form input[name="action_required"]');
+        if (actionField) {
+            this.updateActionRequired(actionField, alertType);
         }
-    });
-
-    // Stock Adjustment Management
-    var StockAdjustmentManager = AbstractAction.extend({
-        template: 'stock_management.StockAdjustmentManager',
+    }
+    
+    updateAlertMessage(field, alertType) {
+        const messages = {
+            'low_stock': 'Product stock is below minimum level. Please reorder soon.',
+            'out_of_stock': 'Product is out of stock. Immediate reorder required.',
+            'overstock': 'Product stock is above maximum level. Consider reducing inventory.',
+            'expiry': 'Product is approaching expiry date. Consider discounting or disposal.',
+            'seasonal': 'Product is out of season. Consider moving to clearance.',
+            'size': 'Specific size is running low. Consider reordering this size.',
+            'brand': 'Brand stock is low. Consider reordering from this brand.',
+            'color': 'Specific color is running low. Consider reordering this color.',
+        };
         
-        init: function (parent, action) {
-            this._super.apply(this, arguments);
-            this.action = action;
-        },
+        field.value = messages[alertType] || '';
+    }
+    
+    updateActionRequired(field, alertType) {
+        const actions = {
+            'low_stock': 'Reorder product',
+            'out_of_stock': 'Urgent reorder required',
+            'overstock': 'Reduce inventory',
+            'expiry': 'Discount or dispose',
+            'seasonal': 'Move to clearance',
+            'size': 'Reorder specific size',
+            'brand': 'Reorder from brand',
+            'color': 'Reorder specific color',
+        };
         
-        start: function () {
-            this._super.apply(this, arguments);
-            this.loadStockAdjustments();
-        },
-        
-        loadStockAdjustments: function () {
-            var self = this;
-            rpc.query({
-                model: 'stock.adjustment',
-                method: 'search_read',
-                args: [[], ['name', 'date', 'warehouse_id', 'adjustment_type', 'state', 'total_quantity_adjusted', 'total_value_adjusted']],
-            }).then(function (adjustments) {
-                self.renderStockAdjustments(adjustments);
-            });
-        },
-        
-        renderStockAdjustments: function (adjustments) {
-            var self = this;
-            var $adjustmentsContainer = this.$('.o_stock_adjustments_container');
-            
-            adjustments.forEach(function (adjustment) {
-                var $adjustment = self.createAdjustmentElement(adjustment);
-                $adjustmentsContainer.append($adjustment);
-            });
-        },
-        
-        createAdjustmentElement: function (adjustment) {
-            var stateClass = 'o_adjustment_state_' + adjustment.state;
-            
-            var $adjustment = $('<div>')
-                .addClass('o_stock_adjustment_card')
-                .addClass(stateClass)
-                .html(
-                    '<div class="o_adjustment_header">' +
-                        '<h4>' + adjustment.name + '</h4>' +
-                        '<span class="o_adjustment_state">' + adjustment.state + '</span>' +
-                    '</div>' +
-                    '<div class="o_adjustment_body">' +
-                        '<p><strong>Date:</strong> ' + adjustment.date + '</p>' +
-                        '<p><strong>Warehouse:</strong> ' + adjustment.warehouse_id[1] + '</p>' +
-                        '<p><strong>Type:</strong> ' + adjustment.adjustment_type + '</p>' +
-                        '<p><strong>Qty Adjusted:</strong> ' + adjustment.total_quantity_adjusted + '</p>' +
-                        '<p><strong>Value Adjusted:</strong> ' + adjustment.total_value_adjusted + '</p>' +
-                    '</div>' +
-                    '<div class="o_adjustment_actions">' +
-                        '<button class="o_stock_btn_primary o_confirm_btn">Confirm</button>' +
-                        '<button class="o_stock_btn_success o_approve_btn">Approve</button>' +
-                        '<button class="o_stock_btn_warning o_done_btn">Done</button>' +
-                    '</div>'
-                );
-            
-            // Add click handlers
-            $adjustment.find('.o_confirm_btn').on('click', function () {
-                self.confirmAdjustment(adjustment.id);
-            });
-            
-            $adjustment.find('.o_approve_btn').on('click', function () {
-                self.approveAdjustment(adjustment.id);
-            });
-            
-            $adjustment.find('.o_done_btn').on('click', function () {
-                self.doneAdjustment(adjustment.id);
-            });
-            
-            return $adjustment;
-        },
-        
-        confirmAdjustment: function (adjustmentId) {
-            var self = this;
-            rpc.query({
-                model: 'stock.adjustment',
-                method: 'action_confirm',
-                args: [adjustmentId],
-            }).then(function () {
-                self.loadStockAdjustments();
-            });
-        },
-        
-        approveAdjustment: function (adjustmentId) {
-            var self = this;
-            rpc.query({
-                model: 'stock.adjustment',
-                method: 'action_approve',
-                args: [adjustmentId],
-            }).then(function () {
-                self.loadStockAdjustments();
-            });
-        },
-        
-        doneAdjustment: function (adjustmentId) {
-            var self = this;
-            rpc.query({
-                model: 'stock.adjustment',
-                method: 'action_done',
-                args: [adjustmentId],
-            }).then(function () {
-                self.loadStockAdjustments();
-            });
+        field.value = actions[alertType] || '';
+    }
+    
+    onProductChange(productId) {
+        if (productId) {
+            // Load product details
+            this.loadProductDetails(productId);
         }
-    });
-
-    // Stock Analysis Management
-    var StockAnalysisManager = AbstractAction.extend({
-        template: 'stock_management.StockAnalysisManager',
-        
-        init: function (parent, action) {
-            this._super.apply(this, arguments);
-            this.action = action;
-        },
-        
-        start: function () {
-            this._super.apply(this, arguments);
-            this.loadStockAnalysis();
-        },
-        
-        loadStockAnalysis: function () {
-            var self = this;
-            rpc.query({
-                model: 'stock.analysis',
-                method: 'search_read',
-                args: [[], ['name', 'date', 'analysis_type', 'state', 'total_products', 'total_stock_value', 'total_stock_quantity']],
-            }).then(function (analyses) {
-                self.renderStockAnalysis(analyses);
-            });
-        },
-        
-        renderStockAnalysis: function (analyses) {
-            var self = this;
-            var $analysesContainer = this.$('.o_stock_analyses_container');
+    }
+    
+    async loadProductDetails(productId) {
+        try {
+            const response = await fetch(`/api/stock/product/${productId}`);
+            const data = await response.json();
             
-            analyses.forEach(function (analysis) {
-                var $analysis = self.createAnalysisElement(analysis);
-                $analysesContainer.append($analysis);
-            });
-        },
-        
-        createAnalysisElement: function (analysis) {
-            var stateClass = 'o_analysis_state_' + analysis.state;
-            
-            var $analysis = $('<div>')
-                .addClass('o_stock_analysis_card')
-                .addClass(stateClass)
-                .html(
-                    '<div class="o_analysis_header">' +
-                        '<h4>' + analysis.name + '</h4>' +
-                        '<span class="o_analysis_state">' + analysis.state + '</span>' +
-                    '</div>' +
-                    '<div class="o_analysis_body">' +
-                        '<p><strong>Date:</strong> ' + analysis.date + '</p>' +
-                        '<p><strong>Type:</strong> ' + analysis.analysis_type + '</p>' +
-                        '<p><strong>Products:</strong> ' + analysis.total_products + '</p>' +
-                        '<p><strong>Stock Value:</strong> ' + analysis.total_stock_value + '</p>' +
-                        '<p><strong>Stock Quantity:</strong> ' + analysis.total_stock_quantity + '</p>' +
-                    '</div>' +
-                    '<div class="o_analysis_actions">' +
-                        '<button class="o_stock_btn_primary o_run_analysis_btn">Run Analysis</button>' +
-                        '<button class="o_stock_btn_success o_view_results_btn">View Results</button>' +
-                    </div>'
-                );
-            
-            // Add click handlers
-            $analysis.find('.o_run_analysis_btn').on('click', function () {
-                self.runAnalysis(analysis.id);
-            });
-            
-            $analysis.find('.o_view_results_btn').on('click', function () {
-                self.viewResults(analysis.id);
-            });
-            
-            return $analysis;
-        },
-        
-        runAnalysis: function (analysisId) {
-            var self = this;
-            rpc.query({
-                model: 'stock.analysis',
-                method: 'action_run_analysis',
-                args: [analysisId],
-            }).then(function () {
-                self.loadStockAnalysis();
-            });
-        },
-        
-        viewResults: function (analysisId) {
-            var self = this;
-            self.do_action({
-                type: 'ir.actions.act_window',
-                name: 'Analysis Results',
-                res_model: 'stock.analysis',
-                res_id: analysisId,
-                view_mode: 'form',
-                target: 'current',
-            });
+            // Update form fields with product data
+            this.populateProductFields(data);
+        } catch (error) {
+            console.error('Error loading product details:', error);
         }
-    });
-
-    // Dashboard Widget
-    var StockDashboardWidget = AbstractAction.extend({
-        template: 'stock_management.StockDashboard',
-        
-        init: function (parent, action) {
-            this._super.apply(this, arguments);
-            this.action = action;
-        },
-        
-        start: function () {
-            this._super.apply(this, arguments);
-            this.loadDashboardData();
-        },
-        
-        loadDashboardData: function () {
-            var self = this;
-            
-            // Load stock alerts
-            rpc.query({
-                model: 'stock.alert',
-                method: 'search_count',
-                args: [[('status', '=', 'active')]],
-            }).then(function (activeAlerts) {
-                self.$('.o_active_alerts_count').text(activeAlerts);
-            });
-            
-            // Load critical alerts
-            rpc.query({
-                model: 'stock.alert',
-                method: 'search_count',
-                args: [[('priority', '=', 'critical')]],
-            }).then(function (criticalAlerts) {
-                self.$('.o_critical_alerts_count').text(criticalAlerts);
-            });
-            
-            // Load reorder rules
-            rpc.query({
-                model: 'stock.reorder.rule',
-                method: 'search_count',
-                args: [[('active', '=', True)]],
-            }).then(function (activeRules) {
-                self.$('.o_active_rules_count').text(activeRules);
-            });
-            
-            // Load pending adjustments
-            rpc.query({
-                model: 'stock.adjustment',
-                method: 'search_count',
-                args: [[('state', '=', 'confirmed'), ('require_approval', '=', True)]],
-            }).then(function (pendingAdjustments) {
-                self.$('.o_pending_adjustments_count').text(pendingAdjustments);
-            });
+    }
+    
+    populateProductFields(data) {
+        // Update age group
+        const ageGroupField = document.querySelector('.ocean_alert_form select[name="age_group"]');
+        if (ageGroupField && data.age_group) {
+            ageGroupField.value = data.age_group;
         }
-    });
-
-    // Utility Functions
-    var StockManagementUtils = {
-        formatCurrency: function (amount) {
-            return new Intl.NumberFormat('en-IN', {
-                style: 'currency',
-                currency: 'INR'
-            }).format(amount);
-        },
         
-        formatNumber: function (number) {
-            return new Intl.NumberFormat('en-IN').format(number);
-        },
-        
-        formatDate: function (date) {
-            return new Date(date).toLocaleDateString('en-IN');
-        },
-        
-        formatDateTime: function (datetime) {
-            return new Date(datetime).toLocaleString('en-IN');
-        },
-        
-        showNotification: function (title, message, type) {
-            var notification = new Dialog(this, {
-                title: title,
-                size: 'medium',
-                buttons: [
-                    {
-                        text: 'OK',
-                        click: function () {
-                            notification.close();
-                        }
-                    }
-                ]
-            });
-            
-            notification.appendTo($('<div>').html(message));
-            notification.open();
-        },
-        
-        showLoading: function (element) {
-            var $loading = $('<div>').addClass('o_stock_loading');
-            $(element).append($loading);
-        },
-        
-        hideLoading: function (element) {
-            $(element).find('.o_stock_loading').remove();
+        // Update size
+        const sizeField = document.querySelector('.ocean_alert_form select[name="size"]');
+        if (sizeField && data.size) {
+            sizeField.value = data.size;
         }
-    };
+        
+        // Update season
+        const seasonField = document.querySelector('.ocean_alert_form select[name="season"]');
+        if (seasonField && data.season) {
+            seasonField.value = data.season;
+        }
+        
+        // Update brand
+        const brandField = document.querySelector('.ocean_alert_form input[name="brand"]');
+        if (brandField && data.brand) {
+            brandField.value = data.brand;
+        }
+        
+        // Update color
+        const colorField = document.querySelector('.ocean_alert_form input[name="color"]');
+        if (colorField && data.color) {
+            colorField.value = data.color;
+        }
+        
+        // Update current stock
+        const currentStockField = document.querySelector('.ocean_alert_form input[name="current_stock"]');
+        if (currentStockField && data.current_stock !== undefined) {
+            currentStockField.value = data.current_stock;
+        }
+        
+        // Update minimum stock
+        const minStockField = document.querySelector('.ocean_alert_form input[name="minimum_stock"]');
+        if (minStockField && data.minimum_stock !== undefined) {
+            minStockField.value = data.minimum_stock;
+        }
+        
+        // Update maximum stock
+        const maxStockField = document.querySelector('.ocean_alert_form input[name="maximum_stock"]');
+        if (maxStockField && data.maximum_stock !== undefined) {
+            maxStockField.value = data.maximum_stock;
+        }
+        
+        // Update reorder point
+        const reorderPointField = document.querySelector('.ocean_alert_form input[name="reorder_point"]');
+        if (reorderPointField && data.reorder_point !== undefined) {
+            reorderPointField.value = data.reorder_point;
+        }
+    }
+    
+    onPriorityChange(priority) {
+        // Update due date based on priority
+        const dueDateField = document.querySelector('.ocean_alert_form input[name="due_date"]');
+        if (dueDateField) {
+            this.updateDueDate(dueDateField, priority);
+        }
+    }
+    
+    updateDueDate(field, priority) {
+        const now = new Date();
+        let daysToAdd = 7; // Default
+        
+        switch (priority) {
+            case 'urgent':
+                daysToAdd = 1;
+                break;
+            case 'high':
+                daysToAdd = 3;
+                break;
+            case 'medium':
+                daysToAdd = 7;
+                break;
+            case 'low':
+                daysToAdd = 14;
+                break;
+        }
+        
+        const dueDate = new Date(now.getTime() + (daysToAdd * 24 * 60 * 60 * 1000));
+        field.value = dueDate.toISOString().slice(0, 16);
+    }
+    
+    resolveAlert(alertId) {
+        // Resolve the alert
+        fetch(`/api/stock/alerts/${alertId}/resolve`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            this.showNotification('Alert resolved successfully', 'success');
+            this.refreshAlertList();
+        })
+        .catch(error => {
+            console.error('Error resolving alert:', error);
+            this.showNotification('Error resolving alert', 'danger');
+        });
+    }
+    
+    cancelAlert(alertId) {
+        // Cancel the alert
+        fetch(`/api/stock/alerts/${alertId}/cancel`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            this.showNotification('Alert cancelled successfully', 'success');
+            this.refreshAlertList();
+        })
+        .catch(error => {
+            console.error('Error cancelling alert:', error);
+            this.showNotification('Error cancelling alert', 'danger');
+        });
+    }
+    
+    reactivateAlert(alertId) {
+        // Reactivate the alert
+        fetch(`/api/stock/alerts/${alertId}/reactivate`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            this.showNotification('Alert reactivated successfully', 'success');
+            this.refreshAlertList();
+        })
+        .catch(error => {
+            console.error('Error reactivating alert:', error);
+            this.showNotification('Error reactivating alert', 'danger');
+        });
+    }
+    
+    createReorderRule(alertId) {
+        // Create reorder rule from alert
+        fetch(`/api/stock/alerts/${alertId}/create_reorder_rule`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            this.showNotification('Reorder rule created successfully', 'success');
+        })
+        .catch(error => {
+            console.error('Error creating reorder rule:', error);
+            this.showNotification('Error creating reorder rule', 'danger');
+        });
+    }
+    
+    generatePurchaseOrder(alertId) {
+        // Generate purchase order from alert
+        fetch(`/api/stock/alerts/${alertId}/generate_purchase_order`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            this.showNotification('Purchase order generated successfully', 'success');
+        })
+        .catch(error => {
+            console.error('Error generating purchase order:', error);
+            this.showNotification('Error generating purchase order', 'danger');
+        });
+    }
+    
+    selectAlertRow(row) {
+        // Remove previous selection
+        document.querySelectorAll('.ocean_alert_table tbody tr').forEach(r => {
+            r.classList.remove('selected');
+        });
+        
+        // Add selection to current row
+        row.classList.add('selected');
+        
+        // Update form with selected alert data
+        this.loadAlertData(row.dataset.alertId);
+    }
+    
+    loadAlertData(alertId) {
+        // Load alert data into form
+        fetch(`/api/stock/alerts/${alertId}`)
+            .then(response => response.json())
+            .then(data => {
+                this.populateForm(data);
+            })
+            .catch(error => {
+                console.error('Error loading alert data:', error);
+            });
+    }
+    
+    populateForm(data) {
+        // Populate form fields with alert data
+        Object.keys(data).forEach(key => {
+            const field = document.querySelector(`.ocean_alert_form [name="${key}"]`);
+            if (field) {
+                field.value = data[key];
+            }
+        });
+    }
+    
+    sortTable(column) {
+        // Sort table by column
+        const table = document.querySelector('.ocean_alert_table');
+        const tbody = table.querySelector('tbody');
+        const rows = Array.from(tbody.querySelectorAll('tr'));
+        
+        const sortedRows = rows.sort((a, b) => {
+            const aValue = a.querySelector(`[data-column="${column}"]`).textContent;
+            const bValue = b.querySelector(`[data-column="${column}"]`).textContent;
+            
+            return aValue.localeCompare(bValue);
+        });
+        
+        // Reorder rows
+        sortedRows.forEach(row => tbody.appendChild(row));
+    }
+    
+    loadDashboardData() {
+        // Load dashboard statistics
+        this.loadAlertStatistics();
+        this.loadStockStatistics();
+        this.loadReorderStatistics();
+    }
+    
+    async loadAlertStatistics() {
+        try {
+            const response = await fetch('/api/stock/statistics/alerts');
+            const data = await response.json();
+            
+            // Update dashboard elements
+            document.querySelector('.ocean_total_alerts').textContent = data.total;
+            document.querySelector('.ocean_active_alerts').textContent = data.active;
+            document.querySelector('.ocean_resolved_alerts').textContent = data.resolved;
+            document.querySelector('.ocean_urgent_alerts').textContent = data.urgent;
+        } catch (error) {
+            console.error('Error loading alert statistics:', error);
+        }
+    }
+    
+    async loadStockStatistics() {
+        try {
+            const response = await fetch('/api/stock/statistics/stock');
+            const data = await response.json();
+            
+            // Update dashboard elements
+            document.querySelector('.ocean_low_stock_items').textContent = data.low_stock;
+            document.querySelector('.ocean_out_of_stock_items').textContent = data.out_of_stock;
+            document.querySelector('.ocean_overstock_items').textContent = data.overstock;
+        } catch (error) {
+            console.error('Error loading stock statistics:', error);
+        }
+    }
+    
+    async loadReorderStatistics() {
+        try {
+            const response = await fetch('/api/stock/statistics/reorder');
+            const data = await response.json();
+            
+            // Update dashboard elements
+            document.querySelector('.ocean_pending_reorders').textContent = data.pending;
+            document.querySelector('.ocean_completed_reorders').textContent = data.completed;
+        } catch (error) {
+            console.error('Error loading reorder statistics:', error);
+        }
+    }
+    
+    refreshAlertList() {
+        // Refresh the alert list
+        location.reload();
+    }
+    
+    // Utility methods
+    formatCurrency(amount) {
+        return new Intl.NumberFormat('en-IN', {
+            style: 'currency',
+            currency: 'INR'
+        }).format(amount);
+    }
+    
+    formatNumber(number) {
+        return new Intl.NumberFormat('en-IN').format(number);
+    }
+    
+    formatDate(date) {
+        return new Date(date).toLocaleDateString('en-IN');
+    }
+    
+    showNotification(message, type = 'info') {
+        // Show notification to user
+        const notification = document.createElement('div');
+        notification.className = `ocean_notification ocean_notification_${type}`;
+        notification.textContent = message;
+        
+        document.body.appendChild(notification);
+        
+        // Remove after 3 seconds
+        setTimeout(() => {
+            notification.remove();
+        }, 3000);
+    }
+    
+    showLoading(element) {
+        const loading = document.createElement('div');
+        loading.className = 'ocean_stock_loading';
+        element.appendChild(loading);
+    }
+    
+    hideLoading(element) {
+        const loading = element.querySelector('.ocean_stock_loading');
+        if (loading) {
+            loading.remove();
+        }
+    }
+}
 
-    // Register actions
-    core.action_registry.add('stock_alert_manager', StockAlertManager);
-    core.action_registry.add('reorder_rule_manager', ReorderRuleManager);
-    core.action_registry.add('stock_adjustment_manager', StockAdjustmentManager);
-    core.action_registry.add('stock_analysis_manager', StockAnalysisManager);
-    core.action_registry.add('stock_dashboard_widget', StockDashboardWidget);
-
-    return {
-        StockAlertManager: StockAlertManager,
-        ReorderRuleManager: ReorderRuleManager,
-        StockAdjustmentManager: StockAdjustmentManager,
-        StockAnalysisManager: StockAnalysisManager,
-        StockDashboardWidget: StockDashboardWidget,
-        StockManagementUtils: StockManagementUtils
-    };
+// Initialize when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    new OceanStockManagement();
 });
+
+// Export for use in other modules
+window.OceanStockManagement = OceanStockManagement;

@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Account Report Tree View -->
+        <record id="view_account_report_tree" model="ocean.ui.view">
+            <field name="name">account.report.tree</field>
+            <field name="model">account.report</field>
+            <field name="arch" type="xml">
+                <tree string="Financial Reports" create="true" edit="true" delete="true">
+                    <field name="name"/>
+                    <field name="report_type"/>
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                    <field name="state"/>
+                    <field name="target_move"/>
+                    <field name="display_detail"/>
+                    <field name="generated_date"/>
+                    <field name="generated_by"/>
+                    <field name="age_group"/>
+                    <field name="size"/>
+                    <field name="season"/>
+                    <field name="brand"/>
+                    <field name="color"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Account Report Form View -->
+        <record id="view_account_report_form" model="ocean.ui.view">
+            <field name="name">account.report.form</field>
+            <field name="model">account.report</field>
+            <field name="arch" type="xml">
+                <form string="Financial Report" create="true" edit="true" delete="true">
+                    <header>
+                        <button name="action_generate" string="Generate Report" type="object" class="btn-primary" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                        <button name="action_cancel" string="Cancel" type="object" class="btn-danger" attrs="{'invisible': [('state', '=', 'generated')]}"/>
+                        <button name="action_view_lines" string="View Report Lines" type="object" class="btn-info" attrs="{'invisible': [('state', '!=', 'generated')]}"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,generated,cancelled"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Report Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="report_type"/>
+                                <field name="date_from"/>
+                                <field name="date_to"/>
+                                <field name="company_id"/>
+                                <field name="currency_id"/>
+                            </group>
+                            <group>
+                                <field name="target_move"/>
+                                <field name="display_detail"/>
+                                <field name="generated_date"/>
+                                <field name="generated_by"/>
+                            </group>
+                        </group>
+                        <group string="Kids Clothing Specific">
+                            <group>
+                                <field name="age_group"/>
+                                <field name="size"/>
+                                <field name="season"/>
+                            </group>
+                            <group>
+                                <field name="brand"/>
+                                <field name="color"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Account Report Search View -->
+        <record id="view_account_report_search" model="ocean.ui.view">
+            <field name="name">account.report.search</field>
+            <field name="model">account.report</field>
+            <field name="arch" type="xml">
+                <search string="Search Financial Reports">
+                    <field name="name"/>
+                    <field name="report_type"/>
+                    <field name="state"/>
+                    <field name="generated_by"/>
+                    <field name="age_group"/>
+                    <field name="size"/>
+                    <field name="season"/>
+                    <field name="brand"/>
+                    <field name="color"/>
+                    <separator/>
+                    <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
+                    <filter string="Generated" name="generated" domain="[('state', '=', 'generated')]"/>
+                    <filter string="Cancelled" name="cancelled" domain="[('state', '=', 'cancelled')]"/>
+                    <separator/>
+                    <filter string="Profit &amp; Loss" name="profit_loss" domain="[('report_type', '=', 'profit_loss')]"/>
+                    <filter string="Balance Sheet" name="balance_sheet" domain="[('report_type', '=', 'balance_sheet')]"/>
+                    <filter string="Cash Flow" name="cash_flow" domain="[('report_type', '=', 'cash_flow')]"/>
+                    <filter string="Trial Balance" name="trial_balance" domain="[('report_type', '=', 'trial_balance')]"/>
+                    <filter string="Aged Receivables" name="aged_receivables" domain="[('report_type', '=', 'aged_receivables')]"/>
+                    <filter string="Aged Payables" name="aged_payables" domain="[('report_type', '=', 'aged_payables')]"/>
+                    <filter string="Inventory Valuation" name="inventory_valuation" domain="[('report_type', '=', 'inventory_valuation')]"/>
+                    <filter string="Sales by Age Group" name="sales_by_age" domain="[('report_type', '=', 'sales_by_age')]"/>
+                    <filter string="Sales by Size" name="sales_by_size" domain="[('report_type', '=', 'sales_by_size')]"/>
+                    <filter string="Sales by Brand" name="sales_by_brand" domain="[('report_type', '=', 'sales_by_brand')]"/>
+                    <filter string="Sales by Color" name="sales_by_color" domain="[('report_type', '=', 'sales_by_color')]"/>
+                    <filter string="Sales by Season" name="sales_by_season" domain="[('report_type', '=', 'sales_by_season')]"/>
+                    <filter string="Cost Analysis" name="cost_analysis" domain="[('report_type', '=', 'cost_analysis')]"/>
+                    <filter string="Profitability Analysis" name="profitability_analysis" domain="[('report_type', '=', 'profitability_analysis')]"/>
+                    <filter string="Seasonal Analysis" name="seasonal_analysis" domain="[('report_type', '=', 'seasonal_analysis')]"/>
+                    <separator/>
+                    <filter string="Baby (0-2)" name="age_0_2" domain="[('age_group', '=', '0-2')]"/>
+                    <filter string="Toddler (2-4)" name="age_2_4" domain="[('age_group', '=', '2-4')]"/>
+                    <filter string="Pre-school (4-6)" name="age_4_6" domain="[('age_group', '=', '4-6')]"/>
+                    <filter string="Summer" name="summer" domain="[('season', '=', 'summer')]"/>
+                    <filter string="Winter" name="winter" domain="[('season', '=', 'winter')]"/>
+                    <filter string="Monsoon" name="monsoon" domain="[('season', '=', 'monsoon')]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Report Type" name="group_report_type" context="{'group_by': 'report_type'}"/>
+                        <filter string="State" name="group_state" context="{'group_by': 'state'}"/>
+                        <filter string="Generated By" name="group_generated_by" context="{'group_by': 'generated_by'}"/>
+                        <filter string="Age Group" name="group_age_group" context="{'group_by': 'age_group'}"/>
+                        <filter string="Size" name="group_size" context="{'group_by': 'size'}"/>
+                        <filter string="Season" name="group_season" context="{'group_by': 'season'}"/>
+                        <filter string="Brand" name="group_brand" context="{'group_by': 'brand'}"/>
+                        <filter string="Color" name="group_color" context="{'group_by': 'color'}"/>
+                        <filter string="Company" name="group_company" context="{'group_by': 'company_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- Account Report Action -->
+        <record id="action_account_report" model="ocean.actions.act_window">
+            <field name="name">Financial Reports</field>
+            <field name="res_model">account.report</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_account_report_search"/>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first financial report!
+                </p>
+                <p>
+                    Financial reports help you analyze your business performance.
+                </p>
+            </field>
+        </record>
+        
+        <!-- Account Report Line Tree View -->
+        <record id="view_account_report_line_tree" model="ocean.ui.view">
+            <field name="name">account.report.line.tree</field>
+            <field name="model">account.report.line</field>
+            <field name="arch" type="xml">
+                <tree string="Report Lines" create="true" edit="true" delete="true">
+                    <field name="report_id"/>
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="level"/>
+                    <field name="amount"/>
+                    <field name="currency_id"/>
+                    <field name="age_group"/>
+                    <field name="size"/>
+                    <field name="season"/>
+                    <field name="brand"/>
+                    <field name="color"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Account Report Line Form View -->
+        <record id="view_account_report_line_form" model="ocean.ui.view">
+            <field name="name">account.report.line.form</field>
+            <field name="model">account.report.line</field>
+            <field name="arch" type="xml">
+                <form string="Report Line" create="true" edit="true" delete="true">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="report_id"/>
+                                <field name="sequence"/>
+                                <field name="name"/>
+                                <field name="code"/>
+                                <field name="level"/>
+                                <field name="amount"/>
+                                <field name="currency_id"/>
+                            </group>
+                            <group>
+                                <field name="age_group"/>
+                                <field name="size"/>
+                                <field name="season"/>
+                                <field name="brand"/>
+                                <field name="color"/>
+                                <field name="company_id"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Account Report Line Action -->
+        <record id="action_account_report_line" model="ocean.actions.act_window">
+            <field name="name">Report Lines</field>
+            <field name="res_model">account.report.line</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    View report lines!
+                </p>
+                <p>
+                    Report lines show the details of each report.
+                </p>
+            </field>
+        </record>
+        
+    </data>
+</ocean>

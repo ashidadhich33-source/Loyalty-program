@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Account Reconciliation Tree View -->
+        <record id="view_account_reconciliation_tree" model="ocean.ui.view">
+            <field name="name">account.reconciliation.tree</field>
+            <field name="model">account.reconciliation</field>
+            <field name="arch" type="xml">
+                <tree string="Account Reconciliations" create="true" edit="true" delete="true">
+                    <field name="name"/>
+                    <field name="date"/>
+                    <field name="account_id"/>
+                    <field name="reconciliation_type"/>
+                    <field name="state"/>
+                    <field name="total_amount"/>
+                    <field name="reconciled_amount"/>
+                    <field name="unreconciled_amount"/>
+                    <field name="partner_id"/>
+                    <field name="age_group"/>
+                    <field name="size"/>
+                    <field name="season"/>
+                    <field name="brand"/>
+                    <field name="color"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Account Reconciliation Form View -->
+        <record id="view_account_reconciliation_form" model="ocean.ui.view">
+            <field name="name">account.reconciliation.form</field>
+            <field name="model">account.reconciliation</field>
+            <field name="arch" type="xml">
+                <form string="Account Reconciliation" create="true" edit="true" delete="true">
+                    <header>
+                        <button name="action_start" string="Start" type="object" class="btn-success" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                        <button name="action_complete" string="Complete" type="object" class="btn-primary" attrs="{'invisible': [('state', '!=', 'in_progress')]}"/>
+                        <button name="action_cancel" string="Cancel" type="object" class="btn-danger" attrs="{'invisible': [('state', '=', 'completed')]}"/>
+                        <button name="action_reopen" string="Reopen" type="object" class="btn-warning" attrs="{'invisible': [('state', '!=', 'completed')]}"/>
+                        <button name="action_view_lines" string="View Lines" type="object" class="btn-info"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,in_progress,completed,cancelled"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Reconciliation Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="date"/>
+                                <field name="account_id"/>
+                                <field name="reconciliation_type"/>
+                                <field name="partner_id"/>
+                                <field name="company_id"/>
+                                <field name="currency_id"/>
+                            </group>
+                            <group>
+                                <field name="total_amount"/>
+                                <field name="reconciled_amount"/>
+                                <field name="unreconciled_amount"/>
+                                <field name="bank_id"/>
+                                <field name="bank_account_id"/>
+                            </group>
+                        </group>
+                        <group string="Kids Clothing Specific">
+                            <group>
+                                <field name="age_group"/>
+                                <field name="size"/>
+                                <field name="season"/>
+                            </group>
+                            <group>
+                                <field name="brand"/>
+                                <field name="color"/>
+                            </group>
+                        </group>
+                        <group string="Notes">
+                            <field name="notes"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Account Reconciliation Search View -->
+        <record id="view_account_reconciliation_search" model="ocean.ui.view">
+            <field name="name">account.reconciliation.search</field>
+            <field name="model">account.reconciliation</field>
+            <field name="arch" type="xml">
+                <search string="Search Account Reconciliations">
+                    <field name="name"/>
+                    <field name="account_id"/>
+                    <field name="reconciliation_type"/>
+                    <field name="state"/>
+                    <field name="partner_id"/>
+                    <field name="age_group"/>
+                    <field name="size"/>
+                    <field name="season"/>
+                    <field name="brand"/>
+                    <field name="color"/>
+                    <separator/>
+                    <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
+                    <filter string="In Progress" name="in_progress" domain="[('state', '=', 'in_progress')]"/>
+                    <filter string="Completed" name="completed" domain="[('state', '=', 'completed')]"/>
+                    <filter string="Cancelled" name="cancelled" domain="[('state', '=', 'cancelled')]"/>
+                    <separator/>
+                    <filter string="Bank Reconciliation" name="bank" domain="[('reconciliation_type', '=', 'bank')]"/>
+                    <filter string="Customer Reconciliation" name="customer" domain="[('reconciliation_type', '=', 'customer')]"/>
+                    <filter string="Supplier Reconciliation" name="supplier" domain="[('reconciliation_type', '=', 'supplier')]"/>
+                    <filter string="Inventory Reconciliation" name="inventory" domain="[('reconciliation_type', '=', 'inventory')]"/>
+                    <separator/>
+                    <filter string="Baby (0-2)" name="age_0_2" domain="[('age_group', '=', '0-2')]"/>
+                    <filter string="Toddler (2-4)" name="age_2_4" domain="[('age_group', '=', '2-4')]"/>
+                    <filter string="Pre-school (4-6)" name="age_4_6" domain="[('age_group', '=', '4-6')]"/>
+                    <filter string="Summer" name="summer" domain="[('season', '=', 'summer')]"/>
+                    <filter string="Winter" name="winter" domain="[('season', '=', 'winter')]"/>
+                    <filter string="Monsoon" name="monsoon" domain="[('season', '=', 'monsoon')]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Reconciliation Type" name="group_reconciliation_type" context="{'group_by': 'reconciliation_type'}"/>
+                        <filter string="State" name="group_state" context="{'group_by': 'state'}"/>
+                        <filter string="Account" name="group_account" context="{'group_by': 'account_id'}"/>
+                        <filter string="Partner" name="group_partner" context="{'group_by': 'partner_id'}"/>
+                        <filter string="Age Group" name="group_age_group" context="{'group_by': 'age_group'}"/>
+                        <filter string="Size" name="group_size" context="{'group_by': 'size'}"/>
+                        <filter string="Season" name="group_season" context="{'group_by': 'season'}"/>
+                        <filter string="Brand" name="group_brand" context="{'group_by': 'brand'}"/>
+                        <filter string="Color" name="group_color" context="{'group_by': 'color'}"/>
+                        <filter string="Company" name="group_company" context="{'group_by': 'company_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- Account Reconciliation Action -->
+        <record id="action_account_reconciliation" model="ocean.actions.act_window">
+            <field name="name">Account Reconciliations</field>
+            <field name="res_model">account.reconciliation</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_account_reconciliation_search"/>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first account reconciliation!
+                </p>
+                <p>
+                    Account reconciliations help you match transactions.
+                </p>
+            </field>
+        </record>
+        
+        <!-- Account Reconciliation Line Tree View -->
+        <record id="view_account_reconciliation_line_tree" model="ocean.ui.view">
+            <field name="name">account.reconciliation.line.tree</field>
+            <field name="model">account.reconciliation.line</field>
+            <field name="arch" type="xml">
+                <tree string="Reconciliation Lines" create="true" edit="true" delete="true">
+                    <field name="reconciliation_id"/>
+                    <field name="move_line_id"/>
+                    <field name="name"/>
+                    <field name="date"/>
+                    <field name="amount"/>
+                    <field name="reconciled"/>
+                    <field name="partner_id"/>
+                    <field name="ref"/>
+                    <field name="age_group"/>
+                    <field name="size"/>
+                    <field name="season"/>
+                    <field name="brand"/>
+                    <field name="color"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Account Reconciliation Line Form View -->
+        <record id="view_account_reconciliation_line_form" model="ocean.ui.view">
+            <field name="name">account.reconciliation.line.form</field>
+            <field name="model">account.reconciliation.line</field>
+            <field name="arch" type="xml">
+                <form string="Reconciliation Line" create="true" edit="true" delete="true">
+                    <header>
+                        <button name="action_reconcile" string="Reconcile" type="object" class="btn-success" attrs="{'invisible': [('reconciled', '=', True)]}"/>
+                        <button name="action_unreconcile" string="Unreconcile" type="object" class="btn-danger" attrs="{'invisible': [('reconciled', '=', False)]}"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="reconciliation_id"/>
+                                <field name="sequence"/>
+                                <field name="move_line_id"/>
+                                <field name="name"/>
+                                <field name="date"/>
+                                <field name="amount"/>
+                                <field name="reconciled"/>
+                            </group>
+                            <group>
+                                <field name="partner_id"/>
+                                <field name="ref"/>
+                                <field name="currency_id"/>
+                                <field name="company_id"/>
+                            </group>
+                        </group>
+                        <group string="Kids Clothing Specific">
+                            <group>
+                                <field name="age_group"/>
+                                <field name="size"/>
+                                <field name="season"/>
+                            </group>
+                            <group>
+                                <field name="brand"/>
+                                <field name="color"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Account Reconciliation Line Action -->
+        <record id="action_account_reconciliation_line" model="ocean.actions.act_window">
+            <field name="name">Reconciliation Lines</field>
+            <field name="res_model">account.reconciliation.line</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    View reconciliation lines!
+                </p>
+                <p>
+                    Reconciliation lines show the details of each transaction.
+                </p>
+            </field>
+        </record>
+        
+    </data>
+</ocean>

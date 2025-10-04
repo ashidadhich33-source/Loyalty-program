@@ -44,5 +44,77 @@
                   action="action_account_journal_template"
                   sequence="20"/>
         
+        <!-- Journal Entries -->
+        <menuitem id="menu_accounting_journal_entries"
+                  name="Journal Entries"
+                  parent="menu_accounting_root"
+                  sequence="30"/>
+        
+        <menuitem id="menu_account_move"
+                  name="Journal Entries"
+                  parent="menu_accounting_journal_entries"
+                  action="action_account_move"
+                  sequence="10"/>
+        
+        <menuitem id="menu_account_move_line"
+                  name="Journal Entry Lines"
+                  parent="menu_accounting_journal_entries"
+                  action="action_account_move_line"
+                  sequence="20"/>
+        
+        <!-- Accounting Periods -->
+        <menuitem id="menu_accounting_periods"
+                  name="Accounting Periods"
+                  parent="menu_accounting_root"
+                  sequence="40"/>
+        
+        <menuitem id="menu_account_period"
+                  name="Periods"
+                  parent="menu_accounting_periods"
+                  action="action_account_period"
+                  sequence="10"/>
+        
+        <menuitem id="menu_account_fiscal_year"
+                  name="Fiscal Years"
+                  parent="menu_accounting_periods"
+                  action="action_account_fiscal_year"
+                  sequence="20"/>
+        
+        <!-- Reconciliations -->
+        <menuitem id="menu_accounting_reconciliations"
+                  name="Reconciliations"
+                  parent="menu_accounting_root"
+                  sequence="50"/>
+        
+        <menuitem id="menu_account_reconciliation"
+                  name="Account Reconciliations"
+                  parent="menu_accounting_reconciliations"
+                  action="action_account_reconciliation"
+                  sequence="10"/>
+        
+        <menuitem id="menu_account_reconciliation_line"
+                  name="Reconciliation Lines"
+                  parent="menu_accounting_reconciliations"
+                  action="action_account_reconciliation_line"
+                  sequence="20"/>
+        
+        <!-- Reports -->
+        <menuitem id="menu_accounting_reports"
+                  name="Reports"
+                  parent="menu_accounting_root"
+                  sequence="60"/>
+        
+        <menuitem id="menu_account_report"
+                  name="Financial Reports"
+                  parent="menu_accounting_reports"
+                  action="action_account_report"
+                  sequence="10"/>
+        
+        <menuitem id="menu_account_report_line"
+                  name="Report Lines"
+                  parent="menu_accounting_reports"
+                  action="action_account_report_line"
+                  sequence="20"/>
+        
     </data>
 </ocean>

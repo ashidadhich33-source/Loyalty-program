@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Stock Adjustment Tree View -->
+        <record id="view_stock_adjustment_tree" model="ocean.ui.view">
+            <field name="name">stock.adjustment.tree</field>
+            <field name="model">stock.adjustment</field>
+            <field name="arch" type="xml">
+                <tree string="Stock Adjustments" create="true" edit="true" delete="true">
+                    <field name="name"/>
+                    <field name="date"/>
+                    <field name="adjustment_type"/>
+                    <field name="state"/>
+                    <field name="location_id"/>
+                    <field name="warehouse_id"/>
+                    <field name="total_quantity"/>
+                    <field name="total_amount"/>
+                    <field name="require_approval"/>
+                    <field name="approved_by"/>
+                    <field name="age_group"/>
+                    <field name="size"/>
+                    <field name="season"/>
+                    <field name="brand"/>
+                    <field name="color"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Stock Adjustment Form View -->
+        <record id="view_stock_adjustment_form" model="ocean.ui.view">
+            <field name="name">stock.adjustment.form</field>
+            <field name="model">stock.adjustment</field>
+            <field name="arch" type="xml">
+                <form string="Stock Adjustment" create="true" edit="true" delete="true">
+                    <header>
+                        <button name="action_submit_for_approval" string="Submit for Approval" type="object" class="btn-primary" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                        <button name="action_approve" string="Approve" type="object" class="btn-success" attrs="{'invisible': [('state', '!=', 'pending_approval')]}"/>
+                        <button name="action_done" string="Mark as Done" type="object" class="btn-success" attrs="{'invisible': [('state', '!=', 'approved')]}"/>
+                        <button name="action_cancel" string="Cancel" type="object" class="btn-danger" attrs="{'invisible': [('state', '=', 'done')]}"/>
+                        <button name="action_view_lines" string="View Lines" type="object" class="btn-info"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,pending_approval,approved,done,cancelled"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Adjustment Number"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="date"/>
+                                <field name="adjustment_type"/>
+                                <field name="location_id"/>
+                                <field name="warehouse_id"/>
+                                <field name="company_id"/>
+                            </group>
+                            <group>
+                                <field name="require_approval"/>
+                                <field name="approved_by"/>
+                                <field name="approved_date"/>
+                                <field name="total_quantity"/>
+                                <field name="total_amount"/>
+                            </group>
+                        </group>
+                        <group string="Kids Clothing Specific">
+                            <group>
+                                <field name="age_group"/>
+                                <field name="size"/>
+                                <field name="season"/>
+                            </group>
+                            <group>
+                                <field name="brand"/>
+                                <field name="color"/>
+                            </group>
+                        </group>
+                        <group string="Reason and Notes">
+                            <field name="reason"/>
+                            <field name="notes"/>
+                        </group>
+                        <group string="Adjustment Lines">
+                            <field name="line_ids" nolabel="1">
+                                <tree string="Adjustment Lines" create="true" edit="true" delete="true">
+                                    <field name="sequence"/>
+                                    <field name="product_id"/>
+                                    <field name="product_template_id"/>
+                                    <field name="quantity"/>
+                                    <field name="theoretical_quantity"/>
+                                    <field name="actual_quantity"/>
+                                    <field name="unit_cost"/>
+                                    <field name="amount"/>
+                                    <field name="age_group"/>
+                                    <field name="size"/>
+                                    <field name="season"/>
+                                    <field name="brand"/>
+                                    <field name="color"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Stock Adjustment Search View -->
+        <record id="view_stock_adjustment_search" model="ocean.ui.view">
+            <field name="name">stock.adjustment.search</field>
+            <field name="model">stock.adjustment</field>
+            <field name="arch" type="xml">
+                <search string="Search Stock Adjustments">
+                    <field name="name"/>
+                    <field name="adjustment_type"/>
+                    <field name="state"/>
+                    <field name="location_id"/>
+                    <field name="warehouse_id"/>
+                    <field name="approved_by"/>
+                    <field name="age_group"/>
+                    <field name="size"/>
+                    <field name="season"/>
+                    <field name="brand"/>
+                    <field name="color"/>
+                    <separator/>
+                    <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
+                    <filter string="Pending Approval" name="pending_approval" domain="[('state', '=', 'pending_approval')]"/>
+                    <filter string="Approved" name="approved" domain="[('state', '=', 'approved')]"/>
+                    <filter string="Done" name="done" domain="[('state', '=', 'done')]"/>
+                    <filter string="Cancelled" name="cancelled" domain="[('state', '=', 'cancelled')]"/>
+                    <separator/>
+                    <filter string="Physical Count" name="physical_count" domain="[('adjustment_type', '=', 'physical_count')]"/>
+                    <filter string="Damage" name="damage" domain="[('adjustment_type', '=', 'damage')]"/>
+                    <filter string="Theft" name="theft" domain="[('adjustment_type', '=', 'theft')]"/>
+                    <filter string="Expiry" name="expiry" domain="[('adjustment_type', '=', 'expiry')]"/>
+                    <filter string="Seasonal" name="seasonal" domain="[('adjustment_type', '=', 'seasonal')]"/>
+                    <filter string="Size Adjustment" name="size" domain="[('adjustment_type', '=', 'size')]"/>
+                    <filter string="Brand Adjustment" name="brand" domain="[('adjustment_type', '=', 'brand')]"/>
+                    <filter string="Color Adjustment" name="color" domain="[('adjustment_type', '=', 'color')]"/>
+                    <filter string="Quality Issue" name="quality_issue" domain="[('adjustment_type', '=', 'quality_issue')]"/>
+                    <filter string="Return" name="return" domain="[('adjustment_type', '=', 'return')]"/>
+                    <filter string="Donation" name="donation" domain="[('adjustment_type', '=', 'donation')]"/>
+                    <filter string="Disposal" name="disposal" domain="[('adjustment_type', '=', 'disposal')]"/>
+                    <separator/>
+                    <filter string="Baby (0-2)" name="age_0_2" domain="[('age_group', '=', '0-2')]"/>
+                    <filter string="Toddler (2-4)" name="age_2_4" domain="[('age_group', '=', '2-4')]"/>
+                    <filter string="Pre-school (4-6)" name="age_4_6" domain="[('age_group', '=', '4-6')]"/>
+                    <filter string="Summer" name="summer" domain="[('season', '=', 'summer')]"/>
+                    <filter string="Winter" name="winter" domain="[('season', '=', 'winter')]"/>
+                    <filter string="Monsoon" name="monsoon" domain="[('season', '=', 'monsoon')]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Adjustment Type" name="group_adjustment_type" context="{'group_by': 'adjustment_type'}"/>
+                        <filter string="State" name="group_state" context="{'group_by': 'state'}"/>
+                        <filter string="Location" name="group_location" context="{'group_by': 'location_id'}"/>
+                        <filter string="Warehouse" name="group_warehouse" context="{'group_by': 'warehouse_id'}"/>
+                        <filter string="Approved By" name="group_approved_by" context="{'group_by': 'approved_by'}"/>
+                        <filter string="Age Group" name="group_age_group" context="{'group_by': 'age_group'}"/>
+                        <filter string="Size" name="group_size" context="{'group_by': 'size'}"/>
+                        <filter string="Season" name="group_season" context="{'group_by': 'season'}"/>
+                        <filter string="Brand" name="group_brand" context="{'group_by': 'brand'}"/>
+                        <filter string="Color" name="group_color" context="{'group_by': 'color'}"/>
+                        <filter string="Company" name="group_company" context="{'group_by': 'company_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- Stock Adjustment Action -->
+        <record id="action_stock_adjustment" model="ocean.actions.act_window">
+            <field name="name">Stock Adjustments</field>
+            <field name="res_model">stock.adjustment</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_stock_adjustment_search"/>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first stock adjustment!
+                </p>
+                <p>
+                    Stock adjustments help you correct inventory discrepancies.
+                </p>
+            </field>
+        </record>
+        
+        <!-- Stock Adjustment Line Tree View -->
+        <record id="view_stock_adjustment_line_tree" model="ocean.ui.view">
+            <field name="name">stock.adjustment.line.tree</field>
+            <field name="model">stock.adjustment.line</field>
+            <field name="arch" type="xml">
+                <tree string="Adjustment Lines" create="true" edit="true" delete="true">
+                    <field name="adjustment_id"/>
+                    <field name="product_id"/>
+                    <field name="quantity"/>
+                    <field name="theoretical_quantity"/>
+                    <field name="actual_quantity"/>
+                    <field name="unit_cost"/>
+                    <field name="amount"/>
+                    <field name="age_group"/>
+                    <field name="size"/>
+                    <field name="season"/>
+                    <field name="brand"/>
+                    <field name="color"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Stock Adjustment Line Form View -->
+        <record id="view_stock_adjustment_line_form" model="ocean.ui.view">
+            <field name="name">stock.adjustment.line.form</field>
+            <field name="model">stock.adjustment.line</field>
+            <field name="arch" type="xml">
+                <form string="Adjustment Line" create="true" edit="true" delete="true">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="adjustment_id"/>
+                                <field name="sequence"/>
+                                <field name="product_id"/>
+                                <field name="product_template_id"/>
+                                <field name="quantity"/>
+                                <field name="theoretical_quantity"/>
+                                <field name="actual_quantity"/>
+                            </group>
+                            <group>
+                                <field name="product_uom_id"/>
+                                <field name="unit_cost"/>
+                                <field name="amount"/>
+                                <field name="company_id"/>
+                            </group>
+                        </group>
+                        <group string="Kids Clothing Specific">
+                            <group>
+                                <field name="age_group"/>
+                                <field name="size"/>
+                                <field name="season"/>
+                            </group>
+                            <group>
+                                <field name="brand"/>
+                                <field name="color"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Stock Adjustment Line Action -->
+        <record id="action_stock_adjustment_line" model="ocean.actions.act_window">
+            <field name="name">Adjustment Lines</field>
+            <field name="res_model">stock.adjustment.line</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    View adjustment lines!
+                </p>
+                <p>
+                    Adjustment lines show the details of each product adjustment.
+                </p>
+            </field>
+        </record>
+        
+    </data>
+</ocean>

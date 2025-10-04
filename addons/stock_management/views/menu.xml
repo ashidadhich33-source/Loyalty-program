@@ -32,5 +32,41 @@
                   action="action_stock_reorder_rule"
                   sequence="10"/>
         
+        <!-- Stock Adjustments -->
+        <menuitem id="menu_stock_management_adjustments"
+                  name="Stock Adjustments"
+                  parent="menu_stock_management_root"
+                  sequence="30"/>
+        
+        <menuitem id="menu_stock_adjustment"
+                  name="Stock Adjustments"
+                  parent="menu_stock_management_adjustments"
+                  action="action_stock_adjustment"
+                  sequence="10"/>
+        
+        <menuitem id="menu_stock_adjustment_line"
+                  name="Adjustment Lines"
+                  parent="menu_stock_management_adjustments"
+                  action="action_stock_adjustment_line"
+                  sequence="20"/>
+        
+        <!-- Stock Analysis -->
+        <menuitem id="menu_stock_management_analysis"
+                  name="Stock Analysis"
+                  parent="menu_stock_management_root"
+                  sequence="40"/>
+        
+        <menuitem id="menu_stock_analysis"
+                  name="Stock Analysis"
+                  parent="menu_stock_management_analysis"
+                  action="action_stock_analysis"
+                  sequence="10"/>
+        
+        <menuitem id="menu_stock_analysis_line"
+                  name="Analysis Lines"
+                  parent="menu_stock_management_analysis"
+                  action="action_stock_analysis_line"
+                  sequence="20"/>
+        
     </data>
 </ocean>

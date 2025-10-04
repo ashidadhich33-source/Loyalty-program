@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        <!-- Demo Purchase Orders -->
+        <record id="demo_purchase_order_1" model="purchase.order">
+            <field name="name">PO2024001</field>
+            <field name="partner_id" ref="base.res_partner_1"/>
+            <field name="date_order">2024-01-15 10:00:00</field>
+            <field name="date_planned">2024-01-20 10:00:00</field>
+            <field name="state">purchase</field>
+            <field name="amount_total">5000.00</field>
+            <field name="age_group">child</field>
+            <field name="season">summer</field>
+            <field name="gender">unisex</field>
+            <field name="special_occasion">daily_wear</field>
+        </record>
+
+        <record id="demo_purchase_order_2" model="purchase.order">
+            <field name="name">PO2024002</field>
+            <field name="partner_id" ref="base.res_partner_2"/>
+            <field name="date_order">2024-01-16 11:00:00</field>
+            <field name="date_planned">2024-01-25 11:00:00</field>
+            <field name="state">done</field>
+            <field name="amount_total">7500.00</field>
+            <field name="age_group">teen</field>
+            <field name="season">winter</field>
+            <field name="gender">boys</field>
+            <field name="special_occasion">school</field>
+        </record>
+
+        <!-- Demo Purchase Order Lines -->
+        <record id="demo_purchase_order_line_1" model="purchase.order.line">
+            <field name="order_id" ref="demo_purchase_order_1"/>
+            <field name="product_id" ref="product.product_product_1"/>
+            <field name="product_qty">50</field>
+            <field name="price_unit">100.00</field>
+            <field name="price_subtotal">5000.00</field>
+            <field name="price_tax">900.00</field>
+            <field name="price_total">5900.00</field>
+        </record>
+
+        <record id="demo_purchase_order_line_2" model="purchase.order.line">
+            <field name="order_id" ref="demo_purchase_order_2"/>
+            <field name="product_id" ref="product.product_product_2"/>
+            <field name="product_qty">30</field>
+            <field name="price_unit">250.00</field>
+            <field name="price_subtotal">7500.00</field>
+            <field name="price_tax">1350.00</field>
+            <field name="price_total">8850.00</field>
+        </record>
+
+        <!-- Demo Vendor Bills -->
+        <record id="demo_vendor_bill_1" model="vendor.bill">
+            <field name="name">VB2024001</field>
+            <field name="partner_id" ref="base.res_partner_1"/>
+            <field name="purchase_order_id" ref="demo_purchase_order_1"/>
+            <field name="bill_date">2024-01-18 10:00:00</field>
+            <field name="due_date">2024-02-18 10:00:00</field>
+            <field name="state">posted</field>
+            <field name="amount_total">5900.00</field>
+            <field name="amount_paid">0.00</field>
+            <field name="amount_residual">5900.00</field>
+        </record>
+
+        <record id="demo_vendor_bill_2" model="vendor.bill">
+            <field name="name">VB2024002</field>
+            <field name="partner_id" ref="base.res_partner_2"/>
+            <field name="purchase_order_id" ref="demo_purchase_order_2"/>
+            <field name="bill_date">2024-01-20 11:00:00</field>
+            <field name="due_date">2024-02-20 11:00:00</field>
+            <field name="state">paid</field>
+            <field name="amount_total">8850.00</field>
+            <field name="amount_paid">8850.00</field>
+            <field name="amount_residual">0.00</field>
+        </record>
+
+        <!-- Demo Purchase Analytics -->
+        <record id="demo_purchase_analytics_1" model="purchase.analytics">
+            <field name="name">Purchase Analytics - January 2024</field>
+            <field name="report_date">2024-01-31 10:00:00</field>
+            <field name="total_orders">2</field>
+            <field name="total_amount">14750.00</field>
+            <field name="average_order_value">7375.00</field>
+            <field name="total_suppliers">2</field>
+            <field name="order_fulfillment_rate">100.00</field>
+            <field name="supplier_performance_score">95.00</field>
+            <field name="cost_savings">737.50</field>
+        </record>
+    </data>
+</ocean>

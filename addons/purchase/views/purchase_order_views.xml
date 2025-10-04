@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        <!-- Purchase Order Tree View -->
+        <record id="view_purchase_order_tree" model="ocean.ui.view">
+            <field name="name">purchase.order.tree</field>
+            <field name="model">purchase.order</field>
+            <field name="arch" type="xml">
+                <tree string="Purchase Orders" decoration-muted="state=='cancel'" decoration-success="state=='done'" decoration-info="state=='draft'">
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="date_order"/>
+                    <field name="date_planned"/>
+                    <field name="state"/>
+                    <field name="amount_total"/>
+                    <field name="currency_id"/>
+                    <field name="user_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Purchase Order Form View -->
+        <record id="view_purchase_order_form" model="ocean.ui.view">
+            <field name="name">purchase.order.form</field>
+            <field name="model">purchase.order</field>
+            <field name="arch" type="xml">
+                <form string="Purchase Order">
+                    <header>
+                        <button name="action_send_rfq" string="Send RFQ" type="object" class="btn-primary" states="draft"/>
+                        <button name="action_approve" string="Approve" type="object" class="btn-success" states="sent,to_approve"/>
+                        <button name="action_done" string="Done" type="object" class="btn-primary" states="purchase"/>
+                        <button name="action_cancel" string="Cancel" type="object" class="btn-secondary" states="draft,sent,to_approve"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,sent,to_approve,purchase,done,cancel"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Order Reference"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="partner_id"/>
+                                <field name="date_order"/>
+                                <field name="date_planned"/>
+                                <field name="user_id"/>
+                                <field name="company_id"/>
+                            </group>
+                            <group>
+                                <field name="amount_untaxed"/>
+                                <field name="amount_tax"/>
+                                <field name="amount_total"/>
+                                <field name="currency_id"/>
+                                <field name="approval_required"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Order Lines" name="order_lines">
+                                <field name="order_line_ids">
+                                    <tree editable="bottom">
+                                        <field name="product_id"/>
+                                        <field name="product_qty"/>
+                                        <field name="product_uom"/>
+                                        <field name="price_unit"/>
+                                        <field name="price_subtotal"/>
+                                        <field name="price_tax"/>
+                                        <field name="price_total"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Kids Clothing Specific" name="kids_clothing">
+                                <group>
+                                    <group>
+                                        <field name="age_group"/>
+                                        <field name="season"/>
+                                        <field name="size_range"/>
+                                        <field name="gender"/>
+                                    </group>
+                                    <group>
+                                        <field name="special_occasion"/>
+                                        <field name="notes"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Purchase Order Search View -->
+        <record id="view_purchase_order_search" model="ocean.ui.view">
+            <field name="name">purchase.order.search</field>
+            <field name="model">purchase.order</field>
+            <field name="arch" type="xml">
+                <search string="Search Purchase Orders">
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="user_id"/>
+                    <separator/>
+                    <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
+                    <filter string="Sent" name="sent" domain="[('state', '=', 'sent')]"/>
+                    <filter string="To Approve" name="to_approve" domain="[('state', '=', 'to_approve')]"/>
+                    <filter string="Purchase Order" name="purchase" domain="[('state', '=', 'purchase')]"/>
+                    <filter string="Done" name="done" domain="[('state', '=', 'done')]"/>
+                    <filter string="Cancelled" name="cancel" domain="[('state', '=', 'cancel')]"/>
+                    <filter string="Today" name="today" domain="[('date_order', '>=', datetime.datetime.combine(context_today(), datetime.time(0,0,0))), ('date_order', '&lt;=', datetime.datetime.combine(context_today(), datetime.time(23,59,59)))]"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter string="Supplier" name="supplier" context="{'group_by': 'partner_id'}"/>
+                        <filter string="State" name="state" context="{'group_by': 'state'}"/>
+                        <filter string="User" name="user" context="{'group_by': 'user_id'}"/>
+                        <filter string="Order Date" name="order_date" context="{'group_by': 'date_order:day'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Purchase Order Action -->
+        <record id="action_purchase_order" model="ocean.actions.act_window">
+            <field name="name">Purchase Orders</field>
+            <field name="res_model">purchase.order</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_purchase_order_search"/>
+            <field name="context">{'search_default_today': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new purchase order
+                </p>
+                <p>
+                    Purchase orders track procurement from suppliers for your kids clothing business.
+                </p>
+            </field>
+        </record>
+    </data>
+</ocean>

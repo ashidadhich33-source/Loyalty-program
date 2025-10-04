@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        <!-- Purchase Root Menu -->
+        <menuitem id="menu_purchase_root" 
+                  name="Purchase" 
+                  sequence="40" 
+                  parent="menu_inventory_root"/>
+        
+        <!-- Purchase Operations Menu -->
+        <menuitem id="menu_purchase_operations" 
+                  name="Operations" 
+                  sequence="10" 
+                  parent="menu_purchase_root"/>
+        
+        <!-- Purchase Orders Menu -->
+        <menuitem id="menu_purchase_orders" 
+                  name="Purchase Orders" 
+                  sequence="10" 
+                  parent="menu_purchase_operations"/>
+        
+        <!-- Vendor Bills Menu -->
+        <menuitem id="menu_vendor_bills" 
+                  name="Vendor Bills" 
+                  sequence="20" 
+                  parent="menu_purchase_operations"/>
+        
+        <!-- Purchase Analytics Menu -->
+        <menuitem id="menu_purchase_analytics" 
+                  name="Analytics" 
+                  sequence="30" 
+                  parent="menu_purchase_root"/>
+        
+        <!-- Purchase Configuration Menu -->
+        <menuitem id="menu_purchase_config" 
+                  name="Configuration" 
+                  sequence="50" 
+                  parent="menu_purchase_root"/>
+    </data>
+</ocean>

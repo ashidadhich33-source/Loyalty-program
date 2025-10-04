@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        <!-- Purchase Order Line Tree View -->
+        <record id="view_purchase_order_line_tree" model="ocean.ui.view">
+            <field name="name">purchase.order.line.tree</field>
+            <field name="model">purchase.order.line</field>
+            <field name="arch" type="xml">
+                <tree string="Purchase Order Lines" decoration-muted="price_unit==0" decoration-info="price_unit>0 and price_unit&lt;100" decoration-success="price_unit>=100">
+                    <field name="order_id"/>
+                    <field name="product_id"/>
+                    <field name="product_qty"/>
+                    <field name="product_uom"/>
+                    <field name="price_unit"/>
+                    <field name="price_subtotal"/>
+                    <field name="price_total"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Purchase Order Line Form View -->
+        <record id="view_purchase_order_line_form" model="ocean.ui.view">
+            <field name="name">purchase.order.line.form</field>
+            <field name="model">purchase.order.line</field>
+            <field name="arch" type="xml">
+                <form string="Purchase Order Line">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="product_id" placeholder="Select Product"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="order_id"/>
+                                <field name="product_id"/>
+                                <field name="product_qty"/>
+                                <field name="product_uom"/>
+                                <field name="price_unit"/>
+                            </group>
+                            <group>
+                                <field name="price_subtotal"/>
+                                <field name="price_tax"/>
+                                <field name="price_total"/>
+                                <field name="notes"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Kids Clothing Specific" name="kids_clothing">
+                                <group>
+                                    <group>
+                                        <field name="age_group"/>
+                                        <field name="season"/>
+                                        <field name="size_range"/>
+                                        <field name="gender"/>
+                                    </group>
+                                    <group>
+                                        <field name="special_occasion"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Purchase Order Line Search View -->
+        <record id="view_purchase_order_line_search" model="ocean.ui.view">
+            <field name="name">purchase.order.line.search</field>
+            <field name="model">purchase.order.line</field>
+            <field name="arch" type="xml">
+                <search string="Search Purchase Order Lines">
+                    <field name="order_id"/>
+                    <field name="product_id"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter string="Order" name="order" context="{'group_by': 'order_id'}"/>
+                        <filter string="Product" name="product" context="{'group_by': 'product_id'}"/>
+                        <filter string="Age Group" name="age_group" context="{'group_by': 'age_group'}"/>
+                        <filter string="Season" name="season" context="{'group_by': 'season'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Purchase Order Line Action -->
+        <record id="action_purchase_order_line" model="ocean.actions.act_window">
+            <field name="name">Purchase Order Lines</field>
+            <field name="res_model">purchase.order.line</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_purchase_order_line_search"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new purchase order line
+                </p>
+                <p>
+                    Purchase order lines track individual products in purchase orders.
+                </p>
+            </field>
+        </record>
+    </data>
+</ocean>

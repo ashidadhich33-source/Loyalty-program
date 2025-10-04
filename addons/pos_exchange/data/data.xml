@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data noupdate="1">
+        
+        <!-- Exchange Reasons -->
+        <record id="exchange_reason_size_small" model="pos.exchange.reason">
+            <field name="name">Size Too Small</field>
+            <field name="code">SIZE_SMALL</field>
+            <field name="description">Customer needs a larger size</field>
+            <field name="category">size_issue</field>
+            <field name="is_active">True</field>
+            <field name="requires_approval">False</field>
+            <field name="age_group_restriction">none</field>
+            <field name="max_exchange_period">7</field>
+            <field name="allow_size_change">True</field>
+            <field name="allow_color_change">True</field>
+            <field name="allow_style_change">False</field>
+            <field name="allow_refund">False</field>
+            <field name="refund_percentage">100.0</field>
+        </record>
+        
+        <record id="exchange_reason_size_large" model="pos.exchange.reason">
+            <field name="name">Size Too Large</field>
+            <field name="code">SIZE_LARGE</field>
+            <field name="description">Customer needs a smaller size</field>
+            <field name="category">size_issue</field>
+            <field name="is_active">True</field>
+            <field name="requires_approval">False</field>
+            <field name="age_group_restriction">none</field>
+            <field name="max_exchange_period">7</field>
+            <field name="allow_size_change">True</field>
+            <field name="allow_color_change">True</field>
+            <field name="allow_style_change">False</field>
+            <field name="allow_refund">False</field>
+            <field name="refund_percentage">100.0</field>
+        </record>
+        
+        <record id="exchange_reason_color_preference" model="pos.exchange.reason">
+            <field name="name">Color Preference</field>
+            <field name="code">COLOR_PREF</field>
+            <field name="description">Customer prefers a different color</field>
+            <field name="category">color_preference</field>
+            <field name="is_active">True</field>
+            <field name="requires_approval">False</field>
+            <field name="age_group_restriction">none</field>
+            <field name="max_exchange_period">7</field>
+            <field name="allow_size_change">False</field>
+            <field name="allow_color_change">True</field>
+            <field name="allow_style_change">False</field>
+            <field name="allow_refund">False</field>
+            <field name="refund_percentage">100.0</field>
+        </record>
+        
+        <record id="exchange_reason_defective" model="pos.exchange.reason">
+            <field name="name">Defective Product</field>
+            <field name="code">DEFECTIVE</field>
+            <field name="description">Product is defective or damaged</field>
+            <field name="category">quality_issue</field>
+            <field name="is_active">True</field>
+            <field name="requires_approval">True</field>
+            <field name="age_group_restriction">none</field>
+            <field name="max_exchange_period">30</field>
+            <field name="allow_size_change">True</field>
+            <field name="allow_color_change">True</field>
+            <field name="allow_style_change">True</field>
+            <field name="allow_refund">True</field>
+            <field name="refund_percentage">100.0</field>
+        </record>
+        
+        <record id="exchange_reason_wrong_item" model="pos.exchange.reason">
+            <field name="name">Wrong Item</field>
+            <field name="code">WRONG_ITEM</field>
+            <field name="description">Wrong item was given to customer</field>
+            <field name="category">wrong_item</field>
+            <field name="is_active">True</field>
+            <field name="requires_approval">False</field>
+            <field name="age_group_restriction">none</field>
+            <field name="max_exchange_period">14</field>
+            <field name="allow_size_change">True</field>
+            <field name="allow_color_change">True</field>
+            <field name="allow_style_change">True</field>
+            <field name="allow_refund">True</field>
+            <field name="refund_percentage">100.0</field>
+        </record>
+        
+        <record id="exchange_reason_toddler_special" model="pos.exchange.reason">
+            <field name="name">Toddler Special Policy</field>
+            <field name="code">TODDLER_SPECIAL</field>
+            <field name="description">Special exchange policy for toddler items</field>
+            <field name="category">customer_preference</field>
+            <field name="is_active">True</field>
+            <field name="requires_approval">False</field>
+            <field name="age_group_restriction">toddler</field>
+            <field name="max_exchange_period">14</field>
+            <field name="allow_size_change">True</field>
+            <field name="allow_color_change">True</field>
+            <field name="allow_style_change">True</field>
+            <field name="allow_refund">True</field>
+            <field name="refund_percentage">100.0</field>
+        </record>
+        
+    </data>
+</ocean>

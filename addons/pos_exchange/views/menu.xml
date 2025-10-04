@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- POS Exchange Menu -->
+        <menuitem id="menu_pos_exchange_root" 
+                  name="POS Exchange" 
+                  parent="menu_pos_root" 
+                  sequence="25"/>
+        
+        <!-- Exchange Operations Menu -->
+        <menuitem id="menu_pos_exchange_operations" 
+                  name="Operations" 
+                  parent="menu_pos_exchange_root" 
+                  sequence="10"/>
+        
+        <menuitem id="menu_pos_exchanges" 
+                  name="Exchanges" 
+                  parent="menu_pos_exchange_operations" 
+                  sequence="10"/>
+        
+        <!-- Exchange Configuration Menu -->
+        <menuitem id="menu_pos_exchange_config" 
+                  name="Configuration" 
+                  parent="menu_pos_exchange_root" 
+                  sequence="20"/>
+        
+        <menuitem id="menu_pos_exchange_reasons" 
+                  name="Exchange Reasons" 
+                  parent="menu_pos_exchange_config" 
+                  sequence="10"/>
+        
+        <!-- Exchange Reports Menu -->
+        <menuitem id="menu_pos_exchange_reports" 
+                  name="Reports" 
+                  parent="menu_pos_exchange_root" 
+                  sequence="30"/>
+        
+        <menuitem id="menu_pos_exchange_analytics" 
+                  name="Exchange Analytics" 
+                  parent="menu_pos_exchange_reports" 
+                  sequence="10"/>
+        
+    </data>
+</ocean>

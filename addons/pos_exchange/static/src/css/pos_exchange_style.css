@@ -1,0 +1,331 @@
+/* POS Exchange Styles for Kids Clothing ERP */
+
+.pos-exchange-dashboard {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.pos-exchange-dashboard h1 {
+    color: white;
+    margin-bottom: 20px;
+}
+
+.pos-exchange-card {
+    background: white;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 10px 0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.pos-exchange-card .exchange-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.pos-exchange-card .exchange-amount {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #ff6b6b;
+}
+
+.pos-exchange-card .exchange-status {
+    padding: 3px 8px;
+    border-radius: 10px;
+    font-size: 0.8em;
+    font-weight: bold;
+}
+
+.pos-exchange-card .exchange-status.draft {
+    background: #ffc107;
+    color: #212529;
+}
+
+.pos-exchange-card .exchange-status.confirmed {
+    background: #17a2b8;
+    color: white;
+}
+
+.pos-exchange-card .exchange-status.done {
+    background: #28a745;
+    color: white;
+}
+
+.pos-exchange-card .exchange-status.cancel {
+    background: #dc3545;
+    color: white;
+}
+
+.pos-exchange-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #dee2e6;
+    background: #f8f9fa;
+}
+
+.pos-exchange-line:last-child {
+    border-bottom: none;
+}
+
+.pos-exchange-line .line-info {
+    flex: 1;
+}
+
+.pos-exchange-line .line-info .original-product {
+    font-weight: bold;
+    color: #dc3545;
+}
+
+.pos-exchange-line .line-info .new-product {
+    font-weight: bold;
+    color: #28a745;
+}
+
+.pos-exchange-line .line-info .exchange-arrow {
+    color: #6c757d;
+    margin: 0 10px;
+}
+
+.pos-exchange-line .line-amounts {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.pos-exchange-line .return-amount {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+.pos-exchange-line .charge-amount {
+    color: #28a745;
+    font-weight: bold;
+}
+
+.pos-exchange-line .difference-amount {
+    color: #ff6b6b;
+    font-weight: bold;
+}
+
+.pos-exchange-reason {
+    background: #e9ecef;
+    border-radius: 20px;
+    padding: 8px 15px;
+    margin: 5px;
+    display: inline-block;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.pos-exchange-reason:hover {
+    background: #dee2e6;
+}
+
+.pos-exchange-reason.selected {
+    background: #ff6b6b;
+    color: white;
+}
+
+.pos-exchange-policy {
+    background: #fff3cd;
+    border: 1px solid #ffeaa7;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+.pos-exchange-policy.warning {
+    background: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+.pos-exchange-policy.success {
+    background: #d4edda;
+    border-color: #c3e6cb;
+}
+
+.pos-exchange-summary {
+    background: #f8f9fa;
+    padding: 15px;
+    border-top: 2px solid #dee2e6;
+    border-radius: 0 0 8px 8px;
+}
+
+.pos-exchange-summary .summary-line {
+    display: flex;
+    justify-content: space-between;
+    margin: 5px 0;
+}
+
+.pos-exchange-summary .summary-line.final {
+    font-weight: bold;
+    font-size: 1.2em;
+    border-top: 1px solid #dee2e6;
+    padding-top: 10px;
+    margin-top: 10px;
+}
+
+.pos-exchange-receipt {
+    font-family: 'Courier New', monospace;
+    background: white;
+    padding: 20px;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.pos-exchange-receipt .receipt-header {
+    text-align: center;
+    border-bottom: 1px dashed #000;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+.pos-exchange-receipt .receipt-item {
+    display: flex;
+    justify-content: space-between;
+    margin: 5px 0;
+}
+
+.pos-exchange-receipt .receipt-total {
+    border-top: 1px dashed #000;
+    padding-top: 10px;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.pos-exchange-receipt .receipt-footer {
+    text-align: center;
+    border-top: 1px dashed #000;
+    padding-top: 10px;
+    margin-top: 10px;
+    font-size: 0.9em;
+}
+
+.pos-exchange-analytics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.pos-exchange-stat-card {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.pos-exchange-stat-card .stat-value {
+    font-size: 2em;
+    font-weight: bold;
+    color: #ff6b6b;
+}
+
+.pos-exchange-stat-card .stat-label {
+    color: #666;
+    margin-top: 5px;
+}
+
+.pos-exchange-reason-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.pos-exchange-reason-card {
+    background: white;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.pos-exchange-reason-card:hover {
+    border-color: #ff6b6b;
+    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.2);
+}
+
+.pos-exchange-reason-card .reason-name {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #ff6b6b;
+}
+
+.pos-exchange-reason-card .reason-description {
+    color: #666;
+    font-size: 0.9em;
+    margin-bottom: 10px;
+}
+
+.pos-exchange-reason-card .reason-policy {
+    font-size: 0.8em;
+    color: #28a745;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .pos-exchange-dashboard {
+        padding: 15px;
+    }
+    
+    .pos-exchange-line {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .pos-exchange-line .line-amounts {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .pos-exchange-analytics {
+        grid-template-columns: 1fr;
+    }
+    
+    .pos-exchange-reason-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Animation Classes */
+.pos-exchange-fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.pos-exchange-slide-in {
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(0); }
+}
+
+.pos-exchange-bounce {
+    animation: bounce 0.6s ease-in-out;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-10px); }
+    60% { transform: translateY(-5px); }
+}

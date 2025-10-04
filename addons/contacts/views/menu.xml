@@ -12,7 +12,7 @@
                   name="Customers"
                   parent="menu_contacts_root"
                   sequence="10"
-                  action="action_contact_customer"/>
+                  action="action_customer"/>
         
         <!-- Suppliers Submenu -->
         <menuitem id="menu_suppliers"

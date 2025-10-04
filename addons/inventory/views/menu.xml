@@ -26,6 +26,7 @@
         <menuitem id="menu_stock_inventory" 
                   name="Inventory Adjustments" 
                   parent="menu_inventory_operations" 
+                  action="action_stock_inventory"
                   sequence="30"/>
         
         <!-- Inventory Configuration Menu -->
@@ -37,6 +38,7 @@
         <menuitem id="menu_stock_locations" 
                   name="Locations" 
                   parent="menu_inventory_config" 
+                  action="action_stock_location"
                   sequence="10"/>
         
         <!-- Inventory Reports Menu -->

@@ -16,6 +16,7 @@
         <menuitem id="menu_pos_config_pos" 
                   name="POS Configurations" 
                   parent="menu_pos_config" 
+                  action="action_pos_config"
                   sequence="10"/>
         
         <!-- POS Operations Menu -->
@@ -42,6 +43,7 @@
         <menuitem id="menu_pos_receipts" 
                   name="Receipts" 
                   parent="menu_pos_operations" 
+                  action="action_pos_receipt"
                   sequence="40"/>
         
         <!-- POS Reports Menu -->
@@ -53,6 +55,7 @@
         <menuitem id="menu_pos_analytics" 
                   name="Analytics" 
                   parent="menu_pos_reports" 
+                  action="action_pos_analytics"
                   sequence="10"/>
         
         <!-- POS Dashboard Menu -->

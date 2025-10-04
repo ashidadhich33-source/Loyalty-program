@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <!-- Report Categories Access Rights -->
+    <record id="access_report_category_user" model="ir.model.access">
+        <field name="name">report.category.user</field>
+        <field name="model_id" ref="model_report_category"/>
+        <field name="group_id" ref="base.group_user"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <record id="access_report_category_manager" model="ir.model.access">
+        <field name="name">report.category.manager</field>
+        <field name="model_id" ref="model_report_category"/>
+        <field name="group_id" ref="base.group_system"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <!-- Report Templates Access Rights -->
+    <record id="access_report_template_user" model="ir.model.access">
+        <field name="name">report.template.user</field>
+        <field name="model_id" ref="model_report_template"/>
+        <field name="group_id" ref="base.group_user"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <record id="access_report_template_manager" model="ir.model.access">
+        <field name="name">report.template.manager</field>
+        <field name="model_id" ref="model_report_template"/>
+        <field name="group_id" ref="base.group_system"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <!-- Report Executions Access Rights -->
+    <record id="access_report_execution_user" model="ir.model.access">
+        <field name="name">report.execution.user</field>
+        <field name="model_id" ref="model_report_execution"/>
+        <field name="group_id" ref="base.group_user"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <record id="access_report_execution_manager" model="ir.model.access">
+        <field name="name">report.execution.manager</field>
+        <field name="model_id" ref="model_report_execution"/>
+        <field name="group_id" ref="base.group_system"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <!-- Report Schedules Access Rights -->
+    <record id="access_report_schedule_user" model="ir.model.access">
+        <field name="name">report.schedule.user</field>
+        <field name="model_id" ref="model_report_schedule"/>
+        <field name="group_id" ref="base.group_user"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <record id="access_report_schedule_manager" model="ir.model.access">
+        <field name="name">report.schedule.manager</field>
+        <field name="model_id" ref="model_report_schedule"/>
+        <field name="group_id" ref="base.group_system"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <!-- Dashboard Widgets Access Rights -->
+    <record id="access_dashboard_widget_user" model="ir.model.access">
+        <field name="name">dashboard.widget.user</field>
+        <field name="model_id" ref="model_dashboard_widget"/>
+        <field name="group_id" ref="base.group_user"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <!-- Report Builder Access Rights -->
+    <record id="access_report_builder_user" model="ir.model.access">
+        <field name="name">report.builder.user</field>
+        <field name="model_id" ref="model_report_builder"/>
+        <field name="group_id" ref="base.group_user"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <record id="access_report_builder_field_user" model="ir.model.access">
+        <field name="name">report.builder.field.user</field>
+        <field name="model_id" ref="model_report_builder_field"/>
+        <field name="group_id" ref="base.group_user"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <record id="access_report_builder_group_user" model="ir.model.access">
+        <field name="name">report.builder.group.user</field>
+        <field name="model_id" ref="model_report_builder_group"/>
+        <field name="group_id" ref="base.group_user"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <record id="access_report_builder_filter_user" model="ir.model.access">
+        <field name="name">report.builder.filter.user</field>
+        <field name="model_id" ref="model_report_builder_filter"/>
+        <field name="group_id" ref="base.group_user"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <!-- Report Export Access Rights -->
+    <record id="access_report_export_user" model="ir.model.access">
+        <field name="name">report.export.user</field>
+        <field name="model_id" ref="model_report_export"/>
+        <field name="group_id" ref="base.group_user"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <record id="access_report_export_manager" model="ir.model.access">
+        <field name="name">report.export.manager</field>
+        <field name="model_id" ref="model_report_export"/>
+        <field name="group_id" ref="base.group_system"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+</ocean>

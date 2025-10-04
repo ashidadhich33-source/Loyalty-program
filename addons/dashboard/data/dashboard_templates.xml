@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <!-- Sales Dashboard Template -->
+    <record id="template_sales_dashboard" model="dashboard.template">
+        <field name="name">Sales Dashboard</field>
+        <field name="description">Comprehensive sales dashboard with revenue, orders, and customer insights</field>
+        <field name="category">sales</field>
+        <field name="layout">grid</field>
+        <field name="theme">light</field>
+        <field name="grid_size">12</field>
+        <field name="sequence">10</field>
+        <field name="is_default" eval="True"/>
+        <field name="preview_description">Perfect for sales managers to track performance and identify opportunities</field>
+    </record>
+
+    <!-- Inventory Dashboard Template -->
+    <record id="template_inventory_dashboard" model="dashboard.template">
+        <field name="name">Inventory Dashboard</field>
+        <field name="description">Stock levels, movement analysis, and inventory optimization</field>
+        <field name="category">inventory</field>
+        <field name="layout">grid</field>
+        <field name="theme">light</field>
+        <field name="grid_size">12</field>
+        <field name="sequence">20</field>
+        <field name="is_default" eval="True"/>
+        <field name="preview_description">Essential for inventory managers to monitor stock levels and movements</field>
+    </record>
+
+    <!-- Financial Dashboard Template -->
+    <record id="template_financial_dashboard" model="dashboard.template">
+        <field name="name">Financial Dashboard</field>
+        <field name="description">Financial overview with P&amp;L, cash flow, and key financial metrics</field>
+        <field name="category">financial</field>
+        <field name="layout">grid</field>
+        <field name="theme">light</field>
+        <field name="grid_size">12</field>
+        <field name="sequence">30</field>
+        <field name="is_default" eval="True"/>
+        <field name="preview_description">Comprehensive financial dashboard for CFOs and finance teams</field>
+    </record>
+
+    <!-- HR Dashboard Template -->
+    <record id="template_hr_dashboard" model="dashboard.template">
+        <field name="name">HR Dashboard</field>
+        <field name="description">Employee metrics, attendance, and HR analytics</field>
+        <field name="category">hr</field>
+        <field name="layout">grid</field>
+        <field name="theme">light</field>
+        <field name="grid_size">12</field>
+        <field name="sequence">40</field>
+        <field name="is_default" eval="True"/>
+        <field name="preview_description">HR dashboard for tracking employee performance and engagement</field>
+    </record>
+
+    <!-- Executive Dashboard Template -->
+    <record id="template_executive_dashboard" model="dashboard.template">
+        <field name="name">Executive Dashboard</field>
+        <field name="description">High-level business metrics and KPIs for executives</field>
+        <field name="category">executive</field>
+        <field name="layout">grid</field>
+        <field name="theme">dark</field>
+        <field name="grid_size">12</field>
+        <field name="sequence">50</field>
+        <field name="is_default" eval="True"/>
+        <field name="preview_description">Executive-level dashboard with key business indicators</field>
+    </record>
+
+    <!-- Marketing Dashboard Template -->
+    <record id="template_marketing_dashboard" model="dashboard.template">
+        <field name="name">Marketing Dashboard</field>
+        <field name="description">Marketing campaigns, leads, and conversion metrics</field>
+        <field name="category">marketing</field>
+        <field name="layout">grid</field>
+        <field name="theme">colorful</field>
+        <field name="grid_size">12</field>
+        <field name="sequence">60</field>
+        <field name="is_default" eval="True"/>
+        <field name="preview_description">Marketing dashboard for tracking campaigns and lead generation</field>
+    </record>
+
+    <!-- Operations Dashboard Template -->
+    <record id="template_operations_dashboard" model="dashboard.template">
+        <field name="name">Operations Dashboard</field>
+        <field name="description">Operational efficiency, productivity, and process metrics</field>
+        <field name="category">operations</field>
+        <field name="layout">grid</field>
+        <field name="theme">minimal</field>
+        <field name="grid_size">12</field>
+        <field name="sequence">70</field>
+        <field name="is_default" eval="True"/>
+        <field name="preview_description">Operations dashboard for monitoring efficiency and productivity</field>
+    </record>
+
+    <!-- Kids Theme Dashboard Template -->
+    <record id="template_kids_dashboard" model="dashboard.template">
+        <field name="name">Kids Clothing Dashboard</field>
+        <field name="description">Colorful dashboard designed for kids clothing retail business</field>
+        <field name="category">custom</field>
+        <field name="layout">grid</field>
+        <field name="theme">kids</field>
+        <field name="grid_size">12</field>
+        <field name="sequence">80</field>
+        <field name="is_default" eval="True"/>
+        <field name="preview_description">Fun and colorful dashboard perfect for kids clothing business</field>
+    </record>
+</ocean>

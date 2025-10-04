@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <!-- Dashboard Access Rights -->
+    <record id="access_dashboard_user" model="ir.model.access">
+        <field name="name">dashboard.dashboard.user</field>
+        <field name="model_id" ref="model_dashboard_dashboard"/>
+        <field name="group_id" ref="base.group_user"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <!-- Dashboard Widget Access Rights -->
+    <record id="access_dashboard_widget_user" model="ir.model.access">
+        <field name="name">dashboard.widget.user</field>
+        <field name="model_id" ref="model_dashboard_widget"/>
+        <field name="group_id" ref="base.group_user"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <!-- Dashboard Widget Position Access Rights -->
+    <record id="access_dashboard_widget_position_user" model="ir.model.access">
+        <field name="name">dashboard.widget.position.user</field>
+        <field name="model_id" ref="model_dashboard_widget_position"/>
+        <field name="group_id" ref="base.group_user"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <!-- Dashboard Template Access Rights -->
+    <record id="access_dashboard_template_user" model="ir.model.access">
+        <field name="name">dashboard.template.user</field>
+        <field name="model_id" ref="model_dashboard_template"/>
+        <field name="group_id" ref="base.group_user"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <record id="access_dashboard_template_manager" model="ir.model.access">
+        <field name="name">dashboard.template.manager</field>
+        <field name="model_id" ref="model_dashboard_template"/>
+        <field name="group_id" ref="base.group_system"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <!-- Dashboard Template Widget Access Rights -->
+    <record id="access_dashboard_template_widget_user" model="ir.model.access">
+        <field name="name">dashboard.template.widget.user</field>
+        <field name="model_id" ref="model_dashboard_template_widget"/>
+        <field name="group_id" ref="base.group_user"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <record id="access_dashboard_template_widget_manager" model="ir.model.access">
+        <field name="name">dashboard.template.widget.manager</field>
+        <field name="model_id" ref="model_dashboard_template_widget"/>
+        <field name="group_id" ref="base.group_system"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <!-- Widget Library Access Rights -->
+    <record id="access_widget_library_user" model="ir.model.access">
+        <field name="name">widget.library.user</field>
+        <field name="model_id" ref="model_widget_library"/>
+        <field name="group_id" ref="base.group_user"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <record id="access_widget_library_manager" model="ir.model.access">
+        <field name="name">widget.library.manager</field>
+        <field name="model_id" ref="model_widget_library"/>
+        <field name="group_id" ref="base.group_system"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+</ocean>

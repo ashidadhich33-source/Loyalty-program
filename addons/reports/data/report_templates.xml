@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <!-- Financial Report Templates -->
+    <record id="template_profit_loss" model="report.template">
+        <field name="name">Profit &amp; Loss Statement</field>
+        <field name="code">profit_loss</field>
+        <field name="description">Comprehensive profit and loss statement</field>
+        <field name="category_id" ref="category_financial"/>
+        <field name="report_type">financial</field>
+        <field name="view_type">list</field>
+        <field name="model_name">account.move</field>
+        <field name="sequence">10</field>
+        <field name="output_formats">pdf,excel</field>
+    </record>
+
+    <record id="template_balance_sheet" model="report.template">
+        <field name="name">Balance Sheet</field>
+        <field name="code">balance_sheet</field>
+        <field name="description">Assets, liabilities, and equity statement</field>
+        <field name="category_id" ref="category_financial"/>
+        <field name="report_type">financial</field>
+        <field name="view_type">list</field>
+        <field name="model_name">account.account</field>
+        <field name="sequence">20</field>
+        <field name="output_formats">pdf,excel</field>
+    </record>
+
+    <record id="template_cash_flow" model="report.template">
+        <field name="name">Cash Flow Statement</field>
+        <field name="code">cash_flow</field>
+        <field name="description">Operating, investing, and financing cash flows</field>
+        <field name="category_id" ref="category_financial"/>
+        <field name="report_type">financial</field>
+        <field name="view_type">list</field>
+        <field name="model_name">account.move</field>
+        <field name="sequence">30</field>
+        <field name="output_formats">pdf,excel</field>
+    </record>
+
+    <!-- Sales Report Templates -->
+    <record id="template_sales_summary" model="report.template">
+        <field name="name">Sales Summary</field>
+        <field name="code">sales_summary</field>
+        <field name="description">Daily, weekly, monthly sales summary</field>
+        <field name="category_id" ref="category_sales"/>
+        <field name="report_type">sales</field>
+        <field name="view_type">graph</field>
+        <field name="model_name">sale.order</field>
+        <field name="sequence">10</field>
+        <field name="output_formats">pdf,excel,html</field>
+    </record>
+
+    <record id="template_top_products" model="report.template">
+        <field name="name">Top Selling Products</field>
+        <field name="code">top_products</field>
+        <field name="description">Best performing products by sales</field>
+        <field name="category_id" ref="category_sales"/>
+        <field name="report_type">sales</field>
+        <field name="view_type">pivot</field>
+        <field name="model_name">sale.order.line</field>
+        <field name="sequence">20</field>
+        <field name="output_formats">pdf,excel</field>
+    </record>
+
+    <record id="template_customer_analysis" model="report.template">
+        <field name="name">Customer Analysis</field>
+        <field name="code">customer_analysis</field>
+        <field name="description">Customer behavior and purchase patterns</field>
+        <field name="category_id" ref="category_sales"/>
+        <field name="report_type">sales</field>
+        <field name="view_type">graph</field>
+        <field name="model_name">res.partner</field>
+        <field name="sequence">30</field>
+        <field name="output_formats">pdf,excel</field>
+    </record>
+
+    <!-- Inventory Report Templates -->
+    <record id="template_stock_summary" model="report.template">
+        <field name="name">Stock Summary</field>
+        <field name="code">stock_summary</field>
+        <field name="description">Current stock levels by product and location</field>
+        <field name="category_id" ref="category_inventory"/>
+        <field name="report_type">inventory</field>
+        <field name="view_type">list</field>
+        <field name="model_name">stock.quant</field>
+        <field name="sequence">10</field>
+        <field name="output_formats">pdf,excel</field>
+    </record>
+
+    <record id="template_stock_movement" model="report.template">
+        <field name="name">Stock Movement Analysis</field>
+        <field name="code">stock_movement</field>
+        <field name="description">Stock movements and transfers</field>
+        <field name="category_id" ref="category_inventory"/>
+        <field name="report_type">inventory</field>
+        <field name="view_type">list</field>
+        <field name="model_name">stock.move</field>
+        <field name="sequence">20</field>
+        <field name="output_formats">pdf,excel</field>
+    </record>
+
+    <record id="template_stock_valuation" model="report.template">
+        <field name="name">Stock Valuation</field>
+        <field name="code">stock_valuation</field>
+        <field name="description">Stock valuation by different methods</field>
+        <field name="category_id" ref="category_inventory"/>
+        <field name="report_type">inventory</field>
+        <field name="view_type">pivot</field>
+        <field name="model_name">stock.quant</field>
+        <field name="sequence">30</field>
+        <field name="output_formats">pdf,excel</field>
+    </record>
+
+    <!-- Purchase Report Templates -->
+    <record id="template_purchase_summary" model="report.template">
+        <field name="name">Purchase Summary</field>
+        <field name="code">purchase_summary</field>
+        <field name="description">Purchase orders and vendor analysis</field>
+        <field name="category_id" ref="category_purchase"/>
+        <field name="report_type">purchase</field>
+        <field name="view_type">graph</field>
+        <field name="model_name">purchase.order</field>
+        <field name="sequence">10</field>
+        <field name="output_formats">pdf,excel</field>
+    </record>
+
+    <record id="template_vendor_analysis" model="report.template">
+        <field name="name">Vendor Analysis</field>
+        <field name="code">vendor_analysis</field>
+        <field name="description">Vendor performance and cost analysis</field>
+        <field name="category_id" ref="category_purchase"/>
+        <field name="report_type">purchase</field>
+        <field name="view_type">pivot</field>
+        <field name="model_name">res.partner</field>
+        <field name="sequence">20</field>
+        <field name="output_formats">pdf,excel</field>
+    </record>
+
+    <record id="template_cost_analysis" model="report.template">
+        <field name="name">Cost Analysis</field>
+        <field name="code">cost_analysis</field>
+        <field name="description">Product cost analysis and trends</field>
+        <field name="category_id" ref="category_purchase"/>
+        <field name="report_type">purchase</field>
+        <field name="view_type">graph</field>
+        <field name="model_name">product.product</field>
+        <field name="sequence">30</field>
+        <field name="output_formats">pdf,excel</field>
+    </record>
+
+    <!-- HR Report Templates -->
+    <record id="template_attendance_summary" model="report.template">
+        <field name="name">Attendance Summary</field>
+        <field name="code">attendance_summary</field>
+        <field name="description">Employee attendance and working hours</field>
+        <field name="category_id" ref="category_hr"/>
+        <field name="report_type">hr</field>
+        <field name="view_type">list</field>
+        <field name="model_name">hr.attendance</field>
+        <field name="sequence">10</field>
+        <field name="output_formats">pdf,excel</field>
+    </record>
+
+    <record id="template_payroll_summary" model="report.template">
+        <field name="name">Payroll Summary</field>
+        <field name="code">payroll_summary</field>
+        <field name="description">Employee payroll and salary analysis</field>
+        <field name="category_id" ref="category_hr"/>
+        <field name="report_type">hr</field>
+        <field name="view_type">list</field>
+        <field name="model_name">hr.payslip</field>
+        <field name="sequence">20</field>
+        <field name="output_formats">pdf,excel</field>
+    </record>
+</ocean>

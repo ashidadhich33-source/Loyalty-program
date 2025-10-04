@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <!-- Reports Menu -->
+    <record id="menu_reports_root" model="ocean.ui.menu">
+        <field name="name">Reports</field>
+        <field name="sequence">50</field>
+        <field name="web_icon">reports,static/description/icon.png</field>
+    </record>
+
+    <!-- Report Categories Menu -->
+    <record id="menu_report_categories" model="ocean.ui.menu">
+        <field name="name">Categories</field>
+        <field name="parent_id" ref="menu_reports_root"/>
+        <field name="action" ref="action_report_category"/>
+        <field name="sequence">10</field>
+    </record>
+
+    <!-- Report Templates Menu -->
+    <record id="menu_report_templates" model="ocean.ui.menu">
+        <field name="name">Templates</field>
+        <field name="parent_id" ref="menu_reports_root"/>
+        <field name="action" ref="action_report_template"/>
+        <field name="sequence">20</field>
+    </record>
+
+    <!-- Report Builder Menu -->
+    <record id="menu_report_builder" model="ocean.ui.menu">
+        <field name="name">Report Builder</field>
+        <field name="parent_id" ref="menu_reports_root"/>
+        <field name="action" ref="action_report_builder"/>
+        <field name="sequence">30</field>
+    </record>
+
+    <!-- Report Executions Menu -->
+    <record id="menu_report_executions" model="ocean.ui.menu">
+        <field name="name">Executions</field>
+        <field name="parent_id" ref="menu_reports_root"/>
+        <field name="action" ref="action_report_execution"/>
+        <field name="sequence">40</field>
+    </record>
+
+    <!-- Report Schedules Menu -->
+    <record id="menu_report_schedules" model="ocean.ui.menu">
+        <field name="name">Schedules</field>
+        <field name="parent_id" ref="menu_reports_root"/>
+        <field name="action" ref="action_report_schedule"/>
+        <field name="sequence">50</field>
+    </record>
+
+    <!-- Dashboards Menu -->
+    <record id="menu_dashboards" model="ocean.ui.menu">
+        <field name="name">Dashboards</field>
+        <field name="parent_id" ref="menu_reports_root"/>
+        <field name="action" ref="action_dashboard"/>
+        <field name="sequence">60</field>
+    </record>
+
+    <!-- Dashboard Widgets Menu -->
+    <record id="menu_dashboard_widgets" model="ocean.ui.menu">
+        <field name="name">Widgets</field>
+        <field name="parent_id" ref="menu_reports_root"/>
+        <field name="action" ref="action_dashboard_widget"/>
+        <field name="sequence">70</field>
+    </record>
+
+    <!-- Financial Reports Submenu -->
+    <record id="menu_financial_reports" model="ocean.ui.menu">
+        <field name="name">Financial Reports</field>
+        <field name="parent_id" ref="menu_reports_root"/>
+        <field name="sequence">100</field>
+    </record>
+
+    <!-- Sales Reports Submenu -->
+    <record id="menu_sales_reports" model="ocean.ui.menu">
+        <field name="name">Sales Reports</field>
+        <field name="parent_id" ref="menu_reports_root"/>
+        <field name="sequence">110</field>
+    </record>
+
+    <!-- Inventory Reports Submenu -->
+    <record id="menu_inventory_reports" model="ocean.ui.menu">
+        <field name="name">Inventory Reports</field>
+        <field name="parent_id" ref="menu_reports_root"/>
+        <field name="sequence">120</field>
+    </record>
+
+    <!-- Purchase Reports Submenu -->
+    <record id="menu_purchase_reports" model="ocean.ui.menu">
+        <field name="name">Purchase Reports</field>
+        <field name="parent_id" ref="menu_reports_root"/>
+        <field name="sequence">130</field>
+    </record>
+
+    <!-- HR Reports Submenu -->
+    <record id="menu_hr_reports" model="ocean.ui.menu">
+        <field name="name">HR Reports</field>
+        <field name="parent_id" ref="menu_reports_root"/>
+        <field name="sequence">140</field>
+    </record>
+</ocean>

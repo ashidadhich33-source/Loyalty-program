@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <!-- Dashboard Views -->
+    <record id="view_dashboard_tree" model="ocean.ui.view">
+        <field name="name">dashboard.dashboard.tree</field>
+        <field name="model">dashboard.dashboard</field>
+        <field name="arch" type="xml">
+            <tree string="Dashboards">
+                <field name="name"/>
+                <field name="description"/>
+                <field name="user_id"/>
+                <field name="layout"/>
+                <field name="theme"/>
+                <field name="is_public"/>
+                <field name="view_count"/>
+                <field name="active"/>
+                <field name="create_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_dashboard_form" model="ocean.ui.view">
+        <field name="name">dashboard.dashboard.form</field>
+        <field name="model">dashboard.dashboard</field>
+        <field name="arch" type="xml">
+            <form string="Dashboard">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_dashboard" type="object" class="oe_stat_button" icon="fa-eye">
+                            <span>View Dashboard</span>
+                        </button>
+                        <button name="action_duplicate_dashboard" type="object" class="oe_stat_button" icon="fa-copy">
+                            <span>Duplicate</span>
+                        </button>
+                        <button name="action_export_dashboard" type="object" class="oe_stat_button" icon="fa-download">
+                            <span>Export</span>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Dashboard Name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="user_id"/>
+                            <field name="layout"/>
+                            <field name="theme"/>
+                            <field name="grid_size"/>
+                        </group>
+                        <group>
+                            <field name="is_public"/>
+                            <field name="active"/>
+                            <field name="view_count"/>
+                            <field name="last_viewed"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="description"/>
+                    </group>
+                    <notebook>
+                        <page string="Widgets">
+                            <field name="widget_ids" widget="one2many">
+                                <tree editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="widget_id"/>
+                                    <field name="title"/>
+                                    <field name="x_position"/>
+                                    <field name="y_position"/>
+                                    <field name="width"/>
+                                    <field name="height"/>
+                                    <field name="show_title"/>
+                                    <field name="show_border"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Settings">
+                            <group>
+                                <field name="auto_refresh"/>
+                                <field name="refresh_interval"/>
+                            </group>
+                            <group>
+                                <field name="show_grid_lines"/>
+                                <field name="allow_resize"/>
+                                <field name="allow_drag"/>
+                            </group>
+                        </page>
+                        <page string="Access Control">
+                            <group>
+                                <field name="group_ids" widget="many2many_tags"/>
+                                <field name="shared_with_ids" widget="many2many_tags"/>
+                            </group>
+                        </page>
+                        <page string="Template">
+                            <group>
+                                <field name="template_id"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Dashboard Kanban View -->
+    <record id="view_dashboard_kanban" model="ocean.ui.view">
+        <field name="name">dashboard.dashboard.kanban</field>
+        <field name="model">dashboard.dashboard</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="name"/>
+                <field name="description"/>
+                <field name="user_id"/>
+                <field name="layout"/>
+                <field name="theme"/>
+                <field name="is_public"/>
+                <field name="view_count"/>
+                <field name="active"/>
+                <field name="create_date"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_card oe_kanban_global_click">
+                            <div class="oe_kanban_content">
+                                <div class="o_kanban_record_top">
+                                    <div class="o_kanban_record_headings">
+                                        <strong class="o_kanban_record_title">
+                                            <field name="name"/>
+                                        </strong>
+                                    </div>
+                                    <div class="o_kanban_record_subtitle">
+                                        <field name="description"/>
+                                    </div>
+                                </div>
+                                <div class="o_kanban_record_body">
+                                    <div class="oe_kanban_bottom_left">
+                                        <field name="user_id"/>
+                                        <span class="badge badge-info" t-if="record.layout.raw_value">
+                                            <field name="layout"/>
+                                        </span>
+                                    </div>
+                                    <div class="oe_kanban_bottom_right">
+                                        <span t-if="record.is_public.raw_value" class="badge badge-success">Public</span>
+                                        <span t-if="!record.active.raw_value" class="badge badge-secondary">Inactive</span>
+                                        <span class="badge badge-primary" t-if="record.view_count.raw_value">
+                                            <field name="view_count"/> views
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Dashboard Template Views -->
+    <record id="view_dashboard_template_tree" model="ocean.ui.view">
+        <field name="name">dashboard.template.tree</field>
+        <field name="model">dashboard.template</field>
+        <field name="arch" type="xml">
+            <tree string="Dashboard Templates">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="category"/>
+                <field name="layout"/>
+                <field name="theme"/>
+                <field name="usage_count"/>
+                <field name="rating"/>
+                <field name="is_public"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_dashboard_template_form" model="ocean.ui.view">
+        <field name="name">dashboard.template.form</field>
+        <field name="model">dashboard.template</field>
+        <field name="arch" type="xml">
+            <form string="Dashboard Template">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_create_dashboard" type="object" class="oe_stat_button" icon="fa-plus">
+                            <span>Create Dashboard</span>
+                        </button>
+                        <button name="action_duplicate_template" type="object" class="oe_stat_button" icon="fa-copy">
+                            <span>Duplicate</span>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Template Name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="category"/>
+                            <field name="layout"/>
+                            <field name="theme"/>
+                            <field name="grid_size"/>
+                        </group>
+                        <group>
+                            <field name="sequence"/>
+                            <field name="active"/>
+                            <field name="is_public"/>
+                            <field name="is_default"/>
+                            <field name="usage_count"/>
+                            <field name="rating"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="description"/>
+                    </group>
+                    <notebook>
+                        <page string="Widgets">
+                            <field name="widget_ids" widget="one2many">
+                                <tree editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="widget_id"/>
+                                    <field name="x_position"/>
+                                    <field name="y_position"/>
+                                    <field name="width"/>
+                                    <field name="height"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Preview">
+                            <group>
+                                <field name="preview_image" widget="image"/>
+                            </group>
+                            <group>
+                                <field name="preview_description"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Dashboard Template Kanban View -->
+    <record id="view_dashboard_template_kanban" model="ocean.ui.view">
+        <field name="name">dashboard.template.kanban</field>
+        <field name="model">dashboard.template</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="name"/>
+                <field name="description"/>
+                <field name="category"/>
+                <field name="layout"/>
+                <field name="theme"/>
+                <field name="usage_count"/>
+                <field name="rating"/>
+                <field name="is_public"/>
+                <field name="active"/>
+                <field name="preview_image"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_card oe_kanban_global_click">
+                            <div class="oe_kanban_content">
+                                <div class="o_kanban_record_top">
+                                    <div class="o_kanban_record_headings">
+                                        <strong class="o_kanban_record_title">
+                                            <field name="name"/>
+                                        </strong>
+                                    </div>
+                                    <div class="o_kanban_record_subtitle">
+                                        <field name="description"/>
+                                    </div>
+                                </div>
+                                <div class="o_kanban_record_body">
+                                    <div class="oe_kanban_bottom_left">
+                                        <span class="badge badge-info">
+                                            <field name="category"/>
+                                        </span>
+                                        <span class="badge badge-secondary">
+                                            <field name="layout"/>
+                                        </span>
+                                    </div>
+                                    <div class="oe_kanban_bottom_right">
+                                        <span t-if="record.is_public.raw_value" class="badge badge-success">Public</span>
+                                        <span t-if="record.is_default.raw_value" class="badge badge-warning">Default</span>
+                                        <span class="badge badge-primary" t-if="record.usage_count.raw_value">
+                                            <field name="usage_count"/> uses
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Actions -->
+    <record id="action_dashboard" model="ocean.actions.act_window">
+        <field name="name">Dashboards</field>
+        <field name="res_model">dashboard.dashboard</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first dashboard!
+            </p>
+            <p>
+                Create custom dashboards with widgets to visualize your data.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_dashboard_template" model="ocean.actions.act_window">
+        <field name="name">Dashboard Templates</field>
+        <field name="res_model">dashboard.template</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first dashboard template!
+            </p>
+            <p>
+                Create reusable dashboard templates for quick dashboard creation.
+            </p>
+        </field>
+    </record>
+</ocean>

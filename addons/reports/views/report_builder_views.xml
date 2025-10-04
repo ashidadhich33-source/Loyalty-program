@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <!-- Report Builder Views -->
+    <record id="view_report_builder_tree" model="ocean.ui.view">
+        <field name="name">report.builder.tree</field>
+        <field name="model">report.builder</field>
+        <field name="arch" type="xml">
+            <tree string="Report Builders">
+                <field name="name"/>
+                <field name="report_type"/>
+                <field name="model_name"/>
+                <field name="user_id"/>
+                <field name="status"/>
+                <field name="is_public"/>
+                <field name="create_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_report_builder_form" model="ocean.ui.view">
+        <field name="name">report.builder.form</field>
+        <field name="model">report.builder</field>
+        <field name="arch" type="xml">
+            <form string="Report Builder">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_execute_report" type="object" class="oe_stat_button" icon="fa-play">
+                            <span>Execute</span>
+                        </button>
+                        <button name="action_publish_report" type="object" class="oe_stat_button" icon="fa-check">
+                            <span>Publish</span>
+                        </button>
+                        <button name="action_duplicate_report" type="object" class="oe_stat_button" icon="fa-copy">
+                            <span>Duplicate</span>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Report Name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="report_type"/>
+                            <field name="model_name"/>
+                            <field name="user_id"/>
+                            <field name="status"/>
+                        </group>
+                        <group>
+                            <field name="limit"/>
+                            <field name="order_by"/>
+                            <field name="is_public"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="description"/>
+                    </group>
+                    <notebook>
+                        <page string="Fields">
+                            <field name="field_ids" widget="one2many">
+                                <tree editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="field_name"/>
+                                    <field name="field_label"/>
+                                    <field name="field_type"/>
+                                    <field name="aggregation"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Group By">
+                            <field name="group_by_ids" widget="one2many">
+                                <tree editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="field_name"/>
+                                    <field name="field_label"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Filters">
+                            <field name="filter_ids" widget="one2many">
+                                <tree editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="field_name"/>
+                                    <field name="field_label"/>
+                                    <field name="operator"/>
+                                    <field name="value"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Chart Configuration" attrs="{'invisible': [('report_type', '!=', 'graph')]}">
+                            <group>
+                                <field name="chart_type"/>
+                                <field name="chart_x_axis"/>
+                                <field name="chart_y_axis"/>
+                                <field name="chart_group_by"/>
+                            </group>
+                        </page>
+                        <page string="Sharing">
+                            <group>
+                                <field name="shared_with_ids" widget="many2many_tags"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Report Builder Field Views -->
+    <record id="view_report_builder_field_tree" model="ocean.ui.view">
+        <field name="name">report.builder.field.tree</field>
+        <field name="model">report.builder.field</field>
+        <field name="arch" type="xml">
+            <tree string="Report Builder Fields">
+                <field name="sequence" widget="handle"/>
+                <field name="field_name"/>
+                <field name="field_label"/>
+                <field name="field_type"/>
+                <field name="aggregation"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_report_builder_field_form" model="ocean.ui.view">
+        <field name="name">report.builder.field.form</field>
+        <field name="model">report.builder.field</field>
+        <field name="arch" type="xml">
+            <form string="Report Builder Field">
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="field_name" placeholder="Field Name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="builder_id"/>
+                            <field name="sequence"/>
+                        </group>
+                        <group>
+                            <field name="field_type"/>
+                            <field name="aggregation"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="field_label"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Report Builder Group Views -->
+    <record id="view_report_builder_group_tree" model="ocean.ui.view">
+        <field name="name">report.builder.group.tree</field>
+        <field name="model">report.builder.group</field>
+        <field name="arch" type="xml">
+            <tree string="Report Builder Groups">
+                <field name="sequence" widget="handle"/>
+                <field name="field_name"/>
+                <field name="field_label"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_report_builder_group_form" model="ocean.ui.view">
+        <field name="name">report.builder.group.form</field>
+        <field name="model">report.builder.group</field>
+        <field name="arch" type="xml">
+            <form string="Report Builder Group">
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="field_name" placeholder="Field Name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="builder_id"/>
+                            <field name="sequence"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="field_label"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Report Builder Filter Views -->
+    <record id="view_report_builder_filter_tree" model="ocean.ui.view">
+        <field name="name">report.builder.filter.tree</field>
+        <field name="model">report.builder.filter</field>
+        <field name="arch" type="xml">
+            <tree string="Report Builder Filters">
+                <field name="sequence" widget="handle"/>
+                <field name="field_name"/>
+                <field name="field_label"/>
+                <field name="operator"/>
+                <field name="value"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_report_builder_filter_form" model="ocean.ui.view">
+        <field name="name">report.builder.filter.form</field>
+        <field name="model">report.builder.filter</field>
+        <field name="arch" type="xml">
+            <form string="Report Builder Filter">
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="field_name" placeholder="Field Name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="builder_id"/>
+                            <field name="sequence"/>
+                        </group>
+                        <group>
+                            <field name="operator"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="field_label"/>
+                        <field name="value"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Actions -->
+    <record id="action_report_builder" model="ocean.actions.act_window">
+        <field name="name">Report Builder</field>
+        <field name="res_model">report.builder</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first custom report!
+            </p>
+            <p>
+                Use the report builder to create custom reports without coding.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_report_builder_field" model="ocean.actions.act_window">
+        <field name="name">Report Builder Fields</field>
+        <field name="res_model">report.builder.field</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_report_builder_group" model="ocean.actions.act_window">
+        <field name="name">Report Builder Groups</field>
+        <field name="res_model">report.builder.group</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_report_builder_filter" model="ocean.actions.act_window">
+        <field name="name">Report Builder Filters</field>
+        <field name="res_model">report.builder.filter</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</ocean>

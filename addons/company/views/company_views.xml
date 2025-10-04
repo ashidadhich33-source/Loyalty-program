@@ -2,7 +2,7 @@
 <ocean>
     <data>
         <!-- Companies Tree View -->
-        <record id="view_companies_tree" model="ocean.ui.view">
+        <record id="view_companies_tree" model="ir.ui.view">
             <field name="name">companies.tree</field>
             <field name="model">res.company</field>
             <field name="arch" type="xml">
@@ -22,7 +22,7 @@
         </record>
         
         <!-- Companies Form View -->
-        <record id="view_companies_form" model="ocean.ui.view">
+        <record id="view_companies_form" model="ir.ui.view">
             <field name="name">companies.form</field>
             <field name="model">res.company</field>
             <field name="arch" type="xml">
@@ -169,7 +169,7 @@
         </record>
         
         <!-- Companies Search View -->
-        <record id="view_companies_search" model="ocean.ui.view">
+        <record id="view_companies_search" model="ir.ui.view">
             <field name="name">companies.search</field>
             <field name="model">res.company</field>
             <field name="arch" type="xml">
@@ -211,7 +211,7 @@
         </record>
         
         <!-- Companies Action -->
-        <record id="action_companies" model="ocean.actions.act_window">
+        <record id="action_companies" model="ir.actions.act_window">
             <field name="name">Companies</field>
             <field name="res_model">res.company</field>
             <field name="view_mode">tree,form</field>
@@ -221,7 +221,7 @@
         </record>
         
         <!-- Company Analytics View -->
-        <record id="view_company_analytics" model="ocean.ui.view">
+        <record id="view_company_analytics" model="ir.ui.view">
             <field name="name">company.analytics</field>
             <field name="model">res.company</field>
             <field name="arch" type="xml">
@@ -267,7 +267,7 @@
         </record>
         
         <!-- Company Analytics Action -->
-        <record id="action_company_analytics" model="ocean.actions.act_window">
+        <record id="action_company_analytics" model="ir.actions.act_window">
             <field name="name">Company Analytics</field>
             <field name="res_model">res.company</field>
             <field name="view_mode">form</field>

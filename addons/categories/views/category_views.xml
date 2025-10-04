@@ -2,7 +2,7 @@
 <ocean>
     <data>
         <!-- Categories Tree View -->
-        <record id="view_categories_tree" model="ocean.ui.view">
+        <record id="view_categories_tree" model="ir.ui.view">
             <field name="name">categories.tree</field>
             <field name="model">product.category</field>
             <field name="arch" type="xml">
@@ -23,7 +23,7 @@
         </record>
         
         <!-- Categories Form View -->
-        <record id="view_categories_form" model="ocean.ui.view">
+        <record id="view_categories_form" model="ir.ui.view">
             <field name="name">categories.form</field>
             <field name="model">product.category</field>
             <field name="arch" type="xml">
@@ -92,7 +92,7 @@
         </record>
         
         <!-- Categories Search View -->
-        <record id="view_categories_search" model="ocean.ui.view">
+        <record id="view_categories_search" model="ir.ui.view">
             <field name="name">categories.search</field>
             <field name="model">product.category</field>
             <field name="arch" type="xml">
@@ -139,7 +139,7 @@
         </record>
         
         <!-- Categories Action -->
-        <record id="action_categories" model="ocean.actions.act_window">
+        <record id="action_categories" model="ir.actions.act_window">
             <field name="name">Product Categories</field>
             <field name="res_model">product.category</field>
             <field name="view_mode">tree,form</field>

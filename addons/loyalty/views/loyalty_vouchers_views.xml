@@ -2,7 +2,7 @@
 <ocean>
     <data>
         <!-- Loyalty Voucher Templates Tree View -->
-        <record id="view_loyalty_voucher_templates_tree" model="ocean.ui.view">
+        <record id="view_loyalty_voucher_templates_tree" model="ir.ui.view">
             <field name="name">loyalty.voucher.templates.tree</field>
             <field name="model">loyalty.voucher.template</field>
             <field name="arch" type="xml">
@@ -33,7 +33,7 @@
         </record>
         
         <!-- Loyalty Voucher Templates Form View -->
-        <record id="view_loyalty_voucher_templates_form" model="ocean.ui.view">
+        <record id="view_loyalty_voucher_templates_form" model="ir.ui.view">
             <field name="name">loyalty.voucher.templates.form</field>
             <field name="model">loyalty.voucher.template</field>
             <field name="arch" type="xml">
@@ -120,7 +120,7 @@
         </record>
         
         <!-- Loyalty Voucher Templates Search View -->
-        <record id="view_loyalty_voucher_templates_search" model="ocean.ui.view">
+        <record id="view_loyalty_voucher_templates_search" model="ir.ui.view">
             <field name="name">loyalty.voucher.templates.search</field>
             <field name="model">loyalty.voucher.template</field>
             <field name="arch" type="xml">
@@ -179,7 +179,7 @@
         </record>
         
         <!-- Loyalty Voucher Templates Action -->
-        <record id="action_loyalty_voucher_templates" model="ocean.actions.act_window">
+        <record id="action_loyalty_voucher_templates" model="ir.actions.act_window">
             <field name="name">Loyalty Voucher Templates</field>
             <field name="res_model">loyalty.voucher.template</field>
             <field name="view_mode">tree,form</field>
@@ -189,7 +189,7 @@
         </record>
         
         <!-- Loyalty Vouchers Tree View -->
-        <record id="view_loyalty_vouchers_tree" model="ocean.ui.view">
+        <record id="view_loyalty_vouchers_tree" model="ir.ui.view">
             <field name="name">loyalty.vouchers.tree</field>
             <field name="model">loyalty.voucher</field>
             <field name="arch" type="xml">
@@ -222,7 +222,7 @@
         </record>
         
         <!-- Loyalty Vouchers Form View -->
-        <record id="view_loyalty_vouchers_form" model="ocean.ui.view">
+        <record id="view_loyalty_vouchers_form" model="ir.ui.view">
             <field name="name">loyalty.vouchers.form</field>
             <field name="model">loyalty.voucher</field>
             <field name="arch" type="xml">
@@ -312,7 +312,7 @@
         </record>
         
         <!-- Loyalty Vouchers Search View -->
-        <record id="view_loyalty_vouchers_search" model="ocean.ui.view">
+        <record id="view_loyalty_vouchers_search" model="ir.ui.view">
             <field name="name">loyalty.vouchers.search</field>
             <field name="model">loyalty.voucher</field>
             <field name="arch" type="xml">
@@ -387,7 +387,7 @@
         </record>
         
         <!-- Loyalty Vouchers Action -->
-        <record id="action_loyalty_vouchers" model="ocean.actions.act_window">
+        <record id="action_loyalty_vouchers" model="ir.actions.act_window">
             <field name="name">Loyalty Vouchers</field>
             <field name="res_model">loyalty.voucher</field>
             <field name="view_mode">tree,form</field>

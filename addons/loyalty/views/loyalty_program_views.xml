@@ -2,7 +2,7 @@
 <ocean>
     <data>
         <!-- Loyalty Programs Tree View -->
-        <record id="view_loyalty_programs_tree" model="ocean.ui.view">
+        <record id="view_loyalty_programs_tree" model="ir.ui.view">
             <field name="name">loyalty.programs.tree</field>
             <field name="model">loyalty.program</field>
             <field name="arch" type="xml">
@@ -27,7 +27,7 @@
         </record>
         
         <!-- Loyalty Programs Form View -->
-        <record id="view_loyalty_programs_form" model="ocean.ui.view">
+        <record id="view_loyalty_programs_form" model="ir.ui.view">
             <field name="name">loyalty.programs.form</field>
             <field name="model">loyalty.program</field>
             <field name="arch" type="xml">
@@ -131,7 +131,7 @@
         </record>
         
         <!-- Loyalty Programs Search View -->
-        <record id="view_loyalty_programs_search" model="ocean.ui.view">
+        <record id="view_loyalty_programs_search" model="ir.ui.view">
             <field name="name">loyalty.programs.search</field>
             <field name="model">loyalty.program</field>
             <field name="arch" type="xml">
@@ -184,7 +184,7 @@
         </record>
         
         <!-- Loyalty Programs Action -->
-        <record id="action_loyalty_programs" model="ocean.actions.act_window">
+        <record id="action_loyalty_programs" model="ir.actions.act_window">
             <field name="name">Loyalty Programs</field>
             <field name="res_model">loyalty.program</field>
             <field name="view_mode">tree,form</field>

@@ -2,7 +2,7 @@
 <ocean>
     <data>
         <!-- Sale Analytics Tree View -->
-        <record id="view_sale_analytics_tree" model="ocean.ui.view">
+        <record id="view_sale_analytics_tree" model="ir.ui.view">
             <field name="name">sale.analytics.tree</field>
             <field name="model">sale.analytics</field>
             <field name="arch" type="xml">
@@ -24,7 +24,7 @@
         </record>
         
         <!-- Sale Analytics Form View -->
-        <record id="view_sale_analytics_form" model="ocean.ui.view">
+        <record id="view_sale_analytics_form" model="ir.ui.view">
             <field name="name">sale.analytics.form</field>
             <field name="model">sale.analytics</field>
             <field name="arch" type="xml">
@@ -120,7 +120,7 @@
         </record>
         
         <!-- Sale Analytics Search View -->
-        <record id="view_sale_analytics_search" model="ocean.ui.view">
+        <record id="view_sale_analytics_search" model="ir.ui.view">
             <field name="name">sale.analytics.search</field>
             <field name="model">sale.analytics</field>
             <field name="arch" type="xml">
@@ -162,7 +162,7 @@
         </record>
         
         <!-- Sale Analytics Action -->
-        <record id="action_sale_analytics" model="ocean.actions.act_window">
+        <record id="action_sale_analytics" model="ir.actions.act_window">
             <field name="name">Sale Analytics</field>
             <field name="res_model">sale.analytics</field>
             <field name="view_mode">tree,form</field>

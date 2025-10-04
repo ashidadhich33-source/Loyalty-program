@@ -2,7 +2,7 @@
 <ocean>
     <data>
         <!-- Branches Tree View -->
-        <record id="view_branches_tree" model="ocean.ui.view">
+        <record id="view_branches_tree" model="ir.ui.view">
             <field name="name">branches.tree</field>
             <field name="model">company.branch</field>
             <field name="arch" type="xml">
@@ -22,7 +22,7 @@
         </record>
         
         <!-- Branches Form View -->
-        <record id="view_branches_form" model="ocean.ui.view">
+        <record id="view_branches_form" model="ir.ui.view">
             <field name="name">branches.form</field>
             <field name="model">company.branch</field>
             <field name="arch" type="xml">
@@ -125,7 +125,7 @@
         </record>
         
         <!-- Branches Search View -->
-        <record id="view_branches_search" model="ocean.ui.view">
+        <record id="view_branches_search" model="ir.ui.view">
             <field name="name">branches.search</field>
             <field name="model">company.branch</field>
             <field name="arch" type="xml">
@@ -158,7 +158,7 @@
         </record>
         
         <!-- Branches Action -->
-        <record id="action_branches" model="ocean.actions.act_window">
+        <record id="action_branches" model="ir.actions.act_window">
             <field name="name">Branches</field>
             <field name="res_model">company.branch</field>
             <field name="view_mode">tree,form</field>

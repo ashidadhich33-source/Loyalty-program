@@ -2,7 +2,7 @@
 <ocean>
     <data>
         <!-- Category Analytics Tree View -->
-        <record id="view_category_analytics_tree" model="ocean.ui.view">
+        <record id="view_category_analytics_tree" model="ir.ui.view">
             <field name="name">category.analytics.tree</field>
             <field name="model">category.analytics</field>
             <field name="arch" type="xml">
@@ -26,7 +26,7 @@
         </record>
         
         <!-- Category Analytics Form View -->
-        <record id="view_category_analytics_form" model="ocean.ui.view">
+        <record id="view_category_analytics_form" model="ir.ui.view">
             <field name="name">category.analytics.form</field>
             <field name="model">category.analytics</field>
             <field name="arch" type="xml">
@@ -103,7 +103,7 @@
         </record>
         
         <!-- Category Analytics Search View -->
-        <record id="view_category_analytics_search" model="ocean.ui.view">
+        <record id="view_category_analytics_search" model="ir.ui.view">
             <field name="name">category.analytics.search</field>
             <field name="model">category.analytics</field>
             <field name="arch" type="xml">
@@ -135,7 +135,7 @@
         </record>
         
         <!-- Category Analytics Action -->
-        <record id="action_category_analytics" model="ocean.actions.act_window">
+        <record id="action_category_analytics" model="ir.actions.act_window">
             <field name="name">Category Analytics</field>
             <field name="res_model">category.analytics</field>
             <field name="view_mode">tree,form</field>

@@ -2,7 +2,7 @@
 <ocean>
     <data>
         <!-- Notification System Tree View -->
-        <record id="view_notification_system_tree" model="ocean.ui.view">
+        <record id="view_notification_system_tree" model="ir.ui.view">
             <field name="name">notification.system.tree</field>
             <field name="model">notification.system</field>
             <field name="arch" type="xml">
@@ -23,7 +23,7 @@
         </record>
         
         <!-- Notification System Form View -->
-        <record id="view_notification_system_form" model="ocean.ui.view">
+        <record id="view_notification_system_form" model="ir.ui.view">
             <field name="name">notification.system.form</field>
             <field name="model">notification.system</field>
             <field name="arch" type="xml">
@@ -104,7 +104,7 @@
         </record>
         
         <!-- Notification System Search View -->
-        <record id="view_notification_system_search" model="ocean.ui.view">
+        <record id="view_notification_system_search" model="ir.ui.view">
             <field name="name">notification.system.search</field>
             <field name="model">notification.system</field>
             <field name="arch" type="xml">
@@ -144,7 +144,7 @@
         </record>
         
         <!-- Notification System Action -->
-        <record id="action_notifications" model="ocean.actions.act_window">
+        <record id="action_notifications" model="ir.actions.act_window">
             <field name="name">Notifications</field>
             <field name="res_model">notification.system</field>
             <field name="view_mode">tree,form</field>
@@ -154,7 +154,7 @@
         </record>
         
         <!-- Notification Template Tree View -->
-        <record id="view_notification_template_tree" model="ocean.ui.view">
+        <record id="view_notification_template_tree" model="ir.ui.view">
             <field name="name">notification.template.tree</field>
             <field name="model">notification.template</field>
             <field name="arch" type="xml">
@@ -168,7 +168,7 @@
         </record>
         
         <!-- Notification Template Form View -->
-        <record id="view_notification_template_form" model="ocean.ui.view">
+        <record id="view_notification_template_form" model="ir.ui.view">
             <field name="name">notification.template.form</field>
             <field name="model">notification.template</field>
             <field name="arch" type="xml">
@@ -199,7 +199,7 @@
         </record>
         
         <!-- Notification Template Action -->
-        <record id="action_notification_templates" model="ocean.actions.act_window">
+        <record id="action_notification_templates" model="ir.actions.act_window">
             <field name="name">Notification Templates</field>
             <field name="res_model">notification.template</field>
             <field name="view_mode">tree,form</field>

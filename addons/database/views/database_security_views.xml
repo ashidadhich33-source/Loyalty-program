@@ -2,7 +2,7 @@
 <ocean>
     <data>
         <!-- Database Security Tree View -->
-        <record id="view_database_security_tree" model="ocean.ui.view">
+        <record id="view_database_security_tree" model="ir.ui.view">
             <field name="name">database.security.tree</field>
             <field name="model">database.security</field>
             <field name="arch" type="xml">
@@ -20,7 +20,7 @@
         </record>
 
         <!-- Database Security Form View -->
-        <record id="view_database_security_form" model="ocean.ui.view">
+        <record id="view_database_security_form" model="ir.ui.view">
             <field name="name">database.security.form</field>
             <field name="model">database.security</field>
             <field name="arch" type="xml">
@@ -67,7 +67,7 @@
         </record>
 
         <!-- Database Security Search View -->
-        <record id="view_database_security_search" model="ocean.ui.view">
+        <record id="view_database_security_search" model="ir.ui.view">
             <field name="name">database.security.search</field>
             <field name="model">database.security</field>
             <field name="arch" type="xml">
@@ -94,7 +94,7 @@
         </record>
 
         <!-- Database Security Action -->
-        <record id="action_database_security" model="ocean.actions.act_window">
+        <record id="action_database_security" model="ir.actions.act_window">
             <field name="name">Database Security</field>
             <field name="res_model">database.security</field>
             <field name="view_mode">tree,form</field>

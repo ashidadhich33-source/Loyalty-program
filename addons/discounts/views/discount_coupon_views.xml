@@ -2,7 +2,7 @@
 <ocean>
     <data>
         <!-- Discount Coupon Templates Tree View -->
-        <record id="view_discount_coupon_templates_tree" model="ocean.ui.view">
+        <record id="view_discount_coupon_templates_tree" model="ir.ui.view">
             <field name="name">discount.coupon.templates.tree</field>
             <field name="model">discount.coupon.template</field>
             <field name="arch" type="xml">
@@ -33,7 +33,7 @@
         </record>
         
         <!-- Discount Coupon Templates Form View -->
-        <record id="view_discount_coupon_templates_form" model="ocean.ui.view">
+        <record id="view_discount_coupon_templates_form" model="ir.ui.view">
             <field name="name">discount.coupon.templates.form</field>
             <field name="model">discount.coupon.template</field>
             <field name="arch" type="xml">
@@ -118,7 +118,7 @@
         </record>
         
         <!-- Discount Coupon Templates Search View -->
-        <record id="view_discount_coupon_templates_search" model="ocean.ui.view">
+        <record id="view_discount_coupon_templates_search" model="ir.ui.view">
             <field name="name">discount.coupon.templates.search</field>
             <field name="model">discount.coupon.template</field>
             <field name="arch" type="xml">
@@ -177,7 +177,7 @@
         </record>
         
         <!-- Discount Coupon Templates Action -->
-        <record id="action_discount_coupon_templates" model="ocean.actions.act_window">
+        <record id="action_discount_coupon_templates" model="ir.actions.act_window">
             <field name="name">Discount Coupon Templates</field>
             <field name="res_model">discount.coupon.template</field>
             <field name="view_mode">tree,form</field>
@@ -187,7 +187,7 @@
         </record>
         
         <!-- Discount Coupons Tree View -->
-        <record id="view_discount_coupons_tree" model="ocean.ui.view">
+        <record id="view_discount_coupons_tree" model="ir.ui.view">
             <field name="name">discount.coupons.tree</field>
             <field name="model">discount.coupon</field>
             <field name="arch" type="xml">
@@ -219,7 +219,7 @@
         </record>
         
         <!-- Discount Coupons Form View -->
-        <record id="view_discount_coupons_form" model="ocean.ui.view">
+        <record id="view_discount_coupons_form" model="ir.ui.view">
             <field name="name">discount.coupons.form</field>
             <field name="model">discount.coupon</field>
             <field name="arch" type="xml">
@@ -307,7 +307,7 @@
         </record>
         
         <!-- Discount Coupons Search View -->
-        <record id="view_discount_coupons_search" model="ocean.ui.view">
+        <record id="view_discount_coupons_search" model="ir.ui.view">
             <field name="name">discount.coupons.search</field>
             <field name="model">discount.coupon</field>
             <field name="arch" type="xml">
@@ -380,7 +380,7 @@
         </record>
         
         <!-- Discount Coupons Action -->
-        <record id="action_discount_coupons" model="ocean.actions.act_window">
+        <record id="action_discount_coupons" model="ir.actions.act_window">
             <field name="name">Discount Coupons</field>
             <field name="res_model">discount.coupon</field>
             <field name="view_mode">tree,form</field>

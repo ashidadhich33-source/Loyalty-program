@@ -2,7 +2,7 @@
 <ocean>
     <data>
         <!-- Discount Programs Tree View -->
-        <record id="view_discount_programs_tree" model="ocean.ui.view">
+        <record id="view_discount_programs_tree" model="ir.ui.view">
             <field name="name">discount.programs.tree</field>
             <field name="model">discount.program</field>
             <field name="arch" type="xml">
@@ -38,7 +38,7 @@
         </record>
         
         <!-- Discount Programs Form View -->
-        <record id="view_discount_programs_form" model="ocean.ui.view">
+        <record id="view_discount_programs_form" model="ir.ui.view">
             <field name="name">discount.programs.form</field>
             <field name="model">discount.program</field>
             <field name="arch" type="xml">
@@ -167,7 +167,7 @@
         </record>
         
         <!-- Discount Programs Search View -->
-        <record id="view_discount_programs_search" model="ocean.ui.view">
+        <record id="view_discount_programs_search" model="ir.ui.view">
             <field name="name">discount.programs.search</field>
             <field name="model">discount.program</field>
             <field name="arch" type="xml">
@@ -242,7 +242,7 @@
         </record>
         
         <!-- Discount Programs Action -->
-        <record id="action_discount_programs" model="ocean.actions.act_window">
+        <record id="action_discount_programs" model="ir.actions.act_window">
             <field name="name">Discount Programs</field>
             <field name="res_model">discount.program</field>
             <field name="view_mode">tree,form</field>

@@ -2,7 +2,7 @@
 <ocean>
     <data>
         <!-- CRM Activities Tree View -->
-        <record id="view_crm_activities_tree" model="ocean.ui.view">
+        <record id="view_crm_activities_tree" model="ir.ui.view">
             <field name="name">crm.activities.tree</field>
             <field name="model">crm.activity</field>
             <field name="arch" type="xml">
@@ -20,7 +20,7 @@
         </record>
         
         <!-- CRM Activities Form View -->
-        <record id="view_crm_activities_form" model="ocean.ui.view">
+        <record id="view_crm_activities_form" model="ir.ui.view">
             <field name="name">crm.activities.form</field>
             <field name="model">crm.activity</field>
             <field name="arch" type="xml">
@@ -87,7 +87,7 @@
         </record>
         
         <!-- CRM Activities Search View -->
-        <record id="view_crm_activities_search" model="ocean.ui.view">
+        <record id="view_crm_activities_search" model="ir.ui.view">
             <field name="name">crm.activities.search</field>
             <field name="model">crm.activity</field>
             <field name="arch" type="xml">
@@ -152,7 +152,7 @@
         </record>
         
         <!-- CRM Activities Action -->
-        <record id="action_crm_activities" model="ocean.actions.act_window">
+        <record id="action_crm_activities" model="ir.actions.act_window">
             <field name="name">CRM Activities</field>
             <field name="res_model">crm.activity</field>
             <field name="view_mode">tree,form</field>

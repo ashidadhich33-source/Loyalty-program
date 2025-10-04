@@ -2,7 +2,7 @@
 <ocean>
     <data>
         <!-- CRM Communications Tree View -->
-        <record id="view_crm_communications_tree" model="ocean.ui.view">
+        <record id="view_crm_communications_tree" model="ir.ui.view">
             <field name="name">crm.communications.tree</field>
             <field name="model">crm.communication</field>
             <field name="arch" type="xml">
@@ -21,7 +21,7 @@
         </record>
         
         <!-- CRM Communications Form View -->
-        <record id="view_crm_communications_form" model="ocean.ui.view">
+        <record id="view_crm_communications_form" model="ir.ui.view">
             <field name="name">crm.communications.form</field>
             <field name="model">crm.communication</field>
             <field name="arch" type="xml">
@@ -90,7 +90,7 @@
         </record>
         
         <!-- CRM Communications Search View -->
-        <record id="view_crm_communications_search" model="ocean.ui.view">
+        <record id="view_crm_communications_search" model="ir.ui.view">
             <field name="name">crm.communications.search</field>
             <field name="model">crm.communication</field>
             <field name="arch" type="xml">
@@ -160,7 +160,7 @@
         </record>
         
         <!-- CRM Communications Action -->
-        <record id="action_crm_communications" model="ocean.actions.act_window">
+        <record id="action_crm_communications" model="ir.actions.act_window">
             <field name="name">CRM Communications</field>
             <field name="res_model">crm.communication</field>
             <field name="view_mode">tree,form</field>

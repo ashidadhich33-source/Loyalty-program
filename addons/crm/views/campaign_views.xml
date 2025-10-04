@@ -2,7 +2,7 @@
 <ocean>
     <data>
         <!-- CRM Campaigns Tree View -->
-        <record id="view_crm_campaigns_tree" model="ocean.ui.view">
+        <record id="view_crm_campaigns_tree" model="ir.ui.view">
             <field name="name">crm.campaigns.tree</field>
             <field name="model">crm.campaign</field>
             <field name="arch" type="xml">
@@ -20,7 +20,7 @@
         </record>
         
         <!-- CRM Campaigns Form View -->
-        <record id="view_crm_campaigns_form" model="ocean.ui.view">
+        <record id="view_crm_campaigns_form" model="ir.ui.view">
             <field name="name">crm.campaigns.form</field>
             <field name="model">crm.campaign</field>
             <field name="arch" type="xml">
@@ -73,7 +73,7 @@
         </record>
         
         <!-- CRM Campaigns Search View -->
-        <record id="view_crm_campaigns_search" model="ocean.ui.view">
+        <record id="view_crm_campaigns_search" model="ir.ui.view">
             <field name="name">crm.campaigns.search</field>
             <field name="model">crm.campaign</field>
             <field name="arch" type="xml">
@@ -137,7 +137,7 @@
         </record>
         
         <!-- CRM Campaigns Action -->
-        <record id="action_crm_campaigns" model="ocean.actions.act_window">
+        <record id="action_crm_campaigns" model="ir.actions.act_window">
             <field name="name">CRM Campaigns</field>
             <field name="res_model">crm.campaign</field>
             <field name="view_mode">tree,form</field>

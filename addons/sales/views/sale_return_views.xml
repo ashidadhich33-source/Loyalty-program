@@ -2,7 +2,7 @@
 <ocean>
     <data>
         <!-- Sale Returns Tree View -->
-        <record id="view_sale_returns_tree" model="ocean.ui.view">
+        <record id="view_sale_returns_tree" model="ir.ui.view">
             <field name="name">sale.returns.tree</field>
             <field name="model">sale.return</field>
             <field name="arch" type="xml">
@@ -22,7 +22,7 @@
         </record>
         
         <!-- Sale Returns Form View -->
-        <record id="view_sale_returns_form" model="ocean.ui.view">
+        <record id="view_sale_returns_form" model="ir.ui.view">
             <field name="name">sale.returns.form</field>
             <field name="model">sale.return</field>
             <field name="arch" type="xml">
@@ -107,7 +107,7 @@
         </record>
         
         <!-- Sale Returns Search View -->
-        <record id="view_sale_returns_search" model="ocean.ui.view">
+        <record id="view_sale_returns_search" model="ir.ui.view">
             <field name="name">sale.returns.search</field>
             <field name="model">sale.return</field>
             <field name="arch" type="xml">
@@ -162,7 +162,7 @@
         </record>
         
         <!-- Sale Returns Action -->
-        <record id="action_sale_returns" model="ocean.actions.act_window">
+        <record id="action_sale_returns" model="ir.actions.act_window">
             <field name="name">Sale Returns</field>
             <field name="res_model">sale.return</field>
             <field name="view_mode">tree,form</field>

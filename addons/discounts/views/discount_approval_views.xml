@@ -2,7 +2,7 @@
 <ocean>
     <data>
         <!-- Discount Approval Workflows Tree View -->
-        <record id="view_discount_approval_workflows_tree" model="ocean.ui.view">
+        <record id="view_discount_approval_workflows_tree" model="ir.ui.view">
             <field name="name">discount.approval.workflows.tree</field>
             <field name="model">discount.approval.workflow</field>
             <field name="arch" type="xml">
@@ -29,7 +29,7 @@
         </record>
         
         <!-- Discount Approval Workflows Form View -->
-        <record id="view_discount_approval_workflows_form" model="ocean.ui.view">
+        <record id="view_discount_approval_workflows_form" model="ir.ui.view">
             <field name="name">discount.approval.workflows.form</field>
             <field name="model">discount.approval.workflow</field>
             <field name="arch" type="xml">
@@ -106,7 +106,7 @@
         </record>
         
         <!-- Discount Approval Workflows Search View -->
-        <record id="view_discount_approval_workflows_search" model="ocean.ui.view">
+        <record id="view_discount_approval_workflows_search" model="ir.ui.view">
             <field name="name">discount.approval.workflows.search</field>
             <field name="model">discount.approval.workflow</field>
             <field name="arch" type="xml">
@@ -159,7 +159,7 @@
         </record>
         
         <!-- Discount Approval Workflows Action -->
-        <record id="action_discount_approval_workflows" model="ocean.actions.act_window">
+        <record id="action_discount_approval_workflows" model="ir.actions.act_window">
             <field name="name">Discount Approval Workflows</field>
             <field name="res_model">discount.approval.workflow</field>
             <field name="view_mode">tree,form</field>
@@ -169,7 +169,7 @@
         </record>
         
         <!-- Discount Approval Requests Tree View -->
-        <record id="view_discount_approval_requests_tree" model="ocean.ui.view">
+        <record id="view_discount_approval_requests_tree" model="ir.ui.view">
             <field name="name">discount.approval.requests.tree</field>
             <field name="model">discount.approval.request</field>
             <field name="arch" type="xml">
@@ -203,7 +203,7 @@
         </record>
         
         <!-- Discount Approval Requests Form View -->
-        <record id="view_discount_approval_requests_form" model="ocean.ui.view">
+        <record id="view_discount_approval_requests_form" model="ir.ui.view">
             <field name="name">discount.approval.requests.form</field>
             <field name="model">discount.approval.request</field>
             <field name="arch" type="xml">
@@ -269,7 +269,7 @@
         </record>
         
         <!-- Discount Approval Requests Search View -->
-        <record id="view_discount_approval_requests_search" model="ocean.ui.view">
+        <record id="view_discount_approval_requests_search" model="ir.ui.view">
             <field name="name">discount.approval.requests.search</field>
             <field name="model">discount.approval.request</field>
             <field name="arch" type="xml">
@@ -340,7 +340,7 @@
         </record>
         
         <!-- Discount Approval Requests Action -->
-        <record id="action_discount_approval_requests" model="ocean.actions.act_window">
+        <record id="action_discount_approval_requests" model="ir.actions.act_window">
             <field name="name">Discount Approval Requests</field>
             <field name="res_model">discount.approval.request</field>
             <field name="view_mode">tree,form</field>

@@ -2,7 +2,7 @@
 <ocean>
     <data>
         <!-- Databases Tree View -->
-        <record id="view_databases_tree" model="ocean.ui.view">
+        <record id="view_databases_tree" model="ir.ui.view">
             <field name="name">databases.tree</field>
             <field name="model">database.info</field>
             <field name="arch" type="xml">
@@ -25,7 +25,7 @@
         </record>
         
         <!-- Databases Form View -->
-        <record id="view_databases_form" model="ocean.ui.view">
+        <record id="view_databases_form" model="ir.ui.view">
             <field name="name">databases.form</field>
             <field name="model">database.info</field>
             <field name="arch" type="xml">
@@ -182,7 +182,7 @@
         </record>
         
         <!-- Databases Search View -->
-        <record id="view_databases_search" model="ocean.ui.view">
+        <record id="view_databases_search" model="ir.ui.view">
             <field name="name">databases.search</field>
             <field name="model">database.info</field>
             <field name="arch" type="xml">
@@ -218,7 +218,7 @@
         </record>
         
         <!-- Databases Action -->
-        <record id="action_databases" model="ocean.actions.act_window">
+        <record id="action_databases" model="ir.actions.act_window">
             <field name="name">Databases</field>
             <field name="res_model">database.info</field>
             <field name="view_mode">tree,form</field>
@@ -228,7 +228,7 @@
         </record>
         
         <!-- Database Analytics View -->
-        <record id="view_database_analytics" model="ocean.ui.view">
+        <record id="view_database_analytics" model="ir.ui.view">
             <field name="name">database.analytics</field>
             <field name="model">database.info</field>
             <field name="arch" type="xml">
@@ -280,7 +280,7 @@
         </record>
         
         <!-- Database Analytics Action -->
-        <record id="action_database_analytics" model="ocean.actions.act_window">
+        <record id="action_database_analytics" model="ir.actions.act_window">
             <field name="name">Database Analytics</field>
             <field name="res_model">database.info</field>
             <field name="view_mode">form</field>

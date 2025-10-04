@@ -2,7 +2,7 @@
 <ocean>
     <data>
         <!-- Loyalty Points Tree View -->
-        <record id="view_loyalty_points_tree" model="ocean.ui.view">
+        <record id="view_loyalty_points_tree" model="ir.ui.view">
             <field name="name">loyalty.points.tree</field>
             <field name="model">loyalty.points</field>
             <field name="arch" type="xml">
@@ -25,7 +25,7 @@
         </record>
         
         <!-- Loyalty Points Form View -->
-        <record id="view_loyalty_points_form" model="ocean.ui.view">
+        <record id="view_loyalty_points_form" model="ir.ui.view">
             <field name="name">loyalty.points.form</field>
             <field name="model">loyalty.points</field>
             <field name="arch" type="xml">
@@ -76,7 +76,7 @@
         </record>
         
         <!-- Loyalty Points Search View -->
-        <record id="view_loyalty_points_search" model="ocean.ui.view">
+        <record id="view_loyalty_points_search" model="ir.ui.view">
             <field name="name">loyalty.points.search</field>
             <field name="model">loyalty.points</field>
             <field name="arch" type="xml">
@@ -143,7 +143,7 @@
         </record>
         
         <!-- Loyalty Points Action -->
-        <record id="action_loyalty_points" model="ocean.actions.act_window">
+        <record id="action_loyalty_points" model="ir.actions.act_window">
             <field name="name">Loyalty Points</field>
             <field name="res_model">loyalty.points</field>
             <field name="view_mode">tree,form</field>
@@ -152,7 +152,7 @@
         </record>
         
         <!-- Loyalty Points Balance Tree View -->
-        <record id="view_loyalty_points_balance_tree" model="ocean.ui.view">
+        <record id="view_loyalty_points_balance_tree" model="ir.ui.view">
             <field name="name">loyalty.points.balance.tree</field>
             <field name="model">loyalty.points.balance</field>
             <field name="arch" type="xml">
@@ -172,7 +172,7 @@
         </record>
         
         <!-- Loyalty Points Balance Form View -->
-        <record id="view_loyalty_points_balance_form" model="ocean.ui.view">
+        <record id="view_loyalty_points_balance_form" model="ir.ui.view">
             <field name="name">loyalty.points.balance.form</field>
             <field name="model">loyalty.points.balance</field>
             <field name="arch" type="xml">
@@ -207,7 +207,7 @@
         </record>
         
         <!-- Loyalty Points Balance Search View -->
-        <record id="view_loyalty_points_balance_search" model="ocean.ui.view">
+        <record id="view_loyalty_points_balance_search" model="ir.ui.view">
             <field name="name">loyalty.points.balance.search</field>
             <field name="model">loyalty.points.balance</field>
             <field name="arch" type="xml">
@@ -232,7 +232,7 @@
         </record>
         
         <!-- Loyalty Points Balance Action -->
-        <record id="action_loyalty_points_balance" model="ocean.actions.act_window">
+        <record id="action_loyalty_points_balance" model="ir.actions.act_window">
             <field name="name">Loyalty Points Balance</field>
             <field name="res_model">loyalty.points.balance</field>
             <field name="view_mode">tree,form</field>

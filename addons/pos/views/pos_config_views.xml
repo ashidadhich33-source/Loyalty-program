@@ -1,6 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ocean>
     <data>
-        <!-- POS Configuration views will be generated -->
+        
+        <!-- POS Configuration Tree View -->
+        <record id="view_pos_config_tree" model="ir.ui.view">
+            <field name="name">pos.config.tree</field>
+            <field name="model">pos.config</field>
+            <field name="arch" type="xml">
+                <tree string="POS Configurations" create="true" edit="true" delete="true">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="company_id"/>
+                    <field name="warehouse_id"/>
+                    <field name="is_active"/>
+                    <field name="is_default"/>
+                    <field name="session_state"/>
+                    <field name="current_session_id"/>
+                    <field name="total_sales"/>
+                    <field name="total_orders"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- POS Configuration Form View -->
+        <record id="view_pos_config_form" model="ir.ui.view">
+            <field name="name">pos.config.form</field>
+            <field name="model">pos.config</field>
+            <field name="arch" type="xml">
+                <form string="POS Configuration" create="true" edit="true" delete="true">
+                    <header>
+                        <button name="action_start_session" string="Start Session" type="object" class="btn-success" attrs="{'invisible': [('session_state', '!=', 'closed')]}"/>
+                        <button name="action_close_session" string="Close Session" type="object" class="btn-warning" attrs="{'invisible': [('session_state', '!=', 'opened')]}"/>
+                        <button name="action_view_orders" string="View Orders" type="object" class="btn-primary"/>
+                        <button name="action_view_payments" string="View Payments" type="object" class="btn-secondary"/>
+                        <field name="session_state" widget="statusbar" statusbar_visible="closed,opened"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="get_pos_dashboard_data" string="Dashboard" type="object" class="oe_stat_button" icon="fa-dashboard"/>
+                            <button name="action_view_orders" string="Orders" type="object" class="oe_stat_button" icon="fa-shopping-cart"/>
+                            <button name="action_view_payments" string="Payments" type="object" class="oe_stat_button" icon="fa-credit-card"/>
+                        </div>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="POS Configuration Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="code"/>
+                                <field name="company_id"/>
+                                <field name="warehouse_id"/>
+                                <field name="is_active"/>
+                                <field name="is_default"/>
+                            </group>
+                            <group>
+                                <field name="session_state"/>
+                                <field name="current_session_id"/>
+                                <field name="total_sales"/>
+                                <field name="total_orders"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Configuration" name="config">
+                                <group>
+                                    <group>
+                                        <field name="allow_price_change"/>
+                                        <field name="allow_discount"/>
+                                        <field name="allow_negative_qty"/>
+                                        <field name="allow_return"/>
+                                    </group>
+                                    <group>
+                                        <field name="require_customer"/>
+                                        <field name="require_payment"/>
+                                        <field name="auto_validate"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Notes" name="notes">
+                                <field name="note" placeholder="Configuration notes..."/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- POS Configuration Search View -->
+        <record id="view_pos_config_search" model="ir.ui.view">
+            <field name="name">pos.config.search</field>
+            <field name="model">pos.config</field>
+            <field name="arch" type="xml">
+                <search string="Search POS Configurations">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="company_id"/>
+                    <field name="warehouse_id"/>
+                    <separator/>
+                    <filter string="Active" name="active" domain="[('is_active', '=', True)]"/>
+                    <filter string="Inactive" name="inactive" domain="[('is_active', '=', False)]"/>
+                    <filter string="Default" name="default" domain="[('is_default', '=', True)]"/>
+                    <separator/>
+                    <filter string="Session Open" name="session_open" domain="[('session_state', '=', 'opened')]"/>
+                    <filter string="Session Closed" name="session_closed" domain="[('session_state', '=', 'closed')]"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter string="Company" name="group_company" context="{'group_by': 'company_id'}"/>
+                        <filter string="Warehouse" name="group_warehouse" context="{'group_by': 'warehouse_id'}"/>
+                        <filter string="Session State" name="group_session_state" context="{'group_by': 'session_state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- POS Configuration Action -->
+        <record id="action_pos_config" model="ir.actions.act_window">
+            <field name="name">POS Configurations</field>
+            <field name="res_model">pos.config</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_pos_config_search"/>
+            <field name="context">{'search_default_active': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first POS configuration
+                </p>
+                <p>
+                    POS configurations define how your point of sale system operates.
+                </p>
+            </field>
+        </record>
+        
     </data>
 </ocean>

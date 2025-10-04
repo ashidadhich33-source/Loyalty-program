@@ -2,7 +2,7 @@
 <ocean>
     <data>
         <!-- Loyalty Offers Tree View -->
-        <record id="view_loyalty_offers_tree" model="ocean.ui.view">
+        <record id="view_loyalty_offers_tree" model="ir.ui.view">
             <field name="name">loyalty.offers.tree</field>
             <field name="model">loyalty.offer</field>
             <field name="arch" type="xml">
@@ -37,7 +37,7 @@
         </record>
         
         <!-- Loyalty Offers Form View -->
-        <record id="view_loyalty_offers_form" model="ocean.ui.view">
+        <record id="view_loyalty_offers_form" model="ir.ui.view">
             <field name="name">loyalty.offers.form</field>
             <field name="model">loyalty.offer</field>
             <field name="arch" type="xml">
@@ -135,7 +135,7 @@
         </record>
         
         <!-- Loyalty Offers Search View -->
-        <record id="view_loyalty_offers_search" model="ocean.ui.view">
+        <record id="view_loyalty_offers_search" model="ir.ui.view">
             <field name="name">loyalty.offers.search</field>
             <field name="model">loyalty.offer</field>
             <field name="arch" type="xml">
@@ -213,7 +213,7 @@
         </record>
         
         <!-- Loyalty Offers Action -->
-        <record id="action_loyalty_offers" model="ocean.actions.act_window">
+        <record id="action_loyalty_offers" model="ir.actions.act_window">
             <field name="name">Loyalty Offers</field>
             <field name="res_model">loyalty.offer</field>
             <field name="view_mode">tree,form</field>

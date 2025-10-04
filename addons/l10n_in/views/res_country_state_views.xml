@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Res Country State Tree View -->
+        <record id="view_res_country_state_tree" model="ocean.ui.view">
+            <field name="name">res.country.state.tree</field>
+            <field name="model">res.country.state</field>
+            <field name="arch" type="xml">
+                <tree string="States" create="true" edit="true" delete="true">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="state_type"/>
+                    <field name="capital"/>
+                    <field name="population"/>
+                    <field name="area"/>
+                    <field name="age_group"/>
+                    <field name="size"/>
+                    <field name="season"/>
+                    <field name="brand"/>
+                    <field name="color"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Res Country State Form View -->
+        <record id="view_res_country_state_form" model="ocean.ui.view">
+            <field name="name">res.country.state.form</field>
+            <field name="model">res.country.state</field>
+            <field name="arch" type="xml">
+                <form string="State" create="true" edit="true" delete="true">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="State Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="code"/>
+                                <field name="state_type"/>
+                                <field name="capital"/>
+                                <field name="country_id"/>
+                            </group>
+                            <group>
+                                <field name="population"/>
+                                <field name="area"/>
+                                <field name="active"/>
+                            </group>
+                        </group>
+                        <group string="Kids Clothing Specific">
+                            <group>
+                                <field name="age_group"/>
+                                <field name="size"/>
+                                <field name="season"/>
+                            </group>
+                            <group>
+                                <field name="brand"/>
+                                <field name="color"/>
+                            </group>
+                        </group>
+                        <group string="Notes">
+                            <field name="notes"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Res Country State Action -->
+        <record id="action_res_country_state" model="ocean.actions.act_window">
+            <field name="name">States</field>
+            <field name="res_model">res.country.state</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'search_default_active': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first state!
+                </p>
+                <p>
+                    States are administrative divisions of countries.
+                </p>
+            </field>
+        </record>
+        
+        <!-- Res Country District Tree View -->
+        <record id="view_res_country_district_tree" model="ocean.ui.view">
+            <field name="name">res.country.district.tree</field>
+            <field name="model">res.country.district</field>
+            <field name="arch" type="xml">
+                <tree string="Districts" create="true" edit="true" delete="true">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="state_id"/>
+                    <field name="district_type"/>
+                    <field name="headquarters"/>
+                    <field name="population"/>
+                    <field name="area"/>
+                    <field name="age_group"/>
+                    <field name="size"/>
+                    <field name="season"/>
+                    <field name="brand"/>
+                    <field name="color"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Res Country District Form View -->
+        <record id="view_res_country_district_form" model="ocean.ui.view">
+            <field name="name">res.country.district.form</field>
+            <field name="model">res.country.district</field>
+            <field name="arch" type="xml">
+                <form string="District" create="true" edit="true" delete="true">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="District Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="code"/>
+                                <field name="state_id"/>
+                                <field name="district_type"/>
+                                <field name="headquarters"/>
+                            </group>
+                            <group>
+                                <field name="population"/>
+                                <field name="area"/>
+                                <field name="active"/>
+                            </group>
+                        </group>
+                        <group string="Kids Clothing Specific">
+                            <group>
+                                <field name="age_group"/>
+                                <field name="size"/>
+                                <field name="season"/>
+                            </group>
+                            <group>
+                                <field name="brand"/>
+                                <field name="color"/>
+                            </group>
+                        </group>
+                        <group string="Notes">
+                            <field name="notes"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Res Country District Action -->
+        <record id="action_res_country_district" model="ocean.actions.act_window">
+            <field name="name">Districts</field>
+            <field name="res_model">res.country.district</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'search_default_active': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first district!
+                </p>
+                <p>
+                    Districts are administrative divisions of states.
+                </p>
+            </field>
+        </record>
+        
+        <!-- Res Country Taluka Tree View -->
+        <record id="view_res_country_taluka_tree" model="ocean.ui.view">
+            <field name="name">res.country.taluka.tree</field>
+            <field name="model">res.country.taluka</field>
+            <field name="arch" type="xml">
+                <tree string="Talukas" create="true" edit="true" delete="true">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="district_id"/>
+                    <field name="taluka_type"/>
+                    <field name="headquarters"/>
+                    <field name="population"/>
+                    <field name="area"/>
+                    <field name="age_group"/>
+                    <field name="size"/>
+                    <field name="season"/>
+                    <field name="brand"/>
+                    <field name="color"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Res Country Taluka Form View -->
+        <record id="view_res_country_taluka_form" model="ocean.ui.view">
+            <field name="name">res.country.taluka.form</field>
+            <field name="model">res.country.taluka</field>
+            <field name="arch" type="xml">
+                <form string="Taluka" create="true" edit="true" delete="true">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Taluka Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="code"/>
+                                <field name="district_id"/>
+                                <field name="taluka_type"/>
+                                <field name="headquarters"/>
+                            </group>
+                            <group>
+                                <field name="population"/>
+                                <field name="area"/>
+                                <field name="active"/>
+                            </group>
+                        </group>
+                        <group string="Kids Clothing Specific">
+                            <group>
+                                <field name="age_group"/>
+                                <field name="size"/>
+                                <field name="season"/>
+                            </group>
+                            <group>
+                                <field name="brand"/>
+                                <field name="color"/>
+                            </group>
+                        </group>
+                        <group string="Notes">
+                            <field name="notes"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Res Country Taluka Action -->
+        <record id="action_res_country_taluka" model="ocean.actions.act_window">
+            <field name="name">Talukas</field>
+            <field name="res_model">res.country.taluka</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'search_default_active': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first taluka!
+                </p>
+                <p>
+                    Talukas are administrative divisions of districts.
+                </p>
+            </field>
+        </record>
+        
+        <!-- Res Country Village Tree View -->
+        <record id="view_res_country_village_tree" model="ocean.ui.view">
+            <field name="name">res.country.village.tree</field>
+            <field name="model">res.country.village</field>
+            <field name="arch" type="xml">
+                <tree string="Villages" create="true" edit="true" delete="true">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="taluka_id"/>
+                    <field name="village_type"/>
+                    <field name="population"/>
+                    <field name="area"/>
+                    <field name="pincode"/>
+                    <field name="age_group"/>
+                    <field name="size"/>
+                    <field name="season"/>
+                    <field name="brand"/>
+                    <field name="color"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Res Country Village Form View -->
+        <record id="view_res_country_village_form" model="ocean.ui.view">
+            <field name="name">res.country.village.form</field>
+            <field name="model">res.country.village</field>
+            <field name="arch" type="xml">
+                <form string="Village" create="true" edit="true" delete="true">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Village Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="code"/>
+                                <field name="taluka_id"/>
+                                <field name="village_type"/>
+                                <field name="pincode"/>
+                            </group>
+                            <group>
+                                <field name="population"/>
+                                <field name="area"/>
+                                <field name="active"/>
+                            </group>
+                        </group>
+                        <group string="Kids Clothing Specific">
+                            <group>
+                                <field name="age_group"/>
+                                <field name="size"/>
+                                <field name="season"/>
+                            </group>
+                            <group>
+                                <field name="brand"/>
+                                <field name="color"/>
+                            </group>
+                        </group>
+                        <group string="Notes">
+                            <field name="notes"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Res Country Village Action -->
+        <record id="action_res_country_village" model="ocean.actions.act_window">
+            <field name="name">Villages</field>
+            <field name="res_model">res.country.village</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'search_default_active': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first village!
+                </p>
+                <p>
+                    Villages are the smallest administrative divisions.
+                </p>
+            </field>
+        </record>
+        
+    </data>
+</ocean>

@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Indian Banks -->
+        <record id="bank_sbi" model="res.bank">
+            <field name="name">State Bank of India</field>
+            <field name="bank_type">public_sector</field>
+            <field name="ifsc_code">SBIN0000001</field>
+            <field name="micr_code">400002001</field>
+            <field name="swift_code">SBININBB</field>
+            <field name="street">State Bank Bhavan</field>
+            <field name="city">Mumbai</field>
+            <field name="state_id" ref="state_maharashtra"/>
+            <field name="zip">400021</field>
+            <field name="country_id" ref="base.in"/>
+            <field name="age_group">all</field>
+            <field name="size">all</field>
+            <field name="season">all_season</field>
+            <field name="brand">SBI Brand</field>
+            <field name="color">Blue</field>
+        </record>
+        
+        <record id="bank_hdfc" model="res.bank">
+            <field name="name">HDFC Bank</field>
+            <field name="bank_type">private_sector</field>
+            <field name="ifsc_code">HDFC0000001</field>
+            <field name="micr_code">400240001</field>
+            <field name="swift_code">HDFCINBB</field>
+            <field name="street">HDFC Bank House</field>
+            <field name="city">Mumbai</field>
+            <field name="state_id" ref="state_maharashtra"/>
+            <field name="zip">400051</field>
+            <field name="country_id" ref="base.in"/>
+            <field name="age_group">all</field>
+            <field name="size">all</field>
+            <field name="season">all_season</field>
+            <field name="brand">HDFC Brand</field>
+            <field name="color">Red</field>
+        </record>
+        
+        <record id="bank_icici" model="res.bank">
+            <field name="name">ICICI Bank</field>
+            <field name="bank_type">private_sector</field>
+            <field name="ifsc_code">ICIC0000001</field>
+            <field name="micr_code">400229001</field>
+            <field name="swift_code">ICICINBB</field>
+            <field name="street">ICICI Bank Towers</field>
+            <field name="city">Mumbai</field>
+            <field name="state_id" ref="state_maharashtra"/>
+            <field name="zip">400001</field>
+            <field name="country_id" ref="base.in"/>
+            <field name="age_group">all</field>
+            <field name="size">all</field>
+            <field name="season">all_season</field>
+            <field name="brand">ICICI Brand</field>
+            <field name="color">Orange</field>
+        </record>
+        
+        <record id="bank_axis" model="res.bank">
+            <field name="name">Axis Bank</field>
+            <field name="bank_type">private_sector</field>
+            <field name="ifsc_code">UTIB0000001</field>
+            <field name="micr_code">400211001</field>
+            <field name="swift_code">AXISINBB</field>
+            <field name="street">Axis House</field>
+            <field name="city">Mumbai</field>
+            <field name="state_id" ref="state_maharashtra"/>
+            <field name="zip">400013</field>
+            <field name="country_id" ref="base.in"/>
+            <field name="age_group">all</field>
+            <field name="size">all</field>
+            <field name="season">all_season</field>
+            <field name="brand">Axis Brand</field>
+            <field name="color">Red</field>
+        </record>
+        
+        <record id="bank_kotak" model="res.bank">
+            <field name="name">Kotak Mahindra Bank</field>
+            <field name="bank_type">private_sector</field>
+            <field name="ifsc_code">KKBK0000001</field>
+            <field name="micr_code">400485001</field>
+            <field name="swift_code">KKBKINBB</field>
+            <field name="street">Kotak Mahindra Bank</field>
+            <field name="city">Mumbai</field>
+            <field name="state_id" ref="state_maharashtra"/>
+            <field name="zip">400051</field>
+            <field name="country_id" ref="base.in"/>
+            <field name="age_group">all</field>
+            <field name="size">all</field>
+            <field name="season">all_season</field>
+            <field name="brand">Kotak Brand</field>
+            <field name="color">Blue</field>
+        </record>
+        
+        <record id="bank_pnb" model="res.bank">
+            <field name="name">Punjab National Bank</field>
+            <field name="bank_type">public_sector</field>
+            <field name="ifsc_code">PUNB0000001</field>
+            <field name="micr_code">110024001</field>
+            <field name="swift_code">PUNBINBB</field>
+            <field name="street">PNB House</field>
+            <field name="city">New Delhi</field>
+            <field name="state_id" ref="state_delhi"/>
+            <field name="zip">110001</field>
+            <field name="country_id" ref="base.in"/>
+            <field name="age_group">all</field>
+            <field name="size">all</field>
+            <field name="season">all_season</field>
+            <field name="brand">PNB Brand</field>
+            <field name="color">Green</field>
+        </record>
+        
+        <record id="bank_bob" model="res.bank">
+            <field name="name">Bank of Baroda</field>
+            <field name="bank_type">public_sector</field>
+            <field name="ifsc_code">BARB0000001</field>
+            <field name="micr_code">390012001</field>
+            <field name="swift_code">BARBINBB</field>
+            <field name="street">Baroda Corporate Centre</field>
+            <field name="city">Vadodara</field>
+            <field name="state_id" ref="state_gujarat"/>
+            <field name="zip">390007</field>
+            <field name="country_id" ref="base.in"/>
+            <field name="age_group">all</field>
+            <field name="size">all</field>
+            <field name="season">all_season</field>
+            <field name="brand">BOB Brand</field>
+            <field name="color">Red</field>
+        </record>
+        
+        <record id="bank_canara" model="res.bank">
+            <field name="name">Canara Bank</field>
+            <field name="bank_type">public_sector</field>
+            <field name="ifsc_code">CNRB0000001</field>
+            <field name="micr_code">560015001</field>
+            <field name="swift_code">CNRBINBB</field>
+            <field name="street">Canara Bank</field>
+            <field name="city">Bangalore</field>
+            <field name="state_id" ref="state_karnataka"/>
+            <field name="zip">560001</field>
+            <field name="country_id" ref="base.in"/>
+            <field name="age_group">all</field>
+            <field name="size">all</field>
+            <field name="season">all_season</field>
+            <field name="brand">Canara Brand</field>
+            <field name="color">Yellow</field>
+        </record>
+        
+        <record id="bank_union" model="res.bank">
+            <field name="name">Union Bank of India</field>
+            <field name="bank_type">public_sector</field>
+            <field name="ifsc_code">UBIN0000001</field>
+            <field name="micr_code">400026001</field>
+            <field name="swift_code">UBININBB</field>
+            <field name="street">Union Bank Bhavan</field>
+            <field name="city">Mumbai</field>
+            <field name="state_id" ref="state_maharashtra"/>
+            <field name="zip">400001</field>
+            <field name="country_id" ref="base.in"/>
+            <field name="age_group">all</field>
+            <field name="size">all</field>
+            <field name="season">all_season</field>
+            <field name="brand">Union Brand</field>
+            <field name="color">Blue</field>
+        </record>
+        
+        <record id="bank_indian" model="res.bank">
+            <field name="name">Indian Bank</field>
+            <field name="bank_type">public_sector</field>
+            <field name="ifsc_code">IDIB0000001</field>
+            <field name="micr_code">600002001</field>
+            <field name="swift_code">IDIBINBB</field>
+            <field name="street">Indian Bank</field>
+            <field name="city">Chennai</field>
+            <field name="state_id" ref="state_tamil_nadu"/>
+            <field name="zip">600001</field>
+            <field name="country_id" ref="base.in"/>
+            <field name="age_group">all</field>
+            <field name="size">all</field>
+            <field name="season">all_season</field>
+            <field name="brand">Indian Brand</field>
+            <field name="color">Red</field>
+        </record>
+        
+    </data>
+</ocean>

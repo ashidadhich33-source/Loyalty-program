@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Res Bank Tree View -->
+        <record id="view_res_bank_tree" model="ocean.ui.view">
+            <field name="name">res.bank.tree</field>
+            <field name="model">res.bank</field>
+            <field name="arch" type="xml">
+                <tree string="Banks" create="true" edit="true" delete="true">
+                    <field name="name"/>
+                    <field name="bank_type"/>
+                    <field name="ifsc_code"/>
+                    <field name="micr_code"/>
+                    <field name="swift_code"/>
+                    <field name="age_group"/>
+                    <field name="size"/>
+                    <field name="season"/>
+                    <field name="brand"/>
+                    <field name="color"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Res Bank Form View -->
+        <record id="view_res_bank_form" model="ocean.ui.view">
+            <field name="name">res.bank.form</field>
+            <field name="model">res.bank</field>
+            <field name="arch" type="xml">
+                <form string="Bank" create="true" edit="true" delete="true">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Bank Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="bank_type"/>
+                                <field name="ifsc_code"/>
+                                <field name="micr_code"/>
+                                <field name="swift_code"/>
+                            </group>
+                            <group>
+                                <field name="active"/>
+                            </group>
+                        </group>
+                        <group string="Address Information">
+                            <group>
+                                <field name="street"/>
+                                <field name="street2"/>
+                                <field name="city"/>
+                                <field name="state_id"/>
+                            </group>
+                            <group>
+                                <field name="zip"/>
+                                <field name="country_id"/>
+                            </group>
+                        </group>
+                        <group string="Kids Clothing Specific">
+                            <group>
+                                <field name="age_group"/>
+                                <field name="size"/>
+                                <field name="season"/>
+                            </group>
+                            <group>
+                                <field name="brand"/>
+                                <field name="color"/>
+                            </group>
+                        </group>
+                        <group string="Notes">
+                            <field name="notes"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Res Bank Action -->
+        <record id="action_res_bank" model="ocean.actions.act_window">
+            <field name="name">Banks</field>
+            <field name="res_model">res.bank</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'search_default_active': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first bank!
+                </p>
+                <p>
+                    Banks are financial institutions for banking services.
+                </p>
+            </field>
+        </record>
+        
+        <!-- Res Bank Branch Tree View -->
+        <record id="view_res_bank_branch_tree" model="ocean.ui.view">
+            <field name="name">res.bank.branch.tree</field>
+            <field name="model">res.bank.branch</field>
+            <field name="arch" type="xml">
+                <tree string="Bank Branches" create="true" edit="true" delete="true">
+                    <field name="name"/>
+                    <field name="bank_id"/>
+                    <field name="branch_type"/>
+                    <field name="ifsc_code"/>
+                    <field name="micr_code"/>
+                    <field name="age_group"/>
+                    <field name="size"/>
+                    <field name="season"/>
+                    <field name="brand"/>
+                    <field name="color"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Res Bank Branch Form View -->
+        <record id="view_res_bank_branch_form" model="ocean.ui.view">
+            <field name="name">res.bank.branch.form</field>
+            <field name="model">res.bank.branch</field>
+            <field name="arch" type="xml">
+                <form string="Bank Branch" create="true" edit="true" delete="true">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Branch Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="bank_id"/>
+                                <field name="branch_type"/>
+                                <field name="ifsc_code"/>
+                                <field name="micr_code"/>
+                            </group>
+                            <group>
+                                <field name="active"/>
+                            </group>
+                        </group>
+                        <group string="Address Information">
+                            <group>
+                                <field name="street"/>
+                                <field name="street2"/>
+                                <field name="city"/>
+                                <field name="state_id"/>
+                            </group>
+                            <group>
+                                <field name="zip"/>
+                                <field name="country_id"/>
+                            </group>
+                        </group>
+                        <group string="Kids Clothing Specific">
+                            <group>
+                                <field name="age_group"/>
+                                <field name="size"/>
+                                <field name="season"/>
+                            </group>
+                            <group>
+                                <field name="brand"/>
+                                <field name="color"/>
+                            </group>
+                        </group>
+                        <group string="Notes">
+                            <field name="notes"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Res Bank Branch Action -->
+        <record id="action_res_bank_branch" model="ocean.actions.act_window">
+            <field name="name">Bank Branches</field>
+            <field name="res_model">res.bank.branch</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'search_default_active': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first bank branch!
+                </p>
+                <p>
+                    Bank branches are local offices of banks.
+                </p>
+            </field>
+        </record>
+        
+    </data>
+</ocean>

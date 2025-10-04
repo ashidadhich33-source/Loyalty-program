@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Indian States -->
+        <record id="state_maharashtra" model="res.country.state">
+            <field name="name">Maharashtra</field>
+            <field name="code">MH</field>
+            <field name="state_type">state</field>
+            <field name="capital">Mumbai</field>
+            <field name="population">112374333</field>
+            <field name="area">307713</field>
+            <field name="country_id" ref="base.in"/>
+            <field name="age_group">all</field>
+            <field name="size">all</field>
+            <field name="season">all_season</field>
+            <field name="brand">Maharashtra Brand</field>
+            <field name="color">Orange</field>
+        </record>
+        
+        <record id="state_karnataka" model="res.country.state">
+            <field name="name">Karnataka</field>
+            <field name="code">KA</field>
+            <field name="state_type">state</field>
+            <field name="capital">Bangalore</field>
+            <field name="population">61130704</field>
+            <field name="area">191791</field>
+            <field name="country_id" ref="base.in"/>
+            <field name="age_group">all</field>
+            <field name="size">all</field>
+            <field name="season">all_season</field>
+            <field name="brand">Karnataka Brand</field>
+            <field name="color">Red</field>
+        </record>
+        
+        <record id="state_tamil_nadu" model="res.country.state">
+            <field name="name">Tamil Nadu</field>
+            <field name="code">TN</field>
+            <field name="state_type">state</field>
+            <field name="capital">Chennai</field>
+            <field name="population">72147030</field>
+            <field name="area">130058</field>
+            <field name="country_id" ref="base.in"/>
+            <field name="age_group">all</field>
+            <field name="size">all</field>
+            <field name="season">all_season</field>
+            <field name="brand">Tamil Nadu Brand</field>
+            <field name="color">Yellow</field>
+        </record>
+        
+        <record id="state_gujarat" model="res.country.state">
+            <field name="name">Gujarat</field>
+            <field name="code">GJ</field>
+            <field name="state_type">state</field>
+            <field name="capital">Gandhinagar</field>
+            <field name="population">60439692</field>
+            <field name="area">196024</field>
+            <field name="country_id" ref="base.in"/>
+            <field name="age_group">all</field>
+            <field name="size">all</field>
+            <field name="season">all_season</field>
+            <field name="brand">Gujarat Brand</field>
+            <field name="color">Green</field>
+        </record>
+        
+        <record id="state_rajasthan" model="res.country.state">
+            <field name="name">Rajasthan</field>
+            <field name="code">RJ</field>
+            <field name="state_type">state</field>
+            <field name="capital">Jaipur</field>
+            <field name="population">68548437</field>
+            <field name="area">342239</field>
+            <field name="country_id" ref="base.in"/>
+            <field name="age_group">all</field>
+            <field name="size">all</field>
+            <field name="season">all_season</field>
+            <field name="brand">Rajasthan Brand</field>
+            <field name="color">Pink</field>
+        </record>
+        
+        <record id="state_uttar_pradesh" model="res.country.state">
+            <field name="name">Uttar Pradesh</field>
+            <field name="code">UP</field>
+            <field name="state_type">state</field>
+            <field name="capital">Lucknow</field>
+            <field name="population">199812341</field>
+            <field name="area">240928</field>
+            <field name="country_id" ref="base.in"/>
+            <field name="age_group">all</field>
+            <field name="size">all</field>
+            <field name="season">all_season</field>
+            <field name="brand">Uttar Pradesh Brand</field>
+            <field name="color">Blue</field>
+        </record>
+        
+        <record id="state_west_bengal" model="res.country.state">
+            <field name="name">West Bengal</field>
+            <field name="code">WB</field>
+            <field name="state_type">state</field>
+            <field name="capital">Kolkata</field>
+            <field name="population">91276115</field>
+            <field name="area">88752</field>
+            <field name="country_id" ref="base.in"/>
+            <field name="age_group">all</field>
+            <field name="size">all</field>
+            <field name="season">all_season</field>
+            <field name="brand">West Bengal Brand</field>
+            <field name="color">White</field>
+        </record>
+        
+        <record id="state_andhra_pradesh" model="res.country.state">
+            <field name="name">Andhra Pradesh</field>
+            <field name="code">AP</field>
+            <field name="state_type">state</field>
+            <field name="capital">Amaravati</field>
+            <field name="population">49386799</field>
+            <field name="area">162968</field>
+            <field name="country_id" ref="base.in"/>
+            <field name="age_group">all</field>
+            <field name="size">all</field>
+            <field name="season">all_season</field>
+            <field name="brand">Andhra Pradesh Brand</field>
+            <field name="color">Yellow</field>
+        </record>
+        
+        <record id="state_madhya_pradesh" model="res.country.state">
+            <field name="name">Madhya Pradesh</field>
+            <field name="code">MP</field>
+            <field name="state_type">state</field>
+            <field name="capital">Bhopal</field>
+            <field name="population">72626809</field>
+            <field name="area">308245</field>
+            <field name="country_id" ref="base.in"/>
+            <field name="age_group">all</field>
+            <field name="size">all</field>
+            <field name="season">all_season</field>
+            <field name="brand">Madhya Pradesh Brand</field>
+            <field name="color">Green</field>
+        </record>
+        
+        <record id="state_kerala" model="res.country.state">
+            <field name="name">Kerala</field>
+            <field name="code">KL</field>
+            <field name="state_type">state</field>
+            <field name="capital">Thiruvananthapuram</field>
+            <field name="population">33387677</field>
+            <field name="area">38863</field>
+            <field name="country_id" ref="base.in"/>
+            <field name="age_group">all</field>
+            <field name="size">all</field>
+            <field name="season">all_season</field>
+            <field name="brand">Kerala Brand</field>
+            <field name="color">Red</field>
+        </record>
+        
+    </data>
+</ocean>

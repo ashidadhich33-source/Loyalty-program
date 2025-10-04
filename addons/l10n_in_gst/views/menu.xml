@@ -51,5 +51,23 @@
                   action="action_gst_report"
                   sequence="10"/>
         
+        <!-- Fiscal Positions -->
+        <menuitem id="menu_l10n_in_gst_fiscal_positions"
+                  name="Fiscal Positions"
+                  parent="menu_l10n_in_gst_root"
+                  sequence="40"/>
+        
+        <menuitem id="menu_account_fiscal_position"
+                  name="Fiscal Positions"
+                  parent="menu_l10n_in_gst_fiscal_positions"
+                  action="action_account_fiscal_position"
+                  sequence="10"/>
+        
+        <menuitem id="menu_account_fiscal_position_tax"
+                  name="Fiscal Position Taxes"
+                  parent="menu_l10n_in_gst_fiscal_positions"
+                  action="action_account_fiscal_position_tax"
+                  sequence="20"/>
+        
     </data>
 </ocean>

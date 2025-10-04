@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- POS Return Menu -->
+        <menuitem id="menu_pos_return_root" 
+                  name="POS Return" 
+                  parent="menu_pos_root" 
+                  sequence="30"/>
+        
+        <!-- Return Operations Menu -->
+        <menuitem id="menu_pos_return_operations" 
+                  name="Operations" 
+                  parent="menu_pos_return_root" 
+                  sequence="10"/>
+        
+        <menuitem id="menu_pos_returns" 
+                  name="Returns" 
+                  parent="menu_pos_return_operations" 
+                  sequence="10"/>
+        
+        <!-- Return Configuration Menu -->
+        <menuitem id="menu_pos_return_config" 
+                  name="Configuration" 
+                  parent="menu_pos_return_root" 
+                  sequence="20"/>
+        
+        <menuitem id="menu_pos_return_reasons" 
+                  name="Return Reasons" 
+                  parent="menu_pos_return_config" 
+                  sequence="10"/>
+        
+        <!-- Return Reports Menu -->
+        <menuitem id="menu_pos_return_reports" 
+                  name="Reports" 
+                  parent="menu_pos_return_root" 
+                  sequence="30"/>
+        
+        <menuitem id="menu_pos_return_analytics" 
+                  name="Return Analytics" 
+                  parent="menu_pos_return_reports" 
+                  sequence="10"/>
+        
+    </data>
+</ocean>

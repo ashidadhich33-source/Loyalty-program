@@ -1,439 +1,320 @@
-/* Accounting Styles */
+/* Ocean ERP - Accounting Styles */
 
 /* Account Type Styles */
-.o_account_type_asset {
+.ocean_account_type_asset {
     background-color: #d4edda;
     border-color: #c3e6cb;
     color: #155724;
 }
 
-.o_account_type_liability {
+.ocean_account_type_liability {
     background-color: #f8d7da;
     border-color: #f5c6cb;
     color: #721c24;
 }
 
-.o_account_type_equity {
+.ocean_account_type_equity {
     background-color: #d1ecf1;
     border-color: #bee5eb;
     color: #0c5460;
 }
 
-.o_account_type_income {
+.ocean_account_type_income {
     background-color: #fff3cd;
     border-color: #ffeaa7;
     color: #856404;
 }
 
-.o_account_type_expense {
+.ocean_account_type_expense {
     background-color: #e2e3e5;
     border-color: #d6d8db;
     color: #383d41;
 }
 
 /* Account Subtype Styles */
-.o_account_subtype_current_asset {
+.ocean_account_subtype_current_asset {
     background-color: #d4edda;
     border-color: #c3e6cb;
     color: #155724;
 }
 
-.o_account_subtype_fixed_asset {
+.ocean_account_subtype_fixed_asset {
     background-color: #cce5ff;
     border-color: #99ccff;
     color: #0066cc;
 }
 
-.o_account_subtype_intangible_asset {
+.ocean_account_subtype_intangible_asset {
     background-color: #e6f3ff;
     border-color: #ccd9ff;
     color: #003d99;
 }
 
-.o_account_subtype_other_asset {
+.ocean_account_subtype_other_asset {
     background-color: #f0f8ff;
     border-color: #e0e6ff;
     color: #001a66;
 }
 
-.o_account_subtype_current_liability {
+.ocean_account_subtype_current_liability {
     background-color: #f8d7da;
     border-color: #f5c6cb;
     color: #721c24;
 }
 
-.o_account_subtype_long_term_liability {
+.ocean_account_subtype_long_term_liability {
     background-color: #f5c6cb;
     border-color: #f1aeb5;
     color: #58151c;
 }
 
-.o_account_subtype_other_liability {
+.ocean_account_subtype_other_liability {
     background-color: #f1aeb5;
     border-color: #ee9ca6;
     color: #3d0f14;
 }
 
-.o_account_subtype_share_capital {
+.ocean_account_subtype_share_capital {
     background-color: #d1ecf1;
     border-color: #bee5eb;
     color: #0c5460;
 }
 
-.o_account_subtype_retained_earnings {
+.ocean_account_subtype_retained_earnings {
     background-color: #bee5eb;
     border-color: #a2d5dd;
     color: #084298;
 }
 
-.o_account_subtype_other_equity {
+.ocean_account_subtype_other_equity {
     background-color: #a2d5dd;
     border-color: #85c4d0;
     color: #052c65;
 }
 
-.o_account_subtype_sales {
+.ocean_account_subtype_sales {
     background-color: #fff3cd;
     border-color: #ffeaa7;
     color: #856404;
 }
 
-.o_account_subtype_other_income {
+.ocean_account_subtype_other_income {
     background-color: #ffeaa7;
     border-color: #ffd93d;
     color: #664d03;
 }
 
-.o_account_subtype_cost_of_goods_sold {
+.ocean_account_subtype_cost_of_goods_sold {
     background-color: #e2e3e5;
     border-color: #d6d8db;
     color: #383d41;
 }
 
-.o_account_subtype_operating_expense {
+.ocean_account_subtype_operating_expense {
     background-color: #d6d8db;
     border-color: #c6c8ca;
     color: #212529;
 }
 
-.o_account_subtype_administrative_expense {
+.ocean_account_subtype_administrative_expense {
     background-color: #c6c8ca;
     border-color: #b6b8ba;
     color: #0f1419;
 }
 
-.o_account_subtype_selling_expense {
+.ocean_account_subtype_selling_expense {
     background-color: #b6b8ba;
     border-color: #a6a8aa;
     color: #000000;
 }
 
-.o_account_subtype_other_expense {
+.ocean_account_subtype_other_expense {
     background-color: #a6a8aa;
     border-color: #96989a;
     color: #000000;
 }
 
 /* Kids Clothing Specific Styles */
-.o_age_group_baby {
+.ocean_age_group_baby {
     background-color: #ffeaa7;
     border-color: #fdcb6e;
     color: #2d3436;
 }
 
-.o_age_group_toddler {
+.ocean_age_group_toddler {
     background-color: #a29bfe;
     border-color: #6c5ce7;
     color: #ffffff;
 }
 
-.o_age_group_preschool {
+.ocean_age_group_preschool {
     background-color: #fd79a8;
     border-color: #e84393;
     color: #ffffff;
 }
 
-.o_age_group_school {
+.ocean_age_group_school {
     background-color: #00b894;
     border-color: #00a085;
     color: #ffffff;
 }
 
-.o_age_group_teen {
+.ocean_age_group_teen {
     background-color: #e17055;
     border-color: #d63031;
     color: #ffffff;
 }
 
-.o_age_group_all {
+.ocean_age_group_all {
     background-color: #74b9ff;
     border-color: #0984e3;
     color: #ffffff;
 }
 
 /* Size Styles */
-.o_size_xs {
+.ocean_size_xs {
     background-color: #ffeaa7;
     border-color: #fdcb6e;
     color: #2d3436;
 }
 
-.o_size_s {
+.ocean_size_s {
     background-color: #a29bfe;
     border-color: #6c5ce7;
     color: #ffffff;
 }
 
-.o_size_m {
+.ocean_size_m {
     background-color: #fd79a8;
     border-color: #e84393;
     color: #ffffff;
 }
 
-.o_size_l {
+.ocean_size_l {
     background-color: #00b894;
     border-color: #00a085;
     color: #ffffff;
 }
 
-.o_size_xl {
+.ocean_size_xl {
     background-color: #e17055;
     border-color: #d63031;
     color: #ffffff;
 }
 
-.o_size_xxl {
+.ocean_size_xxl {
     background-color: #74b9ff;
     border-color: #0984e3;
     color: #ffffff;
 }
 
-.o_size_xxxl {
+.ocean_size_xxxl {
     background-color: #2d3436;
     border-color: #636e72;
     color: #ffffff;
 }
 
-.o_size_all {
+.ocean_size_all {
     background-color: #636e72;
     border-color: #2d3436;
     color: #ffffff;
 }
 
 /* Season Styles */
-.o_season_summer {
+.ocean_season_summer {
     background-color: #ffeaa7;
     border-color: #fdcb6e;
     color: #2d3436;
 }
 
-.o_season_winter {
+.ocean_season_winter {
     background-color: #74b9ff;
     border-color: #0984e3;
     color: #ffffff;
 }
 
-.o_season_monsoon {
+.ocean_season_monsoon {
     background-color: #a29bfe;
     border-color: #6c5ce7;
     color: #ffffff;
 }
 
-.o_season_all_season {
+.ocean_season_all_season {
     background-color: #00b894;
     border-color: #00a085;
     color: #ffffff;
 }
 
 /* Brand Styles */
-.o_brand_popular {
+.ocean_brand_popular {
     background-color: #00b894;
     border-color: #00a085;
     color: #ffffff;
 }
 
-.o_brand_premium {
+.ocean_brand_premium {
     background-color: #e17055;
     border-color: #d63031;
     color: #ffffff;
 }
 
-.o_brand_budget {
+.ocean_brand_budget {
     background-color: #74b9ff;
     border-color: #0984e3;
     color: #ffffff;
 }
 
 /* Color Styles */
-.o_color_blue {
+.ocean_color_blue {
     background-color: #74b9ff;
     border-color: #0984e3;
     color: #ffffff;
 }
 
-.o_color_red {
+.ocean_color_red {
     background-color: #e17055;
     border-color: #d63031;
     color: #ffffff;
 }
 
-.o_color_green {
+.ocean_color_green {
     background-color: #00b894;
     border-color: #00a085;
     color: #ffffff;
 }
 
-.o_color_yellow {
+.ocean_color_yellow {
     background-color: #ffeaa7;
     border-color: #fdcb6e;
     color: #2d3436;
 }
 
-.o_color_pink {
+.ocean_color_pink {
     background-color: #fd79a8;
     border-color: #e84393;
     color: #ffffff;
 }
 
-.o_color_purple {
+.ocean_color_purple {
     background-color: #a29bfe;
     border-color: #6c5ce7;
     color: #ffffff;
 }
 
-.o_color_black {
+.ocean_color_black {
     background-color: #2d3436;
     border-color: #636e72;
     color: #ffffff;
 }
 
-.o_color_white {
+.ocean_color_white {
     background-color: #ffffff;
     border-color: #ddd;
     color: #2d3436;
 }
 
-/* Journal Entry Styles */
-.o_journal_entry_draft {
-    background-color: #e2e3e5;
-    border-color: #d6d8db;
-    color: #383d41;
-}
-
-.o_journal_entry_posted {
-    background-color: #d4edda;
-    border-color: #c3e6cb;
-    color: #155724;
-}
-
-.o_journal_entry_cancelled {
-    background-color: #f8d7da;
-    border-color: #f5c6cb;
-    color: #721c24;
-}
-
-/* Journal Type Styles */
-.o_journal_type_sale {
-    background-color: #d4edda;
-    border-color: #c3e6cb;
-    color: #155724;
-}
-
-.o_journal_type_purchase {
-    background-color: #f8d7da;
-    border-color: #f5c6cb;
-    color: #721c24;
-}
-
-.o_journal_type_cash {
-    background-color: #fff3cd;
-    border-color: #ffeaa7;
-    color: #856404;
-}
-
-.o_journal_type_bank {
-    background-color: #d1ecf1;
-    border-color: #bee5eb;
-    color: #0c5460;
-}
-
-.o_journal_type_general {
-    background-color: #e2e3e5;
-    border-color: #d6d8db;
-    color: #383d41;
-}
-
-/* Period Styles */
-.o_period_draft {
-    background-color: #e2e3e5;
-    border-color: #d6d8db;
-    color: #383d41;
-}
-
-.o_period_open {
-    background-color: #d4edda;
-    border-color: #c3e6cb;
-    color: #155724;
-}
-
-.o_period_closed {
-    background-color: #f8d7da;
-    border-color: #f5c6cb;
-    color: #721c24;
-}
-
-/* Reconciliation Styles */
-.o_reconciliation_draft {
-    background-color: #e2e3e5;
-    border-color: #d6d8db;
-    color: #383d41;
-}
-
-.o_reconciliation_confirmed {
-    background-color: #fff3cd;
-    border-color: #ffeaa7;
-    color: #856404;
-}
-
-.o_reconciliation_done {
-    background-color: #d4edda;
-    border-color: #c3e6cb;
-    color: #155724;
-}
-
-.o_reconciliation_cancelled {
-    background-color: #f8d7da;
-    border-color: #f5c6cb;
-    color: #721c24;
-}
-
-/* Report Styles */
-.o_report_draft {
-    background-color: #e2e3e5;
-    border-color: #d6d8db;
-    color: #383d41;
-}
-
-.o_report_generated {
-    background-color: #d4edda;
-    border-color: #c3e6cb;
-    color: #155724;
-}
-
-.o_report_published {
-    background-color: #d1ecf1;
-    border-color: #bee5eb;
-    color: #0c5460;
-}
-
-.o_report_archived {
-    background-color: #f8d7da;
-    border-color: #f5c6cb;
-    color: #721c24;
-}
-
 /* Dashboard Styles */
-.o_accounting_dashboard {
+.ocean_accounting_dashboard {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
     padding: 20px;
@@ -441,21 +322,21 @@
     margin-bottom: 20px;
 }
 
-.o_accounting_dashboard h2 {
+.ocean_accounting_dashboard h2 {
     color: white;
     margin-bottom: 15px;
 }
 
-.o_accounting_dashboard .o_stat_info {
+.ocean_accounting_dashboard .ocean_stat_info {
     color: white;
 }
 
-.o_accounting_dashboard .o_stat_info .o_stat_text {
+.ocean_accounting_dashboard .ocean_stat_info .ocean_stat_text {
     color: white;
 }
 
 /* Card Styles */
-.o_accounting_card {
+.ocean_accounting_card {
     background: white;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -464,12 +345,12 @@
     transition: transform 0.3s ease;
 }
 
-.o_accounting_card:hover {
+.ocean_accounting_card:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
 }
 
-.o_accounting_card h3 {
+.ocean_accounting_card h3 {
     color: #2d3436;
     margin-bottom: 15px;
     border-bottom: 2px solid #74b9ff;
@@ -477,7 +358,7 @@
 }
 
 /* Button Styles */
-.o_accounting_btn_primary {
+.ocean_accounting_btn_primary {
     background-color: #74b9ff;
     border-color: #0984e3;
     color: white;
@@ -488,11 +369,11 @@
     transition: background-color 0.3s ease;
 }
 
-.o_accounting_btn_primary:hover {
+.ocean_accounting_btn_primary:hover {
     background-color: #0984e3;
 }
 
-.o_accounting_btn_success {
+.ocean_accounting_btn_success {
     background-color: #00b894;
     border-color: #00a085;
     color: white;
@@ -503,11 +384,11 @@
     transition: background-color 0.3s ease;
 }
 
-.o_accounting_btn_success:hover {
+.ocean_accounting_btn_success:hover {
     background-color: #00a085;
 }
 
-.o_accounting_btn_warning {
+.ocean_accounting_btn_warning {
     background-color: #ffeaa7;
     border-color: #fdcb6e;
     color: #2d3436;
@@ -518,11 +399,11 @@
     transition: background-color 0.3s ease;
 }
 
-.o_accounting_btn_warning:hover {
+.ocean_accounting_btn_warning:hover {
     background-color: #fdcb6e;
 }
 
-.o_accounting_btn_danger {
+.ocean_accounting_btn_danger {
     background-color: #e17055;
     border-color: #d63031;
     color: white;
@@ -533,47 +414,47 @@
     transition: background-color 0.3s ease;
 }
 
-.o_accounting_btn_danger:hover {
+.ocean_accounting_btn_danger:hover {
     background-color: #d63031;
 }
 
 /* Table Styles */
-.o_accounting_table {
+.ocean_accounting_table {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 20px;
 }
 
-.o_accounting_table th,
-.o_accounting_table td {
+.ocean_accounting_table th,
+.ocean_accounting_table td {
     padding: 12px;
     text-align: left;
     border-bottom: 1px solid #ddd;
 }
 
-.o_accounting_table th {
+.ocean_accounting_table th {
     background-color: #74b9ff;
     color: white;
     font-weight: bold;
 }
 
-.o_accounting_table tr:hover {
+.ocean_accounting_table tr:hover {
     background-color: #f5f5f5;
 }
 
 /* Form Styles */
-.o_accounting_form_group {
+.ocean_accounting_form_group {
     margin-bottom: 20px;
 }
 
-.o_accounting_form_label {
+.ocean_accounting_form_label {
     display: block;
     margin-bottom: 5px;
     font-weight: bold;
     color: #2d3436;
 }
 
-.o_accounting_form_input {
+.ocean_accounting_form_input {
     width: 100%;
     padding: 10px;
     border: 1px solid #ddd;
@@ -581,39 +462,39 @@
     font-size: 14px;
 }
 
-.o_accounting_form_input:focus {
+.ocean_accounting_form_input:focus {
     outline: none;
     border-color: #74b9ff;
     box-shadow: 0 0 5px rgba(116, 185, 255, 0.3);
 }
 
 /* Alert Styles */
-.o_accounting_alert {
+.ocean_accounting_alert {
     padding: 15px;
     margin-bottom: 20px;
     border-radius: 5px;
     border-left: 4px solid;
 }
 
-.o_accounting_alert_info {
+.ocean_accounting_alert_info {
     background-color: #d1ecf1;
     border-color: #bee5eb;
     color: #0c5460;
 }
 
-.o_accounting_alert_success {
+.ocean_accounting_alert_success {
     background-color: #d4edda;
     border-color: #c3e6cb;
     color: #155724;
 }
 
-.o_accounting_alert_warning {
+.ocean_accounting_alert_warning {
     background-color: #fff3cd;
     border-color: #ffeaa7;
     color: #856404;
 }
 
-.o_accounting_alert_danger {
+.ocean_accounting_alert_danger {
     background-color: #f8d7da;
     border-color: #f5c6cb;
     color: #721c24;
@@ -621,26 +502,26 @@
 
 /* Responsive Styles */
 @media (max-width: 768px) {
-    .o_accounting_dashboard {
+    .ocean_accounting_dashboard {
         padding: 15px;
     }
     
-    .o_accounting_card {
+    .ocean_accounting_card {
         padding: 15px;
     }
     
-    .o_accounting_table {
+    .ocean_accounting_table {
         font-size: 12px;
     }
     
-    .o_accounting_table th,
-    .o_accounting_table td {
+    .ocean_accounting_table th,
+    .ocean_accounting_table td {
         padding: 8px;
     }
 }
 
 /* Animation Styles */
-@keyframes fadeIn {
+@keyframes ocean_fadeIn {
     from {
         opacity: 0;
         transform: translateY(20px);
@@ -651,28 +532,28 @@
     }
 }
 
-.o_accounting_fade_in {
-    animation: fadeIn 0.5s ease-in-out;
+.ocean_accounting_fade_in {
+    animation: ocean_fadeIn 0.5s ease-in-out;
 }
 
 /* Loading Styles */
-.o_accounting_loading {
+.ocean_accounting_loading {
     display: inline-block;
     width: 20px;
     height: 20px;
     border: 3px solid #f3f3f3;
     border-top: 3px solid #74b9ff;
     border-radius: 50%;
-    animation: spin 1s linear infinite;
+    animation: ocean_spin 1s linear infinite;
 }
 
-@keyframes spin {
+@keyframes ocean_spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
 
 /* Progress Bar Styles */
-.o_accounting_progress {
+.ocean_accounting_progress {
     width: 100%;
     height: 20px;
     background-color: #f0f0f0;
@@ -680,20 +561,20 @@
     overflow: hidden;
 }
 
-.o_accounting_progress_bar {
+.ocean_accounting_progress_bar {
     height: 100%;
     background-color: #74b9ff;
     transition: width 0.3s ease;
 }
 
-.o_accounting_progress_bar_success {
+.ocean_accounting_progress_bar_success {
     background-color: #00b894;
 }
 
-.o_accounting_progress_bar_warning {
+.ocean_accounting_progress_bar_warning {
     background-color: #ffeaa7;
 }
 
-.o_accounting_progress_bar_danger {
+.ocean_accounting_progress_bar_danger {
     background-color: #e17055;
 }

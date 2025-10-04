@@ -1,13 +1,21 @@
 # -*- coding: utf-8 -*-
+"""
+Ocean ERP - Account Account Model
+================================
 
-from odoo import models, fields, api, _
-from odoo.exceptions import ValidationError, UserError
+Chart of accounts management for kids clothing retail.
+"""
+
+from core_framework.orm import Model, fields
+from core_framework.exceptions import ValidationError, UserError
 import logging
 
 _logger = logging.getLogger(__name__)
 
 
-class AccountAccount(models.Model):
+class AccountAccount(Model):
+    """Account Account Model for Ocean ERP"""
+    
     _name = 'account.account'
     _description = 'Account'
     _order = 'code'
@@ -89,7 +97,7 @@ class AccountAccount(models.Model):
         ('12-14', 'Teen (12-14 years)'),
         ('14-16', 'Young Adult (14-16 years)'),
         ('all', 'All Age Groups'),
-    ], string='Age Group', help='Age group for this account')
+    ], string='Age Group', help='Age group for the product')
     
     size = fields.Selection([
         ('xs', 'XS'),
@@ -100,23 +108,23 @@ class AccountAccount(models.Model):
         ('xxl', 'XXL'),
         ('xxxl', 'XXXL'),
         ('all', 'All Sizes'),
-    ], string='Size', help='Size for this account')
+    ], string='Size', help='Size of the product')
     
     season = fields.Selection([
         ('summer', 'Summer'),
         ('winter', 'Winter'),
         ('monsoon', 'Monsoon'),
         ('all_season', 'All Season'),
-    ], string='Season', help='Season for this account')
+    ], string='Season', help='Season for the product')
     
     brand = fields.Char(
         string='Brand',
-        help='Brand for this account'
+        help='Brand of the product'
     )
     
     color = fields.Char(
         string='Color',
-        help='Color for this account'
+        help='Color of the product'
     )
     
     # Account Configuration
@@ -184,16 +192,18 @@ class AccountAccount(models.Model):
         help='Full account code including parent codes'
     )
     
-    @api.depends('move_line_ids')
     def _compute_balance(self):
+        """Compute account balance from move lines"""
         for record in self:
-            move_lines = record.move_line_ids
+            move_lines = self.env['account.move.line'].search([
+                ('account_id', '=', record.id)
+            ])
             record.debit = sum(move_lines.mapped('debit'))
             record.credit = sum(move_lines.mapped('credit'))
             record.balance = record.debit - record.credit
     
-    @api.depends('parent_id')
     def _compute_level(self):
+        """Compute account level in hierarchy"""
         for record in self:
             level = 0
             parent = record.parent_id
@@ -202,15 +212,14 @@ class AccountAccount(models.Model):
                 parent = parent.parent_id
             record.level = level
     
-    @api.depends('code', 'parent_id')
     def _compute_full_code(self):
+        """Compute full account code"""
         for record in self:
             if record.parent_id:
                 record.full_code = f"{record.parent_id.full_code}.{record.code}"
             else:
                 record.full_code = record.code
     
-    @api.model
     def create(self, vals):
         """Override create to set default values"""
         if not vals.get('code'):
@@ -238,8 +247,8 @@ class AccountAccount(models.Model):
         
         return super(AccountAccount, self).create(vals)
     
-    @api.constrains('code')
     def _check_code(self):
+        """Validate account code"""
         for record in self:
             if record.code:
                 # Check for duplicate codes
@@ -249,28 +258,28 @@ class AccountAccount(models.Model):
                     ('company_id', '=', record.company_id.id)
                 ])
                 if duplicate:
-                    raise ValidationError(_('Account code must be unique within the company.'))
+                    raise ValidationError('Account code must be unique within the company.')
     
-    @api.constrains('parent_id')
     def _check_parent(self):
+        """Validate parent account"""
         for record in self:
             if record.parent_id:
                 # Check for circular reference
                 if record.parent_id.id == record.id:
-                    raise ValidationError(_('Account cannot be its own parent.'))
+                    raise ValidationError('Account cannot be its own parent.')
                 
                 # Check parent hierarchy
                 parent = record.parent_id
                 while parent:
                     if parent.id == record.id:
-                        raise ValidationError(_('Circular reference detected in account hierarchy.'))
+                        raise ValidationError('Circular reference detected in account hierarchy.')
                     parent = parent.parent_id
     
     def action_view_move_lines(self):
         """View account move lines"""
         return {
-            'type': 'ir.actions.act_window',
-            'name': _('Account Move Lines'),
+            'type': 'ocean.actions.act_window',
+            'name': 'Account Move Lines',
             'res_model': 'account.move.line',
             'view_mode': 'tree,form',
             'domain': [('account_id', '=', self.id)],
@@ -280,11 +289,11 @@ class AccountAccount(models.Model):
     def action_reconcile(self):
         """Reconcile account"""
         if not self.reconcile:
-            raise UserError(_('This account does not allow reconciliation.'))
+            raise UserError('This account does not allow reconciliation.')
         
         return {
-            'type': 'ir.actions.act_window',
-            'name': _('Reconcile Account'),
+            'type': 'ocean.actions.act_window',
+            'name': 'Reconcile Account',
             'res_model': 'account.reconciliation',
             'view_mode': 'form',
             'context': {'default_account_id': self.id},
@@ -294,15 +303,14 @@ class AccountAccount(models.Model):
     def action_generate_report(self):
         """Generate account report"""
         return {
-            'type': 'ir.actions.act_window',
-            'name': _('Account Report'),
+            'type': 'ocean.actions.act_window',
+            'name': 'Account Report',
             'res_model': 'account.report',
             'view_mode': 'form',
             'context': {'default_account_id': self.id},
             'target': 'new',
         }
     
-    @api.model
     def get_kids_clothing_accounts(self, age_group=None, size=None, season=None, brand=None, color=None):
         """Get accounts filtered by kids clothing criteria"""
         domain = [('active', '=', True)]
@@ -324,7 +332,6 @@ class AccountAccount(models.Model):
         
         return self.search(domain)
     
-    @api.model
     def create_kids_clothing_chart(self):
         """Create kids clothing specific chart of accounts"""
         # This method would create a complete chart of accounts
@@ -332,7 +339,9 @@ class AccountAccount(models.Model):
         pass
 
 
-class AccountAccountType(models.Model):
+class AccountAccountType(Model):
+    """Account Type Model for Ocean ERP"""
+    
     _name = 'account.account.type'
     _description = 'Account Type'
     _order = 'sequence, name'
@@ -374,23 +383,23 @@ class AccountAccountType(models.Model):
         ('12-14', 'Teen (12-14 years)'),
         ('14-16', 'Young Adult (14-16 years)'),
         ('all', 'All Age Groups'),
-    ], string='Age Group', help='Age group for this account type')
+    ], string='Age Group', help='Age group for the product')
     
     season = fields.Selection([
         ('summer', 'Summer'),
         ('winter', 'Winter'),
         ('monsoon', 'Monsoon'),
         ('all_season', 'All Season'),
-    ], string='Season', help='Season for this account type')
+    ], string='Season', help='Season for the product')
     
     brand = fields.Char(
         string='Brand',
-        help='Brand for this account type'
+        help='Brand of the product'
     )
     
     color = fields.Char(
         string='Color',
-        help='Color for this account type'
+        help='Color of the product'
     )
     
     # Account Type Properties

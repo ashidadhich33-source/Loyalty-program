@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Not Found - Ocean ERP</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        
+        .error-container {
+            text-align: center;
+            max-width: 700px;
+            padding: 40px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .logo-container {
+            margin-bottom: 30px;
+        }
+        
+        .logo {
+            max-width: 200px;
+            max-height: 100px;
+            object-fit: contain;
+            filter: brightness(0) invert(1);
+        }
+        
+        .error-code {
+            font-size: 8em;
+            font-weight: 900;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            line-height: 1;
+        }
+        
+        .error-title {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            font-weight: 300;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .error-subtitle {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+        
+        .error-message {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 4px solid #ffd700;
+        }
+        
+        .error-message h3 {
+            margin-bottom: 10px;
+            color: #ffd700;
+        }
+        
+        .error-message p {
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+        
+        .suggestions {
+            text-align: left;
+            margin: 30px 0;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 10px;
+        }
+        
+        .suggestions h4 {
+            margin-bottom: 15px;
+            color: #ffd700;
+        }
+        
+        .suggestions ul {
+            list-style: none;
+        }
+        
+        .suggestions li {
+            padding: 8px 0;
+            opacity: 0.9;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 5px;
+            padding-left: 10px;
+        }
+        
+        .suggestions li:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
+        }
+        
+        .suggestions li:before {
+            content: "🔗";
+            margin-right: 10px;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 30px 0;
+        }
+        
+        .action-button {
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            color: #333;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .action-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
+        }
+        
+        .action-button.secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .action-button.secondary:hover {
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        .search-box {
+            margin: 30px 0;
+            position: relative;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 15px 50px 15px 20px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1em;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            outline: none;
+        }
+        
+        .search-input::placeholder {
+            color: #666;
+        }
+        
+        .search-button {
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        
+        .footer-info {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            opacity: 0.7;
+            font-size: 0.9em;
+        }
+        
+        .breadcrumb {
+            margin-bottom: 20px;
+            opacity: 0.8;
+            font-size: 0.9em;
+        }
+        
+        .breadcrumb a {
+            color: #ffd700;
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        .error-details {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(255, 68, 68, 0.1);
+            border-radius: 8px;
+            border-left: 4px solid #ff4444;
+            text-align: left;
+            font-family: monospace;
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+        
+        .error-details h4 {
+            color: #ff4444;
+            margin-bottom: 10px;
+        }
+        
+        .error-details pre {
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+        
+        @media (max-width: 768px) {
+            .error-container {
+                margin: 20px;
+                padding: 30px 15px;
+            }
+            
+            .error-code {
+                font-size: 6em;
+            }
+            
+            .error-title {
+                font-size: 2em;
+            }
+            
+            .error-subtitle {
+                font-size: 1em;
+            }
+            
+            .logo {
+                max-width: 150px;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .action-button {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <div class="logo-container">
+            <img src="{{ logo_url }}" alt="Ocean ERP Logo" class="logo" id="logo">
+        </div>
+        
+        <div class="breadcrumb">
+            <a href="/">Home</a> > <span>Page Not Found</span>
+        </div>
+        
+        <div class="error-code">404</div>
+        
+        <h1 class="error-title">Page Not Found</h1>
+        <p class="error-subtitle">The page you're looking for doesn't exist or has been moved.</p>
+        
+        <div class="error-message">
+            <h3>What happened?</h3>
+            <p>The requested URL <code>{{ requested_url }}</code> could not be found on this server. This might be due to a typo in the URL, a moved page, or an expired link.</p>
+        </div>
+        
+        <div class="search-box">
+            <input type="text" class="search-input" placeholder="Search for what you're looking for..." id="search-input">
+            <button class="search-button" onclick="performSearch()">🔍</button>
+        </div>
+        
+        <div class="suggestions">
+            <h4>Popular Pages:</h4>
+            <ul>
+                <li onclick="navigateTo('/')">🏠 Dashboard</li>
+                <li onclick="navigateTo('/sales')">🛍️ Sales Management</li>
+                <li onclick="navigateTo('/pos')">🏪 Point of Sale</li>
+                <li onclick="navigateTo('/inventory')">📦 Inventory</li>
+                <li onclick="navigateTo('/products')">👕 Products</li>
+                <li onclick="navigateTo('/customers')">👥 Customers</li>
+                <li onclick="navigateTo('/reports')">📊 Reports</li>
+                <li onclick="navigateTo('/settings')">⚙️ Settings</li>
+            </ul>
+        </div>
+        
+        <div class="action-buttons">
+            <a href="/" class="action-button">🏠 Go Home</a>
+            <button class="action-button secondary" onclick="goBack()">⬅️ Go Back</button>
+            <button class="action-button secondary" onclick="refreshPage()">🔄 Refresh</button>
+        </div>
+        
+        <div class="error-details" id="error-details" style="display: none;">
+            <h4>Technical Details:</h4>
+            <pre id="error-text"></pre>
+        </div>
+        
+        <div class="footer-info">
+            <p>Ocean ERP System v1.0.0</p>
+            <p>Kids Clothing Retail Management</p>
+            <p>Error occurred at: <span id="error-time">{{ current_time }}</span></p>
+        </div>
+    </div>
+
+    <script>
+        // Get search input element
+        const searchInput = document.getElementById('search-input');
+        
+        // Perform search
+        function performSearch() {
+            const query = searchInput.value.trim();
+            if (query) {
+                // Redirect to search results page
+                window.location.href = `/search?q=${encodeURIComponent(query)}`;
+            }
+        }
+        
+        // Navigate to specific page
+        function navigateTo(url) {
+            window.location.href = url;
+        }
+        
+        // Go back to previous page
+        function goBack() {
+            if (window.history.length > 1) {
+                window.history.back();
+            } else {
+                window.location.href = '/';
+            }
+        }
+        
+        // Refresh current page
+        function refreshPage() {
+            window.location.reload();
+        }
+        
+        // Handle Enter key in search input
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+        
+        // Auto-focus search input
+        document.addEventListener('DOMContentLoaded', () => {
+            searchInput.focus();
+        });
+        
+        // Handle logo loading error
+        document.getElementById('logo').addEventListener('error', function() {
+            this.style.display = 'none';
+        });
+        
+        // Show technical details if debug mode
+        function showTechnicalDetails() {
+            const errorDetails = document.getElementById('error-details');
+            const errorText = document.getElementById('error-text');
+            
+            const details = {
+                'URL': window.location.href,
+                'Referrer': document.referrer || 'Direct access',
+                'User Agent': navigator.userAgent,
+                'Timestamp': new Date().toISOString(),
+                'Screen Resolution': `${screen.width}x${screen.height}`,
+                'Viewport': `${window.innerWidth}x${window.innerHeight}`,
+                'Language': navigator.language,
+                'Platform': navigator.platform
+            };
+            
+            errorText.textContent = JSON.stringify(details, null, 2);
+            errorDetails.style.display = 'block';
+        }
+        
+        // Show technical details on double-click
+        document.addEventListener('dblclick', showTechnicalDetails);
+        
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            // Ctrl/Cmd + K for search
+            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                e.preventDefault();
+                searchInput.focus();
+            }
+            
+            // Escape to go back
+            if (e.key === 'Escape') {
+                goBack();
+            }
+        });
+        
+        // Update error time
+        function updateErrorTime() {
+            const now = new Date();
+            document.getElementById('error-time').textContent = now.toLocaleString();
+        }
+        
+        // Update time every minute
+        setInterval(updateErrorTime, 60000);
+    </script>
+</body>
+</html>

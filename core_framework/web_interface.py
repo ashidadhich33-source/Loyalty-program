@@ -14,6 +14,7 @@ import json
 import urllib.parse
 import os
 from pathlib import Path
+from datetime import datetime
 from .auth import AuthenticationManager
 from .session import SessionManager
 from .templates import TemplateEngine, TemplateRenderer
@@ -33,12 +34,19 @@ class ERPWebHandler(BaseHTTPRequestHandler):
         try:
             path = urllib.parse.urlparse(self.path).path
             
-            if path == '/':
+            # Check if setup is needed
+            if self._is_setup_needed() and path not in ['/setup', '/setup/', '/static/', '/api/setup']:
+                self._serve_setup_page()
+            elif path == '/':
                 self._serve_home_page()
             elif path == '/login':
                 self._serve_login_page()
             elif path == '/logout':
                 self._serve_logout()
+            elif path == '/setup' or path == '/setup/':
+                self._serve_setup_page()
+            elif path == '/offline':
+                self._serve_offline_page()
             elif path == '/api/status':
                 self._serve_api_status()
             elif path.startswith('/api/'):
@@ -60,6 +68,10 @@ class ERPWebHandler(BaseHTTPRequestHandler):
                 self._handle_login()
             elif path == '/api/logout':
                 self._handle_logout()
+            elif path == '/api/setup':
+                self._handle_setup()
+            elif path == '/api/logo/upload':
+                self._handle_logo_upload()
             elif path.startswith('/api/'):
                 self._handle_api_post(path)
             else:
@@ -554,15 +566,153 @@ class ERPWebHandler(BaseHTTPRequestHandler):
             self._serve_500(str(e))
     
     def _serve_404(self):
-        """Serve 404 error"""
-        html_content = """
-        <!DOCTYPE html>
-        <html>
-        <head><title>404 Not Found</title></head>
-        <body><h1>404 - Page Not Found</h1></body>
-        </html>
-        """
-        self._send_response(404, html_content, 'text/html')
+        """Serve 404 error page"""
+        try:
+            from core_framework.templates import TemplateRenderer
+            from core_framework.config import Config
+            
+            config = Config()
+            template_renderer = TemplateRenderer(None)
+            
+            context = {
+                'logo_url': self._get_logo_url(),
+                'requested_url': self.path,
+                'current_time': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            }
+            
+            html_content = template_renderer.render_template('404.html', context)
+            self._send_response(404, html_content.encode('utf-8'), 'text/html')
+            
+        except Exception as e:
+            # Fallback to simple 404
+            html_content = f"""
+            <!DOCTYPE html>
+            <html>
+            <head><title>404 Not Found</title></head>
+            <body><h1>404 - Page Not Found</h1><p>Error: {str(e)}</p></body>
+            </html>
+            """
+            self._send_response(404, html_content, 'text/html')
+    
+    def _serve_offline_page(self):
+        """Serve offline page"""
+        try:
+            from core_framework.templates import TemplateRenderer
+            from core_framework.config import Config
+            
+            config = Config()
+            template_renderer = TemplateRenderer(None)
+            
+            context = {
+                'logo_url': self._get_logo_url(),
+                'current_time': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            }
+            
+            html_content = template_renderer.render_template('offline.html', context)
+            self._send_response(200, html_content.encode('utf-8'), 'text/html')
+            
+        except Exception as e:
+            # Fallback to simple offline page
+            html_content = f"""
+            <!DOCTYPE html>
+            <html>
+            <head><title>Ocean ERP - Offline</title></head>
+            <body><h1>Ocean ERP is Offline</h1><p>Error: {str(e)}</p></body>
+            </html>
+            """
+            self._send_response(200, html_content, 'text/html')
+    
+    def _serve_setup_page(self):
+        """Serve database setup page"""
+        try:
+            from core_framework.templates import TemplateRenderer
+            from core_framework.config import Config
+            
+            config = Config()
+            template_renderer = TemplateRenderer(None)
+            
+            context = {
+                'logo_url': self._get_logo_url(),
+                'current_time': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            }
+            
+            html_content = template_renderer.render_template('setup.html', context)
+            self._send_response(200, html_content.encode('utf-8'), 'text/html')
+            
+        except Exception as e:
+            # Fallback to simple setup page
+            html_content = f"""
+            <!DOCTYPE html>
+            <html>
+            <head><title>Ocean ERP Setup</title></head>
+            <body><h1>Ocean ERP Database Setup</h1><p>Error: {str(e)}</p></body>
+            </html>
+            """
+            self._send_response(200, html_content, 'text/html')
+    
+    def _is_setup_needed(self):
+        """Check if database setup is needed"""
+        try:
+            from core_framework.setup_wizard import DatabaseSetupWizard
+            setup_wizard = DatabaseSetupWizard()
+            return not setup_wizard.is_setup_complete()
+        except:
+            return True
+    
+    def _handle_setup(self):
+        """Handle database setup request"""
+        try:
+            import json
+            from core_framework.setup_wizard import DatabaseSetupWizard
+            
+            content_length = int(self.headers['Content-Length'])
+            post_data = self.rfile.read(content_length)
+            setup_data = json.loads(post_data.decode('utf-8'))
+            
+            # Run setup wizard
+            setup_wizard = DatabaseSetupWizard()
+            result = setup_wizard.run_setup(setup_data)
+            
+            self._send_json_response(200 if result['success'] else 400, result)
+            
+        except Exception as e:
+            self._send_json_response(500, {
+                'success': False,
+                'error': f'Setup error: {str(e)}'
+            })
+    
+    def _handle_logo_upload(self):
+        """Handle logo upload request"""
+        try:
+            from core_framework.setup_wizard import LogoManager
+            from core_framework.config import Config
+            
+            config = Config()
+            logo_manager = LogoManager(config)
+            
+            # This is a simplified version - in production, you'd use proper file upload handling
+            result = {'success': False, 'error': 'Logo upload not implemented yet'}
+            
+            self._send_json_response(200 if result['success'] else 400, result)
+            
+        except Exception as e:
+            self._send_json_response(500, {
+                'success': False,
+                'error': f'Logo upload error: {str(e)}'
+            })
+    
+    def _get_logo_url(self):
+        """Get logo URL"""
+        try:
+            from core_framework.setup_wizard import LogoManager
+            from core_framework.config import Config
+            
+            config = Config()
+            logo_manager = LogoManager(config)
+            return logo_manager.get_logo_url()
+            
+        except:
+            return '/static/images/logo/default_logo.png'
     
     def _serve_500(self, error_message: str):
         """Serve 500 error"""

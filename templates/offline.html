@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ocean ERP - Offline</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        
+        .offline-container {
+            text-align: center;
+            max-width: 600px;
+            padding: 40px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .logo-container {
+            margin-bottom: 30px;
+        }
+        
+        .logo {
+            max-width: 200px;
+            max-height: 100px;
+            object-fit: contain;
+            filter: brightness(0) invert(1);
+        }
+        
+        .offline-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+        
+        .offline-title {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            font-weight: 300;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .offline-subtitle {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+        
+        .offline-message {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 4px solid #ffd700;
+        }
+        
+        .offline-message h3 {
+            margin-bottom: 10px;
+            color: #ffd700;
+        }
+        
+        .offline-message p {
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+        
+        .retry-button {
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            color: #333;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+        }
+        
+        .retry-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
+        }
+        
+        .retry-button:active {
+            transform: translateY(0);
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #ff4444;
+            margin-right: 8px;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        
+        .features-list {
+            text-align: left;
+            margin: 30px 0;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 10px;
+        }
+        
+        .features-list h4 {
+            margin-bottom: 15px;
+            color: #ffd700;
+        }
+        
+        .features-list ul {
+            list-style: none;
+        }
+        
+        .features-list li {
+            padding: 5px 0;
+            opacity: 0.9;
+        }
+        
+        .features-list li:before {
+            content: "✓";
+            color: #4CAF50;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .footer-info {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            opacity: 0.7;
+            font-size: 0.9em;
+        }
+        
+        .loading-spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top: 2px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-left: 10px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .error-details {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(255, 68, 68, 0.1);
+            border-radius: 8px;
+            border-left: 4px solid #ff4444;
+            text-align: left;
+            font-family: monospace;
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+        
+        .error-details h4 {
+            color: #ff4444;
+            margin-bottom: 10px;
+        }
+        
+        .error-details pre {
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+        
+        @media (max-width: 768px) {
+            .offline-container {
+                margin: 20px;
+                padding: 30px 15px;
+            }
+            
+            .offline-title {
+                font-size: 2em;
+            }
+            
+            .offline-subtitle {
+                font-size: 1em;
+            }
+            
+            .logo {
+                max-width: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="offline-container">
+        <div class="logo-container">
+            <img src="{{ logo_url }}" alt="Ocean ERP Logo" class="logo" id="logo">
+        </div>
+        
+        <div class="offline-icon">🌊</div>
+        
+        <h1 class="offline-title">Ocean ERP</h1>
+        <p class="offline-subtitle">System is currently offline</p>
+        
+        <div class="offline-message">
+            <h3><span class="status-indicator"></span>Connection Status</h3>
+            <p>The Ocean ERP system is temporarily unavailable. This could be due to maintenance, server issues, or network connectivity problems.</p>
+        </div>
+        
+        <div class="features-list">
+            <h4>What you can do:</h4>
+            <ul>
+                <li>Check your internet connection</li>
+                <li>Wait a few minutes and try again</li>
+                <li>Contact your system administrator</li>
+                <li>Check for scheduled maintenance windows</li>
+            </ul>
+        </div>
+        
+        <button class="retry-button" onclick="retryConnection()">
+            <span id="retry-text">Retry Connection</span>
+            <div class="loading-spinner" id="loading-spinner"></div>
+        </button>
+        
+        <div class="error-details" id="error-details" style="display: none;">
+            <h4>Error Details:</h4>
+            <pre id="error-text"></pre>
+        </div>
+        
+        <div class="footer-info">
+            <p>Ocean ERP System v1.0.0</p>
+            <p>Kids Clothing Retail Management</p>
+            <p>Last checked: <span id="last-checked">{{ current_time }}</span></p>
+        </div>
+    </div>
+
+    <script>
+        let retryCount = 0;
+        const maxRetries = 5;
+        
+        function retryConnection() {
+            const retryButton = document.querySelector('.retry-button');
+            const retryText = document.getElementById('retry-text');
+            const loadingSpinner = document.getElementById('loading-spinner');
+            const errorDetails = document.getElementById('error-details');
+            
+            retryCount++;
+            
+            // Show loading state
+            retryButton.disabled = true;
+            retryText.textContent = 'Checking Connection...';
+            loadingSpinner.style.display = 'inline-block';
+            errorDetails.style.display = 'none';
+            
+            // Simulate connection check
+            setTimeout(() => {
+                checkConnection();
+            }, 2000);
+        }
+        
+        function checkConnection() {
+            const retryButton = document.querySelector('.retry-button');
+            const retryText = document.getElementById('retry-text');
+            const loadingSpinner = document.getElementById('loading-spinner');
+            const errorDetails = document.getElementById('error-details');
+            const errorText = document.getElementById('error-text');
+            
+            // Try to fetch the main page
+            fetch('/')
+                .then(response => {
+                    if (response.ok) {
+                        // Connection successful, redirect to main page
+                        window.location.href = '/';
+                    } else {
+                        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                    }
+                })
+                .catch(error => {
+                    // Connection failed
+                    retryButton.disabled = false;
+                    retryText.textContent = retryCount < maxRetries ? 'Retry Connection' : 'Max Retries Reached';
+                    loadingSpinner.style.display = 'none';
+                    
+                    // Show error details
+                    errorText.textContent = `Error: ${error.message}\nRetry attempt: ${retryCount}/${maxRetries}`;
+                    errorDetails.style.display = 'block';
+                    
+                    if (retryCount >= maxRetries) {
+                        retryButton.style.opacity = '0.5';
+                        retryButton.style.cursor = 'not-allowed';
+                    }
+                });
+        }
+        
+        // Auto-retry every 30 seconds
+        setInterval(() => {
+            if (retryCount < maxRetries) {
+                checkConnection();
+            }
+        }, 30000);
+        
+        // Update last checked time
+        function updateLastChecked() {
+            const now = new Date();
+            document.getElementById('last-checked').textContent = now.toLocaleString();
+        }
+        
+        // Update time every minute
+        setInterval(updateLastChecked, 60000);
+        
+        // Initial connection check
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(checkConnection, 1000);
+        });
+        
+        // Handle logo loading error
+        document.getElementById('logo').addEventListener('error', function() {
+            this.style.display = 'none';
+        });
+    </script>
+</body>
+</html>

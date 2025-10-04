@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ocean ERP - Database Setup</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            padding: 20px;
+        }
+        
+        .setup-container {
+            max-width: 800px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        
+        .setup-header {
+            text-align: center;
+            padding: 40px 20px 20px;
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .logo-container {
+            margin-bottom: 20px;
+        }
+        
+        .logo {
+            max-width: 200px;
+            max-height: 100px;
+            object-fit: contain;
+            filter: brightness(0) invert(1);
+        }
+        
+        .setup-title {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 300;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .setup-subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+        
+        .setup-progress {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        
+        .progress-step {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 10px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .progress-step.active {
+            background: #ffd700;
+            color: #333;
+        }
+        
+        .progress-step.completed {
+            background: #4CAF50;
+            color: white;
+        }
+        
+        .setup-content {
+            padding: 40px;
+        }
+        
+        .setup-form {
+            display: none;
+        }
+        
+        .setup-form.active {
+            display: block;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #ffd700;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.3);
+        }
+        
+        .form-group .help-text {
+            font-size: 0.9em;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            gap: 20px;
+        }
+        
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            color: #333;
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+        
+        .loading-spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top: 2px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-left: 10px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .error-message {
+            background: rgba(255, 68, 68, 0.2);
+            border: 1px solid #ff4444;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            color: #ff4444;
+            display: none;
+        }
+        
+        .success-message {
+            background: rgba(76, 175, 80, 0.2);
+            border: 1px solid #4CAF50;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            color: #4CAF50;
+            display: none;
+        }
+        
+        .logo-upload {
+            border: 2px dashed rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .logo-upload:hover {
+            border-color: #ffd700;
+            background: rgba(255, 215, 0, 0.1);
+        }
+        
+        .logo-upload input[type="file"] {
+            display: none;
+        }
+        
+        .logo-preview {
+            max-width: 150px;
+            max-height: 75px;
+            object-fit: contain;
+            margin-top: 10px;
+            border-radius: 4px;
+        }
+        
+        .setup-summary {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .setup-summary h3 {
+            color: #ffd700;
+            margin-bottom: 15px;
+        }
+        
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            opacity: 0.9;
+        }
+        
+        .summary-item strong {
+            color: #ffd700;
+        }
+        
+        @media (max-width: 768px) {
+            .setup-container {
+                margin: 10px;
+            }
+            
+            .setup-content {
+                padding: 20px;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+            }
+            
+            .setup-title {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="setup-container">
+        <div class="setup-header">
+            <div class="logo-container">
+                <img src="{{ logo_url }}" alt="Ocean ERP Logo" class="logo" id="logo">
+            </div>
+            
+            <h1 class="setup-title">Ocean ERP Setup</h1>
+            <p class="setup-subtitle">Configure your database and create your first administrator account</p>
+            
+            <div class="setup-progress">
+                <div class="progress-step active" id="step-1">1</div>
+                <div class="progress-step" id="step-2">2</div>
+                <div class="progress-step" id="step-3">3</div>
+                <div class="progress-step" id="step-4">4</div>
+            </div>
+        </div>
+        
+        <div class="setup-content">
+            <div class="error-message" id="error-message"></div>
+            <div class="success-message" id="success-message"></div>
+            
+            <!-- Step 1: Database Configuration -->
+            <div class="setup-form active" id="form-database">
+                <h2>Database Configuration</h2>
+                <p>Configure your PostgreSQL database connection.</p>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="database_name">Database Name *</label>
+                        <input type="text" id="database_name" name="database_name" value="ocean_erp" required>
+                        <div class="help-text">Name of the database to create</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="database_user">Database User</label>
+                        <input type="text" id="database_user" name="database_user" value="erp_user">
+                        <div class="help-text">PostgreSQL user for the database</div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="database_password">Database Password</label>
+                    <input type="password" id="database_password" name="database_password" value="erp_password">
+                    <div class="help-text">Password for the database user</div>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="nextStep()">Next Step</button>
+                </div>
+            </div>
+            
+            <!-- Step 2: Administrator Account -->
+            <div class="setup-form" id="form-admin">
+                <h2>Administrator Account</h2>
+                <p>Create your administrator account to access the system.</p>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="admin_name">Full Name *</label>
+                        <input type="text" id="admin_name" name="admin_name" value="Administrator" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="admin_user">Username *</label>
+                        <input type="text" id="admin_user" name="admin_user" value="admin" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="admin_email">Email Address</label>
+                        <input type="email" id="admin_email" name="admin_email" value="admin@example.com">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="admin_password">Password *</label>
+                        <input type="password" id="admin_password" name="admin_password" required>
+                        <div class="help-text">Minimum 8 characters</div>
+                    </div>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="prevStep()">Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextStep()">Next Step</button>
+                </div>
+            </div>
+            
+            <!-- Step 3: Company Information -->
+            <div class="setup-form" id="form-company">
+                <h2>Company Information</h2>
+                <p>Set up your company details for the ERP system.</p>
+                
+                <div class="form-group">
+                    <label for="company_name">Company Name *</label>
+                    <input type="text" id="company_name" name="company_name" value="Kids Clothing Store" required>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="company_email">Company Email</label>
+                        <input type="email" id="company_email" name="company_email" value="info@kidsclothingerp.com">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="company_phone">Phone Number</label>
+                        <input type="tel" id="company_phone" name="company_phone" value="+91-9876543210">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="company_website">Website</label>
+                    <input type="url" id="company_website" name="company_website" value="https://www.kidsclothingerp.com">
+                </div>
+                
+                <div class="form-group">
+                    <label for="company_street">Street Address</label>
+                    <input type="text" id="company_street" name="company_street" value="123 Main Street">
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="company_city">City</label>
+                        <input type="text" id="company_city" name="company_city" value="Mumbai">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="company_zip">ZIP Code</label>
+                        <input type="text" id="company_zip" name="company_zip" value="400001">
+                    </div>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="prevStep()">Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="nextStep()">Next Step</button>
+                </div>
+            </div>
+            
+            <!-- Step 4: Logo Upload & Summary -->
+            <div class="setup-form" id="form-logo">
+                <h2>Logo Upload</h2>
+                <p>Upload your company logo (optional).</p>
+                
+                <div class="form-group">
+                    <label>Company Logo</label>
+                    <div class="logo-upload" onclick="document.getElementById('logo_file').click()">
+                        <div>📁 Click to upload logo</div>
+                        <div style="font-size: 0.9em; opacity: 0.7; margin-top: 5px;">
+                            PNG, JPG, SVG (max 2MB)
+                        </div>
+                        <input type="file" id="logo_file" accept="image/*" onchange="previewLogo(this)">
+                        <img id="logo_preview" class="logo-preview" style="display: none;">
+                    </div>
+                </div>
+                
+                <div class="setup-summary">
+                    <h3>Setup Summary</h3>
+                    <div class="summary-item">
+                        <span>Database:</span>
+                        <strong id="summary-database">ocean_erp</strong>
+                    </div>
+                    <div class="summary-item">
+                        <span>Admin User:</span>
+                        <strong id="summary-admin">admin</strong>
+                    </div>
+                    <div class="summary-item">
+                        <span>Company:</span>
+                        <strong id="summary-company">Kids Clothing Store</strong>
+                    </div>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="prevStep()">Previous</button>
+                    <button type="button" class="btn btn-primary" onclick="runSetup()">
+                        <span id="setup-text">Complete Setup</span>
+                        <div class="loading-spinner" id="setup-spinner"></div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 1;
+        const totalSteps = 4;
+        
+        function nextStep() {
+            if (validateCurrentStep()) {
+                if (currentStep < totalSteps) {
+                    currentStep++;
+                    updateStepDisplay();
+                }
+            }
+        }
+        
+        function prevStep() {
+            if (currentStep > 1) {
+                currentStep--;
+                updateStepDisplay();
+            }
+        }
+        
+        function updateStepDisplay() {
+            // Hide all forms
+            document.querySelectorAll('.setup-form').forEach(form => {
+                form.classList.remove('active');
+            });
+            
+            // Show current form
+            document.getElementById(`form-${getFormName(currentStep)}`).classList.add('active');
+            
+            // Update progress steps
+            for (let i = 1; i <= totalSteps; i++) {
+                const step = document.getElementById(`step-${i}`);
+                step.classList.remove('active', 'completed');
+                
+                if (i < currentStep) {
+                    step.classList.add('completed');
+                } else if (i === currentStep) {
+                    step.classList.add('active');
+                }
+            }
+            
+            // Update summary
+            updateSummary();
+        }
+        
+        function getFormName(step) {
+            const forms = ['database', 'admin', 'company', 'logo'];
+            return forms[step - 1];
+        }
+        
+        function validateCurrentStep() {
+            const currentForm = document.getElementById(`form-${getFormName(currentStep)}`);
+            const requiredFields = currentForm.querySelectorAll('[required]');
+            
+            for (let field of requiredFields) {
+                if (!field.value.trim()) {
+                    showError(`Please fill in the ${field.name} field`);
+                    field.focus();
+                    return false;
+                }
+            }
+            
+            // Additional validations
+            if (currentStep === 2) {
+                const password = document.getElementById('admin_password').value;
+                if (password.length < 8) {
+                    showError('Password must be at least 8 characters long');
+                    return false;
+                }
+            }
+            
+            return true;
+        }
+        
+        function updateSummary() {
+            document.getElementById('summary-database').textContent = 
+                document.getElementById('database_name').value;
+            document.getElementById('summary-admin').textContent = 
+                document.getElementById('admin_user').value;
+            document.getElementById('summary-company').textContent = 
+                document.getElementById('company_name').value;
+        }
+        
+        function previewLogo(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const preview = document.getElementById('logo_preview');
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        
+        function runSetup() {
+            const setupButton = document.querySelector('#form-logo .btn-primary');
+            const setupText = document.getElementById('setup-text');
+            const setupSpinner = document.getElementById('setup-spinner');
+            
+            // Show loading state
+            setupButton.disabled = true;
+            setupText.textContent = 'Setting up...';
+            setupSpinner.style.display = 'inline-block';
+            
+            // Collect all form data
+            const setupData = {
+                database_name: document.getElementById('database_name').value,
+                database_user: document.getElementById('database_user').value,
+                database_password: document.getElementById('database_password').value,
+                admin_name: document.getElementById('admin_name').value,
+                admin_user: document.getElementById('admin_user').value,
+                admin_email: document.getElementById('admin_email').value,
+                admin_password: document.getElementById('admin_password').value,
+                company_name: document.getElementById('company_name').value,
+                company_email: document.getElementById('company_email').value,
+                company_phone: document.getElementById('company_phone').value,
+                company_website: document.getElementById('company_website').value,
+                company_street: document.getElementById('company_street').value,
+                company_city: document.getElementById('company_city').value,
+                company_zip: document.getElementById('company_zip').value
+            };
+            
+            // Send setup request
+            fetch('/api/setup', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(setupData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showSuccess('Setup completed successfully! Redirecting to login...');
+                    setTimeout(() => {
+                        window.location.href = '/login';
+                    }, 2000);
+                } else {
+                    showError(data.error || 'Setup failed');
+                    setupButton.disabled = false;
+                    setupText.textContent = 'Complete Setup';
+                    setupSpinner.style.display = 'none';
+                }
+            })
+            .catch(error => {
+                showError('Setup error: ' + error.message);
+                setupButton.disabled = false;
+                setupText.textContent = 'Complete Setup';
+                setupSpinner.style.display = 'none';
+            });
+        }
+        
+        function showError(message) {
+            const errorDiv = document.getElementById('error-message');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            
+            const successDiv = document.getElementById('success-message');
+            successDiv.style.display = 'none';
+        }
+        
+        function showSuccess(message) {
+            const successDiv = document.getElementById('success-message');
+            successDiv.textContent = message;
+            successDiv.style.display = 'block';
+            
+            const errorDiv = document.getElementById('error-message');
+            errorDiv.style.display = 'none';
+        }
+        
+        // Handle logo loading error
+        document.getElementById('logo').addEventListener('error', function() {
+            this.style.display = 'none';
+        });
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            updateSummary();
+        });
+    </script>
+</body>
+</html>

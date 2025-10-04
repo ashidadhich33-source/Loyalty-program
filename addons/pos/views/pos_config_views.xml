@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        
+        <!-- POS Configuration Tree View -->
+        <record id="view_pos_config_tree" model="ir.ui.view">
+            <field name="name">pos.config.tree</field>
+            <field name="model">pos.config</field>
+            <field name="arch" type="xml">
+                <tree string="POS Configurations">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="company_id"/>
+                    <field name="is_active"/>
+                    <field name="current_session_id"/>
+                    <field name="order_count"/>
+                    <field name="total_sales"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- POS Configuration Form View -->
+        <record id="view_pos_config_form" model="ir.ui.view">
+            <field name="name">pos.config.form</field>
+            <field name="model">pos.config</field>
+            <field name="arch" type="xml">
+                <form string="POS Configuration">
+                    <header>
+                        <button name="action_start_session" 
+                                string="Start Session" 
+                                type="object" 
+                                class="btn-primary"
+                                attrs="{'invisible': [('current_session_id', '!=', False)]}"/>
+                        <button name="action_close_session" 
+                                string="Close Session" 
+                                type="object" 
+                                class="btn-secondary"
+                                attrs="{'invisible': [('current_session_id', '=', False)]}"/>
+                        <field name="state" widget="statusbar" statusbar_visible="opened,closed"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_view_sessions" 
+                                    type="object" 
+                                    class="oe_stat_button" 
+                                    icon="fa-calendar">
+                                <field name="session_count" widget="statinfo" string="Sessions"/>
+                            </button>
+                            <button name="action_view_orders" 
+                                    type="object" 
+                                    class="oe_stat_button" 
+                                    icon="fa-shopping-cart">
+                                <field name="order_count" widget="statinfo" string="Orders"/>
+                            </button>
+                            <button name="action_view_payments" 
+                                    type="object" 
+                                    class="oe_stat_button" 
+                                    icon="fa-money">
+                                <field name="total_sales" widget="monetary" string="Total Sales"/>
+                            </button>
+                        </div>
+                        
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="POS Configuration Name"/>
+                            </h1>
+                        </div>
+                        
+                        <group>
+                            <group>
+                                <field name="code"/>
+                                <field name="company_id"/>
+                                <field name="warehouse_id"/>
+                                <field name="is_active"/>
+                            </group>
+                            <group>
+                                <field name="current_session_id"/>
+                                <field name="session_timeout"/>
+                                <field name="auto_close_session"/>
+                            </group>
+                        </group>
+                        
+                        <notebook>
+                            <page string="Settings">
+                                <group>
+                                    <group string="Product Settings">
+                                        <field name="allow_price_change"/>
+                                        <field name="allow_discount"/>
+                                        <field name="max_discount_percentage"/>
+                                    </group>
+                                    <group string="Payment Settings">
+                                        <field name="default_payment_method_id"/>
+                                        <field name="payment_method_ids" widget="many2many_tags"/>
+                                    </group>
+                                </group>
+                            </page>
+                            
+                            <page string="Receipt Settings">
+                                <group>
+                                    <field name="print_receipt"/>
+                                    <field name="receipt_header" widget="text"/>
+                                    <field name="receipt_footer" widget="text"/>
+                                </group>
+                            </page>
+                            
+                            <page string="Loyalty Settings">
+                                <group>
+                                    <field name="enable_loyalty"/>
+                                    <field name="loyalty_points_per_rupee"/>
+                                </group>
+                            </page>
+                            
+                            <page string="Age Discount Settings">
+                                <group>
+                                    <field name="enable_age_discount"/>
+                                    <field name="age_discount_percentage"/>
+                                </group>
+                            </page>
+                            
+                            <page string="Description">
+                                <field name="description" widget="text"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- POS Configuration Search View -->
+        <record id="view_pos_config_search" model="ir.ui.view">
+            <field name="name">pos.config.search</field>
+            <field name="model">pos.config</field>
+            <field name="arch" type="xml">
+                <search string="POS Configurations">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="company_id"/>
+                    <filter string="Active" name="active" domain="[('is_active', '=', True)]"/>
+                    <filter string="Inactive" name="inactive" domain="[('is_active', '=', False)]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Company" name="company" context="{'group_by': 'company_id'}"/>
+                        <filter string="Status" name="status" context="{'group_by': 'is_active'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- POS Configuration Action -->
+        <record id="action_pos_config" model="ir.actions.act_window">
+            <field name="name">POS Configurations</field>
+            <field name="res_model">pos.config</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_pos_config_search"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first POS configuration!
+                </p>
+                <p>
+                    POS configurations define the settings and behavior of your point of sale terminals.
+                </p>
+            </field>
+        </record>
+        
+    </data>
+</odoo>

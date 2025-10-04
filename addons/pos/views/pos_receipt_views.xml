@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        
+        <!-- POS Receipt Tree View -->
+        <record id="view_pos_receipt_tree" model="ir.ui.view">
+            <field name="name">pos.receipt.tree</field>
+            <field name="model">pos.receipt</field>
+            <field name="arch" type="xml">
+                <tree string="POS Receipts">
+                    <field name="name"/>
+                    <field name="order_id"/>
+                    <field name="receipt_type"/>
+                    <field name="receipt_date"/>
+                    <field name="is_printed"/>
+                    <field name="print_count"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- POS Receipt Form View -->
+        <record id="view_pos_receipt_form" model="ir.ui.view">
+            <field name="name">pos.receipt.form</field>
+            <field name="model">pos.receipt</field>
+            <field name="arch" type="xml">
+                <form string="POS Receipt">
+                    <header>
+                        <button name="action_print_receipt" 
+                                string="Print Receipt" 
+                                type="object" 
+                                class="btn-primary"/>
+                        <button name="action_send_digital_receipt" 
+                                string="Send Digital Receipt" 
+                                type="object" 
+                                class="btn-secondary"
+                                attrs="{'invisible': [('customer_email', '=', False)]}"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Receipt Number"/>
+                            </h1>
+                        </div>
+                        
+                        <group>
+                            <group>
+                                <field name="order_id"/>
+                                <field name="session_id"/>
+                                <field name="receipt_type"/>
+                                <field name="receipt_date"/>
+                            </group>
+                            <group>
+                                <field name="is_printed"/>
+                                <field name="print_date"/>
+                                <field name="print_count"/>
+                                <field name="is_digital"/>
+                                <field name="digital_sent"/>
+                            </group>
+                        </group>
+                        
+                        <notebook>
+                            <page string="Company Information">
+                                <group>
+                                    <field name="company_name"/>
+                                    <field name="company_address" widget="text"/>
+                                    <field name="company_phone"/>
+                                    <field name="company_email"/>
+                                    <field name="company_gstin"/>
+                                </group>
+                            </page>
+                            
+                            <page string="Customer Information">
+                                <group>
+                                    <field name="customer_name"/>
+                                    <field name="customer_phone"/>
+                                    <field name="customer_email"/>
+                                </group>
+                            </page>
+                            
+                            <page string="Receipt Content">
+                                <field name="receipt_header" widget="text"/>
+                                <field name="receipt_content" widget="text" readonly="1"/>
+                                <field name="receipt_footer" widget="text"/>
+                            </page>
+                            
+                            <page string="Notes">
+                                <field name="note" widget="text"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- POS Receipt Action -->
+        <record id="action_pos_receipt" model="ir.actions.act_window">
+            <field name="name">POS Receipts</field>
+            <field name="res_model">pos.receipt</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    No receipts found!
+                </p>
+                <p>
+                    Receipts are automatically generated when POS orders are completed.
+                </p>
+            </field>
+        </record>
+        
+    </data>
+</odoo>

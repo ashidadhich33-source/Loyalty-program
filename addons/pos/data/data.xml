@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        
+        <!-- Payment Methods -->
+        <record id="payment_method_cash" model="pos.payment.method">
+            <field name="name">Cash</field>
+            <field name="is_cash">True</field>
+            <field name="is_active">True</field>
+            <field name="sequence">10</field>
+        </record>
+        
+        <record id="payment_method_card" model="pos.payment.method">
+            <field name="name">Card</field>
+            <field name="is_digital">True</field>
+            <field name="is_active">True</field>
+            <field name="sequence">20</field>
+        </record>
+        
+        <record id="payment_method_upi" model="pos.payment.method">
+            <field name="name">UPI</field>
+            <field name="is_digital">True</field>
+            <field name="is_active">True</field>
+            <field name="sequence">30</field>
+        </record>
+        
+        <record id="payment_method_paytm" model="pos.payment.method">
+            <field name="name">Paytm</field>
+            <field name="is_digital">True</field>
+            <field name="is_active">True</field>
+            <field name="sequence">40</field>
+        </record>
+        
+        <record id="payment_method_phonepe" model="pos.payment.method">
+            <field name="name">PhonePe</field>
+            <field name="is_digital">True</field>
+            <field name="is_active">True</field>
+            <field name="sequence">50</field>
+        </record>
+        
+        <!-- Default POS Configuration -->
+        <record id="pos_config_main" model="pos.config">
+            <field name="name">Main Store POS</field>
+            <field name="code">MAIN_POS</field>
+            <field name="description">Main store point of sale configuration</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="is_active">True</field>
+            <field name="auto_close_session">True</field>
+            <field name="session_timeout">30</field>
+            <field name="allow_price_change">False</field>
+            <field name="allow_discount">True</field>
+            <field name="max_discount_percentage">20.0</field>
+            <field name="default_payment_method_id" ref="payment_method_cash"/>
+            <field name="print_receipt">True</field>
+            <field name="receipt_header">Kids Clothing Store&#10;Thank you for shopping with us!</field>
+            <field name="receipt_footer">Visit us again soon!&#10;Follow us on social media</field>
+            <field name="enable_loyalty">True</field>
+            <field name="loyalty_points_per_rupee">1.0</field>
+            <field name="enable_age_discount">True</field>
+            <field name="age_discount_percentage">10.0</field>
+        </record>
+        
+        <!-- Payment Methods for Main POS -->
+        <record id="pos_config_main_payment_cash" model="pos.config.payment.method">
+            <field name="config_id" ref="pos_config_main"/>
+            <field name="payment_method_id" ref="payment_method_cash"/>
+        </record>
+        
+        <record id="pos_config_main_payment_card" model="pos.config.payment.method">
+            <field name="config_id" ref="pos_config_main"/>
+            <field name="payment_method_id" ref="payment_method_card"/>
+        </record>
+        
+        <record id="pos_config_main_payment_upi" model="pos.config.payment.method">
+            <field name="config_id" ref="pos_config_main"/>
+            <field name="payment_method_id" ref="payment_method_upi"/>
+        </record>
+        
+        <record id="pos_config_main_payment_paytm" model="pos.config.payment.method">
+            <field name="config_id" ref="pos_config_main"/>
+            <field name="payment_method_id" ref="payment_method_paytm"/>
+        </record>
+        
+        <record id="pos_config_main_payment_phonepe" model="pos.config.payment.method">
+            <field name="config_id" ref="pos_config_main"/>
+            <field name="payment_method_id" ref="payment_method_phonepe"/>
+        </record>
+        
+    </data>
+</odoo>

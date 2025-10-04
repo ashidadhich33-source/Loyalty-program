@@ -220,6 +220,14 @@ class OceanERPBootstrap:
                 "colors": ["Red", "Blue", "Green", "Yellow", "Pink", "Purple", "Orange", "Black", "White"],
                 "brands": ["Brand A", "Brand B", "Brand C"],
                 "seasons": ["Spring", "Summer", "Fall", "Winter"]
+            },
+            "backup": {
+                "path": "backups",
+                "retention_days": 30,
+                "compression_enabled": True,
+                "encryption_enabled": False,
+                "auto_cleanup": True,
+                "scheduled_backups": True
             }
         }
         

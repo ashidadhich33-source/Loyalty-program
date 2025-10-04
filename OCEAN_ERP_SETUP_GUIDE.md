@@ -708,6 +708,76 @@ netsh advfirewall firewall add rule name="Ocean ERP" dir=in action=allow protoco
 netsh advfirewall firewall add rule name="PostgreSQL" dir=in action=allow protocol=TCP localport=5432
 ```
 
+## 💾 Backup & Restore System
+
+Ocean ERP includes a comprehensive backup and restore system:
+
+### **Backup Features**
+- ✅ **Full Database Backups**: Complete database dumps using pg_dump
+- ✅ **Incremental Backups**: Only changed data
+- ✅ **Compression**: Automatic gzip compression
+- ✅ **Verification**: Backup integrity checking
+- ✅ **Scheduled Backups**: Automated daily/weekly/monthly backups
+- ✅ **Retention Management**: Automatic cleanup of old backups
+- ✅ **Multiple Formats**: SQL dumps with schema and data options
+
+### **Restore Features**
+- ✅ **Full Restore**: Complete database restoration
+- ✅ **Selective Restore**: Restore specific tables or data
+- ✅ **Clean Restore**: Drop existing objects before restore
+- ✅ **Verification**: Pre-restore backup verification
+- ✅ **Rollback Support**: Quick rollback to previous state
+
+### **Using Backup System**
+
+#### **Web Interface**
+1. Go to **Database Management** → **Backups**
+2. Click **Create Backup** to start manual backup
+3. Use **Restore Backup** to restore from existing backup
+4. Configure **Scheduled Backups** for automation
+
+#### **Command Line**
+```bash
+# Create backup
+python backup_cli.py backup --name "daily_backup" --type full
+
+# List backups
+python backup_cli.py list
+
+# Restore backup
+python backup_cli.py restore --backup backups/daily_backup_20231201_020000.sql
+
+# Verify backup
+python backup_cli.py verify --backup backups/daily_backup_20231201_020000.sql
+
+# Cleanup old backups
+python backup_cli.py cleanup --days 30
+```
+
+#### **Backup Service**
+```bash
+# Start backup service (runs scheduled backups)
+python backup_service.py --daemon
+
+# Create immediate backup
+python backup_service.py --backup "emergency_backup"
+```
+
+### **Backup Configuration**
+Edit `erp.conf` to configure backup settings:
+```json
+{
+  "backup": {
+    "path": "backups",
+    "retention_days": 30,
+    "compression_enabled": true,
+    "encryption_enabled": false,
+    "auto_cleanup": true,
+    "scheduled_backups": true
+  }
+}
+```
+
 ## 🎉 Success!
 
 After completing the setup wizard, you'll have:
@@ -718,6 +788,7 @@ After completing the setup wizard, you'll have:
 - ✅ **Logo System**: Company branding in place
 - ✅ **Master Data**: Age groups, seasons, genders loaded
 - ✅ **System Settings**: All configurations optimized
+- ✅ **Backup System**: Comprehensive backup and restore functionality
 
 ## 📞 Support
 

@@ -169,6 +169,22 @@
             </field>
         </record>
         
+        <!-- EDI Transmission Action -->
+        <record id="action_edi_transmission" model="ocean.actions.act_window">
+            <field name="name">EDI Transmissions</field>
+            <field name="res_model">edi.transmission</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first EDI transmission!
+                </p>
+                <p>
+                    EDI transmissions handle the sending and receiving of EDI data.
+                </p>
+            </field>
+        </record>
+        
         <!-- EDI Acknowledgment Tree View -->
         <record id="view_edi_acknowledgment_tree" model="ocean.ui.view">
             <field name="name">edi.acknowledgment.tree</field>

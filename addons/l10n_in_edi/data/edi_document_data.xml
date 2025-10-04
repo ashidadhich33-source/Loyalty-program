@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data>
+        
+        <!-- Sample EDI Documents -->
+        <record id="edi_document_invoice_001" model="edi.document">
+            <field name="name">Invoice INV-2024-001</field>
+            <field name="document_type">invoice</field>
+            <field name="edi_format">edifact</field>
+            <field name="edi_version">D.96A</field>
+            <field name="age_group">4-6</field>
+            <field name="size">m</field>
+            <field name="season">all_season</field>
+            <field name="brand">Kids Brand</field>
+            <field name="color">Blue</field>
+        </record>
+        
+        <record id="edi_document_credit_note_001" model="edi.document">
+            <field name="name">Credit Note CN-2024-001</field>
+            <field name="document_type">credit_note</field>
+            <field name="edi_format">edifact</field>
+            <field name="edi_version">D.96A</field>
+            <field name="age_group">2-4</field>
+            <field name="size">s</field>
+            <field name="season">summer</field>
+            <field name="brand">Toddler Brand</field>
+            <field name="color">Pink</field>
+        </record>
+        
+        <record id="edi_document_purchase_order_001" model="edi.document">
+            <field name="name">Purchase Order PO-2024-001</field>
+            <field name="document_type">purchase_order</field>
+            <field name="edi_format">edifact</field>
+            <field name="edi_version">D.96A</field>
+            <field name="age_group">0-2</field>
+            <field name="size">xs</field>
+            <field name="season">winter</field>
+            <field name="brand">Baby Brand</field>
+            <field name="color">Yellow</field>
+        </record>
+        
+        <record id="edi_document_sales_order_001" model="edi.document">
+            <field name="name">Sales Order SO-2024-001</field>
+            <field name="document_type">sales_order</field>
+            <field name="edi_format">edifact</field>
+            <field name="edi_version">D.96A</field>
+            <field name="age_group">6-8</field>
+            <field name="size">l</field>
+            <field name="season">monsoon</field>
+            <field name="brand">Kids Brand</field>
+            <field name="color">Green</field>
+        </record>
+        
+        <record id="edi_document_delivery_note_001" model="edi.document">
+            <field name="name">Delivery Note DN-2024-001</field>
+            <field name="document_type">delivery_note</field>
+            <field name="edi_format">edifact</field>
+            <field name="edi_version">D.96A</field>
+            <field name="age_group">8-10</field>
+            <field name="size">xl</field>
+            <field name="season">all_season</field>
+            <field name="brand">Kids Brand</field>
+            <field name="color">Red</field>
+        </record>
+        
+        <!-- Sample EDI Messages -->
+        <record id="edi_message_orders_001" model="edi.message">
+            <field name="name">ORDERS Message ORD-2024-001</field>
+            <field name="message_type">ordrsp</field>
+            <field name="message_format">edifact</field>
+            <field name="message_version">D.96A</field>
+            <field name="age_group">4-6</field>
+            <field name="size">m</field>
+            <field name="season">all_season</field>
+            <field name="brand">Kids Brand</field>
+            <field name="color">Blue</field>
+        </record>
+        
+        <record id="edi_message_desadv_001" model="edi.message">
+            <field name="name">DESADV Message DES-2024-001</field>
+            <field name="message_type">desadv</field>
+            <field name="message_format">edifact</field>
+            <field name="message_version">D.96A</field>
+            <field name="age_group">2-4</field>
+            <field name="size">s</field>
+            <field name="season">summer</field>
+            <field name="brand">Toddler Brand</field>
+            <field name="color">Pink</field>
+        </record>
+        
+        <record id="edi_message_invoic_001" model="edi.message">
+            <field name="name">INVOIC Message INV-2024-001</field>
+            <field name="message_type">invoic</field>
+            <field name="message_format">edifact</field>
+            <field name="message_version">D.96A</field>
+            <field name="age_group">0-2</field>
+            <field name="size">xs</field>
+            <field name="season">winter</field>
+            <field name="brand">Baby Brand</field>
+            <field name="color">Yellow</field>
+        </record>
+        
+        <!-- Sample EDI Transmissions -->
+        <record id="edi_transmission_ftp_001" model="edi.transmission">
+            <field name="name">FTP Transmission FTP-2024-001</field>
+            <field name="transmission_type">send</field>
+            <field name="protocol">ftp</field>
+            <field name="host">ftp.example.com</field>
+            <field name="port">21</field>
+            <field name="username">edi_user</field>
+            <field name="password">edi_pass</field>
+            <field name="age_group">4-6</field>
+            <field name="size">m</field>
+            <field name="season">all_season</field>
+            <field name="brand">Kids Brand</field>
+            <field name="color">Blue</field>
+        </record>
+        
+        <record id="edi_transmission_sftp_001" model="edi.transmission">
+            <field name="name">SFTP Transmission SFTP-2024-001</field>
+            <field name="transmission_type">receive</field>
+            <field name="protocol">sftp</field>
+            <field name="host">sftp.example.com</field>
+            <field name="port">22</field>
+            <field name="username">edi_user</field>
+            <field name="password">edi_pass</field>
+            <field name="age_group">2-4</field>
+            <field name="size">s</field>
+            <field name="season">summer</field>
+            <field name="brand">Toddler Brand</field>
+            <field name="color">Pink</field>
+        </record>
+        
+        <record id="edi_transmission_http_001" model="edi.transmission">
+            <field name="name">HTTP Transmission HTTP-2024-001</field>
+            <field name="transmission_type">bidirectional</field>
+            <field name="protocol">http</field>
+            <field name="host">api.example.com</field>
+            <field name="port">80</field>
+            <field name="username">api_user</field>
+            <field name="password">api_pass</field>
+            <field name="age_group">0-2</field>
+            <field name="size">xs</field>
+            <field name="season">winter</field>
+            <field name="brand">Baby Brand</field>
+            <field name="color">Yellow</field>
+        </record>
+        
+        <record id="edi_transmission_https_001" model="edi.transmission">
+            <field name="name">HTTPS Transmission HTTPS-2024-001</field>
+            <field name="transmission_type">send</field>
+            <field name="protocol">https</field>
+            <field name="host">secure-api.example.com</field>
+            <field name="port">443</field>
+            <field name="username">secure_user</field>
+            <field name="password">secure_pass</field>
+            <field name="age_group">6-8</field>
+            <field name="size">l</field>
+            <field name="season">monsoon</field>
+            <field name="brand">Kids Brand</field>
+            <field name="color">Green</field>
+        </record>
+        
+        <record id="edi_transmission_as2_001" model="edi.transmission">
+            <field name="name">AS2 Transmission AS2-2024-001</field>
+            <field name="transmission_type">bidirectional</field>
+            <field name="protocol">as2</field>
+            <field name="host">as2.example.com</field>
+            <field name="port">443</field>
+            <field name="username">as2_user</field>
+            <field name="password">as2_pass</field>
+            <field name="age_group">8-10</field>
+            <field name="size">xl</field>
+            <field name="season">all_season</field>
+            <field name="brand">Kids Brand</field>
+            <field name="color">Red</field>
+        </record>
+        
+    </data>
+</ocean>

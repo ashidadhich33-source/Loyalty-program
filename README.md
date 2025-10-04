@@ -1,15 +1,24 @@
-# Kids Clothing Retail ERP System
+# Ocean ERP - Kids Clothing Management System
 
-A comprehensive ERP system designed specifically for the Kids' Clothing Retail Industry, built with Python, PostgreSQL, and modern web technologies using an **addons-based modular architecture**.
+A comprehensive **custom-built ERP system** designed specifically for the Kids' Clothing Retail Industry, built with Python, PostgreSQL, and modern web technologies using our **proprietary Ocean ERP framework**.
 
-## 🚀 **Addons-Based ERP System**
+## 🚨 **IMPORTANT FRAMEWORK CLARIFICATION**
 
-This is a **complete ERP system** that uses:
+**This is our OWN CUSTOM Ocean ERP Framework - NOT Odoo or any other ERP system.**
+
+- ✅ **Custom Framework**: Built from scratch using Python, PostgreSQL, and modern web technologies
+- ✅ **Ocean ERP**: Our proprietary ERP framework with custom ORM, addon system, and web interface
+- ✅ **No External Dependencies**: No Odoo, no external ERP frameworks - completely standalone
+- ✅ **Custom Patterns**: Uses `ocean.ui.view`, `ocean.actions.act_window`, `<ocean>` XML structure
+
+## 🚀 **Ocean ERP Framework**
+
+This is a **complete custom ERP system** that uses:
 - **Python** for backend development
 - **PostgreSQL** database
-- **Addons-based modular architecture** (custom Ocean ERP framework)
-- **XML templates** for views
-- **Python models** for business logic
+- **Ocean ERP Framework**: Our proprietary addons-based modular architecture
+- **Custom XML templates** for views (`<ocean>` structure)
+- **Custom Python models** for business logic
 - **Modular addons** for easy customization and installation
 
 ## 🏗️ **Architecture**

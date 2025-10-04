@@ -35,7 +35,6 @@ Features:
     'depends': [
         'core_base',
         'l10n_in',
-        'hr',
         'accounting',
     ],
     'data': [
@@ -43,7 +42,15 @@ Features:
         'data/hr_employee_data.xml',
         'security/ir.model.access.csv',
         'views/hr_employee_views.xml',
+        'views/hr_contract_views.xml',
+        'views/hr_salary_rule_views.xml',
+        'views/hr_salary_structure_views.xml',
         'views/hr_payslip_views.xml',
+        'views/hr_payslip_line_views.xml',
+        'views/hr_payroll_period_views.xml',
+        'views/hr_payroll_report_views.xml',
+        'views/hr_tax_computation_views.xml',
+        'views/hr_pf_esi_views.xml',
         'views/menu.xml',
     ],
     'demo': [

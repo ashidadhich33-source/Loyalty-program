@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data noupdate="1">
+        
+        <!-- Demo HR Payslips -->
+        <record id="demo_hr_payslip_manager" model="hr.payslip">
+            <field name="name">Payslip - Rajesh Kumar - 2024-01</field>
+            <field name="employee_id" ref="demo_hr_employee_manager"/>
+            <field name="date_from">2024-01-01</field>
+            <field name="date_to">2024-01-31</field>
+            <field name="state">draft</field>
+            <field name="age_group">adult</field>
+            <field name="size">L,XL</field>
+            <field name="season">all_season</field>
+            <field name="brand">Professional</field>
+            <field name="color">blue,white</field>
+        </record>
+        
+        <record id="demo_hr_payslip_sales" model="hr.payslip">
+            <field name="name">Payslip - Priya Sharma - 2024-01</field>
+            <field name="employee_id" ref="demo_hr_employee_sales"/>
+            <field name="date_from">2024-01-01</field>
+            <field name="date_to">2024-01-31</field>
+            <field name="state">draft</field>
+            <field name="age_group">adult</field>
+            <field name="size">S,M</field>
+            <field name="season">all_season</field>
+            <field name="brand">Professional</field>
+            <field name="color">pink,white</field>
+        </record>
+        
+    </data>
+</ocean>

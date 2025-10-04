@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data noupdate="1">
+        
+        <!-- Demo EDI Transmissions -->
+        <record id="demo_edi_transmission_invoice" model="edi.transmission">
+            <field name="name">Demo Invoice Transmission</field>
+            <field name="transmission_type">invoice</field>
+            <field name="transmission_status">pending</field>
+            <field name="age_group">toddler,teen</field>
+            <field name="size">S,M,L,XL</field>
+            <field name="season">summer,winter</field>
+            <field name="brand">KidsFashion,StyleKids</field>
+            <field name="color">blue,red,green</field>
+        </record>
+        
+        <record id="demo_edi_transmission_ewaybill" model="edi.transmission">
+            <field name="name">Demo E-Way Bill Transmission</field>
+            <field name="transmission_type">ewaybill</field>
+            <field name="transmission_status">pending</field>
+            <field name="age_group">toddler,teen</field>
+            <field name="size">S,M,L,XL</field>
+            <field name="season">summer,winter</field>
+            <field name="brand">KidsFashion,StyleKids</field>
+            <field name="color">blue,red,green</field>
+        </record>
+        
+    </data>
+</ocean>

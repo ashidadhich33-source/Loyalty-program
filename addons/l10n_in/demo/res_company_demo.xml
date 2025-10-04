@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ocean>
+    <data noupdate="1">
+        
+        <!-- Demo Indian Companies -->
+        <record id="demo_company_india" model="res.company">
+            <field name="name">Kids Clothing India Pvt Ltd</field>
+            <field name="country_id" ref="base.in"/>
+            <field name="state_id" ref="l10n_in.state_maharashtra"/>
+            <field name="city">Mumbai</field>
+            <field name="zip">400001</field>
+            <field name="street">123 Fashion Street</field>
+            <field name="phone">+91-22-12345678</field>
+            <field name="email">info@kidsclothingindia.com</field>
+            <field name="website">https://www.kidsclothingindia.com</field>
+            <field name="currency_id" ref="base.INR"/>
+            <field name="language_id" ref="l10n_in.lang_english"/>
+            <field name="age_group">toddler,teen</field>
+            <field name="size">S,M,L,XL</field>
+            <field name="season">summer,winter</field>
+            <field name="brand">KidsFashion,StyleKids</field>
+            <field name="color">blue,red,green</field>
+        </record>
+        
+        <record id="demo_company_delhi" model="res.company">
+            <field name="name">Delhi Kids Store</field>
+            <field name="country_id" ref="base.in"/>
+            <field name="state_id" ref="l10n_in.state_delhi"/>
+            <field name="city">New Delhi</field>
+            <field name="zip">110001</field>
+            <field name="street">456 Children Avenue</field>
+            <field name="phone">+91-11-87654321</field>
+            <field name="email">contact@delhikidsstore.com</field>
+            <field name="website">https://www.delhikidsstore.com</field>
+            <field name="currency_id" ref="base.INR"/>
+            <field name="language_id" ref="l10n_in.lang_hindi"/>
+            <field name="age_group">baby,toddler</field>
+            <field name="size">XS,S,M</field>
+            <field name="season">all_season</field>
+            <field name="brand">BabyStyle,TinyTots</field>
+            <field name="color">pink,yellow,white</field>
+        </record>
+        
+    </data>
+</ocean>

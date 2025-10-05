@@ -16,6 +16,7 @@
             color: white;
             height: 100vh;
             overflow-y: auto;
+            transition: transform 0.3s ease;
         }
         .pos-main {
             height: 100vh;
@@ -44,6 +45,170 @@
             margin: 10px;
             border-radius: 10px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        /* Mobile Navigation for POS */
+        .pos-mobile-nav {
+            display: none;
+            background: white;
+            border-bottom: 1px solid #dee2e6;
+            padding: 10px 15px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .pos-mobile-toggle {
+            background: none;
+            border: none;
+            color: #667eea;
+            font-size: 1.5rem;
+            padding: 0.5rem;
+        }
+        
+        .pos-mobile-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1040;
+        }
+        
+        /* Mobile Responsive Styles */
+        @media (max-width: 768px) {
+            .pos-mobile-nav {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+            
+            .pos-sidebar {
+                position: fixed;
+                top: 0;
+                left: -100%;
+                width: 280px;
+                height: 100vh;
+                z-index: 1050;
+                transform: translateX(0);
+            }
+            
+            .pos-sidebar.show {
+                left: 0;
+            }
+            
+            .pos-main {
+                width: 100%;
+                margin-left: 0;
+            }
+            
+            .pos-content {
+                flex-direction: column;
+            }
+            
+            .pos-products {
+                margin: 5px;
+                order: 2;
+            }
+            
+            .pos-cart {
+                width: 100%;
+                margin: 5px;
+                order: 1;
+                max-height: 40vh;
+                overflow-y: auto;
+            }
+            
+            .mobile-nav-overlay.show {
+                display: block;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .pos-sidebar {
+                width: 100%;
+            }
+            
+            .pos-cart {
+                max-height: 35vh;
+            }
+            
+            .product-card {
+                padding: 10px;
+                margin: 5px;
+            }
+            
+            .barcode-input {
+                font-size: 16px;
+                padding: 12px;
+            }
+        }
+        
+        /* Touch Optimization for POS */
+        @media (hover: none) and (pointer: coarse) {
+            /* Touch-friendly POS buttons */
+            .btn-pos {
+                min-height: 48px;
+                min-width: 48px;
+                padding: 14px 24px;
+                font-size: 16px;
+            }
+            
+            /* Touch-friendly product cards */
+            .product-card {
+                min-height: 140px;
+                cursor: pointer;
+                touch-action: manipulation;
+            }
+            
+            .product-card:active {
+                transform: scale(0.98);
+                transition: transform 0.1s ease;
+            }
+            
+            /* Touch-friendly payment methods */
+            .payment-method {
+                min-height: 80px;
+                cursor: pointer;
+                touch-action: manipulation;
+            }
+            
+            .payment-method:active {
+                transform: scale(0.95);
+                transition: transform 0.1s ease;
+            }
+            
+            /* Touch-friendly form controls */
+            .form-control, .form-select {
+                min-height: 48px;
+                font-size: 16px;
+            }
+            
+            /* Touch-friendly barcode input */
+            .barcode-input {
+                min-height: 48px;
+                font-size: 18px;
+            }
+            
+            /* Touch-friendly cart items */
+            .cart-item {
+                min-height: 60px;
+                padding: 12px;
+            }
+            
+            /* Touch-friendly quantity controls */
+            .input-group .btn {
+                min-height: 40px;
+                min-width: 40px;
+            }
+            
+            /* Touch-friendly navigation */
+            .pos-mobile-toggle {
+                min-height: 44px;
+                min-width: 44px;
+            }
         }
         .product-card {
             border: 1px solid #dee2e6;
@@ -149,10 +314,35 @@
     </style>
 </head>
 <body>
+    <!-- Mobile Navigation Overlay -->
+    <div class="pos-mobile-overlay" id="posMobileOverlay"></div>
+    
     <div class="pos-container">
+        <!-- Mobile Navigation Header -->
+        <div class="pos-mobile-nav d-md-none">
+            <button class="pos-mobile-toggle" id="posMobileToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div>
+                <h5 class="mb-0">Ocean ERP POS</h5>
+                <small class="text-muted">Terminal 1</small>
+            </div>
+            <div class="dropdown">
+                <button class="btn btn-outline-primary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                    <i class="fas fa-user me-1"></i>Admin
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="/profile"><i class="fas fa-user me-2"></i>Profile</a></li>
+                    <li><a class="dropdown-item" href="/settings"><i class="fas fa-cog me-2"></i>Settings</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="/logout"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                </ul>
+            </div>
+        </div>
+        
         <div class="row g-0 h-100">
             <!-- Sidebar -->
-            <div class="col-md-3 pos-sidebar">
+            <div class="col-md-3 pos-sidebar" id="posSidebar">
                 <div class="p-3">
                     <div class="d-flex align-items-center mb-4">
                         <div class="bg-white rounded-circle p-2 me-3">
@@ -162,6 +352,10 @@
                             <h5 class="mb-0">Ocean ERP</h5>
                             <small class="opacity-75">POS System</small>
                         </div>
+                        <!-- Mobile close button -->
+                        <button class="btn btn-link text-white ms-auto d-md-none" id="posCloseSidebar">
+                            <i class="fas fa-times"></i>
+                        </button>
                     </div>
                     
                     <!-- Session Info -->
@@ -270,7 +464,7 @@
                             </div>
                             
                             <!-- Products Grid -->
-                            <div class="row" id="productsGrid">
+                            <div class="row g-2" id="productsGrid">
                                 <!-- Product cards will be dynamically loaded -->
                             </div>
                         </div>
@@ -440,7 +634,60 @@
         document.addEventListener('DOMContentLoaded', function() {
             loadProducts();
             setupEventListeners();
+            setupMobileNavigation();
         });
+        
+        // Mobile Navigation Setup
+        function setupMobileNavigation() {
+            const posMobileToggle = document.getElementById('posMobileToggle');
+            const posSidebar = document.getElementById('posSidebar');
+            const posMobileOverlay = document.getElementById('posMobileOverlay');
+            const posCloseSidebar = document.getElementById('posCloseSidebar');
+            
+            // Toggle sidebar
+            function togglePosSidebar() {
+                posSidebar.classList.toggle('show');
+                posMobileOverlay.classList.toggle('show');
+                document.body.classList.toggle('sidebar-open');
+            }
+            
+            // Close sidebar
+            function closePosSidebar() {
+                posSidebar.classList.remove('show');
+                posMobileOverlay.classList.remove('show');
+                document.body.classList.remove('sidebar-open');
+            }
+            
+            // Event listeners
+            if (posMobileToggle) {
+                posMobileToggle.addEventListener('click', togglePosSidebar);
+            }
+            
+            if (posCloseSidebar) {
+                posCloseSidebar.addEventListener('click', closePosSidebar);
+            }
+            
+            if (posMobileOverlay) {
+                posMobileOverlay.addEventListener('click', closePosSidebar);
+            }
+            
+            // Close sidebar when clicking on nav links (mobile)
+            const posNavLinks = document.querySelectorAll('.pos-sidebar .nav-link, .pos-sidebar button');
+            posNavLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    if (window.innerWidth <= 768) {
+                        closePosSidebar();
+                    }
+                });
+            });
+            
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 768) {
+                    closePosSidebar();
+                }
+            });
+        }
         
         // Load products
         function loadProducts() {
@@ -449,15 +696,15 @@
             
             products.forEach(product => {
                 const productCard = document.createElement('div');
-                productCard.className = 'col-md-6 col-lg-4';
+                productCard.className = 'col-6 col-md-4 col-lg-3';
                 productCard.innerHTML = `
                     <div class="product-card" onclick="addToCart(${product.id})">
                         <div class="d-flex justify-content-between align-items-start mb-2">
-                            <h6 class="mb-0">${product.name}</h6>
+                            <h6 class="mb-0 small">${product.name}</h6>
                             <span class="badge bg-primary">${product.size}</span>
                         </div>
                         <div class="mb-2">
-                            <small class="text-muted">${product.color} | ${product.barcode}</small>
+                            <small class="text-muted">${product.color}</small>
                         </div>
                         <div class="d-flex justify-content-between align-items-center">
                             <div>

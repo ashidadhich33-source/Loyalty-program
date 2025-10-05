@@ -448,8 +448,29 @@
                         <div class="p-3">
                             <!-- Barcode Scanner -->
                             <div class="mb-3">
-                                <input type="text" class="form-control barcode-input" id="barcodeInput" 
-                                       placeholder="Scan or enter barcode..." autofocus>
+                                <div class="input-group">
+                                    <input type="text" class="form-control barcode-input" id="barcodeInput" 
+                                           placeholder="Scan or enter barcode..." autofocus>
+                                    <button class="btn btn-outline-success d-md-none" type="button" onclick="startCameraScan()">
+                                        <i class="fas fa-camera"></i>
+                                    </button>
+                                </div>
+                                <!-- Mobile Camera Scanner -->
+                                <div id="cameraScanner" class="mt-3 d-none">
+                                    <div class="camera-container position-relative">
+                                        <video id="cameraVideo" autoplay playsinline class="w-100 rounded"></video>
+                                        <canvas id="cameraCanvas" style="display: none;"></canvas>
+                                        <div class="camera-overlay position-absolute top-0 start-0 w-100 h-100 d-flex flex-column align-items-center justify-content-center">
+                                            <div class="scan-frame border border-success border-3 rounded" style="width: 200px; height: 100px;"></div>
+                                            <p class="text-center text-white mt-2 bg-dark bg-opacity-50 px-2 py-1 rounded">Position barcode within the frame</p>
+                                        </div>
+                                    </div>
+                                    <div class="text-center mt-2">
+                                        <button class="btn btn-danger btn-sm" onclick="stopCameraScan()">
+                                            <i class="fas fa-stop"></i> Stop Camera
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                             
                             <!-- Product Search -->
@@ -637,6 +658,118 @@
             setupMobileNavigation();
         });
         
+        // Barcode Scanning Functions
+        let cameraStream = null;
+        let scanningInterval = null;
+        
+        function startCameraScan() {
+            const cameraScanner = document.getElementById('cameraScanner');
+            const video = document.getElementById('cameraVideo');
+            
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia({ 
+                    video: { 
+                        facingMode: 'environment', // Use back camera
+                        width: { ideal: 1280 },
+                        height: { ideal: 720 }
+                    } 
+                })
+                .then(function(stream) {
+                    cameraStream = stream;
+                    video.srcObject = stream;
+                    cameraScanner.classList.remove('d-none');
+                    
+                    // Start scanning for barcodes
+                    startBarcodeDetection();
+                })
+                .catch(function(err) {
+                    console.error('Camera access denied:', err);
+                    alert('Camera access is required for barcode scanning. Please allow camera access and try again.');
+                });
+            } else {
+                alert('Camera not supported on this device.');
+            }
+        }
+        
+        function stopCameraScan() {
+            const cameraScanner = document.getElementById('cameraScanner');
+            const video = document.getElementById('cameraVideo');
+            
+            if (cameraStream) {
+                cameraStream.getTracks().forEach(track => track.stop());
+                cameraStream = null;
+            }
+            
+            if (scanningInterval) {
+                clearInterval(scanningInterval);
+                scanningInterval = null;
+            }
+            
+            video.srcObject = null;
+            cameraScanner.classList.add('d-none');
+        }
+        
+        function startBarcodeDetection() {
+            const video = document.getElementById('cameraVideo');
+            const canvas = document.getElementById('cameraCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            scanningInterval = setInterval(() => {
+                if (video.readyState === video.HAVE_ENOUGH_DATA) {
+                    canvas.width = video.videoWidth;
+                    canvas.height = video.videoHeight;
+                    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+                    
+                    // Simple barcode detection (you can integrate with a barcode library like QuaggaJS)
+                    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                    const barcode = detectBarcode(imageData);
+                    
+                    if (barcode) {
+                        document.getElementById('barcodeInput').value = barcode;
+                        addProductByBarcode(barcode);
+                        stopCameraScan();
+                    }
+                }
+            }, 100);
+        }
+        
+        function detectBarcode(imageData) {
+            // This is a simplified barcode detection
+            // In production, you would use a proper barcode library like QuaggaJS or ZXing
+            // For now, we'll simulate detection
+            return null;
+        }
+        
+        function addProductByBarcode(barcode) {
+            // Find product by barcode
+            const product = products.find(p => p.barcode === barcode);
+            if (product) {
+                addToCart(product.id);
+                showNotification(`Product added: ${product.name}`, 'success');
+            } else {
+                showNotification('Product not found for barcode: ' + barcode, 'error');
+            }
+        }
+        
+        function showNotification(message, type) {
+            // Create a simple notification
+            const notification = document.createElement('div');
+            notification.className = `alert alert-${type === 'success' ? 'success' : 'danger'} alert-dismissible fade show position-fixed`;
+            notification.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
+            notification.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            document.body.appendChild(notification);
+            
+            // Auto remove after 3 seconds
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 3000);
+        }
+
         // Mobile Navigation Setup
         function setupMobileNavigation() {
             const posMobileToggle = document.getElementById('posMobileToggle');

@@ -102,13 +102,84 @@
         .step.completed:not(:last-child)::after {
             background: #28a745;
         }
+        
+        /* Mobile Navigation Styles */
+        .mobile-nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: #667eea;
+            font-size: 1.5rem;
+            padding: 0.5rem;
+            margin-right: 1rem;
+        }
+        
+        .mobile-nav-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1040;
+        }
+        
+        /* Mobile Responsive Styles */
+        @media (max-width: 768px) {
+            .mobile-nav-toggle {
+                display: block;
+            }
+            
+            .sidebar {
+                position: fixed;
+                top: 0;
+                left: -100%;
+                width: 280px;
+                height: 100vh;
+                z-index: 1050;
+                transform: translateX(0);
+            }
+            
+            .sidebar.show {
+                left: 0;
+            }
+            
+            .main-content {
+                width: 100%;
+                margin-left: 0;
+            }
+            
+            .mobile-nav-overlay.show {
+                display: block;
+            }
+            
+            /* Adjust header for mobile */
+            .header-mobile {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 1rem;
+                background: white;
+                border-bottom: 1px solid #dee2e6;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .sidebar {
+                width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- Mobile Navigation Overlay -->
+    <div class="mobile-nav-overlay" id="mobileNavOverlay"></div>
+    
     <div class="container-fluid">
         <div class="row">
             <!-- Sidebar -->
-            <div class="col-md-3 col-lg-2 sidebar p-0">
+            <div class="col-md-3 col-lg-2 sidebar p-0" id="sidebar">
                 <div class="p-3">
                     <div class="d-flex align-items-center mb-4">
                         <div class="logo">
@@ -118,6 +189,10 @@
                             <h5 class="text-white mb-0">Ocean ERP</h5>
                             <small class="text-white-50">Kids Clothing</small>
                         </div>
+                        <!-- Mobile close button -->
+                        <button class="btn btn-link text-white ms-auto d-md-none" id="closeSidebar">
+                            <i class="fas fa-times"></i>
+                        </button>
                     </div>
                     
                     <nav class="nav flex-column">
@@ -161,8 +236,30 @@
             <!-- Main Content -->
             <div class="col-md-9 col-lg-10 main-content">
                 <div class="p-4">
-                    <!-- Header -->
-                    <div class="d-flex justify-content-between align-items-center mb-4">
+                    <!-- Mobile Header -->
+                    <div class="header-mobile d-md-none mb-4">
+                        <button class="mobile-nav-toggle" id="mobileNavToggle">
+                            <i class="fas fa-bars"></i>
+                        </button>
+                        <div>
+                            <h5 class="mb-0">Create Product Template</h5>
+                            <small class="text-muted">New StyleCode</small>
+                        </div>
+                        <div class="dropdown">
+                            <button class="btn btn-outline-primary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                <i class="fas fa-user me-1"></i>Admin
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="/profile"><i class="fas fa-user me-2"></i>Profile</a></li>
+                                <li><a class="dropdown-item" href="/settings"><i class="fas fa-cog me-2"></i>Settings</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="/logout"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Desktop Header -->
+                    <div class="d-none d-md-flex justify-content-between align-items-center mb-4">
                         <div>
                             <h2 class="mb-0">Create Product Template</h2>
                             <p class="text-muted mb-0">Create a new product template (StyleCode) for your kids clothing items</p>
@@ -196,13 +293,13 @@
                                             <div class="col-12">
                                                 <h6 class="text-primary mb-3"><i class="fas fa-tag me-2"></i>Basic Information</h6>
                                             </div>
-                                            <div class="col-md-6 mb-3">
+                                            <div class="col-12 col-md-6 mb-3">
                                                 <label for="name" class="form-label">Product Name <span class="text-danger">*</span></label>
                                                 <input type="text" class="form-control" id="name" name="name" 
                                                        placeholder="e.g., Boys Blue Slim Fit Stretchable Jeans" required>
                                                 <div class="form-text">Enter the full product name</div>
                                             </div>
-                                            <div class="col-md-6 mb-3">
+                                            <div class="col-12 col-md-6 mb-3">
                                                 <label for="internal_reference" class="form-label">StyleCode <span class="text-danger">*</span></label>
                                                 <input type="text" class="form-control" id="internal_reference" name="internal_reference" 
                                                        placeholder="e.g., 121246526864" required>
@@ -221,7 +318,7 @@
                                             <div class="col-12">
                                                 <h6 class="text-primary mb-3"><i class="fas fa-layer-group me-2"></i>Category & Brand</h6>
                                             </div>
-                                            <div class="col-md-4 mb-3">
+                                            <div class="col-12 col-md-4 mb-3">
                                                 <label for="brand_id" class="form-label">Brand</label>
                                                 <select class="form-select" id="brand_id" name="brand_id">
                                                     <option value="">Select Brand</option>
@@ -231,7 +328,7 @@
                                                     <option value="4">TINY TOTS</option>
                                                 </select>
                                             </div>
-                                            <div class="col-md-4 mb-3">
+                                            <div class="col-12 col-md-4 mb-3">
                                                 <label for="category_id" class="form-label">Category <span class="text-danger">*</span></label>
                                                 <select class="form-select" id="category_id" name="category_id" required>
                                                     <option value="">Select Category</option>
@@ -241,7 +338,7 @@
                                                     <option value="4">ACCESSORIES</option>
                                                 </select>
                                             </div>
-                                            <div class="col-md-4 mb-3">
+                                            <div class="col-12 col-md-4 mb-3">
                                                 <label for="sub_category_id" class="form-label">Sub Category</label>
                                                 <select class="form-select" id="sub_category_id" name="sub_category_id">
                                                     <option value="">Select Sub Category</option>
@@ -258,7 +355,7 @@
                                             <div class="col-12">
                                                 <h6 class="text-primary mb-3"><i class="fas fa-child me-2"></i>Gender & Age</h6>
                                             </div>
-                                            <div class="col-md-6 mb-3">
+                                            <div class="col-12 col-md-6 mb-3">
                                                 <label for="gender" class="form-label">Gender</label>
                                                 <select class="form-select" id="gender" name="gender">
                                                     <option value="">Select Gender</option>
@@ -267,7 +364,7 @@
                                                     <option value="unisex">UNISEX</option>
                                                 </select>
                                             </div>
-                                            <div class="col-md-6 mb-3">
+                                            <div class="col-12 col-md-6 mb-3">
                                                 <label for="age_group" class="form-label">Age Group</label>
                                                 <select class="form-select" id="age_group" name="age_group">
                                                     <option value="">Select Age Group</option>
@@ -286,13 +383,13 @@
                                             <div class="col-12">
                                                 <h6 class="text-primary mb-3"><i class="fas fa-percentage me-2"></i>GST Information</h6>
                                             </div>
-                                            <div class="col-md-6 mb-3">
+                                            <div class="col-12 col-md-6 mb-3">
                                                 <label for="hsn_code" class="form-label">HSN Code</label>
                                                 <input type="text" class="form-control" id="hsn_code" name="hsn_code" 
                                                        placeholder="e.g., 6203" maxlength="8">
                                                 <div class="form-text">Harmonized System of Nomenclature code</div>
                                             </div>
-                                            <div class="col-md-6 mb-3">
+                                            <div class="col-12 col-md-6 mb-3">
                                                 <label for="gst_tax_group_id" class="form-label">GST Tax Group</label>
                                                 <select class="form-select" id="gst_tax_group_id" name="gst_tax_group_id">
                                                     <option value="">Select GST Tax Group</option>
@@ -324,15 +421,55 @@
                                             </div>
                                         </div>
                                         
+                                        <!-- Product Images -->
+                                        <div class="row mb-4">
+                                            <div class="col-12">
+                                                <h6 class="text-primary mb-3"><i class="fas fa-images me-2"></i>Product Images</h6>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="image-upload-area border border-dashed rounded p-4 text-center">
+                                                    <div id="imagePreview" class="row g-2 mb-3"></div>
+                                                    <div class="upload-buttons">
+                                                        <button type="button" class="btn btn-outline-primary me-2" onclick="document.getElementById('imageInput').click()">
+                                                            <i class="fas fa-upload me-2"></i>Upload Images
+                                                        </button>
+                                                        <button type="button" class="btn btn-outline-success d-md-none" onclick="startCameraCapture()">
+                                                            <i class="fas fa-camera me-2"></i>Take Photo
+                                                        </button>
+                                                    </div>
+                                                    <input type="file" id="imageInput" accept="image/*" multiple style="display: none;" onchange="handleImageUpload(event)">
+                                                    <div class="form-text">Upload product images or take photos with your camera</div>
+                                                </div>
+                                                
+                                                <!-- Mobile Camera Capture -->
+                                                <div id="cameraCapture" class="mt-3 d-none">
+                                                    <div class="camera-container position-relative">
+                                                        <video id="captureVideo" autoplay playsinline class="w-100 rounded"></video>
+                                                        <canvas id="captureCanvas" style="display: none;"></canvas>
+                                                        <div class="camera-overlay position-absolute top-0 start-0 w-100 h-100 d-flex flex-column align-items-center justify-content-end pb-3">
+                                                            <button class="btn btn-success btn-lg rounded-circle" onclick="capturePhoto()" style="width: 60px; height: 60px;">
+                                                                <i class="fas fa-camera"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="text-center mt-2">
+                                                        <button class="btn btn-danger btn-sm" onclick="stopCameraCapture()">
+                                                            <i class="fas fa-stop"></i> Cancel
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
                                         <!-- Action Buttons -->
                                         <div class="row">
                                             <div class="col-12">
-                                                <div class="d-flex justify-content-between">
-                                                    <a href="/products/templates" class="btn btn-outline-secondary">
+                                                <div class="d-flex flex-column flex-md-row justify-content-between gap-2">
+                                                    <a href="/products/templates" class="btn btn-outline-secondary order-2 order-md-1">
                                                         <i class="fas fa-times me-2"></i>Cancel
                                                     </a>
-                                                    <div>
-                                                        <button type="button" class="btn btn-outline-primary me-2" onclick="saveDraft()">
+                                                    <div class="d-flex flex-column flex-md-row gap-2 order-1 order-md-2">
+                                                        <button type="button" class="btn btn-outline-primary" onclick="saveDraft()">
                                                             <i class="fas fa-save me-2"></i>Save Draft
                                                         </button>
                                                         <button type="submit" class="btn btn-primary">
@@ -407,6 +544,170 @@
     </div>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Camera Capture Functions
+        let captureStream = null;
+        let productImages = [];
+        
+        function startCameraCapture() {
+            const cameraCapture = document.getElementById('cameraCapture');
+            const video = document.getElementById('captureVideo');
+            
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia({ 
+                    video: { 
+                        facingMode: 'environment', // Use back camera
+                        width: { ideal: 1280 },
+                        height: { ideal: 720 }
+                    } 
+                })
+                .then(function(stream) {
+                    captureStream = stream;
+                    video.srcObject = stream;
+                    cameraCapture.classList.remove('d-none');
+                })
+                .catch(function(err) {
+                    console.error('Camera access denied:', err);
+                    alert('Camera access is required for photo capture. Please allow camera access and try again.');
+                });
+            } else {
+                alert('Camera not supported on this device.');
+            }
+        }
+        
+        function stopCameraCapture() {
+            const cameraCapture = document.getElementById('cameraCapture');
+            const video = document.getElementById('captureVideo');
+            
+            if (captureStream) {
+                captureStream.getTracks().forEach(track => track.stop());
+                captureStream = null;
+            }
+            
+            video.srcObject = null;
+            cameraCapture.classList.add('d-none');
+        }
+        
+        function capturePhoto() {
+            const video = document.getElementById('captureVideo');
+            const canvas = document.getElementById('captureCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+            
+            // Convert to blob and add to images
+            canvas.toBlob(function(blob) {
+                const imageUrl = URL.createObjectURL(blob);
+                addImageToPreview(imageUrl, blob);
+                stopCameraCapture();
+            }, 'image/jpeg', 0.8);
+        }
+        
+        function handleImageUpload(event) {
+            const files = event.target.files;
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                if (file.type.startsWith('image/')) {
+                    const imageUrl = URL.createObjectURL(file);
+                    addImageToPreview(imageUrl, file);
+                }
+            }
+        }
+        
+        function addImageToPreview(imageUrl, file) {
+            const imagePreview = document.getElementById('imagePreview');
+            const imageId = 'image_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+            
+            const imageContainer = document.createElement('div');
+            imageContainer.className = 'col-6 col-md-4 col-lg-3';
+            imageContainer.innerHTML = `
+                <div class="position-relative">
+                    <img src="${imageUrl}" class="img-fluid rounded" style="height: 120px; object-fit: cover; width: 100%;">
+                    <button type="button" class="btn btn-danger btn-sm position-absolute top-0 end-0 m-1" onclick="removeImage('${imageId}')">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            `;
+            imageContainer.id = imageId;
+            
+            imagePreview.appendChild(imageContainer);
+            
+            // Store image data
+            productImages.push({
+                id: imageId,
+                url: imageUrl,
+                file: file
+            });
+        }
+        
+        function removeImage(imageId) {
+            const imageContainer = document.getElementById(imageId);
+            if (imageContainer) {
+                // Find and remove from productImages array
+                const imageIndex = productImages.findIndex(img => img.id === imageId);
+                if (imageIndex > -1) {
+                    URL.revokeObjectURL(productImages[imageIndex].url);
+                    productImages.splice(imageIndex, 1);
+                }
+                
+                imageContainer.remove();
+            }
+        }
+
+        // Mobile Navigation Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileNavToggle = document.getElementById('mobileNavToggle');
+            const sidebar = document.getElementById('sidebar');
+            const mobileNavOverlay = document.getElementById('mobileNavOverlay');
+            const closeSidebar = document.getElementById('closeSidebar');
+            
+            // Toggle sidebar
+            function toggleSidebar() {
+                sidebar.classList.toggle('show');
+                mobileNavOverlay.classList.toggle('show');
+                document.body.classList.toggle('sidebar-open');
+            }
+            
+            // Close sidebar
+            function closeSidebarMenu() {
+                sidebar.classList.remove('show');
+                mobileNavOverlay.classList.remove('show');
+                document.body.classList.remove('sidebar-open');
+            }
+            
+            // Event listeners
+            if (mobileNavToggle) {
+                mobileNavToggle.addEventListener('click', toggleSidebar);
+            }
+            
+            if (closeSidebar) {
+                closeSidebar.addEventListener('click', closeSidebarMenu);
+            }
+            
+            if (mobileNavOverlay) {
+                mobileNavOverlay.addEventListener('click', closeSidebarMenu);
+            }
+            
+            // Close sidebar when clicking on nav links (mobile)
+            const navLinks = document.querySelectorAll('.sidebar .nav-link');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    if (window.innerWidth <= 768) {
+                        closeSidebarMenu();
+                    }
+                });
+            });
+            
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 768) {
+                    closeSidebarMenu();
+                }
+            });
+        });
+    </script>
     <script>
         // Form submission
         document.getElementById('productTemplateForm').addEventListener('submit', function(e) {

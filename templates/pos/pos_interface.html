@@ -16,6 +16,7 @@
             color: white;
             height: 100vh;
             overflow-y: auto;
+            transition: transform 0.3s ease;
         }
         .pos-main {
             height: 100vh;
@@ -44,6 +45,170 @@
             margin: 10px;
             border-radius: 10px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        /* Mobile Navigation for POS */
+        .pos-mobile-nav {
+            display: none;
+            background: white;
+            border-bottom: 1px solid #dee2e6;
+            padding: 10px 15px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .pos-mobile-toggle {
+            background: none;
+            border: none;
+            color: #667eea;
+            font-size: 1.5rem;
+            padding: 0.5rem;
+        }
+        
+        .pos-mobile-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1040;
+        }
+        
+        /* Mobile Responsive Styles */
+        @media (max-width: 768px) {
+            .pos-mobile-nav {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+            
+            .pos-sidebar {
+                position: fixed;
+                top: 0;
+                left: -100%;
+                width: 280px;
+                height: 100vh;
+                z-index: 1050;
+                transform: translateX(0);
+            }
+            
+            .pos-sidebar.show {
+                left: 0;
+            }
+            
+            .pos-main {
+                width: 100%;
+                margin-left: 0;
+            }
+            
+            .pos-content {
+                flex-direction: column;
+            }
+            
+            .pos-products {
+                margin: 5px;
+                order: 2;
+            }
+            
+            .pos-cart {
+                width: 100%;
+                margin: 5px;
+                order: 1;
+                max-height: 40vh;
+                overflow-y: auto;
+            }
+            
+            .mobile-nav-overlay.show {
+                display: block;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .pos-sidebar {
+                width: 100%;
+            }
+            
+            .pos-cart {
+                max-height: 35vh;
+            }
+            
+            .product-card {
+                padding: 10px;
+                margin: 5px;
+            }
+            
+            .barcode-input {
+                font-size: 16px;
+                padding: 12px;
+            }
+        }
+        
+        /* Touch Optimization for POS */
+        @media (hover: none) and (pointer: coarse) {
+            /* Touch-friendly POS buttons */
+            .btn-pos {
+                min-height: 48px;
+                min-width: 48px;
+                padding: 14px 24px;
+                font-size: 16px;
+            }
+            
+            /* Touch-friendly product cards */
+            .product-card {
+                min-height: 140px;
+                cursor: pointer;
+                touch-action: manipulation;
+            }
+            
+            .product-card:active {
+                transform: scale(0.98);
+                transition: transform 0.1s ease;
+            }
+            
+            /* Touch-friendly payment methods */
+            .payment-method {
+                min-height: 80px;
+                cursor: pointer;
+                touch-action: manipulation;
+            }
+            
+            .payment-method:active {
+                transform: scale(0.95);
+                transition: transform 0.1s ease;
+            }
+            
+            /* Touch-friendly form controls */
+            .form-control, .form-select {
+                min-height: 48px;
+                font-size: 16px;
+            }
+            
+            /* Touch-friendly barcode input */
+            .barcode-input {
+                min-height: 48px;
+                font-size: 18px;
+            }
+            
+            /* Touch-friendly cart items */
+            .cart-item {
+                min-height: 60px;
+                padding: 12px;
+            }
+            
+            /* Touch-friendly quantity controls */
+            .input-group .btn {
+                min-height: 40px;
+                min-width: 40px;
+            }
+            
+            /* Touch-friendly navigation */
+            .pos-mobile-toggle {
+                min-height: 44px;
+                min-width: 44px;
+            }
         }
         .product-card {
             border: 1px solid #dee2e6;
@@ -149,10 +314,35 @@
     </style>
 </head>
 <body>
+    <!-- Mobile Navigation Overlay -->
+    <div class="pos-mobile-overlay" id="posMobileOverlay"></div>
+    
     <div class="pos-container">
+        <!-- Mobile Navigation Header -->
+        <div class="pos-mobile-nav d-md-none">
+            <button class="pos-mobile-toggle" id="posMobileToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div>
+                <h5 class="mb-0">Ocean ERP POS</h5>
+                <small class="text-muted">Terminal 1</small>
+            </div>
+            <div class="dropdown">
+                <button class="btn btn-outline-primary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                    <i class="fas fa-user me-1"></i>Admin
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="/profile"><i class="fas fa-user me-2"></i>Profile</a></li>
+                    <li><a class="dropdown-item" href="/settings"><i class="fas fa-cog me-2"></i>Settings</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="/logout"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                </ul>
+            </div>
+        </div>
+        
         <div class="row g-0 h-100">
             <!-- Sidebar -->
-            <div class="col-md-3 pos-sidebar">
+            <div class="col-md-3 pos-sidebar" id="posSidebar">
                 <div class="p-3">
                     <div class="d-flex align-items-center mb-4">
                         <div class="bg-white rounded-circle p-2 me-3">
@@ -162,6 +352,10 @@
                             <h5 class="mb-0">Ocean ERP</h5>
                             <small class="opacity-75">POS System</small>
                         </div>
+                        <!-- Mobile close button -->
+                        <button class="btn btn-link text-white ms-auto d-md-none" id="posCloseSidebar">
+                            <i class="fas fa-times"></i>
+                        </button>
                     </div>
                     
                     <!-- Session Info -->
@@ -254,8 +448,29 @@
                         <div class="p-3">
                             <!-- Barcode Scanner -->
                             <div class="mb-3">
-                                <input type="text" class="form-control barcode-input" id="barcodeInput" 
-                                       placeholder="Scan or enter barcode..." autofocus>
+                                <div class="input-group">
+                                    <input type="text" class="form-control barcode-input" id="barcodeInput" 
+                                           placeholder="Scan or enter barcode..." autofocus>
+                                    <button class="btn btn-outline-success d-md-none" type="button" onclick="startCameraScan()">
+                                        <i class="fas fa-camera"></i>
+                                    </button>
+                                </div>
+                                <!-- Mobile Camera Scanner -->
+                                <div id="cameraScanner" class="mt-3 d-none">
+                                    <div class="camera-container position-relative">
+                                        <video id="cameraVideo" autoplay playsinline class="w-100 rounded"></video>
+                                        <canvas id="cameraCanvas" style="display: none;"></canvas>
+                                        <div class="camera-overlay position-absolute top-0 start-0 w-100 h-100 d-flex flex-column align-items-center justify-content-center">
+                                            <div class="scan-frame border border-success border-3 rounded" style="width: 200px; height: 100px;"></div>
+                                            <p class="text-center text-white mt-2 bg-dark bg-opacity-50 px-2 py-1 rounded">Position barcode within the frame</p>
+                                        </div>
+                                    </div>
+                                    <div class="text-center mt-2">
+                                        <button class="btn btn-danger btn-sm" onclick="stopCameraScan()">
+                                            <i class="fas fa-stop"></i> Stop Camera
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                             
                             <!-- Product Search -->
@@ -270,7 +485,7 @@
                             </div>
                             
                             <!-- Products Grid -->
-                            <div class="row" id="productsGrid">
+                            <div class="row g-2" id="productsGrid">
                                 <!-- Product cards will be dynamically loaded -->
                             </div>
                         </div>
@@ -440,7 +655,172 @@
         document.addEventListener('DOMContentLoaded', function() {
             loadProducts();
             setupEventListeners();
+            setupMobileNavigation();
         });
+        
+        // Barcode Scanning Functions
+        let cameraStream = null;
+        let scanningInterval = null;
+        
+        function startCameraScan() {
+            const cameraScanner = document.getElementById('cameraScanner');
+            const video = document.getElementById('cameraVideo');
+            
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia({ 
+                    video: { 
+                        facingMode: 'environment', // Use back camera
+                        width: { ideal: 1280 },
+                        height: { ideal: 720 }
+                    } 
+                })
+                .then(function(stream) {
+                    cameraStream = stream;
+                    video.srcObject = stream;
+                    cameraScanner.classList.remove('d-none');
+                    
+                    // Start scanning for barcodes
+                    startBarcodeDetection();
+                })
+                .catch(function(err) {
+                    console.error('Camera access denied:', err);
+                    alert('Camera access is required for barcode scanning. Please allow camera access and try again.');
+                });
+            } else {
+                alert('Camera not supported on this device.');
+            }
+        }
+        
+        function stopCameraScan() {
+            const cameraScanner = document.getElementById('cameraScanner');
+            const video = document.getElementById('cameraVideo');
+            
+            if (cameraStream) {
+                cameraStream.getTracks().forEach(track => track.stop());
+                cameraStream = null;
+            }
+            
+            if (scanningInterval) {
+                clearInterval(scanningInterval);
+                scanningInterval = null;
+            }
+            
+            video.srcObject = null;
+            cameraScanner.classList.add('d-none');
+        }
+        
+        function startBarcodeDetection() {
+            const video = document.getElementById('cameraVideo');
+            const canvas = document.getElementById('cameraCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            scanningInterval = setInterval(() => {
+                if (video.readyState === video.HAVE_ENOUGH_DATA) {
+                    canvas.width = video.videoWidth;
+                    canvas.height = video.videoHeight;
+                    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+                    
+                    // Simple barcode detection (you can integrate with a barcode library like QuaggaJS)
+                    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                    const barcode = detectBarcode(imageData);
+                    
+                    if (barcode) {
+                        document.getElementById('barcodeInput').value = barcode;
+                        addProductByBarcode(barcode);
+                        stopCameraScan();
+                    }
+                }
+            }, 100);
+        }
+        
+        function detectBarcode(imageData) {
+            // This is a simplified barcode detection
+            // In production, you would use a proper barcode library like QuaggaJS or ZXing
+            // For now, we'll simulate detection
+            return null;
+        }
+        
+        function addProductByBarcode(barcode) {
+            // Find product by barcode
+            const product = products.find(p => p.barcode === barcode);
+            if (product) {
+                addToCart(product.id);
+                showNotification(`Product added: ${product.name}`, 'success');
+            } else {
+                showNotification('Product not found for barcode: ' + barcode, 'error');
+            }
+        }
+        
+        function showNotification(message, type) {
+            // Create a simple notification
+            const notification = document.createElement('div');
+            notification.className = `alert alert-${type === 'success' ? 'success' : 'danger'} alert-dismissible fade show position-fixed`;
+            notification.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
+            notification.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            document.body.appendChild(notification);
+            
+            // Auto remove after 3 seconds
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 3000);
+        }
+
+        // Mobile Navigation Setup
+        function setupMobileNavigation() {
+            const posMobileToggle = document.getElementById('posMobileToggle');
+            const posSidebar = document.getElementById('posSidebar');
+            const posMobileOverlay = document.getElementById('posMobileOverlay');
+            const posCloseSidebar = document.getElementById('posCloseSidebar');
+            
+            // Toggle sidebar
+            function togglePosSidebar() {
+                posSidebar.classList.toggle('show');
+                posMobileOverlay.classList.toggle('show');
+                document.body.classList.toggle('sidebar-open');
+            }
+            
+            // Close sidebar
+            function closePosSidebar() {
+                posSidebar.classList.remove('show');
+                posMobileOverlay.classList.remove('show');
+                document.body.classList.remove('sidebar-open');
+            }
+            
+            // Event listeners
+            if (posMobileToggle) {
+                posMobileToggle.addEventListener('click', togglePosSidebar);
+            }
+            
+            if (posCloseSidebar) {
+                posCloseSidebar.addEventListener('click', closePosSidebar);
+            }
+            
+            if (posMobileOverlay) {
+                posMobileOverlay.addEventListener('click', closePosSidebar);
+            }
+            
+            // Close sidebar when clicking on nav links (mobile)
+            const posNavLinks = document.querySelectorAll('.pos-sidebar .nav-link, .pos-sidebar button');
+            posNavLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    if (window.innerWidth <= 768) {
+                        closePosSidebar();
+                    }
+                });
+            });
+            
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 768) {
+                    closePosSidebar();
+                }
+            });
+        }
         
         // Load products
         function loadProducts() {
@@ -449,15 +829,15 @@
             
             products.forEach(product => {
                 const productCard = document.createElement('div');
-                productCard.className = 'col-md-6 col-lg-4';
+                productCard.className = 'col-6 col-md-4 col-lg-3';
                 productCard.innerHTML = `
                     <div class="product-card" onclick="addToCart(${product.id})">
                         <div class="d-flex justify-content-between align-items-start mb-2">
-                            <h6 class="mb-0">${product.name}</h6>
+                            <h6 class="mb-0 small">${product.name}</h6>
                             <span class="badge bg-primary">${product.size}</span>
                         </div>
                         <div class="mb-2">
-                            <small class="text-muted">${product.color} | ${product.barcode}</small>
+                            <small class="text-muted">${product.color}</small>
                         </div>
                         <div class="d-flex justify-content-between align-items-center">
                             <div>

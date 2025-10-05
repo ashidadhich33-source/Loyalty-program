@@ -4,12 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ocean ERP - Dashboard</title>
+    <meta name="description" content="Ocean ERP - Kids Clothing Management System">
+    <meta name="theme-color" content="#667eea">
+    <link rel="manifest" href="/static/manifest.json">
+    <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="/static/css/mobile-optimization.css" rel="stylesheet">
     <style>
         .sidebar {
             min-height: 100vh;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: transform 0.3s ease;
         }
         .sidebar .nav-link {
             color: rgba(255,255,255,0.8);
@@ -30,6 +36,155 @@
         .main-content {
             background: #f8f9fa;
             min-height: 100vh;
+        }
+        
+        /* Mobile Navigation Styles */
+        .mobile-nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: #667eea;
+            font-size: 1.5rem;
+            padding: 0.5rem;
+            margin-right: 1rem;
+        }
+        
+        .mobile-nav-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1040;
+        }
+        
+        /* Mobile Responsive Styles */
+        @media (max-width: 768px) {
+            .mobile-nav-toggle {
+                display: block;
+            }
+            
+            .sidebar {
+                position: fixed;
+                top: 0;
+                left: -100%;
+                width: 280px;
+                height: 100vh;
+                z-index: 1050;
+                transform: translateX(0);
+            }
+            
+            .sidebar.show {
+                left: 0;
+            }
+            
+            .main-content {
+                width: 100%;
+                margin-left: 0;
+            }
+            
+            .mobile-nav-overlay.show {
+                display: block;
+            }
+            
+            /* Adjust header for mobile */
+            .header-mobile {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 1rem;
+                background: white;
+                border-bottom: 1px solid #dee2e6;
+            }
+            
+            /* Stack statistics cards on mobile */
+            .stat-card {
+                margin-bottom: 1rem;
+            }
+            
+            /* Make quick actions stack on mobile */
+            .quick-actions .row .col-md-3 {
+                margin-bottom: 1rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .sidebar {
+                width: 100%;
+            }
+            
+            /* Make cards more compact on small mobile */
+            .card-body {
+                padding: 1rem;
+            }
+            
+            /* Adjust font sizes for mobile */
+            .stat-card h3 {
+                font-size: 1.5rem;
+            }
+            
+            .stat-card h6 {
+                font-size: 0.9rem;
+            }
+        }
+        
+        /* Touch Optimization */
+        @media (hover: none) and (pointer: coarse) {
+            /* Touch-friendly button sizes */
+            .btn {
+                min-height: 44px;
+                min-width: 44px;
+                padding: 12px 20px;
+            }
+            
+            .btn-sm {
+                min-height: 36px;
+                min-width: 36px;
+                padding: 8px 16px;
+            }
+            
+            /* Touch-friendly form controls */
+            .form-control, .form-select {
+                min-height: 44px;
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+            
+            /* Touch-friendly navigation */
+            .nav-link {
+                min-height: 44px;
+                padding: 12px 20px;
+            }
+            
+            /* Touch-friendly cards */
+            .card {
+                cursor: pointer;
+            }
+            
+            .card:hover {
+                transform: none; /* Disable hover effects on touch */
+            }
+            
+            /* Touch-friendly dropdowns */
+            .dropdown-toggle {
+                min-height: 44px;
+            }
+            
+            /* Touch-friendly product cards */
+            .product-card {
+                min-height: 120px;
+                cursor: pointer;
+            }
+            
+            /* Touch-friendly quick actions */
+            .quick-actions .btn {
+                min-height: 80px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+            }
         }
         .card {
             border: none;
@@ -70,10 +225,13 @@
     </style>
 </head>
 <body>
+    <!-- Mobile Navigation Overlay -->
+    <div class="mobile-nav-overlay" id="mobileNavOverlay"></div>
+    
     <div class="container-fluid">
         <div class="row">
             <!-- Sidebar -->
-            <div class="col-md-3 col-lg-2 sidebar p-0">
+            <div class="col-md-3 col-lg-2 sidebar p-0" id="sidebar">
                 <div class="p-3">
                     <div class="d-flex align-items-center mb-4">
                         <div class="logo">
@@ -83,6 +241,10 @@
                             <h5 class="text-white mb-0">Ocean ERP</h5>
                             <small class="text-white-50">Kids Clothing</small>
                         </div>
+                        <!-- Mobile close button -->
+                        <button class="btn btn-link text-white ms-auto d-md-none" id="closeSidebar">
+                            <i class="fas fa-times"></i>
+                        </button>
                     </div>
                     
                     <nav class="nav flex-column">
@@ -126,8 +288,30 @@
             <!-- Main Content -->
             <div class="col-md-9 col-lg-10 main-content">
                 <div class="p-4">
-                    <!-- Header -->
-                    <div class="d-flex justify-content-between align-items-center mb-4">
+                    <!-- Mobile Header -->
+                    <div class="header-mobile d-md-none mb-4">
+                        <button class="mobile-nav-toggle" id="mobileNavToggle">
+                            <i class="fas fa-bars"></i>
+                        </button>
+                        <div>
+                            <h5 class="mb-0">Ocean ERP</h5>
+                            <small class="text-muted">Dashboard</small>
+                        </div>
+                        <div class="dropdown">
+                            <button class="btn btn-outline-primary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                <i class="fas fa-user me-1"></i>Admin
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="/profile"><i class="fas fa-user me-2"></i>Profile</a></li>
+                                <li><a class="dropdown-item" href="/settings"><i class="fas fa-cog me-2"></i>Settings</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="/logout"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Desktop Header -->
+                    <div class="d-none d-md-flex justify-content-between align-items-center mb-4">
                         <div>
                             <h2 class="mb-0">Dashboard</h2>
                             <p class="text-muted mb-0">Welcome to Ocean ERP - Kids Clothing Management</p>
@@ -153,64 +337,64 @@
                     
                     <!-- Statistics Cards -->
                     <div class="row mb-4">
-                        <div class="col-md-3 mb-3">
-                            <div class="card stat-card">
+                        <div class="col-6 col-md-3 mb-3">
+                            <div class="card stat-card h-100">
                                 <div class="card-body">
-                                    <div class="d-flex justify-content-between">
-                                        <div>
-                                            <h6 class="card-title">Total Products</h6>
-                                            <h3 class="mb-0">1,247</h3>
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div class="flex-grow-1">
+                                            <h6 class="card-title mb-1">Total Products</h6>
+                                            <h3 class="mb-1">1,247</h3>
                                             <small class="opacity-75">+12 this week</small>
                                         </div>
-                                        <div class="align-self-center">
+                                        <div class="flex-shrink-0">
                                             <i class="fas fa-cube fa-2x opacity-75"></i>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3 mb-3">
-                            <div class="card stat-card success">
+                        <div class="col-6 col-md-3 mb-3">
+                            <div class="card stat-card success h-100">
                                 <div class="card-body">
-                                    <div class="d-flex justify-content-between">
-                                        <div>
-                                            <h6 class="card-title">Today's Sales</h6>
-                                            <h3 class="mb-0">₹45,230</h3>
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div class="flex-grow-1">
+                                            <h6 class="card-title mb-1">Today's Sales</h6>
+                                            <h3 class="mb-1">₹45,230</h3>
                                             <small class="opacity-75">+8.5% from yesterday</small>
                                         </div>
-                                        <div class="align-self-center">
+                                        <div class="flex-shrink-0">
                                             <i class="fas fa-rupee-sign fa-2x opacity-75"></i>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3 mb-3">
-                            <div class="card stat-card warning">
+                        <div class="col-6 col-md-3 mb-3">
+                            <div class="card stat-card warning h-100">
                                 <div class="card-body">
-                                    <div class="d-flex justify-content-between">
-                                        <div>
-                                            <h6 class="card-title">Low Stock Items</h6>
-                                            <h3 class="mb-0">23</h3>
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div class="flex-grow-1">
+                                            <h6 class="card-title mb-1">Low Stock Items</h6>
+                                            <h3 class="mb-1">23</h3>
                                             <small class="opacity-75">Need restocking</small>
                                         </div>
-                                        <div class="align-self-center">
+                                        <div class="flex-shrink-0">
                                             <i class="fas fa-exclamation-triangle fa-2x opacity-75"></i>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3 mb-3">
-                            <div class="card stat-card info">
+                        <div class="col-6 col-md-3 mb-3">
+                            <div class="card stat-card info h-100">
                                 <div class="card-body">
-                                    <div class="d-flex justify-content-between">
-                                        <div>
-                                            <h6 class="card-title">Active Customers</h6>
-                                            <h3 class="mb-0">1,856</h3>
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div class="flex-grow-1">
+                                            <h6 class="card-title mb-1">Active Customers</h6>
+                                            <h3 class="mb-1">1,856</h3>
                                             <small class="opacity-75">+5 new today</small>
                                         </div>
-                                        <div class="align-self-center">
+                                        <div class="flex-shrink-0">
                                             <i class="fas fa-users fa-2x opacity-75"></i>
                                         </div>
                                     </div>
@@ -227,25 +411,29 @@
                                     <h5 class="mb-0"><i class="fas fa-bolt me-2"></i>Quick Actions</h5>
                                 </div>
                                 <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-md-3 mb-3">
-                                            <a href="/products/templates/create" class="btn btn-outline-primary w-100">
-                                                <i class="fas fa-plus me-2"></i>Create Product Template
+                                    <div class="row g-2">
+                                        <div class="col-6 col-md-3 mb-2">
+                                            <a href="/products/templates/create" class="btn btn-outline-primary w-100 d-flex flex-column align-items-center py-3">
+                                                <i class="fas fa-plus fa-2x mb-2"></i>
+                                                <span class="small">Create Product Template</span>
                                             </a>
                                         </div>
-                                        <div class="col-md-3 mb-3">
-                                            <a href="/pos/session/new" class="btn btn-outline-success w-100">
-                                                <i class="fas fa-cash-register me-2"></i>Start POS Session
+                                        <div class="col-6 col-md-3 mb-2">
+                                            <a href="/pos/session/new" class="btn btn-outline-success w-100 d-flex flex-column align-items-center py-3">
+                                                <i class="fas fa-cash-register fa-2x mb-2"></i>
+                                                <span class="small">Start POS Session</span>
                                             </a>
                                         </div>
-                                        <div class="col-md-3 mb-3">
-                                            <a href="/purchase/orders/create" class="btn btn-outline-warning w-100">
-                                                <i class="fas fa-shopping-cart me-2"></i>Create Purchase Order
+                                        <div class="col-6 col-md-3 mb-2">
+                                            <a href="/purchase/orders/create" class="btn btn-outline-warning w-100 d-flex flex-column align-items-center py-3">
+                                                <i class="fas fa-shopping-cart fa-2x mb-2"></i>
+                                                <span class="small">Create Purchase Order</span>
                                             </a>
                                         </div>
-                                        <div class="col-md-3 mb-3">
-                                            <a href="/inventory/stock" class="btn btn-outline-info w-100">
-                                                <i class="fas fa-warehouse me-2"></i>View Inventory
+                                        <div class="col-6 col-md-3 mb-2">
+                                            <a href="/inventory/stock" class="btn btn-outline-info w-100 d-flex flex-column align-items-center py-3">
+                                                <i class="fas fa-warehouse fa-2x mb-2"></i>
+                                                <span class="small">View Inventory</span>
                                             </a>
                                         </div>
                                     </div>
@@ -256,80 +444,88 @@
                     
                     <!-- Recent Activities -->
                     <div class="row">
-                        <div class="col-md-8">
-                            <div class="card">
+                        <div class="col-lg-8 mb-4">
+                            <div class="card h-100">
                                 <div class="card-header">
                                     <h5 class="mb-0"><i class="fas fa-history me-2"></i>Recent Activities</h5>
                                 </div>
                                 <div class="card-body">
                                     <div class="list-group list-group-flush">
-                                        <div class="list-group-item d-flex justify-content-between align-items-center">
-                                            <div>
-                                                <i class="fas fa-shopping-cart text-success me-2"></i>
-                                                <strong>Purchase Order #PO20241201001</strong> received
-                                                <small class="text-muted d-block">2 minutes ago</small>
+                                        <div class="list-group-item d-flex justify-content-between align-items-start">
+                                            <div class="flex-grow-1">
+                                                <div class="d-flex align-items-center mb-1">
+                                                    <i class="fas fa-shopping-cart text-success me-2"></i>
+                                                    <strong>Purchase Order #PO20241201001</strong>
+                                                </div>
+                                                <small class="text-muted d-block">received 2 minutes ago</small>
                                             </div>
-                                            <span class="badge bg-success">Completed</span>
+                                            <span class="badge bg-success ms-2">Completed</span>
                                         </div>
-                                        <div class="list-group-item d-flex justify-content-between align-items-center">
-                                            <div>
-                                                <i class="fas fa-cash-register text-primary me-2"></i>
-                                                <strong>POS Sale #POS20241201002</strong> completed
-                                                <small class="text-muted d-block">15 minutes ago</small>
+                                        <div class="list-group-item d-flex justify-content-between align-items-start">
+                                            <div class="flex-grow-1">
+                                                <div class="d-flex align-items-center mb-1">
+                                                    <i class="fas fa-cash-register text-primary me-2"></i>
+                                                    <strong>POS Sale #POS20241201002</strong>
+                                                </div>
+                                                <small class="text-muted d-block">completed 15 minutes ago</small>
                                             </div>
-                                            <span class="badge bg-primary">₹1,499</span>
+                                            <span class="badge bg-primary ms-2">₹1,499</span>
                                         </div>
-                                        <div class="list-group-item d-flex justify-content-between align-items-center">
-                                            <div>
-                                                <i class="fas fa-cube text-info me-2"></i>
-                                                <strong>Product Template</strong> "Boys Blue Jeans" created
-                                                <small class="text-muted d-block">1 hour ago</small>
+                                        <div class="list-group-item d-flex justify-content-between align-items-start">
+                                            <div class="flex-grow-1">
+                                                <div class="d-flex align-items-center mb-1">
+                                                    <i class="fas fa-cube text-info me-2"></i>
+                                                    <strong>Product Template</strong>
+                                                </div>
+                                                <small class="text-muted d-block">"Boys Blue Jeans" created 1 hour ago</small>
                                             </div>
-                                            <span class="badge bg-info">New</span>
+                                            <span class="badge bg-info ms-2">New</span>
                                         </div>
-                                        <div class="list-group-item d-flex justify-content-between align-items-center">
-                                            <div>
-                                                <i class="fas fa-users text-warning me-2"></i>
-                                                <strong>New Customer</strong> "Rajesh Kumar" registered
-                                                <small class="text-muted d-block">2 hours ago</small>
+                                        <div class="list-group-item d-flex justify-content-between align-items-start">
+                                            <div class="flex-grow-1">
+                                                <div class="d-flex align-items-center mb-1">
+                                                    <i class="fas fa-users text-warning me-2"></i>
+                                                    <strong>New Customer</strong>
+                                                </div>
+                                                <small class="text-muted d-block">"Rajesh Kumar" registered 2 hours ago</small>
                                             </div>
-                                            <span class="badge bg-warning">Customer</span>
+                                            <span class="badge bg-warning ms-2">Customer</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         
-                        <div class="col-md-4">
-                            <div class="card">
+                        <div class="col-lg-4 mb-4">
+                            <div class="card h-100">
                                 <div class="card-header">
                                     <h5 class="mb-0"><i class="fas fa-chart-pie me-2"></i>Sales Summary</h5>
                                 </div>
                                 <div class="card-body">
                                     <div class="mb-3">
-                                        <div class="d-flex justify-content-between">
+                                        <div class="d-flex justify-content-between align-items-center">
                                             <span>Today</span>
                                             <span class="fw-bold">₹45,230</span>
                                         </div>
-                                        <div class="progress mt-1" style="height: 6px;">
+                                        <div class="progress mt-2" style="height: 8px;">
                                             <div class="progress-bar bg-success" style="width: 75%"></div>
                                         </div>
                                     </div>
                                     <div class="mb-3">
-                                        <div class="d-flex justify-content-between">
+                                        <div class="d-flex justify-content-between align-items-center">
                                             <span>This Week</span>
                                             <span class="fw-bold">₹2,85,450</span>
                                         </div>
-                                        <div class="progress mt-1" style="height: 6px;">
+                                        <div class="progress mt-2" style="height: 8px;">
                                             <div class="progress-bar bg-primary" style="width: 85%"></div>
                                         </div>
                                     </div>
                                     <div class="mb-3">
-                                        <div class="d-flex justify-content-between">
+                                        <div class="d-flex justify-content-between align-items-center">
                                             <span>This Month</span>
                                             <span class="fw-bold">₹12,45,230</span>
                                         </div>
-                                        <div class="progress mt-1" style="height: 6px;">
+                                        <div class="progress mt-2" style="height: 8px;">
                                             <div class="progress-bar bg-warning" style="width: 90%"></div>
                                         </div>
                                     </div>
@@ -343,5 +539,89 @@
     </div>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Mobile Navigation Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileNavToggle = document.getElementById('mobileNavToggle');
+            const sidebar = document.getElementById('sidebar');
+            const mobileNavOverlay = document.getElementById('mobileNavOverlay');
+            const closeSidebar = document.getElementById('closeSidebar');
+            
+            // Toggle sidebar
+            function toggleSidebar() {
+                sidebar.classList.toggle('show');
+                mobileNavOverlay.classList.toggle('show');
+                document.body.classList.toggle('sidebar-open');
+            }
+            
+            // Close sidebar
+            function closeSidebarMenu() {
+                sidebar.classList.remove('show');
+                mobileNavOverlay.classList.remove('show');
+                document.body.classList.remove('sidebar-open');
+            }
+            
+            // Event listeners
+            if (mobileNavToggle) {
+                mobileNavToggle.addEventListener('click', toggleSidebar);
+            }
+            
+            if (closeSidebar) {
+                closeSidebar.addEventListener('click', closeSidebarMenu);
+            }
+            
+            if (mobileNavOverlay) {
+                mobileNavOverlay.addEventListener('click', closeSidebarMenu);
+            }
+            
+            // Close sidebar when clicking on nav links (mobile)
+            const navLinks = document.querySelectorAll('.sidebar .nav-link');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    if (window.innerWidth <= 768) {
+                        closeSidebarMenu();
+                    }
+                });
+            });
+            
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 768) {
+                    closeSidebarMenu();
+                }
+            });
+            
+            // Prevent body scroll when sidebar is open on mobile
+            const observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                        if (document.body.classList.contains('sidebar-open')) {
+                            document.body.style.overflow = 'hidden';
+                        } else {
+                            document.body.style.overflow = '';
+                        }
+                    }
+                });
+            });
+            
+            observer.observe(document.body, {
+                attributes: true,
+                attributeFilter: ['class']
+            });
+        });
+        
+        // Register Service Worker for offline support
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/static/js/service-worker.js')
+                    .then(function(registration) {
+                        console.log('ServiceWorker registration successful');
+                    })
+                    .catch(function(err) {
+                        console.log('ServiceWorker registration failed: ', err);
+                    });
+            });
+        }
+    </script>
 </body>
 </html>

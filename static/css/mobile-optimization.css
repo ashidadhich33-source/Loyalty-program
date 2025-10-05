@@ -1,0 +1,187 @@
+/* Mobile Performance Optimization CSS */
+
+/* Image Optimization */
+img {
+    max-width: 100%;
+    height: auto;
+    loading: lazy; /* Lazy loading for better performance */
+}
+
+/* Optimize images for mobile */
+.product-image, .customer-avatar, .stat-icon {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+}
+
+/* Reduce animations on mobile for better performance */
+@media (max-width: 768px) {
+    * {
+        animation-duration: 0.1s !important;
+        transition-duration: 0.1s !important;
+    }
+    
+    /* Disable hover effects on touch devices */
+    .card:hover, .btn:hover, .nav-link:hover {
+        transform: none !important;
+        box-shadow: none !important;
+    }
+}
+
+/* Optimize font loading */
+@font-face {
+    font-family: 'FontAwesome';
+    src: url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/webfonts/fa-solid-900.woff2') format('woff2');
+    font-display: swap; /* Swap font for better performance */
+}
+
+/* Optimize critical CSS for mobile */
+@media (max-width: 768px) {
+    /* Hide non-essential elements on mobile */
+    .desktop-only {
+        display: none !important;
+    }
+    
+    /* Optimize card layouts */
+    .card {
+        margin-bottom: 0.5rem;
+    }
+    
+    .card-body {
+        padding: 0.75rem;
+    }
+    
+    /* Optimize button sizes for touch */
+    .btn {
+        min-height: 44px;
+        min-width: 44px;
+        font-size: 14px;
+    }
+    
+    /* Optimize form controls */
+    .form-control, .form-select {
+        font-size: 16px; /* Prevent zoom on iOS */
+        min-height: 44px;
+    }
+}
+
+/* Optimize for very small screens */
+@media (max-width: 576px) {
+    /* Reduce padding and margins */
+    .container-fluid {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+    
+    .p-4 {
+        padding: 1rem !important;
+    }
+    
+    .mb-4 {
+        margin-bottom: 1rem !important;
+    }
+    
+    /* Optimize text sizes */
+    h1 { font-size: 1.5rem; }
+    h2 { font-size: 1.25rem; }
+    h3 { font-size: 1.1rem; }
+    h4 { font-size: 1rem; }
+    h5 { font-size: 0.9rem; }
+    h6 { font-size: 0.8rem; }
+    
+    /* Optimize spacing */
+    .row {
+        margin-left: -0.25rem;
+        margin-right: -0.25rem;
+    }
+    
+    .col, [class*="col-"] {
+        padding-left: 0.25rem;
+        padding-right: 0.25rem;
+    }
+}
+
+/* Optimize for touch devices */
+@media (hover: none) and (pointer: coarse) {
+    /* Increase touch targets */
+    .btn, .nav-link, .dropdown-toggle {
+        min-height: 44px;
+        min-width: 44px;
+    }
+    
+    /* Optimize scrolling */
+    .sidebar, .pos-cart, .main-content {
+        -webkit-overflow-scrolling: touch;
+        overflow-scrolling: touch;
+    }
+    
+    /* Optimize images for touch */
+    .product-card img, .customer-avatar {
+        pointer-events: none;
+        user-select: none;
+    }
+}
+
+/* Performance optimizations */
+* {
+    box-sizing: border-box;
+}
+
+/* Optimize repaints and reflows */
+.sidebar, .pos-sidebar {
+    will-change: transform;
+    transform: translateZ(0); /* Force hardware acceleration */
+}
+
+/* Optimize animations */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Optimize for low-end devices */
+@media (max-width: 480px) {
+    /* Reduce visual complexity */
+    .card {
+        border: none;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    
+    /* Simplify layouts */
+    .d-flex {
+        flex-direction: column;
+    }
+    
+    .text-center {
+        text-align: left !important;
+    }
+    
+    /* Optimize images */
+    img {
+        max-height: 200px;
+    }
+}
+
+/* Optimize for landscape mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+    .pos-cart {
+        max-height: 50vh;
+    }
+    
+    .sidebar {
+        width: 250px;
+    }
+}
+
+/* Optimize for portrait mobile */
+@media (max-width: 768px) and (orientation: portrait) {
+    .pos-cart {
+        max-height: 40vh;
+    }
+    
+    .sidebar {
+        width: 100%;
+    }
+}
